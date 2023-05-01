@@ -141,6 +141,34 @@ class JsonController extends Controller
         if(\Auth::check())
         {
             $is_logged = true;
+
+            $user = auth()->user();
+
+            if($user->security_code)
+            {
+
+                if($user->security_code_expired_at->lt(now()))
+                {
+                    $is_logged = false;
+
+                }elseif(config('settings.global.mfa_status') !== 'disable'){
+
+                    dd(config('settings.global.mfa_methods'));
+
+                    if(config('settings.global.mfa_status') == 'all-users'){
+
+                        $is_logged = false;
+
+                    }elseif(config('settings.global.mfa_status') == 'user-will-have-option'
+                        && is_array($user->mfa_methods) && count($user->mfa_methods) >= 0){
+
+                        $is_logged = false;
+
+                    }
+
+                }
+
+            }
         }
 
         $response['success'] = true;

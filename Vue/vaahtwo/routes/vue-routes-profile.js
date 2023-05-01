@@ -2,7 +2,7 @@ let routes= [];
 let routes_list= [];
 
 import LayoutBackend from "../layouts/Backend.vue";
-import Profile from '../pages/profile/Profile.vue'
+import Profile from '../pages/profile/index.vue'
 
 routes_list = {
 

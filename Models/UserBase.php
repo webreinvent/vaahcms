@@ -1968,45 +1968,60 @@ class UserBase extends Authenticatable
     public function verifySecurityAuthentication()
     {
 
-        $this->security_code = null;
-        $this->security_code_expired_at = null;
-        $this->save();
+        try{
 
-        $has_security = true;
+            $this->security_code = null;
+            $this->security_code_expired_at = null;
+            $this->save();
 
-        $response['success'] = false;
-        $response['data'] = null;
+            $has_security = true;
 
-        if(!config('settings.global.mfa_status')
-            || config('settings.global.mfa_status') === 'disable'
-            || !is_array(config('settings.global.mfa_methods'))
-            || (is_array(config('settings.global.mfa_methods'))
-                && count(config('settings.global.mfa_methods')) == 0)){
-            $has_security = false;
+            $response['success'] = false;
+            $response['data'] = null;
+
+            if(!config('settings.global.mfa_status')
+                || config('settings.global.mfa_status') === 'disable'
+                || !is_array(config('settings.global.mfa_methods'))
+                || (is_array(config('settings.global.mfa_methods'))
+                    && count(config('settings.global.mfa_methods')) == 0)){
+                $has_security = false;
+            }
+
+            if(config('settings.global.mfa_status') == 'user-will-have-option'
+                && (!is_array($this->mfa_methods)
+                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+
+                $has_security = false;
+            }
+
+            if(!$has_security){
+                return $response;
+            }
+
+            $this->security_code = rand(100000, 999999);
+            $this->security_code_expired_at = now()->addMinutes(10);
+            $this->save();
+
+            $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+
+
+            if(isset($vaah_mail_response['success']) && !$vaah_mail_response['success']){
+                return $vaah_mail_response;
+            }
+
+            $response['success'] = true;
+
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        if(config('settings.global.mfa_status') == 'user-will-have-option'
-            && (!is_array($this->mfa_methods)
-                || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
-
-            $has_security = false;
-        }
-
-        if(!$has_security){
-            return $response;
-        }
-
-        $this->security_code = rand(100000, 999999);
-        $this->security_code_expired_at = now()->addMinutes(10);
-        $this->save();
-
-        $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
-
-        if(isset($vaah_mail_response['success']) && !$vaah_mail_response['success']){
-            return $vaah_mail_response;
-        }
-
-        $response['success'] = true;
 
         return $response;
 

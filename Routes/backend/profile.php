@@ -7,7 +7,7 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::post('/profile', 'UsersController@getProfile')
+        Route::post('/', 'UsersController@getProfile')
             ->name('backend.vaah.profile');
         //---------------------------------------------------------
         Route::post('/assets', 'UsersController@getAssets')

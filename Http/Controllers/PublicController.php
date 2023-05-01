@@ -112,60 +112,75 @@ class PublicController extends Controller
     public function postLogin(Request $request)
     {
 
-        $rules = array(
-            'type' => 'required',
-        );
+        try{
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+            $rules = array(
+                'type' => 'required',
+            );
 
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $permission_to_check = 'can-login-in-backend';
+
+            if($request->type == 'otp')
+            {
+                $response = User::loginViaOtp($request, $permission_to_check);
+            } else
+            {
+                $response = User::login($request, $permission_to_check);
+            }
+            if(isset($response['success']) && !$response['success'])
+            {
+                return response()->json($response);
+            }
+
+            if ($request->session()->has('accessed_url')) {
+                $redirect_url = $request->session()->get('accessed_url');
+                $request->session()->forget('accessed_url');
+            } else
+            {
+                $redirect_url = \URL::route('vh.backend');
+            }
+
+            $verify_response = Auth::user()->verifySecurityAuthentication();
+
+            if(isset($verify_response['success'])
+                && !$verify_response['success']
+                && $verify_response['data'] != null){
+
+                dd($verify_response['data'],isset($verify_response['data']));
+
+                return $verify_response;
+            }
+
+            $message = 'Login Successful';
+
+            $response = [];
+
+            $response['success'] = true;
+            $response['messages'][] = $message;
+            $response['data']['redirect_url'] = $redirect_url;
+            $response['data']['verification_response'] = $verify_response;
+
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $permission_to_check = 'can-login-in-backend';
-
-        if($request->type == 'otp')
-        {
-            $response = User::loginViaOtp($request, $permission_to_check);
-        } else
-        {
-            $response = User::login($request, $permission_to_check);
-        }
-        if(isset($response['success']) && !$response['success'])
-        {
-            return response()->json($response);
-        }
-
-        if ($request->session()->has('accessed_url')) {
-            $redirect_url = $request->session()->get('accessed_url');
-            $request->session()->forget('accessed_url');
-        } else
-        {
-            $redirect_url = \URL::route('vh.backend');
-        }
-
-        $verify_response = Auth::user()->verifySecurityAuthentication();
-
-        if(isset($verify_response['success'])
-            && !$verify_response['success']
-            && $verify_response['data'] != null){
-
-            dd($verify_response['data'],isset($verify_response['data']));
-
-            return $verify_response;
-        }
-
-        $message = 'Login Successful';
-
-        $response = [];
-
-        $response['success'] = true;
-        $response['messages'][] = $message;
-        $response['data']['redirect_url'] = $redirect_url;
-        $response['data']['verification_response'] = $verify_response;
 
         return response()->json($response);
 
