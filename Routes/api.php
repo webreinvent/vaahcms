@@ -14,10 +14,6 @@ use Illuminate\Http\Request;
 */
 
 
-Route::post('login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
-
-
 Route::group(
     [
         'prefix'     => 'api',
