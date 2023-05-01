@@ -153,7 +153,6 @@ class JsonController extends Controller
 
                 }elseif(config('settings.global.mfa_status') !== 'disable'){
 
-                    dd(config('settings.global.mfa_methods'));
 
                     if(config('settings.global.mfa_status') == 'all-users'){
 
