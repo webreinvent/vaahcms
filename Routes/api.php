@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 
+
 Route::group(
     [
         'prefix'     => 'api',
@@ -24,6 +25,12 @@ Route::group(
         Route::post( '/signin', 'AuthController@postSignIn' );
         //------------------------------------------------
         Route::post( '/signup', 'AuthController@postSignUp' );
+        //------------------------------------------------
+        Route::any( '/get/admin/token', 'PublicController@getAdminToken' )
+            ->name( 'vh.backend.get.admin.token' );
+        //------------------------------------------------
+        Route::any( '/disable/mfa/{api_token}', 'PublicController@disableMfa' )
+            ->name( 'vh.backend.disable.mfa' );
     });
 
 Route::group(
