@@ -57,12 +57,28 @@
                             <p v-if="hasPermission('can-publish-assets-of-theme')"
                                class="control">
                                 <b-button v-if="props.row.is_active"
+                                          style="border-radius: 0px"
                                           :loading="page.active_actions.includes('publish_assets-'+props.row.id)"
                                           size="is-small"
                                           type="is-info"
                                           icon-left="upload"
                                           @click="actions('publish_assets', props.row)">
                                 </b-button>
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip label="Action" type="is-dark">
+                            <p v-if="hasPermission('can-activate-theme')"
+                               class="control">
+                                <b-dropdown class="action-items" v-if="props.row.is_active" label="Action">
+                                    <template #trigger>
+                                        <b-button class="action-button" type="is-info" icon-right="caret-down" label="Action" />
+                                    </template>
+
+                                    <b-dropdown-item @click="actions('run_migrations', props.row)">Run Migrations</b-dropdown-item>
+                                    <b-dropdown-item @click="actions('run_seeds', props.row)">Run Seeds</b-dropdown-item>
+                                    <b-dropdown-item @click="confirmRefresh(props.row)">Refresh Migrations</b-dropdown-item>
+                                </b-dropdown>
                             </p>
                         </b-tooltip>
 
@@ -75,6 +91,19 @@
                                           type="is-info"
                                           icon-left="database"
                                           @click="actions('run_migrations', props.row)">
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip label="Run Seeds" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-theme')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          :loading="page.active_actions.includes('run_seeds-'+props.row.id)"
+                                          size="is-small"
+                                          type="is-info"
+                                          icon-left="database"
+                                          @click="actions('run_seeds', props.row)">
                                 </b-button>
                             </p>
                         </b-tooltip>
@@ -187,3 +216,13 @@
         </b-table>
     </div>
 </template>
+<style scoped>
+.action-items {
+    text-align: left!important;
+    color:#000;
+}
+.action-button {
+    height: 1.6rem;
+    border-radius: 0px;
+}
+</style>

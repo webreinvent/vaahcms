@@ -613,7 +613,7 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function runThemeMigrations($slug, $is_default=false)
+    public static function runMigrations($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -635,8 +635,63 @@ class Theme extends Model {
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
 
+            }
 
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = 'Migration run is successful';
 
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runSeeds($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+            }
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = 'Seeds run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runThemeSeeds($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -647,7 +702,7 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Seeds are successful';
 
             if(env('APP_DEBUG'))
             {
@@ -723,6 +778,50 @@ class Theme extends Model {
                 $response['hint'][] = '';
             }
             return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function refreshMigrations($slug)
+    {
+
+        try{
+
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+                $path = vh_theme_migrations_path($item->name);
+                Migration::refreshtMigrations($path);
+
+                //delete all database migrations
+                $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($theme_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                    Migration::whereIn('migration_id', $theme_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncThemeMigrations($item->id,$max_batch);
+
+            }
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = 'Migration refresh is successful';
 
         }catch(\Exception $e)
         {

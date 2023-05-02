@@ -113,7 +113,6 @@ class Module extends Model {
             $item = static::where('id', $id)
                 ->withTrashed()
                 ->first();
-
             $response['status'] = 'success';
             $response['data'] = $item;
         }catch(\Exception $e)
@@ -504,7 +503,7 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function runModuleMigrations($slug)
+    public static function runMigrations($slug)
     {
         try{
             $module = Module::slug($slug)->first();
@@ -526,6 +525,67 @@ class Module extends Model {
                     Migration::syncModuleMigrations($module->id,$current_max_batch);
                 }
 
+            }
+
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Migration run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runSeeds($slug)
+    {
+        try{
+            $module = Module::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
+                $seeds_namespace = vh_module_database_seeder($module->name);
+                Migration::runSeeds($seeds_namespace);
+
+            }
+
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Seeds run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runModuleSeeds($slug)
+    {
+        try{
+            $module = Module::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -537,7 +597,7 @@ class Module extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $module;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Seeds are successful';
 
             if(env('APP_DEBUG'))
             {
@@ -614,6 +674,49 @@ class Module extends Model {
             }
             return $response;
 
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function refreshMigrations($slug)
+    {
+
+        try{
+
+            $module = Module::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+                $path = vh_module_migrations_path($module->name);
+                Migration::refreshtMigrations($path);
+
+                //delete all database migrations
+                $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($module_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+                    Migration::whereIn('migration_id', $module_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncModuleMigrations($module->id,$max_batch);
+
+            }
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Migration refresh is successful';
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
