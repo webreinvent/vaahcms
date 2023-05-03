@@ -26,9 +26,6 @@ Route::group(
         //------------------------------------------------
         Route::post( '/signup', 'AuthController@postSignUp' );
         //------------------------------------------------
-        Route::any( '/get/admin/token', 'PublicController@getAdminToken' )
-            ->name( 'vh.backend.get.admin.token' );
-        //------------------------------------------------
         Route::any( '/disable/mfa/{api_token}', 'PublicController@disableMfa' )
             ->name( 'vh.backend.disable.mfa' );
     });

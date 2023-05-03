@@ -59,26 +59,6 @@ class PublicController extends Controller
         return $response;
 
     }
-
-    public function getAdminToken(Request $request)
-    {
-
-        $users = User::getByRoles(['super-administrator']);
-
-        if($users && count($users) > 0){
-            if($users[0]->api_token){
-                return $users[0]->api_token;
-            }
-
-            $token = \Str::random(30);
-
-            $users[0]->api_token = $token;
-            $users[0]->save();
-
-            return $token;
-        }
-
-    }
     //----------------------------------------------------------
 
 }
