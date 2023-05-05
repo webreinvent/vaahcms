@@ -4,15 +4,13 @@ namespace WebReinvent\VaahCms\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
-use WebReinvent\VaahCms\Entities\Notification;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Notification;
+use WebReinvent\VaahCms\Models\User;
 
 class ProcessNotifications implements ShouldQueue
 {

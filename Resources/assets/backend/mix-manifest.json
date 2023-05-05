@@ -1,7 +1,4 @@
 {
-    "/vaahone/builds/app.js": "/vaahone/builds/app.js",
-    "/vaahone/builds/app-extended.js": "/vaahone/builds/app-extended.js",
-    "/vaahone/css/style.css": "/vaahone/css/style.css",
-    "/vaahone/css/build.css": "/vaahone/css/build.css",
-    "/vaahprime/css/build.css": "/vaahprime/css/build.css"
+    "/vaahone/build/vaahone.css": "/vaahone/build/vaahone.css",
+    "/vaahtwo/build/vaahtwo.css": "/vaahtwo/build/vaahtwo.css"
 }

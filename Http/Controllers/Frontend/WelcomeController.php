@@ -7,11 +7,12 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\MenuItem;
-use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\Theme;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Module;
+use WebReinvent\VaahCms\Models\Theme;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 use Faker\Factory;
+use WebReinvent\VaahExtend\Libraries\VaahDB;
 
 class WelcomeController extends Controller
 {
@@ -21,14 +22,14 @@ class WelcomeController extends Controller
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_theme_slug();
+
     }
 
     //----------------------------------------------------------
     public function clearCache(Request $request)
     {
         $response = VaahArtisan::clearCache();
-        if($response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -44,38 +45,61 @@ class WelcomeController extends Controller
                 }
             }
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Cache was successfully deleted.';
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            $response['success'] = false;
 
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return $response;
-
     }
     //----------------------------------------------------------
-    public function index()
+    public function index(Request $request)
     {
 
+        if(app()->runningInConsole())
+        {
+            return true;
+        }
 
         $errors = [];
+
+        $message = 'Install VaahCMS and activate the CMS module or define your own routes.';
+
+        if(!VaahDB::isConnected())
+        {
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
+        if(!VaahDB::isTableExist('vh_modules'))
+        {
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
         $is_cms_exists = Module::slug('cms')->active()->exists();
 
         if(!$is_cms_exists)
         {
-            $errors[] = 'Install and activate the CMS module or Define your own routes.';
-            return view($this->theme.'::frontend.welcome')->withErrors($errors);
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
         }
 
         $is_theme_active = Theme::active()->exists();
 
         if(!$is_theme_active)
         {
-            $errors[] = 'Install and activate a theme.';
+            $errors[] = 'Install a theme and activate it.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
@@ -92,12 +116,15 @@ class WelcomeController extends Controller
 
         if(!$menu_item)
         {
-            //check if dedicated welcome page is exist
-            if (view()->exists($this->theme.'::frontend.welcome')) {
-                return view($this->theme.'::frontend.welcome');
-            } else {
-                return view('vaahcms::frontend.theme-welcome');
+            //if dedicated welcome files does not exist in activated theme
+            if (!view()->exists($this->theme.'::frontend.welcome')) {
+                $errors[] = 'Activated theme does not have any welcome (frontend/welcome.blade.php) file.';
+                $errors[] = 'Please read theme documentation.';
+                return view(config('vaahcms.backend_theme').'::frontend.theme-welcome')
+                    ->withErrors($errors);
             }
+
+            return view($this->theme.'::frontend.welcome');
         }
 
         $blade = $menu_item->content->theme->slug.'::'.$menu_item->content->template->file_path;
@@ -114,20 +141,19 @@ class WelcomeController extends Controller
         );
 
         $messages = [
-            'model_namespace.required' => "model_namespace is required. Eg: WebReinvent\VaahCms\Entities\User"
+            'model_namespace.required' => "model_namespace is required. Eg: WebReinvent\VaahCms\Models\User"
         ];
 
         $validator = \Validator::make( $request->all(), $rules, $messages);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
         $model = $request->model_namespace;
-
         $model = new $model();
 
         $table = $model->getTable();
@@ -154,10 +180,12 @@ class WelcomeController extends Controller
         foreach ($fillable as $column)
         {
             $type = \DB::getSchemaBuilder()->getColumnType($table, $column);
+
             $value = null;
 
             switch($type)
             {
+
                 case 'text':
                 $value = $faker->text(60);
                     break;
@@ -196,13 +224,29 @@ class WelcomeController extends Controller
                     $fill[$column] = $faker->lastName;
                     break;
 
+                case 'alternate_email':
                 case 'email':
                     $fill[$column] = $faker->email;
                     break;
 
+                case 'password':
+                    $fill[$column] = $faker->password;
+                break;
+
+                case 'gender':
+                    $fill[$column] = $faker->randomElement(['m','f','o']);
+                    break;
+
+
+                case 'timezone':
+                    $fill[$column] = $faker->timezone('US');
+                break;
+
+                case 'display_name':
                 case 'username':
                     $fill[$column] = $faker->userName;
                     break;
+
 
                 case 'slug':
                     if(isset($fill['name']) && !empty($fill['name']))

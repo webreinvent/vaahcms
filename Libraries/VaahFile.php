@@ -12,7 +12,7 @@ class VaahFile{
 
 
         if(!$request->hasFile('file')){
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'No file to upload.';
             return  $response;
         }
@@ -31,14 +31,14 @@ class VaahFile{
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
         if(!in_array($request->file_extension, $request->allowed_extensions))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'File extension '.$request->file_extension.' is not allowed to upload';
             return $response;
         }
@@ -54,8 +54,8 @@ class VaahFile{
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
-            $response['messages'][] = $e->getMessage();
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
             return $response;
         }
 
@@ -121,12 +121,12 @@ class VaahFile{
 
 
             $file = File::put($file_path, $content);
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data']['file'] = $file;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 

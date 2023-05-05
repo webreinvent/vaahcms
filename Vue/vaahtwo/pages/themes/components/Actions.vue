@@ -1,0 +1,81 @@
+<script  setup>
+import {ref, reactive, watch, onMounted} from 'vue';
+import { useThemeStore } from '../../../stores/store-themes'
+
+import Filters from './Filters.vue'
+
+const store = useThemeStore();
+
+onMounted(async () => {
+    store.getListSelectedMenu();
+    store.getListBulkMenu();
+});
+
+//--------selected_menu_state
+const selected_menu_state = ref();
+const toggleSelectedMenuState = (event) => {
+    selected_menu_state.value.toggle(event);
+};
+//--------/selected_menu_state
+
+//--------bulk_menu_state
+const bulk_menu_state = ref();
+const toggleBulkMenuState = (event) => {
+    bulk_menu_state.value.toggle(event);
+};
+//--------/bulk_menu_state
+</script>
+
+<template>
+    <div>
+
+        <!--actions-->
+        <div class="flex justify-content-between">
+
+            <!--left-->
+                <div class="col-4 mb-5">
+                    <Dropdown v-model="store.query.filter.status"
+                              data-testid="themes-actions"
+                              :options="store.status_list"
+                              optionLabel="name"
+                              optionValue="value"
+                              placeholder="Select a filter"
+                              v-if="store.hasPermission('can-update-theme')"
+                    />
+                </div>
+            <!--/left-->
+
+            <!--right-->
+
+                <div class="col-5 col-offset-3 mb-5">
+                    <div class="p-inputgroup">
+                        <InputText v-model="store.query.filter.q"
+                                   @keyup.enter="store.delayedSearch()"
+                                   @keyup.enter.native="store.delayedSearch()"
+                                   @keyup.13="store.delayedSearch()"
+                                   data-testid="themes-actions-search-input"
+                                   placeholder="Search"
+                                   class="p-inputtext-sm"
+                        />
+
+                        <Button class="p-button-sm"
+                                data-testid="themes-actions-search-button"
+                                @click="store.delayedSearch()"
+                                label="Filters"
+                        />
+
+                        <Button class="p-button-sm"
+                                icon="pi pi-filter-slash"
+                                data-testid="themes-actions-reset-filters"
+                                label="Reset"
+                                @click="store.resetQuery()"
+                        />
+                    </div>
+                </div>
+            <!--/right-->
+
+        </div>
+        <!--/actions-->
+
+    </div>
+</template>

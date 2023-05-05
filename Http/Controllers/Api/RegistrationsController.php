@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Role;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
 
 class RegistrationsController extends Controller
 {
@@ -47,12 +47,12 @@ class RegistrationsController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -64,8 +64,8 @@ class RegistrationsController extends Controller
             ->withTrashed()->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -81,8 +81,8 @@ class RegistrationsController extends Controller
         $item = Registration::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -94,19 +94,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function createUser(Request $request, $column, $value)
     {
-
         $item = Registration::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
         $response = Registration::createUser($item->id);
         return response()->json($response);
-
     }
-
-
 }

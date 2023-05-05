@@ -1,0 +1,152 @@
+@function valueFromArray($arr, $key) {
+
+  @each $value, $index in $arr {
+    @if($key == $index )
+    {
+      @return $value;
+    }
+  }
+  @return null;
+}
+
+@function customLightColor($color, $light: 96%){
+  @if(type-of($color) == 'color'){
+
+    $result: null;
+
+    //@debug "Color: #{$color} | Light: #{$light} | Lightness: #{lightness($color)}";
+
+    $result: change-color($color, $lightness: $light);
+
+    //@debug "result --> #{$result}";
+
+    @return $result;
+  }
+}
+
+@function customDarkColor($color, $dark: 29%){
+  @if(type-of($color) == 'color'){
+
+    $base-l: $dark;
+    $luminance: colorLuminance($color);
+    $luminance-delta: (0.53 - $luminance);
+    $target-l: round($base-l + ($luminance-delta * 53));
+
+    $result: change-color($color, $lightness: max($base-l, $target-l));
+
+    //@debug "result --> #{$result}";
+
+    @return $result;
+  }
+}
+
+
+@function powerNumber($number, $exp) {
+  $value: 1;
+
+  @if $exp > 0 {
+    @for $i from 1 through $exp {
+      $value: $value * $number;
+    }
+  }
+  @else if $exp < 0 {
+    @for $i from 1 through -$exp {
+      $value: divide($value, $number);
+    }
+  }
+
+  @return $value;
+}
+
+@function colorLuminance($color) {
+  @if type-of($color) != "color" {
+    @return 0.55;
+  }
+
+  $color-rgb: ("red": red($color), "green": green($color), "blue": blue($color));
+
+  @each $name, $value in $color-rgb {
+    $adjusted: 0;
+    $value: divide($value, 255);
+
+    @if $value < 0.03928 {
+      $value: divide($value, 12.92);
+    }
+    @else {
+      $value: divide($value + 0.055, 1.055);
+      $value: powerNumber($value, 2);
+    }
+
+    $color-rgb: map-merge($color-rgb, ($name: $value));
+  }
+
+  @return map-get($color-rgb, "red") * 0.2126 + map-get($color-rgb, "green") * 0.7152 + map-get($color-rgb, "blue") * 0.0722;
+}
+
+@function findColorInvert($color) {
+  @if colorLuminance($color) > 0.55 {
+    @return rgba(#000, 0.7);
+  }
+  @else {
+    @return #fff;
+  }
+}
+
+@function findLightColor($color, $l: 96%) {
+  @if type-of($color) == "color" {
+    $l: 96%;
+
+    @if lightness($color) > 96% {
+      $l: lightness($color);
+    }
+
+    @return change-color($color, $lightness: $l);
+  }
+
+  @return $background;
+}
+
+@function findDarkColor($color, $base-l: 29%) {
+  @if type-of($color) == "color" {
+    $luminance: colorLuminance($color);
+    $luminance-delta: 0.53 - $luminance;
+    $target-l: round($base-l + $luminance-delta * 53);
+
+    @return change-color($color, $lightness: max($base-l, $target-l));
+  }
+
+  @return $text-strong;
+}
+
+// Custom divide function by @mdo from https://github.com/twbs/bootstrap/pull/34245
+// Replaces old slash division deprecated in Dart Sass
+@function divide($dividend, $divisor, $precision: 10) {
+  $sign: if($dividend > 0 and $divisor > 0, 1, -1);
+  $dividend: abs($dividend);
+  $divisor: abs($divisor);
+  $quotient: 0;
+  $remainder: $dividend;
+
+  @if $dividend == 0 {
+    @return 0;
+  }
+
+  @if $divisor == 0 {
+    @error "Cannot divide by 0";
+  }
+
+  @if $divisor == 1 {
+    @return $dividend;
+  }
+
+  @while $remainder >= $divisor {
+    $quotient: $quotient + 1;
+    $remainder: $remainder - $divisor;
+  }
+
+  @if $remainder > 0 and $precision > 0 {
+    $remainder: divide($remainder * 10, $divisor, $precision - 1) * 0.1;
+  }
+
+  @return ($quotient + $remainder) * $sign;
+}

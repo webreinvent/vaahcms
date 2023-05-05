@@ -65,7 +65,7 @@ function vh_get_theme_setting_value($settings, $key)
 //-----------------------------------------------------------------------------------
 function vh_get_active_theme_namespace()
 {
-    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+    $theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')->first();
     if($theme)
     {
         return $theme->slug."::";
@@ -113,18 +113,33 @@ function vh_get_vaahcms_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_from_slug($theme_slug=null)
 {
+    $theme_slug = config('vaahcms.frontend_theme');
 
-    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
+    if(!$theme_slug)
+    {
+        $theme_slug = config('vaahcms.backend_theme');
+    }
+
+    if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isConnected())
+    {
+        return $theme_slug;
+    }
+
+    if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isTableExist('vh_themes'))
+    {
+        return $theme_slug;
+    }
+
+    $db_theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')
         ->whereNotNull('is_default')
         ->first();
 
-
-    if(!$theme)
+    if(!$db_theme)
     {
-        return vh_get_vaahcms_theme();
+        return $theme_slug;
     }
 
-    return $theme;
+    return $db_theme->slug;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_theme_id($theme_slug=null)
@@ -181,9 +196,9 @@ function vh_get_page_templates($theme_slug=null)
 {
     if(is_null($theme_slug))
     {
-        $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+        $theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')->first();
     } else{
-        $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
+        $theme = \WebReinvent\VaahCms\Models\Theme::where('slug', $theme_slug)->first();
     }
 
     $path = vh_get_theme_view_path($theme->name)."/page-templates";
@@ -209,7 +224,7 @@ function vh_block($block_slug = null)
 function vh_location_blocks($location_slug = null)
 {
 
-    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData(
+    $data = \WebReinvent\VaahCms\Models\ThemeLocation::getLocationData(
         $location_slug,
         'true',
     null,'block');
@@ -220,7 +235,7 @@ function vh_location_blocks($location_slug = null)
 function vh_location($location_slug, $html=false, $type='bulma')
 {
 
-    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug, $html, $type,
+    $data = \WebReinvent\VaahCms\Models\ThemeLocation::getLocationData($location_slug, $html, $type,
         'menu');
 
 

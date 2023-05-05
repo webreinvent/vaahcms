@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Permission;
-use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Role;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\User;
+use WebReinvent\VaahCms\Models\Permission;
 
 class PermissionsController extends Controller
 {
@@ -40,12 +39,12 @@ class PermissionsController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -56,8 +55,8 @@ class PermissionsController extends Controller
         $item = Permission::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
@@ -86,7 +85,7 @@ class PermissionsController extends Controller
         }
 
         $response['data']['roles'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }
@@ -98,8 +97,8 @@ class PermissionsController extends Controller
         $item = Permission::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
@@ -130,7 +129,7 @@ class PermissionsController extends Controller
         }
 
         $response['data']['users'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }

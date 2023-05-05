@@ -13,7 +13,8 @@ class CreateVhPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_permissions', function (Blueprint $table) {
+        if (!Schema::hasTable('vh_permissions')) {
+            Schema::create('vh_permissions', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->uuid('uuid')->nullable();
             $table->string('name',150)->nullable();
@@ -38,6 +39,7 @@ class CreateVhPermissionsTable extends Migration
             $table->softDeletes();
             $table->index(['created_at', 'updated_at', 'deleted_at']);
         });
+        }
     }
 
     /**

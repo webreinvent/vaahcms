@@ -2,17 +2,12 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
-use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\Notified;
-use WebReinvent\VaahCms\Entities\Theme;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Notified;
+use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller
 {
@@ -74,7 +69,7 @@ class JsonController extends Controller
         //-----Vue Errors----------------------
         /*
          * To Set Errors:
-         * session(['vue_errors'=>$response['errors']]);
+         * session(['vue_errors'=>$response['messages']]);
          */
         $data['vue_errors'] = null;
         $vue_errors = session()->get('vue_errors');
@@ -105,6 +100,7 @@ class JsonController extends Controller
             $data['auth_user'] = [
                 'name' => \Auth::user()->name,
                 'email' => \Auth::user()->email,
+                'avatar' => \Auth::user()->avatar,
             ];
 
             //-----Vue Backend Notices----------------------
@@ -126,7 +122,7 @@ class JsonController extends Controller
         $data['backend_logo_url'] = vh_backend_logo();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -145,9 +141,36 @@ class JsonController extends Controller
         if(\Auth::check())
         {
             $is_logged = true;
+
+            $user = auth()->user();
+
+            if($user->security_code)
+            {
+
+                if($user->security_code_expired_at->lt(now()))
+                {
+                    $is_logged = false;
+
+                }elseif(config('settings.global.mfa_status') !== 'disable'){
+
+
+                    if(config('settings.global.mfa_status') == 'all-users'){
+
+                        $is_logged = false;
+
+                    }elseif(config('settings.global.mfa_status') == 'user-will-have-option'
+                        && is_array($user->mfa_methods) && count($user->mfa_methods) >= 0){
+
+                        $is_logged = false;
+
+                    }
+
+                }
+
+            }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['is_logged_in'] = $is_logged;
 
         return response()->json($response);
@@ -190,12 +213,12 @@ class JsonController extends Controller
 
         if(!\Auth::check())
         {
-            $response['status'] = 'failed';
-            $response['errors'] = [];
+            $response['success'] = false;
+            $response['errors'] = ["You're not logged in."];
             return response()->json($response);
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = \Auth::user()->permissions(true);
 
         return response()->json($response);
@@ -206,10 +229,10 @@ class JsonController extends Controller
     {
 
         $locations = [
+            'sidebar_menu'=>'sidebarMenu',
             'top_left_menu'=>'topLeftMenu',
             'top_right_menu'=>'topRightMenu',
             'top_right_user_menu'=>'topRightUserMenu',
-            'sidebar_menu'=>'sidebarMenu',
         ];
 
         $views = [];

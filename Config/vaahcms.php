@@ -4,16 +4,18 @@
  * Your package config would go here
  */
 
+
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '1.7.17',
+    'version' => '2.0.0',
+    'php_version_required' => '8.1',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
     'documentation' => 'https://docs.vaah.dev/vaahcms',
-    'backend_theme' => 'vaahone',
-    'frontend_theme' => 'vaahone',
-    'frontend_theme_template' => 'vaahone',
+    'backend_theme' => 'vaahtwo',
+    'frontend_theme' => 'vaahcms',
+    'frontend_theme_template' => 'welcome',
     'root_folder' => 'VaahCms',
     'allowed_file_upload_size' => '50',
     'root_folder_path' => base_path().'/VaahCms',
@@ -27,7 +29,7 @@ $settings =  [
     'backend_logo_url' => 'vaahcms/backend/vaahone/images/vaahcms-logo.svg', // vh_backend_logo()
     'per_page' => 20,
     'minified' => 0,
-    'api_route' => 'https://api.vaah.dev/cms/',
+    'api_route' => 'https://api.vaah.dev/cms/v2/',
     'debug' => 1,
     'uploads' => [
         'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
@@ -39,6 +41,4 @@ $settings =  [
         // you can use relative or absolute url
     ]
 ];
-
-
 return $settings;

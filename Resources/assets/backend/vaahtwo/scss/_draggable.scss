@@ -1,0 +1,21 @@
+.draggable-menu{
+    ul{
+        list-style-type: disc;
+        padding-left: 20px;
+        &:not(:first-child){
+            margin: 0 0px 5px 10px;
+        }
+    }
+    .drag-list{
+        position: relative;
+        &:before{
+            position: absolute;
+            height: 100%;
+            width: 4px;
+            left: 6px;
+            top: 0px;
+            content: "";
+            border-left: 2px dotted black;
+        }
+    }
+}

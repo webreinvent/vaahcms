@@ -2,7 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
 use WebReinvent\VaahCms\Http\Middleware\IsHttps;
@@ -239,8 +239,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     private function registerRoutes() {
 
-        include __DIR__.'/Routes/backend.php';
         include __DIR__.'/Routes/frontend.php';
+        include __DIR__.'/Routes/backend.php';
         include __DIR__.'/Routes/api.php';
 
     }

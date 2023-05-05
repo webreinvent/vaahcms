@@ -20,10 +20,10 @@ Route::group(
         Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
-        Route::post( '/sendResetCode/post', 'PublicController@postSendResetCode' )
+        Route::post( '/auth/sendResetCode/post', 'PublicController@postSendResetCode' )
             ->name( 'vh.backend.sendResetCode.post' );
         //------------------------------------------------
-        Route::post( '/resetPassword/post', 'PublicController@postResetPassword' )
+        Route::post( '/auth/resetPassword/post', 'PublicController@postResetPassword' )
             ->name( 'vh.backend.resetPassword.post' );
         //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
@@ -31,6 +31,19 @@ Route::group(
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //-----------------------------------------------
+        Route::post( '/verify/post', 'PublicController@postVerify' )
+            ->name( 'vh.backend.verify.post' );
+        //------------------------------------------------
+        Route::post( '/verify/security/otp', 'PublicController@verifySecurityOtp' )
+            ->name( 'vh.backend.verify.security.otp' );
+        //------------------------------------------------
+        Route::post( '/resend/security/otp', 'PublicController@resendSecurityOtp' )
+            ->name( 'vh.backend.resend.security.otp' );
+
+        Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
+            ->name( 'vh.faker' );
+
+        //------------------------------------------------
 
         Route::group(
             [
@@ -39,7 +52,7 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::post( '/assets', 'JsonController@getPublicAssets' )
+                Route::get( '/assets', 'JsonController@getPublicAssets' )
                     ->name( 'vh.backend.json.assets' );
                 //------------------------------------------------
                 Route::post( '/is-logged-in', 'JsonController@isLoggedIn' )
@@ -81,7 +94,10 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/notices/mark-as-read', 'Settings\NotificationsController@markAsRead' )
+        Route::get( '/vaahextend/ui', 'DashboardController@getVaahExtendUi' )
+            ->name( 'vh.backend.vaahextend.ui' );
+        //------------------------------------------------
+        Route::post( '/notices/mark-as-read', 'Backend\Settings\NotificationsController@markAsRead' )
             ->name( 'vh.backend.notices.mark_as_read' );
         //------------------------------------------------
 
@@ -119,7 +135,11 @@ Route::group(
         Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
-
+        //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+
+

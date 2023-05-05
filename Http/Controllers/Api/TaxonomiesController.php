@@ -2,16 +2,15 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Role;
-use WebReinvent\VaahCms\Entities\Taxonomy;
-use WebReinvent\VaahCms\Entities\TaxonomyType;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\Taxonomy;
+use WebReinvent\VaahCms\Models\TaxonomyType;
+use WebReinvent\VaahCms\Models\User;
+use WebReinvent\VaahCms\Models\Role;
 
 class TaxonomiesController extends Controller
 {
@@ -28,7 +27,7 @@ class TaxonomiesController extends Controller
             $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = "Type not found.";
                 return $response;
             }
@@ -40,7 +39,7 @@ class TaxonomiesController extends Controller
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = "Parent not found.";
                     return $response;
                 }
@@ -75,13 +74,13 @@ class TaxonomiesController extends Controller
 
         $item = $item->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Taxonomy not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors'] = 'Taxonomy not found.';
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -91,9 +90,9 @@ class TaxonomiesController extends Controller
 
         $item = Taxonomy::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -103,7 +102,7 @@ class TaxonomiesController extends Controller
             $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = "Type slug not found.";
                 return $response;
             }
@@ -115,7 +114,7 @@ class TaxonomiesController extends Controller
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = "Parent slug not found.";
                     return $response;
                 }
@@ -139,9 +138,9 @@ class TaxonomiesController extends Controller
 
         $item = Taxonomy::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 

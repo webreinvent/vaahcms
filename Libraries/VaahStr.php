@@ -3,7 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 use Dotenv\Dotenv;
@@ -23,7 +23,6 @@ class VaahStr{
                 ->first();
             $string = static::translateDynamicStringsOfUser($string, $user);
         }
-
 
         $string = static::translateDynamicStringsOfParams($string, $params);
         $string = static::translateDynamicStringsOfEnv($string);
@@ -93,6 +92,8 @@ class VaahStr{
 
         $map = [];
 
+
+
         if(count($matches[1]) > 0)
         {
             foreach ($matches[1] as $item)
@@ -128,15 +129,16 @@ class VaahStr{
                         );
                         break;
                     default:
-                        $route = route($route_name,$param);
+                        $route = route($route_name,$params
+                        && isset($params['route']) ? $params['route'] : [] );
                         break;
                 }
 
                 $map['#!ROUTE:'.$item.'!#'] = $route;
 
-
             }
         }
+
 
         $string = strtr($string, $map);
 
@@ -149,7 +151,7 @@ class VaahStr{
 
         $dynamic_strings = $extend->getPublicUrls();
 
-        if($dynamic_strings && $dynamic_strings['status'] === 'success'){
+        if(isset($dynamic_strings['success']) && $dynamic_strings['success']){
             foreach ($dynamic_strings['data'] as $dynamic_string){
 
                 if(count($params) > 0 && isset($params['has_replace_string'])

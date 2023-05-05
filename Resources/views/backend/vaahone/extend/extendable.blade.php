@@ -1,7 +1,7 @@
 <?php
 
 
-$modules = new \WebReinvent\VaahCms\Entities\Module();
+$modules = new \WebReinvent\VaahCms\Models\Module();
 
 $all = $modules->all();
 

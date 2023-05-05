@@ -3,7 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 use Dotenv\Dotenv;
@@ -51,13 +51,13 @@ class VaahSetup{
 
             VaahFile::createFile(base_path('/'), $file_name, $html);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -172,12 +172,12 @@ class VaahSetup{
 
             VaahFile::createJsonFileFromArray($data, 'vaahcms.json');
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -422,13 +422,13 @@ class VaahSetup{
         try{
             \File::copy(base_path('.env.example'),base_path('.env'));
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
 
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -462,7 +462,7 @@ class VaahSetup{
         $path = base_path('/vaahcms.json');
 
         if (!File::exists($path)) {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             if(env('APP_DEBUG'))
             {
@@ -478,7 +478,7 @@ class VaahSetup{
 
         if(!isset($config['environments']))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             if(env('APP_DEBUG'))
             {
@@ -503,8 +503,8 @@ class VaahSetup{
             {
                 $duplicate_urls = implode( ', ', $duplicates);
 
-                $response['status'] = 'failed';
-                $response['errors'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
+                $response['success'] = false;
+                $response['messages'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
                 if(env('APP_DEBUG'))
                 {
                     $response['hint'][] = 'APP URL already exist in vaahcms.json';
@@ -517,7 +517,7 @@ class VaahSetup{
             {
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = 'APP_URL ('.$environment->app_url.') already exist in vaahcms.json for '.$environment->env_file.' file.';
                     if(env('APP_DEBUG'))
                     {
@@ -528,7 +528,7 @@ class VaahSetup{
             }*/
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
 
         return $response;

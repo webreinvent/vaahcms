@@ -21,14 +21,14 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/general',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'GeneralController@getAssets' )
+        Route::get( '/assets', 'GeneralController@getAssets' )
             ->name( 'vh.backend.settings.general.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'GeneralController@getList' )
+        Route::get( '/list', 'GeneralController@getList' )
             ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
         Route::post( '/store/site/settings', 'GeneralController@storeSiteSettings' )
@@ -39,6 +39,8 @@ Route::group(
         //------------------------------------------------
         Route::post( '/store/meta/tags', 'GeneralController@storeMetaTags' )
             ->name( 'vh.backend.settings.general.store.meta.tags' );
+        Route::post( '/delete/meta/tag', 'GeneralController@deleteMetaTags' )
+            ->name( 'vh.backend.settings.general.delete.meta.tags' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -49,14 +51,14 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/env',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'EnvController@getAssets' )
+        Route::get( '/assets', 'EnvController@getAssets' )
             ->name( 'vh.backend.settings.env.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'EnvController@getList' )
+        Route::get( '/list', 'EnvController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
         Route::get( '/download-file/{file_name}', 'EnvController@downloadFile')
@@ -74,14 +76,14 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/user-setting',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'UserSettingController@getAssets' )
+        Route::get( '/assets', 'UserSettingController@getAssets' )
             ->name( 'vh.backend.settings.env.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'UserSettingController@getList' )
+        Route::get( '/list', 'UserSettingController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
         Route::post( '/field/store', 'UserSettingController@storeField' )
@@ -99,12 +101,12 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/localization',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //---------------------------------------------------------
         Route::get('/assets', 'LocalizationController@getAssets')
-            ->name('backend.vaah.localization.assets');
+            ->name('vh.backend.settings.localization.assets');
         //---------------------------------------------------------
         Route::get('/list', 'LocalizationController@getList')
             ->name('backend.vaah.localization.list');
@@ -128,11 +130,11 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/notifications',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'NotificationsController@getAssets' )
+        Route::get( '/assets', 'NotificationsController@getAssets' )
             ->name( 'vh.backend.settings.notifications.assets' );
         //------------------------------------------------
         Route::post( '/list', 'NotificationsController@getList' )
@@ -203,7 +205,7 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/update',
         'middleware' => ['web', 'app.is.installed', 'has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------

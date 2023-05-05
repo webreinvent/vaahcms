@@ -5,7 +5,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class UiController extends Controller
 {
@@ -23,7 +23,12 @@ class UiController extends Controller
     {
         return view($this->theme.'.pages.ui.index');
     }
-
+    //----------------------------------------------------------
+    public function v2ui()
+    {
+        $this->theme = 'vaahcms::backend.vaahtwo';
+        return view($this->theme.'.pages.ui');
+    }
     //----------------------------------------------------------
 
 

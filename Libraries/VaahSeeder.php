@@ -3,7 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Models\Permission;
 
 
 class VaahSeeder{
@@ -160,6 +160,7 @@ class VaahSeeder{
 
             $record = DB::table($table)
                 ->where('slug', $item['slug'])
+                ->where('vh_taxonomy_type_id', $item['vh_taxonomy_type_id'])
                 ->first();
 
             if(isset($item['meta']))

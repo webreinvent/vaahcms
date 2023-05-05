@@ -3,7 +3,6 @@
 namespace WebReinvent\VaahCms\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -18,7 +17,7 @@ class Notice extends Notification
      *
      * @return void
      */
-    public function __construct(\WebReinvent\VaahCms\Entities\Notification $notification, $params )
+    public function __construct(\WebReinvent\VaahCms\Models\Notification $notification, $params )
     {
         $this->notify = $notification;
         $this->params = $params;

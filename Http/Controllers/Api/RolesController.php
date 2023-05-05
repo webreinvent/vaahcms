@@ -2,15 +2,12 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Permission;
-use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Role;
-use WebReinvent\VaahCms\Entities\User;
+
+use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
+use WebReinvent\VaahCms\Models\Permission;
 
 class RolesController extends Controller
 {
@@ -40,8 +37,8 @@ class RolesController extends Controller
         $item = Role::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -60,8 +57,8 @@ class RolesController extends Controller
         $item = Role::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -84,12 +81,12 @@ class RolesController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -100,8 +97,8 @@ class RolesController extends Controller
         $item = Role::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -129,7 +126,7 @@ class RolesController extends Controller
         }
 
         $response['data']['users'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }
@@ -140,9 +137,9 @@ class RolesController extends Controller
 
         $item = Role::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -170,7 +167,7 @@ class RolesController extends Controller
         }
 
         $response['data']['permissions'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }

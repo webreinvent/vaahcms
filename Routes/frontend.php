@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::group(
     [
         'prefix'     => '/',
@@ -49,17 +48,32 @@ Route::group(
 
 
 
+
 Route::group(
     [
         'prefix'     => 'media',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\backend'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/download/{slug?}', 'MediaController@itemDownload' )
+            ->name( 'vh.frontend.media.download' );
+        //------------------------------------------------
+    });
+
+
+Route::group(
+    [
         'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/download/{slug?}', 'MediaController@upload' )
-            ->name( 'vh.frontend.media.download' );
+        Route::get('/verify-email/{activation_code}', 'PublicController@verifyEmail')
+            ->name('vh.verification');
         //------------------------------------------------
     });
+
 
 
