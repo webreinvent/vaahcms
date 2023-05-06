@@ -121,15 +121,19 @@ onMounted(async () => {
 
 
             <Message severity="error" icon="null" :closable="false">
-                <p>You are going to <b>RESET</b> the application. This will remove all the data of the application.</p>
-                <p>After reset you <b>CANNOT</b> be restored data! Are you <b>ABSOLUTELY</b> sure?</p>
+                <p>You are going to <b>RESET</b> the application.
+                    This will remove all the data of the application.</p>
+                <p>After reset you <b>CANNOT</b> be restored data!
+                    Are you <b>ABSOLUTELY</b> sure?</p>
             </Message>
 
             <div>
-                <p>This action can lead to data loss. To prevent accidental actions we ask you to confirm your intention.</p>
+                <p>This action can lead to data loss.
+                    To prevent accidental actions we ask you to confirm your intention.</p>
 
                 <p class="has-margin-bottom-5">
-                    Please type <b>RESET</b> to proceed and click Confirm button or close this modal to cancel.
+                    Please type <b>RESET</b> to proceed and click
+                    Confirm button or close this modal to cancel.
                 </p>
             </div>
 
