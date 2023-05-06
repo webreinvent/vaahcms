@@ -17,7 +17,9 @@ onMounted(async () => {
 </script>
 <template>
     <div v-if="store.assets">
-        <Message severity="info" :closable="true" class="is-small">This step will install dependencies.</Message>
+        <Message severity="info" :closable="true" class="is-small">
+            This step will install dependencies.
+        </Message>
         <div class="grid" v-if="store.config.dependencies">
             <div class="col-12 md:col-6"
                  v-for="item in store.config.dependencies">
@@ -63,11 +65,13 @@ onMounted(async () => {
                 <div class="my-3">
                     <Button v-if="store.config.count_installed_progress === 100"
                             icon="pi pi-check"
+                            disabled
                             @click="store.installDependencies()"
                             :loading="store.is_btn_loading_dependency"
                             label="Download & install Dependencies"
                             class="p-button-success p-button-sm mr-2 is-small"/>
                     <Button v-else icon="pi pi-download"
+                            disabled
                             @click="store.installDependencies()"
                             :loading="store.is_btn_loading_dependency"
                             label="Download & install Dependencies"
