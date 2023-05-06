@@ -125,7 +125,7 @@ export const useSetupStore = defineStore({
                 this.route = route;
                 this.assets_is_fetching = true;
             }
-            
+
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
