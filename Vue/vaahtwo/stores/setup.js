@@ -152,9 +152,7 @@ export const useSetupStore = defineStore({
                     this.assets_is_fetching = true;
                     this.getAssets();
                 }
-
-                console.log(this.route.name);
-
+                
                 this.config.env.app_url = this.assets.app_url;
 
             }

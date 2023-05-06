@@ -18,6 +18,21 @@ use Illuminate\Http\Request;
 Route::group(
     [
         'prefix'     => 'api',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Api',
+    ],
+    function () {
+
+        Route::post( '/signin', 'AuthController@postSignIn' );
+        //------------------------------------------------
+        Route::post( '/signup', 'AuthController@postSignUp' );
+        //------------------------------------------------
+        Route::any( '/disable/mfa/{api_token}', 'PublicController@disableMfa' )
+            ->name( 'vh.backend.disable.mfa' );
+    });
+
+Route::group(
+    [
+        'prefix'     => 'api',
         'middleware' => ['auth:api'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Api',
     ],

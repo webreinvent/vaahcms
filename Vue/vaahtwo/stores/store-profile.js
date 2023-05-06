@@ -72,7 +72,7 @@ export const useProfileStore = defineStore({
             };
 
             await vaah().ajax(
-                this.ajax_url+'/profile',
+                this.ajax_url,
                 this.afterGetProfile,
                 options
             );

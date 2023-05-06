@@ -7,62 +7,48 @@
 
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
-
-> **In Progress:**  Migrating to **Laravel 9**, **Vue 3** Composition API and **PrimeVue UI** Components.
-
 <br/>
 
-**VaahCMS** is built  with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` which follows **Hierarchical Model View Controller (HMVC)** structure for its **Modules** & **Themes**.
+**VaahCMS** is built  with `Laravel 10`, `Vue 3`, `Pinia`, and `PrimeVue` which follows **Hierarchical Model View Controller (HMVC)** architectural pattern which supports multiple **Modules** and **Themes**. Each module and theme can be setup with just `blade` files support or can have its own frontend JavaScript library e.g. `Vue` or `React`.
+
+- [Introduction](https://vaah.dev/cms)
+- [Features](https://vaah.dev/cms/features)
+- [Documentation](https://docs.vaah.dev/vaahcms-2/)
 
 ## Quick Start
 ```shell
 npx vaah cms:install
 ```
 
----
-
-<div align="center">
-  <h3>
-    <a href="https://vaah.dev/cms">
-      Website
-    </a>
-    <span> | </span>
-    <a href="https://docs.vaah.dev/vaahcms">
-      Documentation
-    </a>
-  </h3>
-</div>
-
----
-
-<br/>
-
-## How is VaahCMS different?
-
-- It's purposed to develop large applications
-
-- Structured (**HMVC**) based modules & themes
-
-- Isolated Vue Apps for each Module & Theme
-
-- Shipped with **headless** CMS
-  
-- Encourages to use latest technologies like `Vue`, `Vuex`, `Buefy`
-
-- CMS Module is inspired from the simplicity of WordPress
-
 <br/>
 
 ## Why VaahCMS?
 
-Well, to answer that, ask a question to yourself: Do you want to develop an enterprise application with content management that doesn't come in your way? If answer is yes, VaahCMS is for you.
+How many times have you used a CMS to build website and Laravel for application development? **Everytime, isn't it?**
+
+Well, not next time. Use `VaahCMS` in your next project and develop applications with content management that doesn't come in your way.
+
+## How is VaahCMS different?
+
+- Its purpose is to develop enterprise level software applications which are `manageable`,  `extendable`, `flexible`, `upgradable`, & `maintainable` in long run
+
+- (**HMVC Architectural Pattern**) Structured modules & themes
+
+- Isolated `Vue` or `React` App for each Module & Theme
+
+- Shipped with **headless** CMS with build in API, so you can plug and play with any frontend framework `like Nuxt` or `Next`.
+
+- `CMS Module` is inspired from the simplicity of WordPress
+
+<br/>
+
 
 ## Join us
 - Contribute and raise issues at: [GitHub](https://github.com/webreinvent/vaahcms)
 - Join us at: [Slack](https://join.slack.com/t/vaah/shared_invite/zt-wgvx75rr-tuAhGtjRweCR~DEVSTFcSQ)
 - Learn more at: [VaahCMS Official Website](https://vaah.dev/cms)
 
-We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.  
+We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.
 
 <br/>
 
@@ -70,7 +56,7 @@ We're actively seeking contributors for our [vaahcms's documentation](https://gi
 
 Please consider starring the project to show your :heart: and support.
 
-[WebReinvent](https://webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
+[WebReinvent](https://webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [at github](https://github.com/webreinvent).
 
 
 <br/>
@@ -83,6 +69,3 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/webreinvent/vaahcms?style=for-the-badge
-
-[synk-image]: https://img.shields.io/snyk/vulnerabilities/github/webreinvent/vaahcms?label=Synk%20Vulnerabilities&style=for-the-badge
-[synk-url]: https://snyk.io/test/github/webreinvent/vaahcms?targetFile=package.json "synk"

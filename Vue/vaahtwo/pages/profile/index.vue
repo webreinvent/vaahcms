@@ -75,7 +75,7 @@ onMounted(async () => {
         <div class="col-5 p-fluid mt-3">
             <Card class="form">
                 <template #content v-if="store.profile">
-                    <div class="p-float-label">
+                    <div class="p-float-label mt-3">
                         <InputText id="email"
                                    data-testid="profile-email"
                                    v-model="store.profile.email"/>
@@ -197,12 +197,12 @@ onMounted(async () => {
                         <label for="alternate-email">Alternate Email</label>
                     </span>
                     <span class="p-float-label">
-                        <Calendar inputId="dateformat"
+                        <Calendar inputId="date-dob"
                                   v-model="store.profile.birth"
                                   dateFormat="mm-dd-yy"
                                   data-testid="profile-dob"
                                   class="w-full"/>
-                        <label for="dateformat">Date of birth</label>
+                        <label for="date-dob">Date of birth</label>
                     </span>
                     <span class="p-float-label">
                         <Editor v-model="store.profile.bio"
@@ -232,10 +232,12 @@ onMounted(async () => {
                          v-for="method in store.mfa_methods">
                         <Checkbox class="flex"
                                   :data-testid="'profile-'+method"
-                                  inputId="mfa-method"
+                                  :inputId="'mfa-method_'+method"
                                   v-model="store.profile.mfa_methods"
                                   :value="method" />
-                        <label class="ml-2" for="mfa-method">{{ useVaah.toLabel(method) }}</label>
+                        <label class="ml-2" :for="'mfa-method_'+method">
+                            {{ useVaah.toLabel(method) }}
+                        </label>
                     </div>
                 </template>
                 <template #footer>
