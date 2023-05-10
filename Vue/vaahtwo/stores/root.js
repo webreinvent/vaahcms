@@ -73,6 +73,18 @@ export const useRootStore = defineStore({
             {
                 this.assets = data;
 
+                if(this.assets && this.assets.extended_views
+                    && this.assets.extended_views.sidebar_menu
+                    && this.assets.extended_views.sidebar_menu.success){
+
+                    for (const [key, module] of Object.entries(this.assets.extended_views.sidebar_menu.success)) {
+                        this.setMenuItems(module);
+                    }
+
+                }
+
+
+
             }
         },
 
@@ -254,6 +266,21 @@ export const useRootStore = defineStore({
             }
 
             this.$router.replace({query: null})
+        },
+        //-----------------------------------------------------------------------
+        setMenuItems(module){
+
+            let self = this;
+
+            module.forEach( (menu,m_key) => {
+                if(menu['child']){
+                    Object.assign(menu,
+                        {items: menu['child']})
+
+                    self.setMenuItems(menu['items']);
+                }
+
+            })
         }
     }
 })
