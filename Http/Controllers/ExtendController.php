@@ -75,8 +75,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-dashboard'))
         {
             $list[0] = [
-                'url' => self::$link,
-                'icon' => 'pi pi-compass',
+                'link' => self::$link,
+                'icon' => 'compass',
                 'label'=> 'Dashboard',
             ];
         }
@@ -88,7 +88,7 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1] = [
-                'icon' => 'pi pi-user',
+                'icon' => 'user',
                 'label'=> 'Users & Access',
             ];
         }
@@ -96,8 +96,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $list[1]['items'][] =  [
-                'url' => self::$link."/registrations/",
-                'icon' => 'pi pi-user-plus',
+                'link' => self::$link."/registrations/",
+                'icon' => 'user-plus',
                 'label'=> 'Registrations',
             ];
         }
@@ -105,8 +105,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $list[1]['items'][] =  [
-                'url' => self::$link."/users/",
-                'icon' => 'pi pi-users',
+                'link' => self::$link."/users/",
+                'icon' => 'users',
                 'label'=> 'Users',
             ];
         }
@@ -114,8 +114,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $list[1]['items'][] =  [
-                'url' => self::$link."/roles/",
-                'icon' => 'pi pi-tag',
+                'link' => self::$link."/roles/",
+                'icon' => 'tag',
                 'label'=> 'Roles',
             ];
         }
@@ -124,8 +124,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1]['items'][] =  [
-                'url' =>  self::$link."/permissions/",
-                'icon' => 'pi pi-key',
+                'link' =>  self::$link."/permissions/",
+                'icon' => 'key',
                 'label'=> 'Permissions',
             ];
         }
@@ -143,8 +143,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-module-section'))
         {
             $list[2]['items'][] =  [
-                'url' => self::$link."/modules/",
-                'icon' => 'pi pi-box',
+                'link' => self::$link."/modules/",
+                'icon' => 'box',
                 'label'=> 'Modules',
             ];
         }
@@ -152,8 +152,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $list[2]['items'][] =  [
-                'url' => self::$link."/themes/",
-                'icon' => 'pi pi-palette',
+                'link' => self::$link."/themes/",
+                'icon' => 'palette',
                 'label'=> 'Themes',
             ];
         }
@@ -162,42 +162,42 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
             $list[3] = [
-                'icon'=> 'pi pi-cog',
+                'icon'=> 'cog',
                 'label'=> 'Settings',
                 'items' => [
                     [
-                        'url' => self::$link."/settings/general",
-                        'icon' => 'pi pi-cog',
+                        'link' => self::$link."/settings/general",
+                        'icon' => 'cog',
                         'label'=> 'General',
                     ],
                     [
-                        'url' => self::$link."/settings/user-settings",
-                        'icon' => 'pi pi-user',
+                        'link' => self::$link."/settings/user-settings",
+                        'icon' => 'user',
                         'label'=> 'User Settings',
                     ],
                     [
-                        'url' => self::$link."/settings/env-variables",
-                        'icon' => 'pi pi-code',
+                        'link' => self::$link."/settings/env-variables",
+                        'icon' => 'code',
                         'label'=> 'Env Variables',
                     ],
                     [
-                        'url' => self::$link."/settings/localization",
-                        'icon' => 'pi pi-book',
+                        'link' => self::$link."/settings/localization",
+                        'icon' => 'book',
                         'label'=> 'Localizations',
                     ],
                     [
-                        'url' => self::$link."/settings/notifications",
-                        'icon' => 'pi pi-bell',
+                        'link' => self::$link."/settings/notifications",
+                        'icon' => 'bell',
                         'label'=> 'Notifications',
                     ],
                     [
-                        'url' => self::$link."/settings/update",
-                        'icon' => 'pi pi-download',
+                        'link' => self::$link."/settings/update",
+                        'icon' => 'download',
                         'label'=> 'Update',
                     ],
                     [
-                        'url' => self::$base."setup",
-                        'icon' => 'pi pi-refresh',
+                        'link' => self::$base."setup",
+                        'icon' => 'refresh',
                         'label'=> 'Reset',
                     ],
                 ]
@@ -207,29 +207,29 @@ class ExtendController extends Controller
         if (\Auth::user()->hasPermission('has-access-of-logs-section'))
         {
             $list[4] = [
-                'url' => self::$link."/advanced/logs",
-                'icon'=> 'pi pi-database',
+                'link' => self::$link."/advanced/logs",
+                'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
         } else if (\Auth::user()->hasPermission('has-access-of-jobs-section'))
         {
             $list[4] = [
-                'url' => self::$link."/advanced/jobs",
-                'icon'=> 'pi pi-database',
+                'link' => self::$link."/advanced/jobs",
+                'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
         } else if (\Auth::user()->hasPermission('has-access-of-failedjobs-section'))
         {
             $list[4] = [
-                'url' => self::$link."/advanced/failedjobs",
-                'icon'=> 'pi pi-database',
+                'link' => self::$link."/advanced/failedjobs",
+                'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
         } else if (\Auth::user()->hasPermission('has-access-of-batches-section'))
         {
             $list[4] = [
-                'url' => self::$link."/advanced/batches",
-                'icon'=> 'pi pi-database',
+                'link' => self::$link."/advanced/batches",
+                'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
         }
@@ -238,17 +238,17 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
         {
             $list[5] = [
-                'icon'=> 'pi pi-images',
+                'icon'=> 'images',
                 'label'=> 'Manage',
                 'items' => [
                     [
-                        'url' => self::$link."/manage/media",
-                        'icon' => 'pi pi-file',
+                        'link' => self::$link."/manage/media",
+                        'icon' => 'file',
                         'label'=> 'Medias',
                     ],
                     [
-                        'url' => self::$link."/manage/taxonomies/",
-                        'icon' => 'pi pi-sitemap',
+                        'link' => self::$link."/manage/taxonomies/",
+                        'icon' => 'sitemap',
                         'label'=> 'Taxonomies',
                     ]
                 ]
