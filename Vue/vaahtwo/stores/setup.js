@@ -263,15 +263,12 @@ export const useSetupStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async afterConfirmReset () {
-            this.assets_is_fetching = true;
-            await this.getAssets();
-            await this.getStatus();
-
-            this.hideProgress();
-
+        async afterConfirmReset (data, res) {
             this.reset_confirm = false;
-            this.show_reset_modal = false;
+            if(data)
+            {
+                location.reload(true);
+            }
         },
         //---------------------------------------------------------------------
         loadConfigurations: function () {
