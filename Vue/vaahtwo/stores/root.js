@@ -19,18 +19,7 @@ export const useRootStore = defineStore({
         is_logged_in: false,
         is_installation_verified: false,
         permissions: null,
-        top_menu_items: [
-            {
-                to:'/vaah',
-                title:'',
-                icon:'pi pi-home'
-            },
-            {
-                to:'/vaah',
-                title:'',
-                icon:'pi pi-link'
-            }
-        ],
+        top_menu_items: [],
         top_dropdown_menu_items: [
             {
                 label:'Profile',
@@ -73,15 +62,25 @@ export const useRootStore = defineStore({
             {
                 this.assets = data;
 
-                if(this.assets && this.assets.extended_views
-                    && this.assets.extended_views.sidebar_menu
-                    && this.assets.extended_views.sidebar_menu.success){
+                if(this.assets){
 
-                    for (const [key, module] of Object.entries(this.assets.extended_views.sidebar_menu.success)) {
-                        this.setMenuItems(module);
+                    if(this.assets.extended_views
+                        && this.assets.extended_views.sidebar_menu
+                        && this.assets.extended_views.sidebar_menu.success){
+                        for (const [key, module] of Object.entries(this.assets.extended_views.sidebar_menu.success)) {
+                            this.setMenuItems(module);
+                        }
                     }
 
+                    if(this.assets.urls){
+                        this.setTopMenuItems();
+                    }
+
+
+
                 }
+
+
 
 
 
@@ -281,6 +280,25 @@ export const useRootStore = defineStore({
                 }
 
             })
+        },
+        //-----------------------------------------------------------------------
+        setTopMenuItems(){
+
+            this.top_menu_items = [
+                {
+                    label:'',
+                    url:this.assets.urls.dashboard,
+                    tooltip:'Dashboard',
+                    icon:'pi pi-home'
+                },
+                {
+                    label:'',
+                    url:this.assets.urls.public,
+                    tooltip:'Visit Site',
+                    target:'_blank',
+                    icon:'pi pi-external-link'
+                }
+            ]
         }
     }
 })

@@ -122,12 +122,12 @@ function vh_get_theme_from_slug($theme_slug=null)
 
     if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isConnected())
     {
-        return $theme_slug;
+        return null;
     }
 
     if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isTableExist('vh_themes'))
     {
-        return $theme_slug;
+        return null;
     }
 
     $db_theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')
@@ -136,10 +136,10 @@ function vh_get_theme_from_slug($theme_slug=null)
 
     if(!$db_theme)
     {
-        return $theme_slug;
+        return null;
     }
 
-    return $db_theme->slug;
+    return $db_theme;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_theme_id($theme_slug=null)
