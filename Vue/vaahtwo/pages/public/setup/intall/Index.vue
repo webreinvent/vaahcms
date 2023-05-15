@@ -13,7 +13,7 @@ const route = useRoute();
 
 
 onMounted(async () => {
-    await store.getAssets(route);
+    await store.getAssets();
     await store.getStatus();
 
 });
@@ -22,10 +22,12 @@ onMounted(async () => {
 <template>
     <div v-if="store && store.assets && root && root.assets" class="">
         <div class="text-center mb-4">
-            <img :src="root.assets.backend_logo_url" alt="" class="mb-2 mx-auto h-3rem">
+            <img v-if="root.assets.backend_logo_url"
+                 :src="root.assets.backend_logo_url" alt=""
+                 class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
-        <div class="container">
+        <div class="container vh-step">
             <Steps :model="store.install_items" class="my-4">
                 <template #item="{item}">
                     <router-link :to="item.to">
@@ -47,14 +49,7 @@ onMounted(async () => {
     </div>
 </template>
 
-<style lang="scss" scoped>
-.p-card .p-card-body {
-    padding: 0.85rem 1rem;
-}
-.p-button{
-    padding: 5px 8px;
-}
-.p-card .p-card-content {
-    padding: 1rem 0 0 0;
-}
+<style lang="scss">
+
+
 </style>

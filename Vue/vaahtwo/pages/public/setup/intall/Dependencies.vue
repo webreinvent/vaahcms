@@ -17,7 +17,9 @@ onMounted(async () => {
 </script>
 <template>
     <div v-if="store.assets">
-        <Message severity="info" :closable="true" class="is-small">This step will install dependencies.</Message>
+        <Message severity="info" :closable="true" class="is-small">
+            This step will install dependencies.
+        </Message>
         <div class="grid" v-if="store.config.dependencies">
             <div class="col-12 md:col-6"
                  v-for="item in store.config.dependencies">

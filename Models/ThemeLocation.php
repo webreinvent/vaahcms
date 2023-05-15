@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\Block;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
-use VaahCms\Modules\Cms\Models\Menu;
+use VaahCms\Modules\Cms\Entities\Menu;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 
 
@@ -159,7 +159,7 @@ class ThemeLocation extends Model {
     //---------------------------------------------------------------------------
     public static function getMenuLocation($location, $html, $type)
     {
-
+        
         $menus_count = Menu::where('vh_theme_location_id', $location->id)
             ->count();
 

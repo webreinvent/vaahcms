@@ -29,23 +29,36 @@ const expandNode = (item) => {
 </script>
 
 <template>
+
     <div class="sidebar"
          v-if="root && root.assets && root.assets.extended_views
           && root.assets.extended_views.sidebar_menu"
     >
-        <div v-for="items in root.assets.extended_views.sidebar_menu.success">
-            <PanelMenu :model="items">
+        <div v-for="menus in root.assets.extended_views.sidebar_menu.success">
+            <PanelMenu :model="menus">
                 <template #item="{item}">
 
                     <div class="p-panelmenu-header-content">
-                        <a :href="item.url"
+                        <a v-if="!item.items" :href="item.link"
                            class="p-panelmenu-header-action p-menuitem-link"
                            :data-testid="'sidebar-'+item.label"
                            tabindex="-1">
                             <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
 
                             </span>
-                            <span class="p-menuitem-icon" :class="item.icon">
+                            <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
+
+                            </span>
+                            <span class="p-menuitem-text">{{item.label}}</span>
+                        </a>
+                        <a v-else
+                           class="p-panelmenu-header-action p-menuitem-link"
+                           :data-testid="'sidebar-'+item.label"
+                           tabindex="-1">
+                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
+
+                            </span>
+                            <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
 
                             </span>
                             <span class="p-menuitem-text">{{item.label}}</span>

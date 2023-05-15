@@ -9,12 +9,14 @@ const confirm = useConfirm();
 import { useSetupStore } from '../../../../stores/setup'
 const store = useSetupStore();
 import { useRootStore } from '../../../../stores/root'
+import {useRoute} from "vue-router";
 const root = useRootStore();
+const route = useRoute();
 
 
 onMounted(async () => {
     document.title = 'Migrate - Setup';
-    await store.getAssets();
+    await store.getAssets(route);
 });
 
 
