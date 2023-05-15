@@ -33,7 +33,7 @@
 
 
                 <a href="https://docs.vaah.dev/vaahcms" target="_blank"
-                   class="p-button p-component p-button-sm no-underline" >
+                   class="p-button p-component p-button-sm no-underline mx-3" >
                     <span class="p-button-label">Documentation</span>
                 </a>
 
