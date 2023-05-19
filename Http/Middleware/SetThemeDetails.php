@@ -26,7 +26,7 @@ class SetThemeDetails
         if(app()->runningInConsole()){
             return $next($request);
         }
-        $theme_slug = vh_get_theme_from_slug();
+        $theme_slug = vh_get_default_theme_slug();
 
         \Session::put('theme_slug', $theme_slug);
 

@@ -123,6 +123,7 @@ export const useSetupStore = defineStore({
 
             if(route){
                 this.route = route;
+                this.assets_is_fetching = true;
             }
 
             if(this.assets_is_fetching === true){
@@ -147,12 +148,13 @@ export const useSetupStore = defineStore({
             {
                 this.assets = data;
 
-                if(this.route.name === 'setup.install.migrate' && !this.assets.env_file ){
+                if(this.route && this.route.name === 'setup.install.migrate'
+                    && !this.assets.env_file ){
 
                     this.assets_is_fetching = true;
                     this.getAssets();
                 }
-                
+
                 this.config.env.app_url = this.assets.app_url;
 
             }
@@ -261,14 +263,12 @@ export const useSetupStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async afterConfirmReset () {
-            await this.getAssets();
-            await this.getStatus();
-
-            this.hideProgress();
-
+        async afterConfirmReset (data, res) {
             this.reset_confirm = false;
-            this.show_reset_modal = false;
+            if(data)
+            {
+                location.reload(true);
+            }
         },
         //---------------------------------------------------------------------
         loadConfigurations: function () {
@@ -415,8 +415,7 @@ export const useSetupStore = defineStore({
             } else
             {
                 this.config.active_step = 1;
-                location.assign(this.base_url+"#/setup/install/migrate");
-                window.location.reload();
+                this.$router.push({name: 'setup.install.migrate'})
             }
 
         },

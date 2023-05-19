@@ -166,7 +166,7 @@ onMounted(async () => {
                         name="account-back_btn"
                         data-testid="account-back_btn"
                         class="p-button-sm w-auto"
-                        :to="{name: 'setup.install.dependencies'}"></Button>
+                        @click="$router.push('/setup/install/dependencies')"></Button>
                     <Button
                         v-if="store.config.is_account_created"
                         name="account-back_to_sign_in_btn"

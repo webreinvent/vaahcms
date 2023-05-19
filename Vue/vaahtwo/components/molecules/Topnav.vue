@@ -27,13 +27,13 @@ const toggleDropDownMenu= (event) => {
             </div>
         </template>
         <template #item="{item}">
-            <router-link :to="item.to" custom v-slot="{href, route, navigate, isActive, isExactActive}">
-                <a :href="href"
-                   :data-testid="'Topnav-'+item.icon.split('-')[1]"
-                   @click="navigate"
-                   class="mx-2">
-                    <i class="pi" :class="item.icon"></i></a>
-            </router-link>
+            <a :href="item.url"
+               :target="item.target"
+               v-tooltip.bottom="item.tooltip"
+               :data-testid="'Topnav-'+item.icon.split('-')[1]"
+               @click="navigate"
+               class="mx-2">
+                <i class="pi" :class="item.icon"></i></a>
         </template>
         <template #end>
            <div v-if="rootStore.assets.auth_user" class="flex align-items-center">

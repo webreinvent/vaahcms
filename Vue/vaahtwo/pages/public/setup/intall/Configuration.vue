@@ -53,6 +53,7 @@ onMounted(async () => {
         <h5 class="text-left p-1 title is-6">Debug</h5>
         <div class="p-inputgroup">
           <Dropdown v-model="store.config.env.app_debug"
+                    name="config-db_connection"
                     :options="store.debug_option" optionLabel="name"
                     optionValue="slug" placeholder="Select Debug"
                     class="p-inputtext-sm"/>
@@ -75,6 +76,7 @@ onMounted(async () => {
         <div class="p-input">
           <InputText v-model="store.config.env.app_name"
                      placeholder="App/Website Name"
+                     name="config-app_name"
                      class="p-inputtext-sm" id="app-name"/>
 
         </div>
@@ -87,6 +89,7 @@ onMounted(async () => {
         <div class="p-inputgroup">
           <Dropdown v-model="store.config.env.db_connection"
                     :options="store.assets.database_types"
+                    name="config-db_connection"
                     optionLabel="name" optionValue="slug"
                     placeholder="Database Type" class="p-inputtext-sm"/>
         </div>
@@ -95,7 +98,9 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Host</h5>
         <div class="p-inputgroup">
-          <InputText v-model="store.config.env.db_host" placeholder="Database Host"
+          <InputText v-model="store.config.env.db_host"
+                     name="config-db_host"
+                     placeholder="Database Host"
                      class="p-inputtext-sm"/>
         </div>
       </div>
@@ -103,7 +108,9 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Port</h5>
         <div class="p-inputgroup">
-          <InputText v-model="store.config.env.db_port" placeholder="Database Port"
+          <InputText v-model="store.config.env.db_port"
+                     name="config-db_port"
+                     placeholder="Database Port"
                      class="p-inputtext-sm"/>
         </div>
       </div>
@@ -115,6 +122,7 @@ onMounted(async () => {
         <div class="p-inputgroup">
             <InputText v-model="store.config.env.db_database"
                        placeholder="Database Name"
+                       name="config-db_database"
                        class="p-inputtext-sm"/>
         </div>
       </div>
@@ -124,6 +132,7 @@ onMounted(async () => {
         <div class="p-inputgroup">
           <InputText v-model="store.config.env.db_username"
                      placeholder="Database Username"
+                     name="config-db_username"
                      class="p-inputtext-sm"/>
         </div>
       </div>
@@ -132,7 +141,9 @@ onMounted(async () => {
         <h5 class="text-left p-1 title is-6">Database Password</h5>
         <div class="p-inputgroup">
           <Password v-model="store.config.env.db_password" :feedback="false"
-                    toggleMask autocomplete="new-password"
+                    toggleMask
+                    :inputProps="{autocomplete:'new-password'}"
+                    name="config-db_password"
                     input-class="w-full p-inputtext-sm"
                     placeholder="Database Password"/>
         </div>

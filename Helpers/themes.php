@@ -113,7 +113,31 @@ function vh_get_vaahcms_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_from_slug($theme_slug=null)
 {
-    $theme_slug = config('vaahcms.frontend_theme');
+
+    if(!$theme_slug){
+        $theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')
+            ->whereNotNull('is_default')
+            ->first();
+    }else{
+        $theme = \WebReinvent\VaahCms\Models\Theme::where('slug',$theme_slug)
+            ->first();
+    }
+
+    if(!$theme)
+    {
+        return vh_get_vaahcms_theme();
+    }
+
+    return $theme;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_default_theme_slug($theme_slug=null)
+{
+
+    if(!$theme_slug)
+    {
+        $theme_slug = config('vaahcms.frontend_theme');
+    }
 
     if(!$theme_slug)
     {
@@ -130,7 +154,7 @@ function vh_get_theme_from_slug($theme_slug=null)
         return $theme_slug;
     }
 
-    $db_theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')
+    $db_theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
         ->whereNotNull('is_default')
         ->first();
 

@@ -13,7 +13,7 @@ APP_TIMEZONE={{$data->app_timezone ?? '' }}
 
 #VAAHCMS_VERSION={{$data->vaahcms_version ?? '' }}
 
-VAAHCMS_VUE_APP={{$data->app_vaahcms_env ?? 'develop' }}
+VAAHCMS_VUE_APP={{$data->app_vaahcms_env ?? '' }}
 #VAAHCMS_ASSETS={{$data->app_vaahcms_env ?? '' }}
 
 LOG_CHANNEL=stack
