@@ -20,8 +20,6 @@
 npx vaah cms:install
 ```
 
-<br/>
-
 ## Why VaahCMS?
 
 How many times have you used a CMS to build website and Laravel for application development? **Everytime, isn't it?**
