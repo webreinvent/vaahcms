@@ -354,6 +354,7 @@ class SetupController extends Controller
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
+        VaahSetup::generateEnvFile($request,'key_value','.env');
 
         if(!$response['success'])
         {
