@@ -24,8 +24,8 @@ const importSampleDataModal = (item) => {
     });
 }
 
-const toggle = (event) => {
-    menu.value[0].toggle(event);
+const toggle = (event,slug) => {
+    menu.value[slug].toggle(event);
 };
 
 const confirmRefresh = (item) =>
@@ -93,8 +93,8 @@ function actionItems(item){
 
                             <div class="flex justify-content-end">
 
-                               <span class="p-buttonset mr-2">
-                                    <Button v-if="item.is_active
+                               <span class="p-inputgroup mr-2 w-auto">
+                                    <Button v-show="item.is_active
                                             && store.hasPermission('can-deactivate-module')"
                                             :data-testid="'module-deactivate-'+item.slug"
                                             class="p-button-sm bg-yellow-400 text-color"
@@ -103,16 +103,17 @@ function actionItems(item){
                                             v-tooltip.top="'Deactivate Module'"
                                             @click="store.toggleIsActive(item)"
                                     />
-                                    <Button v-if="item.is_active && item.is_migratable
+                                    <Button v-show="item.is_active && item.is_migratable
                                              && store.hasPermission('can-activate-module')"
                                             class="p-button-sm bg-yellow-400 text-color"
-
                                             :data-testid="'module-action-'+item.slug"
-                                            @click="toggle"
+                                            @click="$event => toggle($event,index)"
                                             icon="pi pi-arrow-down"
+                                            aria-haspopup="true"
+                                            :aria-controls="'overlay_tmenu_'+item.slug"
                                             v-tooltip.top="'Actions'"
                                     />
-                                    <TieredMenu ref="menu" id="overlay_tmenu"
+                                    <TieredMenu ref="menu" :id="'overlay_tmenu_'+item.slug"
                                                 :model="actionItems(item)" popup />
                                </span>
 
