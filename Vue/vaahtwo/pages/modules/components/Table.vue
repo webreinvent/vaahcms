@@ -2,10 +2,13 @@
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useModuleStore } from '../../../stores/store-modules'
 import { useConfirm } from "primevue/useconfirm";
+import {ref} from "vue";
 
 const store = useModuleStore();
 const useVaah = vaah();
 const confirm = useConfirm();
+const menu = ref();
+
 
 const importSampleDataModal = (item) => {
     confirm.require({
@@ -20,6 +23,11 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+
+const toggle = (event) => {
+    menu.value[0].toggle(event);
+};
+
 const confirmRefresh = (item) =>
 {
     confirm.require({
@@ -84,17 +92,32 @@ function actionItems(item){
                             </div>
 
                             <div class="flex justify-content-end">
-                                <Button v-if="item.is_active && store.hasPermission('can-deactivate-module')"
-                                        data-testid="modules-table-action-deactivate"
-                                        class="mr-2 p-button-sm bg-yellow-400 text-color"
-                                        label="Deactivate"
-                                        :loading="store.active_action.includes('deactivate_'+item.id)"
-                                        v-tooltip.top="'Deactivate Module'"
-                                        @click="store.toggleIsActive(item)"
-                                />
+
+                               <span class="p-buttonset mr-2">
+                                    <Button v-if="item.is_active
+                                            && store.hasPermission('can-deactivate-module')"
+                                            :data-testid="'module-deactivate-'+item.slug"
+                                            class="p-button-sm bg-yellow-400 text-color"
+                                            label="Deactivate"
+                                            :loading="store.active_action.includes('deactivate_'+item.id)"
+                                            v-tooltip.top="'Deactivate Module'"
+                                            @click="store.toggleIsActive(item)"
+                                    />
+                                    <Button v-if="item.is_active && item.is_migratable
+                                             && store.hasPermission('can-activate-module')"
+                                            class="p-button-sm bg-yellow-400 text-color"
+
+                                            :data-testid="'module-action-'+item.slug"
+                                            @click="toggle"
+                                            icon="pi pi-arrow-down"
+                                            v-tooltip.top="'Actions'"
+                                    />
+                                    <TieredMenu ref="menu" id="overlay_tmenu"
+                                                :model="actionItems(item)" popup />
+                               </span>
 
                                 <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
-                                        data-testid="modules-table-action-activate"
+                                        :data-testid="'module-activate-'+item.slug"
                                         v-tooltip.top="'Activate Module'"
                                         label="Activate"
                                         class="mr-2 p-button-sm"
@@ -104,16 +127,17 @@ function actionItems(item){
 
                                 <Button v-if="item.is_active && store.hasPermission('can-publish-assets-of-module')"
                                         class="mr-2 p-button-info p-button-sm"
-                                        data-testid="modules-table-action-install-update"
+                                        :data-testid="'module-publish-assets-'+item.slug"
                                         :loading="store.active_action.includes('publish_assets_'+item.id)"
                                         @click="store.publishAssets(item)"
                                         icon="pi pi-arrow-up"
                                         v-tooltip.top="'Publish Assets'"
                                 />
 
-                                <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
-                                        data-testid="modules-table-action-sample-data"
-                                        size="is-small"
+                                <Button v-if="item.is_active && item.is_sample_data_available
+                                 && store.hasPermission('can-import-sample-data-in-module')"
+                                        :data-testid="'module-import-sample-'+item.slug"
+                                        size="is-small mr-2"
                                         icon="pi pi-database"
                                         class="p-button-sm"
                                         v-tooltip.top="'Import Sample Data'"
@@ -121,16 +145,9 @@ function actionItems(item){
                                         @click="importSampleDataModal(item)"
                                 />
 
-                                <SplitButton v-if="item.is_active
-                                             && item.is_migratable
-                                             && store.hasPermission('can-activate-module')"
-                                             label="Actions"
-                                             class="ml-2 mr-2"
-                                             data-testid="modules-table_action"
-                                             :model="actionItems(item)" />
-
                                 <Button class="p-button-info p-button-sm mr-2"
                                         label="Update"
+                                        :data-testid="'module-update-'+item.slug"
                                         data-testid="modules-table-action-install-update"
                                         icon="cloud-download-alt"
                                         @click="store.confirmUpdate(item)"
@@ -138,15 +155,16 @@ function actionItems(item){
                                         v-if="item.is_update_available && store.hasPermission('can-update-module')"
                                 />
 
-                                <Button class="p-button-sm"
+                                <Button class="p-button-sm mr-2"
                                         icon="pi pi-eye"
+                                        :data-testid="'module-view-'+item.slug"
                                         v-tooltip.top=" 'View' "
                                         @click="store.toView(item)"
                                         v-if="store.hasPermission('can-read-module')"
                                 />
 
-                                <Button class="p-button-danger p-button-sm ml-2"
-                                        data-testid="modules-table-action-trash"
+                                <Button class="p-button-danger p-button-sm"
+                                        :data-testid="'module-trash-'+item.slug"
                                         v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
                                         @click="store.confirmDeleteItem(item)"
                                         v-tooltip.top="'Trash'"
