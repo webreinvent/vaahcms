@@ -140,7 +140,7 @@ function actionItems(item){
                                         :data-testid="'module-import-sample-'+item.slug"
                                         size="is-small mr-2"
                                         icon="pi pi-database"
-                                        class="p-button-sm"
+                                        class="p-button-sm mr-2"
                                         v-tooltip.top="'Import Sample Data'"
                                         :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                         @click="importSampleDataModal(item)"
