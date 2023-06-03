@@ -126,7 +126,7 @@ function actionItems(item){
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('activate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
-                                data-testid="themes-table-action-activate"
+                                :data-testid="'themes-activate-'+item.slug"
                                 v-tooltip.top="'Activate Theme'"
                                 label="Activate"
                         />
@@ -134,7 +134,7 @@ function actionItems(item){
                         <Button v-if="store.hasPermission('can-activate-theme') && item.is_active && item.is_default"
                                 v-tooltip.top="'This theme is marked as default'"
                                 icon="pi pi-check"
-                                data-testid="themes-table-action-is_default_marked"
+                                :data-testid="'themes-is-marked-default-'+item.slug"
                                 class="mr-2 p-button-warning p-button-sm"
                         />
 
@@ -142,13 +142,13 @@ function actionItems(item){
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('make_default_'+item.id)"
                                 v-tooltip.top="'Mark this theme as Default'"
-                                data-testid="themes-table-action-mark_default"
+                                :data-testid="'themes-mark-default-'+item.slug"
                                 @click="store.makeDefault(item)"
                                 label="Make Default"
                         />
 
                         <Button class="mr-2 p-button-info p-button-sm"
-                                data-testid="theme-table-action-install-update"
+                                :data-testid="'themes-update-'+item.slug"
                                 :loading="store.active_action.includes('publish_assets_'+item.id)"
                                 @click="store.publishAssets(item)"
                                 icon="pi pi-arrow-up"
@@ -162,7 +162,7 @@ function actionItems(item){
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                 icon="pi pi-database"
-                                data-testid="themes-table-action-import_sample_data"
+                                :data-testid="'themes-import-sample-'+item.slug"
                                 @click="importSampleDataModal(item)"
                         />
 
