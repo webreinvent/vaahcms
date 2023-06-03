@@ -70,7 +70,7 @@ export const useAuthStore = defineStore({
             this.is_forgot_password_btn_loading = false;
             if(data)
             {
-                this.$router.push({ name: 'dashboard' })
+                this.$router.push({ name: 'sign.in' })
             }
         },
         //-----------------------------------------------------------------------
@@ -93,7 +93,7 @@ export const useAuthStore = defineStore({
             this.is_reset_password_btn_loading = false;
             if(data)
             {
-                this.$router.push({ name: 'dashboard' })
+                this.$router.push({ name: 'sign.in' })
             }
         },
         //-----------------------------------------------------------------------
