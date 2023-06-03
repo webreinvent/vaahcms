@@ -28,11 +28,11 @@ export const useSetupStore = defineStore({
         debug_option: [
             {
                 name:'True',
-                slug:'true'
+                slug:true
             },
             {
                 name:'False',
-                slug:'false'
+                slug:false
             }
         ],
         config:{
