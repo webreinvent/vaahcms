@@ -58,12 +58,10 @@ class VaahSeeder{
         }
     }
     //----------------------------------------------------------
-    public static function storeTaxonomyTypes($list)
+    public static function storeTaxonomyTypes($list, $table = 'vh_taxonomy_types')
     {
         foreach ($list as $item)
         {
-
-            $table = 'vh_taxonomy_types';
 
             $item['slug'] = Str::slug($item['name']);
 
@@ -117,13 +115,12 @@ class VaahSeeder{
         }
     }
     //----------------------------------------------------------
-    public static function storeTaxonomies($list)
+    public static function storeTaxonomies($list,
+                                           $table = 'vh_taxonomies',
+                                           $type_table = 'vh_taxonomy_types')
     {
         foreach ($list as $item)
         {
-
-            $table = 'vh_taxonomies';
-            $type_table = 'vh_taxonomy_types';
 
             $item['slug'] = Str::slug($item['name']);
 
@@ -173,6 +170,7 @@ class VaahSeeder{
                 DB::table($table)->insert($item);
             } else{
                 DB::table($table)->where('slug', $item['slug'])
+                    ->where('vh_taxonomy_type_id', $item['vh_taxonomy_type_id'])
                     ->update($item);
             }
         }

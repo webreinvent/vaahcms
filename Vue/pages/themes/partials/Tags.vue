@@ -3,8 +3,8 @@
     <b-field v-if="item" grouped group-multiline>
 
 
-        <div class="control" >
-            <b-taglist attached>
+        <div class="control extended-tag" >
+            <b-taglist attached class="extended-tag">
                 <b-tag type="is-dark">name</b-tag>
                 <b-tag type="is-info"
                        class="clickable">
@@ -32,20 +32,21 @@
 
 
 
-        <div class="control">
+        <div class="control extended-tag">
             <b-taglist attached>
                 <b-tag type="is-dark">version</b-tag>
                 <b-tag type="is-info">{{ item.version }}</b-tag>
             </b-taglist>
         </div>
 
-        <div class="control">
+        <div class="control extended-tag">
             <b-taglist attached>
                 <b-tag type="is-dark">developed by</b-tag>
                 <b-tag type="is-info"
                        class="clickable">
 
-                    <a :href="item.author_website" target="_blank" >
+                    <a :href="item.author_website"
+                       target="_blank" >
 
                         <b-icon size="is-small"
                                 class="has-margin-right-5"

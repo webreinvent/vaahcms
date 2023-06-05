@@ -39,6 +39,9 @@ export default {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
+        if(this.root && this.root.assets && this.root.assets.timezone){
+            this.config.env.app_timezone = this.root.assets.timezone;
+        }
 
         //----------------------------------------------------
     },
