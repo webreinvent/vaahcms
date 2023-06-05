@@ -92,3 +92,45 @@ function get_string_between($string, $start, $end){
     return substr($string, $ini, $len);
 }
 //-------------------------------------------------------------
+function vh_response($response)
+{
+    if(version_compare(config('vaahcms.version'), '2.0.0', '<' )){
+        $is_vaahcms_two = false;
+    } else{
+        $is_vaahcms_two = true;
+    }
+
+    /*
+     * VaahCMS 1.x Response
+     */
+    if($is_vaahcms_two === false && isset($response['status'])){
+        return $response;
+    }
+
+    if($is_vaahcms_two === false && isset($response['success'])){
+        if($response['success'] === true)
+        {
+            $response['status'] = 'success';
+        } else{
+            $response['status'] = 'failed';
+        }
+        unset($response['success']);
+        return $response;
+    }
+
+    /*
+     * VaahCMS 2.x Response
+     */
+    if($is_vaahcms_two === true && isset($response['success'])){
+        return $response;
+    }
+
+    if($is_vaahcms_two === true && isset($response['status'])){
+        $response['success'] = $response['status'];
+        unset($response['status']);
+        return $response;
+    }
+
+    return $response;
+}
+//-------------------------------------------------------------
