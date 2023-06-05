@@ -5,6 +5,7 @@
 use App\Mail\OrderShipped;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,13 +13,16 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Libraries\VaahMail;
+use WebReinvent\VaahCms\Mail\SecurityOtpMail;
 use WebReinvent\VaahCms\Mail\TestMail;
+use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
@@ -34,7 +38,8 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at", "reset_password_code_sent_at",
+        "affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code_sent_at",
         "reset_password_code_used_at",
         "birth", "activated_at",
         "created_at","updated_at","deleted_at"
@@ -51,7 +56,8 @@ class User extends Authenticatable
         "country","country_code","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at","reset_password_code",
+        "affiliate_code","affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code",'mfa_methods',"security_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
         'foreign_user_id',"meta","created_ip","created_by",
         "updated_by","deleted_by"
@@ -102,6 +108,21 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+
+    }
+    //-------------------------------------------------
+    public function setMfaMethodsAttribute($value)
+    {
+        $this->attributes['mfa_methods'] = json_encode($value);
+    }
+    //-------------------------------------------------
+    public function getMfaMethodsAttribute($value)
     {
         if($value && $value!='null'){
             return json_decode($value);
@@ -235,7 +256,8 @@ class User extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at', 'created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at','security_code_expired_at',
+            'security_code','created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
             'deleted_at'
         ];
@@ -677,7 +699,9 @@ class User extends Authenticatable
 
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
+
             $user->save();
+
 
             $response['status'] = 'success';
         }elseif(Auth::attempt(['username' => $inputs['email'],
@@ -1921,6 +1945,49 @@ class User extends Authenticatable
         }
 
         return $list;
+
+    }
+    //-------------------------------------------------
+    public function verifySecurityAuthentication()
+    {
+
+        $this->security_code = null;
+        $this->security_code_expired_at = null;
+        $this->save();
+
+        $has_security = true;
+
+        $response['status'] = 'failed';
+        $response['data'] = null;
+
+        if(!config('settings.global.mfa_status')
+            || config('settings.global.mfa_status') === 'disable'
+            || !is_array(config('settings.global.mfa_methods'))
+            || (is_array(config('settings.global.mfa_methods'))
+            && count(config('settings.global.mfa_methods')) == 0)){
+            $has_security = false;
+        }
+
+        if(config('settings.global.mfa_status') == 'user-will-have-option'
+            && (!is_array($this->mfa_methods)
+                || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+
+            $has_security = false;
+        }
+
+        if(!$has_security){
+            return $response;
+        }
+
+        $this->security_code = rand(100000, 999999);
+        $this->security_code_expired_at = now()->addMinutes(10);
+        $this->save();
+
+        VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+
+        $response['status'] = 'success';
+
+        return $response;
 
     }
     //-------------------------------------------------

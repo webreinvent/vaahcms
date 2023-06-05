@@ -14,6 +14,8 @@ export default {
         assets: null,
         assets_is_fetching: false,
         profile: null,
+        mfa_method_array: null,
+        mfa_status: null,
         reset_password:{
             current_password: null,
             new_password: null,

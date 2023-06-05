@@ -97,6 +97,17 @@ export default {
             })
         },
         //---------------------------------------------------------------------
+        confirmRefresh(item) {
+            this.$buefy.dialog.confirm({
+                title: 'Refresh Migrations',
+                message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this theme.',
+                confirmText: 'Refresh',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () =>  this.actions('refresh_migrations', item)
+            })
+        },
+        //---------------------------------------------------------------------
         delete: function (theme) {
             this.$Progress.start();
 

@@ -17,7 +17,7 @@ export default {
     data()
     {
         let obj = {
-
+            show_refresh_modal: false,
             namespace: namespace
 
         };
@@ -94,6 +94,18 @@ export default {
                 onConfirm: function () {
                     self.delete(module);
                 }
+            })
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        confirmRefresh(item) {
+            this.$buefy.dialog.confirm({
+                title: 'Refresh Migrations',
+                message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this module.',
+                confirmText: 'Refresh',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () =>  this.actions('refresh_migrations', item)
             })
         },
         //---------------------------------------------------------------------

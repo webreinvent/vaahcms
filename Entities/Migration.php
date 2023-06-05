@@ -42,7 +42,7 @@ class Migration extends Model {
         return $this->morphTo();
     }
     //-------------------------------------------------
-    public static function syncModuleMigrations($module_id=null,$batch_num)
+    public static function syncModuleMigrations($module_id,$batch_num)
     {
 
         $migrations = \DB::table('migrations')->count();
@@ -78,7 +78,7 @@ class Migration extends Model {
         return true;
     }
     //-------------------------------------------------
-    public static function syncThemeMigrations($theme_id=null,$batch_num)
+    public static function syncThemeMigrations($theme_id,$batch_num)
     {
         $migrations = \DB::table('migrations')->count();
 
@@ -147,13 +147,31 @@ class Migration extends Model {
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
-    public static function resetMigrations()
+    public static function resetMigrations($path=null, $force=false)
     {
         $command = 'migrate:reset';
         $params = [
             '--force' => true,
             '--quiet' => true,
         ];
+        if($path)
+        {
+            $params['--path'] = $path;
+        }
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function refreshtMigrations($path=null, $force=false)
+    {
+        $command = 'migrate:refresh';
+        $params = [
+            '--force' => true,
+            '--quiet' => true,
+        ];
+        if($path)
+        {
+            $params['--path'] = $path;
+        }
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------

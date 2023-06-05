@@ -269,7 +269,7 @@
     {
         "category": "login",
         "name": "Login Successful",
-        "content": "You've been successfully logged in."
+        "content": "You have been successfully logged in."
     },
     {
         "category": "login",

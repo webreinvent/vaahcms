@@ -50,6 +50,10 @@
                             <!--/site_settings-->
 
                             <!--repeatable-->
+                            <Securities/>
+                            <!--/repeatable-->
+
+                            <!--repeatable-->
                             <DateTime/>
                             <!--/repeatable-->
 
