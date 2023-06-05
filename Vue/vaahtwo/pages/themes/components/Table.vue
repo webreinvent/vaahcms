@@ -7,11 +7,7 @@ import { useConfirm } from "primevue/useconfirm";
 
 const store = useThemeStore();
 const useVaah = vaah();
-
-
-const menu_options = ref();
-const hideThemes = ref();
-const toggle = ref();
+const menu = ref();
 
 const confirm = useConfirm();
 
@@ -28,6 +24,10 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+
+const toggle = (event,slug) => {
+    menu.value[slug].toggle(event);
+};
 
 const confirmRefresh = (item) => {
     confirm.require({
@@ -98,28 +98,43 @@ function actionItems(item){
                     </div>
 
                     <div class="flex justify-content-end">
-                        <Button v-if="item.is_active && store.hasPermission('can-deactivate-theme')"
-                                class="mr-2 p-button-sm bg-yellow-400 text-color"
-                                :loading="store.active_action.includes('deactivate_'+item.id)"
-                                @click="store.toggleIsActive(item)"
-                                data-testid="themes-table-action-deactivate"
-                                v-tooltip.top="'Deactivate Module'"
-                                label="Deactivate"
-                        />
+
+                         <span class="p-buttonset mr-2">
+                            <Button v-show="item.is_active
+                                    && store.hasPermission('can-deactivate-theme')"
+                                    :data-testid="'themes-deactivate-'+item.slug"
+                                    class="p-button-sm bg-yellow-400 text-color"
+                                    label="Deactivate"
+                                    :loading="store.active_action.includes('deactivate_'+item.id)"
+                                    v-tooltip.top="'Deactivate Theme'"
+                                    @click="store.toggleIsActive(item)"
+                            />
+                            <Button v-show="item.is_active && item.is_migratable
+                                     && store.hasPermission('can-activate-theme')"
+                                    class="p-button-sm bg-yellow-400 text-color"
+                                    :data-testid="'theme-action-'+item.slug"
+                                    @click="$event => toggle($event,index)"
+                                    icon="pi pi-arrow-down"
+                                    aria-haspopup="true" :aria-controls="'overlay_tmenu_'+item.slug"
+                                    v-tooltip.top="'Actions'"
+                            />
+                            <TieredMenu ref="menu" :id="'overlay_tmenu_'+item.slug"
+                                        :model="actionItems(item)" popup />
+                       </span>
 
                         <Button v-if="!item.is_active && store.hasPermission('can-activate-theme')"
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('activate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
-                                data-testid="themes-table-action-activate"
-                                v-tooltip.top="'Activate Module'"
+                                :data-testid="'themes-activate-'+item.slug"
+                                v-tooltip.top="'Activate Theme'"
                                 label="Activate"
                         />
 
                         <Button v-if="store.hasPermission('can-activate-theme') && item.is_active && item.is_default"
                                 v-tooltip.top="'This theme is marked as default'"
                                 icon="pi pi-check"
-                                data-testid="themes-table-action-is_default_marked"
+                                :data-testid="'themes-is-marked-default-'+item.slug"
                                 class="mr-2 p-button-warning p-button-sm"
                         />
 
@@ -127,13 +142,13 @@ function actionItems(item){
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('make_default_'+item.id)"
                                 v-tooltip.top="'Mark this theme as Default'"
-                                data-testid="themes-table-action-mark_default"
+                                :data-testid="'themes-mark-default-'+item.slug"
                                 @click="store.makeDefault(item)"
                                 label="Make Default"
                         />
 
                         <Button class="mr-2 p-button-info p-button-sm"
-                                data-testid="modules-table-action-install-update"
+                                :data-testid="'themes-update-'+item.slug"
                                 :loading="store.active_action.includes('publish_assets_'+item.id)"
                                 @click="store.publishAssets(item)"
                                 icon="pi pi-arrow-up"
@@ -141,23 +156,15 @@ function actionItems(item){
                                 v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                         />
 
-                        <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
+                        <Button v-if="item.is_active && item.is_sample_data_available
+                        && store.hasPermission('can-import-sample-data-in-theme')"
                                 v-tooltip.top="'Import Sample Data'"
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                 icon="pi pi-database"
-                                data-testid="themes-table-action-import_sample_data"
+                                :data-testid="'themes-import-sample-'+item.slug"
                                 @click="importSampleDataModal(item)"
                         />
-
-                        <SplitButton label="Actions"
-                                     v-if="item.is_active
-                                     && item.is_migratable
-                                     && store.hasPermission('can-activate-theme')"
-                                     v-tooltip.top="'Actions'"
-                                     class="mr-2"
-                                     data-testid="themes-table_action"
-                                     :model="actionItems(item)" />
 
                         <Button class="p-button-sm mr-2"
                                 icon="pi pi-eye"

@@ -35,7 +35,7 @@ routes_list = [
                 props: true,
             },
             {
-                path: '/reset-password',
+                path: '/reset-password/:code?',
                 name: 'reset.password_without_code',
                 component: ResetPassword,
                 props: true,

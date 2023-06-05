@@ -10,6 +10,7 @@ const root = useRootStore();
 
 onMounted(async () => {
     document.title = 'Configuration - Setup';
+    store.config.env.app_timezone = root.assets.timezone;
     await store.getAssets();
     await store.getRequiredConfigurations();
 });
@@ -63,7 +64,8 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Timezone</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="store.config.env.app_timezone" :options="store.assets.timezones"
+          <Dropdown v-model="store.config.env.app_timezone"
+                    :options="store.assets.timezones"
                     optionLabel="name" optionValue="slug" :filter="true"
                     placeholder="Select Timezone" class="p-inputtext-sm"/>
         </div>

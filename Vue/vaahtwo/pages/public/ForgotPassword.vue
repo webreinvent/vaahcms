@@ -6,10 +6,13 @@ import Logo from "../../components/molecules/Logo.vue";
 
 
 import { useAuthStore } from '../../stores/auth';
+import {useRootStore} from "../../stores/root";
+const root = useRootStore();
 const auth = useAuthStore();
 
 onMounted(async () => {
     document.title = 'Forgot Password';
+    await root.getAssets();
 });
 
 </script>
