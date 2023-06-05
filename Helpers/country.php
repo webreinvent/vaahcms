@@ -801,6 +801,7 @@ function vh_get_timezones()
         ['slug' => 'Atlantic/Stanley', 'name' =>"(GMT-02:00) Stanley"],
         ['slug' => 'Atlantic/Azores', 'name' =>"(GMT-01:00) Azores"],
         ['slug' => 'Atlantic/Cape_Verde', 'name' =>"(GMT-01:00) Cape Verde Is."],
+        ['slug' => 'UTC', 'name' => "(GMT) UTC"],
         ['slug' => 'Africa/Casablanca', 'name' =>"(GMT) Casablanca"],
         ['slug' => 'Europe/Dublin', 'name' =>"(GMT) Dublin"],
         ['slug' => 'Europe/Lisbon', 'name' =>"(GMT) Lisbon"],

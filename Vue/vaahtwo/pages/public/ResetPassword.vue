@@ -6,10 +6,18 @@ import Logo from "../../components/molecules/Logo.vue";
 
 
 import { useAuthStore } from '../../stores/auth';
+import {useRootStore} from "../../stores/root";
+import {useRoute} from "vue-router";
+const root = useRootStore();
 const auth = useAuthStore();
+const route = useRoute();
 
 onMounted(async () => {
     document.title = 'Reset Password';
+    await root.getAssets();
+    if (route.params && route.params.code) {
+        auth.reset_password_items.reset_password_code = route.params.code;
+    }
 });
 
 </script>
@@ -38,6 +46,7 @@ onMounted(async () => {
                     <Password
                         v-model="auth.reset_password_items.password"
                         name="reset_password-password"
+                        :inputProps="{autocomplete:'new-password'}"
                         data-testid="reset_password-password"
                         class="w-full"
                         inputClass="w-full"
