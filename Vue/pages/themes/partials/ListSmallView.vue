@@ -52,6 +52,20 @@
                             </b-button>
 
                         </p>
+                        <b-tooltip label="Action" type="is-dark">
+                            <p v-if="props.row.is_active && hasPermission('can-activate-theme')"
+                               class="control">
+                                <b-dropdown class="action-items" label="Action">
+                                    <template #trigger>
+                                        <b-button class="action-button" type="is-warning" icon-right="caret-down" />
+                                    </template>
+
+                                    <b-dropdown-item @click="actions('run_migrations', props.row)">Run Migrations</b-dropdown-item>
+                                    <b-dropdown-item @click="actions('run_seeds', props.row)">Run Seeds</b-dropdown-item>
+                                    <b-dropdown-item @click="confirmRefresh(props.row)">Refresh Migrations</b-dropdown-item>
+                                </b-dropdown>
+                            </p>
+                        </b-tooltip>
 
                         <b-tooltip label="Publish Assets" type="is-dark">
                             <p v-if="hasPermission('can-publish-assets-of-theme')"
@@ -64,21 +78,6 @@
                                           icon-left="upload"
                                           @click="actions('publish_assets', props.row)">
                                 </b-button>
-                            </p>
-                        </b-tooltip>
-
-                        <b-tooltip label="Action" type="is-dark">
-                            <p v-if="hasPermission('can-activate-theme')"
-                               class="control">
-                                <b-dropdown class="action-items" v-if="props.row.is_active" label="Action">
-                                    <template #trigger>
-                                        <b-button class="action-button" type="is-info" icon-right="caret-down" label="Action" />
-                                    </template>
-
-                                    <b-dropdown-item @click="actions('run_migrations', props.row)">Run Migrations</b-dropdown-item>
-                                    <b-dropdown-item @click="actions('run_seeds', props.row)">Run Seeds</b-dropdown-item>
-                                    <b-dropdown-item @click="confirmRefresh(props.row)">Refresh Migrations</b-dropdown-item>
-                                </b-dropdown>
                             </p>
                         </b-tooltip>
 
