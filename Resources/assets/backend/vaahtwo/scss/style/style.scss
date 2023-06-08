@@ -825,3 +825,57 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+.dashboard{
+    .dashboard-divider{
+        &:before{
+            width:calc(100% + 2rem);
+            margin-left: -1rem;
+        }
+    }
+    ul{
+        padding-left: 0;
+        &.links-list{
+            list-style-type: none;
+            li{
+                &:not(:last-child){
+                    margin-bottom:12px
+                }
+                a{
+                    cursor: pointer;
+                    i{
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+    .footer-text{
+        margin-top: 75px;
+    }
+}
+
+.p-fileupload{
+    width: 100%;
+    .p-fileupload-buttonbar{
+        display:none;
+    }
+    .p-fileupload-content{
+        padding:1rem;
+        border:2px dashed #bfbfbf;
+        border-radius: 4px;
+    }
+}
+
+.components-list{
+    h5{
+        margin:15px 0
+    }
+}
+
+.form {
+    .p-float-label {
+        &:not(:last-child) {
+            margin-bottom: 25px;
+        }
+    }
+}

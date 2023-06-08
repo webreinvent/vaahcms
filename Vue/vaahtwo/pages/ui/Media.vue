@@ -250,11 +250,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.form {
-    .p-float-label {
-        &:not(:last-child) {
-            margin-bottom: 25px;
-        }
-    }
-}
+
 </style>

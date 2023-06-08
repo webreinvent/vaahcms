@@ -369,9 +369,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.components-list{
-    h5{
-        margin:15px 0
-    }
-}
+
 </style>
