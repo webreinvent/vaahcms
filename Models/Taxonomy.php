@@ -83,7 +83,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = "This name is already exist.";
             return $response;
         }
 
@@ -92,7 +92,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = "This slug is already exist.";
             return $response;
         }
 
@@ -400,7 +400,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = "This name is already exist.";
             return $response;
         }
 
@@ -411,7 +411,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = "This slug is already exist.";
             return $response;
         }
 
@@ -431,7 +431,7 @@ class Taxonomy extends TaxonomyBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['errors'][] = 'Record does not exist.';
             return $response;
         }
         $item->forceDelete();
@@ -490,7 +490,7 @@ class Taxonomy extends TaxonomyBase
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
-            $response['messages'] = $messages->all();
+            $response['errors'] = $messages->all();
             return $response;
         }
 

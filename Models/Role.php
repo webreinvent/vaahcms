@@ -199,7 +199,7 @@ class Role extends RoleBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['messages'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = 'Record not found with ID: '.$id;
             return $response;
         }
         $response['success'] = true;
@@ -224,7 +224,7 @@ class Role extends RoleBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = "This name is already exist.";
             return $response;
         }
 
@@ -234,7 +234,7 @@ class Role extends RoleBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = "This slug is already exist.";
             return $response;
         }
 
@@ -255,7 +255,7 @@ class Role extends RoleBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['errors'][] = 'Record does not exist.';
             return $response;
         }
         $item->forceDelete();
@@ -307,7 +307,7 @@ class Role extends RoleBase
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
-            $response['messages'] = $messages->all();
+            $response['errors'] = $messages->all();
             return $response;
         }
 
