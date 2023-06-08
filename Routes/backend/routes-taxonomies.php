@@ -42,6 +42,11 @@ function () {
     Route::get('/{id}', 'TaxonomiesController@getItem')
         ->name('vh.backend.vaah.taxonomies.read');
     /**
+     * Get List by type id
+     */
+    Route::get('/type/{id}', 'TaxonomiesController@getListByTypeId')
+        ->name('vh.backend.vaah.taxonomies.type.id');
+    /**
      * Update Item
      */
     Route::match(['put', 'patch'], '/{id}', 'TaxonomiesController@updateItem')

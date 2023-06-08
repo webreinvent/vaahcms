@@ -53,7 +53,7 @@ class Job extends JobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = "This name is already exist.";
             return $response;
         }
 
@@ -62,7 +62,7 @@ class Job extends JobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = "This slug is already exist.";
             return $response;
         }
 
@@ -332,7 +332,7 @@ class Job extends JobBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['messages'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = 'Record not found with ID: '.$id;
             return $response;
         }
         $response['success'] = true;

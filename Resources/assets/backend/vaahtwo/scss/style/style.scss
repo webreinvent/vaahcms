@@ -749,3 +749,133 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+.p-treenode-label {
+    width: 100% !important;
+}
+
+.grtv-wrapper {
+    .grtvn-self-action {
+        border:none;
+        background:none;
+        cursor:pointer;
+    }
+
+    .grtvn-self-expander.action-button {
+        padding-left:0;
+    }
+
+    .pi-trash{
+        color:red;
+        font-size: 14px;
+        font-weight: normal;
+    }
+}
+
+.grtv-wrapper .grtvn-self-expander.grtvn-self-expanded i.grtvn-self-expanded-indicator {
+    transform: rotate(90deg);
+    transition: all 0.2s linear;
+}
+
+.grtv-wrapper {
+    .grtvn-children {
+        transition: all 0.2s linear;
+    }
+}
+
+.draggable-tree-list{
+    ul {
+        list-style-type:none;
+        padding-left: 0;
+        &.grtv {
+            li {
+                padding:8px 0;
+                .grtvn-self {
+                    width: 100%;
+                    display: flex;
+                    .list-item{
+                        width:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                    }
+                }
+
+                .grtvn-children-wrapper {
+                    ul {
+                        padding-left:14px
+                    }
+                }
+            }
+        }
+    }
+}
+
+.action-button {
+    border: none;
+    background: transparent;
+    i {
+        font-size: 10px;
+        font-weight: 700;
+    }
+}
+
+.custom-skeleton {
+    ul {
+        list-style: none;
+    }
+}
+
+.dashboard{
+    .dashboard-divider{
+        &:before{
+            width:calc(100% + 2rem);
+            margin-left: -1rem;
+        }
+    }
+    ul{
+        padding-left: 0;
+        &.links-list{
+            list-style-type: none;
+            li{
+                &:not(:last-child){
+                    margin-bottom:12px
+                }
+                a{
+                    cursor: pointer;
+                    i{
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+    .footer-text{
+        margin-top: 75px;
+    }
+}
+
+.p-fileupload{
+    width: 100%;
+    .p-fileupload-buttonbar{
+        display:none;
+    }
+    .p-fileupload-content{
+        padding:1rem;
+        border:2px dashed #bfbfbf;
+        border-radius: 4px;
+    }
+}
+
+.components-list{
+    h5{
+        margin:15px 0
+    }
+}
+
+.form {
+    .p-float-label {
+        &:not(:last-child) {
+            margin-bottom: 25px;
+        }
+    }
+}
