@@ -28,7 +28,6 @@ class TaxonomyBase extends Model {
     protected $fillable = [
         'uuid','parent_id','vh_taxonomy_type_id',
         'name','slug', 'excerpt','details',
-        'seo_title','seo_description','seo_keywords',
         'notes','is_active','meta',
         'created_by','updated_by','deleted_by',
     ];
@@ -58,22 +57,6 @@ class TaxonomyBase extends Model {
         return json_decode($value);
     }
     //-------------------------------------------------
-    public function setSeoKeywordsAttribute($value)
-    {
-        if(!$value || count($value) === 0){
-            $this->attributes['seo_keywords'] = null;
-        }else{
-            $this->attributes['seo_keywords'] = implode(",",$value);
-        }
-    }
-    //-------------------------------------------------
-    public function getSeoKeywordsAttribute($value)
-    {
-        if(!$value){
-            return null;
-        }
-        return explode(",",$value);
-    }
     //-------------------------------------------------
 
     public function createdByUser()

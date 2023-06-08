@@ -110,15 +110,22 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
                 <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name" data-testid="role-item_name" />
+                    <InputText class="w-full"
+                               v-model="store.item.name"
+                               @update:modelValue="store.watchItem"
+                               data-testid="role-item_name" />
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug" data-testid="role-item_slug" />
+                    <InputText class="w-full"
+                               v-model="store.item.slug"
+                               data-testid="role-item_slug" />
                 </VhField>
 
                 <VhField label="Details">
-                    <Textarea class="w-full" v-model="store.item.details" data-testid="role-item_details" />
+                    <Textarea class="w-full"
+                              v-model="store.item.details"
+                              data-testid="role-item_details" />
                 </VhField>
 
                 <VhField label="Is Active">

@@ -56,12 +56,11 @@ class TaxonomiesController extends Controller
             $taxonomy_types = TaxonomyType::query()
                 ->whereNotNull('is_active')
                 ->whereNull('parent_id')
-                ->select('id', 'uuid as key', 'name as label', 'slug as data')
+                ->select('id', 'id as key', 'name as label', 'slug as data')
                 ->with(['children'])
                 ->get();
 
             $data['actions'] = [];
-            $data['countries'] = vh_get_country_list();
             $data['types'] = $taxonomy_types->toArray();
 
             $response['success'] = true;
@@ -228,6 +227,30 @@ class TaxonomiesController extends Controller
             $response = Taxonomy::getItem($id);
         } catch (\Exception $e) {
             $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getListByTypeId(Request $request, $id): JsonResponse
+    {
+        $response = [];
+
+        try {
+            $list = Taxonomy::where('vh_taxonomy_type_id',$id)
+                ->select('id','name','slug','vh_taxonomy_type_id')->get();
+
+            $response['success'] = true;
+            $response['data'] = $list;
+        } catch (\Exception $e) {
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
