@@ -50,8 +50,8 @@ class UserBase extends Authenticatable
         "country","country_code","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at",
-        "reset_password_code",'mfa_methods',
+        "affiliate_code","affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code",'mfa_methods',"security_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
         'foreign_user_id',"meta","created_ip","created_by",
         "updated_by","deleted_by"
