@@ -133,20 +133,5 @@ export default {
 </script>
 
 <style lang="scss">
-.form {
-    .p-card {
-        .p-card-content {
-            .p-float-label {
-                &:not(:last-child) {
-                    margin-bottom: 25px;
-                }
-                .p-chips{
-                    .p-inputtext{
-                        width: 100%;
-                    }
-                }
-            }
-        }
-    }
-}
+
 </style>

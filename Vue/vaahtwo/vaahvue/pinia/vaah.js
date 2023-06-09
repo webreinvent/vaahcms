@@ -425,7 +425,18 @@ export const vaah = defineStore({
         //----------------------------------------------------------
         validateEmail(value) {
             return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
-        }
+        },
+        //----------------------------------------------------------
+        capitalising: function (str) {
+            let capitalized = []
+            str.split(' ').forEach(word => {
+                capitalized.push(
+                    word.charAt(0).toUpperCase() +
+                    word.slice(1).toLowerCase()
+                )
+            })
+            return capitalized.join(' ')
+        },
         //----------------------------------------------------------
     }
 })

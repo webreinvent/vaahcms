@@ -189,15 +189,5 @@ export default {
 
 <style lang="scss">
 
-.p-fileupload{
-    width: 100%;
-    .p-fileupload-buttonbar{
-        display:none;
-    }
-    .p-fileupload-content{
-        padding:1rem;
-        border:2px dashed #bfbfbf;
-        border-radius: 4px;
-    }
-}
+
 </style>

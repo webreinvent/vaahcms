@@ -47,6 +47,7 @@ export const useTaxonomyStore = defineStore({
         list: null,
         item: null,
         fillable: null,
+        parent_options: [],
         empty_query:empty_states.query,
         empty_action:empty_states.action,
         query: vaah().clone(empty_states.query),
@@ -84,7 +85,7 @@ export const useTaxonomyStore = defineStore({
         is_loading: false,
     }),
     getters: {
-
+        
     },
     actions: {
         //---------------------------------------------------------------------
@@ -156,6 +157,15 @@ export const useTaxonomyStore = defineStore({
             )
         },
         //---------------------------------------------------------------------
+        watchItem(name)
+        {
+            if(name && name !== "")
+            {
+                this.item.name = vaah().capitalising(name);
+                this.item.slug = vaah().strToSlug(name);
+            }
+        },
+        //---------------------------------------------------------------------
         watchStates()
         {
             watch(this.query.filter, (newVal,oldVal) =>
@@ -222,6 +232,25 @@ export const useTaxonomyStore = defineStore({
             this.is_btn_loading = false;
         },
         //---------------------------------------------------------------------
+        getListByTypeId(id) {
+            let options = {
+
+            };
+            vaah().ajax(
+                this.ajax_url+'/type/'+id,
+                this.getListByTypeIdAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        getListByTypeIdAfter: function (data, res)
+        {
+            if (data) {
+                this.parent_options = data;
+            }
+
+        },
+        //---------------------------------------------------------------------
 
         async getItem(id) {
             if(id){
@@ -237,6 +266,15 @@ export const useTaxonomyStore = defineStore({
             if(data)
             {
                 this.item = data;
+                let type_id = this.item.vh_taxonomy_type_id;
+
+                this.parent_options = [];
+                if(type_id){
+
+                    this.getListByTypeId(this.item.type.parent_id);
+                }
+
+
             }else{
                 this.$router.push({name: 'taxonomies.index'});
             }
@@ -943,9 +981,12 @@ export const useTaxonomyStore = defineStore({
             this.taxonomy_type_items.parent_id = e.id;
         },
         //---------------------------------------------------------------------
-        async selectedParent(event) {
+        async selectType(event) {
             this.item.vh_taxonomy_type_id = event.id;
-            this.item.type = event.data;
+            this.item.type = event;
+            if(this.item.type.parent_id){
+                this.getListByTypeId(this.item.type.parent_id)
+            }
         },
         //---------------------------------------------------------------------
         async searchCountry(event) {
@@ -961,10 +1002,7 @@ export const useTaxonomyStore = defineStore({
             }, 250);
         },
         //---------------------------------------------------------------------
-        strToSlug(name)
-        {
-            return vaah().strToSlug(name);
-        },
+
         //---------------------------------------------------------------------
         async deleteTaxonomyType(item) {
             this.is_loading = true;
@@ -1034,6 +1072,7 @@ export const useTaxonomyStore = defineStore({
             }
         }
     }
+
 });
 
 

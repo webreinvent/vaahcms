@@ -103,7 +103,7 @@ class TaxonomyType extends Model {
         return $this->hasMany(self::class,
             'parent_id', 'id')
             ->with(['children'])
-            ->select('id', 'uuid as key', 'name as label', 'slug as data', 'parent_id');
+            ->select('id', 'id as key', 'name as label', 'slug as data', 'parent_id');
     }
     //-------------------------------------------------
     public function getTableColumns() {

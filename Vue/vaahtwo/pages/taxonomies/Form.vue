@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watchEffect } from "vue";
+import {computed, onMounted, ref} from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
@@ -32,13 +32,6 @@ onMounted(async () => {
     await store.getFormMenu();
 });
 
-//----item watcher
-watchEffect(async () => {
-    if (store.item && store.item.name) {
-        store.item.slug = store.strToSlug(store.item.name);
-    }
-});
-
 
 //--------form_menu
 const form_menu = ref();
@@ -47,6 +40,11 @@ const toggleFormMenu = (event) => {
 };
 //--------/form_menu
 
+const tree_select_value = computed(() => {
+    return {[store.item.vh_taxonomy_type_id]:true}
+},(value)=>{
+
+})
 
 
 //--------toggle dynamic modal--------//
@@ -147,10 +145,10 @@ const openTaxonomyTypeModal = () => {
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"
-                                    v-model="store.selected_parent_id"
+                                    v-model="tree_select_value"
                                     :options="store.assets.types"
-                                    placeholder="Select a Parent"
-                                    @node-select="store.selectedParent($event)"
+                                    placeholder="Select a type"
+                                    @node-select="store.selectType($event)"
                         />
 
                         <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
@@ -162,15 +160,16 @@ const openTaxonomyTypeModal = () => {
                     </div>
                 </VhField>
 
-                <VhField label="Parent Country"
-                         v-if=" store.item.type === 'cities' "
+                <VhField label="Parent"
+                         v-if="store.item.type
+                         && store.item.type.parent_id"
                 >
                     <Dropdown v-model="store.item.parent_id"
-                              :options="store.assets.countries"
+                              :options="store.parent_options"
                               optionLabel="name"
-                              optionValue="code"
+                              optionValue="id"
                               :filter="true"
-                              placeholder="Select a Parent country"
+                              placeholder="Select a Parent"
                               class="p-inputtext-sm w-full"
                     />
                 </VhField>
@@ -179,6 +178,7 @@ const openTaxonomyTypeModal = () => {
                     <InputText class="w-full"
                                name="taxonomies-name"
                                data-testid="taxonomies-name"
+                               @update:modelValue="store.watchItem"
                                v-model="store.item.name"
                     />
                 </VhField>
@@ -196,32 +196,6 @@ const openTaxonomyTypeModal = () => {
                               data-testid="taxonomies-notes"
                               name="taxonomies-notes"
                               v-model="store.item.notes"
-                    />
-                </VhField>
-
-                <VhField label="Seo Title">
-                    <InputText class="w-full"
-                               name="taxonomies-seo-title"
-                               data-testid="taxonomies-seo-tile"
-                               v-model="store.item.seo_title"
-                    />
-                </VhField>
-
-                <VhField label="Seo Keywords">
-                    <Chips separator=","
-                           inputClass="w-full"
-                           name="taxonomies-seo-keywords"
-                           data-testid="taxonomies-seo-keywords"
-                           v-model="store.item.seo_keywords"
-                    />
-
-                </VhField>
-
-                <VhField label="Seo Description">
-                    <Textarea class="w-full"
-                               name="taxonomies-seo-description"
-                               data-testid="taxonomies-seo-description"
-                               v-model="store.item.description"
                     />
                 </VhField>
 
