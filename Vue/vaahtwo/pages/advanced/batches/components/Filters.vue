@@ -55,6 +55,7 @@ const dateColumns = [
                 </template>
 
                 <Calendar inputId="range"
+                          class="w-full"
                           data-testid="batch"
                           v-model="store.dates2"
                           @date-select="store.setDateRange"

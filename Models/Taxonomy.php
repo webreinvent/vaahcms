@@ -96,7 +96,7 @@ class Taxonomy extends TaxonomyBase
             return $response;
         }
 
-        $item = new self();
+        $item = new static();
         $item->fill($inputs);
         $item->slug = Str::slug($inputs['slug']);
         $item->save();

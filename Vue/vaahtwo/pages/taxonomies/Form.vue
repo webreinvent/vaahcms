@@ -40,10 +40,14 @@ const toggleFormMenu = (event) => {
 };
 //--------/form_menu
 
-const tree_select_value = computed(() => {
-    return {[store.item.vh_taxonomy_type_id]:true}
-},(value)=>{
+const tree_select_value = computed({
+    get() {
+        return {[store.item.vh_taxonomy_type_id]:true}
+    },
+    set(value) {
+        // Note: we are using destructuring assignment syntax here.
 
+    }
 })
 
 

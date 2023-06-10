@@ -50,8 +50,12 @@ const store = useFailedJobStore();
             <Divider/>
 
             <VhFieldVertical>
-                <label for="range">Range</label>
+
+                <template #label>
+                    <b>Range:</b>
+                </template>
                 <Calendar inputId="range"
+                          class="w-full"
                           data-testid="failedjobs-filters-range"
                           v-model="store.dates2"
                           @date-select="store.setDateRange"
