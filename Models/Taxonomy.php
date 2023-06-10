@@ -477,7 +477,7 @@ class Taxonomy extends TaxonomyBase
         $rules = array(
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
-            'vh_taxonomy_type_id' => 'required|exists:vh_taxonomy_types,id'
+            'vh_taxonomy_type_id' => 'required'
         );
 
         $messages = array(
