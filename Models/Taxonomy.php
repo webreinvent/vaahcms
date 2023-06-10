@@ -367,7 +367,8 @@ class Taxonomy extends TaxonomyBase
     {
 
         $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','type'])
+            ->with(['createdByUser', 'updatedByUser', 'deletedByUser',
+                'type','parent'])
             ->withTrashed()
             ->first();
 
