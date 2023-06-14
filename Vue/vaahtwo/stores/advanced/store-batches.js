@@ -515,44 +515,6 @@ export const useBatchStore = defineStore({
         displayBatchDetails(item) {
 
             this.dialog_item = item;
-
-            /*let temp_content = `<div class="card">
-                                <div class='card-header'>
-                                            <div class="card-header-title
-                                                        has-text-primary">
-                                              Detail
-                                            </div>
-                                          </div>
-                                          <div class="card-content">
-                                            <table class="table">
-
-                                            <tbody>
-                                                <tr>
-                                                <th>Total Jobs</th>
-                                                <td>:</td>
-                                                  <td>`+item.total_jobs+`</td>
-                                                  </tr>
-                                                  <tr>
-                                                  <th>Pending Jobs</th>
-                                                  <td>:</td>
-                                                  <td>`+item.pending_jobs+`</td>
-                                                  </tr>
-                                                  <tr>
-                                                   <th>Failed Jobs</th>
-                                                   <td>:</td>
-                                                  <td>`+item.failed_jobs+`</td>
-                                                </tr>
-                                                  <tr>
-                                                   <th>Options</th>
-                                                   <td>:</td>
-                                                  <td>`+JSON.stringify(item.options, null, 2)+`</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                        </div>
-                                        </div>`;
-            this.dialog_content = `<pre class="is-size-6">`+temp_content+`</pre>`;*/
             this.display_detail = true;
         },
         displayFailedIdDetails(content) {
@@ -695,7 +657,7 @@ export const useBatchStore = defineStore({
                 return 0;
             }
 
-            return value;
+            return Math.round(value);
         }
     }
 });
