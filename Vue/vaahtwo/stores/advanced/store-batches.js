@@ -36,6 +36,7 @@ export const useBatchStore = defineStore({
         page: 1,
         rows: 20,
         dialog_content: null,
+        dialog_item: null,
         display_detail: false,
         display_failed_ids: false,
         base_url: base_url,
@@ -511,12 +512,51 @@ export const useBatchStore = defineStore({
                 return d.pending_jobs * 100 / d.total_jobs;
             }
         },
-        displayBatchDetails(content) {
-            this.dialog_content = `<pre class="is-size-6">`+content+`</pre>`;
+        displayBatchDetails(item) {
+
+            this.dialog_item = item;
+
+            /*let temp_content = `<div class="card">
+                                <div class='card-header'>
+                                            <div class="card-header-title
+                                                        has-text-primary">
+                                              Detail
+                                            </div>
+                                          </div>
+                                          <div class="card-content">
+                                            <table class="table">
+
+                                            <tbody>
+                                                <tr>
+                                                <th>Total Jobs</th>
+                                                <td>:</td>
+                                                  <td>`+item.total_jobs+`</td>
+                                                  </tr>
+                                                  <tr>
+                                                  <th>Pending Jobs</th>
+                                                  <td>:</td>
+                                                  <td>`+item.pending_jobs+`</td>
+                                                  </tr>
+                                                  <tr>
+                                                   <th>Failed Jobs</th>
+                                                   <td>:</td>
+                                                  <td>`+item.failed_jobs+`</td>
+                                                </tr>
+                                                  <tr>
+                                                   <th>Options</th>
+                                                   <td>:</td>
+                                                  <td>`+JSON.stringify(item.options, null, 2)+`</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        </div>
+                                        </div>`;
+            this.dialog_content = `<pre class="is-size-6">`+temp_content+`</pre>`;*/
             this.display_detail = true;
         },
         displayFailedIdDetails(content) {
-            this.dialog_content = `<pre class="is-size-6">`+JSON.stringify(content)+`</pre>`;
+            this.dialog_content = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+`</pre>`;
             this.display_failed_ids = true;
         },
         deleteItem(item) {

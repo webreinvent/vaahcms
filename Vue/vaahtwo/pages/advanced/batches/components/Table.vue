@@ -57,7 +57,7 @@ const useVaah = vaah();
                                 </span>
                             </div>
                         </div>
-                        
+
                     </span>
                     <span v-else>
                         <ProgressBar :value="0" style="height:10px;" />
@@ -73,7 +73,7 @@ const useVaah = vaah();
                      <Button v-if="store.hasPermission('can-read-batch-details')"
                              class="p-button-rounded p-button-sm p-button-outlined"
                              data-testid="batches-table-options"
-                             @click="store.displayBatchDetails(prop.data.options)"
+                             @click="store.displayBatchDetails(prop.data)"
                      >
                          <span class="pi pi-eye mr-1"></span>
                          <span>View</span>
@@ -88,6 +88,7 @@ const useVaah = vaah();
                  <template #body="prop">
                      <Button v-if="store.hasPermission('can-read-batch-failed-ids')"
                              class="p-button-sm p-button-outlined p-button-rounded"
+                             :severity="prop.data.failed_job_ids.length > 0?'danger':''"
                              data-testid="batches-table-failed-ids"
                              @click="store.displayFailedIdDetails(prop.data.failed_job_ids)"
                      >
@@ -154,7 +155,32 @@ const useVaah = vaah();
         >
                 <Card class="w-max">
                     <template #content>
-                        <span v-html="store.dialog_content"></span>
+                        <table role="table" class="p-datatable-table" style="min-width:50rem;">
+                            <tbody class="p-datatable-tbody" role="rowgroup" style=""><!---->
+                            <tr class="" tabindex="-1" role="row" draggable="false">
+                                <th class="" role="cell">Total Jobs</th>
+                                <td class="" role="cell">:</td>
+                                <td class="" role="cell">{{store.dialog_item.total_jobs}}</td>
+                            </tr><!----><!----><!---->
+                            <tr class="" tabindex="-1" role="row">
+                                <th class="" role="cell">Pending Jobs</th>
+                                <td class="" role="cell">:</td>
+                                <td class="" role="cell">{{store.dialog_item.pending_jobs}}</td>
+                            </tr><!----><!----><!---->
+                            <tr class="" tabindex="-1" role="row">
+                                <th class="" role="cell">Failed Jobs</th>
+                                <td class="" role="cell">:</td>
+                                <td class="" role="cell">{{store.dialog_item.failed_jobs}}</td>
+                            </tr><!----><!----><!---->
+                            <tr class="" tabindex="-1" role="row">
+                                <th class="" role="cell">Options</th>
+                                <td class="" role="cell">:</td>
+                                <td class="w-5rem" role="cell">
+                                    {{JSON.stringify(store.dialog_item.options, null, 2)}}
+                                </td>
+                            </tr><!----><!----><!---->
+                          </tbody>
+                        </table>
                     </template>
                 </Card>
         </Dialog>

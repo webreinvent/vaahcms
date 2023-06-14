@@ -40,6 +40,18 @@ class BatchBase extends Model
     }
 
     //-------------------------------------------------
+   /* public function getOptionsAttribute($value)
+    {
+
+        try{
+            return unserialize($value);
+        }catch (\Exception $e){
+            return $value;
+        }
+
+    }*/
+
+    //-------------------------------------------------
 
     public function getFailedJobIdsAttribute($value)
     {

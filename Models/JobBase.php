@@ -41,7 +41,15 @@ class JobBase extends Model
     //-------------------------------------------------
     public function getPayloadAttribute($value)
     {
-        return json_decode($value);
+        $json_value = json_decode($value);
+
+        if($json_value && isset($json_value->data)
+            && $json_value->data && isset($json_value->data->command)
+            && $json_value->data->command){
+            $json_value->data->command = unserialize($json_value->data->command);
+        }
+
+        return $json_value;
     }
     //-------------------------------------------------
     public function getTableColumns() {
