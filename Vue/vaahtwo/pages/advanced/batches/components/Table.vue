@@ -2,6 +2,7 @@
 import { vaah } from '../../../../vaahvue/pinia/vaah'
 import { useBatchStore } from '../../../../stores/advanced/store-batches'
 
+
 const store = useBatchStore();
 const useVaah = vaah();
 
@@ -28,16 +29,35 @@ const useVaah = vaah();
 
             <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
-                    <span v-if="prop.data.pending_jobs > 0">
-                        <ProgressBar :value="store.getJobProgress(prop.data,1)"
-                                     data-testid="batches-table-progress-1"
-                        />
-                        <ProgressBar :value="store.getJobProgress(prop.data,2)"
-                                     data-testid="batches-table-progress-2"
-                        />
-                        <ProgressBar :value="store.getJobProgress(prop.data,3)"
-                                     data-testid="batches-table-progress-3"
-                        />
+                    <span v-if="prop.data.total_jobs > 0">
+
+                        <div class="progress mt-1 vh-progress-bar"
+                             show-value="true">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 :aria-valuenow="store.getBarValue('success',prop.data)"
+                                 aria-valuemin="0" aria-valuemax="100"
+                                 :style="'width: '+store.getBarValue('success',prop.data)+'%;'">
+                                <span>{{store.getBarValue('success',prop.data)}}% </span>
+                            </div>
+                            <div class="progress-bar bg-danger"
+                                 role="progressbar"
+                                 :aria-valuenow="store.getBarValue('danger',prop.data)"
+                                 aria-valuemin="0" aria-valuemax="100"
+                                 :style="'width: '+store.getBarValue('danger',prop.data)+'%;'">
+                                <span>{{store.getBarValue('danger',prop.data)}}% </span>
+                            </div>
+                            <div class="progress-bar bg-light"
+                                 role="progressbar"
+                                 :aria-valuenow="store.getBarValue('light',prop.data)"
+                                 aria-valuemin="0" aria-valuemax="100"
+                                 :style="'width: '+store.getBarValue('light',prop.data)+'%;'">
+                                <span class="text-black-alpha-90">
+                                    {{store.getBarValue('light',prop.data)}}%
+                                </span>
+                            </div>
+                        </div>
+                        
                     </span>
                     <span v-else>
                         <ProgressBar :value="0" style="height:10px;" />
@@ -163,3 +183,4 @@ const useVaah = vaah();
         <!--/paginator-->
     </div>
 </template>
+

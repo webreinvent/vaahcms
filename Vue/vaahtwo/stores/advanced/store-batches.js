@@ -624,6 +624,38 @@ export const useBatchStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
+        },
+        //---------------------------------------------------------------------
+        getBarValue(type = 'success',item) {
+
+            let value  = 0;
+            switch (type){
+                case 'success':
+                    value = (item.total_jobs - item.pending_jobs
+                        - item.failed_jobs) * 100 / item.total_jobs;
+                    break;
+                case 'danger':
+                    if((item.total_jobs - item.pending_jobs
+                        - item.failed_jobs) * 100 / item.total_jobs === 100){
+                        break;
+                    }
+                    value = item.failed_jobs * 100 / item.total_jobs;
+                    break;
+                case 'light':
+                    if(((item.total_jobs - item.pending_jobs
+                        - item.failed_jobs) * 100 / item.total_jobs) === 100 ||
+                        item.failed_jobs * 100 / item.total_jobs === 100){
+                        break;
+                    }
+                    value = item.pending_jobs * 100 / item.total_jobs;
+                    break;
+            }
+
+            if(value < 0){
+                return 0;
+            }
+
+            return value;
         }
     }
 });
