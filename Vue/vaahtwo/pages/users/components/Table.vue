@@ -59,12 +59,11 @@ const useVaah = vaah();
                     v-if="store.hasPermission('can-read-users')"
             >
                 <template #body="prop">
-                    <Button class="p-button-sm p-button-rounded white-space-nowrap"
+
+                    <Button rounded
                             data-testid="user-list_data_role"
                             @click="store.toRole(prop.data)"
-                    >
-                        {{ prop.data.active_roles_count }} / {{ store.assets.totalRole }}
-                    </Button>
+                            size="small" class="white-space-nowrap" :label=" prop.data.active_roles_count +' / '+ store.assets.totalRole"/>
                 </template>
             </Column>
 

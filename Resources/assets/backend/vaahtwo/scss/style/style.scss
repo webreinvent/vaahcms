@@ -23,6 +23,43 @@ body{
     line-height: $line-height;
 }
 
+
+/*Tables*/
+.p-datatable{
+    .p-button{
+        &.p-button-sm{
+            padding: .5rem .75rem;
+        }
+    }
+}
+
+
+/*input switch*/
+.p-inputswitch{
+    &.p-inputswitch-sm{
+        background-color: #ff3300;
+        width: $input-switch-small-width;
+        height: $input-switch-small-height;
+        .p-inputswitch-slider{
+            &:before{
+                width:  $input-switch-small-handle-width;
+                height: $input-switch-small-handle-height;
+                left: $input-switch-small-slider-padding;
+                margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
+
+            }
+        }
+
+        &.p-inputswitch-checked {
+            .p-inputswitch-slider:before {
+                transform: translateX($input-switch-small-handle-width);
+            }
+        }
+
+
+    }
+}
+
 .main-container{
     width: calc(100% - 230px);
     margin: 55px 2px 0 auto;
