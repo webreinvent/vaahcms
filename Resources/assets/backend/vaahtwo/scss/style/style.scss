@@ -27,9 +27,8 @@ body{
 /*Tables*/
 .p-datatable{
     .p-button{
-        &.p-button-sm{
-            padding: .5rem .75rem;
-        }
+        padding: 0.25rem 0.5rem;
+        width: auto;
     }
 }
 
@@ -37,7 +36,7 @@ body{
 /*input switch*/
 .p-inputswitch{
     &.p-inputswitch-sm{
-        background-color: #ff3300;
+
         width: $input-switch-small-width;
         height: $input-switch-small-height;
         .p-inputswitch-slider{
@@ -46,7 +45,6 @@ body{
                 height: $input-switch-small-handle-height;
                 left: $input-switch-small-slider-padding;
                 margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
-
             }
         }
 
@@ -59,6 +57,7 @@ body{
 
     }
 }
+
 
 .main-container{
     width: calc(100% - 230px);

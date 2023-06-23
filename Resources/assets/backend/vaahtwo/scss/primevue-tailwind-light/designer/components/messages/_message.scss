@@ -91,4 +91,9 @@
         font-size: $messageIconFontSize;
         margin-right: $inlineSpacing;
     }
+
+    .p-icon:not(.p-message-close-icon) {
+        width: $messageIconFontSize;
+        height: $messageIconFontSize;
+    }
 }

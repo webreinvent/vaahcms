@@ -28,7 +28,7 @@
 
     &.p-focus {
         .p-inputswitch-slider {
-
+            @include focused();
         }
     }
 
@@ -44,7 +44,7 @@
 
             &:before {
                 background: $inputSwitchHandleOnBg;
-             }
+            }
         }
 
         &:not(.p-disabled):hover {
@@ -55,6 +55,8 @@
     }
 
     &.p-invalid {
-        @include invalid-input();
+        .p-inputswitch-slider {
+            @include invalid-input();
+        }
     }
 }

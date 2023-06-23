@@ -98,7 +98,7 @@ const useVaah = vaah();
                                 v-if="store.hasPermission('can-read-users')"
                         />
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button class="p-button-tiny p-button-text "
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"

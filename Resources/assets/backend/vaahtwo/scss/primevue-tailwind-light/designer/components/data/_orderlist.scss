@@ -25,6 +25,7 @@
         padding: $inputListPadding;
         border-bottom-right-radius: $borderRadius;
         border-bottom-left-radius: $borderRadius;
+        outline: 0 none;
 
         .p-orderlist-item {
             padding: $inputListItemPadding;
@@ -39,13 +40,18 @@
                 color: $inputListItemTextHoverColor;
             }
 
-            &:focus {
-                @include focused-listitem();
+            &.p-focus {
+                color: $inputListItemTextFocusColor;
+                background: $inputListItemFocusBg;
             }
 
             &.p-highlight {
                 color: $highlightTextColor;
                 background: $highlightBg;
+
+                &.p-focus {
+                    background: $highlightFocusBg;
+                }
             }
         }
     }

@@ -9,6 +9,10 @@
         color: $toggleButtonIconColor;
     }
 
+    &:not(.p-disabled).p-focus {
+        @include focused-input();
+    }
+
     &:not(.p-disabled):not(.p-highlight):hover {
         background: $toggleButtonHoverBg;
         border-color: $toggleButtonHoverBorderColor;

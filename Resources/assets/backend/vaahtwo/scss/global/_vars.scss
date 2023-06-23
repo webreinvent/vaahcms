@@ -73,7 +73,7 @@ $action-icon-hover-color:$shade900 !default;
 $action-icon-border-radius:50% !default;
 
 //input field (e.g. inputtext, spinner, inputmask)
-$input-padding:.75rem .75rem !default;
+$input-padding:.5rem .75rem !default;
 $input-focus-border-color:$primary !default;
 $input-error-border-color:$danger !default;
 $input-placeholder-text-color:$shade600 !default;
@@ -112,7 +112,7 @@ $input-overlay-shadow:0 0 #0000,0 0 #0000,0 10px 15px -3px rgba(0, 0, 0, 0.1),0 
 
 
 //button
-$button-padding:.75rem 1rem !default;
+$button-padding:.5rem .75rem !default;
 $button-icon-only-width:3rem !default;
 $button-icon-only-padding:.75rem 0 !default;
 
