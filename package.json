@@ -41,7 +41,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@riophae/vue-treeselect": "^0.4.0",
         "axios": "^0.21.0",
-        "babel-loader": "^8.2.2",
+        "babel-loader": "^9.0.0",
         "buefy": "0.9.8",
         "bulma-helpers": "^0.3.12",
         "compass-mixins": "^0.12.10",
