@@ -642,3 +642,64 @@ $raised-button-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 
 $rounded-button-border-radius:2rem !default;
 
 
+
+$primaryColor: $primary !default;
+$primaryLightColor:lighten($primary, 20%) !default;
+$primaryLighterColor:lighten($primary, 40%) !default;
+$primaryDarkColor: darken($primary, 10%) !default;
+$primaryDarkerColor:darken($primary, 30%) !default;
+$primaryTextColor: #ffffff !default;
+
+$infoColor:$info !default;
+$infoLightColor: lighten($infoColor, 20%) !default;
+$infoLighterColor: lighten($infoColor, 30%) !default;
+$infoDarkColor:darken($infoColor, 15%) !default;
+$infoDarkerColor:darken($infoColor, 25%) !default;
+
+
+$successColor:$success;
+$successLightColor: lighten($successColor, 30%) !default;
+$successLighterColor: lighten($successColor, 40%) !default;
+$successDarkColor:darken($successColor, 15%) !default;
+$successDarkerColor:darken($successColor, 25%) !default;
+
+$dangerColor:$danger !default;
+$dangerLightColor: lighten($dangerColor, 20%) !default;
+$dangerLighterColor: lighten($dangerColor, 30%) !default;
+$dangerDarkColor:darken($dangerColor, 20%) !default;
+$dangerDarkerColor:darken($dangerColor, 30%) !default;
+
+$warningColor:$warning !default;
+$warningLightColor: lighten($warningColor, 20%) !default;
+$warningLighterColor: lighten($warningColor, 30%) !default;
+$warningDarkColor:darken($warningColor, 20%) !default;
+$warningDarkerColor:darken($warningColor, 30%) !default;
+
+$helpColor:$help;
+$helpLightColor:lighten($helpColor, 20%);
+$helpLighterColor:lighten($helpColor, 30%);
+$helpDarkColor: darken($helpColor, 15%);
+$helpDarkerColor: darken($helpColor, 25%);
+
+$secondaryColor:$secondary;
+$secondaryDarkColor: darken($secondary, 20%) !default;
+$secondaryDarkerColor: darken($secondary, 30%) !default;
+$secondaryLightColor:lighten($secondary, 15%) !default;
+$secondaryLighterColor:lighten($secondary, 25%) !default;
+
+
+$highlightBg: #EEF2FF !default;
+$highlightTextColor: #312E81 !default;
+$highlightFocusBg: #E0E7FF !default;
+
+
+//card
+$cardHeaderPadding:$card-header-padding !default;
+$cardBodyPadding:$card-body-padding !default;
+$cardTitleFontSize:$card-title-font-size !default;
+$cardTitleFontWeight:$card-title-font-weight !default;
+$cardSubTitleFontWeight:$card-sub-title-font-weight !default;
+$cardSubTitleColor:$card-sub-title-color !default;
+$cardContentPadding:$card-content-padding !default;
+$cardFooterPadding:$card-footer-padding !default;
+$cardShadow:$card-shadow !default;
