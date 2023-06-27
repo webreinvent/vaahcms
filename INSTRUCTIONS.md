@@ -336,6 +336,6 @@ $process->run();
 
 ### Changelog Command:
 ```shell
-auto-changelog --commit-limit false --template changelog-template.hbs 
+auto-changelog --commit-limit false --template changelog-template.hbs
 ``` 
 
