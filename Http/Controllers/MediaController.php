@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 use WebReinvent\VaahCms\Entities\Media;
 use Illuminate\Support\Facades\File;
 
@@ -112,13 +113,13 @@ class MediaController extends Controller
             //create thumbnail if image
             if($data['type'] == 'image')
             {
-                $image = \Image::make($data['full_path'])->fit(180, 101, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
+                $img = new ImageManager();
+
+                $image = $img->make($data['full_path'])->fit(180, 101);
                 $name_details = pathinfo($data['full_path']);
                 $thumbnail_name = $name_details['filename'].'-thumbnail.'.$name_details['extension'];
                 $thumbnail_path = $request->folder_path.'/'.$thumbnail_name;
-                \Storage::put($thumbnail_path, (string) $image->encode());
+                \Storage::put($thumbnail_path, (string) $image->toGif());
 
                 if (substr($thumbnail_path, 0, 6) =='public') {
                     $data['url_thumbnail'] = 'storage'.substr($thumbnail_path, 6);
