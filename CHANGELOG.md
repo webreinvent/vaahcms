@@ -96,7 +96,7 @@ copy custom env to .env
 - [`c8d6795`](https://github.com/webreinvent/vaahcms/commit/c8d6795ae67e5d55eabd1e35b529da46ce53cb50) Updated: css
 - [`e39fb0f`](https://github.com/webreinvent/vaahcms/commit/e39fb0f8754623777deedae6cafb1e535547d446) Updated: css
 - [`cc49247`](https://github.com/webreinvent/vaahcms/commit/cc49247a0d77ca486644f3e68e7fe611ba949527) updated: command
-## [v2.0.0](https://github.com/webreinvent/vaahcms/compare/v1.8.6...v2.0.0) - 2023-05-06
+## [v2.0.0](https://github.com/webreinvent/vaahcms/compare/v1.8.7...v2.0.0) - 2023-05-06
 ### Merged
 - 2.x-release -&gt; 2.x | V2.0.0 [`#153`](https://github.com/webreinvent/vaahcms/pull/153)
 - 2.x feature -&gt; 2.x develop | Add multi factore auth [`#156`](https://github.com/webreinvent/vaahcms/pull/156)
@@ -1435,6 +1435,14 @@ Media Date Filter issue fixed
 - [`08a30a3`](https://github.com/webreinvent/vaahcms/commit/08a30a34d431dff4070086da7b5fb9f218cdd49e) Updated: check update and getting started buttons click events
 - [`d29db88`](https://github.com/webreinvent/vaahcms/commit/d29db881d0c5a135e29a9f8dec646e84d7d9c44c) Updated: page title
 - [`af7a1c5`](https://github.com/webreinvent/vaahcms/commit/af7a1c5556cc24003c98d312cb25d46c96e99547) Updated: clear cache in test config
+## [v1.8.7](https://github.com/webreinvent/vaahcms/compare/v1.8.6...v1.8.7) - 2023-06-27
+### Merged
+- 1.x feature -&gt; 1.x develop | update intervention method syntax [`#171`](https://github.com/webreinvent/vaahcms/pull/171)
+### Commits
+
+- [`fcb1bd9`](https://github.com/webreinvent/vaahcms/commit/fcb1bd90a25ce72c507d24cca7249c31acbed880) updated: changelog
+- [`6b8d874`](https://github.com/webreinvent/vaahcms/commit/6b8d874c99e9be7c23f8bec750b2f86743b0c8f3) Updated: intervention vue3 extension
+- [`3cf4b38`](https://github.com/webreinvent/vaahcms/commit/3cf4b38b04e73b0a30f0237d53ad344a0e80b8e9) updated: version
 ## [v1.8.6](https://github.com/webreinvent/vaahcms/compare/v1.8.5...v1.8.6) - 2023-06-27
 ### Merged
 - 1.x release/v1.8.6 [`#170`](https://github.com/webreinvent/vaahcms/pull/170)
