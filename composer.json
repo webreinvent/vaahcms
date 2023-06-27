@@ -4,7 +4,7 @@
   "keywords": ["vaahcms", "headless", "hmvc", "laravel", "cms", "vue", "vuex"],
   "homepage": "https://webreinvent.com",
   "license": "MIT",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "authors": [
     {
       "name": "WebReinvent",
@@ -18,7 +18,7 @@
     "berkayk/onesignal-laravel": "^1.0.5",
     "composer/composer": "^1.10.6",
     "creativeorange/gravatar": "^1.0",
-    "intervention/image": "^2.5",
+    "intervention/image": "^3.0.0-alpha.5",
     "maatwebsite/excel": "^3.1.19",
     "ixudra/curl": "^6.19.0",
     "nahid/linkify": "^1.0.0",
