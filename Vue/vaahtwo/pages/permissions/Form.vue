@@ -33,7 +33,7 @@ const toggleFormMenu = (event) => {
 <template>
 
     <div class="col-5">
-        <Panel>
+        <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -94,7 +94,7 @@ const toggleFormMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item">
+            <div v-if="store.item" class="pt-3">
 
                 <VhField label="Name">
                     <InputText class="w-full" v-model="store.item.name" data-testid="permission-item_name" />
@@ -115,6 +115,7 @@ const toggleFormMenu = (event) => {
                                   option-label="label"
                                   option-value="value"
                                   data-testid="permission-item_status"
+                                  class="has-shadowless"
                     />
                 </VhField>
             </div>
