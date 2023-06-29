@@ -17,7 +17,7 @@ const useVaah = vaah();
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
-                    selectionMode="single"
+
          >
 
             <Column selectionMode="multiple"

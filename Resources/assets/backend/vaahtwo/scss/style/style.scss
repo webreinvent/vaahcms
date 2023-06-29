@@ -1,6 +1,16 @@
 @use 'sass:math';
-@import "./../global/all.scss";
 @import "./../primevue-tailwind-light/variables.scss";
+@import "./../global/all.scss";
+
+
+
+body{
+    color:$textColor;
+    font-family: $fontFamily;
+    background: $shade200;
+    line-height: $linHeight;
+    font-size: $fontSize;
+}
 
 //Resets
 p,h1,h2,h3,h4,h5,h6,a,div{
@@ -16,12 +26,7 @@ a{
 .p-toast{
     z-index: 1000 !important;
 }
-body{
-    color:$textColor;
-    font-family: $fontFamily;
-    background: $shade200;
-    line-height: $line-height;
-}
+
 .has-shadowless{
     box-shadow: none !important;
 }
