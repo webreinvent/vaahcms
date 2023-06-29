@@ -63,6 +63,10 @@ body{
         width: auto;
         font-size: .75rem;
     }
+    .p-icon{
+        width: 0.75rem;
+        height: 0.75rem;
+    }
 }
 
 
@@ -108,8 +112,8 @@ body{
     }
 }
 .main-container{
-    width: calc(100% - 230px);
-    margin: 55px 2px 0 auto;
+    width: calc(100% - 245px);
+    margin: 55px 10px 0 auto;
 }
 .top-nav-fixed{
     width: 100%;
