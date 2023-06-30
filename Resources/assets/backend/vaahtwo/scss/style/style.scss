@@ -72,6 +72,14 @@ a{
         width: 0.75rem;
         height: 0.75rem;
     }
+    .p-datatable-tbody {
+        > tr {
+            &:focus {
+                outline: none;
+                outline-offset: 0;
+            }
+        }
+    }
 }
 
 
@@ -100,13 +108,7 @@ a{
     }
 }
 /*Table*/
-.p-datatable-table{
-    tr{
-        th, td{
-            font-size: .85rem;
-        }
-    }
-}
+
 /*Input*/
 .p-inputgroup{
     .p-input-icon-left{
