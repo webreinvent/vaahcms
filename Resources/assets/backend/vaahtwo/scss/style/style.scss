@@ -37,6 +37,7 @@ a{
         background-color: transparent;
         button, .p-paginator-pages .p-paginator-page{
             background-color: white;
+            line-height: auto;
         }
         .p-dropdown{
             border-radius: 0;
@@ -44,7 +45,7 @@ a{
                 width: 2rem;
             }
             .p-inputtext{
-                padding: 0.55rem 0.75rem;
+                padding: .35rem 0rem .35rem .5rem;
             }
         }
     }

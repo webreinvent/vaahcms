@@ -50,8 +50,10 @@ $focusOutlineColor:$primary;
 $focusShadow:none;
 
 //button
-$buttonIconOnlyWidth:2rem !default;
-
+$buttonIconOnlyWidth:2rem;
+//paginator
+$paginatorElementWidth:$buttonIconOnlyWidth;
+$paginatorElementHeight:$buttonIconOnlyWidth;
 
 
 
