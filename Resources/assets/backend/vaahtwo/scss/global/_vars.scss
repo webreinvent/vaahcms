@@ -46,7 +46,9 @@ $primeIconFontSize:.85rem;
 $menuitemPadding:.6rem 1rem;
 
 //focus
-$focusOutlineColor:$primary !default;
+$focusOutlineColor:$primary;
+$focusShadow:none;
+
 //button
 $buttonIconOnlyWidth:2rem !default;
 

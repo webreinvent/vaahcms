@@ -131,18 +131,43 @@ a{
     top: 0px;
     border-radius: 0;
     z-index: 100;
+    .p-avatar{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
     .navbar-logo{
-        width: 200px;
+        width: $sideBarWidth;
+        line-height:0;
+        transition: $sideBarAnimation;
         img{
-            max-height: 30px;
+            max-height: none;
             width: 140px;
             margin: auto;
         }
     }
-    .p-menubar-root-list{
-        margin-left: 20px;
+
+    &.p-menubar{
+        .p-menubar-root-list{
+            .p-menuitem{
+                .p-menuitem-content{
+                    cursor: pointer;
+                    &:hover, &:focus{
+                        background-color: transparent !important;
+                        color: $primary !important;
+                    }
+                }
+                &.p-focus{
+                    .p-menuitem-content{
+                        background-color: transparent !important;
+                        color: $primary !important;
+                    }
+                }
+            }
+
+        }
     }
 }
+
 .sidebar{
 
     position: fixed;
@@ -178,12 +203,15 @@ a{
             justify-content: stretch;
             white-space: nowrap;
             width: $sideBarWidth;
+            padding:1rem !important;
+
             .p-menuitem-text{
                 width: 100%;
                 padding-left: 5px;
             }
             .p-submenu-icon{
                 margin-right: 0 !important;
+                font-size: .75rem;
             }
         }
         .p-panelmenu-header{
@@ -214,10 +242,17 @@ a{
 }
 .has-sidebar-small{
     .sidebar{
-        width: 45px;
+        width: 44px;
+        &:hover{
+            width: $sideBarWidth;
+        }
     }
     .main-container {
         width: calc(100% - 60px);
+    }
+    .top-nav-fixed .navbar-logo{
+        width: 37px;
+        overflow-x: hidden;
     }
 }
 //button
