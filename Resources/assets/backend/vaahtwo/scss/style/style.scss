@@ -121,6 +121,7 @@ a{
 .main-container{
     width: calc(100% - 245px);
     margin: 55px 10px 0 auto;
+    transition: $sideBarAnimation;
 }
 .top-nav-fixed{
     width: 100%;
@@ -143,16 +144,19 @@ a{
     }
 }
 .sidebar{
+
     position: fixed;
     background-color: $shade100;
     top: 52px;
     left: 0;
-    width: 225px;
+    width: $sideBarWidth;
     z-index: 99;
     min-height: 100%;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
+    overflow-x: hidden;
     border-right: 1px solid #e5e7eb;
+    transition: $sideBarAnimation;
     &::-webkit-scrollbar {
         display: none;
     }
@@ -171,11 +175,15 @@ a{
     .p-panelmenu{
         .p-panelmenu-header-action{
             position: relative;
+            justify-content: stretch;
+            white-space: nowrap;
+            width: $sideBarWidth;
+            .p-menuitem-text{
+                width: 100%;
+                padding-left: 5px;
+            }
             .p-submenu-icon{
-                position: absolute;
-                right: 10px;
-                font-size: 0.75rem;
-                margin-left: 5px;
+                margin-right: 0 !important;
             }
         }
         .p-panelmenu-header{
@@ -190,9 +198,7 @@ a{
                 }
             }
         }
-
         .p-panelmenu-content{
-
             .p-menuitem-link{
                 position: relative;
                 .p-submenu-icon{
@@ -206,7 +212,14 @@ a{
         }
     }
 }
-
+.has-sidebar-small{
+    .sidebar{
+        width: 45px;
+    }
+    .main-container {
+        width: calc(100% - 60px);
+    }
+}
 //button
 .p-button{
    &.p-button-xs{

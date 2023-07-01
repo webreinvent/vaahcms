@@ -11,6 +11,7 @@ export const useRootStore = defineStore({
         assets: null,
         active_item:null,
         assets_is_fetching: true,
+        is_sidebar_menu_expand: false,
         base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
@@ -285,6 +286,14 @@ export const useRootStore = defineStore({
         setTopMenuItems(){
 
             this.top_menu_items = [
+                {
+                    label:'',
+                    tooltip:'Less Navigation',
+                    icon:'pi pi-align-justify',
+                    command: () => {
+                        this.is_sidebar_menu_expand = !this.is_sidebar_menu_expand;
+                    }
+                },
                 {
                     label:'',
                     url:this.assets.urls.dashboard,
