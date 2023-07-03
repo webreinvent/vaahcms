@@ -31,8 +31,8 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-6" >
-        <Panel>
+    <div class="col-5" >
+        <Panel class="is-small">
             <Message severity="error"
                          class="p-container-message"
                          :closable="false"
@@ -124,7 +124,7 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item && store.assets">
+            <div v-if="store.item && store.assets" class="mt-3">
                 <VhField label="Email">
                     <InputText class="w-full"
                                v-model="store.item.email"

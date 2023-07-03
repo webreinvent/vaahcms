@@ -37,7 +37,7 @@ a{
         background-color: transparent;
         button, .p-paginator-pages .p-paginator-page{
             background-color: white;
-            line-height: auto;
+            line-height: normal;
         }
         .p-dropdown{
             border-radius: 0;
@@ -61,7 +61,17 @@ a{
 
     }
 }
+/*Dropdown*/
+.p-dropdown {
+    &.is-small{
+        .p-dropdown-label {
+            @include scaledFontSize($inputTextFontSize, $scaleSM);
+            @include scaledPadding($inputPadding, $scaleSM);
 
+        }
+        line-height: initial;
+    }
+}
 /*Tables*/
 .p-datatable{
     .p-button{
@@ -118,7 +128,26 @@ a{
             border-bottom-right-radius: 0;
         }
     }
+
 }
+.p-fluid{
+    .p-inputgroup{
+        .p-input-icon-right, .p-input-icon-left{
+            width: auto;
+        }
+    }
+
+
+}
+
+
+.p-input-icon-left > i,
+.p-input-icon-left > svg,
+.p-input-icon-right > i,
+.p-input-icon-right > svg {
+    margin-top: -.35rem;
+}
+
 .main-container{
     width: calc(100% - 245px);
     margin: 55px 10px 0 auto;

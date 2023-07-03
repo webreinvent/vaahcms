@@ -36,7 +36,7 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-6" >
-        <Panel>
+        <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -108,7 +108,7 @@ const toggleFormMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item">
+            <div v-if="store.item" class="mt-3">
                 <VhField label="Name">
                     <InputText class="w-full"
                                v-model="store.item.name"

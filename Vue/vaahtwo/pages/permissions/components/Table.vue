@@ -51,14 +51,15 @@ const useVaah = vaah();
                      class="flex align-items-center"
              >
                 <template #body="prop" class="text-xs">
-                    {{ prop.data.slug }}
-
-                    <Button class="p-button-tiny p-button-text"
+                    <Button class="p-button-tiny p-button-text p-0 mr-2"
                             data-testid="permission-list_slug_copy"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
                             icon="pi pi-copy"
                     />
+                    {{ prop.data.slug }}
+
+
                 </template>
             </Column>
 

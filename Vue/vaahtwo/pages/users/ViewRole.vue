@@ -52,7 +52,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -92,7 +92,7 @@ const toggleItemMenu = (event) => {
                 </div>
             </template>
 
-            <div class="grid p-fluid">
+            <div class="grid p-fluid mt-2 mb-2">
                 <div class="col-12">
                     <div class="p-inputgroup">
                          <span class="p-input-icon-left">
@@ -115,8 +115,6 @@ const toggleItemMenu = (event) => {
                     </div>
                 </div>
             </div>
-
-            <Divider />
 
             <div>
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
@@ -197,7 +195,9 @@ const toggleItemMenu = (event) => {
                                    :rows="store.user_roles_query.rows"
                                    :totalRecords="store.user_roles.list.total"
                                    @page="store.userRolesPaginate($event)"
-                                   :rowsPerPageOptions="store.rows_per_page">
+                                   :rowsPerPageOptions="store.rows_per_page"
+                                   class="bg-white-alpha-0 pt-2"
+                        >
                         </Paginator>
                         <!--/paginator-->
                     </div>

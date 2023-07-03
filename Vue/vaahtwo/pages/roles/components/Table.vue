@@ -14,7 +14,7 @@ const useVaah = vaah();
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
-                    class="p-datatable-sm"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll">
@@ -44,14 +44,16 @@ const useVaah = vaah();
                      class="flex align-items-center"
              >
                  <template #body="prop">
-                     {{ prop.data.slug }}
+                     <Button class="p-button-tiny p-button-text p-0 mr-2"
 
-                     <Button class="p-button-tiny p-button-text"
                              data-testid="role-list_slug_copy"
                              v-tooltip.top="'Copy Slug'"
                              @click="useVaah.copy(prop.data.slug)"
                              icon="pi pi-copy"
                      />
+                     {{ prop.data.slug }}
+
+
 
                  </template>
              </Column>
@@ -158,14 +160,13 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
-
         <!--paginator-->
         <Paginator v-model:first="store.firstElement"
                    :rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
         />
         <!--/paginator-->
 

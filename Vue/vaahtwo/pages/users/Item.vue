@@ -57,7 +57,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -128,7 +128,7 @@ const toggleItemMenu = (event) => {
                     </div>
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
+                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm pt-3">
                     <table class="p-datatable-table">
                         <tbody class="p-datatable-tbody">
                         <Avatar v-if="store.item.avatar" size="xlarge"

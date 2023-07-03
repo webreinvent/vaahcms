@@ -52,8 +52,16 @@ const props = defineProps({
                 <Tag v-else value="No" severity="danger"></Tag>
             </td>
         </template>
+        <template v-else-if="type==='tag'">
+            <td colspan="2">
+                <Button :label="value" outlined />
+
+            </td>
+        </template>
         <template v-else>
-            <td  colspan="2">{{value}}</td>
+            <td  colspan="2">
+            {{value}}
+            </td>
         </template>
 
     </tr>

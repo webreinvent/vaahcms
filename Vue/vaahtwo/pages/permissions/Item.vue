@@ -153,7 +153,12 @@ const toggleItemMenu = (event) => {
                                                type="user"
                                     />
                                 </template>
-
+                                <template v-else-if="column === 'count_users'|| column === 'count_roles' ">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="tag"
+                                    />
+                                </template>
                                 <template v-else-if="column === 'is_active'">
                                     <VhViewRow :label="column"
                                                :value="value"

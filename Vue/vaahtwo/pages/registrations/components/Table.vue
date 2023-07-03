@@ -13,7 +13,7 @@ const useVaah = vaah();
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
-                    class="p-datatable-sm"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
@@ -153,7 +153,7 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
+
 
         <!--paginator-->
         <Paginator v-model:first="store.firstElement"
@@ -162,6 +162,7 @@ const useVaah = vaah();
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page"
                    data-testid="register-table_paginate"
+                   class="bg-white-alpha-0 pt-2"
         />
         <!--/paginator-->
     </div>
