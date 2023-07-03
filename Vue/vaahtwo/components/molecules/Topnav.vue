@@ -35,7 +35,7 @@ const toggleDropDownMenu= (event) => {
                v-tooltip.bottom="item.tooltip"
                :data-testid="'Topnav-'+item.icon.split('-')[1]"
                @click="navigate"
-               class="mx-2">
+               class="px-2">
                 <i class="pi" :class="item.icon"></i></a>
         </template>
         <template #end>

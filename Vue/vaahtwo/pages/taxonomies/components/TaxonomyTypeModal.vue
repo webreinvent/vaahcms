@@ -52,7 +52,7 @@ const cloneAction = () => {
                         data-testid="parent-taxonomies-type-name"
             />
 
-            <InputText class="p-inputtext-sm"
+            <InputText class="p-inputtext-sm border-noround"
                        name="child-taxonomies-type-slug"
                        data-testid="child-taxonomies-type-slug"
                        v-model="store.taxonomy_type_items.name"

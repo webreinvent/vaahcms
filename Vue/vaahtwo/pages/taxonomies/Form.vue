@@ -71,7 +71,7 @@ const openTaxonomyTypeModal = () => {
 </script>
 <template>
     <div class="col-6" >
-        <Panel>
+        <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                         <div class="p-panel-title">
@@ -141,7 +141,7 @@ const openTaxonomyTypeModal = () => {
                 </div>
             </template>
 
-            <div v-if="store.item">
+            <div v-if="store.item" class="pt-2">
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"

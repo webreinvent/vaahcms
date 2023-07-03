@@ -94,7 +94,7 @@ const toggleFormMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item" class="pt-3">
+            <div v-if="store.item" class="pt-2">
 
                 <VhField label="Name">
                     <InputText class="w-full" v-model="store.item.name" data-testid="permission-item_name" />

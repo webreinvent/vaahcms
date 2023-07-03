@@ -117,7 +117,7 @@ const toggleUserStatusMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item" class="mt-3">
+            <div v-if="store.item" class="mt-2">
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"

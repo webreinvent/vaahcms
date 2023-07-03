@@ -131,7 +131,7 @@ const toggleItemMenu = (event) => {
                     </div>
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm pt-3">
+                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                     <table class="p-datatable-table">
 
                         <tbody class="p-datatable-tbody">

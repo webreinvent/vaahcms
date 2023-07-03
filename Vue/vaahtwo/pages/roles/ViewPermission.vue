@@ -181,6 +181,7 @@ const confirmChangeStatus = (event, id) => {
                               placeholder="Select a Section"
                               @click="store.getItemPermissions()"
                               data-testid="role-permission_section"
+                              class="is-small"
                     >
                         <template #option="slotProps">
                             <div>
@@ -233,8 +234,9 @@ const confirmChangeStatus = (event, id) => {
                                 v-tooltip.top="'Copy Slug'"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
+                                :label="prop.data.name"
                         />
-                        {{ prop.data.name }}
+
 
 
                     </template>
@@ -351,7 +353,7 @@ const confirmChangeStatus = (event, id) => {
             <template #message="slotProps">
                 <div class="flex">
                     <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-                    <p class="pl-2 text-sm">{{slotProps.message.message}}</p>
+                    <p class="pl-2">{{slotProps.message.message}}</p>
                 </div>
             </template>
         </ConfirmDialog>

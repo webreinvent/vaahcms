@@ -122,7 +122,7 @@ const openDetailsViewModal = () => {
                 </div>
             </template>
 
-            <div class="grid p-fluid mt-2 mb-2">
+            <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
                     <div class="p-inputgroup">
                          <span class="p-input-icon-left">

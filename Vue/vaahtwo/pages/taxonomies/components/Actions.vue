@@ -27,10 +27,10 @@ const toggleBulkMenuState = (event) => {
 </script>
 
 <template>
-    <div>
+    <div >
 
         <!--actions-->
-        <div :class="{'flex justify-content-between': store.isViewLarge()}">
+        <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
             <div v-if="store.view === 'large'">

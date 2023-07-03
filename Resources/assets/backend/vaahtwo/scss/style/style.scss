@@ -16,6 +16,10 @@ body{
 p,h1,h2,h3,h4,h5,h6,a,div{
   margin:0;
 }
+:focus {
+    box-shadow: none !important;
+    outline: none;
+}
 a{
     text-decoration: none;
     color:$primaryColor;
@@ -54,13 +58,13 @@ a{
 .p-panel{
     &.is-small{
         .p-panel-header, .p-panel-content{
-            padding: 0;
-            border: none;
-            background-color: transparent;
+            padding: .4rem .75rem;
         }
+
 
     }
 }
+
 /*Dropdown*/
 .p-dropdown {
     &.is-small{
@@ -78,6 +82,11 @@ a{
         padding: 0.25rem 0.5rem;
         width: auto;
         font-size: .75rem;
+        &.p-button-text{
+           &:hover, &:active{
+               background-color: transparent;
+           }
+        }
     }
     .p-icon{
         width: 0.75rem;
@@ -202,7 +211,7 @@ a{
 
     position: fixed;
     background-color: $shade100;
-    top: 52px;
+    top: 47px;
     left: 0;
     width: $sideBarWidth;
     z-index: 99;

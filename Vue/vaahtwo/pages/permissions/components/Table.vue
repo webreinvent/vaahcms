@@ -48,17 +48,16 @@ const useVaah = vaah();
                      header="Slug"
                     :sortable="true"
                      v-if="store.isViewLarge()"
-                     class="flex align-items-center"
+
              >
                 <template #body="prop" class="text-xs">
-                    <Button class="p-button-tiny p-button-text p-0 mr-2"
+                    <Button class="p-button-tiny p-button-text p-0"
                             data-testid="permission-list_slug_copy"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
                             icon="pi pi-copy"
+                            :label="prop.data.slug"
                     />
-                    {{ prop.data.slug }}
-
 
                 </template>
             </Column>

@@ -123,7 +123,7 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item && store.assets" class="pt-3">
+            <div v-if="store.item && store.assets" class="pt-2">
                 <div class="field mb-4 flex justify-content-between align-items-center"
                      v-if="root && root.assets && store.item.id">
 

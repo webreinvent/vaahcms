@@ -124,7 +124,7 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item && store.assets" class="mt-3">
+            <div v-if="store.item && store.assets" class="mt-2">
                 <VhField label="Email">
                     <InputText class="w-full"
                                v-model="store.item.email"

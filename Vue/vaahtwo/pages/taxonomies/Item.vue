@@ -59,7 +59,7 @@ const toggleItemMenu = (event) => {
 
     <div class="col-6" >
 
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
 
             <template class="p-1" #header>
 
@@ -116,7 +116,7 @@ const toggleItemMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item">
+            <div v-if="store.item" class="mt-2">
 
                 <Message severity="error"
                          class="p-container-message"
