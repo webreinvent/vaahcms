@@ -8,6 +8,21 @@
         .p-button-icon {
             font-size: $speedDialButtonIconFontSize;
         }
+
+        .p-icon {
+            width: $speedDialButtonIconFontSize;
+            height: $speedDialButtonIconFontSize;
+        }
+    }
+}
+
+.p-speeddial-list {
+    outline: 0 none;
+}
+
+.p-speeddial-item {
+    &.p-focus > .p-speeddial-action {
+        @include focused();
     }
 }
 

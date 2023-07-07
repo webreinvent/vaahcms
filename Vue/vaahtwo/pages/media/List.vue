@@ -111,7 +111,7 @@ onMounted(async () => {
         </div>
 
         <div :class="'col-'+store.list_view_width">
-            <Panel>
+            <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div>

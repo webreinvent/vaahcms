@@ -1,14 +1,13 @@
 @use 'sass:math';
 
 .p-steps {
-
     .p-steps-item {
         .p-menuitem-link {
             background: transparent;
             transition: $listItemTransition;
             border-radius: $borderRadius;
             background: $stepsItemBg;
-            color: $stepsItemNumberColor;
+
             .p-steps-number {
                 color: $stepsItemNumberColor;
                 border: $stepsItemBorder;

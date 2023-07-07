@@ -4,7 +4,7 @@ import { useMediaStore } from '../../stores/store-media'
 import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah";
 import FileUploader from "./components/FileUploader.vue";
-
+import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 
 const store = useMediaStore();
 const route = useRoute();
@@ -28,7 +28,7 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-6">
-        <Panel>
+        <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -97,11 +97,12 @@ const toggleFormMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item" class="form">
-                    <span class="p-float-label mt-2">
-                        <InputText id="name" class="w-full p-inputtext-sm" v-model="store.item.name" />
-                        <label for="name">Name</label>
-                    </span>
+            <div v-if="store.item" class="form mt-3">
+
+                <VhField label="Name">
+                    <InputText class="w-full" v-model="store.item.name" data-testid="media_name" />
+                </VhField>
+
 
                     <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUploader placeholder="Upload Avatar"
@@ -161,38 +162,63 @@ const toggleFormMenu = (event) => {
                         </div>
                     </div>
 
-                    <span class="p-float-label">
-                        <InputText id="title" class="w-full p-inputtext-sm"
-                                   v-model="store.item.title" />
-                        <label for="title">Title</label>
-                    </span>
+                <VhField label="Title">
+                    <InputText class="w-full"  v-model="store.item.title" data-testid="media_title" />
+                </VhField>
 
-                    <span class="p-float-label">
-                        <InputText id="alt-text" class="w-full"
-                                   v-model="store.item.alt_text"
+                <VhField label="Alternate Text">
+                    <InputText class="w-full"  v-model="store.item.alt_text" data-testid="media_alternate_text" />
+                </VhField>
+
+                <VhField label="Caption">
+                    <InputText class="w-full"  v-model="store.item.caption" data-testid="media_alternate_text" />
+                </VhField>
+                <VhField label="Caption">
+                    <InputText class="w-full"  v-model="store.item.caption" data-testid="media_alternate_text" />
+                </VhField>
+
+                <VhField label=" Is this a downloadable media?">
+                    <SelectButton
+                        v-model="store.item.is_downloadable"
+                        :options="store.download_options"
+                        option-value="value"
+                        option-label="label"
+                    />
+                </VhField>
+
+                <VhField label="Download Url" v-if="store.item.is_downloadable">
+
+
+                    <div class="p-inputgroup flex-1">
+                        <Button data-testid="media-copy_download_url"
+                                @click="store.copyDownloadUrl()"
+                                icon="pi pi-copy"
+                                v-tooltip.top=" 'Copy Download Link' "
+                                class="p-button-sm"
+                                :disabled="!store.item.download_url"
+                        />
+                        <InputText class="w-full p-inputtext-sm border-noround"   v-model="store.item.download_url" data-testid="media_alternate_text" />
+                        <Button v-if="store.downloadable_slug_available"
+                                data-testid="media-list-check_url_availability"
+                                @click="store.isDownloadableSlugAvailable"
+                                class="p-button-success p-button-sm"
+                                icon="pi pi-check"
+                                v-tooltip.top=" 'Download URL Available' "
                         />
 
-                        <label for="alt-text">Alternate Text</label>
-                    </span>
+                        <Button v-else
+                                data-testid="media-list-check_url_availability"
+                                @click="store.isDownloadableSlugAvailable"
+                                icon="pi pi-question"
+                                :disabled="!store.item.download_url"
+                                class="p-button-sm"
+                                v-tooltip.top=" 'Check Availability' "
+                        />
+                    </div>
+                </VhField>
 
-                    <span class="p-float-label mb-0">
-                        <Textarea id="caption" class="w-full" v-model="store.item.caption"></Textarea>
-                        <label for="caption">Caption</label>
-                    </span>
 
-                    <span class="p-float-label">
-                        <p class="text-xs text-gray-600 ml-2 mb-1 mt-3">
-                            Is this a downloadable media?
-                        </p>
-                        <SelectButton
-                            v-model="store.item.is_downloadable"
-                            :options="store.download_options"
-                            option-value="value"
-                            option-label="label">
-                        </SelectButton>
-                    </span>
-
-                    <span class="p-float-label" v-if="store.item.is_downloadable">
+                <span class="p-float-label" v-if="store.item.is_downloadable">
                         <span class="p-buttonset">
                             <span class="p-float-label">
                                 <InputText id="download_url" class="col-9 p-inputtext-sm"
@@ -201,30 +227,9 @@ const toggleFormMenu = (event) => {
 
                                 <label for="download_url">Download Url</label>
 
-                                <Button v-if="store.downloadable_slug_available"
-                                        data-testid="media-list-check_url_availability"
-                                        @click="store.isDownloadableSlugAvailable"
-                                        class="p-button-success p-button-sm"
-                                        icon="pi pi-check"
-                                        v-tooltip.top=" 'Download URL Available' "
-                                />
 
-                                <Button v-else
-                                        data-testid="media-list-check_url_availability"
-                                        @click="store.isDownloadableSlugAvailable"
-                                        icon="pi pi-question"
-                                        :disabled="!store.item.download_url"
-                                        class="p-button-sm"
-                                        v-tooltip.top=" 'Check Availability' "
-                                />
 
-                                <Button data-testid="media-copy_download_url"
-                                        @click="store.copyDownloadUrl()"
-                                        icon="pi pi-copy"
-                                        v-tooltip.top=" 'Copy Download Link' "
-                                        class="p-button-sm"
-                                        :disabled="!store.item.download_url"
-                                />
+
                             </span>
                         </span>
                     </span>

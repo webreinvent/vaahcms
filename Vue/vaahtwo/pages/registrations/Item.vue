@@ -68,8 +68,8 @@ const toggleUserStatusMenu = (event) => {
 </script>
 
 <template>
-    <div class="col-6">
-        <Panel v-if="store && store.item" >
+    <div class="col-5">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="p-panel-title">
@@ -117,7 +117,7 @@ const toggleUserStatusMenu = (event) => {
                 </div>
             </template>
 
-            <div v-if="store.item">
+            <div v-if="store.item" class="mt-2">
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"

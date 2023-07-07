@@ -108,7 +108,7 @@ const confirmChangeStatus = (event, id) => {
 
 <template>
     <div class="col-6">
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -155,7 +155,7 @@ const confirmChangeStatus = (event, id) => {
                 </div>
             </template>
 
-            <div class="flex justify-content-between">
+            <div class="flex justify-content-between mt-3 mb-1">
 
                 <div v-if="store && store.assets">
                     <Dropdown v-model="store.role_permissions_query.module"
@@ -163,6 +163,7 @@ const confirmChangeStatus = (event, id) => {
                               placeholder="Select a Module"
                               data-testid="role-permission_module"
                               @change="store.getModuleSection()"
+                              class="is-small"
                     >
                         <template #option="slotProps">
                             <div>
@@ -180,6 +181,7 @@ const confirmChangeStatus = (event, id) => {
                               placeholder="Select a Section"
                               @click="store.getItemPermissions()"
                               data-testid="role-permission_section"
+                              class="is-small"
                     >
                         <template #option="slotProps">
                             <div>
@@ -227,15 +229,16 @@ const confirmChangeStatus = (event, id) => {
                 >
 
                     <template #body="prop">
-
-                        {{ prop.data.name }}
-
-                        <Button class="p-button-tiny p-button-text"
+                        <Button class="p-button-tiny p-button-text p-0 mr-2"
                                 data-testid="role-permission_name_copy"
                                 v-tooltip.top="'Copy Slug'"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
+                                :label="prop.data.name"
                         />
+
+
+
                     </template>
                 </Column>
 
@@ -330,7 +333,7 @@ const confirmChangeStatus = (event, id) => {
                 </Column>
             </DataTable>
 
-            <Divider />
+
 
             <!--paginator-->
             <Paginator v-if="store && store.role_permissions"
@@ -338,6 +341,7 @@ const confirmChangeStatus = (event, id) => {
                        :totalRecords="store.role_permissions.list.total"
                        @page="store.permissionPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
+                       class="bg-white-alpha-0 pt-2"
             />
             <!--/paginator-->
         </Panel>
@@ -349,7 +353,7 @@ const confirmChangeStatus = (event, id) => {
             <template #message="slotProps">
                 <div class="flex">
                     <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-                    <p class="pl-2 text-sm">{{slotProps.message.message}}</p>
+                    <p class="pl-2">{{slotProps.message.message}}</p>
                 </div>
             </template>
         </ConfirmDialog>

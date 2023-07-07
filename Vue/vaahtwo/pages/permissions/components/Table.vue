@@ -13,10 +13,11 @@ const useVaah = vaah();
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
-                    class="p-datatable-sm"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
+
          >
 
             <Column selectionMode="multiple"
@@ -47,17 +48,17 @@ const useVaah = vaah();
                      header="Slug"
                     :sortable="true"
                      v-if="store.isViewLarge()"
-                     class="flex align-items-center"
+
              >
                 <template #body="prop" class="text-xs">
-                    {{ prop.data.slug }}
-
-                    <Button class="p-button-tiny p-button-text"
+                    <Button class="p-button-tiny p-button-text p-0"
                             data-testid="permission-list_slug_copy"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
                             icon="pi pi-copy"
+                            :label="prop.data.slug"
                     />
+
                 </template>
             </Column>
 
@@ -122,7 +123,7 @@ const useVaah = vaah();
                     :header="store.getActionLabel()"
             >
                 <template #body="prop">
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup has-shadowless">
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
@@ -162,7 +163,6 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
 
         <!--paginator-->
         <Paginator v-model:first="store.firstElement"
@@ -170,6 +170,7 @@ const useVaah = vaah();
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
         />
         <!--/paginator-->
 

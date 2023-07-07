@@ -43,25 +43,27 @@ const expandNode = (item) => {
                            class="p-panelmenu-header-action p-menuitem-link"
                            :data-testid="'sidebar-'+item.label"
                            tabindex="-1">
-                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
 
-                            </span>
                             <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
 
                             </span>
                             <span class="p-menuitem-text">{{item.label}}</span>
+                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
+
+                            </span>
                         </a>
                         <a v-else
                            class="p-panelmenu-header-action p-menuitem-link"
                            :data-testid="'sidebar-'+item.label"
                            tabindex="-1">
-                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
 
-                            </span>
                             <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
 
                             </span>
                             <span class="p-menuitem-text">{{item.label}}</span>
+                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
+
+                            </span>
                         </a>
                     </div>
 

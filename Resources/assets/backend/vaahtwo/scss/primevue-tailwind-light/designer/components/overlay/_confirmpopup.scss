@@ -59,6 +59,11 @@
 
     .p-confirm-popup-icon {
         font-size: $primeIconFontSize * 1.5;
+
+        &.p-icon {
+            width: $primeIconFontSize * 1.5;
+            height: $primeIconFontSize * 1.5;
+        }
     }
 
     .p-confirm-popup-message {

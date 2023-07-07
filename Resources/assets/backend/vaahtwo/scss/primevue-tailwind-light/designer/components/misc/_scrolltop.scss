@@ -16,5 +16,10 @@
     .p-scrolltop-icon {
         font-size: $scrollTopFontSize;
         color: $scrollTopTextColor;
+
+        &.p-icon {
+            width: $scrollTopFontSize;
+            height: $scrollTopFontSize;
+        }
     }
 }

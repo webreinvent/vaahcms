@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 
 import Aside from '../components/molecules/Aside.vue';
 
@@ -13,6 +13,8 @@ import Notices from '../components/molecules/Notices.vue'
 const rootStore = useRootStore();
 
 
+
+
 onMounted(async () => {
 
     await rootStore.checkLoggedIn();
@@ -20,20 +22,20 @@ onMounted(async () => {
     await rootStore.getPermission();
 });
 
-
 </script>
 
 
 <template>
-    <div>
+    <div :class="{ 'has-sidebar-small' : rootStore.is_sidebar_menu_expand }">
 
-        <div v-if="rootStore.is_logged_in" class="grid">
+        <div v-if="rootStore.is_logged_in" class="grid" >
 
             <Topnav />
 
             <Sidebar/>
 
             <div class="grid main-container">
+
                 <div class="col-12">
                     <Notices/>
                     <RouterView></RouterView>
@@ -45,3 +47,4 @@ onMounted(async () => {
         <Footer />
     </div>
 </template>
+

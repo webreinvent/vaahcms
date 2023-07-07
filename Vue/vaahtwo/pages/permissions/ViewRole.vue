@@ -82,7 +82,7 @@ const openViewModal = () => {
 
 <template>
     <div class="col-5">
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -129,7 +129,9 @@ const openViewModal = () => {
                 </div>
             </template>
 
-            <div class="grid p-fluid">
+
+
+            <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
                     <div class="p-inputgroup ">
                         <span class="p-input-icon-left">
@@ -151,9 +153,6 @@ const openViewModal = () => {
                     </div>
                 </div>
             </div>
-
-            <Divider />
-
             <DataTable v-if="store && store.permission_roles"
                        :value="store.permission_roles.list.data"
                        dataKey="id"
@@ -232,7 +231,6 @@ const openViewModal = () => {
                 </Column>
             </DataTable>
 
-            <Divider />
 
             <!--paginator-->
             <Paginator v-if="store && store.permission_roles"
@@ -241,6 +239,7 @@ const openViewModal = () => {
                        :totalRecords="store.permission_roles.list.total"
                        @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
+                       class="bg-white-alpha-0 pt-2"
             />
             <!--/paginator-->
         </Panel>

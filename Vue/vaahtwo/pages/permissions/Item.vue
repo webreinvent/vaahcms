@@ -58,7 +58,7 @@ const toggleItemMenu = (event) => {
 <template>
 
     <div class="col-5">
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -133,6 +133,7 @@ const toggleItemMenu = (event) => {
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                     <table class="p-datatable-table">
+
                         <tbody class="p-datatable-tbody">
                             <template v-for="(value, column) in store.item ">
 
@@ -152,7 +153,12 @@ const toggleItemMenu = (event) => {
                                                type="user"
                                     />
                                 </template>
-
+                                <template v-else-if="column === 'count_users'|| column === 'count_roles' ">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="tag"
+                                    />
+                                </template>
                                 <template v-else-if="column === 'is_active'">
                                     <VhViewRow :label="column"
                                                :value="value"

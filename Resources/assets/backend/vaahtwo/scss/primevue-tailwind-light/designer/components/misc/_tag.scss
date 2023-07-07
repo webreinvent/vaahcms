@@ -31,5 +31,10 @@
     .p-tag-icon {
         margin-right: math.div($inlineSpacing, 2);
         font-size: $badgeFontSize;
+
+        &.p-icon {
+            width: $badgeFontSize;
+            height: $badgeFontSize;
+        }
     }
 }
