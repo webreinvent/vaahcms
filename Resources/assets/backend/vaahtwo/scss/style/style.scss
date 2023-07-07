@@ -75,6 +75,10 @@ a{
         }
         line-height: initial;
     }
+    .p-dropdown-label{
+        padding-top: .35rem;
+        padding-bottom: .35rem;
+    }
 }
 /*Tables*/
 .p-datatable{
@@ -125,7 +129,7 @@ a{
 
         &.p-inputswitch-checked {
             .p-inputswitch-slider:before {
-                transform: translateX($input-switch-small-handle-width);
+                transform: translateX($input-switch-small-handle-width + .1rem);
             }
         }
 
@@ -305,6 +309,9 @@ a{
        font-size: 0.65rem;
        padding: 0.5rem 0.5rem;
    }
+}
+.p-inputgroup{
+    box-shadow: none;
 }
 
 //tag
