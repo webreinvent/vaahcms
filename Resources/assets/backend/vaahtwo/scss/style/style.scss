@@ -102,7 +102,12 @@ a{
     }
 }
 
-
+/*Divider*/
+.p-divider{
+    &.is-small{
+        margin: .75rem 0px;
+    }
+}
 /*input switch*/
 .p-inputswitch{
     &.p-inputswitch-sm{
