@@ -7,8 +7,8 @@
     border-radius: $borderRadius;
     width: $menuWidth;
 
-    .p-menuitem-link {
-        @include menuitem-link();
+    .p-contextmenu-root-list {
+        outline: 0 none;
     }
 
     .p-submenu-list {
@@ -20,27 +20,20 @@
     }
 
     .p-menuitem {
-        &.p-menuitem-active {
-            > .p-menuitem-link {
-                background: $menuitemActiveBg;
-
-                .p-menuitem-text {
-                    color: $menuitemTextActiveColor;
-                }
-
-                .p-menuitem-icon, .p-submenu-icon {
-                    color: $menuitemIconActiveColor;
-                }
-            }
-        }
+        @include menuitem();
     }
 
-    .p-menu-separator {
+    .p-menuitem-separator {
         border-top: $divider;
         margin: $menuSeparatorMargin;
     }
 
     .p-submenu-icon {
         font-size: $menuitemSubmenuIconFontSize;
+
+        &.p-icon {
+            width: $menuitemSubmenuIconFontSize;
+            height: $menuitemSubmenuIconFontSize;
+        }
     }
 }

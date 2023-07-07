@@ -8,6 +8,11 @@
     .p-tree-container {
         .p-treenode {
             padding: $treeNodePadding;
+            outline: 0 none;
+
+            &:focus > .p-treenode-content {
+                @include focused-listitem();
+            }
 
             .p-treenode-content {
                 border-radius: $borderRadius;
@@ -32,10 +37,6 @@
                             color: $textColor;
                         }
                     }
-                }
-
-                &:focus {
-                    @include focused-listitem();
                 }
 
                 &.p-highlight {
@@ -80,5 +81,10 @@
 
     .p-tree-loading-icon {
         font-size: $loadingIconFontSize;
+
+        &.p-icon {
+            width:  $loadingIconFontSize;
+            height: $loadingIconFontSize;
+        }
     }
 }

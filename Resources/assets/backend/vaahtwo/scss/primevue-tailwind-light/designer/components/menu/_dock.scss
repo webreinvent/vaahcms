@@ -4,13 +4,22 @@
         border: $dockBorder;
         padding: $dockPadding;
         border-radius: $dockBorderRadius;
+
+        .p-dock-list {
+            outline: 0 none;
+        }
     }
     
     .p-dock-item {
         padding: $dockItemPadding;
+        border-radius: $dockItemBorderRadius;
+
+        &.p-focus {
+            @include focused-listitem();
+        }
     }
 
-    .p-dock-action {
+    .p-dock-link {
         width: $dockActionWidth;
         height: $dockActionHeight;
     }

@@ -37,7 +37,7 @@ const openTaxonomyTypeModal = () => {
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
-                    class="p-datatable-sm"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
@@ -71,14 +71,15 @@ const openTaxonomyTypeModal = () => {
                     class="flex align-items-center"
             >
                 <template #body="prop">
-                    {{ prop.data.slug }}
-
-                    <Button class="p-button-tiny p-button-text"
+                    <Button class="p-button-tiny p-button-text p-0 mr-2"
                             data-testid="taxonomies-table-to-edit"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
                             icon="pi pi-copy"
                     />
+                    {{ prop.data.slug }}
+
+
                 </template>
             </Column>
              <column></column>
@@ -170,7 +171,6 @@ const openTaxonomyTypeModal = () => {
         </DataTable>
         <!--/table-->
 
-        <Divider />
 
         <!--paginator-->
         <Paginator v-model:first="store.first_element"
@@ -178,6 +178,7 @@ const openTaxonomyTypeModal = () => {
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
         />
         <!--/paginator-->
 

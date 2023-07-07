@@ -7,10 +7,9 @@
         border-bottom: 0 none;
         border-top-right-radius: $borderRadius;
         border-top-left-radius: $borderRadius;
+        gap: $inlineSpacing;
 
         .p-button {
-            margin-right: $inlineSpacing;
-
             &.p-fileupload-choose.p-focus {
                 @include focused();
             }
@@ -26,12 +25,32 @@
         border-bottom-left-radius: $borderRadius;
     }
 
+    .p-fileupload-file {
+        padding: $fileUploadFilePadding;
+        border: $fileUploadFileBorder;
+        border-radius: $borderRadius;
+        gap: $inlineSpacing;
+        margin-bottom: $inlineSpacing;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .p-fileupload-file-name {
+        margin-bottom: $inlineSpacing;
+    }
+
+    .p-fileupload-file-size {
+        margin-right: $inlineSpacing;
+    }
+
     .p-progressbar {
         height: $fileUploadProgressBarHeight;
     }
 
     .p-fileupload-row {
-        > div {
+        >div {
             padding: $tableBodyCellPadding;
         }
     }

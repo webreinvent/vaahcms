@@ -13,7 +13,7 @@ const useVaah = vaah();
         <!--table-->
         <DataTable :value="store.list.data"
                    dataKey="id"
-                   class="p-datatable-sm"
+                   class="p-datatable-sm p-datatable-hoverable-rows"
                    v-model:selection="store.action.items"
                    stripedRows
                    responsiveLayout="scroll"
@@ -59,12 +59,11 @@ const useVaah = vaah();
                     v-if="store.hasPermission('can-read-users')"
             >
                 <template #body="prop">
-                    <Button class="p-button-sm p-button-rounded white-space-nowrap"
+
+                    <Button rounded
                             data-testid="user-list_data_role"
                             @click="store.toRole(prop.data)"
-                    >
-                        {{ prop.data.active_roles_count }} / {{ store.assets.totalRole }}
-                    </Button>
+                            size="small" class="white-space-nowrap" :label=" prop.data.active_roles_count +' / '+ store.assets.totalRole"/>
                 </template>
             </Column>
 
@@ -99,7 +98,7 @@ const useVaah = vaah();
                                 v-if="store.hasPermission('can-read-users')"
                         />
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button class="p-button-tiny p-button-text "
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
@@ -128,14 +127,15 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
 
         <!--paginator-->
         <Paginator v-model:first="store.firstElement"
                    :rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
+        >
         </Paginator>
         <!--/paginator-->
     </div>

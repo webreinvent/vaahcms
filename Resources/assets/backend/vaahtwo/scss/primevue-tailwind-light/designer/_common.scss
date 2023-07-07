@@ -29,6 +29,11 @@
     font-size: $primeIconFontSize;
 }
 
+.p-icon {
+    width: $primeIconFontSize;
+    height: $primeIconFontSize;
+}
+
 .p-link {
     font-size: $fontSize;
     font-family: $fontFamily;

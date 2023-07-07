@@ -2,5 +2,10 @@
     .p-scrollpanel-bar {
         background: $scrollPanelTrackBg;
         border: $scrollPanelTrackBorder;
+        transition: $formElementTransition;
+
+        &:focus {
+            @include focused();
+        }
     }
 }

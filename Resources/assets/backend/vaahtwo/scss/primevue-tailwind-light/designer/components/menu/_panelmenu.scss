@@ -1,51 +1,60 @@
 .p-panelmenu {
     .p-panelmenu-header {
-        .p-panelmenu-header-action {
-            padding: $accordionHeaderPadding;
+        outline: 0 none;
+
+        .p-panelmenu-header-content {
+            border: $accordionHeaderBorder;
             color: $accordionHeaderTextColor;
             background: $accordionHeaderBg;
-            font-weight: $accordionHeaderFontWeight;
             border-radius: $borderRadius;
             transition: $listItemTransition;
 
-            .p-panelmenu-icon {
-                margin-right: $inlineSpacing;
-            }
+            .p-panelmenu-header-action {
+                color: $accordionHeaderTextColor;
+                padding: $accordionHeaderPadding;
+                font-weight: $accordionHeaderFontWeight;
 
-            .p-menuitem-icon {
-                margin-right: $inlineSpacing;
-            }
+                .p-submenu-icon {
+                    margin-right: $inlineSpacing;
+                }
 
-            &:focus {
+                .p-menuitem-icon {
+                    margin-right: $inlineSpacing;
+                }
             }
         }
 
-        &:not(.p-highlight):not(.p-disabled) {
-            > a:hover {
+        &:not(.p-disabled) {
+            &:focus {
+                .p-panelmenu-header-content {
+                    @include focused-inset();
+                }
+            }
+        }
+
+        &:not(.p-highlight):not(.p-disabled):hover {
+            .p-panelmenu-header-content {
                 background: $accordionHeaderHoverBg;
                 border-color: $accordionHeaderHoverBorderColor;
                 color: $accordionHeaderTextHoverColor;
             }
         }
 
-        &.p-highlight {
-            margin-bottom: 0;
-
-            > a {
+        &:not(.p-disabled).p-highlight {
+            .p-panelmenu-header-content {
                 background: $accordionHeaderActiveBg;
                 border-color: $accordionHeaderActiveBorderColor;
                 color: $accordionHeaderTextActiveColor;
                 border-bottom-right-radius: 0;
                 border-bottom-left-radius: 0;
+                margin-bottom: 0;
             }
 
-            &:not(.p-disabled) {
-                > a {
-                    &:hover {
-                        border-color: $accordionHeaderActiveHoverBorderColor;
-                        background: $accordionHeaderActiveHoverBg;
-                        color: $accordionHeaderTextActiveHoverColor;
-                    }
+            &:hover {
+                .p-panelmenu-header-content {
+                    border-color: $accordionHeaderActiveHoverBorderColor;
+                    background: $accordionHeaderActiveHoverBg;
+                    color: $accordionHeaderTextActiveHoverColor;
                 }
             }
         }
@@ -53,7 +62,8 @@
 
     .p-panelmenu-content {
         padding: $verticalMenuPadding;
-        background: $accordionHeaderBg;
+        border: $accordionContentBorder;
+        background: $accordionContentBg;
         color: $accordionContentTextColor;
         border-top: 0;
         border-top-right-radius: 0;
@@ -61,17 +71,28 @@
         border-bottom-right-radius: $borderRadius;
         border-bottom-left-radius: $borderRadius;
 
-        .p-menuitem {
-            .p-menuitem-link {
-                @include menuitem-link();
+        .p-panelmenu-root-list {
+            outline: 0 none;
+        }
 
-                .p-panelmenu-icon {
-                    margin-right: $inlineSpacing;
+        .p-menuitem {
+            @include menuitem();
+
+            .p-menuitem-content {
+                .p-menuitem-link { 
+                    .p-submenu-icon {
+                        margin-right: $inlineSpacing;
+                    }
                 }
             }
         }
 
-        .p-submenu-list:not(.p-panelmenu-root-submenu) {
+        .p-menuitem-separator {
+            border-top: $divider;
+            margin: $menuSeparatorMargin;
+        }
+
+        .p-submenu-list:not(.p-panelmenu-root-list) {
             padding: $treeNodeChildrenPadding;
         }
     }
@@ -81,7 +102,7 @@
 
         @if $accordionSpacing == 0 {
             .p-panelmenu-header {
-                > a {
+                .p-panelmenu-header-content {
                     border-radius: 0;
                 }
             }
@@ -92,13 +113,13 @@
 
             &:not(:first-child) {
                 .p-panelmenu-header {
-                    > a {
+                    .p-panelmenu-header-content {
                         border-top: 0 none;
                     }
 
                     &:not(.p-highlight):not(.p-disabled):hover,
                     &:not(.p-disabled).p-highlight:hover {
-                        > a {
+                        .p-panelmenu-header-content {
                             border-top: 0 none;
                         }
                     }
@@ -107,7 +128,7 @@
 
             &:first-child {
                 .p-panelmenu-header {
-                    > a {
+                    .p-panelmenu-header-content {
                         border-top-right-radius: $borderRadius;
                         border-top-left-radius: $borderRadius;
                     }
@@ -116,7 +137,7 @@
 
             &:last-child {
                 .p-panelmenu-header:not(.p-highlight) {
-                    > a {
+                    .p-panelmenu-header-content {
                         border-bottom-right-radius: $borderRadius;
                         border-bottom-left-radius: $borderRadius;
                     }
@@ -127,7 +148,6 @@
                     border-bottom-left-radius: $borderRadius;
                 }
             }
-        }
+        } 
     }
-
 }

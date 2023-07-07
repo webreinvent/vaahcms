@@ -12,6 +12,11 @@
             font-size: $galleriaCloseIconFontSize;
         }
 
+        .p-icon {
+            width: $galleriaCloseIconFontSize;
+            height: $galleriaCloseIconFontSize;
+        }
+
         &:hover {
             background: $galleriaCloseIconHoverBg;
             color: $galleriaCloseIconHoverColor;
@@ -30,6 +35,11 @@
         .p-galleria-item-prev-icon,
         .p-galleria-item-next-icon {
             font-size: $galleriaItemNavigatorFontSize;
+        }
+
+        .p-icon {
+            width: $galleriaCloseIconFontSize;
+            height: $galleriaCloseIconFontSize;
         }
 
         &:not(.p-disabled) {

@@ -52,7 +52,7 @@ onMounted(async () => {
     <div class="grid">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel>
+            <Panel class="is-small">
 
                 <template class="p-1" #header>
 
@@ -88,14 +88,9 @@ onMounted(async () => {
                 </template>
 
                 <Actions/>
-
-                <br/>
-
                 <Table/>
-
             </Panel>
         </div>
-
         <RouterView/>
 
     </div>

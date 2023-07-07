@@ -57,7 +57,7 @@
             font-size: $primeIconFontSize * 2;
         }
 
-        .p-confirm-dialog-message {
+        .p-confirm-dialog-message:not(:first-child) {
             margin-left: $inlineSpacing * 2;
         }
     }

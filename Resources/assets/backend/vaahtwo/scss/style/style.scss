@@ -1,10 +1,24 @@
 @use 'sass:math';
-@import "./../global/all.scss";
 @import "./../primevue-tailwind-light/variables.scss";
+@import "./../global/all.scss";
+
+
+
+body{
+    color:$textColor;
+    font-family: $fontFamily;
+    background: $shade200;
+    line-height: $linHeight;
+    font-size: $fontSize;
+}
 
 //Resets
 p,h1,h2,h3,h4,h5,h6,a,div{
   margin:0;
+}
+:focus {
+    box-shadow: none !important;
+    outline: none;
 }
 a{
     text-decoration: none;
@@ -16,16 +30,146 @@ a{
 .p-toast{
     z-index: 1000 !important;
 }
-body{
-    color:$textColor;
-    font-family: $fontFamily;
-    background: $shade200;
-    line-height: $line-height;
+
+.has-shadowless{
+    box-shadow: none !important;
+}
+
+.bg-white-alpha-0{
+    background-color: rgba(255,255,255,0);
+    .p-paginator{
+        background-color: transparent;
+        button, .p-paginator-pages .p-paginator-page{
+            background-color: white;
+            line-height: normal;
+        }
+        .p-dropdown{
+            border-radius: 0;
+            .p-dropdown-trigger{
+                width: 2rem;
+            }
+            .p-inputtext{
+                padding: .35rem 0rem .35rem .5rem;
+            }
+        }
+    }
+}
+/*Panel*/
+.p-panel{
+    &.is-small{
+        .p-panel-header, .p-panel-content{
+            padding: .4rem .75rem;
+        }
+
+
+    }
+}
+
+/*Dropdown*/
+.p-dropdown {
+    &.is-small{
+        .p-dropdown-label {
+            @include scaledFontSize($inputTextFontSize, $scaleSM);
+            @include scaledPadding($inputPadding, $scaleSM);
+
+        }
+        line-height: initial;
+    }
+    .p-dropdown-label{
+        padding-top: .35rem;
+        padding-bottom: .35rem;
+    }
+}
+/*Tables*/
+.p-datatable{
+    .p-button{
+        padding: 0.25rem 0.5rem;
+        width: auto;
+        font-size: .75rem;
+        &.p-button-text{
+           &:hover, &:active{
+               background-color: transparent;
+           }
+        }
+    }
+    .p-icon{
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+    .p-datatable-tbody {
+        > tr {
+            &:focus {
+                outline: none;
+                outline-offset: 0;
+            }
+        }
+    }
+}
+
+/*Divider*/
+.p-divider{
+    &.is-small{
+        margin: .75rem 0px;
+    }
+}
+/*input switch*/
+.p-inputswitch{
+    &.p-inputswitch-sm{
+
+        width: $input-switch-small-width;
+        height: $input-switch-small-height;
+        .p-inputswitch-slider{
+            &:before{
+                width:  $input-switch-small-handle-width;
+                height: $input-switch-small-handle-height;
+                left: $input-switch-small-slider-padding;
+                margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
+            }
+        }
+
+        &.p-inputswitch-checked {
+            .p-inputswitch-slider:before {
+                transform: translateX($input-switch-small-handle-width + .1rem);
+            }
+        }
+
+
+    }
+}
+/*Table*/
+
+/*Input*/
+.p-inputgroup{
+    .p-input-icon-left{
+        .p-inputtext{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+}
+.p-fluid{
+    .p-inputgroup{
+        .p-input-icon-right, .p-input-icon-left{
+            width: auto;
+        }
+    }
+
+
+}
+
+
+.p-input-icon-left > i,
+.p-input-icon-left > svg,
+.p-input-icon-right > i,
+.p-input-icon-right > svg {
+    margin-top: -.35rem;
 }
 
 .main-container{
-    width: calc(100% - 230px);
-    margin: 55px 2px 0 auto;
+    width: calc(100% - 245px);
+    margin: 55px 10px 0 auto;
+    transition: $sideBarAnimation;
 }
 .top-nav-fixed{
     width: 100%;
@@ -35,29 +179,57 @@ body{
     top: 0px;
     border-radius: 0;
     z-index: 100;
+    .p-avatar{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
     .navbar-logo{
-        width: 200px;
+        width: $sideBarWidth;
+        line-height:0;
+        transition: $sideBarAnimation;
         img{
-            max-height: 30px;
+            max-height: none;
             width: 140px;
             margin: auto;
         }
     }
-    .p-menubar-root-list{
-        margin-left: 20px;
+
+    &.p-menubar{
+        .p-menubar-root-list{
+            .p-menuitem{
+                .p-menuitem-content{
+                    cursor: pointer;
+                    &:hover, &:focus{
+                        background-color: transparent !important;
+                        color: $primary !important;
+                    }
+                }
+                &.p-focus{
+                    .p-menuitem-content{
+                        background-color: transparent !important;
+                        color: $primary !important;
+                    }
+                }
+            }
+
+        }
     }
 }
+
 .sidebar{
+
     position: fixed;
     background-color: $shade100;
-    top: 52px;
+    top: 47px;
     left: 0;
-    width: 225px;
+    width: $sideBarWidth;
     z-index: 99;
     min-height: 100%;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
+    overflow-x: hidden;
     border-right: 1px solid #e5e7eb;
+    transition: $sideBarAnimation;
     &::-webkit-scrollbar {
         display: none;
     }
@@ -72,17 +244,28 @@ body{
         border-top-right-radius: 0;
         border-top-left-radius: 0;
     }
+
     .p-panelmenu{
         .p-panelmenu-header-action{
             position: relative;
+            justify-content: stretch;
+            white-space: nowrap;
+            width: $sideBarWidth;
+            padding:1rem !important;
+
+            .p-menuitem-text{
+                width: 100%;
+                padding-left: 5px;
+            }
             .p-submenu-icon{
-                position: absolute;
-                right: 10px;
-                font-size: 0.75rem;
-                margin-left: 5px;
+                margin-right: 0 !important;
+                font-size: .75rem;
             }
         }
         .p-panelmenu-header{
+            .p-panelmenu-header-content{
+                border: none !important;
+            }
             &.p-highlight{
                 .p-panelmenu-header-content{
                     .p-submenu-icon.pi.pi-chevron-right{
@@ -91,7 +274,6 @@ body{
                 }
             }
         }
-
         .p-panelmenu-content{
             .p-menuitem-link{
                 position: relative;
@@ -106,13 +288,30 @@ body{
         }
     }
 }
-
+.has-sidebar-small{
+    .sidebar{
+        width: 44px;
+        &:hover{
+            width: $sideBarWidth;
+        }
+    }
+    .main-container {
+        width: calc(100% - 60px);
+    }
+    .top-nav-fixed .navbar-logo{
+        width: 37px;
+        overflow-x: hidden;
+    }
+}
 //button
 .p-button{
    &.p-button-xs{
        font-size: 0.65rem;
        padding: 0.5rem 0.5rem;
    }
+}
+.p-inputgroup{
+    box-shadow: none;
 }
 
 //tag

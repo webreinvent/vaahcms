@@ -25,14 +25,17 @@ const toggleDropDownMenu= (event) => {
             <div class="navbar-logo">
                 <img :src="rootStore.assets.backend_logo_url" alt="VaahCMS">
             </div>
+
         </template>
+
         <template #item="{item}">
+
             <a :href="item.url"
                :target="item.target"
                v-tooltip.bottom="item.tooltip"
                :data-testid="'Topnav-'+item.icon.split('-')[1]"
                @click="navigate"
-               class="mx-2">
+               class="px-2">
                 <i class="pi" :class="item.icon"></i></a>
         </template>
         <template #end>
