@@ -37,6 +37,9 @@
 </div>
 
 
+<div id="vaahone" class="vaahone bulma">
+
+</div>
 
 
 {!! vh_config_js() !!}
