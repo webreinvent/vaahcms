@@ -14,7 +14,7 @@ body{
 
 //Resets
 p,h1,h2,h3,h4,h5,h6,a,div{
-  margin:0;
+    margin:0;
 }
 :focus {
     box-shadow: none !important;
@@ -89,9 +89,9 @@ a{
         width: auto;
         font-size: .75rem;
         &.p-button-text{
-           &:hover, &:active{
-               background-color: transparent;
-           }
+            &:hover, &:active{
+                background-color: transparent;
+            }
         }
     }
     .p-icon{
@@ -307,10 +307,10 @@ a{
 }
 //button
 .p-button{
-   &.p-button-xs{
-       font-size: 0.65rem;
-       padding: 0.5rem 0.5rem;
-   }
+    &.p-button-xs{
+        font-size: 0.65rem;
+        padding: 0.5rem 0.5rem;
+    }
 }
 .p-inputgroup{
     box-shadow: none;
@@ -842,8 +842,6 @@ $media-level-2-spacing: 0.5rem !default;
     .p-progressbar .p-progressbar-label{
         display: none;
     }
-
-
     .p-steps-item a .step-icon:before{
         font-size: 0.675rem;
     }
@@ -851,20 +849,35 @@ $media-level-2-spacing: 0.5rem !default;
         .p-steps-list{
             justify-content: center;
             .p-steps-item{
+                &.p-disabled{
+                    opacity: 1;
+                }
                 flex: none;
                 a{
                     position: relative;
                     background: transparent;
                     z-index: 99;
-                    color: $secondary;
+                    color: $primary;
                     padding: 0 3px;
                     font-size: 0.85rem;
-                    .step-icon{
-                        background:transparent;
-                        color: $secondary;
-                        padding:10px;
+                    opacity: 1;
 
+                    .step-icon{
+                        border: 2px solid  $primary;
+                        border-radius: 100%;
+                        color:white;
+                        padding:10px;
+                        position: relative;
+                        margin-right: 5px;
+                        background-color: $primary;
+                        &:before{
+                            position: absolute;
+                            left: 50%;
+                            top: 51%;
+                            transform: translate(-50%,-50%);
+                        }
                     }
+
                 }
                 align-items: center;
                 &:before{
@@ -880,33 +893,33 @@ $media-level-2-spacing: 0.5rem !default;
 
                 }
 
-                .step-icon{
-                    border: 2px solid  $secondary;
-                    border-radius: 100%;
-                    padding: 13px;
-                    position: relative;
-                    margin-right: 5px;
-                    &:before{
-                        position: absolute;
-                        left: 50%;
-                        top: 51%;
-                        transform: translate(-50%,-50%);
-                    }
-                }
                 &.p-highlight{
                     a{
                         color: $primary;
                         .step-icon{
                             border-color:$primary;
-                            color: $primary;
+                            color: white
                         }
                     }
+                }
+                &.p-steps-current{
+
                 }
             }
 
         }
-
-
+        .p-steps-item.p-steps-current ~ {
+           a{
+                color:$primary;
+                .step-icon{
+                    background-color: $primary;
+                    color: $primary;
+                }
+            }
+        }
+        .p-steps-current ~ li a{
+           color:$secondary;
+        }
     }
 
 
