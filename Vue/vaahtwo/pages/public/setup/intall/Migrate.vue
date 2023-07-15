@@ -41,18 +41,21 @@ const confirmDelete = (event) => {
 
 <template>
     <div v-if="store.assets">
-        <Message severity="info" :closable="true" class="is-small">This step will run database migrations and seeds.</Message>
+        <div class="p-card">
+            <div class="p-card-content p-4 border-round-xl">
+        <Message severity="info" :closable="true" class="is-small">
+            This step will run database migrations and seeds.</Message>
         <Button v-if="store.config.is_migrated"
                 label="Migrate & Run Seeds"
                 icon="pi pi-check" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="p-button-success is-small"/>
+                @click="confirmDelete" class="is-small" severity="success"/>
         <Button v-else label="Migrate & Run Seeds"
                 icon="pi pi-database" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="is-small"/>
+                @click="confirmDelete" class="is-small" outlined/>
         <div class="flex justify-content-between mt-5">
-            <Button label="Back" class="p-button-sm"
+            <Button label="Back" class="p-button-sm" severity="secondary"
                     @click="$router.push('/setup/install/configuration')">
             </Button>
             <Button label="Save & Next"
@@ -71,6 +74,7 @@ const confirmDelete = (event) => {
             </template>
         </ConfirmDialog>
     </div>
-F
+        </div>
+        </div>
 </template>
 

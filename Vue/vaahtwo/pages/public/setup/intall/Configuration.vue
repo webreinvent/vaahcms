@@ -251,7 +251,7 @@ onMounted(async () => {
                       </div>
                   </div>
               </div>
-
+            <div class="">
               <Button v-if="store.config.env.mail_is_valid"
                       @click="$event => $refs.op.toggle($event)"
                       label="Test Mail Configuration"
@@ -264,23 +264,22 @@ onMounted(async () => {
                       icon="pi pi-envelope"
                       class="p-button-sm mt-2 mb-3" outlined/>
 
-
               <OverlayPanel ref="op" appendTo="body"
                             :showCloseIcon="true" id="overlay_panel"
                             style="width: 450px" :breakpoints="{'960px': '75vw'}">
                   <div class="col-12">
                       <h5 class="text-left p-1 title is-6">Mail Username</h5>
-                      <div class="p-inputgroup">
+                      <div class="p-inputgroup flex-1">
                           <InputText type="email" v-model="store.config.env.test_email_to"
-                                     placeholder="Your email" class="p-inputtext-sm"/>
-
+                                     placeholder="Your email" class=""/>
+                          <Button :loading="store.is_btn_loading_mail_config"
+                                  @click="store.testMailConfiguration"
+                                  label="Send Email"
+                                  class="p-button-sm is-small"/>
                       </div>
-                      <Button :loading="store.is_btn_loading_mail_config"
-                              @click="store.testMailConfiguration"
-                              label="Send Email"
-                              class="p-button-sm my-4 is-small"/>
                   </div>
               </OverlayPanel>
+            </div>
 
               <div class="grid p-fluid">
                   <div class="col-12">

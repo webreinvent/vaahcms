@@ -16,8 +16,11 @@ onMounted(async () => {
 
 <template>
     <div v-if="store && store.assets">
+        <div class="p-card">
+            <div class="p-card-content p-4 border-round-xl">
         <Message severity="info" :closable="true" class="is-small">
-            Create first account,this account will have super administrator role and will have all the permissions.
+            Create first account,this account will have super administrator
+            role and will have all the permissions.
         </Message>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
@@ -185,6 +188,8 @@ onMounted(async () => {
                         @click="store.validateAccountCreation()"></Button>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 </template>
