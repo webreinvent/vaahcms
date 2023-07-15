@@ -21,13 +21,13 @@ onMounted(async () => {
 
 <template>
     <div v-if="store && store.assets && root && root.assets" class="setup text-center">
-        <Logo/>
+        <Logo class="w-6 mx-auto" />
         <div class="grid justify-content-center">
             <div v-if="store.assets.is_installed" class="col-12">
                 <Message severity="success">VaahCMS is successfully setup</Message>
             </div>
             <div class="col-6">
-                <Card>
+                <Card class="border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
                             <h4 class="text-xl font-semi-bold">Install</h4>
@@ -52,15 +52,18 @@ onMounted(async () => {
                         </div>
                     </template>
                     <template #content>
-                        <p class="text-sm text-left">
+                        <p class="text-left">
                             <a href="https://vaah.dev/cms" target="_blank">VaahCMS
                             </a> is a web application development platform shipped with headless
                             content management system
                         </p>
-                        <div v-if="store.status" class="flex justify-content-between align-items-center mt-4">
+
+                    </template>
+                    <template #footer>
+                        <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.stage && store.status.stage === 'installed'"
                                     disabled label="Install" icon="pi pi-server"
-                                    class="p-button bg-white border-gray-800 text-black-alpha-80"/>
+                                    class="p-button p-button-sm bg-white border-gray-800 text-black-alpha-80"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
                                     @click="store.routeAction('setup.install.configuration')"
@@ -76,7 +79,7 @@ onMounted(async () => {
                 </Card>
             </div>
             <div class="col-6">
-                <Card class="h-full">
+                <Card class="h-full border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
                             <h4 class="text-xl font-semi-bold">Reset</h4>
@@ -91,10 +94,13 @@ onMounted(async () => {
                         </div>
                     </template>
                     <template #content>
-                        <p class="text-sm text-left">
+                        <p class="text-left">
                             You can reset/re-install the application if you're logged in from "Administrator" account.
                         </p>
-                        <div v-if="store.status" class="flex justify-content-between align-items-center mt-4">
+
+                    </template>
+                    <template #footer >
+                        <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.is_user_administrator"
                                     @click="store.show_reset_modal = true"
                                     label="Reset"
@@ -112,7 +118,7 @@ onMounted(async () => {
             </div>
         </div>
 
-        <Footer />
+        <Footer class="mt-3" />
 
         <Dialog header="Reset"
                 v-model:visible="store.show_reset_modal"
@@ -181,14 +187,4 @@ onMounted(async () => {
     </div>
 </template>
 
-<style lang="scss" scoped>
-.p-card .p-card-body {
-    padding: 0.85rem 1rem;
-}
-.p-button{
-    padding: 5px 8px;
-}
-.p-card .p-card-content {
-    padding: 1rem 0 0 0;
-}
-</style>
+
