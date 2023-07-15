@@ -149,6 +149,7 @@ const toggleItemMenu = (event) => {
 
                         <template v-if="column === 'created_by'
                         || column === 'type'
+                        || column === 'parent'
                         || column === 'updated_by'">
                         </template>
 
@@ -163,6 +164,12 @@ const toggleItemMenu = (event) => {
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="user"
+                            />
+                        </template>
+
+                        <template v-else-if="column === 'parent_id'">
+                        <VhViewRow :label="store.item.parent?'parent':''"
+                                   :value="store.item.parent && store.item.parent.name ? store.item.parent.name : ''"
                             />
                         </template>
 
@@ -182,7 +189,7 @@ const toggleItemMenu = (event) => {
                         <template v-else-if="column === 'meta'">
                             <tr>
                                 <td><b>Meta</b></td>
-                                <td >
+                                <td v-if="value" >
                                     <Button icon="pi pi-eye"
                                             label="view"
                                             class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
