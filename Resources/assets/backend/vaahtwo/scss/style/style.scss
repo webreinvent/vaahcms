@@ -75,10 +75,12 @@ a{
         }
         line-height: initial;
     }
-    .p-dropdown-label{
-        padding-top: .35rem;
-        padding-bottom: .35rem;
+    &.p-inputtext-sm {
+        .p-inputtext{
+            line-height: inherit;
+        }
     }
+
 }
 /*Tables*/
 .p-datatable{
@@ -837,69 +839,76 @@ $media-level-2-spacing: 0.5rem !default;
 
 .vh-step{
 
-    .step-icon{
-        border: 2px solid #3273dc;
-        border-radius: 100%;
-        padding: 13px;
-        position: relative;
-        margin-right: 5px;
-        &:before{
-            position: absolute;
-            left: 50%;
-            top: 51%;
-            transform: translate(-50%,-50%);
-        }
-    }
     .p-progressbar .p-progressbar-label{
         display: none;
     }
 
-    .p-steps-item a .step-icon{
-        background: #3273dc;
-        color: white;
-        padding:10px;
-    }
+
     .p-steps-item a .step-icon:before{
         font-size: 0.675rem;
     }
+    .p-steps{
+        .p-steps-list{
+            justify-content: center;
+            .p-steps-item{
+                flex: none;
+                a{
+                    position: relative;
+                    background: transparent;
+                    z-index: 99;
+                    color: $secondary;
+                    padding: 0 3px;
+                    font-size: 0.85rem;
+                    .step-icon{
+                        background:transparent;
+                        color: $secondary;
+                        padding:10px;
 
-    .p-steps-item.p-steps-current a .step-icon{
-        background: #3273dc;
-        color: white;
+                    }
+                }
+                align-items: center;
+                &:before{
+                    position: static;
+                    border-top-color: $secondary;
+                    margin: 0;
+                    width: 90px;
+                }
+                &:first-child{
+                    &:before{
+                        display: none;
+                    }
+
+                }
+
+                .step-icon{
+                    border: 2px solid  $secondary;
+                    border-radius: 100%;
+                    padding: 13px;
+                    position: relative;
+                    margin-right: 5px;
+                    &:before{
+                        position: absolute;
+                        left: 50%;
+                        top: 51%;
+                        transform: translate(-50%,-50%);
+                    }
+                }
+                &.p-highlight{
+                    a{
+                        color: $primary;
+                        .step-icon{
+                            border-color:$primary;
+                            color: $primary;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
     }
-    .p-steps-current ~ .p-steps-item a .step-icon{
-        background: white;
-        color: #b8daff;
-        border-color: #b8daff;
-    }
-    .p-steps-current ~ .p-steps-item a{
-        color: #b8daff;
-    }
-    .p-steps-item:last-child::before{
-        display: none;
-    }
-    .p-steps-item a{
-        position: relative;
-        background: white;
-        z-index: 99;
-        color: #3273dc;
-        padding: 0 3px;
-        font-size: 0.85rem;
-    }
-    .p-steps .p-steps-item:before{
-        border-color: #3273dc;
-        border-width: 2px;
-        top: 27px;
-        width: 220px;
-        left: 65%;
-        z-index: -1;
-    }
-    .p-steps-current.p-steps-item:before{
-        border-color: #b8daff;
-    }
-    .p-steps-current ~ .p-steps-item:before{
-        border-color: #b8daff;
-    }
+
 
     .p-confirm-dialog{
         &.is-small{

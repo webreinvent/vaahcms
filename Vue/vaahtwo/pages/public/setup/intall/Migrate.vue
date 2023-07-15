@@ -71,9 +71,6 @@ const confirmDelete = (event) => {
             </template>
         </ConfirmDialog>
     </div>
-
+F
 </template>
 
-<style scoped>
-
-</style>
