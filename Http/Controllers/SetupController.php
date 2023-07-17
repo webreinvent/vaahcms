@@ -398,10 +398,10 @@ class SetupController extends Controller
 
         $response['success'] = true;
         $response['data']['app_key'] = $env_params['app_key'];
-        $response['data']['app_vaahcms_env'] = "";
-        if(isset($env_params['app_vaahcms_env']))
+        $response['data']['vaahcms_vue_app'] = "";
+        if(isset($env_params['vaahcms_vue_app']))
         {
-            $response['data']['app_vaahcms_env'] = $env_params['app_vaahcms_env'];
+            $response['data']['vaahcms_vue_app'] = $env_params['vaahcms_vue_app'];
         }
 
 
