@@ -36,10 +36,10 @@ onMounted(async () => {
         <h5 class="text-left p-1 title is-6">ENV</h5>
         <div class="p-inputgroup">
 
-          <Dropdown v-model="store.config.env.app_env" :options="store.assets.environments"
-                    @change="store.loadConfigurations()"
-                    optionLabel="name" optionValue="slug"
-                    placeholder="Select Env" class="p-inputtext-sm"/>
+              <Dropdown v-model="store.config.env.app_env" :options="store.assets.environments"
+                        @change="store.loadConfigurations()"
+                        optionLabel="name" optionValue="slug"
+                        placeholder="Select Env" class="p-inputtext-sm"/>
 
         </div>
 
@@ -49,14 +49,15 @@ onMounted(async () => {
                      id="app-env-custom"/>
 
       </div>
-
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Debug</h5>
         <div class="p-inputgroup">
           <Dropdown v-model="store.config.env.app_debug"
                     name="config-db_connection"
-                    :options="store.debug_option" optionLabel="name"
-                    optionValue="slug" placeholder="Select Debug"
+                    :options="store.debug_option"
+                    optionLabel="name"
+                    optionValue="slug"
+                    placeholder="Select Debug"
                     class="p-inputtext-sm"/>
         </div>
       </div>
