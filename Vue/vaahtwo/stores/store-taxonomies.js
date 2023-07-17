@@ -19,6 +19,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            type:null,
         },
     },
     action: {
@@ -85,7 +86,7 @@ export const useTaxonomyStore = defineStore({
         is_loading: false,
     }),
     getters: {
-        
+
     },
     actions: {
         //---------------------------------------------------------------------
