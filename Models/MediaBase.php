@@ -143,6 +143,21 @@ class MediaBase extends Model {
         }
     }
     //-------------------------------------------------
+    public function setMetaAttribute($value)
+    {
+        $this->attributes['meta'] = json_encode($value);
+    }
+    //-------------------------------------------------
+    public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+
+    }
+    //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',

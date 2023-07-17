@@ -366,8 +366,9 @@ class Taxonomy extends TaxonomyBase
     public static function getItem($id)
     {
 
+
         $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','type'])
+            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','type','parent'])
             ->withTrashed()
             ->first();
 
@@ -377,9 +378,10 @@ class Taxonomy extends TaxonomyBase
             $response['errors'][] = 'Record not found with ID: '.$id;
             return $response;
         }
+
+
         $response['success'] = true;
         $response['data'] = $item;
-
         return $response;
 
     }

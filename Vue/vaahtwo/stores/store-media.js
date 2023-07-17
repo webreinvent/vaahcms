@@ -91,7 +91,9 @@ export const useMediaStore = defineStore({
         dates2: [],
         is_btn_loading: false,
         downloadable_slug_available: '',
-        first_element: null
+        first_element: null,
+        meta_content: null,
+        display_meta_modal: false,
     }),
     getters: {
 
@@ -979,6 +981,11 @@ export const useMediaStore = defineStore({
             if(data){
                 this.downloadable_slug_available = data;
             }
+        },
+        //---------------------------------------------------------------------
+        openModal(item){
+            this.meta_content = JSON.stringify(item,null,2);
+            this.display_meta_modal=true;
         },
         //---------------------------------------------------------------------
         copyDownloadUrl()
