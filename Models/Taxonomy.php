@@ -191,10 +191,9 @@ class Taxonomy extends TaxonomyBase
         {
             return $query;
         }
-        return $query->whereHas('type',function($q) use ($filter) {
-            if(!is_null($filter)){
+        return $query->whereHas('type',function($q) use ($filter)
+        {
                 $q->whereIn('slug',$filter['type']);
-            }
         });
     }
     //-------------------------------------------------
