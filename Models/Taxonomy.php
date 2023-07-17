@@ -185,6 +185,19 @@ class Taxonomy extends TaxonomyBase
 
     }
     //-------------------------------------------------
+    public function scopeTypeFilter($query, $filter)
+    {
+        if(!isset($filter['type']))
+        {
+            return $query;
+        }
+        return $query->whereHas('type',function($q) use ($filter) {
+            if(!is_null($filter)){
+                $q->whereIn('slug',$filter['type']);
+            }
+        });
+    }
+    //-------------------------------------------------
     public static function getList($request)
     {
         $list = self::with(['parent','type']);
@@ -192,6 +205,7 @@ class Taxonomy extends TaxonomyBase
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->typeFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 
