@@ -28,11 +28,11 @@ export const useSetupStore = defineStore({
         debug_option: [
             {
                 name:'True',
-                slug:true
+                slug:'true'
             },
             {
                 name:'False',
-                slug:false
+                slug:'false'
             }
         ],
         config:{
@@ -296,15 +296,19 @@ export const useSetupStore = defineStore({
         afterLoadConfigurations: function (data, res) {
             if(data)
             {
+                console.log(1111,this.config.env,data);
                 this.config.env.db_password = null;
                 for(let key in this.config.env)
                 {
                     if( data[key])
                     {
+
                         this.config.env[key] = data[key];
+
 
                     }
                 }
+                console.log(this.config.env,data);
 
             }
         },
