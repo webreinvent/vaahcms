@@ -23,6 +23,9 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getPublicAssets(Request $request)
     {
+        $manager = app('impersonate');
+
+        $data['is_impersonating'] =  $manager->isImpersonating();
 
         $data['timezone'] = config('app.timezone');
 

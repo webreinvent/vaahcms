@@ -79,6 +79,11 @@ Route::group(
         Route::post('/avatar/remove', 'UsersController@removeAvatar')
             ->name('backend.vaah.users.avatar.remove');
         //---------------------------------------------------------
+        Route::post('/impersonate/logout', 'UsersController@impersonateLogout')
+            ->name('backend.vaah.users.impersonate.logout');
+        //---------------------------------------------------------
         Route::post('/impersonate/{id}', 'UsersController@impersonate')
             ->name('backend.vaah.users.impersonate');
+        //---------------------------------------------------------
+
     });

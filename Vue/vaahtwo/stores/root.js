@@ -90,7 +90,7 @@ export const useRootStore = defineStore({
 
 
         //---------------------------------------------------------------------
-        async reloadAssets(data, res)
+        async reloadAssets()
         {
             this.assets_is_fetching = true;
             await this.getAssets();
@@ -283,6 +283,27 @@ export const useRootStore = defineStore({
             })
         },
         //-----------------------------------------------------------------------
+        impersonateLogout(){
+
+            let options = {
+                method:'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/users/impersonate/logout',
+                this.afterImpersonateLogout,
+                options
+            );
+        },
+        //-----------------------------------------------------------------------
+        afterImpersonateLogout(res,data){
+
+            if(data && data.data && data.data.redirect_url){
+                this.reloadAssets();
+                window.location.href = data.data.redirect_url;
+            }
+        },
+        //-----------------------------------------------------------------------
         setTopMenuItems(){
 
             this.top_menu_items = [
@@ -307,7 +328,19 @@ export const useRootStore = defineStore({
                     target:'_blank',
                     icon:'pi pi-external-link'
                 }
+
             ]
+
+            if(this.assets.is_impersonating){
+                this.top_menu_items.push({
+                    label:'',
+                    tooltip:'Impersonate Logout',
+                    icon:'pi pi-users',
+                    command: () => {
+                        this.impersonateLogout();
+                    }
+                })
+            }
         }
     }
 })

@@ -687,6 +687,7 @@ class UsersController extends Controller
             $response = [];
             $user = User::where('id', $id)->first();
 
+
             if(!$user){
                 $response['success'] = false;
                 $response['errors'][] = 'User does not exist.';
@@ -712,6 +713,35 @@ class UsersController extends Controller
 
 
         } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function impersonateLogout(Request $request): JsonResponse
+    {
+
+        try {
+
+            Auth::user()->leaveImpersonation();
+            
+            $response = [];
+            $response['success'] = true;
+            $response['redirect_url'] = 'http://localhost/vikram/vaahcms-dev-env/public/backend#/vaah';
+
+
+        } catch (\Exception $e) {
+
+
             $response = [];
             $response['success'] = false;
 
