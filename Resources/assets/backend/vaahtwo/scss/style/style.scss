@@ -14,7 +14,7 @@ body{
 
 //Resets
 p,h1,h2,h3,h4,h5,h6,a,div{
-  margin:0;
+    margin:0;
 }
 :focus {
     box-shadow: none !important;
@@ -75,10 +75,12 @@ a{
         }
         line-height: initial;
     }
-    .p-dropdown-label{
-        padding-top: .35rem;
-        padding-bottom: .35rem;
+    &.p-inputtext-sm {
+        .p-inputtext{
+            line-height: inherit;
+        }
     }
+
 }
 /*Tables*/
 .p-datatable{
@@ -87,9 +89,9 @@ a{
         width: auto;
         font-size: .75rem;
         &.p-button-text{
-           &:hover, &:active{
-               background-color: transparent;
-           }
+            &:hover, &:active{
+                background-color: transparent;
+            }
         }
     }
     .p-icon{
@@ -305,10 +307,10 @@ a{
 }
 //button
 .p-button{
-   &.p-button-xs{
-       font-size: 0.65rem;
-       padding: 0.5rem 0.5rem;
-   }
+    &.p-button-xs{
+        font-size: 0.65rem;
+        padding: 0.5rem 0.5rem;
+    }
 }
 .p-inputgroup{
     box-shadow: none;
@@ -837,69 +839,89 @@ $media-level-2-spacing: 0.5rem !default;
 
 .vh-step{
 
-    .step-icon{
-        border: 2px solid #3273dc;
-        border-radius: 100%;
-        padding: 13px;
-        position: relative;
-        margin-right: 5px;
-        &:before{
-            position: absolute;
-            left: 50%;
-            top: 51%;
-            transform: translate(-50%,-50%);
-        }
-    }
     .p-progressbar .p-progressbar-label{
         display: none;
-    }
-
-    .p-steps-item a .step-icon{
-        background: #3273dc;
-        color: white;
-        padding:10px;
     }
     .p-steps-item a .step-icon:before{
         font-size: 0.675rem;
     }
+    .p-steps{
+        .p-steps-list{
+            justify-content: center;
+            .p-steps-item{
+                &.p-disabled{
+                    opacity: 1;
+                }
+                flex: none;
+                a{
+                    position: relative;
+                    background: transparent;
+                    z-index: 99;
+                    color: $primary;
+                    padding: 0 3px;
+                    font-size: 0.85rem;
+                    opacity: 1;
 
-    .p-steps-item.p-steps-current a .step-icon{
-        background: #3273dc;
-        color: white;
+                    .step-icon{
+                        border: 2px solid  $primary;
+                        border-radius: 100%;
+                        color:white;
+                        padding:10px;
+                        position: relative;
+                        margin-right: 5px;
+                        background-color: $primary;
+                        &:before{
+                            position: absolute;
+                            left: 50%;
+                            top: 51%;
+                            transform: translate(-50%,-50%);
+                        }
+                    }
+
+                }
+                align-items: center;
+                &:before{
+                    position: static;
+                    border-top-color: $secondary;
+                    margin: 0;
+                    width: 90px;
+                }
+                &:first-child{
+                    &:before{
+                        display: none;
+                    }
+
+                }
+
+                &.p-highlight{
+                    a{
+                        color: $primary;
+                        .step-icon{
+                            border-color:$primary;
+                            color: white
+                        }
+                    }
+                }
+                &.p-steps-current{
+
+                }
+            }
+
+        }
+        .p-steps-item.p-steps-current ~ {
+           a{
+                color:$primary;
+                .step-icon{
+                    background-color: $primary;
+                    color: $primary;
+                }
+            }
+        }
+        .p-steps-current ~ li a{
+           color:$secondary;
+        }
     }
-    .p-steps-current ~ .p-steps-item a .step-icon{
-        background: white;
-        color: #b8daff;
-        border-color: #b8daff;
-    }
-    .p-steps-current ~ .p-steps-item a{
-        color: #b8daff;
-    }
-    .p-steps-item:last-child::before{
-        display: none;
-    }
-    .p-steps-item a{
-        position: relative;
-        background: white;
-        z-index: 99;
-        color: #3273dc;
-        padding: 0 3px;
-        font-size: 0.85rem;
-    }
-    .p-steps .p-steps-item:before{
-        border-color: #3273dc;
-        border-width: 2px;
-        top: 27px;
-        width: 220px;
-        left: 65%;
-        z-index: -1;
-    }
-    .p-steps-current.p-steps-item:before{
-        border-color: #b8daff;
-    }
-    .p-steps-current ~ .p-steps-item:before{
-        border-color: #b8daff;
-    }
+
 
     .p-confirm-dialog{
         &.is-small{

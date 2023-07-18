@@ -203,7 +203,7 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.config.env.app_key = data.app_key;
-                this.config.env.app_vaahcms_env = data.app_vaahcms_env;
+                this.config.env.vaahcms_vue_app = data.vaahcms_vue_app;
 
             }
         },
