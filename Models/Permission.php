@@ -143,6 +143,17 @@ class Permission extends PermissionBase
 
     }
     //-------------------------------------------------
+    public function scopeModuleFilter($query, $filter)
+    {
+
+        if(!isset($filter['module']))
+        {
+            return $query;
+        }
+        $query->where('module',$filter['module']);
+
+    }
+    //-------------------------------------------------
     public static function updateList($request)
     {
 

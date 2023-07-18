@@ -16,6 +16,18 @@ const store = usePermissionStore();
 
             <VhFieldVertical >
                 <template #label>
+                    <b>Module:</b>
+                </template>
+                <Dropdown v-model="store.query.filter.module"
+                          :options="store.assets.module"
+                          optionLabel="module"
+                          placeholder="Select a City"
+                          class="w-full md:w-14rem"
+                />
+            </VhFieldVertical>
+
+            <VhFieldVertical >
+                <template #label>
                     <b>Sort By:</b>
                 </template>
 

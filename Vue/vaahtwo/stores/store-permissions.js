@@ -19,6 +19,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            module:null,
         },
         recount: null,
     },

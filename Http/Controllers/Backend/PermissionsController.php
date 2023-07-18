@@ -49,6 +49,7 @@ class PermissionsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['module'] = Permission::withTrashed()->select('module')->get()->unique('module');
 
             $response['success'] = true;
             $response['data'] = $data;
