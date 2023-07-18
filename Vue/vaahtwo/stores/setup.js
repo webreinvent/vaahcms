@@ -60,7 +60,7 @@ export const useSetupStore = defineStore({
             env:{
                 app_name: "VaahCMS",
                 app_key: null,
-                app_debug: true,
+                app_debug: 'true',
                 app_env: null,
                 app_env_custom: null,
                 app_url: null,
@@ -296,19 +296,15 @@ export const useSetupStore = defineStore({
         afterLoadConfigurations: function (data, res) {
             if(data)
             {
-                console.log(1111,this.config.env,data);
                 this.config.env.db_password = null;
                 for(let key in this.config.env)
                 {
                     if( data[key])
                     {
-
                         this.config.env[key] = data[key];
-
 
                     }
                 }
-                console.log(this.config.env,data);
 
             }
         },
@@ -566,7 +562,7 @@ export const useSetupStore = defineStore({
                 env:{
                     app_name: "VaahCMS",
                     app_key: null,
-                    app_debug: true,
+                    app_debug: 'true',
                     app_env: null,
                     app_url: null,
                     app_timezone: null,
