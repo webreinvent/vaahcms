@@ -28,11 +28,11 @@ export const useSetupStore = defineStore({
         debug_option: [
             {
                 name:'True',
-                slug:true
+                slug:'true'
             },
             {
                 name:'False',
-                slug:false
+                slug:'false'
             }
         ],
         config:{
@@ -60,7 +60,7 @@ export const useSetupStore = defineStore({
             env:{
                 app_name: "VaahCMS",
                 app_key: null,
-                app_debug: true,
+                app_debug: 'true',
                 app_env: null,
                 app_env_custom: null,
                 app_url: null,
@@ -562,7 +562,7 @@ export const useSetupStore = defineStore({
                 env:{
                     app_name: "VaahCMS",
                     app_key: null,
-                    app_debug: true,
+                    app_debug: 'true',
                     app_env: null,
                     app_url: null,
                     app_timezone: null,
