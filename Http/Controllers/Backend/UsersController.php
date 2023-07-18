@@ -680,4 +680,50 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function impersonate(Request $request, $id): JsonResponse
+    {
+
+        try {
+            $response = [];
+            $user = User::where('id', $id)->first();
+
+            if(!$user){
+                $response['success'] = false;
+                $response['errors'][] = 'User does not exist.';
+                return response()->json($response);
+            }
+
+            if($user->is_active != 1){
+                $response['success'] = false;
+                $response['errors'][] = 'User is not active.';
+                return response()->json($response);
+            }
+
+            if(!$user->hasPermission('can-login-in-backend')){
+                $response['success'] = false;
+                $response['errors'][] = 'Permission Denied!';
+                return response()->json($response);
+            }
+
+            Auth::user()->impersonate($user);
+
+            $response['success'] = true;
+            $response['redirect_url'] = 'http://localhost/vikram/vaahcms-dev-env/public/backend#/vaah';
+
+
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 }

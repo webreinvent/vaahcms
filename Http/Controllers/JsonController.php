@@ -147,7 +147,8 @@ class JsonController extends Controller
             if($user->security_code)
             {
 
-                if($user->security_code_expired_at->lt(now()))
+                if($user->security_code_expired_at &&
+                    $user->security_code_expired_at->lt(now()))
                 {
                     $is_logged = false;
 

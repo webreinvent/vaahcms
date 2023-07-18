@@ -900,6 +900,25 @@ export const useUserStore = defineStore({
             this.$router.push({name: 'users.form'})
         },
         //---------------------------------------------------------------------
+        impersonate(item)
+        {
+            let options = {
+                method:'post'
+            };
+            vaah().ajax(
+                this.ajax_url+'/impersonate/'+item.id,
+                this.afterImpersonate,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        afterImpersonate(res,data)
+        {
+            if(data && data.data && data.data.redirect_url){
+                window.location.href = data.data.redirect_url;
+            }
+        },
+        //---------------------------------------------------------------------
         toView(item)
         {
             this.item = vaah().clone(item);

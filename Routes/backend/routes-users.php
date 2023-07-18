@@ -79,4 +79,6 @@ Route::group(
         Route::post('/avatar/remove', 'UsersController@removeAvatar')
             ->name('backend.vaah.users.avatar.remove');
         //---------------------------------------------------------
+        Route::post('/impersonate/{id}', 'UsersController@impersonate')
+            ->name('backend.vaah.users.impersonate');
     });
