@@ -329,17 +329,6 @@ export const useRootStore = defineStore({
                 }
 
             ]
-
-            if(this.assets.is_impersonating){
-                this.top_menu_items.push({
-                    label:'',
-                    tooltip:'Impersonate Logout',
-                    icon:'pi pi-users',
-                    command: () => {
-                        this.impersonateLogout();
-                    }
-                })
-            }
         }
     }
 })

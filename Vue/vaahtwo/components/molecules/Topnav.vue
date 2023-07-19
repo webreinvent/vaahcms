@@ -39,7 +39,17 @@ const toggleDropDownMenu= (event) => {
                 <i class="pi" :class="item.icon"></i></a>
         </template>
         <template #end>
-           <div v-if="rootStore.assets.auth_user" class="flex align-items-center">
+            <div v-if="rootStore.assets.is_impersonating">
+                <div class="p-inputgroup flex-1">
+                    <Button size="small" label="Impersonating" outlined  />
+                    <InputText class="p-inputtext-sm" disabled :placeholder="rootStore.assets.auth_user.name"
+                               :value="rootStore.assets.auth_user.name" />
+                    <Button size="small" @click="rootStore.impersonateLogout()"
+                            severity="danger" label="Leave" />
+                </div>
+<!--                <p class="text-red-500"><strong>Impersonating</strong> {{rootStore.assets.auth_user.name}}</p>-->
+            </div>
+           <div v-if="rootStore.assets.auth_user && !rootStore.assets.is_impersonating" class="flex align-items-center">
                <a @click="toggleDropDownMenu"
                   data-testid="Topnav-Avatar"
                   class="cursor-pointer flex align-items-center">
