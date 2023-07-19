@@ -18,10 +18,23 @@ const store = usePermissionStore();
                 <template #label>
                     <b>Module:</b>
                 </template>
-                <Dropdown v-model="store.query.filter.module"
-                          :options="store.assets.module"
-                          optionLabel="module"
-                          placeholder="Select a City"
+                <Dropdown  v-model="store.query.filter.module"
+                          :options="store.assets.modules ?? []"
+                          @change="store.onSelectModule"
+                          optionValue="name"
+                          optionLabel="name"
+                          placeholder="Select a Module"
+                          class="w-full md:w-14rem"
+                />
+            </VhFieldVertical>
+
+            <VhFieldVertical v-if="store.query.filter.module">
+                <template #label>
+                    <b>Section:</b>
+                </template>
+                <Dropdown v-model="store.query.filter.section"
+                          :options="store.module_sections"
+                          placeholder="Select a Section"
                           class="w-full md:w-14rem"
                 />
             </VhFieldVertical>

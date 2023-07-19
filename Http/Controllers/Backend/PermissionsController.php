@@ -49,7 +49,7 @@ class PermissionsController extends Controller
             }
 
             $data['actions'] = [];
-            $data['module'] = Permission::withTrashed()->select('module')->get()->unique('module');
+            $data['modules'] = Permission::getModulesWithSetions();
 
             $response['success'] = true;
             $response['data'] = $data;
