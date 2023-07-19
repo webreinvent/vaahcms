@@ -2,53 +2,53 @@
 
     {
         "name": "Has Access of Dashboard",
-        "module": "vaahcms",
-        "section": "dashboard",
+        "module": "Vaahcms",
+        "section": "Dashboard",
         "details": "This will allow user to see the link of dashboard."
     },
 
     {
         "name": "Has Access of Setting Section",
-        "module": "vaahcms",
+        "module": "Vaahcms",
         "section": "Setting",
         "details": "This will allow user to see the link of setting section."
     },
 
     {
         "name": "Can Login In Backend",
-        "module": "vaahcms",
-        "section": "backend",
+        "module": "Vaahcms",
+        "section": "Backend",
         "details": "This will allow user to login in the backend."
     },
 
     {
         "name": "Can Login In Frontend",
-        "module": "vaahcms",
-        "section": "frontend",
+        "module": "Vaahcms",
+        "section": "Frontend",
         "details": "This will allow user to login in the frontend."
     },
     {
         "name": "Has Access Of Users Section",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to see the link of user section."
     },
     {
         "name": "Can Create Users",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to add anything in the user section."
     },
     {
         "name": "Can Read Users",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to view anything in the user section."
     },
     {
         "name": "Can Update Users",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to edit anything in the user section."
     },
     {
@@ -59,413 +59,413 @@
     },
     {
         "name": "Can Delete Users",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to delete anything in the user section."
     },
     {
         "name": "Can Manage Users",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to manage anything in the user section."
     },
     {
         "name": "Can See Users Contact Details",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "User",
         "details": "This will allow user to view contact (email, mobile) detail in the user section."
     },
 
 
     {
         "name": "Has Access Of Registrations Section",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user see the link of registration section."
     },
     {
         "name": "Can Create Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to add anything in the registration section."
     },
     {
         "name": "Can Create Users From Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to add users in the registration section."
     },
     {
         "name": "Can Read Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to view anything in the registration section."
     },
     {
         "name": "Can Update Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to edit anything in the registration section."
     },
     {
         "name": "Can Delete Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to delete anything in the registration section."
     },
     {
         "name": "Can Manage Registrations",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to manage anything in the registration section."
     },
     {
         "name": "Can See Registrations Contact Details",
-        "module": "vaahcms",
-        "section": "registration",
+        "module": "Vaahcms",
+        "section": "Registration",
         "details": "This will allow user to view contact detail in the registration section."
     },
 
 
     {
         "name": "Has Access Of Roles Section",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user see the link of role section."
     },
     {
         "name": "Can Create Roles",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user to add anything in the role section."
     },
     {
         "name": "Can Read Roles",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user to view anything in the role section."
     },
     {
         "name": "Can Update Roles",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user to edit anything in the role section."
     },
     {
         "name": "Can Delete Roles",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user to delete anything in the role section."
     },
     {
         "name": "Can Manage Roles",
-        "module": "vaahcms",
-        "section": "role",
+        "module": "Vaahcms",
+        "section": "Role",
         "details": "This will allow user to manage anything in the role section."
     },
 
 
     {
         "name": "Has Access Of Permissions Section",
-        "module": "vaahcms",
-        "section": "permission",
+        "module": "Vaahcms",
+        "section": "Permission",
         "details": "This will allow user see the link of permission section."
     },
     {
         "name": "Can Read Permissions",
-        "module": "vaahcms",
-        "section": "permission",
+        "module": "Vaahcms",
+        "section": "Permission",
         "details": "This will allow user to view anything in the permission section."
     },
     {
         "name": "Can Update Permissions",
-        "module": "vaahcms",
-        "section": "permission",
+        "module": "Vaahcms",
+        "section": "Permission",
         "details": "This will allow user to edit anything in the permission section."
     },
     {
         "name": "Can Manage Permissions",
-        "module": "vaahcms",
-        "section": "permission",
+        "module": "Vaahcms",
+        "section": "Permission",
         "details": "This will allow user to manage anything in the permission section."
     },
 
     {
         "name": "Has Access Of Media Section",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user see the link of media section."
     },
     {
         "name": "Can Create Media",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user to add anything in the media section."
     },
     {
         "name": "Can Read Media",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user to view anything in the media section."
     },
     {
         "name": "Can Update Media",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user to edit anything in the media section."
     },
     {
         "name": "Can Delete Media",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user to delete anything in the media section."
     },
     {
         "name": "Can Manage Media",
-        "module": "vaahcms",
-        "section": "media",
+        "module": "Vaahcms",
+        "section": "Media",
         "details": "This will allow user to manage anything in the media section."
     },
 
     {
         "name": "Has Access Of Module Section",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user see the link of module section."
     },
     {
         "name": "Can Install Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to install a module."
     },
     {
         "name": "Can Publish Assets Of Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to publish assets of a module."
     },
     {
         "name": "Can Delete Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to delete a module."
     },
     {
         "name": "Can Deactivate Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to deactivate a module."
     },
     {
         "name": "Can Activate Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to activate a module."
     },
     {
         "name": "Can Import Sample Data In Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to import sample data in module."
     },
     {
         "name": "Can Update Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to update a module."
     },
     {
         "name": "Can Read Module",
-        "module": "vaahcms",
-        "section": "module",
+        "module": "Vaahcms",
+        "section": "Module",
         "details": "This will allow user to read a module."
     },
 
     {
         "name": "Has Access Of Theme Section",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user see the link of theme section."
     },
     {
         "name": "Can Install Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to install a theme."
     },
     {
         "name": "Can Delete Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to delete a theme."
     },
     {
         "name": "Can Deactivate Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to deactivate a theme."
     },
     {
         "name": "Can Activate Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to activate a theme."
     },
     {
         "name": "Can Import Sample Data In Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to import sample data in theme."
     },
     {
         "name": "Can Update Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to update a theme."
     },
     {
         "name": "Can Read Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to read a theme."
     },
     {
         "name": "Can Publish Assets Of Theme",
-        "module": "vaahcms",
-        "section": "theme",
+        "module": "Vaahcms",
+        "section": "Theme",
         "details": "This will allow user to publish assets of a theme."
     },
     {
         "name": "Has Access Of Advanced Section",
-        "module": "vaahcms",
-        "section": "advanced",
+        "module": "Vaahcms",
+        "section": "Advanced",
         "details": "This will allow user see the link of advanced section."
     },
     {
         "name": "Has Access Of Logs Section",
-        "module": "vaahcms",
-        "section": "logs",
+        "module": "Vaahcms",
+        "section": "Logs",
         "details": "This will allow user see the link of logs section."
     },
     {
         "name": "Can Read Log",
-        "module": "vaahcms",
-        "section": "logs",
+        "module": "Vaahcms",
+        "section": "Logs",
         "details": "This will allow user to see logs details."
     },
     {
         "name": "Can Delete Log",
-        "module": "vaahcms",
-        "section": "logs",
+        "module": "Vaahcms",
+        "section": "Logs",
         "details": "This will allow user to Logs."
     },
     {
         "name": "Has Access Of Batches Section",
-        "module": "vaahcms",
-        "section": "batches",
+        "module": "Vaahcms",
+        "section": "Batches",
         "details": "This will allow user see the link of logs section."
     },
     {
         "name": "Can Read Batch Failed Ids",
-        "module": "vaahcms",
-        "section": "batches",
+        "module": "Vaahcms",
+        "section": "Batches",
         "details": "This will allow user to view failed ids of batch."
     },
     {
         "name": "Can Delete Batch",
-        "module": "vaahcms",
-        "section": "batches",
+        "module": "Vaahcms",
+        "section": "Batches",
         "details": "This will allow user to delete batches."
     },
     {
         "name": "Can Read Batch Details",
-        "module": "vaahcms",
-        "section": "batches",
+        "module": "Vaahcms",
+        "section": "Batches",
         "details": "This will allow user to view batches related details."
     },
     {
         "name": "Has Access Of Failed Jobs Section",
-        "module": "vaahcms",
-        "section": "failedjobs",
+        "module": "Vaahcms",
+        "section": "Failed-Jobs",
         "details": "This will allow user see the link of failed jobs section."
     },
     {
         "name": "Can Read Payload Failed Jobs",
-        "module": "vaahcms",
-        "section": "failedjobs",
+        "module": "Vaahcms",
+        "section": "Failed-Jobs",
         "details": "This will allow user to view failed jobs payload."
     },
     {
         "name": "Can Delete Failed Jobs",
-        "module": "vaahcms",
-        "section": "failedjobs",
+        "module": "Vaahcms",
+        "section": "Failed-Jobs",
         "details": "This will allow user to delete failed jobs."
     },
     {
         "name": "Can Read Failed Jobs Exception",
-        "module": "vaahcms",
-        "section": "failedjobs",
+        "module": "Vaahcms",
+        "section": "Failed-Jobs",
         "details": "This will allow user to view failed jobs exception."
     },
     {
         "name": "Has Access Of Jobs Section",
-        "module": "vaahcms",
-        "section": "jobs",
+        "module": "Vaahcms",
+        "section": "Jobs",
         "details": "This will allow user see the link of jobs section."
     },
     {
         "name": "Can Read Jobs Payload",
-        "module": "vaahcms",
-        "section": "jobs",
+        "module": "Vaahcms",
+        "section": "Jobs",
         "details": "This will allow user to view jobs payload."
     },
     {
         "name": "Can Delete Jobs",
-        "module": "vaahcms",
-        "section": "jobs",
+        "module": "Vaahcms",
+        "section": "Jobs",
         "details": "This will allow user to delete jobs."
     },
     {
         "name": "Has Access Of Taxonomies Section",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to see the link of taxonomy section."
     },
     {
         "name": "Can Create Taxonomies",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to add anything in the taxonomy section."
     },
     {
         "name": "Can Read Taxonomies",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to view anything in the taxonomy section."
     },
     {
         "name": "Can Update Taxonomies",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to edit anything in the taxonomy section."
     },
     {
         "name": "Can Delete Taxonomies",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to delete anything in the taxonomy section."
     },
     {
         "name": "Can Manage Taxonomies",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to manage anything in the taxonomy section."
     },
     {
         "name": "Can Manage Taxonomy Types",
-        "module": "vaahcms",
-        "section": "user",
+        "module": "Vaahcms",
+        "section": "Taxonomy",
         "details": "This will allow user to manage anything in the taxonomy type modal."
     }
 ]
