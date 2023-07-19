@@ -298,9 +298,8 @@ export const useRootStore = defineStore({
         //-----------------------------------------------------------------------
         afterImpersonateLogout(res,data){
 
-            if(data && data.data && data.data.redirect_url){
-                this.reloadAssets();
-                window.location.href = data.data.redirect_url;
+            if(data && data.data && data.data.success){
+                location.reload(true);
             }
         },
         //-----------------------------------------------------------------------

@@ -906,7 +906,7 @@ export const useUserStore = defineStore({
                 method:'post'
             };
             vaah().ajax(
-                this.ajax_url+'/impersonate/'+item.id,
+                this.ajax_url+'/impersonate/'+item.uuid,
                 this.afterImpersonate,
                 options
             );
@@ -916,6 +916,7 @@ export const useUserStore = defineStore({
         {
             if(data && data.data && data.data.redirect_url){
                 window.location.href = data.data.redirect_url;
+                location.reload(true);
             }
         },
         //---------------------------------------------------------------------

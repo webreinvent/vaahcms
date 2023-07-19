@@ -52,6 +52,12 @@
         "details": "This will allow user to edit anything in the user section."
     },
     {
+        "name": "Can Impersonate Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to authenticate as another users."
+    },
+    {
         "name": "Can Delete Users",
         "module": "vaahcms",
         "section": "user",

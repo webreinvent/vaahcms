@@ -90,7 +90,8 @@ const useVaah = vaah();
                 <template #body="prop" >
                     <div class="p-inputgroup">
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button v-if="store.hasPermission('can-impersonate-users')"
+                                class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Impersonate'"
                                 @click="store.impersonate(prop.data)"
                                 icon="pi pi-user"

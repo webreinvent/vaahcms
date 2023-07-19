@@ -680,12 +680,19 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function impersonate(Request $request, $id): JsonResponse
+    public function impersonate(Request $request, $uuid): JsonResponse
     {
+
+        if (!Auth::user()->hasPermission('can-impersonate-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         try {
             $response = [];
-            $user = User::where('id', $id)->first();
+            $user = User::where('uuid', $uuid)->first();
 
 
             if(!$user){
@@ -733,10 +740,10 @@ class UsersController extends Controller
         try {
 
             Auth::user()->leaveImpersonation();
-            
+
             $response = [];
             $response['success'] = true;
-            $response['redirect_url'] = 'http://localhost/vikram/vaahcms-dev-env/public/backend#/vaah';
+            $response['data'] = '';
 
 
         } catch (\Exception $e) {

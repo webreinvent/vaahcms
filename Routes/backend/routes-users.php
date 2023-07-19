@@ -82,7 +82,7 @@ Route::group(
         Route::post('/impersonate/logout', 'UsersController@impersonateLogout')
             ->name('backend.vaah.users.impersonate.logout');
         //---------------------------------------------------------
-        Route::post('/impersonate/{id}', 'UsersController@impersonate')
+        Route::post('/impersonate/{uuid}', 'UsersController@impersonate')
             ->name('backend.vaah.users.impersonate');
         //---------------------------------------------------------
 
