@@ -718,7 +718,7 @@ class UsersController extends Controller
             Auth::user()->impersonate($user);
 
             $response['success'] = true;
-            $response['redirect_url'] = 'http://localhost/vikram/vaahcms-dev-env/public/backend#/vaah';
+            $response['redirect_url'] = route('vh.backend').'#/vaah';
 
 
         } catch (\Exception $e) {
