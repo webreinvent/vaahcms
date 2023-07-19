@@ -709,7 +709,7 @@ class UsersController extends Controller
 
             if(!$user->hasPermission('can-login-in-backend')){
                 $response['success'] = false;
-                $response['errors'][] = 'Permission Denied!';
+                $response['errors'][] = 'Permission Denied. User must have <strong>can-login-in-backend</strong> permission in their specified role.';
                 return response()->json($response);
             }
 
