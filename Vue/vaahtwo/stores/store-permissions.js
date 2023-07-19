@@ -215,6 +215,8 @@ export const usePermissionStore = defineStore({
                     this.item = vaah().clone(data.empty_item);
                 }
 
+                this.onSelectModule();
+
             }
         },
         //---------------------------------------------------------------------
@@ -1065,10 +1067,14 @@ export const usePermissionStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        onSelectModule(e) {
-            let item = vaah().findInArrayByKey(this.assets.modules,'name',e.value);
-            this.module_sections = item.sections;
-        }
+        onSelectModule() {
+            this.module_sections = [];
+            if(this.query.filter.module){
+                let item = vaah().findInArrayByKey(this.assets.modules,'name',this.query.filter.module);
+                this.module_sections = item.sections;
+            }
+
+        },
     }
 });
 
