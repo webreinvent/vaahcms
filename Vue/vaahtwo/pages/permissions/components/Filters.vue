@@ -3,7 +3,9 @@
 import { usePermissionStore } from '../../../stores/store-permissions'
 import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue'
 
+
 const store = usePermissionStore();
+
 
 </script>
 
@@ -18,6 +20,7 @@ const store = usePermissionStore();
                 <template #label>
                     <b>Module:</b>
                 </template>
+
                 <Dropdown  v-model="store.query.filter.module"
                           :options="store.assets.modules ?? []"
                           @change="store.onSelectModule"
@@ -28,11 +31,13 @@ const store = usePermissionStore();
                 />
             </VhFieldVertical>
 
-            <VhFieldVertical v-if="store.query.filter.module">
+            <VhFieldVertical>
                 <template #label>
                     <b>Section:</b>
                 </template>
+
                 <Dropdown v-model="store.query.filter.section"
+                          :disabled="!store.query.filter.module"
                           :options="store.module_sections"
                           placeholder="Select a Section"
                           class="w-full md:w-14rem"
