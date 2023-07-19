@@ -154,6 +154,17 @@ class Permission extends PermissionBase
 
     }
     //-------------------------------------------------
+    public function scopeSectionFilter($query, $filter)
+    {
+
+        if(!isset($filter['section']))
+        {
+            return $query;
+        }
+        $query->where('section',$filter['section']);
+
+    }
+    //-------------------------------------------------
     public static function updateList($request)
     {
 
@@ -412,6 +423,18 @@ class Permission extends PermissionBase
         $item = self::where('is_active', 1)
             ->first();
         return $item;
+    }
+
+    //-------------------------------------------------
+    public static function getModulesWithSetions()
+    {
+        $modules = static::withTrashed()->distinct()->select('module as name')->get();
+
+        foreach ($modules as $key => $module){
+            $modules[$key]['sections'] = static::where('module',$module->name)
+                ->withTrashed()->select('section')->get()->unique('section')->pluck('section');
+        }
+        return $modules;
     }
 
     //-------------------------------------------------

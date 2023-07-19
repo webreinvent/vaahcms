@@ -229,6 +229,7 @@ class PermissionBase extends Model {
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
         $list->moduleFilter($request->filter);
+        $list->sectionFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 

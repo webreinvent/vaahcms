@@ -19,7 +19,8 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
-            module:null,
+            module: null,
+            section: null,
         },
         recount: null,
     },
@@ -50,6 +51,7 @@ export const usePermissionStore = defineStore({
         list: null,
         item: null,
         fillable:null,
+        module_sections:[],
         empty_query:empty_states.query,
         empty_action:empty_states.action,
         query: vaah().clone(empty_states.query),
@@ -1061,6 +1063,11 @@ export const usePermissionStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
+        },
+        //---------------------------------------------------------------------
+        onSelectModule(e) {
+            let item = vaah().findInArrayByKey(this.assets.modules,'name',e.value);
+            this.module_sections = item.sections;
         }
     }
 });
