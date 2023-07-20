@@ -4,6 +4,7 @@ namespace WebReinvent\VaahCms\Libraries;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Permission;
+use WebReinvent\VaahCms\Models\Role;
 
 
 class VaahSeeder{
@@ -210,6 +211,7 @@ class VaahSeeder{
             if(!isset($item['slug']) || !$item['slug'])
             {
                 $item['slug'] = Str::slug($item['name']);
+
             }
 
             if($pre_name){
@@ -233,13 +235,34 @@ class VaahSeeder{
                 $item['meta'] = json_encode($item['meta']);
             }
 
+            $roles  = isset($item['roles']) ? $item['roles'] : [];
+
+            unset($item['roles']);
+
             if(!$record)
             {
                 Permission::insert($item);
+
             } else{
                 Permission::where('slug', $item['slug'])
                     ->update($item);
             }
+
+            $permission= Permission::where('slug', $item['slug'])
+                ->first();
+
+
+            if (count($roles) > 0){
+                foreach ($roles as $role_slug)
+                {
+                    $role= Role::where('slug', $role_slug)
+                        ->first();
+
+                    $role->permissions()->updateExistingPivot($permission, ['is_active'=>true]);
+                }
+            }
+
+
         }
     }
     //----------------------------------------------------------

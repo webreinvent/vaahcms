@@ -1,24 +1,33 @@
 [
-
     {
         "name": "Has Access of Dashboard",
         "module": "vaahcms",
         "section": "dashboard",
-        "details": "This will allow user to see the link of dashboard."
+        "details": "This will allow user to see the link of dashboard.",
+        "roles": [
+            "registered", "editor"
+        ]
     },
+
 
     {
         "name": "Has Access of Setting Section",
         "module": "vaahcms",
         "section": "Setting",
-        "details": "This will allow user to see the link of setting section."
+        "details": "This will allow user to see the link of setting section.",
+        "roles": [
+            "registered", "editor"
+        ]
     },
 
     {
         "name": "Can Login In Backend",
         "module": "vaahcms",
         "section": "backend",
-        "details": "This will allow user to login in the backend."
+        "details": "This will allow user to login in the backend.",
+        "roles": [
+            "registered", "editor"
+        ]
     },
 
     {
