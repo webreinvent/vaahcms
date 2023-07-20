@@ -49,7 +49,7 @@ class PermissionsController extends Controller
             }
 
             $data['actions'] = [];
-            $data['modules'] = Permission::getModulesWithSetions();
+            $data['modules'] = Permission::getModulesWithSections();
 
             $response['success'] = true;
             $response['data'] = $data;
