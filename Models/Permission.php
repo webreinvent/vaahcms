@@ -426,7 +426,7 @@ class Permission extends PermissionBase
     }
 
     //-------------------------------------------------
-    public static function getModulesWithSetions()
+    public static function getModulesWithSections()
     {
         $modules = static::withTrashed()->distinct()->select('module as name')->get();
 
