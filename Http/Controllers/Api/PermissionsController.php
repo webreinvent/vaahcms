@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Permission;
+use WebReinvent\VaahCms\Models\Role;
 
 class PermissionsController extends Controller
 {

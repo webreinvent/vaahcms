@@ -50,9 +50,8 @@ class TaxonomiesController extends Controller
 
         }
 
-        $data = new \stdClass();
-        $data->new_item = $request->all();
-        $response = Taxonomy::createItem($data);
+
+        $response = Taxonomy::createItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
