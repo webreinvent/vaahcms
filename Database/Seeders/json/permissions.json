@@ -4,7 +4,10 @@
         "name": "Has Access of Dashboard",
         "module": "Vaahcms",
         "section": "Dashboard",
-        "details": "This will allow user to see the link of dashboard."
+        "details": "This will allow user to see the link of dashboard.",
+        "roles": [
+            "registered", "editor"
+        ]
     },
 
     {
