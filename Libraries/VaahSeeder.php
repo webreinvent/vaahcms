@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
+use function Nette\Utils\isEmpty;
 
 
 class VaahSeeder{
@@ -183,6 +184,7 @@ class VaahSeeder{
     public static function roles($json_file_path){
 
         $list = self::getListFromJson($json_file_path);
+//        self::storeSeedsWithUuid('vh_roles', $list);
         self::storeRoleSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
@@ -257,9 +259,14 @@ class VaahSeeder{
             if (is_array($roles)){
                 foreach ($roles as $role_slug)
                 {
-                    $role= Role::where('slug', $role_slug)
-                        ->first();
-
+//                    $role= Role::where('slug', $role_slug)
+//                        ->first();
+                    $role = Role::firstOrCreate(['slug' => $role_slug ],
+                        [
+                            'uuid'=>Str::uuid(),
+                            'name'=>self::slugToCamelCase($role_slug),
+                            'is_active'=>1,
+                        ]);
                     $role->permissions()->updateExistingPivot($permission, ['is_active'=>true]);
                 }
             }
@@ -320,15 +327,18 @@ class VaahSeeder{
                     ->update($item);
             }
 
-            if($sections){
-                if (count($sections) > 0){
-
-                    foreach ($sections as $section_slug)
-                    {
+                if (!empty($sections)) {
+                    foreach ($sections as $section_slug) {
                         $permissions = Permission::where('section', $section_slug)
                             ->get();
+//                        $role = Role::firstOrCreate(['slug' => $record->slug],
+//                            [
+//                                'uuid' => Str::uuid(),
+//                                'name' => self::slugToCamelCase($record->slug),
+//                                'is_active' => 1,
+//                            ]);
 
-                        $role = Role::where('slug',$record->slug)->first();;
+                        $role = Role::where('slug',$item['slug'])->first();
 
                         foreach ($permissions as $permission) {
                             $role->permissions()->updateExistingPivot($permission, ['is_active' => true]);
@@ -336,10 +346,19 @@ class VaahSeeder{
                         }
                     }
                 }
-            }
-
 
         }
+    }
+
+  public static function slugToCamelCase($slug)
+    {
+        $words = explode('-', $slug);
+
+        foreach ($words as &$word) {
+            $word = ucfirst($word);
+        }
+
+        return implode('', $words);
     }
 
 }

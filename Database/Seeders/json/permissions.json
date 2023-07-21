@@ -3,10 +3,7 @@
         "name": "Has Access of Dashboard",
         "module": "vaahcms",
         "section": "dashboard",
-        "details": "This will allow user to see the link of dashboard.",
-        "roles": [
-            "registered", "editor"
-        ]
+        "details": "This will allow user to see the link of dashboard."
     },
 
 
@@ -14,10 +11,7 @@
         "name": "Has Access of Setting Section",
         "module": "vaahcms",
         "section": "Setting",
-        "details": "This will allow user to see the link of setting section.",
-        "roles": [
-            "registered", "editor"
-        ]
+        "details": "This will allow user to see the link of setting section."
     },
 
     {
