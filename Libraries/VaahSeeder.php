@@ -27,6 +27,7 @@ class VaahSeeder{
                                               $create_slug=true, $create_slug_from='name',
                                               $has_active=true)
     {
+
         foreach ($list as $item)
         {
             if($create_slug)
@@ -56,6 +57,7 @@ class VaahSeeder{
                 DB::table($table)->where($primary_key, $item[$primary_key])
                     ->update($item);
             }
+
         }
     }
     //----------------------------------------------------------
@@ -181,7 +183,7 @@ class VaahSeeder{
     public static function roles($json_file_path){
 
         $list = self::getListFromJson($json_file_path);
-        self::storeSeedsWithUuid('vh_roles', $list);
+        self::storeRoleSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
     public static function permissions($json_file_path, $prefix = null){
@@ -252,7 +254,7 @@ class VaahSeeder{
                 ->first();
 
 
-            if (count($roles) > 0){
+            if (is_array($roles)){
                 foreach ($roles as $role_slug)
                 {
                     $role= Role::where('slug', $role_slug)
@@ -278,5 +280,66 @@ class VaahSeeder{
         self::storeTaxonomies($list);
     }
     //----------------------------------------------------------
+
+    public static function storeRoleSeedsWithUuid($table, $list, $primary_key='slug',
+                                       $create_slug=true, $create_slug_from='name',
+                                       $has_active=true){
+
+        foreach ($list as $item)
+        {
+            if($create_slug)
+            {
+                $item['slug'] = Str::slug($item[$create_slug_from]);
+            }
+
+            $item['uuid'] = Str::uuid();
+
+            if($has_active){
+                $item['is_active'] = 1;
+            }
+
+
+            $record = DB::table($table)
+                ->where($primary_key, $item[$primary_key])
+                ->first();
+
+            if(isset($item['meta']))
+            {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            $sections  = isset($item['sections']) ? $item['sections'] : [];
+
+            unset($item['sections']);
+
+            if(!$record)
+            {
+                DB::table($table)->insert($item);
+            } else{
+                DB::table($table)->where($primary_key, $item[$primary_key])
+                    ->update($item);
+            }
+
+            if($sections){
+                if (count($sections) > 0){
+
+                    foreach ($sections as $section_slug)
+                    {
+                        $permissions = Permission::where('section', $section_slug)
+                            ->get();
+
+                        $role = Role::where('slug',$record->slug)->first();;
+
+                        foreach ($permissions as $permission) {
+                            $role->permissions()->updateExistingPivot($permission, ['is_active' => true]);
+
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
 
 }
