@@ -6,17 +6,11 @@
     },
     {
         "name": "Administrator",
-        "details": "Somebody who has access to all the administration features within a single site",
-        "sections": [
-            "user"
-        ]
+        "details": "Somebody who has access to all the administration features within a single site"
     },
     {
         "name": "Manager",
-        "details": "Users who have manage roles can assign a role to user.",
-        "sections": [
-            "user"
-        ]
+        "details": "Users who have manage roles can assign a role to user."
     },
     {
         "name": "Editor",

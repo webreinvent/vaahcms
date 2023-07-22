@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahSeeder;
+use WebReinvent\VaahCms\Models\Permission;
 
 class VaahCmsTableSeeder extends Seeder
 {
@@ -15,8 +16,8 @@ class VaahCmsTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedPermissions();
         $this->seedRoles();
+        $this->seedPermissions();
         $this->seedLanguages();
         $this->seedLanguageCategories();
         $this->seedLanguageStrings();
@@ -25,6 +26,8 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedNotificationContent();
         $this->seedTaxonomyTypes();
         $this->seedTaxonomies();
+
+        Permission::syncPermissionsWithRoles();
 
     }
     //------------------------------------------------------------

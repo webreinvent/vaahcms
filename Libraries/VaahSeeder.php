@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
-use function Nette\Utils\isEmpty;
 
 
 class VaahSeeder{
@@ -28,7 +27,6 @@ class VaahSeeder{
                                               $create_slug=true, $create_slug_from='name',
                                               $has_active=true)
     {
-
         foreach ($list as $item)
         {
             if($create_slug)
@@ -58,7 +56,6 @@ class VaahSeeder{
                 DB::table($table)->where($primary_key, $item[$primary_key])
                     ->update($item);
             }
-
         }
     }
     //----------------------------------------------------------
@@ -184,8 +181,7 @@ class VaahSeeder{
     public static function roles($json_file_path){
 
         $list = self::getListFromJson($json_file_path);
-//        self::storeSeedsWithUuid('vh_roles', $list);
-        self::storeRoleSeedsWithUuid('vh_roles', $list);
+        self::storeSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
     public static function permissions($json_file_path, $prefix = null){
@@ -205,8 +201,8 @@ class VaahSeeder{
 
             if(!$pre_name){
                 $pre_name = get_string_between($json_file_path,
-                DIRECTORY_SEPARATOR.'VaahCms'.DIRECTORY_SEPARATOR.'Themes'.DIRECTORY_SEPARATOR,
-                DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'Seeds');
+                    DIRECTORY_SEPARATOR.'VaahCms'.DIRECTORY_SEPARATOR.'Themes'.DIRECTORY_SEPARATOR,
+                    DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'Seeds');
             }
         }
 
@@ -215,7 +211,6 @@ class VaahSeeder{
             if(!isset($item['slug']) || !$item['slug'])
             {
                 $item['slug'] = Str::slug($item['name']);
-
             }
 
             if($pre_name){
@@ -239,39 +234,47 @@ class VaahSeeder{
                 $item['meta'] = json_encode($item['meta']);
             }
 
-            $roles  = isset($item['roles']) ? $item['roles'] : [];
+            $roles = [];
 
-            unset($item['roles']);
+            if(isset($item['roles']) && is_array($item['roles'])
+                && count($item['roles']) > 0){
+                $roles = $item['roles'];
+                unset($item['roles']);
+
+            }
 
             if(!$record)
             {
                 Permission::insert($item);
-
             } else{
                 Permission::where('slug', $item['slug'])
                     ->update($item);
             }
 
+            if(count($roles) === 0){
+                continue;
+            }
+
             $permission= Permission::where('slug', $item['slug'])
                 ->first();
 
+            foreach ($roles as $role_slug)
+            {
+                $role= Role::where('slug', $role_slug)
+                    ->first();
 
-            if (is_array($roles)){
-                foreach ($roles as $role_slug)
-                {
-//                    $role= Role::where('slug', $role_slug)
-//                        ->first();
-                    $role = Role::firstOrCreate(['slug' => $role_slug ],
-                        [
-                            'uuid'=>Str::uuid(),
-                            'name'=>self::slugToCamelCase($role_slug),
-                            'is_active'=>1,
-                        ]);
+                if(!$role){
+                    continue;
+                }
+
+                if (!$role->permissions()
+                    ->wherePivot('vh_permission_id', $permission->id)->exists()) {
+                    $role->permissions()->attach($permission, ['is_active'=>true]);
+                } else {
                     $role->permissions()->updateExistingPivot($permission, ['is_active'=>true]);
                 }
+
             }
-
-
         }
     }
     //----------------------------------------------------------
@@ -287,78 +290,5 @@ class VaahSeeder{
         self::storeTaxonomies($list);
     }
     //----------------------------------------------------------
-
-    public static function storeRoleSeedsWithUuid($table, $list, $primary_key='slug',
-                                       $create_slug=true, $create_slug_from='name',
-                                       $has_active=true){
-
-        foreach ($list as $item)
-        {
-            if($create_slug)
-            {
-                $item['slug'] = Str::slug($item[$create_slug_from]);
-            }
-
-            $item['uuid'] = Str::uuid();
-
-            if($has_active){
-                $item['is_active'] = 1;
-            }
-
-
-            $record = DB::table($table)
-                ->where($primary_key, $item[$primary_key])
-                ->first();
-
-            if(isset($item['meta']))
-            {
-                $item['meta'] = json_encode($item['meta']);
-            }
-
-            $sections  = isset($item['sections']) ? $item['sections'] : [];
-
-            unset($item['sections']);
-
-            if(!$record)
-            {
-                DB::table($table)->insert($item);
-            } else{
-                DB::table($table)->where($primary_key, $item[$primary_key])
-                    ->update($item);
-            }
-
-                if (!empty($sections)) {
-                    foreach ($sections as $section_slug) {
-                        $permissions = Permission::where('section', $section_slug)
-                            ->get();
-//                        $role = Role::firstOrCreate(['slug' => $record->slug],
-//                            [
-//                                'uuid' => Str::uuid(),
-//                                'name' => self::slugToCamelCase($record->slug),
-//                                'is_active' => 1,
-//                            ]);
-
-                        $role = Role::where('slug',$item['slug'])->first();
-
-                        foreach ($permissions as $permission) {
-                            $role->permissions()->updateExistingPivot($permission, ['is_active' => true]);
-
-                        }
-                    }
-                }
-
-        }
-    }
-
-  public static function slugToCamelCase($slug)
-    {
-        $words = explode('-', $slug);
-
-        foreach ($words as &$word) {
-            $word = ucfirst($word);
-        }
-
-        return implode('', $words);
-    }
 
 }
