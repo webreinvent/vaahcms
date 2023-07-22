@@ -315,6 +315,7 @@ export const useUserStore = defineStore({
                 this.list = data;
                 this.firstElement = this.query.rows * (this.query.page - 1);
             }
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
         async getItem(id) {

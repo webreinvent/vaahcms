@@ -252,7 +252,7 @@ export const useRoleStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        async afterGetList (data, res)
         {
             this.is_btn_loading = false;
             this.query.recount = null;
@@ -262,6 +262,7 @@ export const useRoleStore = defineStore({
                 this.total_permissions = res.data.totalPermissions;
                 this.total_users = res.data.totalUsers;
             }
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
 

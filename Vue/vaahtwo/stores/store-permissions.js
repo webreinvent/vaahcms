@@ -227,7 +227,7 @@ export const usePermissionStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        async afterGetList (data, res)
         {
             this.is_btn_loading = false;
             this.query.recount = null;
@@ -238,6 +238,8 @@ export const usePermissionStore = defineStore({
                 this.total_users = res.data.total_users;
                 this.firstElement = this.query.rows * (this.query.page - 1);
             }
+
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
 

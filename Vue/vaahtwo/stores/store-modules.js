@@ -19,6 +19,7 @@ let empty_states = {
             sort: null,
             status: null
         },
+        recount: null,
     },
     action: {
         type: null,
@@ -230,9 +231,10 @@ export const useModuleStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList(data)
+        async afterGetList(data)
         {
             this.is_btn_loading = false;
+            this.query.recount = null;
             if (data)
             {
                 this.list = data.list.data;
@@ -244,6 +246,8 @@ export const useModuleStore = defineStore({
 
                 this.first_element = ((this.query.page - 1) * this.query.rows);
             }
+
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
 

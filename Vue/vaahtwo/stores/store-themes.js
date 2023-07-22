@@ -21,6 +21,7 @@ let empty_states = {
             sort: null,
             status: null
         },
+        recount: null,
         q: null
     },
     action: {
@@ -229,9 +230,10 @@ export const useThemeStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        async afterGetList (data, res)
         {
             this.is_btn_loading = false;
+            this.query.recount = null;
             if (data)
             {
                 this.list = data.list.data;
@@ -243,6 +245,7 @@ export const useThemeStore = defineStore({
 
                 this.first_element = ((this.query.page - 1) * this.query.rows);
             }
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
 

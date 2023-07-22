@@ -30,7 +30,7 @@ class ThemesController extends Controller
         }
 
         try {
-
+            Theme::syncAll();
             $data['vaahcms_api_route'] = config('vaahcms.api_route');
             $data['debug'] = config('vaahcms.debug');
             $data['installed'] = Theme::select('slug')->get()->pluck('slug')->toArray();
@@ -63,7 +63,9 @@ class ThemesController extends Controller
         }
 
         try {
-            Theme::syncAll();
+            if ($request->has('recount') && $request->recount == true) {
+                Theme::syncAll();
+            }
             $list = Theme::orderBy('created_at', 'DESC');
 
             if ($request->has('filter')) {
