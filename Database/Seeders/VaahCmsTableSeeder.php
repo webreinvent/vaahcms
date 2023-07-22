@@ -15,8 +15,8 @@ class VaahCmsTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedPermissions();
         $this->seedRoles();
+        $this->seedPermissions();
         $this->seedLanguages();
         $this->seedLanguageCategories();
         $this->seedLanguageStrings();

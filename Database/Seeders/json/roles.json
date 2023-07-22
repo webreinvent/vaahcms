@@ -6,10 +6,7 @@
     },
     {
         "name": "Administrator",
-        "details": "Somebody who has access to all the administration features within a single site",
-        "sections": [
-            "user"
-        ]
+        "details": "Somebody who has access to all the administration features within a single site"
     },
     {
         "name": "Manager",

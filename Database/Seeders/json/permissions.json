@@ -6,7 +6,7 @@
         "section": "Dashboard",
         "details": "This will allow user to see the link of dashboard.",
         "roles": [
-            "registered", "editor"
+            "administrator", "manager"
         ]
     },
 
@@ -14,14 +14,20 @@
         "name": "Has Access of Setting Section",
         "module": "Vaahcms",
         "section": "Setting",
-        "details": "This will allow user to see the link of setting section."
+        "details": "This will allow user to see the link of setting section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
     {
         "name": "Can Login In Backend",
         "module": "Vaahcms",
         "section": "Backend",
-        "details": "This will allow user to login in the backend."
+        "details": "This will allow user to login in the backend.",
+        "roles": [
+            "registered", "contributor", "editor", "manager", "administrator"
+        ]
     },
 
     {
@@ -34,43 +40,64 @@
         "name": "Has Access Of Users Section",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to see the link of user section."
+        "details": "This will allow user to see the link of user section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Users",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to add anything in the user section."
+        "details": "This will allow user to add anything in the user section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Read Users",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to view anything in the user section."
+        "details": "This will allow user to view anything in the user section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Users",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to edit anything in the user section."
+        "details": "This will allow user to edit anything in the user section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Delete Users",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to delete anything in the user section."
+        "details": "This will allow user to delete anything in the user section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Manage Users",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to manage anything in the user section."
+        "details": "This will allow user to manage anything in the user section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can See Users Contact Details",
         "module": "Vaahcms",
         "section": "User",
-        "details": "This will allow user to view contact (email, mobile) detail in the user section."
+        "details": "This will allow user to view contact (email, mobile) detail in the user section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
 
@@ -78,49 +105,73 @@
         "name": "Has Access Of Registrations Section",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user see the link of registration section."
+        "details": "This will allow user see the link of registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to add anything in the registration section."
+        "details": "This will allow user to add anything in the registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Users From Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to add users in the registration section."
+        "details": "This will allow user to add users in the registration section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Read Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to view anything in the registration section."
+        "details": "This will allow user to view anything in the registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to edit anything in the registration section."
+        "details": "This will allow user to edit anything in the registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Delete Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to delete anything in the registration section."
+        "details": "This will allow user to delete anything in the registration section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Manage Registrations",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to manage anything in the registration section."
+        "details": "This will allow user to manage anything in the registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can See Registrations Contact Details",
         "module": "Vaahcms",
         "section": "Registration",
-        "details": "This will allow user to view contact detail in the registration section."
+        "details": "This will allow user to view contact detail in the registration section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
 
@@ -128,37 +179,55 @@
         "name": "Has Access Of Roles Section",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user see the link of role section."
+        "details": "This will allow user see the link of role section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Roles",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user to add anything in the role section."
+        "details": "This will allow user to add anything in the role section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Roles",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user to view anything in the role section."
+        "details": "This will allow user to view anything in the role section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Roles",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user to edit anything in the role section."
+        "details": "This will allow user to edit anything in the role section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Delete Roles",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user to delete anything in the role section."
+        "details": "This will allow user to delete anything in the role section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Manage Roles",
         "module": "Vaahcms",
         "section": "Role",
-        "details": "This will allow user to manage anything in the role section."
+        "details": "This will allow user to manage anything in the role section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
 
@@ -166,111 +235,165 @@
         "name": "Has Access Of Permissions Section",
         "module": "Vaahcms",
         "section": "Permission",
-        "details": "This will allow user see the link of permission section."
+        "details": "This will allow user see the link of permission section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Permissions",
         "module": "Vaahcms",
         "section": "Permission",
-        "details": "This will allow user to view anything in the permission section."
+        "details": "This will allow user to view anything in the permission section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Permissions",
         "module": "Vaahcms",
         "section": "Permission",
-        "details": "This will allow user to edit anything in the permission section."
+        "details": "This will allow user to edit anything in the permission section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Manage Permissions",
         "module": "Vaahcms",
         "section": "Permission",
-        "details": "This will allow user to manage anything in the permission section."
+        "details": "This will allow user to manage anything in the permission section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
     {
         "name": "Has Access Of Media Section",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user see the link of media section."
+        "details": "This will allow user see the link of media section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Media",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user to add anything in the media section."
+        "details": "This will allow user to add anything in the media section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Media",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user to view anything in the media section."
+        "details": "This will allow user to view anything in the media section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Media",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user to edit anything in the media section."
+        "details": "This will allow user to edit anything in the media section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Delete Media",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user to delete anything in the media section."
+        "details": "This will allow user to delete anything in the media section.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Manage Media",
         "module": "Vaahcms",
         "section": "Media",
-        "details": "This will allow user to manage anything in the media section."
+        "details": "This will allow user to manage anything in the media section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
     {
         "name": "Has Access Of Module Section",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user see the link of module section."
+        "details": "This will allow user see the link of module section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Install Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to install a module."
+        "details": "This will allow user to install a module.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Delete Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to delete a module."
+        "details": "This will allow user to delete a module.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Deactivate Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to deactivate a module."
+        "details": "This will allow user to deactivate a module.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Activate Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to activate a module."
+        "details": "This will allow user to activate a module.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Import Sample Data In Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to import sample data in module."
+        "details": "This will allow user to import sample data in module.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to update a module."
+        "details": "This will allow user to update a module.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Module",
         "module": "Vaahcms",
         "section": "Module",
-        "details": "This will allow user to read a module."
+        "details": "This will allow user to read a module.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Publish Assets of Module",
@@ -283,103 +406,154 @@
         "name": "Has Access Of Theme Section",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user see the link of theme section."
+        "details": "This will allow user see the link of theme section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Install Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to install a theme."
+        "details": "This will allow user to install a theme.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Delete Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to delete a theme."
+        "details": "This will allow user to delete a theme.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Deactivate Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to deactivate a theme."
+        "details": "This will allow user to deactivate a theme.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Activate Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to activate a theme."
+        "details": "This will allow user to activate a theme.",
+        "roles": [
+            "administrator"
+        ]
     },
     {
         "name": "Can Import Sample Data In Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to import sample data in theme."
+        "details": "This will allow user to import sample data in theme.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to update a theme."
+        "details": "This will allow user to update a theme.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to read a theme."
+        "details": "This will allow user to read a theme.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Publish Assets of Theme",
         "module": "Vaahcms",
         "section": "Theme",
-        "details": "This will allow user to publish an assets of theme."
+        "details": "This will allow user to publish an assets of theme.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Has Access Of Advanced Section",
         "module": "Vaahcms",
         "section": "Advanced",
-        "details": "This will allow user see the link of advanced section."
+        "details": "This will allow user see the link of advanced section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
 
     {
         "name": "Has Access Of Taxonomies Section",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to see the link of taxonomy section."
+        "details": "This will allow user to see the link of taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Create Taxonomies",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to add anything in the taxonomy section."
+        "details": "This will allow user to add anything in the taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Read Taxonomies",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to view anything in the taxonomy section."
+        "details": "This will allow user to view anything in the taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Update Taxonomies",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to edit anything in the taxonomy section."
+        "details": "This will allow user to edit anything in the taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Delete Taxonomies",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to delete anything in the taxonomy section."
+        "details": "This will allow user to delete anything in the taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Manage Taxonomies",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to manage anything in the taxonomy section."
+        "details": "This will allow user to manage anything in the taxonomy section.",
+        "roles": [
+            "administrator", "manager"
+        ]
     },
     {
         "name": "Can Manage Taxonomy Types",
         "module": "Vaahcms",
         "section": "Taxonomy",
-        "details": "This will allow user to manage anything in the taxonomy type modal."
+        "details": "This will allow user to manage anything in the taxonomy type modal.",
+        "roles": [
+            "administrator", "manager"
+        ]
     }
 ]

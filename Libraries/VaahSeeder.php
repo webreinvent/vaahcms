@@ -180,7 +180,8 @@ class VaahSeeder{
     public static function roles($json_file_path){
 
         $list = self::getListFromJson($json_file_path);
-        self::storeRoleSeedsWithUuid('vh_roles', $list);
+        self::storeSeedsWithUuid('vh_roles', $list);
+//        self::storeRoleSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
     public static function permissions($json_file_path, $prefix = null){
@@ -233,9 +234,14 @@ class VaahSeeder{
                 $item['meta'] = json_encode($item['meta']);
             }
 
-            $roles  = isset($item['roles']) ? $item['roles'] : [];
+            $roles = [];
 
-            unset($item['roles']);
+            if(isset($item['roles']) && is_array($item['roles'])
+                && count($item['roles']) > 0){
+                $roles = $item['roles'];
+                unset($item['roles']);
+
+            }
 
             if(!$record)
             {
@@ -245,18 +251,29 @@ class VaahSeeder{
                     ->update($item);
             }
 
+            if(count($roles) === 0){
+                continue;
+            }
             $permission= Permission::where('slug', $item['slug'])
                 ->first();
+            foreach ($roles as $role_slug)
+            {
+                $role= Role::where('slug', $role_slug)
+                    ->first();
 
-            if (is_array($roles)){
-                foreach ($roles as $role_slug)
-                {
-                    $role= Role::where('slug', $role_slug)
-                        ->first();
+                if(!$role){
+                    continue;
+                }
 
+                if (!$role->permissions()
+                    ->wherePivot('vh_permission_id', $permission->id)->exists()) {
+                    $role->permissions()->attach($permission, ['is_active'=>true]);
+                } else {
                     $role->permissions()->updateExistingPivot($permission, ['is_active'=>true]);
                 }
+
             }
+
         }
     }
     //----------------------------------------------------------
