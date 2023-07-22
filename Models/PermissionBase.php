@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder;
 
 class PermissionBase extends Model {
 
@@ -198,9 +197,7 @@ class PermissionBase extends Model {
                 }
             }
         }
-      $seed = new VaahCmsTableSeeder();
-        $seed->seedPermissions();
-        $seed->seedRoles();
+
     }
     //-------------------------------------------------
     public static function recountRelations()
