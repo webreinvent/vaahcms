@@ -29,7 +29,6 @@ class ModulesController extends Controller
         }
 
         try {
-            Module::syncAllModules();
             $data['vaahcms_api_route'] = config('vaahcms.api_route');
             $data['debug'] = config('vaahcms.debug');
             $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
@@ -62,9 +61,8 @@ class ModulesController extends Controller
         }
 
         try {
-            if ($request->has('recount') && $request->recount == true) {
-                Module::syncAllModules();
-            }
+
+            Module::syncAllModules();
 
             $list = Module::orderBy('created_at', 'DESC');
 
