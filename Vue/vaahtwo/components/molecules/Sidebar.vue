@@ -35,7 +35,7 @@ const expandNode = (item) => {
           && root.assets.extended_views.sidebar_menu"
     >
         <div v-for="menus in root.assets.extended_views.sidebar_menu.success">
-            <PanelMenu :model="menus" :expandedKeys="root.sidebar_expanded_keys">
+            <PanelMenu :model="menus" v-model:expandedKeys="root.sidebar_expanded_keys">
                 <template #item="{item}">
 
                     <div class="p-panelmenu-header-content">

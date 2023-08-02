@@ -281,12 +281,11 @@ export const useRootStore = defineStore({
                     self.setMenuItems(menu['items']);
                 }
 
+                let key = vaah().strToSlug(menu['label']);
+                menu['key'] = key;
+
                 if(menu.hasOwnProperty('is_expanded') && menu['is_expanded'] === true){
-
-                    let key = vaah().strToSlug(menu['label']);
-                    menu['key'] = key;
                     self.sidebar_expanded_keys[key] = true;
-
                 }
 
             })
