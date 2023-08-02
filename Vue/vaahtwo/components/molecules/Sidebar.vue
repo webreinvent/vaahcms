@@ -35,7 +35,7 @@ const expandNode = (item) => {
           && root.assets.extended_views.sidebar_menu"
     >
         <div v-for="menus in root.assets.extended_views.sidebar_menu.success">
-            <PanelMenu :model="menus">
+            <PanelMenu :model="menus" :expandedKeys="root.sidebar_expanded_keys">
                 <template #item="{item}">
 
                     <div class="p-panelmenu-header-content">
@@ -48,9 +48,6 @@ const expandNode = (item) => {
 
                             </span>
                             <span class="p-menuitem-text">{{item.label}}</span>
-                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
-
-                            </span>
                         </a>
                         <a v-else
                            class="p-panelmenu-header-action p-menuitem-link"

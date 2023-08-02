@@ -12,6 +12,7 @@ export const useRootStore = defineStore({
         active_item:null,
         assets_is_fetching: true,
         is_sidebar_menu_expand: false,
+        sidebar_expanded_keys: {},
         base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
@@ -278,6 +279,14 @@ export const useRootStore = defineStore({
                         {items: menu['child']})
 
                     self.setMenuItems(menu['items']);
+                }
+
+                if(menu.hasOwnProperty('is_expanded') && menu['is_expanded'] === true){
+
+                    let key = vaah().strToSlug(menu['label']);
+                    menu['key'] = key;
+                    self.sidebar_expanded_keys[key] = true;
+
                 }
 
             })
