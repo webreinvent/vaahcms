@@ -64,14 +64,6 @@ const toggleDropDownMenu= (event) => {
                          ref="menu"
                          :popup="true"
             >
-                <template #item="{item}">
-                    <a :href="item.url"
-                       :data-testid="'Topnav-'+item.label"
-                       class="w-full">
-                        <span><i :class="item.icon + ' mx-2 my-2 py-1'" /></span>
-                        {{item.label}}
-                    </a>
-                </template>
             </TieredMenu>
         </template>
     </Menubar>
