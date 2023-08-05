@@ -39,25 +39,25 @@ const expandNode = (item) => {
                 <template #item="{item}">
 
                     <div class="p-panelmenu-header-content">
-                        <a v-if="!item.items" :href="item.link"
+                        <a v-if="!item.items" :href="item.link ?? ''"
                            class="p-panelmenu-header-action p-menuitem-link"
-                           :data-testid="'sidebar-'+item.label"
+                           :data-testid="'sidebar-'+item.label ?? ''"
                            tabindex="-1">
 
-                            <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
+                            <span v-if="item.icon" class="p-menuitem-icon" :class="'pi pi-'+item.icon">
 
                             </span>
-                            <span class="p-menuitem-text">{{item.label}}</span>
+                            <span v-if="item.label" class="p-menuitem-text">{{item.label}}</span>
                         </a>
                         <a v-else
                            class="p-panelmenu-header-action p-menuitem-link"
-                           :data-testid="'sidebar-'+item.label"
+                           :data-testid="'sidebar-'+item.label ?? ''"
                            tabindex="-1">
 
-                            <span class="p-menuitem-icon" :class="'pi pi-'+item.icon">
+                            <span v-if="item.icon" class="p-menuitem-icon" :class="'pi pi-'+item.icon">
 
                             </span>
-                            <span class="p-menuitem-text">{{item.label}}</span>
+                            <span v-if="item.label" class="p-menuitem-text">{{item.label}}</span>
                             <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
 
                             </span>

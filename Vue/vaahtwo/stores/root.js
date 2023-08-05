@@ -274,10 +274,13 @@ export const useRootStore = defineStore({
             let self = this;
 
             module.forEach( (menu,m_key) => {
+
                 if(menu['child']){
                     Object.assign(menu,
                         {items: menu['child']})
+                }
 
+                if(menu['items']){
                     self.setMenuItems(menu['items']);
                 }
 
