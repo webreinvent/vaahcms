@@ -33,9 +33,11 @@ function getLink(item)
             </div>
         </template>
         <template #item="{item}">
-            <a :href="getLink(item)"
+            <a :href="item.url"
+               :target="item.target"
+               v-tooltip.bottom="item.tooltip"
                :data-testid="'Topnav-'+item.icon.split('-')[1]"
-               class="mx-2">
+               class="px-2">
                 <i class="pi" :class="item.icon"></i></a>
         </template>
 

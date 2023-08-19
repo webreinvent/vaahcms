@@ -319,10 +319,11 @@ export const useRootStore = defineStore({
             this.top_menu_items = [
                 {
                     label:'',
-                    tooltip:'Less Navigation',
+                    tooltip:'Show Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
                         this.is_sidebar_menu_expand = !this.is_sidebar_menu_expand;
+                        this.top_menu_items[0].tooltip = this.is_sidebar_menu_expand ? 'Show Full Navigation' : 'Show Less Navigation';
                     }
                 },
                 {
