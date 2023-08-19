@@ -3,12 +3,10 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Entities\Content;
-use VaahCms\Modules\Cms\Entities\ContentType;
-use VaahCms\Modules\Cms\Entities\FormField;
-use VaahCms\Modules\Cms\Entities\FormGroup;
-use VaahCms\Modules\Cms\Entities\Group;
-use VaahCms\Modules\Cms\Entities\Page;
+use VaahCms\Modules\Cms\Models\Content;
+use VaahCms\Modules\Cms\Models\ContentType;
+use VaahCms\Modules\Cms\Models\FormField;
+use VaahCms\Modules\Cms\Models\FormGroup;
 
 
 class ThemeTemplate extends Model {
