@@ -18,29 +18,31 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-<div class="vaahtwo">
+<div id="main">
 
-    <div class="primevue">
+    <div class="vaahtwo">
 
-        @include("vaahcms::backend.vaahtwo.components.errors")
-        @include("vaahcms::backend.vaahtwo.components.flash")
+        <div id="topmenu-sidebar" class="primevue"  >
 
-        <div id="themeVaahTwoExtend"></div>
+            @include("vaahcms::backend.vaahtwo.components.errors")
+            @include("vaahcms::backend.vaahtwo.components.flash")
 
+            <div id="themeVaahTwoExtend"></div>
+
+        </div>
+
+        <div class="main-container">
+            @yield('content')
+        </div>
 
     </div>
 
-    <div style="margin-top: 65px; margin-left: 226px;">
-        @yield('content')
+
+    <div id="vaahone" class="vaahone bulma">
+
     </div>
 
 </div>
-
-
-<div id="vaahone" class="vaahone bulma">
-
-</div>
-
 
 {!! vh_config_js() !!}
 
