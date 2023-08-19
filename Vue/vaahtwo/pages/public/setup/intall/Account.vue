@@ -16,8 +16,11 @@ onMounted(async () => {
 
 <template>
     <div v-if="store && store.assets">
+        <div class="p-card">
+            <div class="p-card-content p-4 border-round-xl">
         <Message severity="info" :closable="true" class="is-small">
-            Create first account,this account will have super administrator role and will have all the permissions.
+            Create first account,this account will have super administrator
+            role and will have all the permissions.
         </Message>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
@@ -120,44 +123,24 @@ onMounted(async () => {
         </div>
         <div class="grid p-fluid">
             <div class="col-12 mt-3">
-                <span v-if="store.config.env.db_is_valid">
-                    <Button
-                        v-if="store.config.is_account_created"
-                        name="account-create_account_btn"
-                        data-testid="account-create_account_btn"
-                        icon="pi pi-check"
-                        label="Create Account"
-                        class="p-button-success p-button-sm w-auto is-small"
-                        :loading="store.config.btn_is_account_creating"/>
-                    <Button
-                        v-else
-                        name="account-create_account_btn"
-                        data-testid="account-create_account_btn"
-                        icon="pi pi-check"
-                        label="Create Account"
-                        class="p-button-success p-button-sm w-auto is-small"
-                        :loading="store.config.btn_is_account_creating"
-                        @click="store.createAccount()"/>
-                </span>
-                <span v-else>
-                    <Button
-                        v-if="store.config.is_account_created"
-                        name="account-create_account_btn"
-                        data-testid="account-create_account_btn"
-                        icon="pi pi-user-plus"
-                        label="Create Account"
-                        class="p-button-sm w-auto is-small"
-                        :loading="store.config.btn_is_account_creating"/>
-                    <Button
-                        v-else
-                        name="account-create_account_btn"
-                        data-testid="account-create_account_btn"
-                        icon="pi pi-user-plus"
-                        label="Create Account"
-                        class="p-button-sm w-auto is-small"
-                        :loading="store.config.btn_is_account_creating"
-                        @click="store.createAccount()"/>
-                </span>
+                <Button
+                    v-if="store.config.is_account_created"
+                    name="account-create_account_btn"
+                    data-testid="account-create_account_btn"
+                    icon="pi pi-check"
+                    label="Create Account"
+                    class="p-button-success p-button-sm w-auto is-small"
+                    :loading="store.config.btn_is_account_creating"/>
+                <Button
+                    v-else
+                    name="account-create_account_btn"
+                    data-testid="account-create_account_btn"
+                    icon="pi pi-check"
+                    label="Create Account"
+                    class="p-button-sm w-auto is-small"
+                    :loading="store.config.btn_is_account_creating"
+                    @click="store.createAccount()"/>
+
             </div>
             <div class="col-12">
                 <div class="flex justify-content-between mt-3">
@@ -173,7 +156,7 @@ onMounted(async () => {
                         data-testid="account-back_to_sign_in_btn"
                         icon="pi pi-external-link"
                         label="Go to Backend Sign in"
-                        class="p-button-sm w-auto"
+                        class="p-button-success p-button-sm w-auto"
                         @click="store.validateAccountCreation()"></Button>
                     <Button
                         v-else
@@ -185,6 +168,8 @@ onMounted(async () => {
                         @click="store.validateAccountCreation()"></Button>
                 </div>
             </div>
+        </div>
+    </div>
         </div>
     </div>
 </template>

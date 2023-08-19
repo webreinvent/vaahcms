@@ -41,7 +41,7 @@
 <template>
     <div>
 
-        <div>
+        <div :class="{ 'has-sidebar-small' : rootStore.is_sidebar_menu_expand }">
 
             <!--default-->
             <ProgressBar style="z-index: 10000000; position: fixed; top: 1px; width: 100%; left: 0px; height: 2px;"

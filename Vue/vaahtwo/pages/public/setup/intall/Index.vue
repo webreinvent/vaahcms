@@ -44,12 +44,8 @@ onMounted(async () => {
             </div>
             <router-view />
 
-            <Footer />
+            <Footer class="mt-3"/>
         </div>
     </div>
 </template>
 
-<style lang="scss">
-
-
-</style>

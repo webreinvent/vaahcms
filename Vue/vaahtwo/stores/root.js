@@ -12,6 +12,7 @@ export const useRootStore = defineStore({
         active_item:null,
         assets_is_fetching: true,
         is_sidebar_menu_expand: false,
+        sidebar_expanded_keys: {},
         base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
@@ -90,7 +91,7 @@ export const useRootStore = defineStore({
 
 
         //---------------------------------------------------------------------
-        async reloadAssets(data, res)
+        async reloadAssets()
         {
             this.assets_is_fetching = true;
             await this.getAssets();
@@ -273,14 +274,44 @@ export const useRootStore = defineStore({
             let self = this;
 
             module.forEach( (menu,m_key) => {
+
                 if(menu['child']){
                     Object.assign(menu,
                         {items: menu['child']})
+                }
 
+                if(menu['items']){
                     self.setMenuItems(menu['items']);
                 }
 
+                let key = vaah().strToSlug(menu['label']);
+                menu['key'] = key;
+
+                if(menu.hasOwnProperty('is_expanded') && menu['is_expanded'] === true){
+                    self.sidebar_expanded_keys[key] = true;
+                }
+
             })
+        },
+        //-----------------------------------------------------------------------
+        impersonateLogout(){
+
+            let options = {
+                method:'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/users/impersonate/logout',
+                this.afterImpersonateLogout,
+                options
+            );
+        },
+        //-----------------------------------------------------------------------
+        afterImpersonateLogout(res,data){
+
+            if(data && data.data && data.data.success){
+                location.reload(true);
+            }
         },
         //-----------------------------------------------------------------------
         setTopMenuItems(){
@@ -288,10 +319,11 @@ export const useRootStore = defineStore({
             this.top_menu_items = [
                 {
                     label:'',
-                    tooltip:'Less Navigation',
+                    tooltip:'Show Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
                         this.is_sidebar_menu_expand = !this.is_sidebar_menu_expand;
+                        this.top_menu_items[0].tooltip = this.is_sidebar_menu_expand ? 'Show Full Navigation' : 'Show Less Navigation';
                     }
                 },
                 {
@@ -307,6 +339,7 @@ export const useRootStore = defineStore({
                     target:'_blank',
                     icon:'pi pi-external-link'
                 }
+
             ]
         }
     }

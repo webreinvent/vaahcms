@@ -11,6 +11,12 @@ use WebReinvent\VaahCms\Models\User;
 
 class Role extends RoleBase
 {
+
+    //-------------------------------------------------
+    public $pivot_relations  = [
+        'permissions','users'
+    ];
+    //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

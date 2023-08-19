@@ -54,9 +54,13 @@ class TaxonomyBase extends Model {
     //-------------------------------------------------
     public function getMetaAttribute($value)
     {
-        return json_decode($value);
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+
     }
-    //-------------------------------------------------
     //-------------------------------------------------
 
     public function createdByUser()

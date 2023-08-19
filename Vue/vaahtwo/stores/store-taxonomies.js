@@ -19,6 +19,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            type:null,
         },
     },
     action: {
@@ -83,9 +84,11 @@ export const useTaxonomyStore = defineStore({
         first_element: null,
         selected_parent_id: null,
         is_loading: false,
+        meta_content: null,
+        display_meta_modal: false,
     }),
     getters: {
-        
+
     },
     actions: {
         //---------------------------------------------------------------------
@@ -1070,7 +1073,15 @@ export const useTaxonomyStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
+
+        //---------------------------------------------------------------------
+        openModal(item){
+            this.meta_content = JSON.stringify(item,null,2);
+            this.display_meta_modal=true;
+        },
+        //---------------------------------------------------------------------
+
     }
 
 });

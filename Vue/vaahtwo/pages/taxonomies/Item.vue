@@ -147,7 +147,10 @@ const toggleItemMenu = (event) => {
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 
-                        <template v-if="column === 'created_by' || column === 'updated_by'">
+                        <template v-if="column === 'created_by'
+                        || column === 'type'
+                        || column === 'parent'
+                        || column === 'updated_by'">
                         </template>
 
                         <template v-else-if="column === 'id' || column === 'uuid' || column === 'slug'">
@@ -164,11 +167,46 @@ const toggleItemMenu = (event) => {
                             />
                         </template>
 
+                        <template v-else-if="column === 'parent_id'">
+                        <VhViewRow :label="store.item.parent?'parent':''"
+                                   :value="store.item.parent && store.item.parent.name ? store.item.parent.name : ''"
+                            />
+                        </template>
+
+                        <template v-else-if="column === 'vh_taxonomy_type_id'">
+                            <VhViewRow label="Type"
+                                       :value="store.item.type && store.item.type.name ?  store.item.type.name : ''"
+                            />
+                        </template>
+
                         <template v-else-if="column === 'is_active'">
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="yes-no"
                             />
+                        </template>
+
+                        <template v-else-if="column === 'meta'">
+                            <tr>
+                                <td><b>Meta</b></td>
+                                <td v-if="value" >
+                                    <Button icon="pi pi-eye"
+                                            label="view"
+                                            class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
+                                            @click="store.openModal(value)"
+                                            data-testid="register-open_meta_modal"
+                                    />
+                                </td>
+                            </tr>
+
+                            <Dialog header="Meta"
+                                    v-model:visible="store.display_meta_modal"
+                                    :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                    :style="{width: '50vw'}" :modal="true"
+                            >
+                                <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
+                            </Dialog>
+
                         </template>
 
                         <template v-else>

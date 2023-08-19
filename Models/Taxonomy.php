@@ -185,6 +185,18 @@ class Taxonomy extends TaxonomyBase
 
     }
     //-------------------------------------------------
+    public function scopeTypeFilter($query, $filter)
+    {
+        if(!isset($filter['type']))
+        {
+            return $query;
+        }
+        return $query->whereHas('type',function($q) use ($filter)
+        {
+                $q->whereIn('slug',$filter['type']);
+        });
+    }
+    //-------------------------------------------------
     public static function getList($request)
     {
         $list = self::with(['parent','type']);
@@ -192,6 +204,7 @@ class Taxonomy extends TaxonomyBase
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->typeFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 
@@ -366,8 +379,9 @@ class Taxonomy extends TaxonomyBase
     public static function getItem($id)
     {
 
+
         $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','type'])
+            ->with(['createdByUser', 'updatedByUser', 'deletedByUser','type','parent'])
             ->withTrashed()
             ->first();
 
@@ -377,9 +391,10 @@ class Taxonomy extends TaxonomyBase
             $response['errors'][] = 'Record not found with ID: '.$id;
             return $response;
         }
+
+
         $response['success'] = true;
         $response['data'] = $item;
-
         return $response;
 
     }

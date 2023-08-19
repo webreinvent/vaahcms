@@ -14,6 +14,25 @@ const store = useTaxonomyStore();
                  position="right"
                  style="z-index: 1101"
         >
+
+            <VhFieldVertical>
+                <template #label>
+                    <b>Type:</b>
+                </template>
+
+                <div class="card flex justify-content-center">
+                    <MultiSelect v-model="store.query.filter.type"
+                                 :options="store.assets.types"
+                                 optionLabel="label"
+                                 optionValue="data"
+                                 placeholder="Select Types"
+                                 :maxSelectedLabels="3"
+                                 filter
+                                 display="chip"
+                                 class="w-full md:w-20rem"/>
+                </div>
+            </VhFieldVertical>
+
             <VhFieldVertical>
                 <template #label>
                     <b>Sort By:</b>

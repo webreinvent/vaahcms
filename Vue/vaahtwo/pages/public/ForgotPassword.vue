@@ -17,42 +17,53 @@ onMounted(async () => {
 
 </script>
 <template>
-    <Card style="width: 28rem;max-width: 100vw; margin-bottom: 2em" class="m-auto">
-        <template #title>
-            <div class="content text-center">
-                <Logo/>
-                <h4 class="text-xl font-semibold line-height-2 mb-2">Forgot password?</h4>
-                <p class="text-sm text-gray-600 font-semibold mb-5">You can recover your password from here.</p>
+    <div class="col-12 mt-6 mx-auto">
+        <div class="grid flex justify-content-center flex-wrap ">
+            <div v-if="root.assets" class="w-full">
+                <Card class="m-auto border-round-xl w-full max-w-24rem">
+                    <template #title>
+                        <div class="content text-center">
+                            <Logo class="mt-3" />
+                            <h4 class="text-xl font-semibold mb-1">Forgot password?</h4>
+                            <p class="text-xs text-gray-600 font-normal">You can recover your password from here.</p>
+
+                        </div>
+                    </template>
+
+                    <template #content>
+                        <div class="flex flex-column align-items-center gap-3 ">
+                            <InputText
+                                v-model="auth.forgot_password_items.email"
+                                placeholder="Enter Email Address"
+                                name="forgot_password-email"
+                                data-testid="forgot_password-email"
+                                id="email"
+                                class="w-full"
+                                type="text"/>
+                            <div class="w-full flex justify-content-between align-items-center">
+                                <Button
+                                    label="Send Code"
+                                    name="forgot_password-send_code_btn"
+                                    data-testid="forgot_password-send_code_btn"
+                                    class="p-button-sm"
+                                    native-type="submit"
+                                    @click="auth.sendCode()"
+                                    :loading="auth.is_forgot_password_btn_loading"/>
+                                <router-link :to="{name:'sign.in'}">
+                                    <Button label="Sign In" class="p-button-text p-button-sm"/>
+                                </router-link>
+                            </div>
+                        </div>
+
+                    </template>
+                    <template class="m-0" #footer>
+                        <Footer />
+                    </template>
+                </Card>
+
             </div>
-        </template>
-        <template #content>
-            <div class="p-float-label field mb-5">
-                <InputText
-                    v-model="auth.forgot_password_items.email"
-                    name="forgot_password-email"
-                    data-testid="forgot_password-email"
-                    id="email"
-                    class="w-full"
-                    type="text"/>
-                <label for="email">Enter Email Address</label>
-            </div>
-            <div class="field flex justify-content-between align-items-center">
-                <Button
-                    label="Send Code"
-                    name="forgot_password-send_code_btn"
-                    data-testid="forgot_password-send_code_btn"
-                    class="p-button-sm"
-                    native-type="submit"
-                    @click="auth.sendCode()"
-                    :loading="auth.is_forgot_password_btn_loading"/>
-                <router-link :to="{name:'sign.in'}">
-                    <Button label="Sign In" class="p-button-text p-button-sm"/>
-                </router-link>
-            </div>
-        </template>
-        <template #footer>
-            <Footer />
-        </template>
-    </Card>
+        </div>
+    </div>
+
 </template>
 

@@ -98,6 +98,25 @@ class CrudWithUuidObserver
     }
 	//-----------------------------------------------------------
 
+
+    //-----------------------------------------------------------
+    public function forceDeleting( $model ) {
+
+        if($model->pivot_relations){
+            foreach ($model->pivot_relations as $relation_item){
+                $model->{$relation_item}()
+                    ->detach();
+            }
+        }
+
+        if($model->has_morph_relations){
+            foreach ($model->has_morph_relations as $relation_item){
+                $model->{$relation_item}()
+                    ->delete();
+            }
+        }
+
+    }
 	//-----------------------------------------------------------
 	//-----------------------------------------------------------
 	//-----------------------------------------------------------

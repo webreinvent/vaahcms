@@ -47,7 +47,7 @@
 @yield('vaahcms_extend_backend_js')
 
 @if(env('VAAHCMS_VUE_APP') == 'develop')
-    <script type="module" src="http://localhost:4000/main-extend.js" defer></script>
+    <script type="module" src="http://localhost:4000/main-extended.js" defer></script>
 @else
     <script type="module" src="{{vh_get_backend_assets("build/mainExtended.js", "vaahtwo")}}" defer></script>
 @endif
