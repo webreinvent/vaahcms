@@ -72,14 +72,19 @@ class ExtendController extends Controller
     {
         $list = [];
 
+        $n = 0;
+
         if(\Auth::user()->hasPermission('has-access-of-dashboard'))
         {
-            $list[0] = [
+            $list[$n] = [
                 'link' => self::$link,
                 'icon' => 'compass',
                 'label'=> 'Dashboard',
             ];
+
+            $n++;
         }
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section') ||
@@ -87,81 +92,97 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-roles-section') ||
             \Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
-            $list[1] = [
+            $list[$n] = [
                 'icon' => 'user',
                 'label'=> 'Users & Access',
+                'items'=> [],
             ];
-        }
-
-        if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
-        {
-            $list[1]['items'][] =  [
-                'link' => self::$link."/registrations/",
-                'icon' => 'user-plus',
-                'label'=> 'Registrations',
-            ];
-        }
-
-        if(\Auth::user()->hasPermission('has-access-of-users-section'))
-        {
-            $list[1]['items'][] =  [
-                'link' => self::$link."/users/",
-                'icon' => 'users',
-                'label'=> 'Users',
-            ];
-        }
-
-        if(\Auth::user()->hasPermission('has-access-of-roles-section'))
-        {
-            $list[1]['items'][] =  [
-                'link' => self::$link."/roles/",
-                'icon' => 'tag',
-                'label'=> 'Roles',
-            ];
-        }
 
 
-        if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
-        {
-            $list[1]['items'][] =  [
-                'link' =>  self::$link."/permissions/",
-                'icon' => 'key',
-                'label'=> 'Permissions',
-            ];
+            if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' => self::$link."/registrations/",
+                    'icon' => 'user-plus',
+                    'label'=> 'Registrations',
+                ];
+            }
+
+            if(\Auth::user()->hasPermission('has-access-of-users-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' => self::$link."/users/",
+                    'icon' => 'users',
+                    'label'=> 'Users',
+                ];
+            }
+
+            if(\Auth::user()->hasPermission('has-access-of-roles-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' => self::$link."/roles/",
+                    'icon' => 'tag',
+                    'label'=> 'Roles',
+                ];
+            }
+
+
+            if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' =>  self::$link."/permissions/",
+                    'icon' => 'key',
+                    'label'=> 'Permissions',
+                ];
+            }
+
+            $n++;
         }
+
+
+
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-module-section') ||
             \Auth::user()->hasPermission('has-access-of-theme-section'))
         {
-            $list[2] = [
+            $list[$n] = [
                 'icon' => "pi pi-box",
                 'label'=> 'Extend',
+                'items'=> [],
             ];
+
+            if(\Auth::user()->hasPermission('has-access-of-module-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' => self::$link."/modules/",
+                    'icon' => 'box',
+                    'label'=> 'Modules',
+                ];
+            }
+
+            if(\Auth::user()->hasPermission('has-access-of-theme-section'))
+            {
+                $list[$n]['items'][] =  [
+                    'link' => self::$link."/themes/",
+                    'icon' => 'palette',
+                    'label'=> 'Themes',
+                ];
+            }
+
+            $n++;
+
         }
 
-        if(\Auth::user()->hasPermission('has-access-of-module-section'))
-        {
-            $list[2]['items'][] =  [
-                'link' => self::$link."/modules/",
-                'icon' => 'box',
-                'label'=> 'Modules',
-            ];
-        }
 
-        if(\Auth::user()->hasPermission('has-access-of-theme-section'))
-        {
-            $list[2]['items'][] =  [
-                'link' => self::$link."/themes/",
-                'icon' => 'palette',
-                'label'=> 'Themes',
-            ];
-        }
+
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $list[3] = [
+            $list[$n] = [
                 'icon'=> 'cog',
                 'label'=> 'Settings',
                 'items' => [
@@ -202,42 +223,48 @@ class ExtendController extends Controller
                     ],
                 ]
             ];
+
+            $n++;
         }
 
         if (\Auth::user()->hasPermission('has-access-of-logs-section'))
         {
-            $list[4] = [
+            $list[$n] = [
                 'link' => self::$link."/advanced/logs",
                 'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
+            $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-jobs-section'))
         {
-            $list[4] = [
+            $list[$n] = [
                 'link' => self::$link."/advanced/jobs",
                 'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
+            $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-failedjobs-section'))
         {
-            $list[4] = [
+            $list[$n] = [
                 'link' => self::$link."/advanced/failedjobs",
                 'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
+            $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-batches-section'))
         {
-            $list[4] = [
+            $list[$n] = [
                 'link' => self::$link."/advanced/batches",
                 'icon'=> 'database',
                 'label'=> 'Advanced'
             ];
+            $n++;
         }
 
 
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
         {
-            $list[5] = [
+            $list[$n] = [
                 'icon'=> 'images',
                 'label'=> 'Manage',
                 'items' => [
@@ -254,7 +281,7 @@ class ExtendController extends Controller
                 ]
             ];
         }
-
+        
 
         $response['success'] = true;
         $response['data'] = $list;

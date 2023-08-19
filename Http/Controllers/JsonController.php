@@ -23,6 +23,9 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getPublicAssets(Request $request)
     {
+        $manager = app('impersonate');
+
+        $data['is_impersonating'] =  $manager->isImpersonating();
 
         $data['timezone'] = config('app.timezone');
 
@@ -147,7 +150,8 @@ class JsonController extends Controller
             if($user->security_code)
             {
 
-                if($user->security_code_expired_at->lt(now()))
+                if($user->security_code_expired_at &&
+                    $user->security_code_expired_at->lt(now()))
                 {
                     $is_logged = false;
 

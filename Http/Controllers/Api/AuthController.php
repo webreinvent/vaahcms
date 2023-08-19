@@ -94,13 +94,7 @@ class AuthController extends Controller
             return $response;
         }
 
-        $request_array = [
-            'new_item' => $inputs
-        ];
-
-
-        $data = new \stdClass();
-        $data->new_item = $inputs;
+        $data = new Request($inputs);
         $response = User::create($data);
         return response()->json($response);
     }

@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Lab404\Impersonate\Models\Impersonate;
 use WebReinvent\VaahCms\Libraries\VaahMail;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use Illuminate\Http\Response;
@@ -19,6 +20,7 @@ use WebReinvent\VaahCms\Mail\SecurityOtpMail;
 class UserBase extends Authenticatable
 {
 
+    use Impersonate;
     use Notifiable;
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

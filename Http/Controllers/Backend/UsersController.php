@@ -680,4 +680,89 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function impersonate(Request $request, $uuid): JsonResponse
+    {
+
+        if (!Auth::user()->hasPermission('can-impersonate-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = [];
+            $user = User::where('uuid', $uuid)->first();
+
+
+            if(!$user){
+                $response['success'] = false;
+                $response['errors'][] = 'User does not exist.';
+                return response()->json($response);
+            }
+
+            if($user->is_active != 1){
+                $response['success'] = false;
+                $response['errors'][] = 'User is not active.';
+                return response()->json($response);
+            }
+
+            if(!$user->hasPermission('can-login-in-backend')){
+                $response['success'] = false;
+                $response['errors'][] = "Permission Denied. User must have
+                                        <strong>can-login-in-backend</strong>
+                                        permission in user's specified role.";
+                return response()->json($response);
+            }
+
+            Auth::user()->impersonate($user);
+
+            $response['success'] = true;
+            $response['redirect_url'] = route('vh.backend').'#/vaah';
+
+
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function impersonateLogout(Request $request): JsonResponse
+    {
+
+        try {
+
+            Auth::user()->leaveImpersonation();
+
+            $response = [];
+            $response['success'] = true;
+            $response['data'] = '';
+
+
+        } catch (\Exception $e) {
+
+
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 }
