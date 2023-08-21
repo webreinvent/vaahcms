@@ -322,13 +322,17 @@ export const useRootStore = defineStore({
                     tooltip:'Show Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
-                        let element = document.getElementById("main");
 
-                        if(element.classList.contains("has-sidebar-small")){
-                            element.classList.remove("has-sidebar-small");
-                        }else{
-                            element.classList.add("has-sidebar-small");
+                        let element = document.getElementById("main-vaahtwo");
+                        
+                        if(element){
+                            if(element.classList.contains("has-sidebar-small")){
+                                element.classList.remove("has-sidebar-small");
+                            }else{
+                                element.classList.add("has-sidebar-small");
+                            }
                         }
+
 
 
 

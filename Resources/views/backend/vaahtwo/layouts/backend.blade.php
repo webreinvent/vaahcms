@@ -18,7 +18,7 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-<div id="main">
+<div id="main-vaahtwo">
 
     <div class="vaahtwo">
 
