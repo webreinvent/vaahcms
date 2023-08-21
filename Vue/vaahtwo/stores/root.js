@@ -324,7 +324,7 @@ export const useRootStore = defineStore({
                     command: () => {
 
                         let element = document.getElementById("main-vaahtwo");
-                        
+
                         if(element){
                             if(element.classList.contains("has-sidebar-small")){
                                 element.classList.remove("has-sidebar-small");
