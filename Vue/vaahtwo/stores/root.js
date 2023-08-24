@@ -322,6 +322,20 @@ export const useRootStore = defineStore({
                     tooltip:'Show Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
+
+                        let element = document.getElementById("main-vaahtwo");
+
+                        if(element){
+                            if(element.classList.contains("has-sidebar-small")){
+                                element.classList.remove("has-sidebar-small");
+                            }else{
+                                element.classList.add("has-sidebar-small");
+                            }
+                        }
+
+
+
+
                         this.is_sidebar_menu_expand = !this.is_sidebar_menu_expand;
                         this.top_menu_items[0].tooltip = this.is_sidebar_menu_expand ? 'Show Full Navigation' : 'Show Less Navigation';
                     }

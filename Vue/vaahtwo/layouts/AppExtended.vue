@@ -39,64 +39,49 @@
 
 
 <template>
-    <div>
+    <div id="app-extend">
 
-        <div :class="{ 'has-sidebar-small' : rootStore.is_sidebar_menu_expand }">
+        <!--default-->
+        <ProgressBar style="z-index: 10000000; position: fixed; top: 1px; width: 100%; left: 0px; height: 2px;"
+                     v-if="useVaah.show_progress_bar"
+                     mode="indeterminate"/>
 
-            <!--default-->
-            <ProgressBar style="z-index: 10000000; position: fixed; top: 1px; width: 100%; left: 0px; height: 2px;"
-                         v-if="useVaah.show_progress_bar"
-                         mode="indeterminate"/>
-
-            <Toast class="p-container-toasts" position="top-center" >
-                <template #message="slotProps">
-                    <div class="p-toast-message-text">
+        <Toast class="p-container-toasts" position="top-center" >
+            <template #message="slotProps">
+                <div class="p-toast-message-text">
                     <span class="p-toast-summary" v-if="slotProps.message.summary"
                           v-html="slotProps.message.summary"></span>
-                        <div class="p-toast-detail" v-if="slotProps.message.detail"
-                             v-html="slotProps.message.detail">
-                        </div>
-                    </div>
-                </template>
-            </Toast>
-
-            <ConfirmDialog :style="{width: '40vw'}"
-                           class="p-container-confirm-dialog text-red-200">
-                <template #message="slotProps">
-
-                    <i :class="slotProps.message.icon+' text-'+slotProps.message.acceptClass+'-500'"
-                       class="p-confirm-dialog-icon "></i>
-                    <span :class="'text-'+slotProps.message.acceptClass+'-500'"
-                          class="p-confirm-dialog-message"
-                          v-html="slotProps.message.message">
-                </span>
-                </template>
-            </ConfirmDialog>
-            <!--/default-->
-
-
-            <div v-if="rootStore.is_logged_in" class="grid">
-
-                <TopnavExtended />
-
-                <Sidebar/>
-
-                <!--
-                <div class="grid main-container">
-                    <div class="col-12">
-                        <Notices/>
+                    <div class="p-toast-detail" v-if="slotProps.message.detail"
+                         v-html="slotProps.message.detail">
                     </div>
                 </div>
-                -->
+            </template>
+        </Toast>
 
-            </div>
+        <ConfirmDialog :style="{width: '40vw'}"
+                       class="p-container-confirm-dialog text-red-200">
+            <template #message="slotProps">
+
+                <i :class="slotProps.message.icon+' text-'+slotProps.message.acceptClass+'-500'"
+                   class="p-confirm-dialog-icon "></i>
+                <span :class="'text-'+slotProps.message.acceptClass+'-500'"
+                      class="p-confirm-dialog-message"
+                      v-html="slotProps.message.message">
+                </span>
+            </template>
+        </ConfirmDialog>
+        <!--/default-->
 
 
+        <div id="topmenu-and-sidebar-container" v-if="rootStore.is_logged_in">
+
+            <TopnavExtended />
+
+            <Sidebar/>
 
 
-<!--            <Footer />-->
         </div>
-
-
+        
+        <!--            <Footer />-->
     </div>
 </template>
