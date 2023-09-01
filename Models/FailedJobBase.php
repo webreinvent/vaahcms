@@ -11,6 +11,8 @@ class FailedJobBase extends Model {
 
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'failed_jobs';
     //-------------------------------------------------
     protected $casts = [

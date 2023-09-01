@@ -9,6 +9,8 @@ class Notified extends Model {
     use SoftDeletes;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_notified';
     //-------------------------------------------------
     protected $dates = [

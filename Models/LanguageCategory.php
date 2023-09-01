@@ -13,6 +13,8 @@ class LanguageCategory extends Model {
     use CrudObservantTrait;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_lang_categories';
     //-------------------------------------------------
     protected $casts = [

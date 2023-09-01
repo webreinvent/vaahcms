@@ -7,6 +7,8 @@ use WebReinvent\VaahCms\Models\Theme;
 class Migration extends Model {
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_migrations';
     //-------------------------------------------------
     protected $casts = [

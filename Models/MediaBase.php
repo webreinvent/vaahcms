@@ -14,6 +14,8 @@ class MediaBase extends Model {
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_medias';
     //-------------------------------------------------
     protected $casts = [

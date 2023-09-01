@@ -12,6 +12,10 @@ class Job extends JobBase
 {
     use CrudWithUuidObservantTrait;
 
+    //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
+
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

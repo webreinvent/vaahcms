@@ -26,6 +26,8 @@ class UserBase extends Authenticatable
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_users';
     public bool $prevent_password_hashing = false;
     //-------------------------------------------------

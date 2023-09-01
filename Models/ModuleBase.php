@@ -11,6 +11,8 @@ class ModuleBase extends Model
 {
     use SoftDeletes;
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_modules';
     //-------------------------------------------------
     protected $casts = [

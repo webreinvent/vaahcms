@@ -6,6 +6,9 @@ use Illuminate\Support\Str;
 class User extends UserBase
 {
 
+    //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

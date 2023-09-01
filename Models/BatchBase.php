@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 class BatchBase extends Model
 {
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'job_batches';
     //-------------------------------------------------
     protected $casts = [

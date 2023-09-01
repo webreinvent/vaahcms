@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 class ThemeTemplateField extends Model {
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_theme_template_fields';
     //-------------------------------------------------
     protected $casts = [
