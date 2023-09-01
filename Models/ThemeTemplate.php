@@ -12,6 +12,8 @@ use VaahCms\Modules\Cms\Models\FormGroup;
 class ThemeTemplate extends Model {
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_theme_templates';
     //-------------------------------------------------
     protected $casts = [

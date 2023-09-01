@@ -13,6 +13,8 @@ class FailedJob extends FailedJobBase
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');

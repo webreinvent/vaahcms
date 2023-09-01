@@ -15,6 +15,8 @@ class PermissionBase extends Model {
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_permissions';
     //-------------------------------------------------
     protected $casts = [

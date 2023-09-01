@@ -9,6 +9,8 @@ class ThemeBlock extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_theme_blocks';
     //-------------------------------------------------
     protected $casts = [

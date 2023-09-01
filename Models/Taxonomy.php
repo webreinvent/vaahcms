@@ -11,6 +11,9 @@ use WebReinvent\VaahCms\Models\User;
 
 class Taxonomy extends TaxonomyBase
 {
+    //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

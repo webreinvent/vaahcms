@@ -13,6 +13,10 @@ use WebReinvent\VaahCms\Models\User;
 class Media extends MediaBase
 {
 
+    //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
+
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

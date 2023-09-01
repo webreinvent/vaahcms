@@ -9,6 +9,8 @@ class NotificationContent extends Model {
     use SoftDeletes;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_notification_contents';
     //-------------------------------------------------
     protected $casts = [

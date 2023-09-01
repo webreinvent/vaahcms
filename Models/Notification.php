@@ -15,6 +15,8 @@ class Notification extends Model {
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_notifications';
     //-------------------------------------------------
     protected $casts = [

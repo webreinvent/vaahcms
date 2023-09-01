@@ -14,6 +14,8 @@ class TaxonomyBase extends Model {
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_taxonomies';
     //-------------------------------------------------
     protected $casts = [

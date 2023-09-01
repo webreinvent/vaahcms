@@ -13,6 +13,8 @@ use VaahCms\Modules\Cms\Entities\MenuItem;
 class ThemeLocation extends Model {
 
     //-------------------------------------------------
+    protected $connection= 'mysql';
+    //-------------------------------------------------
     protected $table = 'vh_theme_locations';
     //-------------------------------------------------
     protected $casts = [
@@ -159,7 +161,7 @@ class ThemeLocation extends Model {
     //---------------------------------------------------------------------------
     public static function getMenuLocation($location, $html, $type)
     {
-        
+
         $menus_count = Menu::where('vh_theme_location_id', $location->id)
             ->count();
 
