@@ -65,19 +65,25 @@ const store = useGeneralStore();
                     </div>
                 </div>
 
-                <div class="field">
+                <div class="field flex align-items-center">
                     <InputSwitch inputId="switch1"
                                  data-testid="general-securities_status_is_new_device"
+                                 class="p-inputswitch-sm mr-2"
                                  v-model="store.list.is_new_device_verification_enabled"/>
-                    <label for="switch1">We will prompt for additional verification when you log in from a new device or browser.</label>
+                    <label for="switch1" class="m-0">We will prompt for additional verification when you log in from a new device or browser.</label>
+                </div>
+                <div class="col-12 pb-0">
+                    <Divider class="mt-0 mb-3"/>
+
+                    <Button label="Save"
+                            icon="pi pi-save"
+                            data-testid="general-securities_save"
+                            @click="store.storeSecuritySettings()"
+                            class="p-button-sm"
+                    />
+
                 </div>
 
-                <Button label="Save"
-                        icon="pi pi-save"
-                        data-testid="general-securities_save"
-                        @click="store.storeSecuritySettings()"
-                        class="p-button-sm"
-                />
             </div>
         </div>
     </div>
