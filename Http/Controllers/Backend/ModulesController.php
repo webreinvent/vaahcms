@@ -29,7 +29,6 @@ class ModulesController extends Controller
         }
 
         try {
-            Module::syncAllModules();
 
             $data['vaahcms_api_route'] = config('vaahcms.api_route');
             $data['debug'] = config('vaahcms.debug');
