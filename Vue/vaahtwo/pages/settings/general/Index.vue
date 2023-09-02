@@ -35,89 +35,93 @@ onMounted(async () => {
 
 <template>
     <div>
-        <Card>
-            <template #header>
-                <div class="flex justify-content-between align-items-center w-full">
-                    <h5 class="font-semibold text-lg">General Settings</h5>
+         <Panel class="is-small">
+            <template class="p-1" #header>
+                <div class="flex flex-row">
                     <div>
-                        <Button label="Expand all" class="p-button-sm mr-2" @click="store.expandAll"></Button>
-                        <Button label="Collapse all" class="p-button-sm" @click="store.collapseAll"></Button>
-                    </div>
+                        <b class="mr-1">General Settings</b>
+                     </div>
                 </div>
             </template>
 
-            <template #content>
-                <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <div>
-                                    <h5 class="font-semibold text-sm">Site Settings</h5>
-                                    <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
-                                        the login page where you can log in with your new password.</p>
-                                </div>
-                            </div>
-                        </template>
-
-                        <SiteSettings />
-                    </AccordionTab>
-
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Securities</h5>
-                                <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
-                            </div>
-                        </template>
-
-                        <Securities />
-                    </AccordionTab>
-
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Date & Time</h5>
-                                <p class="text-color-secondary text-xs">Global date and time settings.</p>
-                            </div>
-                        </template>
-
-                        <DateTime />
-                    </AccordionTab>
-
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Social Media & Links</h5>
-                                <p class="text-color-secondary text-xs">Static links management.</p>
-                            </div>
-                        </template>
-
-                        <SocialMediaLink />
-                    </AccordionTab>
-
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Scripts</h5>
-                                <p class="text-color-secondary text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
-                            </div>
-                        </template>
-
-                        <Script />
-                    </AccordionTab>
-
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Meta Tags</h5>
-                                <p class="text-color-secondary text-xs">Global meta tags.</p>
-                            </div>
-                        </template>
-
-                        <MetaTags />
-                    </AccordionTab>
-                </Accordion>
+            <template #icons>
+                <div class="buttons">
+                    <Button label="Expand all" icon="pi pi-plus" class="p-button-sm mr-2" @click="store.expandAll"></Button>
+                    <Button label="Collapse all" icon="pi pi-minus" class="p-button-sm" @click="store.collapseAll"></Button>
+                </div>
             </template>
-        </Card>
+
+            <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer" class="my-2">
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <div>
+                                <h5 class="font-semibold text-sm">Site Settings</h5>
+                                <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
+                                    the login page where you can log in with your new password.</p>
+                            </div>
+                        </div>
+                    </template>
+
+                    <SiteSettings />
+                </AccordionTab>
+
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-sm">Securities</h5>
+                            <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                        </div>
+                    </template>
+
+                    <Securities />
+                </AccordionTab>
+
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-sm">Date & Time</h5>
+                            <p class="text-color-secondary text-xs">Global date and time settings.</p>
+                        </div>
+                    </template>
+
+                    <DateTime />
+                </AccordionTab>
+
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-sm">Social Media & Links</h5>
+                            <p class="text-color-secondary text-xs">Static links management.</p>
+                        </div>
+                    </template>
+
+                    <SocialMediaLink />
+                </AccordionTab>
+
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-sm">Scripts</h5>
+                            <p class="text-color-secondary text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
+                        </div>
+                    </template>
+
+                    <Script />
+                </AccordionTab>
+
+                <AccordionTab>
+                    <template #header>
+                        <div class="w-full">
+                            <h5 class="font-semibold text-sm">Meta Tags</h5>
+                            <p class="text-color-secondary text-xs">Global meta tags.</p>
+                        </div>
+                    </template>
+
+                    <MetaTags />
+                </AccordionTab>
+            </Accordion>
+
+        </Panel>
     </div>
 </template>
