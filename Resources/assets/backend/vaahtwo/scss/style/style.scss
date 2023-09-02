@@ -88,6 +88,9 @@ a{
         padding: 0.25rem 0.5rem;
         width: auto;
         font-size: .75rem;
+        &:not(.p-button-tiny){
+            font-size: .6rem;
+        }
         &.p-button-text{
             &:hover, &:active{
                 background-color: transparent;
@@ -226,7 +229,7 @@ a{
     left: 0;
     width: $sideBarWidth;
     z-index: 99;
-    min-height: 100%;
+    height: 100%;
     max-height: calc(100vh - 47px);
     overflow-y: auto;
     overflow-x: hidden;
@@ -277,6 +280,8 @@ a{
             }
         }
         .p-panelmenu-content{
+            border: none;
+            border-radius: 0 !important;
             .p-menuitem-link{
                 position: relative;
                 .p-submenu-icon{
@@ -521,6 +526,30 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+/*Buttons*/
+.p-button{
+    color: #8394a6;
+    background-color: #e5e9f2;
+    border-color: #ced5e5;
+    border-radius: 2px;
+    &.p-button-sm{
+        .p-button-icon {
+            font-size: 0.65rem;
+        }
+    }
+}
+.p-inputgroup{
+    button{
+        &:first-child{
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px
+        }
+        &:last-child{
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+        }
+    }
+}
 
 //Plain Buttons
 .p-button-plain{

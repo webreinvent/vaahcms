@@ -41,7 +41,7 @@ const useVaah = vaah();
                      field="slug"
                      header="Slug"
                      :sortable="true"
-                     class="flex align-items-center"
+
              >
                  <template #body="prop">
                      <Button class="p-button-tiny p-button-text p-0 mr-2"
@@ -50,10 +50,8 @@ const useVaah = vaah();
                              v-tooltip.top="'Copy Slug'"
                              @click="useVaah.copy(prop.data.slug)"
                              icon="pi pi-copy"
+                             :label="prop.data.slug"
                      />
-                     {{ prop.data.slug }}
-
-
 
                  </template>
              </Column>
