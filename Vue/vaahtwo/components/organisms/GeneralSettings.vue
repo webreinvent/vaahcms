@@ -34,7 +34,10 @@
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
-                                        <Dropdown v-model="selectedLanguage" :options="languages" placeholder="Select a Language"/>
+                                        <Dropdown
+                                            class="is-small"
+                                            v-model="selectedLanguage" :options="languages"
+                                                  placeholder="Select a Language"/>
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>

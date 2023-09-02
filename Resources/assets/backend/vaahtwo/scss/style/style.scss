@@ -330,6 +330,17 @@ a{
         padding: 0.5rem 0.5rem;
     }
 }
+
+.p-buttonset {
+    .p-button{
+        font-size: 0.65625rem;
+        padding: 0.5rem 0.4375rem;
+        .p-button-label{
+            line-height:initial;
+        }
+    }
+
+}
 .p-inputgroup{
     box-shadow: none;
 }
@@ -544,7 +555,6 @@ $media-level-2-spacing: 0.5rem !default;
     color: #8394a6;
     background-color: #e5e9f2;
     border-color: #ced5e5;
-    border-radius: 2px;
     &.p-button-sm{
         .p-button-icon {
             font-size: 0.65rem;
@@ -552,14 +562,15 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 .p-inputgroup{
+    .p-inputtext{
+        border-right-color: transparent;
+    }
     button, input{
         &:first-child{
-            border-top-left-radius: 2px;
-            border-bottom-left-radius: 2px
+
         }
         &:last-child{
-            border-top-right-radius: 2px;
-            border-bottom-right-radius: 2px;
+
         }
     }
 }
