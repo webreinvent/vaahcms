@@ -46,8 +46,10 @@ onMounted(async () => {
 
             <template #icons>
                 <div class="buttons">
-                    <Button label="Expand all" icon="pi pi-plus" class="p-button-sm mr-2" @click="store.expandAll"></Button>
-                    <Button label="Collapse all" icon="pi pi-minus" class="p-button-sm" @click="store.collapseAll"></Button>
+                    <Button label="Expand all" icon="pi pi-angle-double-down" class="p-button-sm mr-2"
+                            @click="store.expandAll"></Button>
+                    <Button label="Collapse all" icon="pi pi-angle-double-up" class="p-button-sm"
+                            @click="store.collapseAll"></Button>
                 </div>
             </template>
 

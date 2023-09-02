@@ -14,6 +14,7 @@ const store = useGeneralStore();
                           data-testid="general-date_format"
                           :options="store.date_format_options"
                           inputClass="p-inputtext-sm"
+                          class="is-small"
                 />
 
                 <InputText placeholder="Enter Custom date format"
@@ -39,6 +40,7 @@ const store = useGeneralStore();
                           data-testid="general-time_format"
                           :options="store.time_format_options"
                           inputClass="p-inputtext-sm"
+                          class="is-small"
                 />
 
                 <InputText placeholder="Enter Custom time format"
@@ -63,6 +65,7 @@ const store = useGeneralStore();
                           data-testid="general-datetime_format"
                           :options="store.date_time_format_options"
                           inputClass="p-inputtext-sm"
+                          class="is-small"
                 />
 
                 <InputText placeholder="Enter Custom date-time format"
@@ -70,6 +73,7 @@ const store = useGeneralStore();
                            data-testid="general-datetime_format_custom"
                            v-if="store.list.datetime_format === 'custom'"
                            class="p-inputtext-sm"
+
                 />
 
                 <Button icon="pi pi-copy"
@@ -80,7 +84,8 @@ const store = useGeneralStore();
             </div>
         </div>
 
-        <div class="col-12 mt-5">
+        <div class="col-12">
+            <Divider class="mt-0 mb-3"/>
             <Button label="Save"
                     @click="store.storeSiteSettings()"
                     data-testid="general-date_format_save"

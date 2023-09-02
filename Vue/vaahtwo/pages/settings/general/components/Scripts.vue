@@ -75,8 +75,9 @@ const store = useGeneralStore();
             </div>
         </div>
 
-        <div class="grid mt-5">
+        <div class="grid">
             <div class="col-12">
+                <Divider class="my-3"/>
                 <div class="p-inputgroup justify-content-end">
                     <Button label="Save"
                             icon="pi pi-save"
