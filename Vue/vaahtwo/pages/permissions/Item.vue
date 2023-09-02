@@ -133,20 +133,16 @@ const toggleItemMenu = (event) => {
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                     <table class="p-datatable-table">
-
                         <tbody class="p-datatable-tbody">
                             <template v-for="(value, column) in store.item ">
-
                                 <template v-if="column === 'created_by' || column === 'updated_by'">
                                 </template>
-
                                 <template v-else-if="column === 'id' || column === 'uuid' || column === 'slug'">
                                     <VhViewRow :label="column"
                                                :value="value"
                                                :can_copy="true"
                                     />
                                 </template>
-
                                 <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null)">
                                     <VhViewRow :label="column"
                                                :value="value"

@@ -84,6 +84,19 @@ a{
 }
 /*Tables*/
 .p-datatable{
+    tr{
+        th{
+            font-size: .7rem;
+            span{
+                svg{
+                    &.p-icon{
+                        width: 10px;
+                    }
+
+                }
+            }
+        }
+    }
     .p-button{
         padding: 0.25rem 0.5rem;
         width: auto;
@@ -539,7 +552,7 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 .p-inputgroup{
-    button{
+    button, input{
         &:first-child{
             border-top-left-radius: 2px;
             border-bottom-left-radius: 2px

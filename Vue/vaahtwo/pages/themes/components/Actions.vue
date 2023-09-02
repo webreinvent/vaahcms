@@ -33,7 +33,7 @@ const toggleBulkMenuState = (event) => {
         <div class="flex justify-content-between">
 
             <!--left-->
-                <div class="col-4 mb-5">
+                <div class="">
                     <Dropdown v-model="store.query.filter.status"
                               data-testid="themes-actions"
                               :options="store.status_list"
@@ -47,7 +47,7 @@ const toggleBulkMenuState = (event) => {
 
             <!--right-->
 
-                <div class="col-5 col-offset-3 mb-5">
+                <div class="">
                     <div class="p-inputgroup">
                         <InputText v-model="store.query.filter.q"
                                    @keyup.enter="store.delayedSearch()"

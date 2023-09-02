@@ -76,7 +76,7 @@ const toggleBulkMenuState = (event) => {
             <!--/left-->
 
             <!--right-->
-            <div >
+            <div>
                 <div class="grid p-fluid">
                     <div class="col-12">
                         <div class="p-inputgroup">
@@ -113,7 +113,6 @@ const toggleBulkMenuState = (event) => {
                             />
                         </div>
                     </div>
-
                     <Filters/>
                 </div>
             </div>

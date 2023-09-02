@@ -78,15 +78,12 @@ const toggleItemMenu = (event) => {
 
 
             <div v-if="store.item">
-
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at">
-
                     <div class="flex align-items-center justify-content-between">
-
                         <div class="">
                             Deleted {{store.item.deleted_at}}
                         </div>
@@ -107,9 +104,7 @@ const toggleItemMenu = (event) => {
                 <table class="p-datatable-table">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
-
                         <template v-if="column === 'created_by' || column === 'updated_by'"></template>
-
                         <template v-else-if="column === 'author_website'">
                             <tr>
                                 <td><b>{{ vaah().toLabel(column) }}</b></td>
@@ -122,21 +117,18 @@ const toggleItemMenu = (event) => {
                                 </td>
                             </tr>
                         </template>
-
                         <template v-else-if="column === 'id' || column === 'uuid' || column === 'slug'">
                             <VhViewRow :label="column"
                                        :value="value"
                                        :can_copy="true"
                             />
                         </template>
-
                         <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null)">
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="user"
                             />
                         </template>
-
                         <template v-else-if="column === 'is_active'
                                             || column === 'is_update_available'
                                             || column === 'is_assets_published'
@@ -149,19 +141,14 @@ const toggleItemMenu = (event) => {
                                        type="yes-no"
                             />
                         </template>
-
                         <template v-else>
                             <VhViewRow :label="column"
                                        :value="value"
                                        />
                         </template>
-
-
                     </template>
                     </tbody>
-
                 </table>
-
                 </div>
             </div>
         </Panel>
