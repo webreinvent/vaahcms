@@ -26,7 +26,7 @@ onMounted(async () => {
 
 
 <template>
-    <div :class="{ 'has-sidebar-small' : rootStore.is_sidebar_menu_expand }">
+    <div>
 
         <div v-if="rootStore.is_logged_in" class="grid" >
 
