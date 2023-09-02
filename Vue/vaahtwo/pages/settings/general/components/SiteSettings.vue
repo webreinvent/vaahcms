@@ -127,7 +127,7 @@ const store = useGeneralStore();
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
                     <div class="p-inputgroup">
-                        <div class="field-radiobutton mr-2">
+<!--                        <div class="field-radiobutton mr-2">
                             <RadioButton inputId="copyright-app-name"
                                          name="copyright_text"
                                          value="app_name"
@@ -137,7 +137,6 @@ const store = useGeneralStore();
 
                             <label for="copyright-app-name">Use App Name</label>
                         </div>
-
                         <div class="field-radiobutton">
                             <RadioButton inputId="copyright-custom"
                                          name="copyright_text"
@@ -147,9 +146,21 @@ const store = useGeneralStore();
                             />
 
                             <label for="copyright-custom">Custom</label>
-                        </div>
+                        </div>-->
 
-                        <Button class="p-button-sm ml-2"
+                        <span class="p-buttonset">
+    <Button label="Use App Name"
+            v-model="store.list.copyright_text"
+            value="app_name"
+            data-testid="general-copyright"
+    />
+    <Button label="Custom"
+            name="copyright_text"
+            value="custom"
+            data-testid="general-copyright_custom"
+            v-model="store.list.copyright_text"/>
+            </span>
+<Button class="p-button-sm"
                                 icon="pi pi-copy"
                                 data-testid="general-copyright_custom_filed_copy"
                                 @click="store.getCopy('copyright_text')"
@@ -356,7 +367,9 @@ const store = useGeneralStore();
                 </div>
             </div>
         </div>
-<Divider class="mt-2 mb-2"/>
+        <div class="col-12">
+            <Divider class="m-0"/>
+        </div>
         <div class="col-12">
             <Button label="Save Settings"
                     icon="pi pi-save"
