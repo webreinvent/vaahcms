@@ -318,14 +318,16 @@ export const useRootStore = defineStore({
             this.top_menu_items = [
                 {
                     label:'',
-                    tooltip:'Show Less Navigation',
+                    tooltip:'View Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
 
                         if(document.body.classList.contains("has-sidebar-small")){
                             document.body.classList.remove("has-sidebar-small");
+                            this.top_menu_items[0].tooltip = 'View Less Navigation';
                         }else{
                             document.body.classList.add("has-sidebar-small");
+                            this.top_menu_items[0].tooltip = 'View Full Navigation';
                         }
 
                     }
