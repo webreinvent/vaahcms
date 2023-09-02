@@ -73,25 +73,23 @@ function actionItems(item){
 
 <template>
     <div v-if="store.list">
+        <Divider class="mt-2"/>
         <!--table-->
-        <div class="col">
-            <div class="grid">
-                <div class="col-12">
-                    <div class="grid" v-for="(item,index) in store.list">
-                        <div class="col-12 md:col-5">
-                            <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
-                            <Tag value="Default" v-if="item.is_default" severity="success" class="ml-2" rounded />
-                            <p class="text-sm text-gray-600 mt-2">{{ item.description}}</p>
-                        </div>
+        <div class="grid" v-for="(item,index) in store.list">
+            <div class="col-12 md:col-5">
+                <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
+                <Tag value="Default" v-if="item.is_default" severity="success" class="ml-2" rounded />
+                <p class="text-sm text-gray-600 mt-2">{{ item.description}}</p>
+            </div>
 
-                        <div class="col-12 md:col-7">
-                            <div class="flex justify-content-end mb-3">
-                                <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Name: {{ item.name }}</Tag>
-                                <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Version: {{ item.version }}</Tag>
-                                <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Developed by: {{ item.author_name }}</Tag>
-                            </div>
+            <div class="col-12 md:col-7">
+                <div class="flex justify-content-end mb-3">
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Name: {{ item.name }}</Tag>
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Version: {{ item.version }}</Tag>
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Developed by: {{ item.author_name }}</Tag>
+                </div>
 
-                            <div class="flex justify-content-end">
+                <div class="flex justify-content-end">
 
                                <span class="p-inputgroup mr-2 w-auto">
                                     <Button v-show="item.is_active
@@ -117,68 +115,65 @@ function actionItems(item){
                                                 :model="actionItems(item)" popup />
                                </span>
 
-                                <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
-                                        :data-testid="'module-activate-'+item.slug"
-                                        v-tooltip.top="'Activate Module'"
-                                        label="Activate"
-                                        class="mr-2 p-button-sm"
-                                        :loading="store.active_action.includes('activate_'+item.id)"
-                                        @click="store.toggleIsActive(item)"
-                                />
+                    <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
+                            :data-testid="'module-activate-'+item.slug"
+                            v-tooltip.top="'Activate Module'"
+                            label="Activate"
+                            class="mr-2 p-button-sm"
+                            :loading="store.active_action.includes('activate_'+item.id)"
+                            @click="store.toggleIsActive(item)"
+                    />
 
-                                <Button v-if="item.is_active && store.hasPermission('can-publish-assets-of-module')"
-                                        class="mr-2 p-button-info p-button-sm"
-                                        :data-testid="'module-publish-assets-'+item.slug"
-                                        :loading="store.active_action.includes('publish_assets_'+item.id)"
-                                        @click="store.publishAssets(item)"
-                                        icon="pi pi-arrow-up"
-                                        v-tooltip.top="'Publish Assets'"
-                                />
+                    <Button v-if="item.is_active && store.hasPermission('can-publish-assets-of-module')"
+                            class="mr-2 p-button-info p-button-sm"
+                            :data-testid="'module-publish-assets-'+item.slug"
+                            :loading="store.active_action.includes('publish_assets_'+item.id)"
+                            @click="store.publishAssets(item)"
+                            icon="pi pi-arrow-up"
+                            v-tooltip.top="'Publish Assets'"
+                    />
 
-                                <Button v-if="item.is_active && item.is_sample_data_available
+                    <Button v-if="item.is_active && item.is_sample_data_available
                                  && store.hasPermission('can-import-sample-data-in-module')"
-                                        :data-testid="'module-import-sample-'+item.slug"
-                                        size="is-small mr-2"
-                                        icon="pi pi-database"
-                                        class="p-button-sm mr-2"
-                                        v-tooltip.top="'Import Sample Data'"
-                                        :loading="store.active_action.includes('import_sample_data_'+item.id)"
-                                        @click="importSampleDataModal(item)"
-                                />
+                            :data-testid="'module-import-sample-'+item.slug"
+                            size="is-small mr-2"
+                            icon="pi pi-database"
+                            class="p-button-sm mr-2"
+                            v-tooltip.top="'Import Sample Data'"
+                            :loading="store.active_action.includes('import_sample_data_'+item.id)"
+                            @click="importSampleDataModal(item)"
+                    />
 
-                                <Button class="p-button-info p-button-sm mr-2"
-                                        label="Update"
-                                        :data-testid="'module-update-'+item.slug"
-                                        data-testid="modules-table-action-install-update"
-                                        icon="cloud-download-alt"
-                                        @click="store.confirmUpdate(item)"
-                                        v-tooltip.top="'Update Module'"
-                                        v-if="item.is_update_available && store.hasPermission('can-update-module')"
-                                />
+                    <Button class="p-button-info p-button-sm mr-2"
+                            label="Update"
+                            :data-testid="'module-update-'+item.slug"
+                            data-testid="modules-table-action-install-update"
+                            icon="cloud-download-alt"
+                            @click="store.confirmUpdate(item)"
+                            v-tooltip.top="'Update Module'"
+                            v-if="item.is_update_available && store.hasPermission('can-update-module')"
+                    />
 
-                                <Button class="p-button-sm mr-2"
-                                        icon="pi pi-eye"
-                                        :data-testid="'module-view-'+item.slug"
-                                        v-tooltip.top=" 'View' "
-                                        @click="store.toView(item)"
-                                        v-if="store.hasPermission('can-read-module')"
-                                />
+                    <Button class="p-button-sm mr-2"
+                            icon="pi pi-eye"
+                            :data-testid="'module-view-'+item.slug"
+                            v-tooltip.top=" 'View' "
+                            @click="store.toView(item)"
+                            v-if="store.hasPermission('can-read-module')"
+                    />
 
-                                <Button class="p-button-danger p-button-sm"
-                                        :data-testid="'module-trash-'+item.slug"
-                                        v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
-                                        @click="store.confirmDeleteItem(item)"
-                                        v-tooltip.top="'Trash'"
-                                        icon="pi pi-trash"
-                                />
+                    <Button class="p-button-danger p-button-sm"
+                            :data-testid="'module-trash-'+item.slug"
+                            v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
+                            @click="store.confirmDeleteItem(item)"
+                            v-tooltip.top="'Trash'"
+                            icon="pi pi-trash"
+                    />
 
-                            </div>
-                        </div>
-
-                        <Divider />
-                    </div>
                 </div>
             </div>
+
+            <Divider />
         </div>
         <!--/table-->
 

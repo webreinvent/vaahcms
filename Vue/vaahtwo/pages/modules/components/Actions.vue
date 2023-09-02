@@ -28,11 +28,12 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
 
             <!--left-->
 
-            <div class="col-4 mb-5">
+            <div class="">
+<!--
                 <Dropdown v-model="store.query.filter.status"
                           :options="store.status_list"
                           optionLabel="name"
@@ -40,11 +41,28 @@ const toggleBulkMenuState = (event) => {
                           data-testid="modules-actions-status-dropdown"
                           placeholder="Select a filter"
                 />
+-->
+
+                <!--bulk_menu-->
+                <Button class="p-button-sm"
+                        icon="pi pi-filter"
+                        aria-haspopup="true"
+                        data-testid="themes-actions"
+                        @click="toggleBulkMenuState"
+                        label="Filter"
+
+                />
+
+                <Menu ref="bulk_menu_state"
+                      :model="store.status_list"
+                      :popup="true"
+                />
+                <!--/bulk_menu-->
             </div>
             <!--/left-->
 
             <!--right-->
-            <div class="col-5 col-offset-3 mb-5">
+            <div class="">
                 <div class="p-inputgroup">
                     <InputText v-model="store.query.filter.q"
                                @keyup.enter="store.delayedSearch()"
@@ -55,11 +73,6 @@ const toggleBulkMenuState = (event) => {
                                class="p-inputtext-sm"
                     />
 
-                    <Button class="p-button-sm"
-                            label="Filters"
-                            data-testid="modules-actions-search-filters"
-                            @click="store.delayedSearch()"
-                    />
 
                     <Button class="p-button-sm"
                             icon="pi pi-filter-slash"
