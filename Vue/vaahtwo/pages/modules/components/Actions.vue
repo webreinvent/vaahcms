@@ -7,6 +7,7 @@ const store = useModuleStore();
 onMounted(async () => {
     store.getListSelectedMenu();
     store.getListBulkMenu();
+    store.getFilterMenu();
 });
 
 //--------selected_menu_state
@@ -33,15 +34,6 @@ const toggleBulkMenuState = (event) => {
             <!--left-->
 
             <div class="">
-<!--
-                <Dropdown v-model="store.query.filter.status"
-                          :options="store.status_list"
-                          optionLabel="name"
-                          optionValue="value"
-                          data-testid="modules-actions-status-dropdown"
-                          placeholder="Select a filter"
-                />
--->
 
                 <!--bulk_menu-->
                 <Button class="p-button-sm"
@@ -49,8 +41,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         data-testid="themes-actions"
                         @click="toggleBulkMenuState"
-                        label="Filter"
-
+                        :label="store.query.filter.status?store.toLabel(store.query.filter.status):'Filter'"
                 />
 
                 <Menu ref="bulk_menu_state"
