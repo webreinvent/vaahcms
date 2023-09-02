@@ -27,22 +27,39 @@ const toggleBulkMenuState = (event) => {
 </script>
 
 <template>
-    <div>
+    <div class="">
 
         <!--actions-->
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
 
             <!--left-->
-                <div class="">
-                    <Dropdown v-model="store.query.filter.status"
+                <div>
+<!--                    <Dropdown v-model="store.query.filter.status"
                               data-testid="themes-actions"
                               :options="store.status_list"
                               optionLabel="name"
                               optionValue="value"
                               placeholder="Select a filter"
                               v-if="store.hasPermission('can-update-theme')"
+                    />-->
+                    <!--bulk_menu-->
+                    <Button class="p-button-sm"
+                            icon="pi pi-filter"
+                            aria-haspopup="true"
+                            data-testid="themes-actions"
+                            @click="toggleBulkMenuState"
+                            label="Filter"
+
                     />
+
+                    <Menu ref="bulk_menu_state"
+                          :model="store.status_list"
+                          :popup="true"
+                    />
+                    <!--/bulk_menu-->
                 </div>
+
+
             <!--/left-->
 
             <!--right-->
@@ -56,12 +73,6 @@ const toggleBulkMenuState = (event) => {
                                    data-testid="themes-actions-search-input"
                                    placeholder="Search"
                                    class="p-inputtext-sm"
-                        />
-
-                        <Button class="p-button-sm"
-                                data-testid="themes-actions-search-button"
-                                @click="store.delayedSearch()"
-                                label="Filters"
                         />
 
                         <Button class="p-button-sm"

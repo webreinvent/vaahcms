@@ -75,7 +75,7 @@ function actionItems(item){
 <template>
 
     <div v-if="store.list">
-        <Divider />
+        <Divider class="mt-2"/>
         <div class="grid" v-for="(item, index) in store.list">
             <div class="col-12 md:col-5">
                 <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
@@ -183,7 +183,7 @@ function actionItems(item){
 
                 </div>
             </div>
-            <Divider />
+            <Divider class="mt-2" />
         </div>
 
         <!--paginator-->
