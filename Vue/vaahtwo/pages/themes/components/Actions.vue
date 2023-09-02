@@ -9,6 +9,7 @@ const store = useThemeStore();
 onMounted(async () => {
     store.getListSelectedMenu();
     store.getListBulkMenu();
+    store.getFilterMenu();
 });
 
 //--------selected_menu_state
@@ -34,21 +35,13 @@ const toggleBulkMenuState = (event) => {
 
             <!--left-->
                 <div>
-<!--                    <Dropdown v-model="store.query.filter.status"
-                              data-testid="themes-actions"
-                              :options="store.status_list"
-                              optionLabel="name"
-                              optionValue="value"
-                              placeholder="Select a filter"
-                              v-if="store.hasPermission('can-update-theme')"
-                    />-->
-                    <!--bulk_menu-->
+
                     <Button class="p-button-sm"
                             icon="pi pi-filter"
                             aria-haspopup="true"
                             data-testid="themes-actions"
                             @click="toggleBulkMenuState"
-                            label="Filter"
+                            :label="store.query.filter.status?store.toLabel(store.query.filter.status):'Filter'"
 
                     />
 

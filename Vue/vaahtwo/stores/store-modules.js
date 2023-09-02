@@ -79,13 +79,7 @@ export const useModuleStore = defineStore({
         is_btn_loading: false,
         module: null,
         selected_item: null,
-        status_list: [
-            {name: 'All', value: 'all'},
-            {name: 'Active', value: 'active'},
-            {name: 'Inactive', value: 'inactive'},
-            {name: 'Update Available', value: 'update_available'}
-
-        ],
+        status_list: [],
         first_element: null,
         stats: null,
         modules_query: {
@@ -838,6 +832,37 @@ export const useModuleStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
+        getFilterMenu()
+        {
+            this.status_list = [
+
+                {
+                    label: 'All',
+                    command: async () => {
+                        this.query.filter.status = 'all';
+                    }
+                },
+                {
+                    label: 'Active',
+                    command: async () => {
+                        this.query.filter.status = 'active';
+                    }
+                },
+                {
+                    label: 'Inactive',
+                    command: async () => {
+                        this.query.filter.status = 'inactive';
+                    }
+                },
+                {
+                    label: 'Update Available',
+                    command: async () => {
+                        this.query.filter.status = 'update_available';
+                    }
+                }
+            ];
+        },
+        //---------------------------------------------------------------------
         getItemMenu()
         {
             let item_menu = [];
@@ -1141,6 +1166,10 @@ export const useModuleStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
+        },
+        //---------------------------------------------------------------------
+        toLabel(text) {
+            return vaah().toLabel(text);
         }
     }
 });
