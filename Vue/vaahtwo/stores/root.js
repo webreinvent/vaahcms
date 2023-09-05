@@ -11,7 +11,6 @@ export const useRootStore = defineStore({
         assets: null,
         active_item:null,
         assets_is_fetching: true,
-        is_sidebar_menu_expand: false,
         sidebar_expanded_keys: {},
         base_url: base_url,
         ajax_url: ajax_url,
@@ -319,25 +318,18 @@ export const useRootStore = defineStore({
             this.top_menu_items = [
                 {
                     label:'',
-                    tooltip:'Show Less Navigation',
+                    tooltip:'View Less Navigation',
                     icon:'pi pi-align-justify',
                     command: () => {
 
-                        let element = document.getElementById("main-vaahtwo");
-
-                        if(element){
-                            if(element.classList.contains("has-sidebar-small")){
-                                element.classList.remove("has-sidebar-small");
-                            }else{
-                                element.classList.add("has-sidebar-small");
-                            }
+                        if(document.body.classList.contains("has-sidebar-small")){
+                            document.body.classList.remove("has-sidebar-small");
+                            this.top_menu_items[0].tooltip = 'View Less Navigation';
+                        }else{
+                            document.body.classList.add("has-sidebar-small");
+                            this.top_menu_items[0].tooltip = 'View Full Navigation';
                         }
 
-
-
-
-                        this.is_sidebar_menu_expand = !this.is_sidebar_menu_expand;
-                        this.top_menu_items[0].tooltip = this.is_sidebar_menu_expand ? 'Show Full Navigation' : 'Show Less Navigation';
                     }
                 },
                 {

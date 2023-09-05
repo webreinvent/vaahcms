@@ -51,7 +51,7 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel>
+            <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
@@ -73,7 +73,6 @@ onMounted(async () => {
                                 data-testid="themes-list-install"
                                 label="Install"
                         />
-
                         <Button :loading="store.is_fetching_updates"
                                 v-if="store.hasPermission('can-update-theme')"
                                 @click="store.checkUpdate()"
@@ -96,9 +95,7 @@ onMounted(async () => {
 
                 <Actions/>
 
-                <br/>
-
-                <Table/>
+             <Table/>
 
             </Panel>
         </div>

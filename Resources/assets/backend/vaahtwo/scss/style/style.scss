@@ -84,10 +84,31 @@ a{
 }
 /*Tables*/
 .p-datatable{
+    tr{
+        th{
+            font-size: .7rem;
+            span{
+                svg{
+                    &.p-icon{
+                        width: 10px;
+                    }
+
+                }
+            }
+        }
+        td{
+            .p-checkbox{
+                vertical-align: middle;
+            }
+        }
+    }
     .p-button{
         padding: 0.25rem 0.5rem;
         width: auto;
         font-size: .75rem;
+        &:not(.p-button-tiny){
+            font-size: .6rem;
+        }
         &.p-button-text{
             &:hover, &:active{
                 background-color: transparent;
@@ -226,8 +247,8 @@ a{
     left: 0;
     width: $sideBarWidth;
     z-index: 99;
-    min-height: 100%;
-    max-height: calc(100vh - 60px);
+    height: 100%;
+    max-height: calc(100vh - 47px);
     overflow-y: auto;
     overflow-x: hidden;
     border-right: 1px solid #e5e7eb;
@@ -277,6 +298,8 @@ a{
             }
         }
         .p-panelmenu-content{
+            border: none;
+            border-radius: 0 !important;
             .p-menuitem-link{
                 position: relative;
                 .p-submenu-icon{
@@ -311,6 +334,17 @@ a{
         font-size: 0.65rem;
         padding: 0.5rem 0.5rem;
     }
+}
+
+.p-buttonset {
+    .p-button{
+        font-size: 0.65625rem;
+        padding: 0.5rem 0.4375rem;
+        .p-button-label{
+            line-height:initial;
+        }
+    }
+
 }
 .p-inputgroup{
     box-shadow: none;
@@ -521,6 +555,30 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+/*Buttons*/
+.p-button{
+    color: #8394a6;
+    background-color: #e5e9f2;
+    border-color: #ced5e5;
+    &.p-button-sm{
+        .p-button-icon {
+            font-size: 0.65rem;
+        }
+    }
+}
+.p-inputgroup{
+    .p-inputtext{
+        border-right-color: transparent;
+    }
+    button, input{
+        &:first-child{
+
+        }
+        &:last-child{
+
+        }
+    }
+}
 
 //Plain Buttons
 .p-button-plain{

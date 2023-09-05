@@ -76,12 +76,7 @@ export const useThemeStore = defineStore({
         list_is_loading: false,
         themes: [],
         module: null,
-        status_list: [
-            {name: 'All', value: 'all'},
-            {name: 'Active', value: 'active'},
-            {name: 'Inactive', value: 'inactive'},
-            {name: 'Updates Available', value: 'update_available'}
-        ],
+        status_list: [],
         first_element: null,
         stats: null,
         themes_query: {
@@ -840,6 +835,37 @@ export const useThemeStore = defineStore({
                 },
             ];
         },
+        //---------------------------------------------------------------------
+        getFilterMenu()
+        {
+            this.status_list = [
+
+                {
+                    label: 'All',
+                    command: async () => {
+                        this.query.filter.status = 'all';
+                    }
+                },
+                {
+                    label: 'Active',
+                    command: async () => {
+                        this.query.filter.status = 'active';
+                    }
+                },
+                {
+                    label: 'Inactive',
+                    command: async () => {
+                        this.query.filter.status = 'inactive';
+                    }
+                },
+                {
+                    label: 'Update Available',
+                    command: async () => {
+                        this.query.filter.status = 'update_available';
+                    }
+                }
+            ];
+        },
         confirmDeleteItem(item)
         {
             this.item = item;
@@ -1085,6 +1111,10 @@ export const useThemeStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
+        },
+        //---------------------------------------------------------------------
+        toLabel(text) {
+            return vaah().toLabel(text);
         }
     }
 });

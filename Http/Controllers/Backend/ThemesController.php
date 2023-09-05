@@ -30,7 +30,6 @@ class ThemesController extends Controller
         }
 
         try {
-            Theme::syncAll();
 
             $data['vaahcms_api_route'] = config('vaahcms.api_route');
             $data['debug'] = config('vaahcms.debug');
@@ -64,6 +63,8 @@ class ThemesController extends Controller
         }
 
         try {
+            Theme::syncAll();
+
             $list = Theme::orderBy('created_at', 'DESC');
 
             if ($request->has('filter')) {

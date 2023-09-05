@@ -40,8 +40,9 @@ const useVaah = vaah();
             </div>
         </div>
 
-        <div class="grid mt-5">
+        <div class="grid">
             <div class="col-12 md:col-4">
+                <h5 class="p-1 text-xs mb-1">Add Link</h5>
                 <div class="p-inputgroup">
                     <InputText v-model="store.add_link"
                                data-testid="general-add_link_field"
@@ -60,7 +61,8 @@ const useVaah = vaah();
                 </div>
             </div>
 
-            <div class="col-12 md:col-8">
+            <div class="col-12">
+                <Divider class="mt-0 mb-3"/>
                 <div class="p-inputgroup justify-content-end">
                     <Button label="Save"
                             icon="pi pi-save"

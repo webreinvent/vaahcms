@@ -70,6 +70,9 @@ export const useGeneralStore = defineStore({
             {name:'Custom',value:'custom'}
         ],
         password_protection_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        copyright_text_options: [{name:'Use App Name',value:"app_name"}, {name:'Custom',value:"custom"}],
+        copyright_link_options: [{name:'Use App Url',value:"app_url"}, {name:'Custom',value:"custom"}],
+        copyright_year_options: [{name:'Use Current year',value:"use_current_year"}, {name:'Custom',value:"custom"}],
         laravel_queues_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
         social_media_links: null,
         add_link: null,
