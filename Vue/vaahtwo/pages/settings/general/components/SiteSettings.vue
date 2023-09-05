@@ -26,8 +26,8 @@ const store = useGeneralStore();
                     </div>
                 </div>
 
-                <div class="col-5">
-                    <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
+                <div class="col-6">
+                    <h5 class="p-1 text-xs mb-1">Default Site Language sdfds</h5>
 
                     <Dropdown v-model="store.list.language"
                               :options="store.languages"
@@ -36,6 +36,7 @@ const store = useGeneralStore();
                               optionValue="locale_code_iso_639"
                               placeholder="Select a Language"
                               inputClass="p-inputtext-sm"
+                              class="is-small"
                     />
                 </div>
 
@@ -126,39 +127,28 @@ const store = useGeneralStore();
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
                     <div class="p-inputgroup">
-                        <div class="field-radiobutton mr-2">
-                            <RadioButton inputId="copyright-app-name"
-                                         name="copyright_text"
-                                         value="app_name"
-                                         data-testid="general-copyright"
-                                         v-model="store.list.copyright_text"
-                            />
 
-                            <label for="copyright-app-name">Use App Name</label>
-                        </div>
+                        <SelectButton v-model="store.list.copyright_text"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.copyright_text_options"
+                                      class="p-button-sm"
+                                      data-testid="general-password_protection"
+                                      aria-labelledby="single"
+                        />
 
-                        <div class="field-radiobutton">
-                            <RadioButton inputId="copyright-custom"
-                                         name="copyright_text"
-                                         value="custom"
-                                         data-testid="general-copyright_custom"
-                                         v-model="store.list.copyright_text"
-                            />
-
-                            <label for="copyright-custom">Custom</label>
-                        </div>
-
-                        <Button class="p-button-sm ml-2"
+                        <Button class="p-button-sm"
                                 icon="pi pi-copy"
                                 data-testid="general-copyright_custom_filed_copy"
                                 @click="store.getCopy('copyright_text')"
                         />
                     </div>
 
-                    <InputText class="w-full" v-if="store.list.copyright_text === 'custom'"
+                    <InputText class="w-full p-inputtext-sm mt-2" v-if="store.list.copyright_text === 'custom'"
                                data-testid="general-copyright_custom_filed"
                                v-model="store.list.copyright_text_custom"
                                placeholder="Enter Custom Text"
+
                     />
                 </div>
 
@@ -166,36 +156,24 @@ const store = useGeneralStore();
                     <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
 
                     <div class="p-inputgroup">
-                        <div class="field-radiobutton mr-2">
-                            <RadioButton inputId="copyright-link"
-                                         name="copyright_link"
-                                         value="app_url"
-                                         data-testid="general-copyright_link"
-                                         v-model="store.list.copyright_link"
-                            />
 
-                            <label for="copyright-link">Use App Url</label>
-                        </div>
+                        <SelectButton v-model="store.list.copyright_link"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.copyright_link_options"
+                                      class="p-button-sm"
+                                      data-testid="general-password_protection"
+                                      aria-labelledby="single"
+                        />
 
-                        <div class="field-radiobutton">
-                            <RadioButton inputId="copyright-custom_link"
-                                         name="copyright_link"
-                                         value="custom"
-                                         data-testid="general-copyright_custom_link"
-                                         v-model="store.list.copyright_link"
-                            />
-
-                            <label for="copyright-custom_link">Custom</label>
-                        </div>
-
-                        <Button class="p-button-sm ml-2"
+                        <Button class="p-button-sm"
                                 icon="pi pi-copy"
                                 data-testid="general-copyright_custom_link_filed_copy"
                                 @click="store.getCopy('copyright_link')"
                         />
                     </div>
 
-                    <InputText class="w-full p-inputtext-sm"
+                    <InputText class="w-full p-inputtext-sm mt-2"
                                data-testid="general-copyright_custom_link_field"
                                v-if="store.list.copyright_link === 'custom'"
                                v-model="store.list.copyright_link_custom"
@@ -207,29 +185,18 @@ const store = useGeneralStore();
                     <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
 
                     <div class="p-inputgroup">
-                        <div class="field-radiobutton mr-2">
-                            <RadioButton inputId="copyright-year"
-                                         data-testid="general-copyright_year"
-                                         name="copyright_year"
-                                         value="use_current_year"
-                                         v-model="store.list.copyright_year"
-                            />
 
-                            <label for="copyright-year">Use Current year</label>
-                        </div>
 
-                        <div class="field-radiobutton">
-                            <RadioButton inputId="copyright-custom_year"
-                                         data-testid="general-copyright_year_custom"
-                                         name="copyright_year"
-                                         value="custom"
-                                         v-model="store.list.copyright_year"
-                            />
+                        <SelectButton v-model="store.list.copyright_year"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.copyright_year_options"
+                                      class="p-button-sm"
+                                      data-testid="general-password_protection"
+                                      aria-labelledby="single"
+                        />
 
-                            <label for="copyright-custom_year">Custom</label>
-                        </div>
-
-                        <Button class="p-button-sm ml-2"
+                        <Button class="p-button-sm"
                                 icon="pi pi-copy"
                                 data-testid="general-copyright_custom_year_filed_copy"
                                 @click="store.getCopy('copyright_year')"
@@ -241,12 +208,12 @@ const store = useGeneralStore();
                               dateFormat="yy"
                               data-testid="general-copyright_yearcalender"
                               v-if="store.list.copyright_year === 'custom'"
-                              input-class="w-full" class="w-full"
+                              class="w-full p-inputtext-sm mt-2"
                               placeholder="Choose Copyright Year"
                     />
                 </div>
 
-                <div class="col-6">
+                <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">
                         Max number of forgot password attempts
                     </h5>
@@ -259,14 +226,16 @@ const store = useGeneralStore();
                                      class="p-inputtext-sm"
                         />
 
+
                         <Button icon="pi pi-copy"
                                 data-testid="general-forgotpassword_attempts_copy"
                                 @click="store.getCopy('maximum_number_of_forgot_password_attempts_per_session')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
                     <div class="p-inputgroup">
                         <InputNumber inputId="withoutgrouping"
@@ -284,7 +253,7 @@ const store = useGeneralStore();
                     </div>
                 </div>
 
-                <div class="col-6 p-fluid">
+                <div class="col-4 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Password Protection</h5>
 
                     <SelectButton v-model="store.list.password_protection"
@@ -297,7 +266,7 @@ const store = useGeneralStore();
                     />
                 </div>
 
-                <div class="col-6 p-fluid">
+                <div class="col-4 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
 
                     <SelectButton v-model="store.list.laravel_queues"
@@ -310,7 +279,7 @@ const store = useGeneralStore();
                     />
                 </div>
 
-                <div class="col-6 p-fluid">
+                <div class="col-4 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
 
                     <SelectButton v-model="store.list.maintenance_mode"
@@ -352,8 +321,10 @@ const store = useGeneralStore();
                 </div>
             </div>
         </div>
-
-        <div class="col-12 mt-5">
+        <div class="col-12">
+            <Divider class="m-0"/>
+        </div>
+        <div class="col-12">
             <Button label="Save Settings"
                     icon="pi pi-save"
                     data-testid="general-save_site"

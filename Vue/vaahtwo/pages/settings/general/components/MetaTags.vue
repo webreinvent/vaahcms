@@ -18,6 +18,7 @@ const store = useGeneralStore();
                               data-testid="general-metatags_attributes"
                               placeholder="Select any"
                               inputClass="p-inputtext-sm"
+                              class="is-small"
                     />
 
                     <InputText v-model="item.value.attribute_value"
@@ -75,6 +76,7 @@ const store = useGeneralStore();
                               optionValue="value"
                               placeholder="Select a type"
                               inputClass="p-inputtext-sm"
+                              class="is-small"
                     />
 
                     <Button label="Generate"
