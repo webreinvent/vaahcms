@@ -136,6 +136,40 @@ export const useAuthStore = defineStore({
                 }
             }
         },
+        //-----------------------------------------------------------------------
+        signUp () {
+            // this.no_of_login_attempt++;
+            // this.is_btn_loading = true;
+
+            let params = {
+                params: this.sign_up_items,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/signup/post',
+                this.signUpAfter,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        signUpAfter (data, res) {
+            console.log(data);
+            // this.is_btn_loading = false
+            // console.log(data.redirect_url);
+            //
+            // if(data) {
+            //     if(data.verification_response && data.verification_response.success) {
+            //         this.is_mfa_visible = true;
+            //         this.security_timer = 30;
+            //         this.title.heading = 'Multi-Factor Authentication';
+            //         this.title.description = 'You have received an email which contains two factor code.';
+            //         this.resendCountdown();
+            //     } else {
+            //         window.location = data.redirect_url+'#/vaah';
+            //     }
+            // }
+        },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {
 

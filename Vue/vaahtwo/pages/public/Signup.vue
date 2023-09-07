@@ -1,5 +1,5 @@
-<script  setup>
-import {onMounted, reactive, ref} from "vue";
+<script setup>
+import {onMounted, reactive, ref,watch} from "vue";
 import { useRootStore } from '../../stores/root'
 import Footer from '../../components/organisms/Footer.vue'
 import {vaah} from "../../vaahvue/pinia/vaah";
@@ -16,9 +16,28 @@ onMounted(async () => {
     root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();
+});
 
+
+    // ...
+
+const error = ref('');
+
+const validatePasswords = () => {
+    if (auth.sign_up_items.confirm_password === '') {
+        error.value = 'Please enter a password';
+    } else if (auth.sign_up_items.password !== auth.sign_up_items.confirm_password) {
+        error.value = 'Passwords do not match';
+    } else {
+        error.value = '';
+    }
+};
+
+watch(() => auth.sign_up_items.confirm_password, () => {
+    validatePasswords();
 });
 </script>
+
 <template>
     <div v-if="root.assets && auth.is_installation_verified">
         <div class="grid flex justify-content-center flex-wrap ">
@@ -37,70 +56,77 @@ onMounted(async () => {
                             <div>
                                 <div class="p-float-label field mb-5">
                                     <InputText
-                                        name="signin-email"
-                                        data-testid="signin-email"
-                                        id="username"
+                                        name="signup-name"
+                                        data-testid="signup-name"
+                                        id="name"
                                         class="w-full"
                                         type="text"
-                                        v-model="auth.sign_up_items.name"/>
+                                        v-model="auth.sign_up_items.name"
+                                    />
                                     <label for="name">Name</label>
                                 </div>
 
                                 <div class="p-float-label field mb-5">
                                     <InputText
-                                        name="signin-email"
-                                        data-testid="signin-email"
-                                        id="email"
+                                        name="signup-username"
+                                        data-testid="signup-username"
+                                        id="username"
                                         class="w-full"
                                         type="text"
-                                        v-model="auth.sign_up_items.username"/>
+                                        v-model="auth.sign_up_items.username"
+                                    />
                                     <label for="username">Username</label>
                                 </div>
 
                                 <div class="p-float-label field mb-5">
                                     <InputText
-                                        name="signin-email"
-                                        data-testid="signin-email"
+                                        name="signup-email"
+                                        data-testid="signup-email"
                                         id="email"
                                         class="w-full"
-                                        type="text"
-                                        v-model="auth.sign_up_items.email"/>
+                                        type="email"
+                                        v-model="auth.sign_up_items.email"
+                                    />
                                     <label for="email">Email</label>
                                 </div>
+
                                 <div class="p-float-label field mb-5">
                                     <InputText
-                                        name="signin-email"
-                                        data-testid="signin-email"
-                                        id="email"
+                                        name="signup-password"
+                                        data-testid="signup-password"
+                                        id="password"
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.password"
+                                        @input="validatePasswords"
                                     />
                                     <label for="password">Password</label>
                                 </div>
 
                                 <div class="p-float-label field mb-5">
                                     <InputText
-                                        name="signin-email"
-                                        data-testid="signin-email"
-                                        id="email"
+                                        name="signup-confirm_password"
+                                        data-testid="signup-confirm_password"
+                                        id="confirm_password"
                                         class="w-full"
                                         type="text"
-                                        v-model="auth.sign_up_items.confirm_password"/>
-                                    <label for="email">Confirm Password</label>
+                                        v-model="auth.sign_up_items.confirm_password"
+                                        @input="validatePasswords"
+                                    />
+
+                                    <label for="confirm_password">Confirm Password</label>
+                                    <p v-if="error" class="error">{{ error }}</p>
                                 </div>
 
-
                                 <div class="field flex justify-content-between align-items-center">
-
                                     <router-link to="/signup">
                                         <Button
                                             name="signup"
                                             data-testid="signup"
                                             label="Submit"
+                                            @click="auth.signUp()"
                                         />
                                     </router-link>
-
 
                                     <router-link to="/">
                                         <Button
@@ -110,9 +136,9 @@ onMounted(async () => {
                                         />
                                     </router-link>
                                 </div>
-
                             </div>
                         </template>
+
                         <template class="m-0" #footer>
                             <Footer />
                         </template>
@@ -124,3 +150,8 @@ onMounted(async () => {
 </template>
 
 
+<style>
+.error {
+    color: red;
+}
+</style>
