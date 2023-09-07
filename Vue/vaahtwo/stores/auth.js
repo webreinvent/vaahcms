@@ -45,6 +45,13 @@ export const useAuthStore = defineStore({
             max_attempts: 5,
             is_password_disabled: null,
         },
+        sign_up_items: {
+            name: null,
+            username: null,
+            email: null,
+            password: null,
+            confirm_password: null,
+        },
         is_otp_btn_loading: false,
     }),
     getters: {},
