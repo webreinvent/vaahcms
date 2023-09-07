@@ -365,6 +365,96 @@ class RegistrationBase extends Model
         return $response;
 
     }
+
+    //-------------------------------------------------
+
+    public static function createRegistration($request)
+    {
+
+        $inputs = $request->all();
+
+                    $rules = [
+                'display_name' => 'required|max:150',
+                'username' => 'required|max:150',
+                'email' => 'required|max:150',
+                'password' => [
+                    'required',
+                    'min:8',
+                    'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/',
+                ],
+                'confirm_password' => 'required|same:password',
+            ];
+
+            $messages = [
+                'confirm_password.same' => 'Use alphabets and numbers.',
+            ];
+
+            $validator = \Validator::make($request->all(), $rules, $messages);
+
+        if ( $validator->fails() ) {
+            $errors = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+ //       die('12345');
+        if($user)
+        {
+            $response['success'] = false;
+            $response['messages'][] = trans('vaahcms-user.email_already_registered');
+            return $response;
+        }
+
+        // check if username already exist
+        $user = self::where('username',$inputs['username'])->first();
+
+        if($user)
+        {
+            $response['success'] = false;
+            $response['messages'][] = trans('vaahcms-user.username_already_registered');
+            return $response;
+        }
+
+        // check if user already exist
+        $user = User::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['success'] = false;
+            $response['messages'][] = 'User already exist';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = trans('vaahcms-user.registration_created_when_user_not_exist');
+            }
+            return $response;
+        }
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'email-verification-pending';
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        $response['success'] = true;
+        $response['data']['item'] = $reg;
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        return $response;
+
+    }
     //-------------------------------------------------
     public static function getList($request,$excluded_columns = [])
     {

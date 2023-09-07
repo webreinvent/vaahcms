@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\RegistrationBase;
 use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
 
@@ -389,75 +390,8 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function postSignup(Request $request)
     {
-
         try{
-
-            $rules = [
-                'name' => 'required|max:150',
-                'username' => 'required|max:150',
-                'email' => 'required|max:150',
-                'password' => [
-                    'required',
-                    'min:8',
-                    'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/',
-                ],
-                'confirm_password' => 'required|same:password',
-            ];
-
-            $messages = [
-                'confirm_password.same' => 'Use alphabets and numbers.',
-            ];
-
-            $validator = \Validator::make($request->all(), $rules, $messages);
-
-            if ( $validator->fails() ) {
-
-                $errors             = errorsToArray($validator->errors());
-                $response['status'] = 'failed';
-                $response['errors'] = $errors;
-                return response()->json($response);
-            }
-
-            $permission_to_check = 'can-login-in-backend';
-
-            if($request->type == 'otp')
-            {
-                $response = User::loginViaOtp($request, $permission_to_check);
-            } else
-            {
-                $response = User::login($request, $permission_to_check);
-            }
-            if(isset($response['success']) && !$response['success'])
-            {
-                return response()->json($response);
-            }
-
-            if ($request->session()->has('accessed_url')) {
-                $redirect_url = $request->session()->get('accessed_url');
-                $request->session()->forget('accessed_url');
-            } else
-            {
-                $redirect_url = \URL::route('vh.backend');
-            }
-
-            $verify_response = Auth::user()->verifySecurityAuthentication();
-
-            if(isset($verify_response['success'])
-                && !$verify_response['success']
-                && $verify_response['data'] != null){
-
-                return $verify_response;
-            }
-
-            $message = 'Login Successful';
-
-            $response = [];
-
-            $response['success'] = true;
-            $response['messages'][] = $message;
-            $response['data']['redirect_url'] = $redirect_url;
-            $response['data']['verification_response'] = $verify_response;
-
+            return RegistrationBase::createRegistration($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

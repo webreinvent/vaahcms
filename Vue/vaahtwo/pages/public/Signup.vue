@@ -61,7 +61,7 @@ watch(() => auth.sign_up_items.confirm_password, () => {
                                         id="name"
                                         class="w-full"
                                         type="text"
-                                        v-model="auth.sign_up_items.name"
+                                        v-model="auth.sign_up_items.display_name"
                                     />
                                     <label for="name">Name</label>
                                 </div>
