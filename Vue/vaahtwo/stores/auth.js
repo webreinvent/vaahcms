@@ -46,7 +46,7 @@ export const useAuthStore = defineStore({
             is_password_disabled: null,
         },
         sign_up_items: {
-            display_name: null,
+            first_name: null,
             last_name:null,
             username: null,
             email: null,

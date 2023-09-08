@@ -45,7 +45,7 @@ onMounted(async () => {
                                         id="name"
                                         class="w-full"
                                         type="text"
-                                        v-model="auth.sign_up_items.display_name"
+                                        v-model="auth.sign_up_items.first_name"
                                     />
                                     <label for="name">First Name</label>
                                 </div>

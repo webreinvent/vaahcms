@@ -374,9 +374,10 @@ class RegistrationBase extends Model
         $inputs = $request->all();
 
            $rules = [
-                'display_name' => 'required|max:150',
+                'first_name' => 'required|max:150',
+                'last_name' => 'required|max:150',
                 'username' => 'required|max:150',
-                'email' => 'required|max:150',
+               'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
                 'password' => [
                     'required',
                 ],
@@ -445,7 +446,6 @@ class RegistrationBase extends Model
 
         $reg = new static();
         $reg->fill($inputs);
-        $reg->first_name = $inputs['display_name'];
         $reg->save();
 
         $response['success'] = true;
