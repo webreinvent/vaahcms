@@ -4,10 +4,14 @@ use DateTimeInterface;
 use Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Notifications\Notice;
+
+
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
@@ -359,6 +363,7 @@ class RegistrationBase extends Model
         $reg->fill($inputs);
         $reg->save();
 
+
         $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
@@ -448,12 +453,17 @@ class RegistrationBase extends Model
         $reg->fill($inputs);
         $reg->save();
 
+        $request_item = new Request([$reg->id]);
+
+        Registration::sendVerificationEmail($request_item);
+
         $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 
     }
+
     //-------------------------------------------------
     public static function getList($request,$excluded_columns = [])
     {
