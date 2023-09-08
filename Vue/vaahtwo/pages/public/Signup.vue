@@ -20,22 +20,6 @@ onMounted(async () => {
 
 
     // ...
-
-const error = ref('');
-
-const validatePasswords = () => {
-    if (auth.sign_up_items.confirm_password === '') {
-        error.value = 'Please enter a password';
-    } else if (auth.sign_up_items.password !== auth.sign_up_items.confirm_password) {
-        error.value = 'Passwords do not match';
-    } else {
-        error.value = '';
-    }
-};
-
-watch(() => auth.sign_up_items.confirm_password, () => {
-    validatePasswords();
-});
 </script>
 
 <template>
@@ -63,7 +47,19 @@ watch(() => auth.sign_up_items.confirm_password, () => {
                                         type="text"
                                         v-model="auth.sign_up_items.display_name"
                                     />
-                                    <label for="name">Name</label>
+                                    <label for="name">First Name</label>
+                                </div>
+
+                                <div class="p-float-label field mb-5">
+                                    <InputText
+                                        name="signup-last_name"
+                                        data-testid="signup-last_name"
+                                        id="last_name"
+                                        class="w-full"
+                                        type="text"
+                                        v-model="auth.sign_up_items.last_name"
+                                    />
+                                    <label for="last-name">Last Name</label>
                                 </div>
 
                                 <div class="p-float-label field mb-5">
@@ -115,7 +111,6 @@ watch(() => auth.sign_up_items.confirm_password, () => {
                                     />
 
                                     <label for="confirm_password">Confirm Password</label>
-                                    <p v-if="error" class="error">{{ error }}</p>
                                 </div>
 
                                 <div class="field flex justify-content-between align-items-center">
@@ -149,9 +144,3 @@ watch(() => auth.sign_up_items.confirm_password, () => {
     </div>
 </template>
 
-
-<style>
-.error {
-    color: red;
-}
-</style>

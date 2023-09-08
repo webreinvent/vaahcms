@@ -47,6 +47,7 @@ export const useAuthStore = defineStore({
         },
         sign_up_items: {
             display_name: null,
+            last_name:null,
             username: null,
             email: null,
             password: null,
