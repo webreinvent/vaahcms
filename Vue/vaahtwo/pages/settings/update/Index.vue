@@ -72,10 +72,10 @@ onMounted(async () => {
                             </div>
                         </div>
                     </template>
-                    <div>
+                    <div style="white-space: break-spaces;">
                         {{store.release.body}}
                     </div>
-                    <div class="field-checkbox mt-5">
+                    <div class="field-checkbox mt-3">
                         <Checkbox inputId="binary"
                                   v-model="store.backup_database"
                                   data-testid="setting-update_confirmation"
@@ -88,7 +88,7 @@ onMounted(async () => {
                             :disabled="!store.is_button_active"
                             data-testid="setting-update_button"
                             @click="store.onUpdate"
-                            class="p-button-sm mt-2 mb-3"></Button>
+                            class="p-button-sm mt-0 mb-3"></Button>
                     <div class="grid m-0" v-if="store.is_update_step_visible">
                         <div class="col-3">
                             <ol class="pl-3">
@@ -141,7 +141,7 @@ onMounted(async () => {
                         </div>
                     </div>
                 </Panel>
-                
+
             </div>
         </div>
         <div v-if="store.manual_update">
