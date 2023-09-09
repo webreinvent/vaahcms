@@ -456,10 +456,11 @@ class RegistrationBase extends Model
         $request_item = new Request([$reg->id]);
 
         Registration::sendVerificationEmail($request_item);
-
+        $redirect_url = \URL::route('vh.backend');
         $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        $response['data']['redirect_url'] = $redirect_url;
         return $response;
 
     }

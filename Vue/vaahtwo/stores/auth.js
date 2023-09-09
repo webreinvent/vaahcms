@@ -139,6 +139,7 @@ export const useAuthStore = defineStore({
         },
         //-----------------------------------------------------------------------
         signUp () {
+            this.is_btn_loading = true;
             let params = {
                 params: this.sign_up_items,
                 method: 'post'
@@ -151,8 +152,13 @@ export const useAuthStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        signUpAfter (data, res) {
-            console.log(data);
+        signUpAfter (data,) {
+            this.is_btn_loading = false
+            if(data) {
+                setTimeout(() => {
+                    window.location = data.redirect_url;
+                }, 2000);
+            }
         },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {

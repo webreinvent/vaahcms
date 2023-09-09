@@ -12,7 +12,7 @@ const auth = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
-    document.title = 'Sign In';
+    document.title = 'Sign Up';
     root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();
@@ -117,6 +117,8 @@ onMounted(async () => {
                                             name="signup"
                                             data-testid="signup"
                                             label="Submit"
+                                            class="p-button-sm"
+                                            :loading="auth.is_btn_loading"
                                             @click="auth.signUp()"
                                         />
                                     </router-link>
