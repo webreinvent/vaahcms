@@ -53,10 +53,11 @@ const toggleBulkMenuState = (event) => {
                      :options="store.logs_file_types"
                      optionLabel="name" placeholder="Filter By Extension"
                      display="chip"
-                     class="w-full mt-2"
+                     class="w-full mt-2 p-inputtext-sm"
                      optionValue="value"
                      data-testid="logs-action_filter"
                      @change="store.getList()"
+
         />
         <!--/actions-->
     </div>

@@ -47,7 +47,7 @@ const toggleItemMenu = (event) => {
 
     <div class="col-7" >
 
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
 
             <template class="p-1" #header>
 
