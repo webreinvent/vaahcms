@@ -148,7 +148,7 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="inactive">
-                                            <div class="">
+                                            <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm p-datatable-hoverable-rows">
                                                 <table class="p-datatable-table">
                                                     <tbody class="p-datatable-tbody">
                                                     <tr>
@@ -159,6 +159,7 @@ onMounted(async () => {
                                                                          data-testid="setting-customfield_is_hidden"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"
+                                                                         class="is-small"
                                                             />
                                                         </td>
                                                     </tr>
@@ -171,6 +172,7 @@ onMounted(async () => {
                                                                          data-testid="setting-customfield_to_registration"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"
+                                                                         class="is-small"
                                                             />
                                                         </td>
                                                     </tr>
@@ -183,6 +185,7 @@ onMounted(async () => {
                                                                          data-testid="setting-customfield_is_password_reveal"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"
+                                                                         class="is-small"
                                                             />
                                                         </td>
                                                     </tr>
@@ -234,7 +237,7 @@ onMounted(async () => {
                         </div>
                     </div>
 
-                    <div class="grid justify-content-between">
+                    <div class="grid">
                         <div class="col-12 md:col-4">
                             <div class="p-inputgroup">
                                 <Dropdown v-model="store.selected_field_type"
@@ -242,7 +245,9 @@ onMounted(async () => {
                                           :options="store.field_types"
                                           optionLabel="name" optionValue="value"
                                           placeholder="Select a type"
+                                          class="is-small"
                                           inputClass="p-inputtext-sm"
+
                                 />
 
                                 <Button label="Add"
@@ -254,12 +259,17 @@ onMounted(async () => {
                             </div>
                         </div>
 
-                        <div class="col-12 md:col-3 flex justify-content-end">
-                            <Button icon="pi pi-save" label="Save"
-                                    class="p-button-sm"
-                                    data-testid="setting-customfield_field_save"
-                                    @click="store.storeCustomField"
-                            />
+                        <div class="col-12">
+                            <Divider class="mb-3 mt-0"/>
+
+                            <div class="p-inputgroup justify-content-end">
+                                <Button icon="pi pi-save" label="Save"
+                                        class="p-button-sm"
+                                        data-testid="setting-customfield_field_save"
+                                        @click="store.storeCustomField"
+                                />
+                            </div>
+
                         </div>
                     </div>
                 </AccordionTab>
