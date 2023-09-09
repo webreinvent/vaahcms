@@ -328,6 +328,14 @@ a{
         overflow-x: hidden;
     }
 }
+
+//tooltip
+.p-tooltip {
+    .p-tooltip-text {
+        padding: .15rem .5rem;
+        font-size: .65rem;
+    }
+}
 //button
 .p-button{
     &.p-button-xs{
