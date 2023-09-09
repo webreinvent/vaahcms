@@ -67,7 +67,7 @@ a{
 
 /*Dropdown*/
 .p-dropdown {
-    &.is-small{
+    &.is-small, .p-inputtext-sm{
         .p-dropdown-label {
             @include scaledFontSize($inputTextFontSize, $scaleSM);
             @include scaledPadding($inputPadding, $scaleSM);
