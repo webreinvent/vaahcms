@@ -93,6 +93,23 @@ a{
 
     }
 }
+/*Tabview*/
+.p-tabview{
+    &.is-small{
+        .p-tabview-nav{
+            li{
+                .p-tabview-nav-link{
+                    padding: 0.75rem 1rem;
+                }
+            }
+        }
+    }
+    &.tab-panel-has-no-padding{
+        .p-tabview-panels{
+            padding: .75rem 0;
+        }
+    }
+}
 /*Tables*/
 .p-datatable{
     tr{
@@ -174,6 +191,11 @@ a{
 /*Table*/
 
 /*Input*/
+.w-full{
+    .p-inputtext{
+        width: 100%;
+    }
+}
 .p-inputgroup{
     .p-input-icon-left{
         .p-inputtext{
@@ -577,13 +599,17 @@ $media-level-2-spacing: 0.5rem !default;
 
 /*Buttons*/
 .p-button{
-    color: #8394a6;
-    background-color: #e5e9f2;
-    border-color: #ced5e5;
+    color: $primaryCustomColor;
+    background-color: $bgPrimaryCustomColor;
+    border-color: $bdrPrimaryCustomColor;
     &.p-button-sm{
         .p-button-icon {
             font-size: 0.65rem;
         }
+    }
+    &.p-button-outlined{
+        border-color: $bdrPrimaryCustomColor;
+        color: $primaryCustomColor;
     }
 }
 .p-inputgroup{
@@ -684,6 +710,15 @@ $media-level-2-spacing: 0.5rem !default;
     &.p-message-error{
         &.is-light{
             background:$dangerLighterColor;
+        }
+    }
+    &.p-message-primary{
+        background-color:#4f46e50f;
+        color: $primaryCustomColor;
+        &.text-center{
+           .p-message-wrapper{
+               justify-content: center;
+           }
         }
     }
 }

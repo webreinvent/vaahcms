@@ -165,4 +165,16 @@ $highlightFocusBg: #E0E7FF !default;
 $cardHeaderPadding:$card-header-padding !default;
 
 $borderRadius:2px;
+$regentGray:hsl(211, 16%, 58%);
+$catskillWhite:hsl(222, 33%, 92%);
+$otticelli:hsl(222, 31%, 85%);
+
+$primaryCustomColor:$regentGray;
+$bgPrimaryCustomColor:$catskillWhite;
+$bdrPrimaryCustomColor:$otticelli;
+
+$primaryCustomLightColor:lighten($regentGray, 15%) ;
+$bgPrimaryCustomLightColor:lighten($catskillWhite, 15%);
+$bdrPrimaryLightColor:lighten($otticelli, 15%);
+
 
