@@ -92,9 +92,11 @@ const openTaxonomyTypeModal = () => {
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+
                     />
 
-                    <template v-if="store.hasPermission('can-create-taxonomies') || store.hasPermission('can-update-taxonomies')">
+                    <template v-if="store.hasPermission('can-create-taxonomies') ||
+                    store.hasPermission('can-update-taxonomies')">
                         <Button v-if="store.item && store.item.id"
                                 class="p-button-sm"
                                 label="Save"
@@ -118,12 +120,14 @@ const openTaxonomyTypeModal = () => {
                     />
 
                     <!--form_menu-->
-                    <template v-if="store.hasPermission('can-manage-taxonomies') || store.hasPermission('can-update-taxonomies')">
+                    <template v-if="store.hasPermission('can-manage-taxonomies') ||
+                    store.hasPermission('can-update-taxonomies')">
                         <Button type="button"
                                 @click="toggleFormMenu"
                                 data-testid="taxonomies-form-menu"
                                 icon="pi pi-angle-down"
                                 aria-haspopup="true"
+                                class="p-button-sm"
                         />
 
                         <Menu ref="form_menu"
@@ -133,7 +137,7 @@ const openTaxonomyTypeModal = () => {
                     </template>
                     <!--/form_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-primary p-button-sm"
                             icon="pi pi-times"
                             data-testid="taxonomies-to-list"
                             @click="store.toList()">
@@ -175,7 +179,7 @@ const openTaxonomyTypeModal = () => {
                 </VhField>
 
                 <VhField label="Name">
-                    <InputText class="w-full"
+                    <InputText class="w-full p-inputtext-sm"
                                name="taxonomies-name"
                                data-testid="taxonomies-name"
                                @update:modelValue="store.watchItem"
@@ -184,7 +188,7 @@ const openTaxonomyTypeModal = () => {
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full"
+                    <InputText class="w-full p-inputtext-sm"
                                name="taxonomies-slug"
                                data-testid="taxonomies-slug"
                                v-model="store.item.slug"
@@ -192,7 +196,7 @@ const openTaxonomyTypeModal = () => {
                 </VhField>
 
                 <VhField label="Notes">
-                    <Textarea class="w-full"
+                    <Textarea class="w-full p-inputtext-sm"
                               data-testid="taxonomies-notes"
                               name="taxonomies-notes"
                               v-model="store.item.notes"

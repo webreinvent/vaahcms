@@ -59,13 +59,13 @@ const toggleItemMenu = (event) => {
 <template>
     <div class="grid" v-if="store.assets">
         <div class='col-5'>
-            <Panel>
+            <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Logs</b>
 
-                            <Badge v-if="store.list && store.list.length > 0"
+                            <Badge class="is-small" v-if="store.list && store.list.length > 0"
                                    :value="store.list.length"
                             />
                         </div>
@@ -94,10 +94,7 @@ const toggleItemMenu = (event) => {
                         />
                     </div>
                 </template>
-
                 <Actions/>
-
-                <br/>
                 <Table/>
             </Panel>
         </div>
