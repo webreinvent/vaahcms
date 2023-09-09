@@ -87,24 +87,26 @@ onMounted(async () => {
                                 </div>
 
                                 <div class="p-float-label field mb-5">
-                                    <InputText
+                                    <Password
                                         name="signup-password"
                                         data-testid="signup-password"
                                         id="password"
-                                        class="w-full"
-                                        type="text"
+                                        class="w-full" inputClass="w-full"
+                                        :feedback="false"
+                                        toggleMask
                                         v-model="auth.sign_up_items.password"
                                     />
                                     <label for="password">Password</label>
                                 </div>
 
                                 <div class="p-float-label field mb-5">
-                                    <InputText
+                                    <Password
                                         name="signup-confirm_password"
                                         data-testid="signup-confirm_password"
                                         id="confirm_password"
-                                        class="w-full"
-                                        type="text"
+                                        class="w-full" inputClass="w-full"
+                                        :feedback="false"
+                                        toggleMask
                                         v-model="auth.sign_up_items.confirm_password"
                                     />
 

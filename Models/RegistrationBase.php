@@ -379,19 +379,15 @@ class RegistrationBase extends Model
         $inputs = $request->all();
 
            $rules = [
-                'first_name' => 'required|max:150',
-                'last_name' => 'required|max:150',
-                'username' => 'required|max:150',
-               'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
-                'password' => [
-                    'required',
-                ],
-                'confirm_password' => 'required|same:password',
-            ];
+                      'username' => 'required|max:150',
+                      'email' => 'email:rfc,dns',
+                      'password' => 'required',
+                      'confirm_password' => 'required|same:password',
+                   ];
 
-            $messages = [
-                'confirm_password.same' => 'Password and confirm password does not match.',
-            ];
+           $messages = [
+                       'confirm_password.same' => 'Password and confirm password does not match.',
+                 ];
 
             $validator = \Validator::make($request->all(), $rules, $messages);
 
@@ -402,7 +398,7 @@ class RegistrationBase extends Model
             return $response;
         }
 
-        // check if already exist
+        // check if email already exist
         $user = static::where('email',$inputs['email'])->first();
 
         if($user)
@@ -423,8 +419,6 @@ class RegistrationBase extends Model
         }
 
         // check if user already exist
-        $user = User::where('email',$inputs['email'])->first();
-
         if($user)
         {
             $response['success'] = false;
