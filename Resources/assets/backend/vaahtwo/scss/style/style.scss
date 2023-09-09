@@ -82,6 +82,17 @@ a{
     }
 
 }
+.p-dropdown-panel{
+    .p-dropdown-items-wrapper{
+        .p-dropdown-items{
+            .p-dropdown-item{
+                font-size: 0.7rem;
+                padding:.35rem .5rem;
+            }
+        }
+
+    }
+}
 /*Tables*/
 .p-datatable{
     tr{
@@ -97,9 +108,10 @@ a{
             }
         }
         td{
-            .p-checkbox{
+            .p-checkbox, .p-inputswitch{
                 vertical-align: middle;
             }
+
         }
     }
     .p-button{
