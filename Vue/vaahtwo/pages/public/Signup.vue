@@ -94,7 +94,6 @@ onMounted(async () => {
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.password"
-                                        @input="validatePasswords"
                                     />
                                     <label for="password">Password</label>
                                 </div>
@@ -107,7 +106,6 @@ onMounted(async () => {
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.confirm_password"
-                                        @input="validatePasswords"
                                     />
 
                                     <label for="confirm_password">Confirm Password</label>
