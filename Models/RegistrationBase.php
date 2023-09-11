@@ -419,8 +419,8 @@ class RegistrationBase extends Model
         }
 
         // check if user already exist
-        $user = User::where('email',$inputs['email'])->first();
-        if($user)
+        $vh_user = User::where('email',$inputs['email'])->first();
+        if($vh_user)
         {
             $response['success'] = false;
             $response['messages'][] = 'User already exist';
