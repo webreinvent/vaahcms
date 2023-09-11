@@ -37,58 +37,59 @@ onMounted(async () => {
                         </template>
 
                         <template #content>
-                            <div>
-                                <div class="p-float-label field mb-5">
+                            <div class="flex flex-column align-items-center gap-3">
+                                <div class="w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-name"
+                                        placeholder="Enter First Name"
                                         data-testid="signup-name"
                                         id="name"
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.first_name"
                                     />
-                                    <label for="name">First Name</label>
                                 </div>
 
-                                <div class="p-float-label field mb-5">
+                                <div class="w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-last_name"
+                                        placeholder="Enter Last Name"
                                         data-testid="signup-last_name"
                                         id="last_name"
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.last_name"
                                     />
-                                    <label for="last-name">Last Name</label>
                                 </div>
 
-                                <div class="p-float-label field mb-5">
+                                <div class="w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-username"
+                                        placeholder="Enter Username"
                                         data-testid="signup-username"
                                         id="username"
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.username"
                                     />
-                                    <label for="username">Username</label>
                                 </div>
 
-                                <div class="p-float-label field mb-5">
+                                <div class="w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-email"
+                                        placeholder="Enter Email"
                                         data-testid="signup-email"
                                         id="email"
                                         class="w-full"
                                         type="email"
                                         v-model="auth.sign_up_items.email"
                                     />
-                                    <label for="email">Email</label>
                                 </div>
 
-                                <div class="p-float-label field mb-5">
+                                <div class="w-full gap-3 flex flex-column">
                                     <Password
                                         name="signup-password"
+                                        placeholder="Enter Password"
                                         data-testid="signup-password"
                                         id="password"
                                         class="w-full" inputClass="w-full"
@@ -96,12 +97,12 @@ onMounted(async () => {
                                         toggleMask
                                         v-model="auth.sign_up_items.password"
                                     />
-                                    <label for="password">Password</label>
                                 </div>
 
-                                <div class="p-float-label field mb-5">
+                                <div class="w-full gap-3 flex flex-column">
                                     <Password
                                         name="signup-confirm_password"
+                                        placeholder="Enter Confirm Password"
                                         data-testid="signup-confirm_password"
                                         id="confirm_password"
                                         class="w-full" inputClass="w-full"
@@ -109,11 +110,9 @@ onMounted(async () => {
                                         toggleMask
                                         v-model="auth.sign_up_items.confirm_password"
                                     />
-
-                                    <label for="confirm_password">Confirm Password</label>
                                 </div>
 
-                                <div class="field flex justify-content-between align-items-center">
+                                <div class="w-full flex justify-content-between align-items-center">
                                     <router-link to="/signup">
                                         <Button
                                             name="signup"
@@ -127,6 +126,7 @@ onMounted(async () => {
 
                                     <router-link to="/">
                                         <Button
+                                            class="p-button-text p-button-sm"
                                             name="signin"
                                             data-testid="signin"
                                             label="Sign In"
