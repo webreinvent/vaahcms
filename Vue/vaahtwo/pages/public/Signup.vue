@@ -12,11 +12,21 @@ const auth = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
+
     document.title = 'Sign Up';
     root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();
+
+    // if (root.assets && root.assets.signup_mode_value === 0) {
+    //     window.location.href = root.base_url;
+    // }
+    // if (root.assets.signup_mode_value===0) {
+    //     window.location.href = root.base_url;
+    // }
+
 });
+
 
 
     // ...

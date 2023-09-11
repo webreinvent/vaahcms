@@ -292,6 +292,19 @@ const store = useGeneralStore();
                     />
                 </div>
 
+                <div class="col-4 p-fluid">
+                    <h5 class="p-1 text-xs mb-1">Sign Up</h5>
+
+                    <SelectButton v-model="store.list.signup_mode"
+                                  optionLabel="name"
+                                  optionValue="value"
+                                  :options="store.sign_up_options"
+                                  data-testid="general-signup"
+                                  class="p-button-sm"
+                                  aria-labelledby="single"
+                    />
+                </div>
+
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
 

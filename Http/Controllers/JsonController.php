@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Models\Notified;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller
@@ -63,6 +64,8 @@ class JsonController extends Controller
             'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
             'http' => 'http://',
         ];
+
+        $data['signup_mode_value'] = Setting::where('key', 'signup_mode')->value('value');
 
         if(\Request::secure())
         {
