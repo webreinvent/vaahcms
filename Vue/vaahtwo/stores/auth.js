@@ -45,6 +45,14 @@ export const useAuthStore = defineStore({
             max_attempts: 5,
             is_password_disabled: null,
         },
+        sign_up_items: {
+            first_name: null,
+            last_name:null,
+            username: null,
+            email: null,
+            password: null,
+            confirm_password: null,
+        },
         is_otp_btn_loading: false,
     }),
     getters: {},
@@ -127,6 +135,29 @@ export const useAuthStore = defineStore({
                 } else {
                     window.location = data.redirect_url+'#/vaah';
                 }
+            }
+        },
+        //-----------------------------------------------------------------------
+        signUp () {
+            this.is_btn_loading = true;
+            let params = {
+                params: this.sign_up_items,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/signup/post',
+                this.signUpAfter,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        signUpAfter (data,) {
+            this.is_btn_loading = false
+            if(data) {
+                setTimeout(() => {
+                    window.location = data.redirect_url;
+                }, 2000);
             }
         },
         //---------------------------------------------------------------------

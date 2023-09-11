@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\RegistrationBase;
 use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
 
@@ -386,6 +387,28 @@ class PublicController extends Controller
         }
 
     }
+    //----------------------------------------------------------
+    public function postSignup(Request $request)
+    {
+        try{
+            return RegistrationBase::createRegistration($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 }
