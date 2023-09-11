@@ -380,7 +380,7 @@ class RegistrationBase extends Model
 
            $rules = [
                       'username' => 'required|max:150',
-                      'email' => 'email:rfc,dns',
+                      'email' => 'email:rfc',
                       'password' => 'required',
                       'confirm_password' => 'required|same:password',
                    ];
