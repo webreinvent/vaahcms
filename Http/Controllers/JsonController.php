@@ -65,7 +65,8 @@ class JsonController extends Controller
             'http' => 'http://',
         ];
 
-        $data['signup_mode_value'] = Setting::where('key', 'signup_mode')->value('value');
+        $data['is_signup_page_visible'] = Setting::where('key', 'signup_mode')->value('value') == 1 ? true : false;
+
 
         if(\Request::secure())
         {

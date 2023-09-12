@@ -15,6 +15,7 @@ export const useRootStore = defineStore({
         base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
+        signup_visible:null,
         gutter: 20,
         show_progress_bar: false,
         is_logged_in: false,
@@ -54,14 +55,14 @@ export const useRootStore = defineStore({
                 );
             }
         },
-
-
+        
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
             if(data)
             {
                 this.assets = data;
+               this.signup_visible = data.is_signup_page_visible;
 
                 if(this.assets){
 
@@ -79,15 +80,19 @@ export const useRootStore = defineStore({
 
 
 
+
                 }
-
-
-
-
-
             }
         },
 
+        //---------------------------------------------------------------------
+        async checkSignupPageVisible(){
+            if (this.$router.currentRoute.value.name === 'signup') {
+                if(this.signup_visible === false){
+                    this.$router.push({ name: 'sign.in' });
+                }
+            }
+        },
 
         //---------------------------------------------------------------------
         async reloadAssets()
@@ -312,6 +317,7 @@ export const useRootStore = defineStore({
                 location.reload(true);
             }
         },
+
         //-----------------------------------------------------------------------
         setTopMenuItems(){
 
