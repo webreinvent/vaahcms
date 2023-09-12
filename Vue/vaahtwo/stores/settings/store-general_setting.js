@@ -74,7 +74,7 @@ export const useGeneralStore = defineStore({
         copyright_link_options: [{name:'Use App Url',value:"app_url"}, {name:'Custom',value:"custom"}],
         copyright_year_options: [{name:'Use Current year',value:"use_current_year"}, {name:'Custom',value:"custom"}],
         laravel_queues_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        sign_up_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        sign_up_options: [{name:'Show',value:"1"}, {name:'Hide',value:"0"}],
         social_media_links: null,
         add_link: null,
         show_link_input: true,

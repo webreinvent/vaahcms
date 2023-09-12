@@ -55,14 +55,14 @@ export const useRootStore = defineStore({
                 );
             }
         },
-        
+
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
             if(data)
             {
                 this.assets = data;
-               this.signup_visible = data.is_signup_page_visible;
+               this.signup_visible = data.settings.is_signup_page_visible;
 
                 if(this.assets){
 

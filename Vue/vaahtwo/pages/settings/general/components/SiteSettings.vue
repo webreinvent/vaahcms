@@ -292,10 +292,10 @@ const store = useGeneralStore();
                     />
                 </div>
 
-                <div class="col-4 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Sign Up</h5>
-
-                    <SelectButton v-model="store.list.signup_mode"
+                <div>
+                    <h5 class="p-1 text-xs mb-1">Signup Page</h5>
+                    <div class="p-inputgroup">
+                    <SelectButton v-model="store.list.signup_page_visibility"
                                   optionLabel="name"
                                   optionValue="value"
                                   :options="store.sign_up_options"
@@ -303,6 +303,12 @@ const store = useGeneralStore();
                                   class="p-button-sm"
                                   aria-labelledby="single"
                     />
+                    <Button class="p-button-sm"
+                            icon="pi pi-copy"
+                            data-testid="general-copyright_custom_year_filed_copy"
+                            @click="store.getCopy('signup_mode')"
+                    />
+                    </div>
                 </div>
 
                 <div class="col-12">
@@ -330,6 +336,7 @@ const store = useGeneralStore();
                                 @click="store.getCopy('redirect_after_backend_logout')"
                                 class="p-button-sm"
                         />
+
                     </div>
                 </div>
             </div>
