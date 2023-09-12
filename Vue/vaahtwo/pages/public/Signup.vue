@@ -11,18 +11,21 @@ const root = useRootStore();
 const auth = useAuthStore();
 const route = useRoute();
 
+
 onMounted(async () => {
+
     document.title = 'Sign Up';
     root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();
+    await root.checkSignupPageVisible();
+
 });
 
-
-    // ...
 </script>
 
 <template>
+
     <div v-if="root.assets && auth.is_installation_verified">
         <div class="grid flex justify-content-center flex-wrap ">
             <div class="col-5 flex align-items-center justify-content-center ">

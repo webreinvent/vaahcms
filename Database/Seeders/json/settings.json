@@ -4,6 +4,7 @@
     {"category": "global", "key": "language", "value": "en" },
     {"category": "global", "key": "search_engine_visibility", "value": 1 },
     {"category": "global", "key": "maintenance_mode", "value": 0 },
+    {"category": "global", "key": "signup_page_visibility", "value": 0 },
     {"category": "global", "key": "copyright_text", "value": "app_name" },
     {"category": "global", "key": "copyright_link", "value": "app_url" },
     {"category": "global", "key": "copyright_year", "value": "use_current_year" },

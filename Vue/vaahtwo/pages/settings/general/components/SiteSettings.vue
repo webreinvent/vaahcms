@@ -252,10 +252,9 @@ const store = useGeneralStore();
                         />
                     </div>
                 </div>
-
-                <div class="col-4 p-fluid">
+                <div class="col-6 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Password Protection</h5>
-
+                    <div class="p-inputgroup">
                     <SelectButton v-model="store.list.password_protection"
                                   optionLabel="name"
                                   optionValue="value"
@@ -264,11 +263,17 @@ const store = useGeneralStore();
                                   data-testid="general-password_protection"
                                   aria-labelledby="single"
                     />
+                    <Button class="p-button-sm"
+                            icon="pi pi-copy"
+                            data-testid="general-copyright_custom_year_filed_copy"
+                            @click="store.getCopy('password_protection')"
+                    />
+                   </div>
                 </div>
 
-                <div class="col-4 p-fluid">
+                <div class="col-6 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
-
+                    <div class="p-inputgroup">
                     <SelectButton v-model="store.list.laravel_queues"
                                   optionLabel="name"
                                   optionValue="value"
@@ -277,11 +282,17 @@ const store = useGeneralStore();
                                   class="p-button-sm"
                                   aria-labelledby="single"
                     />
+                    <Button class="p-button-sm"
+                            icon="pi pi-copy"
+                            data-testid="general-copyright_custom_year_filed_copy"
+                            @click="store.getCopy('laravel_queues')"
+                    />
+                  </div>
                 </div>
 
-                <div class="col-4 p-fluid">
+                <div class="col-6 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
-
+                    <div class="p-inputgroup">
                     <SelectButton v-model="store.list.maintenance_mode"
                                   optionLabel="name"
                                   optionValue="value"
@@ -290,6 +301,31 @@ const store = useGeneralStore();
                                   class="p-button-sm"
                                   aria-labelledby="single"
                     />
+                    <Button class="p-button-sm"
+                            icon="pi pi-copy"
+                            data-testid="general-copyright_custom_year_filed_copy"
+                            @click="store.getCopy('maintenance_mode')"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-6 p-fluid">
+                    <h5 class="p-1 text-xs mb-1">Signup Page</h5>
+                    <div class="p-inputgroup">
+                    <SelectButton v-model="store.list.signup_page_visibility"
+                                  optionLabel="name"
+                                  optionValue="value"
+                                  :options="store.sign_up_options"
+                                  data-testid="general-signup"
+                                  class="p-button-sm"
+                                  aria-labelledby="single"
+                    />
+                    <Button class="p-button-sm"
+                            icon="pi pi-copy"
+                            data-testid="general-copyright_custom_year_filed_copy"
+                            @click="store.getCopy('signup_page_visibility')"
+                    />
+                    </div>
                 </div>
 
                 <div class="col-12">
@@ -317,6 +353,7 @@ const store = useGeneralStore();
                                 @click="store.getCopy('redirect_after_backend_logout')"
                                 class="p-button-sm"
                         />
+
                     </div>
                 </div>
             </div>

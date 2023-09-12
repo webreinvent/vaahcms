@@ -55,14 +55,12 @@ export const useRootStore = defineStore({
             }
         },
 
-
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
             if(data)
             {
                 this.assets = data;
-
                 if(this.assets){
 
                     if(this.assets.extended_views
@@ -76,18 +74,18 @@ export const useRootStore = defineStore({
                     if(this.assets.urls){
                         this.setTopMenuItems();
                     }
-
-
-
                 }
-
-
-
-
-
             }
         },
 
+        //---------------------------------------------------------------------
+        async checkSignupPageVisible(){
+            if ( this.assets && this.assets.settings &&
+                this.assets.settings.is_signup_page_visible == false &&
+                this.$router.currentRoute.value.name === 'signup'){
+                    this.$router.push({ name: 'sign.in' });
+            }
+        },
 
         //---------------------------------------------------------------------
         async reloadAssets()
@@ -312,6 +310,7 @@ export const useRootStore = defineStore({
                 location.reload(true);
             }
         },
+
         //-----------------------------------------------------------------------
         setTopMenuItems(){
 

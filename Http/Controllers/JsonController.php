@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Models\Notified;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller
@@ -52,6 +53,7 @@ class JsonController extends Controller
         $data['settings'] = [
             'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
             'max_attempts_of_login' => config('settings.global.maximum_number_of_login_attempts_per_session'),
+            'is_signup_page_visible' => config('settings.global.signup_page_visibility')== 1 ? true : false,
             'max_attempts_of_forgot_password' => config('settings.global.maximum_number_of_forgot_password_attempts_per_session'),
         ];
 
@@ -63,6 +65,7 @@ class JsonController extends Controller
             'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
             'http' => 'http://',
         ];
+
 
         if(\Request::secure())
         {
