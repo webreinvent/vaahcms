@@ -152,6 +152,9 @@ Route::group(
         Route::post( '/send', 'NotificationsController@send' )
             ->name( 'vh.backend.settings.notifications.send' );
         //------------------------------------------------
+        Route::post('/search/notification', 'NotificationsController@searchNotication')
+            ->name('vh.backend.settings.notifications.search');
+        //------------------------------------------------
     });
 
 

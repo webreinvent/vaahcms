@@ -20,6 +20,7 @@ export const useNotificationStore = defineStore({
         app: null,
         activeSubTab: 0,
         assets: null,
+        notification_options:null,
         fillable: null,
         route: null,
         view: 'large',
@@ -480,7 +481,37 @@ export const useNotificationStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
+        //---------------------------------------------------------------------
+
+        async searchNotification(event)
+        {
+            const query = {
+                filter: {
+                    q: event,
+                },
+            };
+
+            const options = {
+                params: query,
+                method: 'post',
+            };
+
+            await vaah().ajax(
+                this.ajax_url+'/search/notification',
+                this.searchNotificationAfter,
+                options
+            );
+
+        },
+
+        //---------------------------------------------------------------------
+
+        searchNotificationAfter(data,res){
+             if(data){
+                 this.notification_options = data;
+             }
+        },
     }
 });
 
