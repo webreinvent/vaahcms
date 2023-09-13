@@ -270,4 +270,23 @@ class NotificationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+
+    //----------------------------------------------------------
+
+    public function searchNotication(Request $request)
+    {
+        try{
+            return Notification::searchNotication($request);
+        }catch (\Exception $e){
+            $response = [];
+            $response['success'] = false;
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+            return $response;
+        }
+    }
 }

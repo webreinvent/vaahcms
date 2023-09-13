@@ -46,17 +46,30 @@ onMounted(async () => {
         <div class="grid">
             <div class="col-12" v-if="store && store.assets && store.assets.notifications">
                 <div class="p-inputgroup">
-                    <Dropdown v-model="store.notification"
-                              :options="store.assets.notifications"
-                              optionLabel="name"
-                              optionValue="id"
-                              :filter="true"
-                              placeholder="Search"
-                              data-testid="notification-search"
-                              class="w-full"
-                              @change="store.callShowNotificationSettings()"
-                              inputClass="p-inputtext-sm"
-                    />
+<!--                    <Dropdown v-model="store.notification"-->
+<!--                              :options="store.assets.notifications"-->
+<!--                              optionLabel="name"-->
+<!--                              optionValue="id"-->
+<!--                              :filter="true"-->
+<!--                              placeholder="Search test"-->
+<!--                              data-testid="notification-search"-->
+<!--                              class="w-full"-->
+<!--                              @change="store.callShowNotificationSettings()"-->
+<!--                              inputClass="p-inputtext-sm"-->
+<!--                    />-->
+
+                        <AutoComplete
+                            v-model="store.notification"
+                            dropdown
+                            placeholder="Search"
+                            optionLabel="name"
+                            :completeOnFocus="true"
+                            :suggestions="store.notification_options"
+                            @complete="(event) => store.searchNotification(event)"
+                            class="w-full"
+                            inputClass="p-inputtext-sm"
+                            @change="store.callShowNotificationSettings()"
+                        />
 
                     <Button class="p-button-sm"
                             label="Reset"
