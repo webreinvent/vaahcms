@@ -38,18 +38,6 @@ onMounted(async () => {
 
             <div class="flx justify-content-end mt-2" v-if="store && store.assets && store.assets.notifications">
                 <div class="p-inputgroup">
-<!--                    <Dropdown v-model="store.notification"-->
-<!--                              :options="store.assets.notifications"-->
-<!--                              optionLabel="name"-->
-<!--                              optionValue="id"-->
-<!--                              :filter="true"-->
-<!--                              placeholder="Search test"-->
-<!--                              data-testid="notification-search"-->
-<!--                              class="w-full"-->
-<!--                              @change="store.callShowNotificationSettings()"-->
-<!--                              inputClass="p-inputtext-sm"-->
-<!--                    />-->
-
                         <AutoComplete
                             v-model="store.notification"
                             dropdown

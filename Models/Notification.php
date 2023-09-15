@@ -446,8 +446,7 @@ class Notification extends Model {
         } else {
             $customers = Notification::select('id', 'name')
                 ->where(function ($q) use ($query) {
-                    $q->where('name', 'LIKE', '%' . $query . '%')
-                        ->orWhere('slug', 'LIKE', '%' . $query . '%');
+                    $q->where('name', 'LIKE', '%' . $query . '%');
                 })->get();
         }
 
