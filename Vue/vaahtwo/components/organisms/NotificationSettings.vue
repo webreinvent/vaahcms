@@ -81,6 +81,7 @@
                             <TabView ref="tabview1">
                                 <TabPanel header="Mail" content-class="p-0">
                                     <div>
+
                                         <h5 class="p-1 text-xs mb-1 mt-3">Subject</h5>
                                         <div class="p-inputgroup">
                                             <InputText placeholder="Enter Subject"></InputText>
@@ -139,6 +140,7 @@
             </div>
         </template>
     </Card>
+
 </template>
 
 <script>
