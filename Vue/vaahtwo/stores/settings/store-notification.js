@@ -117,18 +117,19 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
-            this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id);
+            if(item && item.id){
+                this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id);
+                let options = {
+                    method: 'post',
+                    query:  item,
+                };
 
-            let options = {
-                method: 'post',
-                query:  item,
-            };
-
-            vaah().ajax(
-                this.ajax_url + '/list',
-                this.afterShowNotificationSettings,
-                options
-            );
+                vaah().ajax(
+                    this.ajax_url + '/list',
+                    this.afterShowNotificationSettings,
+                    options
+                );
+            }
         },
         //---------------------------------------------------------------------
         afterShowNotificationSettings(data, res) {
@@ -463,7 +464,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         async callShowNotificationSettings() {
             // this.active_notification = this.notification;
-            const item = vaah().findInArrayByKey(this.assets.notifications, 'id', this.notification);
+            const item = vaah().findInArrayByKey(this.assets.notifications, 'id', this.notification.id);
             await this.showNotificationSettings(item);
         },
         //---------------------------------------------------------------------
