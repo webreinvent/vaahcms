@@ -273,10 +273,10 @@ class NotificationsController extends Controller
 
     //----------------------------------------------------------
 
-    public function searchNotication(Request $request)
+    public function searchNoticationByName(Request $request)
     {
         try{
-            return Notification::searchNotication($request);
+            return Notification::searchNoticationByName($request);
         }catch (\Exception $e){
             $response = [];
             $response['success'] = false;

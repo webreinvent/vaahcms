@@ -463,9 +463,12 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async callShowNotificationSettings() {
-            // this.active_notification = this.notification;
-            const item = vaah().findInArrayByKey(this.assets.notifications, 'id', this.notification.id);
-            await this.showNotificationSettings(item);
+               if (!this.notification) {
+                     return false;
+               }
+     
+                const item = vaah().findInArrayByKey(this.assets.notifications, 'id', this.notification.id);
+                await this.showNotificationSettings(item);
         },
         //---------------------------------------------------------------------
         async clearNotificationSearch() {
@@ -487,12 +490,7 @@ export const useNotificationStore = defineStore({
 
         async searchNotification(event)
         {
-            const query = {
-                filter: {
-                    q: event,
-                },
-            };
-
+            const query = event;
             const options = {
                 params: query,
                 method: 'post',

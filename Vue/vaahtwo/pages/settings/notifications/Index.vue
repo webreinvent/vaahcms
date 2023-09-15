@@ -48,7 +48,6 @@ onMounted(async () => {
                 <div class="p-inputgroup">
                         <AutoComplete
                             v-model="store.notification"
-                            dropdown
                             placeholder="Search"
                             optionLabel="name"
                             :completeOnFocus="true"
@@ -116,7 +115,7 @@ onMounted(async () => {
                 <div class="level">
                     <div class="flex align-items-center">
 
-                        <Button class="p-button-outlined p-button-sm mr-2"
+                        <Button class="p-button-sm mr-2"
                                 label="Go back"
                                 icon="pi pi-arrow-left"
                                 icon-class="text-xs"
