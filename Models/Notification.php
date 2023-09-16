@@ -333,7 +333,6 @@ class Notification extends Model {
             }
 
             $response['success'] = true;
-            $response['data'] = [];
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
         }catch(\Exception $e)
