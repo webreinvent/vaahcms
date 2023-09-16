@@ -439,11 +439,9 @@ class Notification extends Model {
     //-------------------------------------------------
     public static function searchNoticationByName($request){
 
-        $query = $request['query'];
         $customers = Notification::select('id', 'name');
-
-        if ($query) {
-            $customers->where('name', 'LIKE', '%' . $query . '%');
+        if ($request->has('query') && $request->input('query')) {
+            $customers->where('name', 'LIKE', '%' . $request->input('query') . '%');
         }
         $customers = $customers->limit(10)->get();
 
