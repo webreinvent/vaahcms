@@ -302,6 +302,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request,$id,$action): JsonResponse
     {
+
         if(!Auth::user()->hasPermission('can-manage-users') &&
             !Auth::user()->hasPermission('can-update-users')
         ) {
@@ -312,6 +313,13 @@ class UsersController extends Controller
         }
 
         try {
+            $userCount = User::count();
+            $getRole = User::isLastSuperAdmin();
+            if ($userCount === 1 && $action === 'deactivate' && $getRole) {
+                $response['success'] = false;
+                $response['errors'][] = 'Something went wrong.';
+                return response()->json($response);
+            }
             $response = User::itemAction($request,$id,$action);
         } catch (\Exception $e) {
             $response = [];
