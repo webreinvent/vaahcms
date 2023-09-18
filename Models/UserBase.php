@@ -507,12 +507,17 @@ class UserBase extends Authenticatable
         {
             switch ($action_type)
             {
+
                 //------------------------
                 case 'bulk-trash':
                 case 'bulk-delete':
                 case 'bulk-change-status':
+                case 'deactivate':
+                case 'trash':
+                case 'delete':
                     $result = true;
                     break;
+                //------------------------
                 //------------------------
                 default:
                     break;

@@ -116,6 +116,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
+
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -124,6 +125,14 @@ class UsersController extends Controller
         }
 
         try {
+            $action = $request['type'];
+            $interId = Auth::user()->id;
+            $getMessage  = User::restrictedActions($action,$interId);
+            if ($getMessage) {
+                $response['success'] = false;
+                $response['errors'][] = 'You are not allowed to perform this action.';
+                return response()->json($response);
+            }
             $response = User::updateList($request);
         } catch (\Exception $e) {
             $response = [];
@@ -142,6 +151,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
+
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -168,6 +178,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+
         try {
             $response = User::deleteList($request);
         } catch (\Exception $e) {
@@ -274,6 +285,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id): JsonResponse
     {
+
         if (!Auth::user()->hasPermission('can-update-users') ||
             !Auth::user()->hasPermission('can-delete-users')
         ) {
@@ -284,6 +296,14 @@ class UsersController extends Controller
         }
 
         try {
+            $interId = intval($id);
+            $action = 'delete';
+            $getMessage  = User::restrictedActions($action,$interId);
+            if ($getMessage) {
+                $response['success'] = false;
+                $response['errors'][] = 'You are not allowed to perform this action.';
+                return response()->json($response);
+            }
             $response = User::deleteItem($request, $id);
         } catch (\Exception $e) {
             $response = [];
@@ -300,8 +320,10 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+
     public function itemAction(Request $request,$id,$action): JsonResponse
     {
+
 
         if(!Auth::user()->hasPermission('can-manage-users') &&
             !Auth::user()->hasPermission('can-update-users')
@@ -313,13 +335,14 @@ class UsersController extends Controller
         }
 
         try {
-            $userCount = User::count();
-            $getRole = User::isLastSuperAdmin();
-            if ($userCount === 1 && $action === 'deactivate' && $getRole) {
+             $interId = intval($id);
+             $getMessage  = User::restrictedActions($action,$interId);
+             if ($getMessage){
                 $response['success'] = false;
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = 'You are not allowed to perform this action.';
                 return response()->json($response);
             }
+
             $response = User::itemAction($request,$id,$action);
         } catch (\Exception $e) {
             $response = [];
