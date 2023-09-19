@@ -125,14 +125,24 @@ class UsersController extends Controller
         }
 
         try {
+
             $action = $request['type'];
-            $interId = Auth::user()->id;
-            $getMessage  = User::restrictedActions($action,$interId);
-            if ($getMessage) {
-                $response['success'] = false;
-                $response['errors'][] = 'You are not allowed to perform this action.';
-                return response()->json($response);
+            $loggedInUserId = Auth::user()->id;
+
+            $modifiedItems = [];
+            foreach ($request->items as $item) {
+                $interId = $item['id'];
+                if ($interId === $loggedInUserId) {
+                    $getMessage = User::restrictedActions($action, $interId);
+                    if ($getMessage) {
+                        continue;
+                    }
+                }
+                $modifiedItems[] = $item;
             }
+
+            $request->merge(['items' => $modifiedItems]);
+
             $response = User::updateList($request);
         } catch (\Exception $e) {
             $response = [];
@@ -160,6 +170,13 @@ class UsersController extends Controller
         }
 
         try {
+            $loggedInUserId = Auth::user()->id;
+            $getBollenResponse  = User::restrictedActions($type,$loggedInUserId);
+            if ($getBollenResponse) {
+                $response['success'] = false;
+                $response['errors'][] = 'You are not allowed to perform this action.';
+                return response()->json($response);
+            }
             $response = User::listAction($request, $type);
         } catch (\Exception $e) {
             $response = [];
@@ -180,7 +197,24 @@ class UsersController extends Controller
     {
 
         try {
-            $response = User::deleteList($request);
+            $action = $request['type'];
+            $loggedInUserId = Auth::user()->id;
+
+            $modifiedItems = [];
+            foreach ($request->items as $item) {
+                $interId = $item['id'];
+                if ($interId === $loggedInUserId) {
+                    $getMessage = User::restrictedActions($action, $interId);
+                    if ($getMessage) {
+                        continue;
+                    }
+                }
+                $modifiedItems[] = $item;
+            }
+
+            $request->merge(['items' => $modifiedItems]);
+
+           $response = User::deleteList($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -298,8 +332,8 @@ class UsersController extends Controller
         try {
             $interId = intval($id);
             $action = 'delete';
-            $getMessage  = User::restrictedActions($action,$interId);
-            if ($getMessage) {
+            $getBollenResponse  = User::restrictedActions($action,$interId);
+            if ($getBollenResponse) {
                 $response['success'] = false;
                 $response['errors'][] = 'You are not allowed to perform this action.';
                 return response()->json($response);
@@ -324,7 +358,7 @@ class UsersController extends Controller
     public function itemAction(Request $request,$id,$action): JsonResponse
     {
 
-
+        
         if(!Auth::user()->hasPermission('can-manage-users') &&
             !Auth::user()->hasPermission('can-update-users')
         ) {
@@ -336,8 +370,8 @@ class UsersController extends Controller
 
         try {
              $interId = intval($id);
-             $getMessage  = User::restrictedActions($action,$interId);
-             if ($getMessage){
+            $getBollenResponse  = User::restrictedActions($action,$interId);
+             if ($getBollenResponse){
                 $response['success'] = false;
                 $response['errors'][] = 'You are not allowed to perform this action.';
                 return response()->json($response);

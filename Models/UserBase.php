@@ -500,14 +500,12 @@ class UserBase extends Authenticatable
     public static function restrictedActions($action_type, $user_id)
     {
 
-
         //restricted actions on logged in users
         $result = false;
         if($user_id === \Auth::user()->id)
         {
             switch ($action_type)
             {
-
                 //------------------------
                 case 'bulk-trash':
                 case 'bulk-delete':
@@ -515,6 +513,9 @@ class UserBase extends Authenticatable
                 case 'deactivate':
                 case 'trash':
                 case 'delete':
+                case 'delete-all':
+                case 'deactivate-all':
+                case 'trash-all':
                     $result = true;
                     break;
                 //------------------------
