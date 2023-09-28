@@ -83,7 +83,32 @@ export const useSetupStore = defineStore({
                 mail_from_name: null,
                 mail_is_valid: false,
                 test_email_to: null,
-            }
+            },
+            data_testid_app_env:{
+               'data-testid':"configuration-app_url"
+            },
+            data_testid_debug:{
+                'data-testid':"configuration-debug"
+            },
+            data_testid_timezone:{
+                'data-testid':"configuration-timezone"
+            },
+            data_testid_db_type:{
+                'data-testid':"configuration-db_type"
+            },
+            data_testid_db_password:{
+                'data-testid':"configuration-db_password",
+                'autocomplete':'new-password'
+            },
+            data_testid_mail_provider:{
+                'data-testid':"configuration-mail_provider"
+            },
+            data_testid_mail_password:{
+                'data-testid':"configuration-mail_password"
+            },
+            data_testid_mail_encryption:{
+                'data-testid':"configuration-mail_encryption"
+            },
         },
         install_items: [
             {
