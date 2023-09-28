@@ -173,14 +173,24 @@ onMounted(async () => {
                       :loading="store.is_btn_loading_db_connection"
                       icon="pi pi-check"
                       class="p-button-sm mt-2 mb-3" severity="success"
-                      data-testid="configuration-test_db_connection"/>
+                      data-testid="configuration-test_db_connection"
+                      :pt="{
+                                    label: {
+                                            'data-testid': `configuration-test_db_connection_btn_text`
+                                      }
+                                  }"/>
 
               <Button v-else
                       @click="store.testDatabaseConnection()"
                       label="Test Database connection"
                       :loading="store.is_btn_loading_db_connection"
                       icon="pi pi-database" class="p-button-sm mt-2 mb-3" outlined
-                      data-testid="configuration-test_db_connection"/>
+                      data-testid="configuration-test_db_connection"
+                      :pt="{
+                                    label: {
+                                            'data-testid': `configuration-test_db_connection_btn_text`
+                                      }
+                                  }"/>
 
 
 
@@ -290,14 +300,24 @@ onMounted(async () => {
                       label="Test Mail Configuration"
                       icon="pi pi-check"
                       class="p-button-sm mt-2 mb-3" severity="success"
-                      data-testid="configuration-test_mail"/>
+                      data-testid="configuration-test_mail"
+                      :pt="{
+                                    label: {
+                                            'data-testid': `configuration-test_mail_btn_text`
+                                      }
+                                  }"/>
 
               <Button v-else
                       @click="$event => $refs.op.toggle($event)"
                       label="Test Mail Configuration"
                       icon="pi pi-envelope"
                       class="p-button-sm mt-2 mb-3" outlined
-                      data-testid="configuration-test_mail"/>
+                      data-testid="configuration-test_mail"
+                      :pt="{
+                                    label: {
+                                            'data-testid': `configuration-test_mail_btn_text`
+                                      }
+                                  }"/>
 
               <OverlayPanel ref="op" appendTo="body"
                             :showCloseIcon="true" id="overlay_panel"
@@ -317,7 +337,12 @@ onMounted(async () => {
                                   @click="store.testMailConfiguration"
                                   label="Send Email"
                                   class="p-button-sm is-small"
-                                  data-testid="configuration-send_mail"/>
+                                  data-testid="configuration-send_mail"
+                                  :pt="{
+                                    label: {
+                                            'data-testid': `configuration-send_mail_btn_text`
+                                      }
+                                  }"/>
                       </div>
                   </div>
               </OverlayPanel>
@@ -329,7 +354,12 @@ onMounted(async () => {
                           <Button label="Save & Next" :loading="store.is_btn_loading_config"
                                   :disabled="!store.config.env.db_is_valid"
                                   class="p-button-sm w-auto" @click="store.validateConfigurations"
-                                  data-testid="configuration-save"></Button>
+                                  data-testid="configuration-save"
+                                  :pt="{
+                                    label: {
+                                            'data-testid': `configuration-save_btn_text`
+                                      }
+                                  }"></Button>
                       </div>
                   </div>
               </div>
