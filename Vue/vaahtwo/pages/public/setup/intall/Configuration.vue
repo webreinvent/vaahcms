@@ -157,7 +157,12 @@ onMounted(async () => {
                                     :inputProps="store.config.data_testid_db_password"
                                     name="config-db_password"
                                     input-class="w-full p-inputtext-sm"
-                                    placeholder="Database Password"/>
+                                    placeholder="Database Password"
+                                    :pt="{
+                                        showicon: {
+                                            'data-testid': `configuration-db_password_eye`
+                                        }
+                                    }"/>
                       </div>
                   </div>
               </div>
@@ -237,7 +242,13 @@ onMounted(async () => {
                           <Password v-model="store.config.env.mail_password"
                                     :feedback="false" toggleMask
                                     input-class="w-full p-inputtext-sm" placeholder="Mail Password"
-                                    :inputProps="store.config.data_testid_mail_password"/>
+                                    :inputProps="store.config.data_testid_mail_password"
+                                    :pt="{
+                                        showicon: {
+                                            'data-testid': `configuration-mail_password_eye`
+                                        }
+                                    }"
+                          />
                       </div>
                   </div>
               </div>
@@ -290,7 +301,12 @@ onMounted(async () => {
 
               <OverlayPanel ref="op" appendTo="body"
                             :showCloseIcon="true" id="overlay_panel"
-                            style="width: 450px" :breakpoints="{'960px': '75vw'}">
+                            style="width: 450px" :breakpoints="{'960px': '75vw'}"
+                            :pt="{
+                                    closebutton: {
+                                            'data-testid': `configuration-test_mail_close`
+                                      }
+                                  }">
                   <div class="col-12">
                       <h5 class="text-left p-1 title is-6">Mail Username</h5>
                       <div class="p-inputgroup flex-1">
