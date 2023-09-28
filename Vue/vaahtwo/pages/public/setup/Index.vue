@@ -67,7 +67,8 @@ onMounted(async () => {
 
                             <Button v-else label="Install" icon="pi pi-server"
                                     @click="store.routeAction('setup.install.configuration')"
-                                    class="p-button bg-white border-gray-800 text-black-alpha-80"/>
+                                    class="p-button bg-white border-gray-800 text-black-alpha-80"
+                                    data-testid="setup-install_vaahcms"/>
 
                             <SplitButton label="Advanced Options"
                                          :model="store.advanced_option_menu_list"
