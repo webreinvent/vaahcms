@@ -19,6 +19,11 @@ Route::group(
         //------------------------------------------------
         Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
+
+        //------------------------------------------------
+        Route::post( '/signup/post', 'PublicController@postSignup' )
+            ->name( 'vh.backend.signup.post' );
+
         //------------------------------------------------
         Route::post( '/auth/sendResetCode/post', 'PublicController@postSendResetCode' )
             ->name( 'vh.backend.sendResetCode.post' );

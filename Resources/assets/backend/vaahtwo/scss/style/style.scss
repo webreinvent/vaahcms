@@ -67,7 +67,7 @@ a{
 
 /*Dropdown*/
 .p-dropdown {
-    &.is-small{
+    &.is-small, .p-inputtext-sm{
         .p-dropdown-label {
             @include scaledFontSize($inputTextFontSize, $scaleSM);
             @include scaledPadding($inputPadding, $scaleSM);
@@ -81,6 +81,34 @@ a{
         }
     }
 
+}
+.p-dropdown-panel{
+    .p-dropdown-items-wrapper{
+        .p-dropdown-items{
+            .p-dropdown-item{
+                font-size: 0.7rem;
+                padding:.35rem .5rem;
+            }
+        }
+
+    }
+}
+/*Tabview*/
+.p-tabview{
+    &.is-small{
+        .p-tabview-nav{
+            li{
+                .p-tabview-nav-link{
+                    padding: 0.75rem 1rem;
+                }
+            }
+        }
+    }
+    &.tab-panel-has-no-padding{
+        .p-tabview-panels{
+            padding: .75rem 0;
+        }
+    }
 }
 /*Tables*/
 .p-datatable{
@@ -97,9 +125,10 @@ a{
             }
         }
         td{
-            .p-checkbox{
+            .p-checkbox, .p-inputswitch{
                 vertical-align: middle;
             }
+
         }
     }
     .p-button{
@@ -162,6 +191,11 @@ a{
 /*Table*/
 
 /*Input*/
+.w-full{
+    .p-inputtext{
+        width: 100%;
+    }
+}
 .p-inputgroup{
     .p-input-icon-left{
         .p-inputtext{
@@ -326,6 +360,14 @@ a{
     .top-nav-fixed .navbar-logo{
         width: 37px;
         overflow-x: hidden;
+    }
+}
+
+//tooltip
+.p-tooltip {
+    .p-tooltip-text {
+        padding: .15rem .5rem;
+        font-size: .65rem;
     }
 }
 //button
@@ -557,13 +599,17 @@ $media-level-2-spacing: 0.5rem !default;
 
 /*Buttons*/
 .p-button{
-    color: #8394a6;
-    background-color: #e5e9f2;
-    border-color: #ced5e5;
+    color: $primaryCustomColor;
+    background-color: $bgPrimaryCustomColor;
+    border-color: $bdrPrimaryCustomColor;
     &.p-button-sm{
         .p-button-icon {
             font-size: 0.65rem;
         }
+    }
+    &.p-button-outlined{
+        border-color: $bdrPrimaryCustomColor;
+        color: $primaryCustomColor;
     }
 }
 .p-inputgroup{
@@ -664,6 +710,15 @@ $media-level-2-spacing: 0.5rem !default;
     &.p-message-error{
         &.is-light{
             background:$dangerLighterColor;
+        }
+    }
+    &.p-message-primary{
+        background-color:#4f46e50f;
+        color: $primaryCustomColor;
+        &.text-center{
+           .p-message-wrapper{
+               justify-content: center;
+           }
         }
     }
 }

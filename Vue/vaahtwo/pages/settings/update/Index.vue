@@ -23,36 +23,59 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <Card>
-        <template #header>
-            <div class="flex justify-content-between align-items-center">
-                <h5 class="font-semibold text-lg white-space-nowrap">Update VaahCMS</h5>
-                <div class="p-inputgroup justify-content-end">
-                    <Button icon="pi pi-refresh"
-                            label="Check for Update"
-                            data-testid="setting-update_check"
-                            @click="store.checkForUpdate"
-                            class="p-button-sm"></Button>
+    <Panel class="is-small">
+        <template class="p-1" #header>
+            <div class="flex flex-row">
+                <div>
+                    <b class="mr-1">Update VaahCMS</b>
                 </div>
             </div>
         </template>
-        <template #content>
+
+        <template #icons>
+            <div class="buttons">
+                <Button icon="pi pi-refresh"
+                        label="Check for Update"
+                        data-testid="setting-update_check"
+                        @click="store.checkForUpdate"
+                        class="p-button-sm"></Button>
+            </div>
+        </template>
+        <Message
+            severity="primary" :closable="false" class="text-center pt-3 pb-1">
+            <p><i class="pi pi-bell" style="font-size: 1.5rem"></i></p>
             <div class="text-center" v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">
-                <h4 class="mb-3">Current Version of</h4>
-                <p class="mb-3"><Tag>VaahCMS</Tag> is <Tag>{{ root.assets.vaahcms.version }}</Tag></p>
+                <p>Current Version of <strong>VaahCMS</strong> is</p>
+                <Button :label="root.assets.vaahcms.version"
+                        data-testid="setting-notification_add_sms"
+
+                        class="w-auto my-2 p-button-sm"
+                />
                 <p v-if="store.is_up_to_data"><span class="subtitle">Current version of this VaahCMS is the latest version</span></p>
             </div>
-            <div v-if="store.backend_update">
-                <div v-if="store.release" class="text-sm">
-                    <p class="mb-3">A newer version <b>{{ store.remote_version }}</b> of VaahCMS is available.</p>
+        </Message>
 
-                    <h5 class="font-semibold text-sm">NEW Updates:</h5>
-                    <div>
+        <div v-if="store.backend_update">
+            <div v-if="store.release" class="text-sm">
+                <Message class="py-2" icon="pi-sync pi"
+                    severity="success" :closable="false">
+                    <p>A newer version <b>{{ store.remote_version }}</b> of VaahCMS is available.</p>
+                </Message>
+
+                <Panel class="is-small">
+                    <template class="p-1" #header>
+                        <div class="flex flex-row">
+                            <div>
+                                <b class="mr-1">NEW Updates:</b>
+                            </div>
+                        </div>
+                    </template>
+                    <div style="white-space: break-spaces;">
                         {{store.release.body}}
                     </div>
-                    <div class="field-checkbox mt-5">
+                    <div class="field-checkbox mt-3">
                         <Checkbox inputId="binary"
                                   v-model="store.backup_database"
                                   data-testid="setting-update_confirmation"
@@ -65,7 +88,7 @@ onMounted(async () => {
                             :disabled="!store.is_button_active"
                             data-testid="setting-update_button"
                             @click="store.onUpdate"
-                            class="p-button-sm mt-2 mb-3"></Button>
+                            class="p-button-sm mt-0 mb-3"></Button>
                     <div class="grid m-0" v-if="store.is_update_step_visible">
                         <div class="col-3">
                             <ol class="pl-3">
@@ -114,37 +137,39 @@ onMounted(async () => {
                         </div>
                         <div class="col-9">
                             <div id="terminal"></div>
-<!--                            <Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />-->
+                            <!--                            <Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />-->
                         </div>
                     </div>
-                </div>
+                </Panel>
+
             </div>
-            <div v-if="store.manual_update">
-                <div v-if="store.release">
-                    A newer version <b>{{store.remote_version}}</b> of VaahCMS is available.
-                    This is a <b>major release</b>. You have to do manual upgrade to update VaahCms.
-                    <hr/>
-                    <b>New Updates:</b>
-                    <div class="content">
+        </div>
+        <div v-if="store.manual_update">
+            <div v-if="store.release">
+                A newer version <b>{{store.remote_version}}</b> of VaahCMS is available.
+                This is a <b>major release</b>. You have to do manual upgrade to update VaahCms.
+                <hr/>
+                <b>New Updates:</b>
+                <div class="content">
 
-                        {{store.release.body}}
-                    </div>
-
-                    <b>Steps of Manually Upgrade</b>
-                    <ol class="ml-4">
-                        <li>Go to Root path</li>
-                        <li>Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json</li>
-                        <li>Run <b>Composer Update</b></li>
-                        <li>Publish assets</li>
-                        <li>Run Migrations and Seeds</li>
-                        <li>Clear Cache</li>
-                    </ol>
-
-
+                    {{store.release.body}}
                 </div>
+
+                <b>Steps of Manually Upgrade</b>
+                <ol class="ml-4">
+                    <li>Go to Root path</li>
+                    <li>Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json</li>
+                    <li>Run <b>Composer Update</b></li>
+                    <li>Publish assets</li>
+                    <li>Run Migrations and Seeds</li>
+                    <li>Clear Cache</li>
+                </ol>
+
+
             </div>
-        </template>
-    </Card>
+        </div>
+    </Panel>
+
 </template>
 
 <style scoped lang="scss">

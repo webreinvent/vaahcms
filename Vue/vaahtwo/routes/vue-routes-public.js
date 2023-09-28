@@ -5,6 +5,7 @@ let routes_list= [];
 
 import LayoutPublic from '../layouts/Public.vue'
 import Signin from '../pages/public/Signin.vue'
+import Signup from '../pages/public/Signup.vue'
 import SetupIndex from '../pages/public/setup/Index.vue'
 import SetupInstall from '../pages/public/setup/intall/Index.vue'
 import Configuration from "../pages/public/setup/intall/Configuration.vue";
@@ -13,6 +14,7 @@ import Migrate from "../pages/public/setup/intall/Migrate.vue";
 import Account from "../pages/public/setup/intall/Account.vue";
 import ForgotPassword from "../pages/public/ForgotPassword.vue";
 import ResetPassword from "../pages/public/ResetPassword.vue";
+
 
 
 
@@ -32,6 +34,12 @@ routes_list = [
                 path: '/forgot-password',
                 name: 'forgot.password',
                 component: ForgotPassword,
+                props: true,
+            },
+            {
+                path: '/signup',
+                name: 'signup',
+                component: Signup,
                 props: true,
             },
             {
