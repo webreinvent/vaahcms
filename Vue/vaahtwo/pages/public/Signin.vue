@@ -28,8 +28,10 @@ onMounted(async () => {
                         <template #title>
                             <div class="content text-center">
                                 <Logo class="mt-3" />
-                                <h4 class="text-xl font-semibold mb-1">{{ auth.title.heading }}</h4>
-                                <p class="text-xs text-gray-600 font-normal">{{ auth.title.description }}</p>
+                                <h4 class="text-xl font-semibold mb-1"
+                                    data-testid="signin-heading_text">{{ auth.title.heading }}</h4>
+                                <p class="text-xs text-gray-600 font-normal"
+                                   data-testid="signin-description_text">{{ auth.title.description }}</p>
 
                             </div>
                         </template>

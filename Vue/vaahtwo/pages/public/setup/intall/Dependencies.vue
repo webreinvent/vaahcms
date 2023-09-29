@@ -34,7 +34,8 @@ onMounted(async () => {
                 <Card>
                     <template #title>
                         <div class="flex align-items-center justify-content-between">
-                            <h5 class="font-semibold">{{item.name}}</h5>
+                            <h5 class="font-semibold"
+                                data-testid="dependencies-module_title">{{item.name}}</h5>
                             <i v-if="item.installed"
                                class="pi pi-check bg-green-500 p-2 border-round-3xl"
                                style="font-size: 12px"></i>
@@ -58,8 +59,10 @@ onMounted(async () => {
                             </a>
                         </p>
                         <ProgressBar v-if="store.active_dependency && item.slug === store.active_dependency.slug "
-                                     mode="indeterminate" class="mb-3" />
-                        <ProgressBar v-else :value="0" class="mb-3" />
+                                     mode="indeterminate" class="mb-3"
+                                     data-testid="dependencies-module_install_progressbar"/>
+                        <ProgressBar v-else :value="0" class="mb-3"
+                                     data-testid="dependencies-module_install_progressbar"/>
                         <div class="field-checkbox">
                             <Checkbox inputId="binary" v-model="item.import_sample_data"
                                       :binary="true" class="is-small"
@@ -75,7 +78,7 @@ onMounted(async () => {
             </div>
             <div class="col-12">
                 <ProgressBar :value="store.config.count_installed_progress" class="mt-4 mb-5"
-                             data-testid="dependencies-install_progressBar"/>
+                             data-testid="dependencies-install_progressbar"/>
                 <div class="my-3">
                     <Button v-if="store.config.count_installed_progress === 100"
                             icon="pi pi-check"

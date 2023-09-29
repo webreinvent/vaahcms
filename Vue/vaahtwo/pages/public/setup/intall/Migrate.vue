@@ -37,6 +37,7 @@ const confirmDelete = (event) => {
     });
 };
 
+
 </script>
 
 <template>
@@ -94,17 +95,22 @@ const confirmDelete = (event) => {
                        :style="{width: '400px'}"
                        :breakpoints="{'600px': '100vw'}"
                        :pt="{
-                               rejectbutton: {
-                                    'data-testid': `migrate-confirmation_cancel_btn`
-                               },
-                               acceptbutton:{
+                           acceptbutton:{
+                               root:{
                                    'data-testid': `migrate-confirmation_proceed_btn`
-                               },
-                               closebutton:{
-                                   'data-testid': `migrate-confirmation_close_btn`
                                }
 
-                  }">
+                           },
+                           rejectbutton:{
+                               root:{
+                                   'data-testid': `migrate-confirmation_cancel_btn`
+                               }
+
+                           },
+                           closeButton:{
+                               'data-testid': `migrate-confirmation_close_btn`
+                           },
+                       }">
             <template #message="slotProps">
                 <div class="flex">
                     <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>

@@ -24,8 +24,10 @@ onMounted(async () => {
                     <template #title>
                         <div class="content text-center">
                             <Logo class="mt-3" />
-                            <h4 class="text-xl font-semibold mb-1">Forgot password?</h4>
-                            <p class="text-xs text-gray-600 font-normal">You can recover your password from here.</p>
+                            <h4 class="text-xl font-semibold mb-1"
+                                data-testid="forgot_password-heading_text">Forgot password?</h4>
+                            <p class="text-xs text-gray-600 font-normal"
+                               data-testid="forgot_password-description_text">You can recover your password from here.</p>
 
                         </div>
                     </template>
@@ -40,6 +42,7 @@ onMounted(async () => {
                                 id="email"
                                 class="w-full"
                                 type="text"/>
+
                             <div class="w-full flex justify-content-between align-items-center">
                                 <Button
                                     label="Send Code"
