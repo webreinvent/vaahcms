@@ -18,7 +18,15 @@ onMounted(async () => {
     <div v-if="store && store.assets">
         <div class="p-card">
             <div class="p-card-content p-4 border-round-xl">
-        <Message severity="info" :closable="true" class="is-small">
+        <Message severity="info" :closable="true" class="is-small"
+                 :pt="{
+                      text: {
+                               'data-testid': `account-message_text`
+                             },
+                      closebutton:{
+                          'data-testid': `account-message_close_btn`
+                      }
+                  }">
             Create first account,this account will have super administrator
             role and will have all the permissions.
         </Message>
@@ -31,7 +39,8 @@ onMounted(async () => {
                         name="account-first_name"
                         data-testid="account-first_name"
                         placeholder="Enter first name"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                    />
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -90,7 +99,12 @@ onMounted(async () => {
                         data-testid="account-password"
                         :feedback="false"
                         toggleMask input-class="w-full p-inputtext-sm"
-                        placeholder="Enter password"/>
+                        placeholder="Enter password"
+                        :pt="{
+                              showicon: {
+                                      'data-testid': `account-password_eye`
+                                  }
+                           }"/>
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -130,7 +144,12 @@ onMounted(async () => {
                     icon="pi pi-check"
                     label="Create Account"
                     class="p-button-success p-button-sm w-auto is-small"
-                    :loading="store.config.btn_is_account_creating"/>
+                    :loading="store.config.btn_is_account_creating"
+                    :pt="{
+                              label: {
+                                      'data-testid': `account-create_account_btn_text`
+                                  }
+                           }"/>
                 <Button
                     v-else
                     name="account-create_account_btn"
@@ -139,7 +158,12 @@ onMounted(async () => {
                     label="Create Account"
                     class="p-button-sm w-auto is-small"
                     :loading="store.config.btn_is_account_creating"
-                    @click="store.createAccount()"/>
+                    @click="store.createAccount()"
+                    :pt="{
+                              label: {
+                                      'data-testid': `account-create_account_btn_text`
+                                  }
+                           }"/>
 
             </div>
             <div class="col-12">
@@ -149,7 +173,12 @@ onMounted(async () => {
                         name="account-back_btn"
                         data-testid="account-back_btn"
                         class="p-button-sm w-auto"
-                        @click="$router.push('/setup/install/dependencies')"></Button>
+                        @click="$router.push('/setup/install/dependencies')"
+                        :pt="{
+                              label: {
+                                      'data-testid': `account-back_btn_text`
+                                  }
+                           }"></Button>
                     <Button
                         v-if="store.config.is_account_created"
                         name="account-back_to_sign_in_btn"
@@ -157,7 +186,12 @@ onMounted(async () => {
                         icon="pi pi-external-link"
                         label="Go to Backend Sign in"
                         class="p-button-success p-button-sm w-auto"
-                        @click="store.validateAccountCreation()"></Button>
+                        @click="store.validateAccountCreation()"
+                        :pt="{
+                              label: {
+                                      'data-testid': `account-back_to_sign_in_btn_text`
+                                  }
+                           }"></Button>
                     <Button
                         v-else
                         name="account-back_to_sign_in_btn"
@@ -165,7 +199,12 @@ onMounted(async () => {
                         icon="pi pi-external-link"
                         label="Go to Backend Sign in"
                         class="p-button-sm w-auto"
-                        @click="store.validateAccountCreation()"></Button>
+                        @click="store.validateAccountCreation()"
+                        :pt="{
+                              label: {
+                                      'data-testid': `account-back_to_sign_in_btn_text`
+                                  }
+                           }"></Button>
                 </div>
             </div>
         </div>

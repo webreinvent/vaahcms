@@ -107,7 +107,12 @@ onMounted(async () => {
                                                 class="w-full" inputClass="w-full"
                                                 :feedback="false"
                                                 toggleMask
-                                                id="password"></Password>
+                                                id="password"
+                                                :pt="{
+                                                       showicon: {
+                                                             'data-testid': `signin-password_eye`
+                                                       }
+                                                 }"></Password>
 
                                         </div>
                                         </div>

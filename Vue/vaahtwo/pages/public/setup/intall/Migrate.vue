@@ -43,7 +43,8 @@ const confirmDelete = (event) => {
     <div v-if="store.assets">
         <div class="p-card">
             <div class="p-card-content p-4 border-round-xl">
-        <Message severity="info" :closable="true" class="is-small" :pt="{
+        <Message severity="info" :closable="true" class="is-small"
+                 :pt="{
                       text: {
                                'data-testid': `migrate-message_text`
                              },
@@ -71,7 +72,7 @@ const confirmDelete = (event) => {
         <div class="flex justify-content-between mt-5">
             <Button label="Back" class="p-button-sm" severity="secondary"
                     @click="$router.push('/setup/install/configuration')"
-                    data-testid="migrate-back"
+                    data-testid="migrate-back_btn"
                     :pt="{
                       label: {
                                'data-testid': `migrate-back_btn_text`
@@ -81,7 +82,7 @@ const confirmDelete = (event) => {
             <Button label="Save & Next"
                     class="p-button-sm"
                     @click="store.validateMigration"
-                    data-testid="migrate-save"
+                    data-testid="migrate-save_btn"
                     :pt="{
                       label: {
                                'data-testid': `migrate-save_btn_text`

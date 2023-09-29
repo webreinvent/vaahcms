@@ -48,7 +48,12 @@ onMounted(async () => {
                                     class="p-button-sm"
                                     native-type="submit"
                                     @click="auth.sendCode()"
-                                    :loading="auth.is_forgot_password_btn_loading"/>
+                                    :loading="auth.is_forgot_password_btn_loading"
+                                    :pt="{
+                                        label: {
+                                           'data-testid': `forgot_password-send_code_btn_text`
+                                            }
+                                    }"/>
                                 <router-link :to="{name:'sign.in'}">
                                     <Button label="Sign In" class="p-button-text p-button-sm"/>
                                 </router-link>

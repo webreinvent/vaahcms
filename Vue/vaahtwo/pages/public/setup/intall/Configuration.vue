@@ -354,7 +354,7 @@ onMounted(async () => {
                           <Button label="Save & Next" :loading="store.is_btn_loading_config"
                                   :disabled="!store.config.env.db_is_valid"
                                   class="p-button-sm w-auto" @click="store.validateConfigurations"
-                                  data-testid="configuration-save"
+                                  data-testid="configuration-save_btn"
                                   :pt="{
                                     label: {
                                             'data-testid': `configuration-save_btn_text`

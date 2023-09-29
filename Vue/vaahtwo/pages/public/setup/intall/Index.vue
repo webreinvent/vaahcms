@@ -38,7 +38,12 @@ onMounted(async () => {
                 </template>
             </Steps>
             <div v-if="store.assets.env_file" class="w-auto text-center my-4">
-                <Tag class="bg-black-alpha-90 m-auto is-small">
+                <Tag class="bg-black-alpha-90 m-auto is-small"
+                     :pt="{
+                      root: {
+                               'data-testid': `setup-use_env`
+                             }
+                  }">
                 ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b>
                 </Tag>
             </div>
