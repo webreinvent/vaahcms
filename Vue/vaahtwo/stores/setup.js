@@ -85,7 +85,7 @@ export const useSetupStore = defineStore({
                 test_email_to: null,
             },
             data_testid_app_env:{
-               'data-testid':"configuration-app_url"
+               'data-testid':"configuration-env"
             },
             data_testid_debug:{
                 'data-testid':"configuration-debug"
