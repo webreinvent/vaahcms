@@ -43,33 +43,71 @@ const confirmDelete = (event) => {
     <div v-if="store.assets">
         <div class="p-card">
             <div class="p-card-content p-4 border-round-xl">
-        <Message severity="info" :closable="true" class="is-small">
+        <Message severity="info" :closable="true" class="is-small" :pt="{
+                      text: {
+                               'data-testid': `migrate-message_text`
+                             },
+                      closebutton:{
+                          'data-testid': `migrate-message_close_btn`
+                      }
+                  }">
             This step will run database migrations and seeds.</Message>
         <Button v-if="store.config.is_migrated"
                 label="Migrate & Run Seeds"
                 icon="pi pi-check" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="is-small" severity="success"/>
+                @click="confirmDelete" class="is-small" severity="success"
+                data-testid="migrate-run_migration"/>
         <Button v-else label="Migrate & Run Seeds"
                 icon="pi pi-database" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="is-small" outlined/>
+                @click="confirmDelete" class="is-small" outlined
+                data-testid="migrate-run_migration"
+                :pt="{
+                      label: {
+                               'data-testid': `migrate-run_migration_btn_text`
+                             }
+                  }"/>
         <div class="flex justify-content-between mt-5">
             <Button label="Back" class="p-button-sm" severity="secondary"
-                    @click="$router.push('/setup/install/configuration')">
+                    @click="$router.push('/setup/install/configuration')"
+                    data-testid="migrate-back"
+                    :pt="{
+                      label: {
+                               'data-testid': `migrate-back_btn_text`
+                             }
+                  }">
             </Button>
             <Button label="Save & Next"
                     class="p-button-sm"
-                    @click="store.validateMigration">
+                    @click="store.validateMigration"
+                    data-testid="migrate-save"
+                    :pt="{
+                      label: {
+                               'data-testid': `migrate-save_btn_text`
+                             }
+                  }">
             </Button>
         </div>
         <ConfirmDialog group="templating" class="is-small"
                        :style="{width: '400px'}"
-                       :breakpoints="{'600px': '100vw'}">
+                       :breakpoints="{'600px': '100vw'}"
+                       :pt="{
+                               rejectbutton: {
+                                    'data-testid': `migrate-confirmation_cancel_btn`
+                               },
+                               acceptbutton:{
+                                   'data-testid': `migrate-confirmation_proceed_btn`
+                               },
+                               closebutton:{
+                                   'data-testid': `migrate-confirmation_close_btn`
+                               }
+
+                  }">
             <template #message="slotProps">
                 <div class="flex">
                     <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-                    <p class="pl-2 text-xs">{{slotProps.message.message}}</p>
+                    <p class="pl-2 text-xs" data-testid="migrate-confirmation_message">{{slotProps.message.message}}</p>
                 </div>
             </template>
         </ConfirmDialog>
