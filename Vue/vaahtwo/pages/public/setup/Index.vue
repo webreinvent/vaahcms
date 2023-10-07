@@ -36,14 +36,25 @@ onMounted(async () => {
                                     <a @click="$router.push({name:'dashboard'})">
                                         <Button class="bg-gray-200 active:text-black
                                         p-2 p-button-rounded p-button-outlined"
+                                                data-testid="setup-dashboard_button"
                                                 v-tooltip.top="'Dashboard'"
                                                 icon=" pi pi-server"/>
+                                    </a>
+                                </div>
+                                <div v-else-if="store.assets.is_installed" class="m-1">
+                                    <a @click="$router.push({name:'sign.in'})">
+                                        <Button class="bg-gray-200 active:text-black
+                                        p-2 p-button-rounded p-button-outlined"
+                                                data-testid="setup-signin_button"
+                                                v-tooltip.top="'Sign In'"
+                                                icon="pi pi-sign-in"/>
                                     </a>
                                 </div>
                                 <div class="m-1">
                                     <a href="https://docs.vaah.dev/vaahcms/installation.html" target="_blank">
                                         <Button class="bg-gray-200 active:text-black
                                         p-2 p-button-rounded p-button-outlined"
+                                                data-testid="setup-documentation_button"
                                                 v-tooltip.top="'Documentation'"
                                                 icon=" pi pi-book"/>
                                     </a>
