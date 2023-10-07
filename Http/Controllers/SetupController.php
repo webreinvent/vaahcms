@@ -301,9 +301,16 @@ class SetupController extends Controller
             'app_env' => 'required',
             'app_name' => 'required',
             'app_timezone' => 'required',
+            'mail_from_name' => 'required',
+            'mail_from_address' => 'required',
         );
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $messages = array(
+            'mail_from_name.required' => 'The from name field is required.',
+            'mail_from_address.required' => 'The from email field is required.',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules,$messages);
         if ( $validator->fails() ) {
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;

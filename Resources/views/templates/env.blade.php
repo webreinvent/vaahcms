@@ -8,6 +8,7 @@ APP_KEY={{$data->app_key ?? '' }}
 @isset($data->app_debug)
 APP_DEBUG=true
 @endisset
+DEBUGBAR_ENABLED=false
 APP_URL={{$data->app_url ?? '' }}
 APP_TIMEZONE={{$data->app_timezone ?? '' }}
 
@@ -43,7 +44,7 @@ MAIL_PASSWORD={{$data->mail_password ?? '' }}
 MAIL_ENCRYPTION={{$data->mail_encryption ?? '' }}
 
 MAIL_FROM_NAME={{$data->mail_from_name ?? '' }}
-MAIL_FROM_ADDRESS={{$data->test_email_to ?? '' }}
+MAIL_FROM_ADDRESS={{$data->mail_from_address ?? '' }}
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
