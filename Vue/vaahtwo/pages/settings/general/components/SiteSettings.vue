@@ -27,7 +27,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Default Site Language sdfds</h5>
+                    <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
 
                     <Dropdown v-model="store.list.language"
                               :options="store.languages"

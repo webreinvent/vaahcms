@@ -152,6 +152,41 @@ class Setting extends Model {
 
     }
     //-------------------------------------------------
+    public static function getGlobalConfigSettings()
+    {
+
+     $global_settings = Setting::where('category', 'global')
+         ->get()
+         ->pluck('value', 'key' )->toArray();
+
+        foreach ($global_settings as $key => $value){
+            switch ($key){
+                case 'copyright_link':
+                    $global_settings[$key] = $global_settings['copyright_link_custom']??'';
+                    if($value === 'app_name'){
+                        $global_settings[$key] = env('APP_NAME');
+                    }
+                    break;
+                case 'copyright_text':
+                    $global_settings[$key] = $global_settings['copyright_text_custom']??'';
+                    if($value === 'app_url'){
+                        $global_settings[$key] = env('APP_URL');
+                    }
+                    break;
+                case 'copyright_year':
+                    $global_settings[$key] = $global_settings['copyright_year_custom']??'';
+                    if($value === 'use_current_year'){
+                        $global_settings[$key] = date("Y");
+                    }
+                    break;
+                default:
+            }
+        }
+
+        return $global_settings;
+
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
 
 }

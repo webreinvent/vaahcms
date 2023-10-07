@@ -121,8 +121,12 @@ onMounted(async () => {
                                        name="config-db_port"
                                        placeholder="Database Port"
                                        class="p-inputtext-sm"
-                                       data-testid="configuration-db_port"
-                                       inputId="withoutgrouping" :useGrouping="false" />
+                                       inputId="withoutgrouping" :useGrouping="false"
+                                       :pt="{
+                                           input: {
+                                                'data-testid': `configuration-db_port`
+                                           }
+                                       }"/>
                       </div>
                   </div>
               </div>
