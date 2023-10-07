@@ -179,6 +179,14 @@ class Setting extends Model {
                         $global_settings[$key] = date("Y");
                     }
                     break;
+                case 'redirect_after_backend_logout':
+                    $global_settings[$key] = $global_settings['redirect_after_backend_logout_url']??'';
+                    if($value === 'backend'){
+                        $global_settings[$key] = url('/backend');
+                    }elseif($value === 'frontend'){
+                        $global_settings[$key] = url('');
+                    }
+                    break;
                 default:
             }
         }
