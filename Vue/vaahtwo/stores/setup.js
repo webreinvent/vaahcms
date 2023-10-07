@@ -470,7 +470,7 @@ export const useSetupStore = defineStore({
 
         //---------------------------------------------------------------------
         validateMigration: function () {
-            if(!this.config.is_migrated)
+            if(this.status && !this.status.is_db_migrated)
             {
                 vaah().toastErrors(['Click on Migrate & Run Seeds button']);
                 return false;

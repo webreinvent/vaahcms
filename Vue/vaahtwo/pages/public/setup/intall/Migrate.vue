@@ -54,12 +54,17 @@ const confirmDelete = (event) => {
                       }
                   }">
             This step will run database migrations and seeds.</Message>
-        <Button v-if="store.config.is_migrated"
+        <Button v-if="store.status && store.status.is_db_migrated"
                 label="Migrate & Run Seeds"
                 icon="pi pi-check" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="is-small" severity="success"
-                data-testid="migrate-run_migration"/>
+                @click="confirmDelete" class="is-small"
+                :pt="{
+                      label: {
+                               'data-testid': `migrate-run_migration_btn_text`
+                             }
+                  }"
+                severity="success" data-testid="migrate-run_migration"/>
         <Button v-else label="Migrate & Run Seeds"
                 icon="pi pi-database" iconPos="left"
                 :loading="store.btn_is_migration"
