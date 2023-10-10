@@ -843,9 +843,8 @@ $media-level-2-spacing: 0.5rem !default;
         padding: 0.35rem 0.5rem;
     }
 }
-
-.p-inputgroup {
-    .p-inputtext {
+.p-inputgroup{
+    .p-inputtext{
         //border-right-color: transparent;
     }
 
@@ -1259,25 +1258,21 @@ $media-level-2-spacing: 0.5rem !default;
                 }
 
                 flex: none;
-
-                a {
+                a{
                     border: 1.3px solid rgba($secondary, 0.5);
-                    border-radius: 1rem;
+                    border-radius: 2rem;
                     position: relative;
                     background: transparent;
                     z-index: 99;
                     color: $secondary;
-                    padding: 3px 14px;
+                    padding: 3px 8px;
                     font-size: 0.85rem;
                     opacity: 1;
 
-                    .step-icon {
-                        color: $secondary;
+                    .step-icon{
+                        color:$secondary;
                         position: relative;
-                        width: max-content;
-                        padding: 0 10px 0 6px;
-
-                        &:before {
+                        &:before{
                             position: absolute;
                             left: 50%;
                             top: 51%;
@@ -1313,11 +1308,10 @@ $media-level-2-spacing: 0.5rem !default;
                 &.p-highlight {
                     a {
                         color: $primary;
-                        border: 1.25px solid $primary;
+                        border: 1.25px solid  $primary;
                         background: rgba($primary, 0.1);
-
-                        .step-icon {
-                            border-color: $primary;
+                        .step-icon{
+                            border-color:$primary;
                             color: $primary;
                         }
                     }

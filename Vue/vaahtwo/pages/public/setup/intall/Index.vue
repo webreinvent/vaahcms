@@ -27,7 +27,7 @@ onMounted(async () => {
                  class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
-        <div class="container vh-step relative">
+        <div class="container vh-step">
             <Steps
                 :model="store.install_items"
                 class="my-4"
