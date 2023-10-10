@@ -669,7 +669,7 @@ $media-level-2-spacing: 0.5rem !default;
 }
 .p-inputgroup{
     .p-inputtext{
-        border-right-color: transparent;
+        //border-right-color: transparent;
     }
     button, input{
         &:first-child{
@@ -1030,22 +1030,19 @@ $media-level-2-spacing: 0.5rem !default;
                 }
                 flex: none;
                 a{
+                    border: 1.3px solid rgba($secondary, 0.5);
+                    border-radius: 2rem;
                     position: relative;
                     background: transparent;
                     z-index: 99;
-                    color: $primary;
-                    padding: 0 3px;
+                    color: $secondary;
+                    padding: 3px 8px;
                     font-size: 0.85rem;
                     opacity: 1;
 
                     .step-icon{
-                        border: 2px solid  $primary;
-                        border-radius: 100%;
-                        color:white;
-                        padding:10px;
+                        color:$secondary;
                         position: relative;
-                        margin-right: 5px;
-                        background-color: $primary;
                         &:before{
                             position: absolute;
                             left: 50%;
@@ -1054,13 +1051,20 @@ $media-level-2-spacing: 0.5rem !default;
                         }
                     }
 
+                    .step-label {
+                        font-size: 11px;
+                    }
+
                 }
                 align-items: center;
                 &:before{
                     position: static;
-                    border-top-color: $secondary;
-                    margin: 0;
-                    width: 90px;
+                    margin: 0 15px;
+                    width: 6px;
+                    height: 6px;
+                    border-bottom: 1.5px solid rgba($secondary, 0.5);
+                    border-right: 1.5px solid rgba($secondary, 0.5);
+                    transform: translateX(-50%) rotate(-45deg);
                 }
                 &:first-child{
                     &:before{
@@ -1072,9 +1076,11 @@ $media-level-2-spacing: 0.5rem !default;
                 &.p-highlight{
                     a{
                         color: $primary;
+                        border: 1.25px solid  $primary;
+                        background: rgba($primary, 0.1);
                         .step-icon{
                             border-color:$primary;
-                            color: white
+                            color: $primary;
                         }
                     }
                 }
