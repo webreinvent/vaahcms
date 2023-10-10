@@ -28,11 +28,14 @@ onMounted(async () => {
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
         <div class="container vh-step">
-            <Steps :model="store.install_items" class="my-4">
-                <template #item="{item}">
-                    <router-link :to="item.to">
-                        <a class="flex align-items-center font-medium">
-                            <i :class="item.icon" class="step-icon"></i>{{item.label}}</a>
+            <Steps
+                :model="store.install_items"
+                class="my-4"
+            >
+                <template #item="{item, index}">
+                    <router-link :to="item.to" class="flex align-items-center font-medium">
+                            <i :class="item.icon" class="step-icon"></i>
+                            <span class="step-label">&nbsp;{{ index + 1 }}. {{item.label}}</span>
                     </router-link>
 
                 </template>

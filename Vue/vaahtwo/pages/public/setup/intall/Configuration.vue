@@ -42,14 +42,14 @@ onMounted(async () => {
                           <Dropdown v-model="store.config.env.app_env" :options="store.assets.environments"
                                     @change="store.loadConfigurations()"
                                     optionLabel="name" optionValue="slug"
-                                    placeholder="Select Env" class="p-inputtext-sm"
+                                    placeholder="Select Env" class="is-small"
                                     :inputProps="store.config.data_testid_app_env"/>
 
                       </div>
 
                       <InputText v-if="store.config.env.app_env == 'custom'"
                                  v-model="store.config.env.app_env_custom"
-                                 placeholder="Env File Name" class="p-inputtext-sm"
+                                 placeholder="Env File Name" class="is-small"
                                  id="app-env-custom"
                                  data-testid="configuration-custom_evn"/>
 
@@ -61,7 +61,7 @@ onMounted(async () => {
                                     name="config-db_connection"
                                     :options="store.debug_option" optionLabel="name"
                                     optionValue="slug" placeholder="Select Debug"
-                                    class="p-inputtext-sm"
+                                    class="is-small"
                                     :inputProps="store.config.data_testid_debug"/>
                       </div>
                   </div>
@@ -71,7 +71,7 @@ onMounted(async () => {
                           <Dropdown v-model="store.config.env.app_timezone"
                                     :options="store.assets.timezones"
                                     optionLabel="name" optionValue="slug" :filter="true"
-                                    placeholder="Select Timezone" class="p-inputtext-sm"
+                                    placeholder="Select Timezone" class="is-small"
                                     :inputProps="store.config.data_testid_timezone"/>
                       </div>
                   </div>
@@ -98,7 +98,7 @@ onMounted(async () => {
                                     :options="store.assets.database_types"
                                     name="config-db_connection"
                                     optionLabel="name" optionValue="slug"
-                                    placeholder="Database Type" class="p-inputtext-sm"
+                                    placeholder="Database Type" class="is-small"
                                     :inputProps="store.config.data_testid_db_type"/>
                       </div>
                   </div>
@@ -208,7 +208,7 @@ onMounted(async () => {
                                     @change="store.setMailConfigurations()"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Select Mail Provider"
-                                    class="p-inputtext-sm"
+                                    class="is-small"
                                     :inputProps="store.config.data_testid_mail_provider"/>
                       </div>
                   </div>
@@ -275,7 +275,7 @@ onMounted(async () => {
                           <Dropdown v-model="store.config.env.mail_encryption"
                                     :options="store.assets.mail_encryption_types"
                                     optionLabel="name" optionValue="slug"
-                                    placeholder="Select Mail Encryption" class="p-inputtext-sm"
+                                    placeholder="Select Mail Encryption" class="is-small"
                                     :inputProps="store.config.data_testid_mail_encryption"/>
                       </div>
                   </div>
