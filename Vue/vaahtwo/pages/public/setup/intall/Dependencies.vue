@@ -20,13 +20,20 @@ onMounted(async () => {
         v-if="store.assets"
         class="pt-3"
     >
-        <Message severity="info" :closable="true" class="is-small"
+        <Message severity="info" class="is-small"
                  :pt="{
                       text: {
                                'data-testid': `dependencies-message_text`
                              },
                       closebutton:{
-                          'data-testid': `dependencies-message_close_btn`
+                          'data-testid': `dependencies-message_close_btn`,
+                          style: {
+                              width: '1.65rem',
+                              height: '1.65rem'
+                          }
+                      },
+                      closeicon: {
+                          class: 'w-5'
                       }
                   }">
             This step will install dependencies.
@@ -34,7 +41,13 @@ onMounted(async () => {
         <div class="grid" v-if="store.config.dependencies">
             <div class="col-12 md:col-6"
                  v-for="item in store.config.dependencies">
-                <Card>
+                <Card
+                    :pt="{
+                        content: {
+                            class: 'pt-3 pb-0'
+                        }
+                    }"
+                >
                     <template #title>
                         <div class="flex align-items-center justify-content-between">
                             <h5 class="font-semibold"
@@ -46,7 +59,7 @@ onMounted(async () => {
                                style="font-size: 12px"></i>
                         </div>
                     </template>
-                    <template #content>
+                    <template #content class="pt-4 pb-0">
                         <div class="mb-3">
                             <Tag :value="item.type" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
                             <Tag :value="item.slug" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
@@ -66,7 +79,7 @@ onMounted(async () => {
                                      data-testid="dependencies-module_install_progressbar"/>
                         <ProgressBar v-else :value="0" class="mb-3"
                                      data-testid="dependencies-module_install_progressbar"/>
-                        <div class="field-checkbox">
+                        <div class="field-checkbox mb-0">
                             <Checkbox inputId="binary" v-model="item.import_sample_data"
                                       :binary="true" class="is-small"
                                       :pt="{
@@ -80,7 +93,7 @@ onMounted(async () => {
                 </Card>
             </div>
             <div class="col-12">
-                <ProgressBar :value="store.config.count_installed_progress" class="mt-4 mb-5"
+                <ProgressBar :value="store.config.count_installed_progress" class="mt-2"
                              data-testid="dependencies-install_progressbar"/>
                 <div class="my-3">
                     <Button v-if="store.config.count_installed_progress === 100"

@@ -50,7 +50,14 @@ const confirmDelete = (event) => {
                                'data-testid': `migrate-message_text`
                              },
                       closebutton:{
-                          'data-testid': `migrate-message_close_btn`
+                          'data-testid': `migrate-message_close_btn`,
+                          style: {
+                              width: '1.65rem',
+                              height: '1.65rem'
+                          }
+                      },
+                      closeicon: {
+                          class: 'w-5'
                       }
                   }">
             This step will run database migrations and seeds.</Message>

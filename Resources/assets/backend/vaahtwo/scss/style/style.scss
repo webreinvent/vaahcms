@@ -1141,12 +1141,12 @@ $media-level-2-spacing: 0.5rem !default;
                 padding:10px 15px;
                 .p-message-text{
                     font-size: 13px;
+                    flex-grow: 1;
                 }
                 button{
-                    &.p-message-close{
-                        justify-content: flex-end;
+                    .p-message-close{
                         &:hover{
-                            background:none;
+                            background: rgba($primary, 0.1);
                         }
                     }
                 }
@@ -1154,6 +1154,29 @@ $media-level-2-spacing: 0.5rem !default;
             .p-message-icon{
                 font-size: 1rem;
             }
+        }
+    }
+}
+
+//Message small
+.p-message{
+    &.is-small{
+        .p-message-wrapper{
+            padding:10px 15px;
+            .p-message-text{
+                font-size: 13px;
+                flex-grow: 1;
+            }
+            button{
+                .p-message-close{
+                    &:hover{
+                        background: none;
+                    }
+                }
+            }
+        }
+        .p-message-icon{
+            font-size: 1rem;
         }
     }
 }

@@ -24,7 +24,14 @@ onMounted(async () => {
                                'data-testid': `account-message_text`
                              },
                       closebutton:{
-                          'data-testid': `account-message_close_btn`
+                          'data-testid': `account-message_close_btn`,
+                          style: {
+                              width: '1.65rem',
+                              height: '1.65rem'
+                          }
+                      },
+                      closeicon: {
+                          class: 'w-5'
                       }
                   }">
             Create first account,this account will have super administrator
