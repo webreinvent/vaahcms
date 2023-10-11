@@ -16,7 +16,10 @@ onMounted(async () => {
 
 </script>
 <template>
-    <div v-if="store.assets">
+    <div
+        v-if="store.assets"
+        class="pt-3"
+    >
         <Message severity="info" :closable="true" class="is-small"
                  :pt="{
                       text: {
