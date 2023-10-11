@@ -27,7 +27,7 @@ onMounted(async () => {
                  class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
-        <div class="container vh-step">
+        <div class="container vh-step relative">
             <Steps
                 :model="store.install_items"
                 class="my-4"
@@ -37,19 +37,18 @@ onMounted(async () => {
                             <i :class="item.icon" class="step-icon"></i>
                             <span class="step-label">&nbsp;{{ index + 1 }}. {{item.label}}</span>
                     </router-link>
-
                 </template>
             </Steps>
-            <div v-if="store.assets.env_file" class="w-auto text-center my-4">
-                <Tag class="bg-black-alpha-90 m-auto is-small"
-                     :pt="{
-                      root: {
-                               'data-testid': `setup-use_env`
-                             }
-                  }">
-                ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b>
-                </Tag>
-            </div>
+            <Tag v-if="store.assets.env_file"
+                 class="bg-black-alpha-70 m-auto is-small absolute border-round-2xl"
+                 :pt="{
+                  root: {
+                           'data-testid': `setup-use_env`
+                        }
+              }">
+                <span class="font-medium">ACTIVE ENV FILE: </span>
+                <b class="ml-1">{{ store.assets.env_file }}</b>
+            </Tag>
             <router-view />
 
             <Footer class="mt-3"/>
