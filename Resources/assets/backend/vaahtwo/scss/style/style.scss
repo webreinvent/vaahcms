@@ -1385,14 +1385,10 @@ $media-level-2-spacing: 0.5rem !default;
                     font-size: 13px;
                     flex-grow: 1;
                 }
-
-                button {
-                    .p-message-close {
-                        height: 1.65rem;
-                        width: 1.65rem;
-
-                        .p-message-close-icon {
-                            width: 40%;
+                button{
+                    .p-message-close{
+                        &:hover{
+                            background: rgba($primary, 0.1);
                         }
 
                         &:hover {
@@ -1410,57 +1406,24 @@ $media-level-2-spacing: 0.5rem !default;
 }
 
 //Message small
-.p-message {
-    &.is-small {
-        .p-message-wrapper {
-            padding: 10px 15px;
-
-            .p-message-text {
+.p-message{
+    &.is-small{
+        .p-message-wrapper{
+            padding:10px 15px;
+            .p-message-text{
                 font-size: 13px;
                 flex-grow: 1;
             }
-
-            button {
-                .p-message-close {
-                    height: 1.65rem;
-                    width: 1.65rem;
-
-                    .p-message-close-icon {
-                        width: 40%;
-                    }
-
-                    &:hover {
+            button{
+                .p-message-close{
+                    &:hover{
                         background: none;
                     }
                 }
             }
         }
-
-        .p-message-icon {
+        .p-message-icon{
             font-size: 1rem;
-        }
-    }
-}
-
-//Message hover
-.p-message {
-    .p-message-wrapper {
-        .p-message-text {
-            flex-grow: 1;
-            text-align: left;
-        }
-
-        .p-message-close {
-            height: 1.65rem;
-            width: 1.65rem;
-
-            .p-message-close-icon {
-                width: 40%;
-            }
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.5) !important;
-            }
         }
     }
 }

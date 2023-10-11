@@ -20,7 +20,7 @@ onMounted(async () => {
         v-if="store.assets"
         class="pt-3"
     >
-        <Message severity="info" :closable="true" class="is-small"
+        <Message severity="info" class="is-small"
                  :pt="{
                       root: {
                         class: 'mt-0'
@@ -30,6 +30,13 @@ onMounted(async () => {
                              },
                       closebutton:{
                           'data-testid': `dependencies-message_close_btn`,
+                          style: {
+                              width: '1.65rem',
+                              height: '1.65rem'
+                          }
+                      },
+                      closeicon: {
+                          class: 'w-5'
                       }
                   }">
             This step will install dependencies.
