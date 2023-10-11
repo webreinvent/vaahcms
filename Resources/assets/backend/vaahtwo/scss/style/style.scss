@@ -1340,11 +1340,9 @@ $media-level-2-spacing: 0.5rem !default;
         }
     }
 
-    .p-tag.vh-env-tag {
-        white-space: nowrap;
+    .p-tag{
         font-size: 10px;
-        padding: 2px 12px;
-        border-radius: 12px;
+        padding: 1px 8px;
         left: 50%;
         transform: translate(-50%, -50%);
     }

@@ -27,7 +27,7 @@ onMounted(async () => {
                  class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
-        <div class="container vh-step">
+        <div class="container vh-step relative">
             <Steps
                 :model="store.install_items"
                 class="my-4"
@@ -40,7 +40,7 @@ onMounted(async () => {
                 </template>
             </Steps>
             <Tag v-if="store.assets.env_file"
-                 class="vh-env-tag bg-black-alpha-70 m-auto is-small absolute"
+                 class="bg-black-alpha-70 m-auto is-small absolute border-round-2xl"
                  :pt="{
                   root: {
                            'data-testid': `setup-use_env`

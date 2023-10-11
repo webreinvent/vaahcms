@@ -18,9 +18,9 @@ onMounted(async () => {
 <template>
     <div
         v-if="store.assets"
-        class="pt-4"
+        class="pt-3"
     >
-        <Message severity="info" class="is-small"
+        <Message severity="info" :closable="true" class="is-small"
                  :pt="{
                       root: {
                         class: 'mt-0'
