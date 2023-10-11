@@ -464,6 +464,7 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.config.is_migrated = true;
+                this.getStatus();
             }
 
         },
