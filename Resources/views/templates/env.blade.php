@@ -14,7 +14,7 @@ APP_TIMEZONE={{$data->app_timezone ?? '' }}
 #VAAHCMS_VERSION={{$data->vaahcms_version ?? '' }}
 
 VAAHCMS_VUE_APP={{$data->vaahcms_vue_app ?? '' }}
-#VAAHCMS_ASSETS={{$data->vaahcms_vue_app ?? '' }}
+VAAHCMS_ASSETS={{$data->vaahcms_vue_app ?? '' }}
 
 LOG_CHANNEL=stack
 
