@@ -321,14 +321,29 @@ onMounted(async () => {
 
               <OverlayPanel ref="op" appendTo="body"
                             :showCloseIcon="true" id="overlay_panel"
-                            style="width: 450px" :breakpoints="{'960px': '75vw'}"
+                            style="width: 400px" :breakpoints="{'960px': '75vw'}"
                             :pt="{
+                                root: {
+                                   class: 'shadow-1 mt-2'
+                                },
                                     closebutton: {
-                                            'data-testid': `configuration-test_mail_close`
-                                      }
+                                            'data-testid': `configuration-test_mail_close`,
+                                            style: {
+                                                width: '1.5rem',
+                                                height: '1.5rem',
+                                                top: '-0.5rem',
+                                                right: '-0.5rem'
+                                            }
+                                    },
+                                    closeicon: {
+                                        class: 'w-5'
+                                    },
+                                    content: {
+                                        class: 'p-2'
+                                    }
                                   }">
                   <div class="col-12">
-                      <h5 class="text-left p-1 title is-6">Mail Username</h5>
+                      <h5 class="text-left p-1 pt-0 title is-6">Mail Username</h5>
                       <div class="p-inputgroup flex-1">
                           <InputText type="email" v-model="store.config.env.test_email_to"
                                      placeholder="Your email" class=""
