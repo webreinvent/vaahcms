@@ -54,9 +54,11 @@ a {
         .p-toast-icon-close {
             height: 1.65rem;
             width: 1.65rem;
+
             .p-toast-icon-close-icon {
                 width: 40%;
             }
+
             &:hover {
                 background: rgba(255, 255, 255, 0.5);
             }
@@ -97,52 +99,6 @@ a {
 .p-panel {
     &.is-small {
         .p-panel-header, .p-panel-content {
-            padding: .4rem .75rem;
-        }
-        .p-panel-header {
-            .p-badge {
-                background: rgba($primaryColor, 0.1);
-                color: $primaryColor;
-                font-size: .6rem;
-                font-weight: 600;
-                height: 1.2rem;
-                line-height: 1.2rem;
-                min-width: 1.2rem;
-            }
-        }
-    }
-}
-
-/*Accordion*/
-.p-accordion{
-    &.is-small{
-        .p-accordion-header {
-            .p-accordion-header-link {
-                border-radius: 2px;
-                .p-accordion-toggle-icon {
-                    margin-right: 0.3rem;
-                }
-            }
-        }
-
-        .p-accordion-tab:not(:first-child) {
-            .p-accordion-header {
-                .p-accordion-header-link {
-                    border: 1px solid $shade300;
-                    border-radius: 2px;
-                }
-            }
-            .p-accordion-header:not(.p-highlight):not(.p-disabled),
-            .p-accordion-header:not(.p-disabled).p-highlight {
-                &:hover {
-                    .p-accordion-header-link {
-                        border: 1px solid $shade300;
-                        border-radius: 2px;
-                    }
-                }
-            }
-        }
-        .p-accordion-header-action {
             padding: .4rem .75rem;
         }
         .p-accordion-content {
@@ -191,6 +147,8 @@ a {
             @include scaledPadding($inputPadding, $scaleSM);
         }
 
+        }
+
         line-height: initial;
     }
 
@@ -227,7 +185,7 @@ a {
     }
 
     &.tab-panel-has-no-padding {
-        .p-tabview-panels{
+        .p-tabview-panels {
             padding: .75rem 0;
         }
     }
@@ -238,7 +196,6 @@ a {
     tr {
         th {
             font-size: .7rem;
-            white-space: nowrap;
 
             span {
                 svg {
@@ -841,8 +798,9 @@ $media-level-2-spacing: 0.5rem !default;
         padding: 0.35rem 0.5rem;
     }
 }
-.p-inputgroup{
-    .p-inputtext{
+
+.p-inputgroup {
+    .p-inputtext {
         //border-right-color: transparent;
     }
 
@@ -1237,8 +1195,8 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
-.vh-step{
-    .p-progressbar .p-progressbar-label{
+.vh-step {
+    .p-progressbar .p-progressbar-label {
         display: none;
     }
 
@@ -1256,21 +1214,25 @@ $media-level-2-spacing: 0.5rem !default;
                 }
 
                 flex: none;
-                a{
+
+                a {
                     border: 1.3px solid rgba($secondary, 0.5);
-                    border-radius: 2rem;
+                    border-radius: 1rem;
                     position: relative;
                     background: transparent;
                     z-index: 99;
                     color: $secondary;
-                    padding: 3px 8px;
+                    padding: 3px 14px;
                     font-size: 0.85rem;
                     opacity: 1;
 
-                    .step-icon{
-                        color:$secondary;
+                    .step-icon {
+                        color: $secondary;
                         position: relative;
-                        &:before{
+                        width: max-content;
+                        padding: 0 10px 0 6px;
+
+                        &:before {
                             position: absolute;
                             left: 50%;
                             top: 51%;
@@ -1306,10 +1268,11 @@ $media-level-2-spacing: 0.5rem !default;
                 &.p-highlight {
                     a {
                         color: $primary;
-                        border: 1.25px solid  $primary;
+                        border: 1.25px solid $primary;
                         background: rgba($primary, 0.1);
-                        .step-icon{
-                            border-color:$primary;
+
+                        .step-icon {
+                            border-color: $primary;
                             color: $primary;
                         }
                     }
@@ -1338,10 +1301,11 @@ $media-level-2-spacing: 0.5rem !default;
         }
     }
 
-        .p-tag.vh-env-tag{
+    .p-tag.vh-env-tag {
         white-space: nowrap;
         font-size: 10px;
-        padding: 1px 8px;
+        padding: 2px 12px;
+        border-radius: 12px;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -1383,14 +1347,17 @@ $media-level-2-spacing: 0.5rem !default;
                     font-size: 13px;
                     flex-grow: 1;
                 }
-                button{
-                    .p-message-close{
+
+                button {
+                    .p-message-close {
                         height: 1.65rem;
                         width: 1.65rem;
+
                         .p-message-close-icon {
                             width: 40%;
                         }
-                        &:hover{
+
+                        &:hover {
                             background: rgba($highlightBg, 0.5);
                         }
 
@@ -1409,28 +1376,33 @@ $media-level-2-spacing: 0.5rem !default;
 }
 
 //Message small
-.p-message{
-    &.is-small{
-        .p-message-wrapper{
-            padding:10px 15px;
-            .p-message-text{
+.p-message {
+    &.is-small {
+        .p-message-wrapper {
+            padding: 10px 15px;
+
+            .p-message-text {
                 font-size: 13px;
                 flex-grow: 1;
             }
-            button{
-                .p-message-close{
+
+            button {
+                .p-message-close {
                     height: 1.65rem;
                     width: 1.65rem;
+
                     .p-message-close-icon {
                         width: 40%;
                     }
-                    &:hover{
+
+                    &:hover {
                         background: none;
                     }
                 }
             }
         }
-        .p-message-icon{
+
+        .p-message-icon {
             font-size: 1rem;
         }
     }
@@ -1438,14 +1410,23 @@ $media-level-2-spacing: 0.5rem !default;
 
 //Message hover
 .p-message {
-    .p-message-close {
-        height: 1.65rem;
-        width: 1.65rem;
-        .p-message-close-icon {
-            width: 40%;
+    .p-message-wrapper {
+        .p-message-text {
+            flex-grow: 1;
+            text-align: left;
         }
-        &:hover {
-            background: rgba(255, 255, 255, 0.5)!important;
+
+        .p-message-close {
+            height: 1.65rem;
+            width: 1.65rem;
+
+            .p-message-close-icon {
+                width: 40%;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.5) !important;
+            }
         }
     }
 }
