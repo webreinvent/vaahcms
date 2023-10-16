@@ -18,10 +18,13 @@ onMounted(async () => {
 <template>
     <div
         v-if="store.assets"
-        class="pt-3"
+        class="pt-4"
     >
         <Message severity="info" class="is-small"
                  :pt="{
+                      root: {
+                        class: 'mt-0'
+                      },
                       text: {
                                'data-testid': `dependencies-message_text`
                              },

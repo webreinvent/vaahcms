@@ -40,7 +40,7 @@ onMounted(async () => {
                 </template>
             </Steps>
             <Tag v-if="store.assets.env_file"
-                 class="vh-env-tag bg-black-alpha-70 m-auto is-small absolute border-round-2xl"
+                 class="vh-env-tag bg-black-alpha-70 m-auto is-small absolute"
                  :pt="{
                   root: {
                            'data-testid': `setup-use_env`
