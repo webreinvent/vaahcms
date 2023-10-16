@@ -29,6 +29,19 @@ a{
 }
 .p-toast{
     z-index: 1000 !important;
+
+    .p-toast-message {
+        .p-toast-icon-close {
+            height: 1.65rem;
+            width: 1.65rem;
+            .p-toast-icon-close-icon {
+                width: 40%;
+            }
+            &:hover {
+                background: rgba(255, 255, 255, 0.5);
+            }
+        }
+    }
 }
 
 .has-shadowless{
@@ -1145,8 +1158,13 @@ $media-level-2-spacing: 0.5rem !default;
                 }
                 button{
                     .p-message-close{
+                        height: 1.65rem;
+                        width: 1.65rem;
+                        .p-message-close-icon {
+                            width: 40%;
+                        }
                         &:hover{
-                            background: rgba($primary, 0.1);
+                            background: rgba($highlightBg, 0.5);
                         }
                     }
                 }
@@ -1169,6 +1187,11 @@ $media-level-2-spacing: 0.5rem !default;
             }
             button{
                 .p-message-close{
+                    height: 1.65rem;
+                    width: 1.65rem;
+                    .p-message-close-icon {
+                        width: 40%;
+                    }
                     &:hover{
                         background: none;
                     }
@@ -1177,6 +1200,20 @@ $media-level-2-spacing: 0.5rem !default;
         }
         .p-message-icon{
             font-size: 1rem;
+        }
+    }
+}
+
+//Message hover
+.p-message {
+    .p-message-close {
+        height: 1.65rem;
+        width: 1.65rem;
+        .p-message-close-icon {
+            width: 40%;
+        }
+        &:hover {
+            background: rgba(255, 255, 255, 0.5)!important;
         }
     }
 }
