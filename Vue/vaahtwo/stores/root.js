@@ -88,6 +88,13 @@ export const useRootStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        toSignIn(){
+
+            this.$router.push({ name: 'sign.in' });
+
+        },
+
+        //---------------------------------------------------------------------
         async reloadAssets()
         {
             this.assets_is_fetching = true;
