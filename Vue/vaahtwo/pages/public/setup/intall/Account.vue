@@ -27,7 +27,7 @@ onMounted(async () => {
                           'data-testid': `account-message_close_btn`,
                       }
                   }">
-            Create first account,this account will have super administrator
+            Create first account, this account will have super administrator
             role and will have all the permissions.
         </Message>
         <div class="grid p-fluid">
