@@ -365,7 +365,8 @@ onMounted(async () => {
 
               <div class="grid p-fluid">
                   <div class="col-12">
-                      <div class="flex justify-content-end">
+                      <div class="flex justify-content-end gap-2">
+                          <p class="text-xs">Test Database connection for next step</p>
                           <Button label="Save & Next" :loading="store.is_btn_loading_config"
                                   :disabled="!store.config.env.db_is_valid"
                                   class="p-button-sm w-auto" @click="store.validateConfigurations"
