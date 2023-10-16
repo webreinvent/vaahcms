@@ -177,9 +177,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         if(VaahSetup::isInstalled() && !config('settings'))
         {
-            $global_settings = Setting::where('category', 'global')
-                ->get()
-                ->pluck('value', 'key' )->toArray();
+            $global_settings = Setting::getGlobalConfigSettings();
 
             config([
                 'settings.global' => $global_settings

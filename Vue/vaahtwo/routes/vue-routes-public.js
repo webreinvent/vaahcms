@@ -4,6 +4,7 @@ let routes= [];
 let routes_list= [];
 
 import LayoutPublic from '../layouts/Public.vue'
+import NotFound from '../pages/public/404.vue'
 import Signin from '../pages/public/Signin.vue'
 import Signup from '../pages/public/Signup.vue'
 import SetupIndex from '../pages/public/setup/Index.vue'
@@ -24,6 +25,11 @@ routes_list = [
         component: LayoutPublic,
         props: true,
         children: [
+            {
+                path: '/:pathMatch(.*)',
+                name: 'not-found',
+                component: NotFound
+            },
             {
                 path: '/',
                 name: 'sign.in',

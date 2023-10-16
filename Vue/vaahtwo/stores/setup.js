@@ -434,14 +434,12 @@ export const useSetupStore = defineStore({
         //---------------------------------------------------------------------
         afterValidateConfigurations: function (data, res) {
 
-            if(!data)
-            {
-                this.is_btn_loading_config = false
-            } else
+            if(data)
             {
                 this.config.active_step = 1;
                 this.$router.push({name: 'setup.install.migrate'})
             }
+            this.is_btn_loading_config = false
 
         },
 
@@ -466,13 +464,14 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.config.is_migrated = true;
+                this.getStatus();
             }
 
         },
 
         //---------------------------------------------------------------------
         validateMigration: function () {
-            if(!this.config.is_migrated)
+            if(this.status && !this.status.is_db_migrated)
             {
                 vaah().toastErrors(['Click on Migrate & Run Seeds button']);
                 return false;

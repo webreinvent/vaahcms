@@ -27,7 +27,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Default Site Language sdfds</h5>
+                    <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
 
                     <Dropdown v-model="store.list.language"
                               :options="store.languages"
@@ -203,14 +203,17 @@ const store = useGeneralStore();
                         />
                     </div>
 
-                    <Calendar inputId="yearpicker"
-                              v-model="store.list.copyright_year_custom" view="year"
-                              dateFormat="yy"
-                              data-testid="general-copyright_yearcalender"
-                              v-if="store.list.copyright_year === 'custom'"
-                              class="w-full p-inputtext-sm mt-2"
-                              placeholder="Choose Copyright Year"
-                    />
+                    <InputNumber v-model="store.list.copyright_year_custom"
+                                 name="config-db_port"
+                                 placeholder="Copyright Year"
+                                 class="w-full p-inputtext-sm mt-2"
+                                 inputId="withoutgrouping" :useGrouping="false"
+                                 :pt="{
+                                           input: {
+                                                'data-testid': `general-copyright_year`
+                                           }
+                                       }"/>
+
                 </div>
 
                 <div class="col-12">
