@@ -52,15 +52,15 @@ a {
 
     .p-toast-message {
         .p-toast-icon-close {
-            height: 1.65rem;
-            width: 1.65rem;
+            height: 1.65rem !important;
+            width: 1.65rem !important;
 
             .p-toast-icon-close-icon {
-                width: 40%;
+                width: 40% !important;
             }
 
             &:hover {
-                background: rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.6) !important;
             }
         }
     }
