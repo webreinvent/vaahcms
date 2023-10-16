@@ -30,13 +30,6 @@ onMounted(async () => {
                              },
                       closebutton:{
                           'data-testid': `dependencies-message_close_btn`,
-                          style: {
-                              width: '1.65rem',
-                              height: '1.65rem'
-                          }
-                      },
-                      closeicon: {
-                          class: 'w-5'
                       }
                   }">
             This step will install dependencies.
