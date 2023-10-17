@@ -40,7 +40,9 @@ onMounted(async () => {
                         data-testid="account-first_name"
                         placeholder="Enter first name"
                         class="p-inputtext-sm"
+                        required
                     />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -62,7 +64,10 @@ onMounted(async () => {
                         name="account-last_name"
                         data-testid="account-last_name"
                         placeholder="Enter last name"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -74,7 +79,10 @@ onMounted(async () => {
                         data-testid="account-email"
                         @blur="store.generateUsername()"
                         placeholder="Enter email"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
         </div>
@@ -87,7 +95,10 @@ onMounted(async () => {
                         name="account-username"
                         data-testid="account-username"
                         placeholder="Enter Username"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -101,27 +112,35 @@ onMounted(async () => {
                         toggleMask input-class="w-full p-inputtext-sm"
                         placeholder="Enter password"
                         :pt="{
+                            root: {
+                              required: ''
+                            },
                               showicon: {
                                       'data-testid': `account-password_eye`
                                   }
                            }"/>
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
                 <h5 class="text-left p-1 title is-6">Search Country</h5>
-                <AutoComplete
-                    v-model="store.config.account.country_calling_code_object"
-                    :suggestions="store.filtered_country_codes"
-                    :completeOnFocus="store.autocomplete_on_focus"
-                    @complete="store.searchCountryCode"
-                    @blur="store.setFocusDropDownToTrue"
-                    @item-select="store.onSelectCountryCode"
-                    placeholder="Enter Your Country"
-                    optionLabel="name"
-                    name="account-country_calling_code"
-                    data-testid="account-country_calling_code"
-                    input-class="p-inputtext-sm"
-                />
+                <div class="p-inputgroup">
+                    <AutoComplete
+                        v-model="store.config.account.country_calling_code_object"
+                        :suggestions="store.filtered_country_codes"
+                        :completeOnFocus="store.autocomplete_on_focus"
+                        @complete="store.searchCountryCode"
+                        @blur="store.setFocusDropDownToTrue"
+                        @item-select="store.onSelectCountryCode"
+                        placeholder="Enter Your Country"
+                        optionLabel="name"
+                        name="account-country_calling_code"
+                        data-testid="account-country_calling_code"
+                        input-class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
+                </div>
             </div>
             <div class="col-12 md:col-3">
                 <h5 class="text-left p-1 title is-6">Phone</h5>
@@ -131,7 +150,10 @@ onMounted(async () => {
                         name="account-phone"
                         data-testid="account-phone"
                         placeholder="Enter phone"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
         </div>
