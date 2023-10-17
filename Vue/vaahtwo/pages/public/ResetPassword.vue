@@ -31,39 +31,61 @@ onMounted(async () => {
                             <Logo class="mt-3" />
                             <h4 class="text-xl font-semibold mb-1">Reset password?</h4>
                             <p class="text-xs text-gray-600 font-normal">
-                                ou can recover your password from here.</p>
+                                You can recover your password from here.</p>
 
                         </div>
                     </template>
 
                     <template #content>
                         <div class="flex flex-column align-items-center gap-3 ">
-                            <InputText
-                                v-model="auth.reset_password_items.reset_password_code"
-                                placeholder="Enter Code to reset the password"
-                                name="reset_password-reset_password_code"
-                                data-testid="reset_password-reset_password_code"
-                                id="code"
-                                class="w-full"
-                                type="text"/>
-                            <Password
-                                v-model="auth.reset_password_items.password"
-                                placeholder="New Password"
+                            <div class="p-inputgroup">
+                                <InputText
+                                    v-model="auth.reset_password_items.reset_password_code"
+                                    placeholder="Enter Code to reset the password"
+                                    name="reset_password-reset_password_code"
+                                    data-testid="reset_password-reset_password_code"
+                                    id="code"
+                                    class="w-full"
+                                    type="text" required
+                                />
+                                <div class="required-field hidden"></div>
+                            </div>
+                            <div class="p-inputgroup">
+                                <Password
+                                    v-model="auth.reset_password_items.password"
+                                    placeholder="New Password"
 
-                                name="reset_password-password"
-                                :inputProps="{autocomplete:'new-password'}"
-                                data-testid="reset_password-password"
-                                class="w-full"
-                                inputClass="w-full"
-                                toggleMask id="new-password"></Password>
-                            <Password
-                                v-model="auth.reset_password_items.password_confirmation"
-                                placeholder="Confirm Password"
-                                name="reset_password-password_confirmation"
-                                data-testid="reset_password-password_confirmation"
-                                class="w-full"
-                                inputClass="w-full"
-                                toggleMask id="confirm-password"></Password>
+                                    name="reset_password-password"
+                                    :inputProps="{autocomplete:'new-password'}"
+                                    data-testid="reset_password-password"
+                                    class="w-full"
+                                    inputClass="w-full"
+                                    toggleMask id="new-password"
+                                    :pt="{
+                                        root: {
+                                            required: ''
+                                        }
+                                    }"
+                                ></Password>
+                                <div class="required-field hidden"></div>
+                            </div>
+                            <div class="p-inputgroup">
+                                <Password
+                                    v-model="auth.reset_password_items.password_confirmation"
+                                    placeholder="Confirm Password"
+                                    name="reset_password-password_confirmation"
+                                    data-testid="reset_password-password_confirmation"
+                                    class="w-full"
+                                    inputClass="w-full"
+                                    toggleMask id="confirm-password"
+                                    :pt="{
+                                        root: {
+                                            required: ''
+                                        }
+                                    }"
+                                ></Password>
+                                <div class="required-field hidden"></div>
+                            </div>
                             <div class="w-full flex justify-content-between align-items-center">
                                 <Button
                                     label="Recover"

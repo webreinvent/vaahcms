@@ -252,7 +252,20 @@ a {
     position: relative;
     display: flex;
     overflow: hidden;
-    .p-inputtext:required ~ .required-field {
+    .p-inputtext:required {
+        padding-right: 25px;
+    }
+    .p-inputwrapper[required] {
+        .p-dropdown-trigger,
+        .p-icon {
+            margin-right: 10px;
+        }
+        .p-autocomplete-input {
+            padding-right: 25px;
+        }
+    }
+    .p-inputtext:required ~ .required-field,
+    .p-inputwrapper[required] ~ .required-field {
         display: block !important;
     }
 
@@ -264,46 +277,8 @@ a {
         &:before {
             content: "";
             position: absolute;
-            top: 0px;
-            right: 0px;
-            border-left: 0px solid transparent;
-            border-right: 25px solid $shade200;
-            border-bottom: 25px solid transparent;
-        }
-        &:after {
-            content: '*';
-            font-size: 1rem;
-            font-weight: 700;
-            color: $danger;
-            position: absolute;
-            top: 0;
-            right: 2px;
-        }
-    }
-}
-
-.p-inputgroup {
-    position: relative;
-    display: flex;
-    overflow: hidden;
-    .p-inputwrapper[required] {
-        .p-dropdown-trigger,
-        .p-icon {
-            margin-right: 10px;
-        }
-    }
-    .p-inputwrapper[required] ~ .required-field {
-        display: block !important;
-    }
-
-    .required-field {
-        position: absolute;
-        right: 0;
-        &:before {
-            content: "";
-            position: absolute;
             top: 0.5px;
-            right: 1px;
+            right: 0.5px;
             border-left: 0px solid transparent;
             border-right: 25px solid $shade200;
             border-bottom: 25px solid transparent;
