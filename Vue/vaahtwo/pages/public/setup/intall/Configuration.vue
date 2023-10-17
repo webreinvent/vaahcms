@@ -45,8 +45,10 @@ onMounted(async () => {
                                     @change="store.loadConfigurations()"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Select Env" class="is-small"
-                                    :inputProps="store.config.data_testid_app_env"/>
-
+                                    :inputProps="store.config.data_testid_app_env"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
 
                       <InputText v-if="store.config.env.app_env == 'custom'"
@@ -66,7 +68,10 @@ onMounted(async () => {
                                     :options="store.debug_option" optionLabel="name"
                                     optionValue="slug" placeholder="Select Debug"
                                     class="is-small"
-                                    :inputProps="store.config.data_testid_debug"/>
+                                    :inputProps="store.config.data_testid_debug"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
                   <div class="col-12 md:col-4">
@@ -76,7 +81,10 @@ onMounted(async () => {
                                     :options="store.assets.timezones"
                                     optionLabel="name" optionValue="slug" :filter="true"
                                     placeholder="Select Timezone" class="is-small"
-                                    :inputProps="store.config.data_testid_timezone"/>
+                                    :inputProps="store.config.data_testid_timezone"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
@@ -105,7 +113,10 @@ onMounted(async () => {
                                     name="config-db_connection"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Database Type" class="is-small"
-                                    :inputProps="store.config.data_testid_db_type"/>
+                                    :inputProps="store.config.data_testid_db_type"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
