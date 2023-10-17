@@ -295,7 +295,80 @@ a {
             border-bottom-right-radius: 0;
         }
     }
+}
 
+/*Required Input*/
+.p-input,
+.p-inputgroup {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    .p-inputtext:required ~ .required-field {
+        display: block !important;
+    }
+
+    .required-field {
+        position: absolute;
+        right: 0.5px;
+        top: 0.5px;
+        z-index: 2;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            border-left: 0px solid transparent;
+            border-right: 25px solid $shade200;
+            border-bottom: 25px solid transparent;
+        }
+        &:after {
+            content: '*';
+            font-size: 1rem;
+            font-weight: 700;
+            color: $danger;
+            position: absolute;
+            top: 0;
+            right: 2px;
+        }
+    }
+}
+
+.p-inputgroup {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    .p-inputwrapper[required] {
+        .p-dropdown-trigger,
+        .p-icon {
+            margin-right: 10px;
+        }
+    }
+    .p-inputwrapper[required] ~ .required-field {
+        display: block !important;
+    }
+
+    .required-field {
+        position: absolute;
+        right: 0;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0.5px;
+            right: 1px;
+            border-left: 0px solid transparent;
+            border-right: 25px solid $shade200;
+            border-bottom: 25px solid transparent;
+        }
+        &:after {
+            content: '*';
+            font-size: 1rem;
+            font-weight: 700;
+            color: $danger;
+            position: absolute;
+            top: 0;
+            right: 2px;
+        }
+    }
 }
 
 .p-fluid {

@@ -28,8 +28,10 @@ onMounted(async () => {
                           <InputText v-model="store.config.env.app_url" disabled
                                      placeholder="App URL" class="p-inputtext-sm"
                                      id="app-url"
-                                     data-testid="configuration-app_url"/>
-
+                                     data-testid="configuration-app_url"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
@@ -43,16 +45,20 @@ onMounted(async () => {
                                     @change="store.loadConfigurations()"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Select Env" class="is-small"
-                                    :inputProps="store.config.data_testid_app_env"/>
-
+                                    :inputProps="store.config.data_testid_app_env"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
 
                       <InputText v-if="store.config.env.app_env == 'custom'"
                                  v-model="store.config.env.app_env_custom"
                                  placeholder="Env File Name" class="is-small"
                                  id="app-env-custom"
-                                 data-testid="configuration-custom_evn"/>
-
+                                 data-testid="configuration-custom_evn"
+                                 required
+                      />
+                      <div class="required-field hidden"></div>
                   </div>
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6 label-required">Debug</h5>
@@ -62,7 +68,10 @@ onMounted(async () => {
                                     :options="store.debug_option" optionLabel="name"
                                     optionValue="slug" placeholder="Select Debug"
                                     class="is-small"
-                                    :inputProps="store.config.data_testid_debug"/>
+                                    :inputProps="store.config.data_testid_debug"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
                   <div class="col-12 md:col-4">
@@ -72,7 +81,10 @@ onMounted(async () => {
                                     :options="store.assets.timezones"
                                     optionLabel="name" optionValue="slug" :filter="true"
                                     placeholder="Select Timezone" class="is-small"
-                                    :inputProps="store.config.data_testid_timezone"/>
+                                    :inputProps="store.config.data_testid_timezone"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
@@ -84,8 +96,10 @@ onMounted(async () => {
                                      placeholder="App/Website Name"
                                      name="config-app_name"
                                      class="p-inputtext-sm" id="app-name"
-                                     data-testid="configuration-app_name"/>
-
+                                     data-testid="configuration-app_name"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
@@ -99,7 +113,10 @@ onMounted(async () => {
                                     name="config-db_connection"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Database Type" class="is-small"
-                                    :inputProps="store.config.data_testid_db_type"/>
+                                    :inputProps="store.config.data_testid_db_type"
+                                    required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
@@ -110,23 +127,24 @@ onMounted(async () => {
                                      name="config-db_host"
                                      placeholder="Database Host"
                                      class="p-inputtext-sm"
-                                     data-testid="configuration-db_host"/>
+                                     data-testid="configuration-db_host"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6 label-required">Database Port</h5>
                       <div class="p-inputgroup">
-                          <InputNumber v-model="store.config.env.db_port"
-                                       name="config-db_port"
-                                       placeholder="Database Port"
-                                       class="p-inputtext-sm"
-                                       inputId="withoutgrouping" :useGrouping="false"
-                                       :pt="{
-                                           input: {
-                                                'data-testid': `configuration-db_port`
-                                           }
-                                       }"/>
+                          <InputText v-model="store.config.env.db_port"
+                                     name="config-db_port"
+                                     placeholder="Database Port"
+                                     class="p-inputtext-sm"
+                                     data-testid="configuration-db_port"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
@@ -139,7 +157,10 @@ onMounted(async () => {
                                      placeholder="Database Name"
                                      name="config-db_database"
                                      class="p-inputtext-sm"
-                                     data-testid="configuration-db_name"/>
+                                     data-testid="configuration-db_name"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
@@ -150,7 +171,10 @@ onMounted(async () => {
                                      placeholder="Database Username"
                                      name="config-db_username"
                                      class="p-inputtext-sm"
-                                     data-testid="configuration-db_username"/>
+                                     data-testid="configuration-db_username"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
@@ -167,7 +191,8 @@ onMounted(async () => {
                                         showicon: {
                                             'data-testid': `configuration-db_password_eye`
                                         }
-                                    }"/>
+                                    }"
+                          />
                       </div>
                   </div>
               </div>
@@ -285,7 +310,10 @@ onMounted(async () => {
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.mail_from_name"
                                      placeholder="From Name" class="p-inputtext-sm"
-                                     data-testid="configuration-mail_from_name"/>
+                                     data-testid="configuration-mail_from_name"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
 
@@ -295,7 +323,10 @@ onMounted(async () => {
                           <InputText v-model="store.config.env.mail_from_address"
                                      type="email"
                                      placeholder="From Email" class="p-inputtext-sm"
-                                     data-testid="configuration-mail_from_address"/>
+                                     data-testid="configuration-mail_from_address"
+                                     required
+                          />
+                          <div class="required-field hidden"></div>
                       </div>
                   </div>
               </div>
