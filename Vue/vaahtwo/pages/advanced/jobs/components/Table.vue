@@ -99,7 +99,7 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider/>
+        <Divider class="my-1" />
 
         <!--paginator-->
         <Paginator v-model:first="store.first_element"

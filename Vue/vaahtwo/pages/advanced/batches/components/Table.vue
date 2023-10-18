@@ -18,6 +18,11 @@ const useVaah = vaah();
                     data-testid="batches-table-checkbox"
                    stripedRows
                    responsiveLayout="scroll"
+                    :pt="{
+                       column: {
+                           headercell: 'white-space-nowrap'
+                       }
+                    }"
          >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -124,7 +129,7 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
+        <Divider class="my-1" />
 
         <Dialog header="Options"
                 v-model:visible="store.display_detail"

@@ -49,8 +49,17 @@ onMounted(async () => {
 <template>
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
-            <Panel>
-                <template class="p-1" #header>
+            <Panel
+                :pt="{
+                    header: {
+                        class: 'py-2'
+                    },
+                    content: {
+                        class: 'py-1'
+                    }
+                }"
+            >
+                <template #header>
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Jobs</b>
@@ -77,9 +86,7 @@ onMounted(async () => {
                     Completed jobs gets deleted automatically .
                 </Message>
 
-                <Actions />
-
-                <br/>
+                <Actions class="mb-3" />
 
                 <Table/>
             </Panel>
