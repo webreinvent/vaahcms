@@ -11,6 +11,23 @@ body {
     font-size: $fontSize;
 }
 
+//text-colors
+.text-danger {
+    color: $danger !important;
+}
+.text-warning {
+    color: $warning !important;
+}
+.text-info {
+    color: $info !important;
+}
+.text-success {
+    color: $success !important;
+}
+.text-help {
+    color: $help !important;
+}
+
 //Resets
 p, h1, h2, h3, h4, h5, h6, a, div {
     margin: 0;
@@ -76,6 +93,11 @@ a {
             }
         }
     }
+}
+
+.timestamp,
+.vh-ago{
+    font-size: 0.65rem !important;
 }
 
 /*Panel*/
@@ -159,7 +181,6 @@ a {
         .p-dropdown-label {
             @include scaledFontSize($inputTextFontSize, $scaleSM);
             @include scaledPadding($inputPadding, $scaleSM);
-
         }
 
         line-height: initial;

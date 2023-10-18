@@ -106,6 +106,68 @@ const toggleItemMenu = (event) => {
                         }
                     }"
                 >
+                    <TabPanel class="vh-logs" header="test logs">
+                        <DataTable
+                            :value="store.item.logs"
+                            tableStyle="max-width: 30rem"
+                            :row-hover="true"
+                            :pt="{
+                                column: {
+                                    headerCell: {
+                                        class: 'p-2'
+                                    },
+                                    bodyCell: {
+                                        class: 'p-2'
+                                    }
+                                }
+                            }"
+                        >
+                            <Column field="type" header="Type">
+                                <template #body="slotProps">
+                                    <div
+                                        class="flex align-items-center gap-2"
+                                        :class="{
+                                            'text-success': slotProps.data.type.toLowerCase() === 'success',
+                                            'text-info': slotProps.data.type.toLowerCase() === 'info' || slotProps.data.type.toLowerCase() === 'debug',
+                                            'text-warning': slotProps.data.type.toLowerCase() === 'warning',
+                                            'text-danger': slotProps.data.type.toLowerCase() === 'error'
+                                        }"
+                                    >
+                                        <i :class="{
+                                            'fa-solid fa-circle-info': slotProps.data.type.toLowerCase() === 'info' || slotProps.data.type.toLowerCase() === 'debug',
+                                            'fa-solid fa-circle-exclamation': slotProps.data.type.toLowerCase() === 'error',
+                                            'fa-solid fa-circle-check': slotProps.data.type.toLowerCase() === 'success',
+                                            'fa-solid fa-triangle-exclamation': slotProps.data.type.toLowerCase() === 'warning',
+                                        }"></i>
+                                        <span>
+                                        {{ slotProps.data.type.charAt(0).toUpperCase() + slotProps.data.type.substring(1).toLowerCase() }}
+                                    </span>
+                                    </div>
+                                </template>
+                            </Column>
+                            <Column field="timestamp" header="Time">
+                                <template #body="slotProps">
+                                    <span class="timestamp white-space-nowrap font-medium">{{ slotProps.data.timestamp }}</span>
+                                </template>
+                            </Column>
+                            <Column field="env" header="Env">
+                                <template #body="slotProps">
+                                    <span class="white-space-nowrap">{{ slotProps.data.env }}</span>
+                                </template>
+                            </Column>
+                            <Column field="message" header="Message">
+                                <template #body="slotProps">
+                                    <p class="w-18rem max-w-18rem overflow-hidden white-space-nowrap text-overflow-ellipsis">{{ slotProps.data.message }}</p>
+                                </template>
+                            </Column>
+                            <Column field="ago" header="">
+                                <template #body="slotProps">
+                                    <span class="vh-ago white-space-nowrap">{{ slotProps.data.ago }}</span>
+                                </template>
+                            </Column>
+                        </DataTable>
+                    </TabPanel>
+
                     <TabPanel header="Logs">
                         <table v-if="store.item.logs" class="p-datatable">
                             <tr v-for="log in store.item.logs">
