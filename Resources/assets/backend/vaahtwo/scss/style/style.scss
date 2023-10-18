@@ -95,6 +95,11 @@ a {
     }
 }
 
+.timestamp,
+.vh-ago{
+    font-size: 0.65rem !important;
+}
+
 /*Panel*/
 .p-panel {
     &.is-small {
@@ -158,8 +163,6 @@ a {
         .p-dropdown-label {
             @include scaledFontSize($inputTextFontSize, $scaleSM);
             @include scaledPadding($inputPadding, $scaleSM);
-        }
-
         }
 
         line-height: initial;
