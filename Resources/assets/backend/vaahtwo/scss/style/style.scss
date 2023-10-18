@@ -89,6 +89,19 @@ a {
     }
 }
 
+/*Multiselect*/
+.p-multiselect {
+    .p-multiselect-label-container {
+        .p-multiselect-label {
+            padding: 0.25rem 0.75rem;
+            transition: none;
+        }
+    }
+    &.p-inputtext-sm {
+        font-size: 0.65625rem;
+    }
+}
+
 /*Dropdown*/
 .p-dropdown {
     &.is-small, .p-inputtext-sm {
