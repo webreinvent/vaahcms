@@ -95,6 +95,8 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
+        <Divider class="my-1" />
+
         <!--paginator-->
         <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"

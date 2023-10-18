@@ -52,7 +52,16 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small" >
+            <Panel
+                :pt="{
+                    header: {
+                        class: 'py-2'
+                    },
+                    content: {
+                        class: 'py-1'
+                    }
+                }"
+            >
 
                 <template class="p-1" #header>
 
@@ -77,7 +86,7 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions />
+                <Actions class="py-2 mb-1" />
 
                 <Table />
             </Panel>

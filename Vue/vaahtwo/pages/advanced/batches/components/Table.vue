@@ -16,8 +16,13 @@ const useVaah = vaah();
                     class="p-datatable-sm p-datatable-hoverable-rows"
                     v-model:selection="store.action.items"
                     data-testid="batches-table-checkbox"
-                    stripedRows
-                    responsiveLayout="scroll"
+                   stripedRows
+                   responsiveLayout="scroll"
+                    :pt="{
+                       column: {
+                           headercell: 'white-space-nowrap'
+                       }
+                    }"
          >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -123,6 +128,8 @@ const useVaah = vaah();
              </Column>
         </DataTable>
         <!--/table-->
+
+        <Divider class="my-1" />
 
         <Dialog header="Options"
                 v-model:visible="store.display_detail"
