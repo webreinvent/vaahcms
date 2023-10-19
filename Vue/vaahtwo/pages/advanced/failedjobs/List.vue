@@ -52,20 +52,11 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel
-                :pt="{
-                    header: {
-                        class: 'py-2'
-                    },
-                    content: {
-                        class: 'py-1'
-                    }
-                }"
-            >
+            <Panel class="is-small" >
 
                 <template class="p-1" #header>
 
-                    <div class="flex flex-row">
+                    <div class="flex flex-row align-items-center">
                         <div >
                             <b class="mr-1">Failed Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
