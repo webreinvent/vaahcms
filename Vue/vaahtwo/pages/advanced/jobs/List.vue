@@ -50,8 +50,8 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
             <Panel class="is-small">
-                <template #header>
-                    <div class="flex flex-row align-items-center">
+                <template class="p-1" #header>
+                    <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
@@ -77,8 +77,7 @@ onMounted(async () => {
                     Completed jobs gets deleted automatically .
                 </Message>
 
-                <Actions class="mb-3" />
-
+                <Actions />
                 <Table/>
             </Panel>
         </div>

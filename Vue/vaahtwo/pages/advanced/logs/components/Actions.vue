@@ -60,21 +60,6 @@ const toggleBulkMenuState = (event) => {
                          @change="store.getList()"
             />
         </div>
-
-        <MultiSelect v-model="store.query.filter.file_type"
-                     :options="store.logs_file_types"
-                     optionLabel="name" placeholder="Filter By Extension"
-                     display="chip"
-                     class="w-full my-2 p-inputtext-sm"
-                     optionValue="value"
-                     data-testid="logs-action_filter"
-                     @change="store.getList()"
-                     :pt="{
-                         panel: {
-                                 class: 'mt-1'
-                         }
-                     }"
-        />
         <!--/actions-->
     </div>
 </template>
