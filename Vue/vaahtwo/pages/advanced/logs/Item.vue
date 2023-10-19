@@ -55,7 +55,6 @@ const toggleItemMenu = (event) => {
 
                     <div class="p-panel-title">
                         Log
-
                         <span v-if="store.item.name">
                            :  {{store.item.name}}
                         </span>
@@ -94,19 +93,8 @@ const toggleItemMenu = (event) => {
             </template>
 
             <div class="card overflow-hidden">
-                <TabView
-                    :pt="{
-                        panelContainer: {
-                            class: 'p-0 pt-2'
-                        },
-                        tabpanel: {
-                            headerAction: {
-                                class: 'py-2'
-                            }
-                        }
-                    }"
-                >
-                    <TabPanel class="vh-logs" header="test logs">
+                <TabView class="is-small tab-panel-has-no-padding">
+                    <TabPanel header="test logs">
                         <DataTable
                             :value="store.item.logs"
                             tableStyle="max-width: 30rem"
