@@ -56,7 +56,7 @@ onMounted(async () => {
 
                 <template class="p-1" #header>
 
-                    <div class="flex flex-row align-items-center">
+                    <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Failed Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
@@ -77,7 +77,7 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions class="py-2 mb-1" />
+                <Actions />
 
                 <Table />
             </Panel>

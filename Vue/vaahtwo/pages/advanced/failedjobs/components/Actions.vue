@@ -30,7 +30,7 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div :class="{'flex align-items-center justify-content-between': store.isViewLarge()}">
+        <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
             <div v-if="store.view === 'large'">
@@ -73,8 +73,9 @@ const toggleBulkMenuState = (event) => {
 
             <!--right-->
             <div>
-                <div class="flex align-items-center p-fluid">
-                    <div class="p-inputgroup">
+                <div class="grid p-fluid">
+                    <div class="col-12">
+                        <div class="p-inputgroup">
                             <InputText v-model="store.query.filter.q"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
@@ -105,6 +106,7 @@ const toggleBulkMenuState = (event) => {
                                     label="Reset"
                                     @click="store.resetQuery()"
                             />
+                        </div>
                     </div>
                     <Filters />
                 </div>
