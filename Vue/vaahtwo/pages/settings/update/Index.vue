@@ -43,7 +43,7 @@ onMounted(async () => {
         </template>
         <Message
             severity="primary" :closable="false" class="text-center pt-1">
-            <p class="text-center"><i class="pi pi-bell" style="font-size: 1.2rem"></i></p>
+            <p class="text-right"><i class="pi pi-bell" style="font-size: 1.1rem"></i></p>
             <div class="text-center" v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">

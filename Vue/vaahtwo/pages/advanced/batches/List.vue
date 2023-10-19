@@ -51,16 +51,7 @@ onMounted(async () => {
 <template>
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
-            <Panel
-                :pt="{
-                    header: {
-                        class: 'py-2'
-                    },
-                    content: {
-                        class: 'py-1'
-                    }
-                }"
-            >
+            <Panel class="is-small" >
                 <template class="p-1" #header>
                     <div class="flex flex-row align-items-center w-full">
                         <div class="w-full">
@@ -81,7 +72,7 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions class="py-2 mb-1" />
+                <Actions />
 
                 <Table/>
 
