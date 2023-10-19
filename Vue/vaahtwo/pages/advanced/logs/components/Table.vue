@@ -16,7 +16,7 @@ const route = useRoute();
         <!--table-->
         <DataTable :value="store.list"
                    dataKey="id"
-                   class="p-datatable-sm"
+                   class="p-datatable-sm p-datatable-hoverable-rows"
                    v-model:selection="store.action.items"
                    stripedRows
                    responsiveLayout="scroll">
@@ -59,8 +59,6 @@ const route = useRoute();
 
         </DataTable>
         <!--/table-->
-
-        <Divider class="my-1" />
 
         <!--paginator-->
         <Paginator v-model:first="store.first_element"

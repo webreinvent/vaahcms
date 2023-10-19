@@ -124,6 +124,21 @@ a {
     }
 }
 
+/*Multiselect panel*/
+.p-multiselect-panel {
+    margin-top: 2px;
+    .p-multiselect-header {
+        padding: 0.25rem 0.5rem;
+    }
+    .p-multiselect-items-wrapper {
+        .p-multiselect-items {
+            li {
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+}
+
 /*Dropdown*/
 .p-dropdown {
     &.is-small, .p-inputtext-sm {
@@ -168,7 +183,7 @@ a {
     }
 
     &.tab-panel-has-no-padding {
-        .p-tabview-panels {
+        .p-tabview-panels{
             padding: .75rem 0;
         }
     }

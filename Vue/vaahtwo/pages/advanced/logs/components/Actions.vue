@@ -31,38 +31,35 @@ const toggleBulkMenuState = (event) => {
 <template>
     <div>
         <!--actions-->
-        <div class="p-inputgroup">
-            <InputText class="p-inputtext-sm"
-                       inputClass="w-full"
-                       v-model="store.query.filter.q"
-                       @keyup.enter="store.delayedSearch()"
-                       @keyup.enter.native="store.delayedSearch()"
-                       @keyup.13="store.delayedSearch()"
-                       placeholder="Search"
-                       data-testid="logs-action_search_input"
-            />
+        <div class="mt-2 mb-2">
+            <div class="p-inputgroup">
+                <InputText class="p-inputtext-sm"
+                           inputClass="w-full"
+                           v-model="store.query.filter.q"
+                           @keyup.enter="store.delayedSearch()"
+                           @keyup.enter.native="store.delayedSearch()"
+                           @keyup.13="store.delayedSearch()"
+                           placeholder="Search"
+                           data-testid="logs-action_search_input"
+                />
 
-            <Button label="Reset"
-                    class="p-button-sm"
-                    data-testid="logs-action_search"
-                    @click="store.resetSearch"
+                <Button label="Reset"
+                        class="p-button-sm"
+                        data-testid="logs-action_search"
+                        @click="store.resetSearch"
+                />
+            </div>
+
+            <MultiSelect v-model="store.query.filter.file_type"
+                         :options="store.logs_file_types"
+                         optionLabel="name" placeholder="Filter By Extension"
+                         display="chip"
+                         class="w-full my-2 p-inputtext-sm"
+                         optionValue="value"
+                         data-testid="logs-action_filter"
+                         @change="store.getList()"
             />
         </div>
-
-        <MultiSelect v-model="store.query.filter.file_type"
-                     :options="store.logs_file_types"
-                     optionLabel="name" placeholder="Filter By Extension"
-                     display="chip"
-                     class="w-full my-2 p-inputtext-sm"
-                     optionValue="value"
-                     data-testid="logs-action_filter"
-                     @change="store.getList()"
-                     :pt="{
-                         panel: {
-                                 class: 'mt-1'
-                         }
-                     }"
-        />
         <!--/actions-->
     </div>
 </template>
