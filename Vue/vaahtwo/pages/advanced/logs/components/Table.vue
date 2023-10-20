@@ -65,7 +65,9 @@ const route = useRoute();
                    :rows="store.query.rows"
                    :totalRecords="store.list_total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page" />
+                   :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
+        />
         <!--/paginator-->
 
     </div>
