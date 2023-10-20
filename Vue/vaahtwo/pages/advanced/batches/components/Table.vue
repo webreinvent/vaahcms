@@ -156,7 +156,9 @@ const useVaah = vaah();
                    data-testid="batch-table-paginator"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
+        >
         </Paginator>
         <!--/paginator-->
     </div>
