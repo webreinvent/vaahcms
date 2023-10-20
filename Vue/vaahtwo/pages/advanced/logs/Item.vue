@@ -94,103 +94,57 @@ const toggleItemMenu = (event) => {
 
             <div class="card overflow-hidden">
                 <TabView class="is-small tab-panel-has-no-padding">
-                    <TabPanel header="test logs">
+                    <TabPanel header="Logs">
                         <DataTable
                             :value="store.item.logs"
-                            tableStyle="max-width: 30rem"
-                            :row-hover="true"
-                            :pt="{
-                                column: {
-                                    headerCell: {
-                                        class: 'p-2'
-                                    },
-                                    bodyCell: {
-                                        class: 'p-2'
-                                    }
-                                }
-                            }"
+                            class="p-datatable-sm p-datatable-hoverable-rows"
+                            stripedRows
+                            responsiveLayout="scroll"
                         >
                             <Column field="type" header="Type">
-                                <template #body="slotProps">
+                                <template #body="prop">
                                     <div
                                         class="flex align-items-center gap-2"
                                         :class="{
-                                            'text-success': slotProps.data.type.toLowerCase() === 'success',
-                                            'text-info': slotProps.data.type.toLowerCase() === 'info' || slotProps.data.type.toLowerCase() === 'debug',
-                                            'text-warning': slotProps.data.type.toLowerCase() === 'warning',
-                                            'text-danger': slotProps.data.type.toLowerCase() === 'error'
+                                            'text-success': prop.data.type.toLowerCase() === 'success',
+                                            'text-info': prop.data.type.toLowerCase() === 'info' || prop.data.type.toLowerCase() === 'debug',
+                                            'text-warning': prop.data.type.toLowerCase() === 'warning',
+                                            'text-danger': prop.data.type.toLowerCase() === 'error'
                                         }"
                                     >
                                         <i :class="{
-                                            'fa-solid fa-circle-info': slotProps.data.type.toLowerCase() === 'info' || slotProps.data.type.toLowerCase() === 'debug',
-                                            'fa-solid fa-circle-exclamation': slotProps.data.type.toLowerCase() === 'error',
-                                            'fa-solid fa-circle-check': slotProps.data.type.toLowerCase() === 'success',
-                                            'fa-solid fa-triangle-exclamation': slotProps.data.type.toLowerCase() === 'warning',
+                                            'fa-solid fa-circle-info': prop.data.type.toLowerCase() === 'info' || prop.data.type.toLowerCase() === 'debug',
+                                            'fa-solid fa-circle-exclamation': prop.data.type.toLowerCase() === 'error',
+                                            'fa-solid fa-circle-check': prop.data.type.toLowerCase() === 'success',
+                                            'fa-solid fa-triangle-exclamation': prop.data.type.toLowerCase() === 'warning',
                                         }"></i>
                                         <span>
-                                        {{ slotProps.data.type.charAt(0).toUpperCase() + slotProps.data.type.substring(1).toLowerCase() }}
+                                        {{ prop.data.type.charAt(0).toUpperCase() + prop.data.type.substring(1).toLowerCase() }}
                                     </span>
                                     </div>
                                 </template>
                             </Column>
                             <Column field="timestamp" header="Time">
-                                <template #body="slotProps">
-                                    <span class="timestamp white-space-nowrap font-medium">{{ slotProps.data.timestamp }}</span>
+                                <template #body="prop">
+                                    <span class="timestamp white-space-nowrap font-medium">{{ prop.data.timestamp }}</span>
                                 </template>
                             </Column>
                             <Column field="env" header="Env">
-                                <template #body="slotProps">
-                                    <span class="white-space-nowrap">{{ slotProps.data.env }}</span>
+                                <template #body="prop">
+                                    <span class="white-space-nowrap">{{ prop.data.env }}</span>
                                 </template>
                             </Column>
                             <Column field="message" header="Message">
-                                <template #body="slotProps">
-                                    <p class="w-18rem max-w-18rem overflow-hidden white-space-nowrap text-overflow-ellipsis">{{ slotProps.data.message }}</p>
+                                <template #body="prop">
+                                    <p class="w-20rem max-w-20rem overflow-hidden white-space-nowrap text-overflow-ellipsis">{{ prop.data.message }}</p>
                                 </template>
                             </Column>
                             <Column field="ago" header="">
-                                <template #body="slotProps">
-                                    <span class="vh-ago white-space-nowrap">{{ slotProps.data.ago }}</span>
+                                <template #body="prop">
+                                    <span class="white-space-nowrap">{{ prop.data.ago }}</span>
                                 </template>
                             </Column>
                         </DataTable>
-                    </TabPanel>
-
-                    <TabPanel header="Logs">
-                        <table v-if="store.item.logs" class="p-datatable">
-                            <tr v-for="log in store.item.logs">
-                                <td>
-                                    <div class="level is-marginless">
-                                        <div class="level-left">
-                                            <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs">TYPE</Tag>
-                                                <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
-                                            </div>
-
-                                            <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround">TIME</Tag>
-                                                <Tag class="mr-2 mb-2 border-noround" severity="danger"
-                                                     :value="log.timestamp+'/'+log.ago"></Tag>
-                                            </div>
-
-                                            <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround"
-                                                     value="ENV"
-                                                />
-
-                                                <Tag class="mr-2 mb-2 border-noround"
-                                                     :value="log.env"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <small>
-                                        {{log.message}}
-                                    </small>
-                                </td>
-                            </tr>
-                        </table>
                     </TabPanel>
 
                     <TabPanel header="Raw">
