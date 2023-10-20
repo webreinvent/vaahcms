@@ -124,7 +124,7 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <span class="p-buttonset">
+                    <span class="p-inputgroup">
                         <Button data-testid="media-list-create"
                                 @click="store.toForm()"
                                 icon="pi pi-plus"
