@@ -781,6 +781,10 @@ $media-level-2-spacing: 0.5rem !default;
         border-color: $bdrPrimaryCustomColor;
         color: $primaryCustomColor;
     }
+
+    &.p-button-icon-only {
+        padding: 0.35rem 0.5rem;
+    }
 }
 
 .p-inputgroup {
