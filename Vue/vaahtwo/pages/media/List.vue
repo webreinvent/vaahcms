@@ -143,9 +143,6 @@ onMounted(async () => {
                 </template>
 
                 <Actions/>
-
-                <br/>
-
                 <Table/>
             </Panel>
         </div>
