@@ -37,12 +37,12 @@ const toggleBulkMenuState = (event) => {
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
-                        icon="pi pi-angle-down"
                         @click="toggleSelectedMenuState"
                         data-testid="failedjobs-actions-menu"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                 >
+                    <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
                     />
