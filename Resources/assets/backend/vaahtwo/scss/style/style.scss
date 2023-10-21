@@ -232,6 +232,12 @@ a {
 
     .p-datatable-tbody {
         > tr {
+            border: 1px solid $shade200;
+
+            > td,
+            > th {
+                border: none;
+            }
             &:focus {
                 outline: none;
                 outline-offset: 0;

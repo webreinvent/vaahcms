@@ -184,6 +184,7 @@ onMounted(async () => {
 
                 <div class="p-inputgroup">
                         <Textarea v-model="item.content"
+                                  rows="1"
                                   :data-testid="'localization-'+item.slug"
                                   :auto-resize="true"
                         />
@@ -232,7 +233,6 @@ onMounted(async () => {
             </div>
 
             <div class="col-12">
-                <Divider class="mb-3 mt-0"/>
                 <div class="p-inputgroup justify-content-end">
                     <Button label="Generate Language Files"
                             data-testid="localization-generate_languafe_file"
