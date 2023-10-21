@@ -38,6 +38,7 @@ const toggleBulkMenuState = (event) => {
                 <!--selected_menu-->
                 <Button v-if="store.hasPermission('can-manage-media') || store.hasPermission('can-update-media')"
                         class="p-button-sm"
+                        icon="pi pi-angle-down"
                         data-testid="media-actions-menu"
                         type="button"
                         aria-haspopup="true"
