@@ -64,6 +64,7 @@ const route = useRoute();
         <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
                    :totalRecords="store.list_total"
+                   template="PrevPageLink PageLinks NextPageLink RowsPerPageDropdown"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page"
                    class="bg-white-alpha-0 pt-2"
