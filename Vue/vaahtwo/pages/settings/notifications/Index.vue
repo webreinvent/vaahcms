@@ -66,7 +66,7 @@ onMounted(async () => {
                 </div>
             </div>
 
-            <div class="col-12 mt-3" v-if="store.show_new_item_form">
+            <div class="col-12" v-if="store.show_new_item_form">
                 <Message severity="error" :closable="false">
                     These are notifications needs to be send manually.
                 </Message>
@@ -259,7 +259,7 @@ onMounted(async () => {
                             </span>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 pt-0">
                             <TabView ref="tabview1" class="is-small tab-panel-has-no-padding">
                                 <TabPanel v-if="store.active_notification.via_mail" header="Mail" >
                                     <div v-if="store.active_notification.contents" v-for="line in store.active_notification.contents.mail">
@@ -586,7 +586,7 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
                             </TabView>
-                            <Divider class="mb-3 mt-1"/>
+                            <Divider class="mb-3 mt-0" />
                             <div class="flex justify-content-end">
                                 <Button label="Save" icon="pi pi-save"
                                         data-testid="setting-notification_store"
