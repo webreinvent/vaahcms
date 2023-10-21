@@ -325,9 +325,10 @@ class ThemeBase extends Model {
     public static function getActiveThemesWithTemplates()
     {
         return static::where('is_active', 1)
-            ->with(['templates'])
+            ->with(['templates.groups.fields.type'])
             ->orderBy('is_default', 'desc')
             ->get();
+
     }
     //-------------------------------------------------
     public static function getDefaultThemesAndTemplateWithRelations($content_slug)
