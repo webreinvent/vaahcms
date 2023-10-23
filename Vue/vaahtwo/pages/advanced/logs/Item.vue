@@ -95,56 +95,40 @@ const toggleItemMenu = (event) => {
             <div class="card overflow-hidden">
                 <TabView class="is-small tab-panel-has-no-padding">
                     <TabPanel header="Logs">
-                        <DataTable
-                            :value="store.item.logs"
-                            class="p-datatable-sm p-datatable-hoverable-rows"
-                            stripedRows
-                            responsiveLayout="scroll"
-                        >
-                            <Column field="type" header="Type">
-                                <template #body="prop">
-                                    <div
-                                        class="flex align-items-center gap-2"
-                                        :class="{
-                                            'text-success': prop.data.type.toLowerCase() === 'success',
-                                            'text-info': prop.data.type.toLowerCase() === 'info' || prop.data.type.toLowerCase() === 'debug',
-                                            'text-warning': prop.data.type.toLowerCase() === 'warning',
-                                            'text-danger': prop.data.type.toLowerCase() === 'error'
-                                        }"
-                                    >
-                                        <i :class="{
-                                            'fa-solid fa-circle-info': prop.data.type.toLowerCase() === 'info' || prop.data.type.toLowerCase() === 'debug',
-                                            'fa-solid fa-circle-exclamation': prop.data.type.toLowerCase() === 'error',
-                                            'fa-solid fa-circle-check': prop.data.type.toLowerCase() === 'success',
-                                            'fa-solid fa-triangle-exclamation': prop.data.type.toLowerCase() === 'warning',
-                                        }"></i>
-                                        <span>
-                                        {{ prop.data.type.charAt(0).toUpperCase() + prop.data.type.substring(1).toLowerCase() }}
-                                    </span>
+                        <table v-if="store.item.logs" class="p-datatable">
+                            <tr v-for="log in store.item.logs">
+                                <td>
+                                    <div class="level is-marginless">
+                                        <div class="level-left">
+                                            <div class="level-item">
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs line-height-3">TYPE</Tag>
+                                                <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
+                                            </div>
+
+                                            <div class="level-item">
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround line-height-3">TIME</Tag>
+                                                <Tag class="mr-2 mb-2 border-noround" severity="danger"
+                                                     :value="log.timestamp+'/'+log.ago"></Tag>
+                                            </div>
+
+                                            <div class="level-item">
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround"
+                                                     value="ENV"
+                                                />
+
+                                                <Tag class="mr-2 mb-2 border-noround"
+                                                     :value="log.env"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </template>
-                            </Column>
-                            <Column field="timestamp" header="Time">
-                                <template #body="prop">
-                                    <span class="timestamp white-space-nowrap font-medium">{{ prop.data.timestamp }}</span>
-                                </template>
-                            </Column>
-                            <Column field="env" header="Env">
-                                <template #body="prop">
-                                    <span class="white-space-nowrap">{{ prop.data.env }}</span>
-                                </template>
-                            </Column>
-                            <Column field="message" header="Message">
-                                <template #body="prop">
-                                    <p class="w-20rem max-w-20rem overflow-hidden white-space-nowrap text-overflow-ellipsis">{{ prop.data.message }}</p>
-                                </template>
-                            </Column>
-                            <Column field="ago" header="">
-                                <template #body="prop">
-                                    <span class="white-space-nowrap">{{ prop.data.ago }}</span>
-                                </template>
-                            </Column>
-                        </DataTable>
+
+                                    <small>
+                                        {{log.message}}
+                                    </small>
+                                </td>
+                            </tr>
+                        </table>
                     </TabPanel>
 
                     <TabPanel header="Raw">
