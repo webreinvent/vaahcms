@@ -265,11 +265,9 @@ a {
 
     .p-datatable-tbody {
         > tr {
-            border: 1px solid $shade200;
-
             > td,
             > th {
-                border: none;
+                border-bottom: 1px solid $shade200;
             }
             &:focus {
                 outline: none;
