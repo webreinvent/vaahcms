@@ -3,11 +3,11 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Entities\Block;
-use VaahCms\Modules\Cms\Entities\FormField;
-use VaahCms\Modules\Cms\Entities\FormGroup;
-use VaahCms\Modules\Cms\Entities\Menu;
-use VaahCms\Modules\Cms\Entities\MenuItem;
+use VaahCms\Modules\Cms\Models\Block;
+use VaahCms\Modules\Cms\Models\FormField;
+use VaahCms\Modules\Cms\Models\FormGroup;
+use VaahCms\Modules\Cms\Models\Menu;
+use VaahCms\Modules\Cms\Models\MenuItem;
 
 
 class ThemeLocation extends Model {
