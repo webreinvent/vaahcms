@@ -60,8 +60,59 @@ a{
         .p-panel-header, .p-panel-content{
             padding: .4rem .75rem;
         }
+        .p-panel-header {
+            .p-badge {
+                background: rgba($primaryColor, 0.1);
+                color: $primaryColor;
+                font-size: .6rem;
+                font-weight: 600;
+                height: 1.2rem;
+                line-height: 1.2rem;
+                min-width: 1.2rem;
+            }
+        }
+    }
+}
 
+/*Accordion*/
+.p-accordion{
+    &.is-small{
+        .p-accordion-header {
+            .p-accordion-header-link {
+                border-radius: 2px;
+                .p-accordion-toggle-icon {
+                    margin-right: 0.3rem;
+                }
+            }
+        }
 
+        .p-accordion-tab:not(:first-child) {
+            .p-accordion-header {
+                .p-accordion-header-link {
+                    border: 1px solid $shade300;
+                    border-radius: 2px;
+                }
+            }
+            .p-accordion-header:not(.p-highlight):not(.p-disabled),
+            .p-accordion-header:not(.p-disabled).p-highlight {
+                &:hover {
+                    .p-accordion-header-link {
+                        border: 1px solid $shade300;
+                        border-radius: 2px;
+                    }
+                }
+            }
+        }
+        .p-accordion-header-action {
+            padding: .4rem .75rem;
+        }
+        .p-accordion-content {
+            padding: .75rem;
+        }
+        .p-icon {
+            height: 0.7rem;
+            width: 0.7rem;
+        }
     }
 }
 
@@ -904,6 +955,14 @@ $media-level-2-spacing: 0.5rem !default;
 
 //card
 .p-card{
+    &.is-small {
+        .p-card-header, .p-card-body{
+            padding: .4rem .75rem;
+        }
+        .p-card-content {
+            padding: 0;
+        }
+    }
     border-radius: 0.25rem;
     box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
     .p-card-header{
