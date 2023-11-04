@@ -84,7 +84,7 @@ class VaahSetup{
                         "excerpt"=> "CMS is a framework for creating, managing, and deploying customized content types and fields.",
                         "author_name"=> "Vaah",
                         "author_website"=> "https://vaah.dev",
-                        "version"=> "v0.1.6",
+                        "version"=> "v2.0.1",
                         "is_sample_data_available"=> true,
                         "import_sample_data"=> false,
                     ],
