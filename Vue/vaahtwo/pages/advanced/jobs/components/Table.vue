@@ -53,11 +53,7 @@ const useVaah = vaah();
                     style="width:150px;"
             >
                 <template #body="prop">
-                    <Badge v-if="prop.data.reserved_at"
-                           value="Trashed"
-                           severity="danger"
-                    />
-                        {{prop.data.reserved_at}}
+                    {{prop.data.reserved_at}}
                 </template>
             </Column>
 
