@@ -27,6 +27,7 @@ class JsonController extends Controller
         $manager = app('impersonate');
 
         $data['is_impersonating'] =  $manager->isImpersonating();
+        $data['is_logo_compressed_with_sidebar'] =  (bool)config('settings.global.is_logo_compressed');
 
         $data['timezone'] = config('app.timezone');
 
