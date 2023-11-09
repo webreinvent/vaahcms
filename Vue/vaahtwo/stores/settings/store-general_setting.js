@@ -64,6 +64,7 @@ export const useGeneralStore = defineStore({
         languages: null,
         visibitlity_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
         maintenanceModeOptions: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        compressedLogoOptions: [{name:'True',value:"1"}, {name:'False',value:"0"}],
         redirect_after_logout_options: [
             {name:'Backend',value:'backend'},
             {name:'Frontend',value:'frontend'},
