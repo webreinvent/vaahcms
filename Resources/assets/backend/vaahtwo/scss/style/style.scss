@@ -1492,3 +1492,51 @@ textarea.p-inputtextarea {
         }
     }
 }
+
+//JsonEditorVue
+.jse-main {
+    &.svelte-sxaskb {
+        .jse-menu {
+            &.svelte-497ud4 {
+                border-top-left-radius: $borderRadius;
+                border-top-right-radius: $borderRadius;
+
+                .jse-separator {
+                    &.svelte-497ud4 {
+                        margin: 0 1px;
+                    }
+                }
+
+                .jse-button {
+                    &.svelte-497ud4:not(.jse-group-button) {
+                        width: $buttonIconOnlyWidth;
+                        height: $buttonIconOnlyWidth;
+
+                        svg {
+                            width: 12px;
+                            height: 12px;
+                        }
+                    }
+                }
+            }
+        }
+        .jse-tree-mode {
+            .jse-contents {
+                border-bottom-left-radius: $borderRadius;
+                border-bottom-right-radius: $borderRadius;
+            }
+        }
+        .jse-text-mode {
+            .jse-status-bar {
+                border-bottom-left-radius: $borderRadius;
+                border-bottom-right-radius: $borderRadius;
+            }
+        }
+        .jse-table-mode {
+            .jse-table-mode-welcome {
+                border-bottom-left-radius: $borderRadius;
+                border-bottom-right-radius: $borderRadius;
+            }
+        }
+    }
+}
