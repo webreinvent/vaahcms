@@ -946,11 +946,38 @@ $media-level-2-spacing: 0.5rem !default;
 .p-chips{
     &.is-small{
         ul{
+            gap: 0.3rem;
+            max-height: 96px;
+            overflow: auto;
+
             .p-chips-token,.pi{
-                font-size:13px;
+                @include scaledFontSize($inputTextFontSize, $scaleSM);
+                padding: 0.35rem 0.65rem;
+                margin-right: 0;
+                gap: 0.3rem;
+
+                .p-chips-token-label {
+                    line-height: normal;
+                }
+
+                svg {
+                    &.p-chips-token-icon {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .p-chips-input-token {
+                padding: 0;
+
+                input {
+                    @include scaledFontSize($inputTextFontSize, $scaleSM);
+                }
             }
         }
     }
+
+
 }
 
 //card
@@ -1280,4 +1307,188 @@ $media-level-2-spacing: 0.5rem !default;
 .label-required:after {
     content: " *";
     color: red;
+}
+
+// Datepicker
+.p-datepicker {
+    padding: 0;
+    &.p-component {
+        width: max-content !important;
+        min-width: max-content !important;
+
+        .p-datepicker-group-container {
+            .p-datepicker-group {
+                padding: $calendarPadding;
+
+                .p-datepicker-header {
+                    padding: 0 0 $calendarHeaderPadding/2 0;
+                    button {
+                        height: 1.5rem;
+                        width: 1.5rem;
+                        svg {
+                            height: .7rem;
+                            width: .7rem;
+                        }
+                    }
+
+                    .p-datepicker-title {
+                        line-height: normal;
+                        button {
+                            width: min-content;
+                            padding: 0;
+                        }
+                    }
+                }
+
+                .p-datepicker-calendar-container {
+                    padding: 0;
+
+                    table {
+                        margin: 0;
+                        font-size: .7rem;
+
+                        thead, tbody {
+                            tr {
+                                th, td {
+                                    padding: 0.25rem;
+                                }
+                                th {
+                                    font-weight: 500;
+                                }
+                                td {
+                                    span {
+                                        height: 1.5rem;
+                                        width: 1.5rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .p-timepicker {
+            div {
+                padding: 0 0.25rem;
+
+                button {
+                    svg {
+                        height: 0.75rem;
+                        width: 0.75rem;
+                    }
+                }
+
+                span {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}
+
+// Editor
+.p-editor-container {
+    .p-editor-toolbar {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        &.ql-snow {
+            &.ql-toolbar {
+                button {
+                    height: 20px;
+                    width: 20px;
+                    color: $editorToolbarIconColor;
+
+                    &.ql-active {
+                        color: $editorIconActiveColor;
+                    }
+
+                    &:hover {
+                        color: $editorToolbarIconHoverColor;
+                    }
+                }
+            }
+
+            .ql-picker {
+                font-size: 12px;
+                height: 20px;
+                &.ql-font,
+                &.ql-header {
+                    width: 90px;
+                }
+
+                &.ql-expanded {
+                    .ql-picker-options {
+                        padding: 0.25rem 0;
+                    }
+                    &.ql-color-picker {
+                        .ql-picker-options {
+                            padding: 7px;
+                        }
+                    }
+                }
+
+                &.ql-expanded:not(.ql-icon-picker) {
+                    .ql-picker-item {
+                        padding: 0.35rem 0.75rem;
+                        &[data-label="Heading"]:before {
+                            font-size: 1.3rem;
+                        }
+                        &[data-label="Subheading"]:before {
+                            font-size: 1.2rem;
+                        }
+                    }
+                }
+            }
+
+            .ql-color-picker,
+            .ql-icon-picker {
+                width: 22px;
+            }
+
+            .ql-color-picker {
+                .ql-picker-options {
+                    .ql-picker-item {
+                        height: 19px;
+                        width: 19px;
+                        border-radius: 50%;
+                        padding: 0.5rem !important;
+                    }
+                }
+            }
+        }
+
+        &.ql-toolbar {
+            &.ql-snow {
+                padding: 0.25rem;
+                border: 1px solid $editorToolbarBorder;
+
+                .ql-formats {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+    .p-editor-content {
+        .ql-editor {
+            padding: 0.4rem 0.75rem;
+        }
+    }
+}
+
+//Max Characters while focus on Input field
+input.p-inputtext,
+textarea.p-inputtextarea {
+    &:focus {
+        + div {
+            > span:last-child {
+                visibility: visible !important;
+            }
+        }
+    }
 }
