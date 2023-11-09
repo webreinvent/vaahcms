@@ -22,7 +22,7 @@ const toggleDropDownMenu= (event) => {
              :model="rootStore.top_menu_items"
              class="top-nav-fixed py-2 align-items-center">
         <template #start>
-            <div :class="{'w-225':rootStore.assets.is_logo_compressed_with_sidebar}" class="navbar-logo">
+            <div :class="{'w-225':!rootStore.assets.is_logo_compressed_with_sidebar}" class="navbar-logo">
                 <img :src="rootStore.assets.backend_logo_url" alt="VaahCMS">
             </div>
 
