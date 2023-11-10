@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use WebReinvent\VaahCms\Http\Middleware\SetLocale;
 use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
@@ -68,6 +69,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         //global middleware
         $router->pushMiddlewareToGroup('web', IsHttps::class);
+        $router->pushMiddlewareToGroup('web', SetLocale::class);
 
 
         //register middleware
