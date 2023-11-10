@@ -1603,10 +1603,27 @@ $media-level-2-spacing: 0.5rem !default;
             display: none;
         }
     }
+    .p-fileupload-buttonbar, .p-fileupload-content {
+        @include scaledPadding($inputPadding, $scaleSM);
 
-    .p-fileupload-content {
-        padding: 1rem;
-        border: 2px dashed #bfbfbf;
+        .p-button{
+            color: $primaryCustomColor;
+            background-color: $bgPrimaryCustomColor;
+            border-color: $bdrPrimaryCustomColor;
+
+            .p-button-icon {
+                font-size: 0.65rem;
+            }
+
+            .p-button-label {
+                font-size: 0.65rem;
+                line-height: normal;
+            }
+        }
+    }
+
+    .p-fileupload-content{
+        border:2px dashed #bfbfbf;
         border-radius: 4px;
     }
 }
