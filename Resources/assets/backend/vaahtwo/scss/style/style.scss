@@ -1280,8 +1280,10 @@ $media-level-2-spacing: 0.5rem !default;
 
 .p-fileupload{
     width: 100%;
-    .p-fileupload-buttonbar{
-        display:none;
+    &.has-fileupload-buttonbar-hidden {
+        .p-fileupload-buttonbar {
+            display: none;
+        }
     }
     .p-fileupload-content{
         padding:1rem;
