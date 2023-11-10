@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
     <title><?php
+
+            $title = config('vaahcms.app_name');
+
+            if(config('settings.global.site_title')){
+                $title = config('settings.global.site_title');
+            }
+
+            $version = config('vaahcms.version');
+
+            if(env('VAAHCMS_VERSION')){
+                $version = env('VAAHCMS_VERSION');
+            }
+
            if(isset($data->title)) { echo $data->title; }
-           elseif(env('VAAHCMS_VERSION')) {
-               echo config('vaahcms.app_name')." v".env('VAAHCMS_VERSION');
-           }else{
-               echo config('vaahcms.app_name')." v".config('vaahcms.version');
+           else{
+               echo $title." v".$version;
            }
            ?></title>
     @include("vaahcms::backend.vaahtwo.components.head")
