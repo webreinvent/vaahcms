@@ -16,7 +16,7 @@ function vh_get_assets_base_url()
 //-----------------------------------------------------------------------------------
 function vh_get_backend_assets_url()
 {
-    return url('/'.env('BUILD_PATH','vaahcms').'/backend/');
+    return url('/'.env('BUILD_DIRECTORY_NAME','vaahcms').'/backend/');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_theme_url($theme=null)
