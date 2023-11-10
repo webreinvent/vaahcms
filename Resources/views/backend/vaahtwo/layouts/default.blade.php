@@ -9,7 +9,7 @@
             }
 
             $version = config('vaahcms.version');
-    
+
             if(env('VAAHCMS_VERSION')){
                 $version = env('VAAHCMS_VERSION');
             }
@@ -19,7 +19,7 @@
                 echo $title." v".$version;
             }
            ?></title>
-    @include("vaahcms::backend.vaahtwo.components.head")
+    @include("vaahcms::backend.vaahtwo.components.head",['title' => $title])
 
     {!! vh_config_css() !!}
 
