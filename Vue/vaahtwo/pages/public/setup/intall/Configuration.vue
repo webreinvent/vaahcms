@@ -20,7 +20,7 @@ onMounted(async () => {
   <div v-if="store.assets" class="container">
       <div class="p-card">
           <div class="p-card-content p-4 border-round-xl">
-              <h5 class="text-left p-1 title is-6 label-required">App URL</h5>
+              <h5 class="text-left p-1 title is-6">App URL</h5>
 
               <div class="grid p-fluid">
                   <div class="col-12">
@@ -38,7 +38,7 @@ onMounted(async () => {
 
               <div class="grid p-fluid">
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">ENV</h5>
+                      <h5 class="text-left p-1 title is-6">ENV</h5>
                       <div class="p-inputgroup">
 
                           <Dropdown v-model="store.config.env.app_env" :options="store.assets.environments"
@@ -61,7 +61,7 @@ onMounted(async () => {
                       <div class="required-field hidden"></div>
                   </div>
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Debug</h5>
+                      <h5 class="text-left p-1 title is-6">Debug</h5>
                       <div class="p-inputgroup">
                           <Dropdown v-model="store.config.env.app_debug"
                                     name="config-db_connection"
@@ -75,7 +75,7 @@ onMounted(async () => {
                       </div>
                   </div>
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Timezone</h5>
+                      <h5 class="text-left p-1 title is-6">Timezone</h5>
                       <div class="p-inputgroup">
                           <Dropdown v-model="store.config.env.app_timezone"
                                     :options="store.assets.timezones"
@@ -90,7 +90,7 @@ onMounted(async () => {
               </div>
               <div class="grid p-fluid">
                   <div class="col-12">
-                      <h5 class="text-left p-1 title is-6 label-required">App/Website Name</h5>
+                      <h5 class="text-left p-1 title is-6">App/Website Name</h5>
                       <div class="p-input">
                           <InputText v-model="store.config.env.app_name"
                                      placeholder="App/Website Name"
@@ -106,7 +106,7 @@ onMounted(async () => {
 
               <div class="grid p-fluid">
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Database Type</h5>
+                      <h5 class="text-left p-1 title is-6">Database Type</h5>
                       <div class="p-inputgroup">
                           <Dropdown v-model="store.config.env.db_connection"
                                     :options="store.assets.database_types"
@@ -121,7 +121,7 @@ onMounted(async () => {
                   </div>
 
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Database Host</h5>
+                      <h5 class="text-left p-1 title is-6">Database Host</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.db_host"
                                      name="config-db_host"
@@ -135,7 +135,7 @@ onMounted(async () => {
                   </div>
 
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Database Port</h5>
+                      <h5 class="text-left p-1 title is-6">Database Port</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.db_port"
                                      name="config-db_port"
@@ -151,7 +151,7 @@ onMounted(async () => {
 
               <div class="grid p-fluid">
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Database Name</h5>
+                      <h5 class="text-left p-1 title is-6">Database Name</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.db_database"
                                      placeholder="Database Name"
@@ -165,7 +165,7 @@ onMounted(async () => {
                   </div>
 
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">Database Username</h5>
+                      <h5 class="text-left p-1 title is-6">Database Username</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.db_username"
                                      placeholder="Database Username"
@@ -306,7 +306,7 @@ onMounted(async () => {
                   </div>
 
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">From Name</h5>
+                      <h5 class="text-left p-1 title is-6">From Name</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.mail_from_name"
                                      placeholder="From Name" class="p-inputtext-sm"
@@ -318,7 +318,7 @@ onMounted(async () => {
                   </div>
 
                   <div class="col-12 md:col-4">
-                      <h5 class="text-left p-1 title is-6 label-required">From Email</h5>
+                      <h5 class="text-left p-1 title is-6">From Email</h5>
                       <div class="p-inputgroup">
                           <InputText v-model="store.config.env.mail_from_address"
                                      type="email"

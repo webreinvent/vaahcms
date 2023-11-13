@@ -32,7 +32,7 @@ onMounted(async () => {
         </Message>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">First name</h5>
+                <h5 class="text-left p-1 title is-6">First name</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.first_name"
@@ -57,7 +57,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Last name</h5>
+                <h5 class="text-left p-1 title is-6">Last name</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.last_name"
@@ -71,7 +71,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Email</h5>
+                <h5 class="text-left p-1 title is-6">Email</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.email"
@@ -88,7 +88,7 @@ onMounted(async () => {
         </div>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Username</h5>
+                <h5 class="text-left p-1 title is-6">Username</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.username"
@@ -102,7 +102,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Password</h5>
+                <h5 class="text-left p-1 title is-6">Password</h5>
                 <div class="p-inputgroup">
                     <Password
                         v-model="store.config.account.password"
@@ -143,7 +143,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Phone</h5>
+                <h5 class="text-left p-1 title is-6">Phone</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.phone"
