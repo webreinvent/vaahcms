@@ -197,7 +197,7 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         getCopy(value)
         {
-            let copyText = '{!! trans(vaahcms-'+value.language_category.slug+'.'+value.slug+') !!}';
+            let copyText = '{!! trans("vaahcms-'+value.language_category.slug+'.'+value.slug+'") !!}';
             navigator.clipboard.writeText(copyText);
             vaah().toastSuccess(['Copied']);
         },

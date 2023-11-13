@@ -119,6 +119,25 @@ const store = useGeneralStore();
                                   placeholder="Search"
                     />
                 </div>
+
+                <div class="col-6 p-fluid">
+                    <h5 class="p-1 text-xs mb-1">Is Logo compressed with Sidebar</h5>
+                    <div class="p-inputgroup">
+                        <SelectButton v-model="store.list.is_logo_compressed"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.compressedLogoOptions"
+                                      data-testid="general-is_logo_compressed"
+                                      class="p-button-sm"
+                                      aria-labelledby="single"
+                        />
+                        <Button class="p-button-sm"
+                                icon="pi pi-copy"
+                                data-testid="general-copyright_custom_year_filed_copy"
+                                @click="store.getCopy('is_logo_compressed')"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
 

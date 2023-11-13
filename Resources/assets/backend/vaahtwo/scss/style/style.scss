@@ -318,10 +318,12 @@ a {
         width: 100%;
     }
 }
-
-.p-inputgroup {
-    .p-input-icon-left {
-        .p-inputtext {
+.w-225{
+    width: 225px !important;
+}
+.p-inputgroup{
+    .p-input-icon-left{
+        .p-inputtext{
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
         }
