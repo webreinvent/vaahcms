@@ -1529,8 +1529,8 @@ textarea.p-inputtextarea {
 
                 .jse-button {
                     &.svelte-497ud4:not(.jse-group-button) {
-                        width: $buttonIconOnlyWidth;
-                        height: $buttonIconOnlyWidth;
+                        width: $buttonIconOnlyWidth - 0.5rem;
+                        height: $buttonIconOnlyWidth - 0.5rem;
 
                         svg {
                             width: 12px;
