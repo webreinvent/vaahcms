@@ -24,15 +24,15 @@ onMounted(async () => {
                                'data-testid': `account-message_text`
                              },
                       closebutton:{
-                          'data-testid': `account-message_close_btn`
+                          'data-testid': `account-message_close_btn`,
                       }
                   }">
-            Create first account,this account will have super administrator
+            Create first account, this account will have super administrator
             role and will have all the permissions.
         </Message>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">First name</h5>
+                <h5 class="text-left p-1 title is-6">First name</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.first_name"
@@ -40,7 +40,9 @@ onMounted(async () => {
                         data-testid="account-first_name"
                         placeholder="Enter first name"
                         class="p-inputtext-sm"
+                        required
                     />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
@@ -55,18 +57,21 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Last name</h5>
+                <h5 class="text-left p-1 title is-6">Last name</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.last_name"
                         name="account-last_name"
                         data-testid="account-last_name"
                         placeholder="Enter last name"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Email</h5>
+                <h5 class="text-left p-1 title is-6">Email</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.email"
@@ -74,24 +79,30 @@ onMounted(async () => {
                         data-testid="account-email"
                         @blur="store.generateUsername()"
                         placeholder="Enter email"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
         </div>
         <div class="grid p-fluid">
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Username</h5>
+                <h5 class="text-left p-1 title is-6">Username</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.username"
                         name="account-username"
                         data-testid="account-username"
                         placeholder="Enter Username"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Password</h5>
+                <h5 class="text-left p-1 title is-6">Password</h5>
                 <div class="p-inputgroup">
                     <Password
                         v-model="store.config.account.password"
@@ -101,37 +112,48 @@ onMounted(async () => {
                         toggleMask input-class="w-full p-inputtext-sm"
                         placeholder="Enter password"
                         :pt="{
+                            root: {
+                              required: ''
+                            },
                               showicon: {
                                       'data-testid': `account-password_eye`
                                   }
                            }"/>
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Search Country</h5>
-                <AutoComplete
-                    v-model="store.config.account.country_calling_code_object"
-                    :suggestions="store.filtered_country_codes"
-                    :completeOnFocus="store.autocomplete_on_focus"
-                    @complete="store.searchCountryCode"
-                    @blur="store.setFocusDropDownToTrue"
-                    @item-select="store.onSelectCountryCode"
-                    placeholder="Enter Your Country"
-                    optionLabel="name"
-                    name="account-country_calling_code"
-                    data-testid="account-country_calling_code"
-                    input-class="p-inputtext-sm"
-                />
+                <h5 class="text-left p-1 title is-6">Search Country</h5>
+                <div class="p-inputgroup">
+                    <AutoComplete
+                        v-model="store.config.account.country_calling_code_object"
+                        :suggestions="store.filtered_country_codes"
+                        :completeOnFocus="store.autocomplete_on_focus"
+                        @complete="store.searchCountryCode"
+                        @blur="store.setFocusDropDownToTrue"
+                        @item-select="store.onSelectCountryCode"
+                        placeholder="Enter Your Country"
+                        optionLabel="name"
+                        name="account-country_calling_code"
+                        data-testid="account-country_calling_code"
+                        input-class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
+                </div>
             </div>
             <div class="col-12 md:col-3">
-                <h5 class="text-left p-1 title is-6 label-required">Phone</h5>
+                <h5 class="text-left p-1 title is-6">Phone</h5>
                 <div class="p-inputgroup">
                     <InputText
                         v-model="store.config.account.phone"
                         name="account-phone"
                         data-testid="account-phone"
                         placeholder="Enter phone"
-                        class="p-inputtext-sm"/>
+                        class="p-inputtext-sm"
+                        required
+                    />
+                    <div class="required-field hidden"></div>
                 </div>
             </div>
         </div>

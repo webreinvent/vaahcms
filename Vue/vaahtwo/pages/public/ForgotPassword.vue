@@ -34,14 +34,19 @@ onMounted(async () => {
 
                     <template #content>
                         <div class="flex flex-column align-items-center gap-3 ">
-                            <InputText
-                                v-model="auth.forgot_password_items.email"
-                                placeholder="Enter Email Address"
-                                name="forgot_password-email"
-                                data-testid="forgot_password-email"
-                                id="email"
-                                class="w-full"
-                                type="text"/>
+                            <div class="p-inputgroup">
+                                <InputText
+                                    v-model="auth.forgot_password_items.email"
+                                    placeholder="Enter Email Address"
+                                    name="forgot_password-email"
+                                    data-testid="forgot_password-email"
+                                    id="email"
+                                    class="w-full"
+                                    type="text"
+                                    required=""
+                                />
+                                <div class="required-field hidden"></div>
+                            </div>
 
                             <div class="w-full flex justify-content-between align-items-center">
                                 <Button

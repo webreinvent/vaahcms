@@ -68,24 +68,23 @@ const openTaxonomyTypeModal = () => {
 
             <Column field="slug" header="Slug"
                     :sortable="false"
-                    class="flex align-items-center"
             >
                 <template #body="prop">
-                    <Button class="p-button-tiny p-button-text p-0 mr-2"
-                            data-testid="taxonomies-table-to-edit"
-                            v-tooltip.top="'Copy Slug'"
-                            @click="useVaah.copy(prop.data.slug)"
-                            icon="pi pi-copy"
-                    />
-                    {{ prop.data.slug }}
-
-
+                    <div class="flex align-items-center">
+                        <Button class="p-button-tiny p-button-text p-0 mr-2"
+                                data-testid="taxonomies-table-to-edit"
+                                v-tooltip.top="'Copy Slug'"
+                                @click="useVaah.copy(prop.data.slug)"
+                                icon="pi pi-copy"
+                        />
+                        <p v-if="prop.data.slug">{{ prop.data.slug }}</p>
+                    </div>
                 </template>
             </Column>
              <column></column>
              <Column field="type" header="Type"
                      :sortable="false"
-                     class="flex align-items-center"
+                     class="flex align-items-center justify-content-between"
              >
                  <template #body="prop">
                      <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>

@@ -136,7 +136,6 @@ function selectFile (data){
     <FileUpload name="file"
                 :auto="auto_upload"
                 ref="upload_refs"
-
                 :mode="is_basic?'basic':'advanced'"
                 :multiple="can_select_multiple"
                 :customUpload="true"
@@ -147,7 +146,11 @@ function selectFile (data){
                 @clear="removeFile"
                 :showUploadButton="!auto_upload"
                 :showCancelButton="!auto_upload"
-                :maxFileSize="props.max_file_size" >
+                :maxFileSize="props.max_file_size"
+                :pt="{
+                    root: 'has-fileupload-buttonbar-hidden'
+                }"
+    >
         <template #empty>
             <p class="text-center text-sm text-gray-600">
                 Drag and drop files to here to upload.
