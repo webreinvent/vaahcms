@@ -56,21 +56,24 @@ const useVaah = vaah();
              >
                 <template #body="prop">
                     <Tag v-if="prop.data.status === 'email-verified' "
-                         class="mr-2 p-tag-xs"
+                         class="mr-2 p-tag-xs border-round-xl px-2"
                          severity="success"
                          :value="useVaah.toLabel(prop.data.status)"
+                         :pt="{ value: 'px-1' }"
                     />
 
                     <Tag v-else-if="prop.data.status === 'email-verification-pending' "
-                         class="mr-2 p-tag-xs"
+                         class="mr-2 p-tag-xs border-round-xl px-2"
                          severity="danger"
                          :value="useVaah.toLabel(prop.data.status)"
+                         :pt="{ value: 'px-1' }"
                     />
 
                     <Tag v-else
-                         class="mr-2 p-tag-xs"
+                         class="mr-2 p-tag-xs border-round-xl px-2"
                          severity="info"
                          :value="useVaah.toLabel(prop.data.status)"
+                         :pt="{ value: 'px-1' }"
                     />
                 </template>
             </Column>
