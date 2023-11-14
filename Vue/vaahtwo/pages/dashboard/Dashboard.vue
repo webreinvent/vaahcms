@@ -21,11 +21,11 @@ const key = ref();
 <template>
     <div v-if="root.assets && store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
         <div class="col-12 md:col-8">
-            <Card>
+            <Card :pt="{ content: 'py-0' }">
                 <template #content>
                     <h5 class="text-xl font-semibold mb-1">Welcome to Vaah<b>Cms</b></h5>
                     <p>We've assembled some links to get you started:</p>
-                    <div class="grid mt-4">
+                    <div class="grid mt-3">
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-2 text-sm">Get Started</h6>
                             <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
@@ -42,7 +42,7 @@ const key = ref();
                                     Activate Theme
                                 </span>
                             </Button>
-                            <p class="text-sm mt-1">
+                            <p class="text-xs">
                                 or, <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
                                        data-testid="dashboard-create_theme"
                                        target="_blank">
@@ -51,18 +51,18 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">Next Steps</h6>
-                            <ul class="links-list">
+                            <h6 class="font-semibold text-sm">Next Steps</h6>
+                            <ul class="links-list my-2">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
                                 >
-                                    <template v-for="next_step in module.next_steps">
+                                    <template v-for="(next_step, index) in module.next_steps">
                                         <li>
                                             <a href="javascript:void(0)"
                                                data-testid="dashboard-goto_theme"
                                                @click="store.goToLink(next_step.link, next_step.open_in_new_tab ?? null)"
                                             >
-                                                <i class="pi" :class="next_step.icon"></i>
+                                                <i class="text-xs pi" :class="next_step.icon"></i>
                                                 {{ next_step.name }}
                                             </a>
                                         </li>
@@ -72,8 +72,8 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">More Actions</h6>
-                            <ul class="links-list">
+                            <h6 class="font-semibold text-sm">More Actions</h6>
+                            <ul class="links-list my-2">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
                                 >
@@ -82,7 +82,7 @@ const key = ref();
                                             <a href="javascript:void(0)"
                                                :data-testid="'dashboard-'+action.name"
                                                @click="store.goToLink(action.link, action.open_in_new_tab ?? null)">
-                                                <i class="pi" :class="action.icon"></i>
+                                                <i class="text-xs pi" :class="action.icon"></i>
                                                 {{ action.name }}
                                             </a>
                                         </li>
@@ -91,34 +91,34 @@ const key = ref();
                             </ul>
                         </div>
 
-                        <Divider />
+                        <Divider class="my-0" />
 
                         <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                   v-for="module in store.dashboard_items.success"
                         >
                             <div class="col-12" v-if="module.card">
-                                <h5 class="text-lg font-semibold mb-4">{{ module.card.title }}</h5>
+                                <h5 class="text-base font-semibold mb-1">{{ module.card.title }}</h5>
 
                                 <div class="grid m-0">
                                     <template v-for="(item,key) in module.card.list"
                                     >
-                                        <div class="col">
-                                            <span class="p-3 border-circle bg-blue-50">
-                                                <i class="text-blue-400 pi" :class="item.icon"></i>
+                                        <div class="col text-center">
+                                            <span class="mx-auto border-circle bg-blue-50 block h-2rem w-2rem flex justify-content-center align-items-center">
+                                                <i class="text-blue-400 text-xs pi" :class="item.icon"></i>
                                             </span>
 
-                                            <p class="text-sm font-semibold mt-3">{{ item.label }}</p>
+                                            <p class="text-sm font-medium">{{ item.label }}</p>
                                             <h6 class="text-xl font-semibold my-1">{{ item.count }}</h6>
                                             <a href="javascript:void(0)"
                                                :data-testid="'dashboard-view_'+item.label"
                                                @click="store.goToLink(item.link, item.open_in_new_tab ?? null)"
-                                               class="text-sm">
+                                               class="text-xs">
                                                 View Details
                                             </a>
                                         </div>
 
-                                        <Divider layout="vertical" class="hidden md:block"></Divider>
-                                        <Divider class="md:hidden"></Divider>
+                                        <Divider layout="vertical" class="mx-2 hidden md:block"></Divider>
+                                        <Divider class="my-2 md:hidden"></Divider>
                                     </template>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@ const key = ref();
             </Card>
         </div>
 
-        <div class="col-12 md:col-4 mt-3">
+        <div class="col-12 md:col-4">
             <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                       v-for="module in store.dashboard_items.success"
             >
@@ -137,8 +137,9 @@ const key = ref();
                 >
                     <Button :label="h_item.name"
                             :icon="h_item.icon"
+                            iconClass="mr-1"
                             :data-testid="'dashboard-'+h_item.name"
-                            class="p-button-sm p-button-outlined mr-2 mb-3 pi"
+                            class="p-button-sm p-button-outlined mr-2 mb-2"
                             @click="store.goToLink(h_item.link,h_item.open_in_new_tab?h_item.open_in_new_tab:null)"
                     />
                 </template>
