@@ -152,12 +152,21 @@ const key = ref();
                           v-for="(item, index) in module.expanded_item"
                           :key="index"
                 >
-                    <Accordion :multiple="true" :activeIndex="store.active_index">
-                        <AccordionTab :header="item.title" :key="item.title">
+                    <Accordion :multiple="true"
+                               :activeIndex="store.active_index"
+                               class="is-small"
+                    >
+                        <AccordionTab :header="item.title"
+                                      :key="item.title"
+                                      :pt="{
+                                          headerTitle: 'py-1 font-semibold'
+                                      }"
+                        >
                             <template v-if="item.type === 'content'">
                                 <div v-if="!item.is_job_enabled">
                                     <Message severity="error"
                                              :closable="false"
+                                             class="mt-0"
                                              icon="null"
                                     >
                                         Enable <b>Laravel Queues</b> to run your jobs
@@ -170,11 +179,11 @@ const key = ref();
                                     </Message>
                                 </div>
 
-                                <p class="text-sm">
+                                <p class="text-sm mb-2">
                                     {{ item.description }}
                                 </p>
 
-                                <Divider />
+                                <Divider class="my-0" />
 
                                 <div class="flex justify-content-evenly align-items-center align-items-center">
                                     <template v-for="f_item in item.footer">
@@ -190,7 +199,7 @@ const key = ref();
                                     </template>
                                 </div>
 
-                                <Divider />
+                                <Divider class="my-0" />
                             </template>
 
                             <template v-if=" item.type === 'list' ">
@@ -208,7 +217,7 @@ const key = ref();
 
                                         <a href="javascript:void(0)"
                                            @click="store.goToLink(item.link+'view/'+log.name)"
-                                           class="text-sm"
+                                           class="text-xs"
                                            :data-testid="'dashboard-'+log.name+'_view'"
                                         >
                                             View
@@ -216,7 +225,7 @@ const key = ref();
 
                                     </div>
 
-                                    <Divider />
+                                    <Divider class="my-0" />
                                 </template>
 
                                 <template v-if="item.list.length === 0">
