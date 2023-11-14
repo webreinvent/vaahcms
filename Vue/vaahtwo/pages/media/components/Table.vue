@@ -12,11 +12,11 @@ const useVaah = vaah();
     <div v-if="store.list">
         <!--table-->
          <DataTable :value="store.list.data"
-                       dataKey="id"
-                   class="p-datatable-sm p-datatable-hoverable-rows"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll"
+                    dataKey="id"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
+                    v-model:selection="store.action.items"
+                    stripedRows
+                    responsiveLayout="scroll"
          >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge() || store.hasPermission('can-update-media')"
@@ -126,8 +126,6 @@ const useVaah = vaah();
             </Column>
         </DataTable>
         <!--/table-->
-
-        <Divider />
 
         <!--paginator-->
         <Paginator v-model:first="store.first_element"

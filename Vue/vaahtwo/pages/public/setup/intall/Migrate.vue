@@ -50,7 +50,7 @@ const confirmDelete = (event) => {
                                'data-testid': `migrate-message_text`
                              },
                       closebutton:{
-                          'data-testid': `migrate-message_close_btn`
+                          'data-testid': `migrate-message_close_btn`,
                       }
                   }">
             This step will run database migrations and seeds.</Message>
@@ -85,16 +85,19 @@ const confirmDelete = (event) => {
                              }
                   }">
             </Button>
-            <Button label="Save & Next"
-                    class="p-button-sm"
-                    @click="store.validateMigration"
-                    data-testid="migrate-save_btn"
-                    :pt="{
+            <div class="flex align-items-center gap-2">
+                <p class="text-xs">Migrate & Run Seeds for next step</p>
+                <Button label="Save & Next"
+                        class="p-button-sm"
+                        @click="store.validateMigration"
+                        data-testid="migrate-save_btn"
+                        :pt="{
                       label: {
                                'data-testid': `migrate-save_btn_text`
                              }
                   }">
-            </Button>
+                </Button>
+            </div>
         </div>
         <ConfirmDialog group="templating" class="is-small"
                        :style="{width: '400px'}"

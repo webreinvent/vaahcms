@@ -45,7 +45,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
 
-    <div class="col-7" >
+    <div class="col-8" >
 
         <Panel v-if="store && store.item" class="is-small">
 
@@ -55,7 +55,6 @@ const toggleItemMenu = (event) => {
 
                     <div class="p-panel-title">
                         Log
-
                         <span v-if="store.item.name">
                            :  {{store.item.name}}
                         </span>
@@ -93,8 +92,8 @@ const toggleItemMenu = (event) => {
                 />
             </template>
 
-            <div class="card">
-                <TabView>
+            <div class="card overflow-hidden">
+                <TabView class="is-small tab-panel-has-no-padding">
                     <TabPanel header="Logs">
                         <table v-if="store.item.logs" class="p-datatable">
                             <tr v-for="log in store.item.logs">
@@ -102,12 +101,12 @@ const toggleItemMenu = (event) => {
                                     <div class="level is-marginless">
                                         <div class="level-left">
                                             <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs">TYPE</Tag>
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs line-height-3">TYPE</Tag>
                                                 <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
                                             </div>
 
                                             <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround">TIME</Tag>
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround line-height-3">TIME</Tag>
                                                 <Tag class="mr-2 mb-2 border-noround" severity="danger"
                                                      :value="log.timestamp+'/'+log.ago"></Tag>
                                             </div>

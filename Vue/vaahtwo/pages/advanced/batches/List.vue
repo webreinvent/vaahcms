@@ -51,9 +51,9 @@ onMounted(async () => {
 <template>
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
-            <Panel>
+            <Panel class="is-small" >
                 <template class="p-1" #header>
-                    <div class="flex flex-row w-full">
+                    <div class="flex flex-row align-items-center w-full">
                         <div class="w-full">
                             <b class="mr-1">Batches</b>
                             <Badge v-if="store.list && store.list.total > 0"
@@ -72,9 +72,7 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
-
-                <br/>
+                <Actions />
 
                 <Table/>
 

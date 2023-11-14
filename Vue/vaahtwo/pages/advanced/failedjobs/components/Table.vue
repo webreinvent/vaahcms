@@ -11,11 +11,11 @@ const useVaah = vaah();
     <div v-if="store.list">
         <!--table-->
          <DataTable :value="store.list.data"
-                       dataKey="id"
-                   class="p-datatable-sm"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll"
+                    dataKey="id"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
+                    v-model:selection="store.action.items"
+                    stripedRows
+                    responsiveLayout="scroll"
          >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -92,14 +92,14 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
-
         <!--paginator-->
         <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
+        >
         </Paginator>
         <!--/paginator-->
     </div>

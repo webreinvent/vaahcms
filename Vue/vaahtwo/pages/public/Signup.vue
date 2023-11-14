@@ -41,7 +41,7 @@ onMounted(async () => {
 
                         <template #content>
                             <div class="flex flex-column align-items-center gap-3">
-                                <div class="w-full gap-3 flex flex-column">
+                                <div class="p-inputgroup w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-name"
                                         placeholder="Enter First Name"
@@ -50,7 +50,9 @@ onMounted(async () => {
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.first_name"
+                                        required
                                     />
+                                    <div class="required-field hidden"></div>
                                 </div>
 
                                 <div class="w-full gap-3 flex flex-column">
@@ -65,7 +67,7 @@ onMounted(async () => {
                                     />
                                 </div>
 
-                                <div class="w-full gap-3 flex flex-column">
+                                <div class="p-inputgroup w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-username"
                                         placeholder="Enter Username"
@@ -74,10 +76,12 @@ onMounted(async () => {
                                         class="w-full"
                                         type="text"
                                         v-model="auth.sign_up_items.username"
+                                        required
                                     />
+                                    <div class="required-field hidden"></div>
                                 </div>
 
-                                <div class="w-full gap-3 flex flex-column">
+                                <div class="p-inputgroup w-full gap-3 flex flex-column">
                                     <InputText
                                         name="signup-email"
                                         placeholder="Enter Email"
@@ -86,10 +90,12 @@ onMounted(async () => {
                                         class="w-full"
                                         type="email"
                                         v-model="auth.sign_up_items.email"
+                                        required
                                     />
+                                    <div class="required-field hidden"></div>
                                 </div>
 
-                                <div class="w-full gap-3 flex flex-column">
+                                <div class="p-inputgroup w-full gap-3 flex flex-column">
                                     <Password
                                         name="signup-password"
                                         placeholder="Enter Password"
@@ -99,10 +105,16 @@ onMounted(async () => {
                                         :feedback="false"
                                         toggleMask
                                         v-model="auth.sign_up_items.password"
+                                        :pt="{
+                                            root: {
+                                                required: ''
+                                            }
+                                        }"
                                     />
+                                    <div class="required-field hidden"></div>
                                 </div>
 
-                                <div class="w-full gap-3 flex flex-column">
+                                <div class="p-inputgroup w-full gap-3 flex flex-column">
                                     <Password
                                         name="signup-confirm_password"
                                         placeholder="Enter Confirm Password"
@@ -112,7 +124,13 @@ onMounted(async () => {
                                         :feedback="false"
                                         toggleMask
                                         v-model="auth.sign_up_items.confirm_password"
+                                        :pt="{
+                                            root: {
+                                                required: ''
+                                            }
+                                        }"
                                     />
+                                    <div class="required-field hidden"></div>
                                 </div>
 
                                 <div class="w-full flex justify-content-between align-items-center">

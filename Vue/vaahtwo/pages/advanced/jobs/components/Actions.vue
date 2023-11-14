@@ -30,19 +30,19 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div :class="{'flex justify-content-between': store.isViewLarge()}">
+        <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
-                        icon="pi pi-angle-down"
                         @click="toggleSelectedMenuState"
                         data-testid="jobs-actions-menu"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                 >
+                    <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
                     />
@@ -73,7 +73,7 @@ const toggleBulkMenuState = (event) => {
             <div>
                 <div class="grid p-fluid">
                     <div class="col-12">
-                        <div class="p-inputgroup ">
+                        <div class="p-inputgroup">
                             <InputText v-model="store.query.filter.q"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
@@ -104,7 +104,6 @@ const toggleBulkMenuState = (event) => {
                             />
                         </div>
                     </div>
-
                     <Filters />
                 </div>
             </div>

@@ -67,27 +67,30 @@ onMounted(async () => {
                     <div class="p-inputgroup">
                         <password v-if="store.inputType(item) == 'password'"
                                   v-model="item.value"
+                                  class="w-full"
                                   :disabled="store.isDisable(item)"
                                   toggleMask
-                                  class="p-inputtext-sm"
+                                  :auto-resize="true"
                                   :data-testid="'env-'+item.key"
                         />
 
                         <Textarea v-else
                                   v-model="item.value"
+                                  rows="1"
+                                  class="is-small"
                                   :disabled="store.isDisable(item)"
                                   :auto-resize="true"
                                   :data-testid="'env-'+item.key"
                         />
 
                         <Button icon="pi pi-copy"
-                                :data-testid="'env-copy_+item.key'"
+                                :data-testid="'env-copy_'+item.key"
                                 @click="store.getCopy(item)"
                         />
 
                         <Button icon="pi pi-trash"
                                 class="p-button-danger p-button-sm"
-                                :data-testid="'env-remove_+item.key'"
+                                :data-testid="'env-remove_'+item.key"
                                 @click="store.removeVariable(item)"
                         />
                     </div>
