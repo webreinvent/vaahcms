@@ -43,8 +43,9 @@ const toggleBulkMenuState = (event) => {
                         data-testid="register-toggle_list_selected_menu"
                         v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                 >
-                    <i class="pi pi-angle-down"></i>
+                    <i class="text-xs pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
+                           class="text-xs font-medium"
                            :value="store.action.items.length"
                     />
                 </Button>
@@ -57,13 +58,13 @@ const toggleBulkMenuState = (event) => {
 
                 <!--bulk_menu-->
                 <Button class="p-button-sm ml-1"
-                        icon="pi pi-ellipsis-h"
                         @click="toggleBulkMenuState"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
                         data-testid="register-toggle_list_bulk_menu"
                         v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                 >
+                    <i class="text-xs pi pi-ellipsis-h"></i>
                 </Button>
 
                 <Menu ref="bulk_menu_state"
