@@ -240,6 +240,15 @@ const toggleUserStatusMenu = (event) => {
                                         </Dialog>
                                     </td>
                                 </tr>
+
+                                <Dialog header="Meta"
+                                        v-model:visible="store.display_meta_modal"
+                                        :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                        :style="{width: '50vw'}" :modal="true"
+                                        :draggable="false"
+                                >
+                                    <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
+                                </Dialog>
                             </template>
 
                             <template v-else-if="column === 'status'" >
