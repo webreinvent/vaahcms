@@ -56,24 +56,24 @@ const useVaah = vaah();
              >
                 <template #body="prop">
                     <Tag v-if="prop.data.status === 'email-verified' "
-                         class="mr-2 p-tag-xs border-round-xl px-2"
+                         class="mr-2 p-tag-xs bg-green-50 text-green-500 font-medium border-1 border-round-xl px-2"
                          severity="success"
                          :value="useVaah.toLabel(prop.data.status)"
-                         :pt="{ value: 'px-1' }"
+                         :pt="{ value: 'line-height-1' }"
                     />
 
                     <Tag v-else-if="prop.data.status === 'email-verification-pending' "
-                         class="mr-2 p-tag-xs border-round-xl px-2"
+                         class="mr-2 p-tag-xs bg-red-50 text-red-500 font-medium border-1 border-round-xl px-2"
                          severity="danger"
                          :value="useVaah.toLabel(prop.data.status)"
-                         :pt="{ value: 'px-1' }"
+                         :pt="{ value: 'line-height-1' }"
                     />
 
                     <Tag v-else
-                         class="mr-2 p-tag-xs border-round-xl px-2"
+                         class="mr-2 p-tag-xs bg-blue-50 text-blue-500 font-medium border-1 border-round-xl px-2"
                          severity="info"
                          :value="useVaah.toLabel(prop.data.status)"
-                         :pt="{ value: 'px-1' }"
+                         :pt="{ value: 'line-height-1' }"
                     />
                 </template>
             </Column>
@@ -94,21 +94,21 @@ const useVaah = vaah();
                     :sortable="true"
              >
                 <template #body="prop">
-                    <Tag severity="primary"
-                         class="mr-2 p-tag-xs"
-                         v-if="prop.data.gender && prop.data.gender=='m'"
+                    <Tag v-if="prop.data.gender && prop.data.gender=='m'"
                          value="Male"
+                         class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                         :pt="{ value: 'line-height-1' }"
                     />
 
-                    <Tag severity="primary"
-                         class="mr-2 p-tag-xs"
-                         v-if="prop.data.gender && prop.data.gender=='f'"
+                    <Tag v-if="prop.data.gender && prop.data.gender=='f'"
                          value="Female"
+                         class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                         :pt="{ value: 'line-height-1' }"
                     />
-                    <Tag severity="primary"
-                         class="mr-2 p-tag-xs"
-                         v-if="prop.data.gender && prop.data.gender=='o'"
+                    <Tag v-if="prop.data.gender && prop.data.gender=='o'"
                          value="others"
+                         class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                         :pt="{ value: 'line-height-1' }"
                     />
                 </template>
             </Column>
