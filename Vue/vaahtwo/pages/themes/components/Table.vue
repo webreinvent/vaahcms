@@ -99,7 +99,7 @@ function actionItems(item){
 
                 <div class="flex justify-content-end">
 
-                         <span class="p-buttonset mr-2">
+                         <span class="p-inputgroup mr-2 w-auto">
                             <Button v-show="item.is_active
                                     && store.hasPermission('can-deactivate-theme')"
                                     :data-testid="'themes-deactivate-'+item.slug"
