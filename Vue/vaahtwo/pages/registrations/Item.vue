@@ -197,55 +197,64 @@ const toggleUserStatusMenu = (event) => {
 
                             <template v-else-if="column === 'bio'">
                                 <tr v-if="!store.isHidden(column)">
-                                    <td style="font-weight:bold">{{ vaah().toLabel(column) }}</td>
-                                    <td>
+                                    <td class="text-xs font-semibold line-height-2">{{ vaah().toLabel(column) }}</td>
+                                    <td colspan="2">
                                         <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
                                                 label="View"
                                                 icon="pi pi-eye"
+                                                iconClass="mr-1"
                                                 @click="store.displayBioModal(value)"
                                                 v-if="value"
                                         />
+                                        <Dialog header="Bio"
+                                                v-model:visible="store.display_bio_modal"
+                                                :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                                :style="{width: '50vw'}"
+                                                :modal="true"
+                                                :draggable="false"
+                                        >
+                                            <p class="m-3" v-html="store.bio_modal_data" />
+                                        </Dialog>
                                     </td>
                                 </tr>
                             </template>
 
                             <template v-else-if="column === 'meta'">
                                 <tr>
-                                    <td><b>Meta</b></td>
-                                    <td v-if="value">
+                                    <td class="text-xs font-semibold line-height-2">Meta</td>
+                                    <td v-if="value" colspan="2">
                                         <Button icon="pi pi-eye"
-                                                label="view"
+                                                label="View"
+                                                iconClass="mr-1"
                                                 class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
                                                 @click="store.openModal(value)"
                                                 data-testid="register-open_meta_modal"
                                         />
+                                        <Dialog header="Meta"
+                                                v-model:visible="store.display_meta_modal"
+                                                :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                                :style="{width: '50vw'}" :modal="true"
+                                                :draggable="false"
+                                        >
+                                            <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
+                                        </Dialog>
                                     </td>
                                 </tr>
-
-                                <Dialog header="Meta"
-                                        v-model:visible="store.display_meta_modal"
-                                        :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-                                        :style="{width: '50vw'}" :modal="true"
-                                        :draggable="false"
-                                >
-                                    <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
-                                </Dialog>
                             </template>
 
                             <template v-else-if="column === 'status'" >
                                 <tr>
-                                    <td><b>Status</b></td>
+                                    <td class="text-xs font-semibold line-height-2">Status</td>
                                     <td v-if="value" colspan="2">
                                         <div class="p-inputgroup">
-                                            <Button :label="value"
-                                                    v-if="value"
-                                                    class="p-button-outlined p-button-secondary p-button-xs"
+                                            <Button v-if="value"
+                                                    :label="value"
+                                                    class="p-button-outlined p-button-secondary p-button-xs py-1 line-height-1"
                                                     disabled="disabled"
                                             />
 
                                             <Button v-if="store.assets && store.assets.registration_statuses"
-                                                    class="p-button-outlined wd-2rem
-                                                     p-button-secondary p-button-xs"
+                                                    class="p-button-outlined wd-2rem p-button-secondary p-button-xs py-1 line-height-1"
                                                     @click="toggleStatusMenu"
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"
@@ -257,8 +266,6 @@ const toggleUserStatusMenu = (event) => {
                                                   :popup="true"
                                             />
 
-
-
                                             <Menu ref="user_status"
                                                   :model="store.userCreatedOption()"
                                                   :popup="true"
@@ -266,29 +273,26 @@ const toggleUserStatusMenu = (event) => {
 
                                             <Button v-if="value == 'email-verification-pending'"
                                                     label="Resend Verification Email"
-                                                    class="p-button-info p-button-xs"
+                                                    class="p-button-info p-button-xs py-1 line-height-1"
                                                     @click="store.sendVerificationEmail()"
                                                     data-testid="register-view_send_verification_email"
                                             />
 
                                             <Button v-if="value == 'email-verified'"
                                                     label="Create User"
-                                                    class="p-button-success p-button-xs"
+                                                    class="p-button-success p-button-xs py-1 line-height-1"
                                                      @click="store.confirmCreateUser()"
                                                     data-testid="register-view_confirm_create_user"
                                             />
-
 
                                             <Button v-if="value == 'email-verified'"
                                                     type="button"
                                                     @click="toggleUserStatusMenu"
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"
-                                                    class="p-button-success p-button-xs"
+                                                    class="p-button-success p-button-xs py-1 line-height-1"
                                                     data-testid="register-view_email_verified"
                                             />
-
-
                                         </div>
                                     </td>
                                 </tr>
@@ -296,11 +300,28 @@ const toggleUserStatusMenu = (event) => {
 
                             <template v-else-if="column === 'gender'">
                                 <tr v-if="!store.isHidden(column)">
-                                    <td><b>Gender</b></td>
-                                    <td v-if="value">
-                                        <Tag severity="primary" value="Male" class="mr-2" v-if="value==='m'" />
-                                        <Tag severity="primary" value="Female" class="mr-2" v-else-if="value==='f'" />
-                                        <Tag severity="primary" value="Others" class="mr-2" v-else-if="value==='o'" />
+                                    <td class="text-xs font-semibold line-height-2">Gender</td>
+                                    <td v-if="value" colspan="2">
+                                        <Tag v-if="value==='m'"
+                                             value="Male"
+                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                                             :pt="{
+                                                value: 'line-height-1'
+                                             }"/>
+
+                                        <Tag v-else-if="value==='f'"
+                                             value="Female"
+                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                                             :pt="{
+                                                value: 'line-height-1'
+                                             }" />
+
+                                        <Tag v-else-if="value==='o'"
+                                             value="Others"
+                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
+                                             :pt="{
+                                                value: 'line-height-1'
+                                             }" />
                                     </td>
                                 </tr>
                             </template>
@@ -321,14 +342,6 @@ const toggleUserStatusMenu = (event) => {
                 </div>
             </div>
         </Panel>
-
-        <Dialog header="Bio"
-                v-model:visible="store.display_bio_modal"
-                :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}"
-                :modal="true"
-        >
-            <p class="m-3" v-html="store.bio_modal_data" />
-        </Dialog>
     </div>
 
 </template>
