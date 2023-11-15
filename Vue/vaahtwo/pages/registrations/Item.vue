@@ -212,7 +212,6 @@ const toggleUserStatusMenu = (event) => {
                                                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                                                 :style="{width: '50vw'}"
                                                 :modal="true"
-                                                :draggable="false"
                                         >
                                             <p class="m-3 mt-0" v-html="store.bio_modal_data" />
                                         </Dialog>
@@ -236,7 +235,6 @@ const toggleUserStatusMenu = (event) => {
                                                 v-model:visible="store.display_meta_modal"
                                                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                                                 :style="{width: '50vw'}" :modal="true"
-                                                :draggable="false"
                                         >
                                             <p class="m-0" v-html="`<pre class='my-0'>`+store.meta_content+'<pre>'"></p>
                                         </Dialog>
