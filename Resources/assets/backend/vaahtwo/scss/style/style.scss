@@ -1276,6 +1276,18 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+//Dialog small
+.p-dialog {
+    &.is-small {
+        .p-dialog-header {
+            padding: 8px 12px;
+        }
+        .p-dialog-content {
+            padding: 0 12px 8px;
+        }
+    }
+}
+
 //Message small
 .p-message {
     &.is-small {
