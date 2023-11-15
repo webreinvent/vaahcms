@@ -97,10 +97,11 @@ const toggleBulkMenuState = (event) => {
 
                             <Button label="Filters"
                                     class="p-button-sm"
+                                    :badge="store.count_filters > 0 ? store.count_filters : ''"
+                                    badgeClass="font-normal"
                                     @click="store.show_filters = true"
                                     data-testid="register-show_filters"
                             >
-                                <Badge v-if="store.count_filters > 0" :value="store.count_filters" />
                             </Button>
 
                             <Button icon="pi pi-filter-slash"
