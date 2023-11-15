@@ -193,7 +193,13 @@ const toggleFormMenu = (event) => {
                               data-testid="register-title"
                               class="w-full"
                               :pt="{
-                                  input: 'p-inputtext-sm'
+                                  input: 'p-inputtext-sm',
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
                               }"
                     />
                 </VhField>
@@ -259,7 +265,13 @@ const toggleFormMenu = (event) => {
                               data-testid="register-country_calling_code"
                               class="w-full"
                               :pt="{
-                                  input: 'p-inputtext-sm'
+                                  input: 'p-inputtext-sm',
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
                               }"
                     >
                     </Dropdown>
@@ -295,7 +307,20 @@ const toggleFormMenu = (event) => {
                               data-testid="register-timezone"
                               class="w-full"
                               :pt="{
-                                  input: 'p-inputtext-sm'
+                                  input: 'p-inputtext-sm',
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  },
+                                  clearIcon: {
+                                      style: {
+                                          marginTop: '-0.35rem',
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  },
                               }"
                     />
                 </VhField>
@@ -347,7 +372,13 @@ const toggleFormMenu = (event) => {
                               placeholder="Select a status"
                               data-testid="register-status"
                               :pt="{
-                                  input: 'p-inputtext-sm'
+                                  input: 'p-inputtext-sm',
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
                               }"
                     />
                 </VhField>
