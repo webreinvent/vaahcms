@@ -207,13 +207,14 @@ const toggleUserStatusMenu = (event) => {
                                                 v-if="value"
                                         />
                                         <Dialog header="Bio"
+                                                class="is-small"
                                                 v-model:visible="store.display_bio_modal"
                                                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                                                 :style="{width: '50vw'}"
                                                 :modal="true"
                                                 :draggable="false"
                                         >
-                                            <p class="m-3" v-html="store.bio_modal_data" />
+                                            <p class="m-3 mt-0" v-html="store.bio_modal_data" />
                                         </Dialog>
                                     </td>
                                 </tr>
@@ -231,24 +232,16 @@ const toggleUserStatusMenu = (event) => {
                                                 data-testid="register-open_meta_modal"
                                         />
                                         <Dialog header="Meta"
+                                                class="is-small"
                                                 v-model:visible="store.display_meta_modal"
                                                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                                                 :style="{width: '50vw'}" :modal="true"
                                                 :draggable="false"
                                         >
-                                            <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
+                                            <p class="m-0" v-html="`<pre class='my-0'>`+store.meta_content+'<pre>'"></p>
                                         </Dialog>
                                     </td>
                                 </tr>
-
-                                <Dialog header="Meta"
-                                        v-model:visible="store.display_meta_modal"
-                                        :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-                                        :style="{width: '50vw'}" :modal="true"
-                                        :draggable="false"
-                                >
-                                    <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
-                                </Dialog>
                             </template>
 
                             <template v-else-if="column === 'status'" >
