@@ -527,6 +527,13 @@ a{
 }
 
 .p-buttonset {
+    &.p-buttonset-sm {
+        .p-button{
+            @include scaledPadding($inputPadding, $scaleSM);
+            font-size: 0.65625rem;
+            line-height:normal;
+        }
+    }
     .p-button{
         font-size: 0.65625rem;
         padding: 0.5rem 0.4375rem;
@@ -1577,6 +1584,7 @@ $media-level-2-spacing: 0.5rem !default;
                     &.ql-color-picker {
                         .ql-picker-options {
                             padding: 7px;
+                            right: -20%;
                         }
                     }
                 }
@@ -1625,6 +1633,7 @@ $media-level-2-spacing: 0.5rem !default;
         }
     }
     .p-editor-content {
+        height: 150px;
         .ql-editor {
             padding: 0.4rem 0.75rem;
         }
