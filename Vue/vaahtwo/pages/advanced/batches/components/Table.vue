@@ -12,12 +12,12 @@ const useVaah = vaah();
         <!--table-->
 
          <DataTable :value="store.list.data"
-                       dataKey="id"
-                   class="p-datatable-sm"
-                   v-model:selection="store.action.items"
+                    dataKey="id"
+                    class="p-datatable-sm p-datatable-hoverable-rows"
+                    v-model:selection="store.action.items"
                     data-testid="batches-table-checkbox"
-                   stripedRows
-                   responsiveLayout="scroll"
+                    stripedRows
+                    responsiveLayout="scroll"
          >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -124,8 +124,6 @@ const useVaah = vaah();
         </DataTable>
         <!--/table-->
 
-        <Divider />
-
         <Dialog header="Options"
                 v-model:visible="store.display_detail"
                 data-testid="batch-table-detail_dialog"
@@ -158,7 +156,9 @@ const useVaah = vaah();
                    data-testid="batch-table-paginator"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page"
+                   class="bg-white-alpha-0 pt-2"
+        >
         </Paginator>
         <!--/paginator-->
     </div>

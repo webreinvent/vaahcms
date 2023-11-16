@@ -51,7 +51,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 ml-5 text-sm">Next Steps</h6>
+                            <h6 class="font-semibold mb-2 text-sm">Next Steps</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -72,7 +72,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 ml-5 text-sm">More Actions</h6>
+                            <h6 class="font-semibold mb-2 text-sm">More Actions</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"

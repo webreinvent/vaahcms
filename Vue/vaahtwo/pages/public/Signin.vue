@@ -92,15 +92,18 @@ onMounted(async () => {
 
                                     <div class="flex flex-column align-items-center gap-3" >
                                         <div v-if="auth.sign_in_items.type === 'password'" class="w-full gap-3 flex flex-column">
-                                        <InputText
-                                            name="signin-email"
-                                            placeholder="Enter Username or Email"
-                                            data-testid="signin-email"
-                                            id="email"
-                                            class="w-full"
-                                            type="text"
-                                            v-model="auth.sign_in_items.email"/>
-                                        <div  class="w-full">
+                                        <div class="p-inputgroup">
+                                            <InputText
+                                                name="signin-email"
+                                                placeholder="Enter Username or Email"
+                                                data-testid="signin-email"
+                                                id="email"
+                                                class="w-full"
+                                                type="text"
+                                                v-model="auth.sign_in_items.email" required/>
+                                            <div class="required-field hidden"></div>
+                                        </div>
+                                        <div  class="p-inputgroup w-full">
                                             <Password
                                                 name="signin-password"
                                                 placeholder="Enter Password"
@@ -111,24 +114,30 @@ onMounted(async () => {
                                                 toggleMask
                                                 id="password"
                                                 :pt="{
+                                                    root: {
+                                                      required: ''
+                                                    },
                                                        showicon: {
                                                              'data-testid': `signin-password_eye`
                                                        }
                                                  }"></Password>
-
+                                            <div class="required-field hidden"></div>
                                         </div>
                                         </div>
 
                                         <div v-if="auth.sign_in_items.type === 'otp'" class="w-full">
                                             <div class="flex flex-column align-items-center gap-3">
                                                 <div class="p-inputgroup flex-1">
-                                                    <InputText
-                                                        name="signin-email"
-                                                        placeholder="Enter Username or Email"
-                                                        data-testid="signin-email"
-                                                        id="email"
-                                                        type="text"
-                                                        v-model="auth.sign_in_items.email"/>
+                                                    <div class="p-inputgroup">
+                                                        <InputText
+                                                            name="signin-email"
+                                                            placeholder="Enter Username or Email"
+                                                            data-testid="signin-email"
+                                                            id="email"
+                                                            type="text"
+                                                            v-model="auth.sign_in_items.email" required/>
+                                                        <div class="required-field hidden"></div>
+                                                    </div>
                                                     <Button
                                                         name="signin-generate_otp_btn"
                                                         data-testid="signin-generate_otp_btn"
@@ -137,15 +146,17 @@ onMounted(async () => {
                                                         :loading="auth.is_otp_btn_loading"
                                                         @click="auth.generateOTP()" />
                                                 </div>
-                                                <InputText
-                                                    name="signin-otp"
-                                                    placeholder="Enter OTP"
-                                                    data-testid="signin-otp"
-                                                    type="number"
-                                                    class="w-full"
-                                                    id="otp"
-                                                    v-model="auth.sign_in_items.login_otp"/>
-
+                                                <div class="p-inputgroup">
+                                                    <InputText
+                                                        name="signin-otp"
+                                                        placeholder="Enter OTP"
+                                                        data-testid="signin-otp"
+                                                        type="number"
+                                                        class="w-full"
+                                                        id="otp"
+                                                        v-model="auth.sign_in_items.login_otp" required/>
+                                                    <div class="required-field hidden"></div>
+                                                </div>
                                             </div>
 
 
