@@ -634,7 +634,7 @@ class ModuleBase extends Model
     {
         $module_path = config('vaahcms.modules_path').'/'.$module->name;
         $source = $module_path."/Resources/assets";
-        $dec = public_path('vaahcms/modules/'.$module->slug.'/assets');
+        $dec = public_path(env('BUILD_DIRECTORY_NAME','vaahcms').'modules/'.$module->slug.'/assets');
 
         if(!\File::exists($source)) {
             return false;
