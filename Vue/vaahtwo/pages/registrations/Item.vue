@@ -304,24 +304,18 @@ const toggleUserStatusMenu = (event) => {
                                     <td v-if="value" colspan="2">
                                         <Tag v-if="value==='m'"
                                              value="Male"
-                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
-                                             :pt="{
-                                                value: 'line-height-1'
-                                             }"/>
+                                             class="mr-2 p-tag-xs"
+                                             severity="primary"/>
 
                                         <Tag v-else-if="value==='f'"
                                              value="Female"
-                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
-                                             :pt="{
-                                                value: 'line-height-1'
-                                             }" />
+                                             class="mr-2 p-tag-xs"
+                                             severity="primary"/>
 
                                         <Tag v-else-if="value==='o'"
                                              value="Others"
-                                             class="mr-2 px-2 p-tag-xs font-medium bg-blue-50 text-blue-500 border-1 border-round-xl"
-                                             :pt="{
-                                                value: 'line-height-1'
-                                             }" />
+                                             class="mr-2 p-tag-xs"
+                                             severity="primary"/>
                                     </td>
                                 </tr>
                             </template>
