@@ -55,7 +55,7 @@ const toggleItemMenu = (event) => {
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -92,12 +92,11 @@ const toggleItemMenu = (event) => {
                 </div>
             </template>
 
-            <div class="grid p-fluid mt-1 mb-2">
-                <div class="col-12">
-                    <div class="p-inputgroup">
+            <div class="flex justify-content-between mt-2 mb-2">
+                <div class="p-inputgroup justify-content-end mb-2">
                          <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
-                            <InputText class="w-full p-inputtext-sm"
+                            <i class="text-xs pi pi-search" />
+                            <InputText class="w-full p-inputtext-sm pl-5"
                                        placeholder="Search"
                                        type="text"
                                        v-model="store.user_roles_query.q"
@@ -113,7 +112,6 @@ const toggleItemMenu = (event) => {
                                 @click="store.resetUserRolesFilters()"
                         />
                     </div>
-                </div>
             </div>
 
             <div>
@@ -127,7 +125,7 @@ const toggleItemMenu = (event) => {
                         >
                             <Column field="role"
                                     header="Roles"
-                                    class="flex align-items-center"
+                                    class="flex align-items-center justify-content-between"
                             >
                                 <template #body="prop">
                                     {{ prop.data.name }}
@@ -184,6 +182,7 @@ const toggleItemMenu = (event) => {
                                             @click="store.showModal(prop.data)"
                                             data-testid="user-role_details_view"
                                             icon="pi pi-eye"
+                                            iconClass="mr-1"
                                             label="View"
                                     />
                                 </template>
@@ -207,6 +206,7 @@ const toggleItemMenu = (event) => {
         </Panel>
 
         <Dialog header="Details"
+                class="is-small"
                 v-model:visible="store.displayModal"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}"
                 :modal="true"
@@ -214,7 +214,7 @@ const toggleItemMenu = (event) => {
             <div v-for="(item,index) in store.modalData" :key="index">
                 <span> {{ index }} </span> : {{ item }}
 
-                <Divider />
+                <Divider class="my-0" />
             </div>
         </Dialog>
     </div>

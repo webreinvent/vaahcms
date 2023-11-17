@@ -147,101 +147,133 @@ const toggleFormMenu = (event) => {
                                       :is_basic="true"
                                       data-testid="user-form_upload_avatar"
                                       :auto_upload="true"
-                                      :uploadUrl="root.assets.urls.upload" >
-                        </FileUploader>
+                                      :uploadUrl="root.assets.urls.upload"
+                                      :pt="{
+                                          chooseButton: 'p-button-sm',
+                                          label: 'line-height-2',
+                                          uploadIcon: {
+                                              style: {
+                                                  width: '0.7rem',
+                                                  height: '0.7rem'
+                                              }
+                                          }
+                                      }"
+                        />
                     </div>
 
                 </div>
 
-                <VhField label="Email">
-                    <InputText :class="'w-full '+ store.email_error.class"
+                <VhField label="Email" class="mb-2">
+                    <InputText :class="'w-full p-inputtext-sm '+ store.email_error.class"
                                v-model="store.item.email"
                                @input="store.validateEmail"
                                name="account-email"
                                data-testid="account-email"
                                type="email"
                                aria-describedby="email-error"
+                               placeholder="Email"
                     />
                     <small id="email-error" class="p-error">{{ store.email_error.msg }}</small>
                 </VhField>
 
-                <VhField label="Username">
-                    <InputText class="w-full"
+                <VhField label="Username" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
                                v-model="store.item.username"
                                name="account-username"
                                data-testid="account-username"
+                               placeholder="Username"
                     />
                 </VhField>
 
-                <VhField label="Password">
+                <VhField label="Password" class="mb-2">
                     <Password class="w-full"
                               v-model="store.item.password"
                               :feedback="false"
                               id="password"
                               name="account-password"
                               data-testid="account-password"
-                              inputClass="w-full"
+                              inputClass="w-full p-inputtext-sm"
+                              placeholder="Password"
                               toggleMask
                     />
                 </VhField>
 
-                <VhField label="Display Name" v-if="!store.isHidden('display_name')">
-                    <InputText class="w-full"
+                <VhField label="Display Name"
+                         v-if="!store.isHidden('display_name')"
+                         class="mb-2"
+                >
+                    <InputText class="w-full p-inputtext-sm"
                                v-model="store.item.display_name"
+                               placeholder="Display Name"
                                name="account-display_name"
                                data-testid="account-display_name"
                     />
                 </VhField>
 
                 <template v-if="!store.isHidden('title')">
-                    <VhField label="Title">
+                    <VhField label="Title" class="mb-2">
                         <Dropdown class="w-full"
+                                  placeholder="Title"
                                   v-model="store.item.title"
                                   :options="store.assets.name_titles"
                                   optionLabel="name"
                                   optionValue="slug"
                                   id="Title"
+                                  inputClass="p-inputtext-sm"
                                   name="account-title"
                                   data-testid="account-title"
+                                  :pt="{
+                                      dropdownIcon: {
+                                          style: {
+                                              height: '0.7rem',
+                                              width: '0.7rem'
+                                          }
+                                      }
+                                  }"
                         />
                     </VhField>
                 </template>
 
-                <VhField label="Designation" v-if="!store.isHidden('designation')">
-                    <InputText class="w-full"
+                <VhField label="Designation" v-if="!store.isHidden('designation')" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Designation"
                                v-model="store.item.designation"
                                name="account-designation"
                                data-testid="account-designation"
                     />
                 </VhField>
 
-                <VhField label="First Name">
-                    <InputText class="w-full"
+                <VhField label="First Name" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="First Name"
                                v-model="store.item.first_name"
                                name="account-first_name"
                                data-testid="account-first_name"
                     />
                 </VhField>
 
-                <VhField label="Middle Name" v-if="!store.isHidden('middle_name')">
-                    <InputText class="w-full"
+                <VhField label="Middle Name" v-if="!store.isHidden('middle_name')" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Middle Name"
                                v-model="store.item.middle_name"
                                name="account-middle_name"
                                data-testid="account-middle_name"
                     />
                 </VhField>
 
-                <VhField label="Last Name" v-if="!store.isHidden('last_name')">
-                    <InputText class="w-full"
+                <VhField label="Last Name" v-if="!store.isHidden('last_name')" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Last Name"
                                v-model="store.item.last_name"
                                name="account-last_name"
                                data-testid="account-last_name"
                     />
                 </VhField>
 
-                <VhField label="Gender" v-if="!store.isHidden('gender')">
+                <VhField label="Gender" v-if="!store.isHidden('gender')" class="mb-2">
                     <SelectButton v-model="store.item.gender"
                                   :options="store.gender_options"
+                                  class="shadow-none p-buttonset-sm"
                                   optionLabel="label"
                                   optionValue="value"
                                   aria-labelledby="custom"
@@ -254,7 +286,7 @@ const toggleFormMenu = (event) => {
                     </SelectButton>
                 </VhField>
 
-                <VhField label="Country" v-if="!store.isHidden('country')">
+                <VhField label="Country" v-if="!store.isHidden('country')" class="mb-2">
                     <AutoComplete class="w-full"
                                   v-model="store.item.country"
                                   :suggestions="store.filtered_country_codes"
@@ -264,12 +296,15 @@ const toggleFormMenu = (event) => {
                                   optionLabel="name"
                                   name="account-country"
                                   data-testid="account-country"
-                                  inputClass="w-full"
+                                  inputClass="w-full p-inputtext-sm"
                     />
                 </VhField>
 
-                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')">
+                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')"
+                         class="mb-2">
                     <Dropdown class="w-full"
+                              placeholder="Country Code"
+                              inputClass="p-inputtext-sm"
                               v-model="store.item.country_calling_code"
                               :options="store.assets.countries"
                               :editable="true"
@@ -278,34 +313,48 @@ const toggleFormMenu = (event) => {
                               id="calling_code"
                               name="account-country_calling_code"
                               data-testid="account-country_calling_code"
+                              :pt="{
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
+                              }"
                     />
                 </VhField>
 
-                <VhField label="Phone" v-if="!store.isHidden('phone')">
-                    <InputText class="w-full"
+                <VhField label="Phone" v-if="!store.isHidden('phone')"
+                         class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Phone"
                                v-model="store.item.phone"
                                name="account-phone"
                                data-testid="account-phone"
                     />
                 </VhField>
 
-                <VhField label="bio" v-if="!store.isHidden('bio')">
+                <VhField label="Bio" v-if="!store.isHidden('bio')"
+                         class="mb-2">
                     <Editor v-model="store.item.bio"
-                            editorStyle="height: 320px"
                             name="account-bio"
+                            placeholder="Bio..."
                             data-testid="account-bio"
                     />
                 </VhField>
 
-                <VhField label="Website" v-if="!store.isHidden('website')">
-                    <InputText class="w-full"
+                <VhField label="Website" v-if="!store.isHidden('website')"
+                         class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Website"
                                v-model="store.item.website"
                                name="account-website"
                                data-testid="account-website"
                     />
                 </VhField>
 
-                <VhField label="Timezone" v-if="!store.isHidden('timezone')">
+                <VhField label="Timezone" v-if="!store.isHidden('timezone')"
+                         class="mb-2">
                     <Dropdown v-model="store.item.timezone"
                               :options="store.assets.timezones"
                               optionLabel="name"
@@ -315,32 +364,52 @@ const toggleFormMenu = (event) => {
                               :showClear="true"
                               data-testid="account-timezone"
                               class="w-full"
+                              inputClass="p-inputtext-sm"
+                              :pt="{
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
+                              }"
                     />
                 </VhField>
 
-                <VhField label="Alternate Email" v-if="!store.isHidden('alternate_email')">
-                    <InputText class="w-full"
+                <VhField label="Alternate Email" v-if="!store.isHidden('alternate_email')"
+                         class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Alternate Email"
                                v-model="store.item.alternate_email"
                                name="account-alternate_email"
                                data-testid="account-alternate_email"
                     />
                 </VhField>
 
-                <VhField label="Date of Birth" v-if="!store.isHidden('birth')">
-                    <Calendar class="w-full"
+                <VhField label="Date of Birth" v-if="!store.isHidden('birth')"
+                         class="mb-2">
+                    <Calendar class="w-full p-inputgroup"
                               id="dob"
                               inputId="basic"
                               v-model="store.item.birth"
                               autocomplete="off"
                               name="account-birth"
                               data-testid="account-birth"
-                              dateFormat="dd-mm-yy"
+                              dateFormat="mm-dd-yy"
+                              placeholder="mm-dd-yy"
+                              :showIcon="true"
                               :showTime="false"
+                              :pt="{
+                                  input: 'p-inputtext-sm',
+                                  button: 'p-button-sm'
+                              }"
                     />
                 </VhField>
 
-                <VhField label="Foreign User Id" v-if="!store.isHidden('foreign_user_id')">
-                    <InputText class="w-full"
+                <VhField label="Foreign User Id" v-if="!store.isHidden('foreign_user_id')"
+                         class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               placeholder="Foreign User Id"
                                type="number"
                                v-model="store.item.foreign_user_id"
                                name="account-foreign_user_id"
@@ -348,8 +417,10 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <VhField label="Status">
+                <VhField label="Status" class="mb-2">
                     <Dropdown class="w-full"
+                              inputClass="p-inputtext-sm"
+                              placeholder="Status"
                               v-model="store.item.status"
                               :options="store.status_options"
                               optionLabel="label"
@@ -358,13 +429,22 @@ const toggleFormMenu = (event) => {
                               name="account-status"
                               data-testid="account-status"
                               @change="store.setIsActiveStatus"
+                              :pt="{
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
+                              }"
                     />
                 </VhField>
 
-                <VhField label="Is Active">
+                <VhField label="Is Active" class="mb-2">
                     <SelectButton v-if="root && root.is_active_status_options"
                                   v-model="store.item.is_active"
                                   :options="root.is_active_status_options"
+                                  class="shadow-none p-buttonset-sm"
                                   option-label="label"
                                   option-value="value"
                     />

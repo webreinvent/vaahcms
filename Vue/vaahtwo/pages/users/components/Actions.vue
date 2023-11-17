@@ -43,9 +43,10 @@ const toggleBulkMenuState = (event) => {
                         @click="toggleSelectedMenuState"
                         v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                 >
-                    <i class="pi pi-angle-down"></i>
+                    <i class="text-xs pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
+                           class="font-normal"
                     />
                 </Button>
 
@@ -57,13 +58,14 @@ const toggleBulkMenuState = (event) => {
 
                 <!--bulk_menu-->
                 <Button class="p-button-sm ml-1"
-                        icon="pi pi-ellipsis-h"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
                         data-testid="user-action_bulk_menu"
                         @click="toggleBulkMenuState"
                         v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
-                />
+                >
+                    <i class="text-xs pi pi-ellipsis-h"></i>
+                </Button>
 
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
@@ -96,13 +98,11 @@ const toggleBulkMenuState = (event) => {
 
                             <Button class="p-button-sm"
                                     label="Filters"
+                                    :badge="store.count_filters > 0 ? store.count_filters : ''"
+                                    badgeClass="font-normal"
                                     data-testid="user-action_filter"
                                     @click="store.show_filters = true"
                             >
-
-                                <Badge v-if="store.count_filters > 0"
-                                       :value="store.count_filters"
-                                />
                             </Button>
 
                             <Button class="p-button-sm"
