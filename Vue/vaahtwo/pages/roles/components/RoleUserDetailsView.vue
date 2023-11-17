@@ -18,11 +18,11 @@ onMounted(async () => {
     <div>
         <div v-if="store && store.active_role_user">
             <p>Created By : <span> {{ store.active_role_user.json.created_by }}</span></p>
-           <Divider class="is-small"/>
+           <Divider class="is-small my-0"/>
             <p>Updated By : <span> {{ store.active_role_user.json.updated_by }}</span></p>
-           <Divider class="is-small"/>
+           <Divider class="is-small my-0"/>
             <p>Created At : <span> {{ store.active_role_user.json.created_at }}</span></p>
-           <Divider class="is-small"/>
+           <Divider class="is-small my-0"/>
             <p>Updated At : <span> {{ store.active_role_user.json.updated_at }}</span></p>
         </div>
 

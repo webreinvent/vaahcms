@@ -60,7 +60,7 @@ const toggleItemMenu = (event) => {
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                        {{ store.item.name }}
                     </div>
                 </div>

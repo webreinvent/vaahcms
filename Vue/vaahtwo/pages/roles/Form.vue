@@ -39,7 +39,7 @@ const toggleFormMenu = (event) => {
         <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
@@ -109,28 +109,32 @@ const toggleFormMenu = (event) => {
             </template>
 
             <div v-if="store.item" class="mt-2">
-                <VhField label="Name">
-                    <InputText class="w-full"
+                <VhField label="Name" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
                                v-model="store.item.name"
+                               placeholder="Name"
                                @update:modelValue="store.watchItem"
                                data-testid="role-item_name" />
                 </VhField>
 
-                <VhField label="Slug">
-                    <InputText class="w-full"
+                <VhField label="Slug" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
                                v-model="store.item.slug"
+                               placeholder="Slug"
                                data-testid="role-item_slug" />
                 </VhField>
 
-                <VhField label="Details">
-                    <Textarea class="w-full"
+                <VhField label="Details" class="mb-2">
+                    <Textarea class="w-full p-inputtext-sm"
                               v-model="store.item.details"
+                              placeholder="Details"
                               data-testid="role-item_details" />
                 </VhField>
 
-                <VhField label="Is Active">
+                <VhField label="Is Active" class="mb-2">
                     <SelectButton v-if="root && root.is_active_status_options"
                                   v-model="store.item.is_active"
+                                  class="shadow-none p-buttonset-sm"
                                   data-testid="role-item_status"
                                   :options="root.is_active_status_options"
                                   option-label="label"

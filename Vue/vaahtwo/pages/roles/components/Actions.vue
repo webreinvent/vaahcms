@@ -35,18 +35,19 @@ const toggleBulkMenuState = (event) => {
 
             <!--left-->
             <div v-if="store.view === 'large'">
-
                 <!--selected_menu-->
                 <Button class="p-button-sm"
                         type="button"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         @click="toggleSelectedMenuState"
-                        v-if="store.hasPermission('can-manage-role') || store.hasPermission('can-update-role')"
+                        v-if="store.hasPermission('can-manage-roles')
+                        || store.hasPermission('can-update-roles')"
                 >
-                    <i class="pi pi-angle-down"></i>
+                    <i class="text-xs pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
+                           class="font-normal"
                     />
                 </Button>
 
@@ -58,13 +59,15 @@ const toggleBulkMenuState = (event) => {
 
                 <!--bulk_menu-->
                 <Button class="ml-1 p-button-sm"
-                        icon="pi pi-ellipsis-h"
                         type="button"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
                         @click="toggleBulkMenuState"
-                        v-if="store.hasPermission('can-manage-role') || store.hasPermission('can-update-role')"
-                />
+                        v-if="store.hasPermission('can-manage-roles')
+                        || store.hasPermission('can-update-roles')"
+                >
+                    <i class="text-xs pi pi-ellipsis-h"></i>
+                </Button>
 
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
@@ -97,14 +100,12 @@ const toggleBulkMenuState = (event) => {
 
                             <Button class="p-button-sm"
                                     type="button"
+                                    label="Filters"
+                                    :badge="store.count_filters > 0 ? store.count_filters : ''"
+                                    badgeClass="font-normal"
                                     @click="store.show_filters = true"
                                     data-testid="role-action_filter"
-                            >
-                                Filters
-                                <Badge v-if="store.count_filters > 0"
-                                       :value="store.count_filters"
-                                />
-                            </Button>
+                            />
 
                             <Button class="p-button-sm"
                                     label="Reset"

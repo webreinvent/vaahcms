@@ -68,6 +68,7 @@ const dialog = useDialog();
 const openViewModal = () => {
     const dialogRef = dialog.open(PermissionDetailsView, {
         props: {
+            class: 'is-small',
             header: 'Details',
             style: {
                 width: '50vw',
@@ -111,8 +112,7 @@ const confirmChangeStatus = (event, id) => {
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -155,7 +155,7 @@ const confirmChangeStatus = (event, id) => {
                 </div>
             </template>
 
-            <div class="flex justify-content-between mt-3 mb-1">
+            <div class="flex justify-content-between mt-2 mb-2">
 
                 <div v-if="store && store.assets">
                     <Dropdown v-model="store.role_permissions_query.module"
@@ -164,6 +164,14 @@ const confirmChangeStatus = (event, id) => {
                               data-testid="role-permission_module"
                               @change="store.getModuleSection()"
                               class="is-small"
+                              :pt="{
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
+                              }"
                     >
                         <template #option="slotProps">
                             <div>
@@ -182,6 +190,14 @@ const confirmChangeStatus = (event, id) => {
                               @click="store.getItemPermissions()"
                               data-testid="role-permission_section"
                               class="is-small"
+                              :pt="{
+                                  dropdownIcon: {
+                                      style: {
+                                          height: '0.7rem',
+                                          width: '0.7rem'
+                                      }
+                                  }
+                              }"
                     >
                         <template #option="slotProps">
                             <div>
@@ -195,19 +211,20 @@ const confirmChangeStatus = (event, id) => {
                     <div class="col-12">
                         <div class="p-inputgroup">
                             <span class="p-input-icon-left">
-                                <i class="pi pi-search" />
+                                <i class="text-xs pi pi-search" />
                                 <InputText v-model="store.role_permissions_query.q"
                                            @keyup.enter="store.delayedRolePermissionSearch()"
                                            @keyup.enter.native="store.delayedRolePermissionSearch()"
                                            @keyup.13="store.delayedRolePermissionSearch()"
                                            placeholder="Search"
                                            type="text"
-                                           class="w-full"
+                                           class="w-full pl-5 p-inputtext-sm"
                                            data-testid="role-permission_search"
                                 />
                             </span>
 
                             <Button label="Reset"
+                                    class="p-button-sm"
                                     @click="store.resetRolePermissionFilters()"
                                     data-testid="role-permission_search_reset"
                             />
@@ -326,6 +343,7 @@ const confirmChangeStatus = (event, id) => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
+                                iconClass="mr-1"
                                 label="View"
                                 data-testid="role-permission_view_modal"
                         />

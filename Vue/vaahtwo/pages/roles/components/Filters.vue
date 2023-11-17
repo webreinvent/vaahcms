@@ -14,13 +14,16 @@ const store = useRoleStore();
         <Sidebar v-model:visible="store.show_filters"
                  style="z-index: 1101"
                  position="right"
+                 :pt="{
+                     header: 'py-2'
+                 }"
         >
             <VhFieldVertical>
                 <template #label>
                     <b>Sort By:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-none"
                                  value=""
                                  data-testid="role-filter_sort_none"
@@ -29,7 +32,7 @@ const store = useRoleStore();
                     <label for="sort-none">None</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-ascending"
                                  value="updated_at"
                                  data-testid="role-filter_sort_asc"
@@ -38,7 +41,7 @@ const store = useRoleStore();
                     <label for="sort-ascending">Updated (Ascending)</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-descending"
                                  value="updated_at:desc"
                                  data-testid="role-filter_sort_desc"
@@ -49,14 +52,14 @@ const store = useRoleStore();
 
             </VhFieldVertical>
 
-            <Divider/>
+            <Divider class="my-0"/>
 
             <VhFieldVertical>
                 <template #label>
                     <b>Is Active:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-all"
                                  value="null"
                                  data-testid="role-filter_status_all"
@@ -65,7 +68,7 @@ const store = useRoleStore();
                     <label for="active-all">All</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-true"
                                  value="true"
                                  data-testid="role-filter_status_active_only"
@@ -74,7 +77,7 @@ const store = useRoleStore();
                     <label for="active-true">Only Active</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-false"
                                  value="false"
                                  data-testid="role-filter_status_inactive_only"
@@ -90,7 +93,7 @@ const store = useRoleStore();
                     <b>Trashed:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-exclude"
                                  value=""
                                  data-testid="role-filter_trashed_exclude"
@@ -99,7 +102,7 @@ const store = useRoleStore();
                     <label for="trashed-exclude">Exclude Trashed</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-include"
                                  value="include"
                                  data-testid="role-filter_trashed_include"
@@ -107,7 +110,7 @@ const store = useRoleStore();
                     <label for="trashed-include">Include Trashed</label>
                 </div>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-only"
                                  value="only"
                                  data-testid="role-filter_trashed_only"
