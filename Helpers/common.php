@@ -42,6 +42,11 @@ function slug_to_str($slug)
     return $str;
 }
 //-------------------------------------------------------------
+function str_to_slug($string)
+{
+    return \Str::slug($string);;
+}
+//-------------------------------------------------------------
 function generate_random_string($length=8)
 {
     return \Str::random($length);
