@@ -13,6 +13,9 @@ const store = useUserStore();
         <Sidebar v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101"
+                 :pt="{
+                     header: 'py-2'
+                 }"
         >
             <VhFieldVertical >
                 <template #label>
@@ -43,7 +46,7 @@ const store = useUserStore();
 
             </VhFieldVertical>
 
-            <Divider/>
+            <Divider class="my-0"/>
 
             <VhFieldVertical >
                 <template #label>
