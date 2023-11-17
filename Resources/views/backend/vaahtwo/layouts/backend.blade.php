@@ -24,8 +24,6 @@
 
     {!! vh_config_css() !!}
 
-    @yield('vaahcms_extend_backend_css')
-
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
