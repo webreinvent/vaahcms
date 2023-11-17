@@ -13,13 +13,16 @@ const store = useRegistrationStore();
         <Sidebar v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101"
+                 :pt="{
+                     header: 'py-2'
+                 }"
         >
             <VhFieldVertical >
                 <template #label>
                     <b>Sort By:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-none"
                                  value=""
                                  v-model="store.query.filter.sort"
@@ -27,7 +30,7 @@ const store = useRegistrationStore();
                     />
                     <label for="sort-none">None</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-ascending"
                                  value="updated_at"
                                  v-model="store.query.filter.sort"
@@ -35,7 +38,7 @@ const store = useRegistrationStore();
                     />
                     <label for="sort-ascending">Updated (Ascending)</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-descending"
                                  value="updated_at:desc"
                                  v-model="store.query.filter.sort"
@@ -46,14 +49,14 @@ const store = useRegistrationStore();
 
             </VhFieldVertical>
 
-            <Divider/>
+            <Divider class="my-0"/>
 
             <VhFieldVertical >
                 <template #label>
                     <b>Trashed:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-exclude"
                                  value=""
                                  v-model="store.query.filter.trashed"
@@ -61,7 +64,7 @@ const store = useRegistrationStore();
                     />
                     <label for="trashed-exclude">Exclude Trashed</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-include"
                                  value="include"
                                  v-model="store.query.filter.trashed"
@@ -69,7 +72,7 @@ const store = useRegistrationStore();
                     />
                     <label for="trashed-include">Include Trashed</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-only"
                                  value="only"
                                  v-model="store.query.filter.trashed"
@@ -80,13 +83,13 @@ const store = useRegistrationStore();
 
             </VhFieldVertical>
 
-            <Divider/>
+            <Divider class="my-0"/>
             <VhFieldVertical >
                 <template #label>
                     <b>Status:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="email-verification-pending"
                                  value="email-verification-pending"
                                  v-model="store.query.filter.status"
@@ -94,7 +97,7 @@ const store = useRegistrationStore();
                     />
                     <label for="email-verification-pending">Email Verification Pending</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="email-verified"
                                  value="email-verified"
                                  v-model="store.query.filter.status"
@@ -102,7 +105,7 @@ const store = useRegistrationStore();
                     />
                     <label for="email-verified">Email Verified</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="user-created"
                                  value="user-created"
                                  v-model="store.query.filter.status"

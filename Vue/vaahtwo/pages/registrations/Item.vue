@@ -105,7 +105,11 @@ const toggleUserStatusMenu = (event) => {
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                          :pt="{
+                              icon: 'text-xs'
+                          }"
+                    />
 
                     <!--/item_menu-->
 
