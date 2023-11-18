@@ -58,6 +58,7 @@ const dialog = useDialog();
 const openDetailsViewModal = () => {
     const dialogRef = dialog.open(RoleUserDetailsView, {
         props: {
+            class: 'is-small',
             header: 'Details',
             style: {
                 width: '50vw',
@@ -78,8 +79,7 @@ const openDetailsViewModal = () => {
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -122,11 +122,11 @@ const openDetailsViewModal = () => {
                 </div>
             </template>
 
-            <div class="grid p-fluid mt-1 mb-2">
+            <div class="grid p-fluid py-2">
                 <div class="col-12">
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup justify-content-end">
                          <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
+                            <i class="text-xs pi pi-search" />
                             <InputText v-model="store.role_users_query.q"
                                        @keyup.enter="store.delayedRoleUsersSearch()"
                                        @keyup.enter.native="store.delayedRoleUsersSearch()"
@@ -134,7 +134,7 @@ const openDetailsViewModal = () => {
                                        placeholder="Search"
                                        type="text"
                                        data-testid="role-user_search"
-                                       class="w-full p-inputtext-sm"
+                                       class="w-full pl-5 p-inputtext-sm"
                             />
                          </span>
 
@@ -216,6 +216,7 @@ const openDetailsViewModal = () => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
                                 icon="pi pi-eye"
+                                iconClass="mr-1"
                                 label="View"
                                 data-testid="role-user_view_details"
                         />
