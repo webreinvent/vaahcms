@@ -53,13 +53,17 @@ onMounted(async () => {
                 </div>
             </template>
 
-            <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer" class="my-2">
-                <AccordionTab>
+            <Accordion :multiple="true"
+                       :activeIndex="store.active_index"
+                       id="accordionTabContainer"
+                       class="my-2"
+            >
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
                             <div>
-                                <h5 class="font-semibold text-sm">Site Settings</h5>
-                                <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
+                                <h5 class="font-semibold text-sm line-height-2">Site Settings</h5>
+                                <p class="text-color-secondary font-medium text-xs">After a successful password update, you will be redirected to
                                     the login page where you can log in with your new password.</p>
                             </div>
                         </div>
@@ -68,55 +72,55 @@ onMounted(async () => {
                     <SiteSettings />
                 </AccordionTab>
 
-                <AccordionTab>
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Securities</h5>
-                            <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                            <h5 class="font-semibold text-sm line-height-2">Securities</h5>
+                            <p class="text-color-secondary font-medium text-xs">Enable and choose multiple methods of authentication</p>
                         </div>
                     </template>
 
                     <Securities />
                 </AccordionTab>
 
-                <AccordionTab>
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Date & Time</h5>
-                            <p class="text-color-secondary text-xs">Global date and time settings.</p>
+                            <h5 class="font-semibold text-sm line-height-2">Date & Time</h5>
+                            <p class="text-color-secondary font-medium text-xs">Global date and time settings.</p>
                         </div>
                     </template>
 
                     <DateTime />
                 </AccordionTab>
 
-                <AccordionTab>
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Social Media & Links</h5>
-                            <p class="text-color-secondary text-xs">Static links management.</p>
+                            <h5 class="font-semibold text-sm line-height-2">Social Media & Links</h5>
+                            <p class="text-color-secondary font-medium text-xs">Static links management.</p>
                         </div>
                     </template>
 
                     <SocialMediaLink />
                 </AccordionTab>
 
-                <AccordionTab>
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Scripts</h5>
-                            <p class="text-color-secondary text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
+                            <h5 class="font-semibold text-sm line-height-2">Scripts</h5>
+                            <p class="text-color-secondary font-medium text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
                         </div>
                     </template>
 
                     <Script />
                 </AccordionTab>
 
-                <AccordionTab>
+                <AccordionTab :pt="{ headerAction: 'py-2' }">
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Meta Tags</h5>
-                            <p class="text-color-secondary text-xs">Global meta tags.</p>
+                            <h5 class="font-semibold text-sm line-height-2">Meta Tags</h5>
+                            <p class="text-color-secondary font-medium text-xs">Global meta tags.</p>
                         </div>
                     </template>
 
