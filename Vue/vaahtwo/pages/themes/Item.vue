@@ -60,20 +60,28 @@ const toggleItemMenu = (event) => {
 
     <div class="col-6" >
 
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
 
             <template #header>
-                <div class="flex justify-content-between align-items-center w-full">
-                    <h5 class="white-space-nowrap font-semibold text-lg pt-2">{{ store.item.name}}</h5>
-                    <div class="p-inputgroup justify-content-end w-6 flex">
-                        <h5 class="white-space-nowrap font-semibold text-lg pt-2 pr-3">#{{ store.item.id }}</h5>
-                        <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
+                <div class="flex flex-row">
+                    <div class="p-panel-title">
+                        {{ store.item.name }}
                     </div>
                 </div>
             </template>
 
             <template #icons>
+                <div class="p-inputgroup">
+                    <Button class="p-button-sm"
+                            :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
+                    />
 
+                    <Button class="p-button-sm"
+                            icon="pi pi-times"
+                            @click="store.closeInstallTheme()"
+                    />
+                </div>
             </template>
 
 
@@ -101,14 +109,18 @@ const toggleItemMenu = (event) => {
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
+                <table class="p-datatable-table w-full">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
                         <template v-if="column === 'created_by' || column === 'updated_by'"></template>
                         <template v-else-if="column === 'author_website'">
                             <tr>
-                                <td><b>{{ vaah().toLabel(column) }}</b></td>
-                                <td style="word-break: break-all;">{{ value }}</td>
+                                <td style="width: 120px;">
+                                    <p class="font-semibold text-xs line-height-2">
+                                        {{ vaah().toLabel(column) }}
+                                    </p>
+                                </td>
+                                <td class="line-height-2 text-xs">{{ value }}</td>
                                 <td>
                                     <Button icon="pi pi-external-link"
                                         @click="store.openWebsite(value)"

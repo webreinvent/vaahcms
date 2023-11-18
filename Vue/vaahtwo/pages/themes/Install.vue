@@ -49,15 +49,15 @@ onMounted(async () => {
 <template>
     <div class="column col-6" >
         <div v-if="store.themes && store.themes.data">
-            <Card>
+            <Card class="is-small">
                 <template #header>
-                    <div class="flex justify-content-between align-items-center">
-                        <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
+                    <div class="flex justify-content-between align-items-center mt-2">
+                        <h5 class="white-space-nowrap font-semibold text-base">Install Themes</h5>
                         <div class="p-inputgroup justify-content-end w-6">
                             <span class="p-input-icon-left">
-                                <i class="pi pi-search" />
+                                <i class="text-xs pi pi-search" />
                                 <InputText placeholder="Search"
-                                           class="w-full p-inputtext-sm"
+                                           class="w-full pl-5 p-inputtext-sm"
                                            type="search"
                                            icon="search"
                                            v-model="store.query.q"
@@ -76,17 +76,24 @@ onMounted(async () => {
                     </div>
                 </template>
                 <template #content>
-                    <div class="col-12 md:col-6" v-for="item in store.themes.data">
-                        <Card>
+                    <div class="flex flex-wrap mb-2">
+                        <div class="col-12 md:col-6" v-for="item in store.themes.data">
+                        <Card :pt="{ footer: 'mb-2'}">
                             <template #header>
-                                <img :src="item.thumbnail" style="height: 15rem" />
+                                <img :src="item.thumbnail" class="w-full" />
                             </template>
                             <template #content>
                                 <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>
                                 <p class="mb-3 text-sm">{{item.excerpt}}</p>
-                                <Tag class="mr-2 mb-2">Name:{{item.title}}</Tag>
-                                <Tag class="mr-2 mb-2">Version: {{item.version}}</Tag>
-                                <Tag class="mr-2 mb-2">Developed by: {{item.author_name}}</Tag>
+                                <Tag class="mr-2 mb-2 bg-blue-50 text-blue-600 font-semibold">
+                                    Name: {{item.title}}
+                                </Tag>
+                                <Tag class="mr-2 mb-2 bg-blue-50 text-blue-600 font-semibold">
+                                    Version: {{item.version}}
+                                </Tag>
+                                <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">
+                                    Developed by: {{item.author_name}}
+                                </Tag>
                             </template>
                             <template #footer v-if="store.hasPermission('can-install-theme')">
                                 <Button icon="pi pi-check"
@@ -102,16 +109,17 @@ onMounted(async () => {
                             </template>
                         </Card>
                     </div>
-                    <hr style="margin-top: 0;"/>
+                    </div>
+                    <hr class="my-0"/>
+                    <Paginator v-model:rows="store.themes_query.rows"
+                               :totalRecords="store.themes.total"
+                               class="bg-white-alpha-0 pt-2"
+                               @page="store.themesPaginate($event)"
+                               data-testid="themes-install-action-pagination"
+                               :rowsPerPageOptions="store.rows_per_page">
+                    </Paginator>
                 </template>
             </Card>
         </div>
-
-        <Paginator v-model:rows="store.themes_query.rows"
-                   :totalRecords="store.themes.total"
-                   @page="store.themesPaginate($event)"
-                   data-testid="themes-install-action-pagination"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
     </div>
 </template>

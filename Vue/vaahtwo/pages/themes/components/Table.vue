@@ -79,7 +79,11 @@ function actionItems(item){
         <div class="grid" v-for="(item, index) in store.list">
             <div class="col-12 md:col-5">
                 <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
-                <Tag v-if="item.is_default" value="Default" severity="success" class="ml-2" rounded></Tag>
+                <Tag v-if="item.is_default"
+                     value="Default"
+                     severity="success"
+                     class="ml-2"
+                     rounded/>
                 <p class="text-sm text-gray-600 mt-2">{{ item.description }}</p>
             </div>
             <div class="col-12 md:col-7">
@@ -189,6 +193,7 @@ function actionItems(item){
         <!--paginator-->
         <Paginator v-model:first="store.firstElement"
                    :rows="store.query.rows"
+                   class="bg-white-alpha-0 pt-2"
                    :totalRecords="store.stats.all"
                    @page="store.paginate($event)"
                    data-testid="themes-list-pagination"
