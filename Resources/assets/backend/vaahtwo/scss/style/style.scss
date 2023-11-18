@@ -195,59 +195,63 @@ a{
 }
 /*Tables*/
 .p-datatable {
-    tr {
-        th {
-            font-size: .7rem;
-            white-space: nowrap;
+    table {
+        border-collapse: collapse;
 
-            span {
-                svg {
-                    &.p-icon {
-                        width: 10px;
+        tr {
+            th {
+                font-size: .7rem;
+                white-space: nowrap;
+
+                span {
+                    svg {
+                        &.p-icon {
+                            width: 10px;
+                        }
+
                     }
+                }
+            }
 
+            td {
+                .p-checkbox, .p-inputswitch {
+                    vertical-align: middle;
+                }
+
+            }
+        }
+
+        .p-button {
+            padding: 0.25rem 0.5rem;
+            width: auto;
+            font-size: .75rem;
+
+            &:not(.p-button-tiny) {
+                font-size: .6rem;
+            }
+
+            &.p-button-text {
+                &:hover, &:active {
+                    background-color: transparent;
                 }
             }
         }
 
-        td {
-            .p-checkbox, .p-inputswitch {
-                vertical-align: middle;
-            }
-
-        }
-    }
-
-    .p-button {
-        padding: 0.25rem 0.5rem;
-        width: auto;
-        font-size: .75rem;
-
-        &:not(.p-button-tiny) {
-            font-size: .6rem;
+        .p-icon {
+            width: 0.75rem;
+            height: 0.75rem;
         }
 
-        &.p-button-text {
-            &:hover, &:active {
-                background-color: transparent;
-            }
-        }
-    }
-
-    .p-icon {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
-
-    .p-datatable-tbody {
-        > tr {
-            > td,
-            > th {
-                border-bottom: 1px solid $shade200;
-            }
-            &:focus {
-                outline: none;
-                outline-offset: 0;
+        .p-datatable-tbody {
+            > tr {
+                > td,
+                > th {
+                    border-bottom: 1px solid $shade200;
+                }
+                &:focus {
+                    outline: none;
+                    outline-offset: 0;
+                }
             }
         }
     }

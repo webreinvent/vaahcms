@@ -29,7 +29,7 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div class="flex justify-content-between align-items-center">
+        <div class="flex justify-content-between align-items-center mt-2 mb-2">
 
             <!--left-->
 

@@ -59,11 +59,11 @@ const toggleItemMenu = (event) => {
 
     <div class="col-6" >
 
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" class="is-small">
 
             <template class="p-1" #header>
-                <div class="flex flex-row w-full">
-                    <div class="p-panel-title font-semibold text-lg flex align-items-center">
+                <div class="flex flex-row">
+                    <div class="p-panel-title">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -112,7 +112,7 @@ const toggleItemMenu = (event) => {
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
+                <table class="p-datatable-table w-full">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 
@@ -121,11 +121,14 @@ const toggleItemMenu = (event) => {
 
                         <template v-else-if="column === 'author_website'">
                             <tr>
-                                <td><b>{{ vaah().toLabel(column) }}</b></td>
-                                <td style="word-break: break-all;">{{ value }}</td>
-                                <td><Button icon="pi pi-external-link"
+                                <td style="width: 120px;">
+                                    <p class="font-semibold text-xs line-height-2">{{ vaah().toLabel(column) }}</p>
+                                </td>
+                                <td class="line-height-2 text-xs">{{ value }}</td>
+                                <td>
+                                    <Button icon="pi pi-external-link"
                                             @click="store.openWebsite(value)"
-                                            class="p-button-text p-button-sm"/>
+                                            class="p-button-text"/>
                                 </td>
                             </tr>
                         </template>

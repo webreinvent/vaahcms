@@ -180,6 +180,7 @@ function actionItems(item){
         <!--paginator-->
         <Paginator v-model:first="store.first_element"
                     :rows="store.query.rows"
+                   class="bg-white-alpha-0 pt-2"
                    :totalRecords="store.stats.all"
                    @page="store.paginate($event)"
                    :rows-per-page-options="store.rows_per_page"
