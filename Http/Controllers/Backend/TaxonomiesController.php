@@ -413,6 +413,8 @@ class TaxonomiesController extends Controller
                 self::deletechildrens($item->childrens);
             }
 
+            $item->taxonomies()->update(['vh_taxonomy_type_id' => null]);
+
             $item->forceDelete();
 
             $response['success'] = true;
@@ -438,6 +440,8 @@ class TaxonomiesController extends Controller
             if (count($type->childrens) > 0) {
                 self::deletechildrens($type->childrens);
             }
+
+            $type->taxonomies()->update(['vh_taxonomy_type_id' => null]);
 
             $type->forceDelete();
         }
