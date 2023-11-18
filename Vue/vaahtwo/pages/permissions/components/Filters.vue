@@ -12,26 +12,30 @@ const store = usePermissionStore();
 
         <Sidebar v-model:visible="store.show_filters"
                  style="z-index: 1001"
-                 position="right">
+                 position="right"
+                 :pt="{
+                     header: 'py-2'
+                 }"
+        >
 
             <VhFieldVertical >
                 <template #label>
                     <b>Sort By:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-none"
                                  value=""
                                  v-model="store.query.filter.sort" />
                     <label for="sort-none">None</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-ascending"
                                  value="updated_at"
                                  v-model="store.query.filter.sort" />
                     <label for="sort-ascending">Updated (Ascending)</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="sort-descending"
                                  value="updated_at:desc"
                                  v-model="store.query.filter.sort" />
@@ -40,28 +44,28 @@ const store = usePermissionStore();
 
             </VhFieldVertical>
 
-            <Divider/>
+            <Divider class="my-0"/>
 
             <VhFieldVertical >
                 <template #label>
                     <b>Is Active:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-all"
                                  value="null"
                                  data-testid="permission-filter_active_all"
                                  v-model="store.query.filter.is_active" />
                     <label for="active-all">All</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-true"
                                  value="true"
                                  data-testid="permission-filter_active_only"
                                  v-model="store.query.filter.is_active" />
                     <label for="active-true">Only Active</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="active-false"
                                  value="false"
                                  data-testid="permission-filter_inactive_only"
@@ -76,21 +80,21 @@ const store = usePermissionStore();
                     <b>Trashed:</b>
                 </template>
 
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-exclude"
                                  value=""
                                  data-testid="permission-filter_trashed_exclude"
                                  v-model="store.query.filter.trashed" />
                     <label for="trashed-exclude">Exclude Trashed</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-include"
                                  value="include"
                                  data-testid="permission-filter_trashed_include"
                                  v-model="store.query.filter.trashed" />
                     <label for="trashed-include">Include Trashed</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton mb-2">
                     <RadioButton name="trashed-only"
                                  value="only"
                                  data-testid="permission-filter_trashed_only"

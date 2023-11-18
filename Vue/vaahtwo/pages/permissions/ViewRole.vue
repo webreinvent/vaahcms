@@ -64,6 +64,7 @@ const dialog = useDialog();
 const openViewModal = () => {
     const dialogRef = dialog.open(RoleDetailsView, {
         props: {
+            class: 'is-small',
             header: 'Details',
             style: {
                 width: '50vw',
@@ -85,8 +86,7 @@ const openViewModal = () => {
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -131,12 +131,12 @@ const openViewModal = () => {
 
 
 
-            <div class="grid p-fluid mt-1 mb-2">
+            <div class="grid p-fluid py-2">
                 <div class="col-12">
-                    <div class="p-inputgroup ">
+                    <div class="p-inputgroup justify-content-end">
                         <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
-                            <InputText  class="w-full p-inputtext-sm"
+                            <i class="text-xs pi pi-search" />
+                            <InputText  class="w-full pl-5 p-inputtext-sm"
                                         placeholder="Search"
                                         data-testid="permission-role_search"
                                         v-model="store.permission_roles_query.q"
@@ -162,7 +162,7 @@ const openViewModal = () => {
             >
                 <Column field="role"
                         header="Role"
-                        class="flex align-items-center"
+                        class="flex align-items-center justify-content-between"
                 >
 
                     <template #body="prop" >
@@ -221,11 +221,12 @@ const openViewModal = () => {
 
                 <Column>
                     <template #body="prop">
-                        <Button class="p-button-sm p-button-rounded"
+                        <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_permission_role = prop.data"
                                 icon="pi pi-eye"
-                                data-testid="permission-role_view_details"
+                                iconClass="mr-1"
                                 label="View"
+                                data-testid="permission-role_view_details"
                         />
                     </template>
                 </Column>

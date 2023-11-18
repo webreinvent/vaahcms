@@ -27,7 +27,6 @@ const useVaah = vaah();
 
             <Column field="id"
                     header="ID"
-                    class="text-sm"
                     :style="{width: store.getIdWidth()}"
                     :sortable="true"
             />

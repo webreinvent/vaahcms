@@ -8,11 +8,11 @@ const store = usePermissionStore();
     <div>
         <div v-if="store && store.active_permission_role">
             <p>Created By : <span> {{ store.active_permission_role.json.created_by }}</span></p>
-            <Divider class="is-small"/>
+            <Divider class="is-small my-0"/>
             <p>Updated By : <span> {{ store.active_permission_role.json.updated_by }}</span></p>
-            <Divider class="is-small"/>
+            <Divider class="is-small my-0"/>
             <p>Created At : <span> {{ store.active_permission_role.json.created_at }}</span></p>
-            <Divider class="is-small"/>
+            <Divider class="is-small my-0"/>
             <p>Updated At : <span> {{ store.active_permission_role.json.updated_at }}</span></p>
         </div>
     </div>

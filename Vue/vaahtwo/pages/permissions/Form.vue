@@ -36,7 +36,7 @@ const toggleFormMenu = (event) => {
         <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
                            {{ store.item.name }}
                         </span>
@@ -96,26 +96,38 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item" class="pt-2">
 
-                <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name" data-testid="permission-item_name" />
+                <VhField label="Name" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               v-model="store.item.name"
+                               data-testid="permission-item_name"
+                               placeholder="Name"
+                    />
                 </VhField>
 
-                <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug" data-testid="permission-item_slug"/>
+                <VhField label="Slug" class="mb-2">
+                    <InputText class="w-full p-inputtext-sm"
+                               v-model="store.item.slug"
+                               data-testid="permission-item_slug"
+                               placeholder="Slug"
+                    />
                 </VhField>
 
-                <VhField label="Details">
-                    <Textarea class="w-full" v-model="store.item.details" data-testid="permission-item_details"/>
+                <VhField label="Details"  class="mb-2">
+                    <Textarea class="w-full p-inputtext-sm"
+                              v-model="store.item.details"
+                              data-testid="permission-item_details"
+                              placeholder="Details"
+                    />
                 </VhField>
 
-                <VhField label="Is Active">
+                <VhField label="Is Active" class="mb-2">
                     <SelectButton v-if="root && root.is_active_status_options"
                                   v-model="store.item.is_active"
                                   :options="root.is_active_status_options"
                                   option-label="label"
                                   option-value="value"
                                   data-testid="permission-item_status"
-                                  class="has-shadowless"
+                                  class="has-shadowless p-buttonset-sm"
                     />
                 </VhField>
             </div>
