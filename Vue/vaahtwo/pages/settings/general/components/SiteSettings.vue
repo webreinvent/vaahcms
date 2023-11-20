@@ -9,12 +9,13 @@ const store = useGeneralStore();
         <div class="col-12 md:col-6 pr-4">
             <div class="grid p-fluid">
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Site Title</h5>
+                    <h5 class="p-1 text-xs line-height-2">Site Title</h5>
 
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.site_title"
                                    data-testid="general-site_title"
                                    class="p-inputtext-sm"
+                                   placeholder="Site Title"
                                    id="site-title"
                         />
 
@@ -26,8 +27,8 @@ const store = useGeneralStore();
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
+                <div class="col-12">
+                    <h5 class="p-1 text-xs line-height-2">Default Site Language</h5>
 
                     <Dropdown v-model="store.list.language"
                               :options="store.languages"
@@ -40,13 +41,14 @@ const store = useGeneralStore();
                     />
                 </div>
 
-                <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
+                <div class="col-12">
+                    <h5 class="p-1 text-xs line-height-2">Redirect after Frontend Login</h5>
 
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.redirect_after_frontend_login"
                                    data-testid="general-login_redirection"
                                    class="p-inputtext-sm"
+                                   placeholder="Redirect after Frontend Login"
                         />
 
                         <Button icon="pi pi-copy"
@@ -58,12 +60,14 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                    <h5 class="p-1 text-xs line-height-2">Meta Description</h5>
 
                     <div class="p-inputgroup">
                         <Textarea v-model="store.list.site_description"
                                   :autoResize="true"
-                                  class="w-full"
+                                  rows="1"
+                                  placeholder="Meta Description"
+                                  class="is-small p-inputtext-sm"
                         />
 
                         <Button icon="pi pi-copy"
@@ -74,7 +78,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Search Engine Visibility</h5>
+                    <h5 class="p-1 text-xs line-height-2">Search Engine Visibility</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.search_engine_visibility"
@@ -83,7 +87,7 @@ const store = useGeneralStore();
                                       optionValue="value"
                                       data-testid="general-visibility"
                                       aria-labelledby="single"
-                                      class="p-button-sm"
+                                      class="p-buttonset-sm"
                         />
 
                         <Button icon="pi pi-copy"
@@ -95,7 +99,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
+                    <h5 class="p-1 text-xs line-height-2">Assign Role(s) on Registration</h5>
 
                     <AutoComplete :multiple="true"
                                   v-model="store.list.registration_roles"
@@ -103,32 +107,33 @@ const store = useGeneralStore();
                                   @complete="store.searchRegistrationRoles($event)"
                                   data-testid="general-registration_roles"
                                   placeholder="Search"
-                                  class="p-inputtext-sm"
+                                  class="is-small"
+
                     />
                 </div>
 
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
+                    <h5 class="p-1 text-xs line-height-2">Allowed file types for upload</h5>
 
                     <AutoComplete :multiple="true"
                                   v-model="store.list.upload_allowed_files"
                                   :suggestions="store.filtered_allowed_files"
                                   @complete="store.searchAllowedFiles($event)"
-                                  class="p-inputtext-sm"
+                                  class="p-inputtext-sm is-small"
                                   data-testid="general-allowed_files"
                                   placeholder="Search"
                     />
                 </div>
 
-                <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Is Logo compressed with Sidebar</h5>
+                <div class="col-12 p-fluid">
+                    <h5 class="p-1 text-xs line-height-2">Is Logo compressed with Sidebar</h5>
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.is_logo_compressed"
                                       optionLabel="name"
                                       optionValue="value"
                                       :options="store.compressedLogoOptions"
                                       data-testid="general-is_logo_compressed"
-                                      class="p-button-sm"
+                                      class="p-buttonset-sm"
                                       aria-labelledby="single"
                         />
                         <Button class="p-button-sm"
@@ -144,16 +149,24 @@ const store = useGeneralStore();
         <div class="col-12 md:col-6 pl-4">
             <div class="grid">
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
+                    <h5 class="p-1 text-xs line-height-2">Copyright Text</h5>
                     <div class="p-inputgroup">
 
                         <SelectButton v-model="store.list.copyright_text"
                                       optionLabel="name"
                                       optionValue="value"
                                       :options="store.copyright_text_options"
-                                      class="p-button-sm"
+                                      class="p-buttonset-sm"
                                       data-testid="general-password_protection"
                                       aria-labelledby="single"
+                                      :allowEmpty="false"
+                        />
+
+                        <InputText placeholder="Enter Copyright Text"
+                                   v-model="store.list.copyright_text_custom"
+                                   data-testid="general-copyright_custom_filed"
+                                   :disabled="store.list.copyright_text !== 'custom'"
+                                   class="p-inputtext-sm"
                         />
 
                         <Button class="p-button-sm"
@@ -162,17 +175,10 @@ const store = useGeneralStore();
                                 @click="store.getCopy('copyright_text')"
                         />
                     </div>
-
-                    <InputText class="w-full p-inputtext-sm mt-2" v-if="store.list.copyright_text === 'custom'"
-                               data-testid="general-copyright_custom_filed"
-                               v-model="store.list.copyright_text_custom"
-                               placeholder="Enter Custom Text"
-
-                    />
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
+                    <h5 class="p-1 text-xs line-height-2">Copyright Link</h5>
 
                     <div class="p-inputgroup">
 
@@ -180,7 +186,7 @@ const store = useGeneralStore();
                                       optionLabel="name"
                                       optionValue="value"
                                       :options="store.copyright_link_options"
-                                      class="p-button-sm"
+                                      class="p-buttonset-sm"
                                       data-testid="general-password_protection"
                                       aria-labelledby="single"
                         />
@@ -201,7 +207,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
+                    <h5 class="p-1 text-xs line-height-2">Copyright Year</h5>
 
                     <div class="p-inputgroup">
 
@@ -210,9 +216,18 @@ const store = useGeneralStore();
                                       optionLabel="name"
                                       optionValue="value"
                                       :options="store.copyright_year_options"
-                                      class="p-button-sm"
+                                      class="p-buttonset-sm"
                                       data-testid="general-password_protection"
                                       aria-labelledby="single"
+                        />
+
+                        <InputNumber v-model="store.list.copyright_year_custom"
+                                     name="config-db_port"
+                                     placeholder="Enter Copyright Year"
+                                     :disabled="store.list.copyright_year !== 'custom'"
+                                     class="p-inputtext-sm"
+                                     inputId="withoutgrouping" :useGrouping="false"
+                                     :inputProps="{ 'data-testid': `general-copyright_year` }"
                         />
 
                         <Button class="p-button-sm"
@@ -221,22 +236,10 @@ const store = useGeneralStore();
                                 @click="store.getCopy('copyright_year')"
                         />
                     </div>
-
-                    <InputNumber v-model="store.list.copyright_year_custom"
-                                 name="config-db_port"
-                                 placeholder="Copyright Year"
-                                 class="w-full p-inputtext-sm mt-2"
-                                 inputId="withoutgrouping" :useGrouping="false"
-                                 :pt="{
-                                           input: {
-                                                'data-testid': `general-copyright_year`
-                                           }
-                                       }"/>
-
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">
+                    <h5 class="p-1 text-xs line-height-2">
                         Max number of forgot password attempts
                     </h5>
 
@@ -258,7 +261,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
+                    <h5 class="p-1 text-xs line-height-2">Maximum number of login attempts</h5>
                     <div class="p-inputgroup">
                         <InputNumber inputId="withoutgrouping"
                                      data-testid="general-login_attempts"
@@ -275,13 +278,13 @@ const store = useGeneralStore();
                     </div>
                 </div>
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Password Protection</h5>
+                    <h5 class="p-1 text-xs line-height-2">Password Protection</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.password_protection"
                                   optionLabel="name"
                                   optionValue="value"
                                   :options="store.password_protection_options"
-                                  class="p-button-sm"
+                                  class="p-buttonset-sm"
                                   data-testid="general-password_protection"
                                   aria-labelledby="single"
                     />
@@ -294,14 +297,14 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
+                    <h5 class="p-1 text-xs line-height-2">Laravel Queues</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.laravel_queues"
                                   optionLabel="name"
                                   optionValue="value"
                                   :options="store.laravel_queues_options"
                                   data-testid="general-laravel_queues"
-                                  class="p-button-sm"
+                                  class="p-buttonset-sm"
                                   aria-labelledby="single"
                     />
                     <Button class="p-button-sm"
@@ -313,14 +316,14 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
+                    <h5 class="p-1 text-xs line-height-2">Maintenance Mode</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.maintenance_mode"
                                   optionLabel="name"
                                   optionValue="value"
                                   :options="store.maintenanceModeOptions"
                                   data-testid="general-maintenance_mode"
-                                  class="p-button-sm"
+                                  class="p-buttonset-sm"
                                   aria-labelledby="single"
                     />
                     <Button class="p-button-sm"
@@ -332,14 +335,14 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Signup Page</h5>
+                    <h5 class="p-1 text-xs line-height-2">Signup Page</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.signup_page_visibility"
                                   optionLabel="name"
                                   optionValue="value"
                                   :options="store.sign_up_options"
                                   data-testid="general-signup"
-                                  class="p-button-sm"
+                                  class="p-buttonset-sm"
                                   aria-labelledby="single"
                     />
                     <Button class="p-button-sm"
@@ -351,7 +354,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
+                    <h5 class="p-1 text-xs line-height-2">Redirect after Backend Logout</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.redirect_after_backend_logout"
@@ -360,14 +363,7 @@ const store = useGeneralStore();
                                       :options="store.redirect_after_logout_options"
                                       data-testid="general-redirect_logout"
                                       aria-labelledby="single"
-                                      class="p-button-sm"
-                        />
-
-                        <InputText placeholder="Enter Redirection Link"
-                                   v-model="store.list.redirect_after_backend_logout_url"
-                                   data-testid="general-redirect_logout_custom"
-                                   :disabled="store.list.redirect_after_backend_logout !== 'custom'"
-                                   class="p-inputtext-sm"
+                                      class="p-buttonset-sm"
                         />
 
                         <Button icon="pi pi-copy"
@@ -377,10 +373,16 @@ const store = useGeneralStore();
                         />
 
                     </div>
+                    <InputText v-if="store.list.redirect_after_backend_logout === 'custom'"
+                               placeholder="Enter Redirection Link"
+                               v-model="store.list.redirect_after_backend_logout_url"
+                               data-testid="general-redirect_logout_custom"
+                               class="w-full p-inputtext-sm mt-2"
+                    />
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 py-1">
             <Divider class="m-0"/>
         </div>
         <div class="col-12">

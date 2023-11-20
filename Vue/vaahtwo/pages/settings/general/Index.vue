@@ -56,9 +56,9 @@ onMounted(async () => {
             <Accordion :multiple="true"
                        :activeIndex="store.active_index"
                        id="accordionTabContainer"
-                       class="my-2"
+                       class="is-small my-2"
             >
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <div>
@@ -72,7 +72,7 @@ onMounted(async () => {
                     <SiteSettings />
                 </AccordionTab>
 
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <h5 class="font-semibold text-sm line-height-2">Securities</h5>
@@ -83,7 +83,7 @@ onMounted(async () => {
                     <Securities />
                 </AccordionTab>
 
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <h5 class="font-semibold text-sm line-height-2">Date & Time</h5>
@@ -94,7 +94,7 @@ onMounted(async () => {
                     <DateTime />
                 </AccordionTab>
 
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <h5 class="font-semibold text-sm line-height-2">Social Media & Links</h5>
@@ -105,7 +105,7 @@ onMounted(async () => {
                     <SocialMediaLink />
                 </AccordionTab>
 
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <h5 class="font-semibold text-sm line-height-2">Scripts</h5>
@@ -116,7 +116,7 @@ onMounted(async () => {
                     <Script />
                 </AccordionTab>
 
-                <AccordionTab :pt="{ headerAction: 'py-2' }">
+                <AccordionTab>
                     <template #header>
                         <div class="w-full">
                             <h5 class="font-semibold text-sm line-height-2">Meta Tags</h5>

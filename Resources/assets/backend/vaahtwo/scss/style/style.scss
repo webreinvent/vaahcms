@@ -111,27 +111,8 @@ a{
     &.is-small{
         .p-accordion-header {
             .p-accordion-header-link {
-                border-radius: 2px;
                 .p-accordion-toggle-icon {
-                    margin-right: 0.3rem;
-                }
-            }
-        }
-
-        .p-accordion-tab:not(:first-child) {
-            .p-accordion-header {
-                .p-accordion-header-link {
-                    border: 1px solid $shade300;
-                    border-radius: 2px;
-                }
-            }
-            .p-accordion-header:not(.p-highlight):not(.p-disabled),
-            .p-accordion-header:not(.p-disabled).p-highlight {
-                &:hover {
-                    .p-accordion-header-link {
-                        border: 1px solid $shade300;
-                        border-radius: 2px;
-                    }
+                    margin-right: 0.4rem;
                 }
             }
         }
@@ -142,8 +123,8 @@ a{
             padding: .75rem;
         }
         .p-icon {
-            height: 0.7rem;
-            width: 0.7rem;
+            height: 0.75rem;
+            width: 0.75rem;
         }
     }
 }
@@ -533,7 +514,7 @@ a{
 .p-buttonset {
     &.p-buttonset-sm {
         .p-button{
-            @include scaledPadding($inputPadding, $scaleSM);
+            padding: 0.4375rem 0.5rem;
             font-size: 0.65625rem;
             line-height:normal;
         }
@@ -1711,6 +1692,40 @@ textarea.p-inputtextarea {
             .jse-table-mode-welcome {
                 border-bottom-left-radius: $borderRadius;
                 border-bottom-right-radius: $borderRadius;
+            }
+        }
+    }
+}
+
+//Small Autocomplete
+.p-autocomplete {
+    &.is-small {
+        ul{
+            gap: 0.3rem;
+            max-height: 96px;
+            overflow: auto;
+
+            .p-autocomplete-token,.pi{
+                @include scaledFontSize($inputTextFontSize, $scaleSM);
+                @include scaledPadding($inputPadding, $scaleSM);
+                margin-right: 0;
+                gap: 0.3rem;
+
+                .p-autocomplete-token-label {
+                    line-height: normal;
+                }
+
+                svg {
+                    &.p-autocomplete-token-icon {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .p-autocomplete-input-token {
+                input {
+                    @include scaledFontSize($inputTextFontSize, $scaleSM);
+                }
             }
         }
     }
