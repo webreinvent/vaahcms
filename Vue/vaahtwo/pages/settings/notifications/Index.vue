@@ -50,8 +50,12 @@ onMounted(async () => {
                               :options="store.assets.notifications"
                               optionLabel="name"
                               optionValue="id"
+                              placeholder="Select a notification option"
                               :filter="true"
-                              placeholder="Search"
+                              filterPlaceholder="Filter"
+                              :filterInputProps="{
+                                  class: 'p-inputtext-sm'
+                              }"
                               data-testid="notification-search"
                               class="w-full"
                               @change="store.callShowNotificationSettings()"
@@ -67,17 +71,19 @@ onMounted(async () => {
             </div>
 
             <div class="col-12" v-if="store.show_new_item_form">
-                <Message severity="error" :closable="false">
+                <Message severity="error" :closable="false" class="my-0">
                     These are notifications needs to be send manually.
                 </Message>
+            </div>
+
+            <div class="col-12" v-if="store.show_new_item_form">
 
                 <div class="p-inputgroup">
-                    <inputText data-testid="setting-notification_add_new_value"
+                    <InputText data-testid="setting-notification_add_new_value"
                                v-model="store.new_item.name"
                                placeholder="Enter new notification name"
                                :autoResize="true"
-                               class="w-full"
-                               inputClass="p-inputtext-sm"
+                               class="w-full p-inputtext-sm"
                     />
 
                     <Button icon="pi pi-save"
@@ -118,7 +124,7 @@ onMounted(async () => {
                         <Button class="p-button-outlined p-button-sm mr-2"
                                 label="Go back"
                                 icon="pi pi-arrow-left"
-                                icon-class="text-xs"
+                                iconClass="mr-1"
                                 data-testid="setting-notification_back"
                                 @click="store.hideNotificationSettings"
                         />
