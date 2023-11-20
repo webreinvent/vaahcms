@@ -8,8 +8,8 @@ const store = useGeneralStore();
     <div v-if="store">
         <div class="grid">
             <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
-                <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
-
+                <h5 class="p-1 text-xs line-height-2">{{item.label}}</h5>
+                
                 <div class="p-inputgroup">
                     <Dropdown v-model="item.value.attribute"
                               :options="store.assets.vh_meta_attributes"
@@ -24,6 +24,7 @@ const store = useGeneralStore();
                     <InputText v-model="item.value.attribute_value"
                                data-testid="general-metatags_attributes_value"
                                class="p-inputtext-sm"
+                               placeholder="attribute_value"
                     />
 
                     <Button label="Content" disabled="" />
@@ -31,6 +32,7 @@ const store = useGeneralStore();
                     <InputText v-model="item.value.content"
                                data-testid="general-metatags_attributes_content"
                                class="p-inputtext-sm"
+                               placeholder="attribute_content"
                     />
 
                     <Button icon="pi pi-trash"

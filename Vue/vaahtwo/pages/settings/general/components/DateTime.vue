@@ -7,7 +7,7 @@ const store = useGeneralStore();
 <template>
     <div v-if="store.list" class="grid">
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Format</h5>
+            <h5 class="p-1 text-xs line-height-2">Date Format</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.date_format"
@@ -33,7 +33,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Time Format</h5>
+            <h5 class="p-1 text-xs line-height-2">Time Format</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.time_format"
@@ -59,7 +59,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
+            <h5 class="p-1 text-xs line-height-2">Date Time Format</h5>
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.datetime_format"
                           data-testid="general-datetime_format"

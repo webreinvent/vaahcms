@@ -19,7 +19,7 @@ const store = useGeneralStore();
                                      :data-testid="'general-securities_status_'+store.list.mfa_status"
                                      value="disable"
                                      v-model="store.list.mfa_status" />
-                        <label for="mfa-option-1">Disable</label>
+                        <label for="mfa-option-1" style="line-height: normal;">Disable</label>
                     </div>
                     <div class="field-radiobutton">
                         <RadioButton inputId="mfa-option-2"
@@ -27,7 +27,7 @@ const store = useGeneralStore();
                                      :data-testid="'general-securities_status_'+store.list.mfa_status"
                                      value="all-users"
                                      v-model="store.list.mfa_status" />
-                        <label for="mfa-option-2">Enable for all users</label>
+                        <label for="mfa-option-2" style="line-height: normal;">Enable for all users</label>
                     </div>
                     <div class="field-radiobutton">
                         <RadioButton inputId="mfa-option-3"
@@ -35,7 +35,7 @@ const store = useGeneralStore();
                                      :data-testid="'general-securities_status_'+store.list.mfa_status"
                                      value="user-will-have-option"
                                      v-model="store.list.mfa_status" />
-                        <label for="mfa-option-3">Users will have option to enable it</label>
+                        <label for="mfa-option-3" style="line-height: normal;">Users will have option to enable it</label>
                     </div>
                 </div>
                 <div class="field">
@@ -46,14 +46,14 @@ const store = useGeneralStore();
                                   inputId="binary1" class="is-small"
                                   v-model="store.list.mfa_methods"
                                   value="email-otp-verification" />
-                        <label for="binary1">Email OTP Verification</label>
+                        <label for="binary1" style="line-height: normal;">Email OTP Verification</label>
                     </div>
                     <div class="field-checkbox">
                         <Checkbox disabled inputId="binary2" class="is-small"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
                                   v-model="store.list.mfa_methods"
                                   value="sms-otp-verification" />
-                        <label for="binary2">SMS OTP Verification</label>
+                        <label for="binary2" style="line-height: normal;">SMS OTP Verification</label>
                     </div>
                     <div class="field-checkbox">
                         <Checkbox disabled inputId="binary3"
@@ -61,7 +61,7 @@ const store = useGeneralStore();
                                   class="is-small"
                                   v-model="store.list.mfa_methods"
                                   value="authenticator-app" />
-                        <label for="binary3">Authenticator App (only user can enable this)</label>
+                        <label for="binary3" style="line-height: normal;">Authenticator App (only user can enable this)</label>
                     </div>
                 </div>
 
@@ -73,7 +73,7 @@ const store = useGeneralStore();
                     <label for="switch1" class="m-0">We will prompt for additional verification when you log in from a new device or browser.</label>
                 </div>
                 <div class="col-12 pb-0">
-                    <Divider class="mt-0 mb-3"/>
+                    <Divider class="mt-0 mb-1"/>
 
                     <Button label="Save"
                             icon="pi pi-save"

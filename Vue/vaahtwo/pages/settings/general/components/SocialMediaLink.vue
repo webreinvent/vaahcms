@@ -10,7 +10,7 @@ const useVaah = vaah();
     <div v-if="store">
         <div class="grid">
             <div class="col-12 md:col-4" v-for="(item,index) in store.social_media_links">
-                <h5 class="p-1 text-xs mb-1">{{ useVaah.toLabel(item.label) }}</h5>
+                <h5 class="p-1 text-xs line-height-2">{{ useVaah.toLabel(item.label) }}</h5>
 
                 <div class="p-inputgroup p-fluid">
                     <span class="p-input-icon-left">
@@ -42,11 +42,12 @@ const useVaah = vaah();
 
         <div class="grid">
             <div class="col-12 md:col-4">
-                <h5 class="p-1 text-xs mb-1">Add Link</h5>
+                <h5 class="p-1 text-xs line-height-2">Add Link</h5>
                 <div class="p-inputgroup">
                     <InputText v-model="store.add_link"
                                data-testid="general-add_link_field"
                                icon= "pi pi-link"
+                               placeholder="Enter Link Title"
                                v-if="store.show_link_input"
                                class="p-inputtext-sm"
                     />
