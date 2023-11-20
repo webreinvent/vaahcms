@@ -46,7 +46,10 @@ onMounted(async () => {
                             @click="store.collapseAll"></Button>
                 </div>
             </template>
-            <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
+            <Accordion :multiple="true"
+                       :activeIndex="store.active_index"
+                       id="accordionTabContainer"
+                       class="is-small my-2">
                 <AccordionTab >
                     <template #header>
                         <div class="w-full">
@@ -115,9 +118,8 @@ onMounted(async () => {
                                        @end="drag=false"
                             >
                                 <template #item = {element,index}>
-                                    <div class="content-div"
-                                    >
-                                        <div class="p-inputgroup mb-3">
+                                    <div class="content-div mb-3">
+                                        <div class="p-inputgroup mb-2">
                                             <Button label=":::"
                                                     class="drag p-button-sm"
                                                     data-testid="setting-customfield_drag_btn"
@@ -197,6 +199,7 @@ onMounted(async () => {
                                                             <InputNumber v-model="element.minlength"
                                                                          data-testid="setting-customfield_minlength"
                                                                          class="w-full p-inputtext-sm"
+                                                                         placeholder="Min Length"
                                                             />
                                                         </td>
                                                     </tr>
@@ -207,16 +210,18 @@ onMounted(async () => {
                                                             <InputNumber v-model="element.maxlength"
                                                                          data-testid="setting-customfield_maxlength"
                                                                          class="w-full p-inputtext-sm"
+                                                                         placeholder="Max Length"
                                                             />
                                                         </td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Excerpt</td>
-                                                        <td>
+                                                        <td class="border-bottom-none">Excerpt</td>
+                                                        <td class="border-bottom-none">
                                                                     <Textarea v-model="element.excerpt"
                                                                               data-testid="setting-customfield_excerpt"
                                                                               class="w-full"
+                                                                              placeholder="Excerpt"
                                                                     />
                                                         </td>
                                                     </tr>
