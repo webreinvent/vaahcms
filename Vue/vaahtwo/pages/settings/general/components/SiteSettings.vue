@@ -249,6 +249,7 @@ const store = useGeneralStore();
                                      data-testid="general-forgotpassword_attempts"
                                      :useGrouping="false"
                                      class="p-inputtext-sm"
+                                     placeholder="Max number of forgot password attempts"
                         />
 
 
@@ -268,6 +269,7 @@ const store = useGeneralStore();
                                      v-model="store.list.maximum_number_of_login_attempts_per_session"
                                      :useGrouping="false"
                                      class="p-inputtext-sm"
+                                     placeholder="Maximum number of login attempts"
                         />
 
                         <Button icon="pi pi-copy"
