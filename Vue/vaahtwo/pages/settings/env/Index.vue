@@ -62,12 +62,14 @@ onMounted(async () => {
         </template>
         <div class="grid justify-content-start">
             <div class="col-12 md:col-6" v-for="(item,index) in store.list">
-                <h5 class="p-1 text-xs mb-1">{{item.key}}</h5>
+                <h5 class="p-1 text-xs line-height-2">{{item.key}}</h5>
                 <form>
                     <div class="p-inputgroup">
-                        <password v-if="store.inputType(item) == 'password'"
+                        <Password v-if="store.inputType(item) == 'password'"
                                   v-model="item.value"
                                   class="w-full"
+                                  inputClass="p-inputtext-sm"
+                                  :placeholder="item.key"
                                   :disabled="store.isDisable(item)"
                                   toggleMask
                                   :auto-resize="true"
@@ -77,13 +79,15 @@ onMounted(async () => {
                         <Textarea v-else
                                   v-model="item.value"
                                   rows="1"
-                                  class="is-small"
+                                  class="is-small p-inputtext-sm"
+                                  :placeholder="item.key"
                                   :disabled="store.isDisable(item)"
                                   :auto-resize="true"
                                   :data-testid="'env-'+item.key"
                         />
 
                         <Button icon="pi pi-copy"
+                                class="p-button-sm"
                                 :data-testid="'env-copy_'+item.key"
                                 @click="store.getCopy(item)"
                         />
@@ -104,6 +108,7 @@ onMounted(async () => {
                     <InputText :autoResize="true"
                                v-model="store.new_variable"
                                class="p-inputtext-sm"
+                               placeholder="Env Variable"
                                :data-testid="'env-add_variable_field'"
                     />
 
