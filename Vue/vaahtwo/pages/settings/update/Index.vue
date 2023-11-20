@@ -53,7 +53,11 @@ onMounted(async () => {
 
                         class="w-auto my-2 p-button-sm"
                 />
-                <p v-if="store.is_up_to_data"><span class="subtitle">Current version of this VaahCMS is the latest version</span></p>
+                <p v-if="store.is_up_to_data">
+                    <span class="subtitle text-sm">
+                        Already on the latest version.
+                    </span>
+                </p>
             </div>
         </Message>
 
@@ -137,7 +141,7 @@ onMounted(async () => {
                         </div>
                         <div class="col-9">
                             <div id="terminal"></div>
-                            <!--                            <Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />-->
+                            <!--<Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />-->
                         </div>
                     </div>
                 </Panel>
