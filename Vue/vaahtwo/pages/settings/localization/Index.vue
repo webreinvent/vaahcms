@@ -66,7 +66,7 @@ onMounted(async () => {
 
         <div class="flex align-items-center">
             <div class="mb-4" v-if="store.show_add_language">
-                <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
+                <h5 class="p-1 text-xs line-height-2">Add New Languages</h5>
 
                 <div class="level has-padding-bottom-25">
                     <div class="level-left">
@@ -99,7 +99,7 @@ onMounted(async () => {
             </div>
 
             <div class="mb-4" v-if="store.show_add_category">
-                <h5 class="p-1 text-xs mb-1">Add New Category</h5>
+                <h5 class="p-1 text-xs line-height-2">Add New Category</h5>
 
                 <div class="level has-padding-bottom-25" >
 
@@ -180,17 +180,20 @@ onMounted(async () => {
 
         <div class="grid mt-1">
             <div v-if="store.list" class="col-12 md:col-6" v-for="(item,index) in store.list.data">
-                <h5 class="p-1 text-xs mb-1">{{item.slug}}</h5>
+                <h5 class="p-1 text-xs line-height-2">{{item.slug}}</h5>
 
                 <div class="p-inputgroup">
                         <Textarea v-model="item.content"
                                   rows="1"
+                                  class="p-inputtext-sm"
+                                  :placeholder="item.slug"
                                   :data-testid="'localization-'+item.slug"
                                   :auto-resize="true"
                         />
 
                     <Button icon="pi pi-copy"
                             :disabled="!item.id"
+                            class="p-button-sm"
                             data-testid="localization-copyString"
                             @click="store.getCopy(item)"
                     />
@@ -222,6 +225,7 @@ onMounted(async () => {
                     <InputText class="p-inputtext-sm"
                                v-model="store.new_variable"
                                data-testid="localization-add_string"
+                               placeholder="add_string"
                     />
 
                     <Button label="Add String" icon="pi pi-plus"
