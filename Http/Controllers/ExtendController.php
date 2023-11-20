@@ -94,7 +94,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => 'user',
-                'label'=> 'Users & Access',
+                'label'=> trans("vaahcms-sidebar-menu.users_access"),
                 'items'=> [],
             ];
 
@@ -104,7 +104,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/registrations/",
                     'icon' => 'user-plus',
-                    'label'=> 'Registrations',
+                    'label'=> trans("vaahcms-sidebar-menu.registrations"),
                 ];
             }
 
@@ -113,7 +113,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/users/",
                     'icon' => 'users',
-                    'label'=> 'Users',
+                    'label'=>  trans("vaahcms-sidebar-menu.users"),
                 ];
             }
 
@@ -122,7 +122,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/roles/",
                     'icon' => 'tag',
-                    'label'=> 'Roles',
+                    'label'=> trans("vaahcms-sidebar-menu.roles"),
                 ];
             }
 
@@ -132,7 +132,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' =>  self::$link."/permissions/",
                     'icon' => 'key',
-                    'label'=> 'Permissions',
+                    'label'=> trans("vaahcms-sidebar-menu.permissions"),
                 ];
             }
 
@@ -281,7 +281,7 @@ class ExtendController extends Controller
                 ]
             ];
         }
-        
+
 
         $response['success'] = true;
         $response['data'] = $list;

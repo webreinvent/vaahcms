@@ -188,7 +188,8 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'User'],
             ["name" => 'Media'],
             ["name" => 'Localization'],
-            ["name" => 'Login']
+            ["name" => 'Login'],
+            ["name" => 'Sidebar Menu'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);
