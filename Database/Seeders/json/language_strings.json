@@ -1,77 +1,93 @@
+
 [
 
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Title Required",
         "content": "The title field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Slug Required",
         "content": "The slug field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Slug Limit",
         "content": "The slug character is not greater than 150."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Description Required",
         "content": "The description field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Description Limit",
         "content": "The description character is not greater than 255."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Detail Required",
         "content": "The detail field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Detail Limit",
         "content": "The detail character is not greater than 255."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Category Required",
         "content": "The category field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Category Limit",
         "content": "The category character is not greater than 150."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Is Active Required",
         "content": "The is active option is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Status Required",
         "content": "The status is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Saved successfully",
         "content": "Saved successfully."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "Action successful",
         "content": "Action was successful"
     },
 
     {
+        "locale_code_iso_639": "en",
         "category": "general",
         "name": "No module installed",
         "content": "No module installed/downloaded"
@@ -80,21 +96,25 @@
 
 
     {
+        "locale_code_iso_639": "en",
         "category": "localization",
         "name": "Locale Code ISO 639 Required",
         "content": "The locale code iso 639 field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "localization",
         "name": "Locale Code already exist",
         "content": "Locale Code already exist"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "localization",
         "name": "Record already exist",
         "content": "Record already exist"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "localization",
         "name": "one string required",
         "content": "At least one string is required"
@@ -103,31 +123,37 @@
 
 
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Alternate Text Required",
         "content": "The alternate text field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Alternate Text Limit",
         "content": "The alternate text character is not greater than 150."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Caption Required",
         "content": "The caption field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Caption Limit",
         "content": "The caption character is not greater than 255."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "The is downloadable option is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "media",
         "name": "Download url associate",
         "content": "Download url is associated with other media."
@@ -137,168 +163,587 @@
 
 
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Logged in to update profile",
         "content": "You must be logged in to update your profile"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Confirm password not match",
         "content": "Confirm password does not match"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Current password incorrect",
         "content": "Current password is incorrect"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Email associate with other user",
         "content": "Email is associated with other user."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Username already taken",
         "content": "Username already taken"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Registration Status is Registered",
         "content": "The registration status is \"registered\", hence user id is required"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "First user super administrator",
         "content": "First user will always be an super administrator"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Email Already Registered",
         "content": "Email is already registered."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Username Already Registered",
         "content": "Username is already registered."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Phone Already Registered",
         "content": "Phone number is already registered."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "No user exist",
         "content": "No user exist"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "First Name Required",
         "content": "The first name field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Last Name Required",
         "content": "The last name field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Phone Required",
         "content": "The phone field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Phone Digit",
         "content": "The phone character is in number."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Name Required",
         "content": "The name field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Name Limit",
         "content": "The name character is not greater than 150."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Email Required",
         "content": "The email field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Email Limit",
         "content": "The email character is not greater than 150."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Email Invalid",
         "content": "The email is invalid."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Username Required",
         "content": "The name field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Username Limit",
         "content": "The username character is not greater than 20."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Display Name Required",
         "content": "The display name field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Display Name Limit",
         "content": "The display name character is not greater than 50."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "user",
         "name": "Registration created when user not exist",
         "content": "Registration can be created only when user does not exist"
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Login OTP Sent",
         "content": "One time password (OTP) is sent to your email."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Login Successful",
         "content": "You have been successfully logged in."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Reset Code Sent",
         "content": "A password reset code is sent to your email."
     },
     {
+
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Password Has Been Reset",
         "content": "Your password has been reset successfully."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Email or Username Required",
         "content": "The email or username field is required."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Email or Username Limit",
         "content": "The email or username may not be greater than 150 characters."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "OTP Sent",
         "content": "A one time password (OTP) has been sent to your email."
     },
     {
+        "locale_code_iso_639": "en",
         "category": "login",
         "name": "Incorrect reset password code",
         "content": "Incorrect reset password code"
+    },
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Dashboard",
+        "content": "Dashboard"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Users & Access",
+        "content": "Users & Access"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Registrations",
+        "content": "Registrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Users",
+        "content": "Users"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Roles",
+        "content": "Roles"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Permissions",
+        "content": "Permissions"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Extend",
+        "content": "Extend"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Settings",
+        "content": "Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Advanced",
+        "content": "Advanced"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Manage",
+        "content": "Manage"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Modules",
+        "content": "Modules"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Themes",
+        "content": "Themes"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Medias",
+        "content": "Medias"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Taxonomies",
+        "content": "Taxonomies"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "User Settings",
+        "content": "User Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Env Variables",
+        "content": "Env Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Localizations",
+        "content": "Localizations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Notifications",
+        "content": "Notifications"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Dashboard",
+        "content": "Panel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Users & Access",
+        "content": "Usuarios y acceso"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Registrations",
+        "content": "Inscripciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Users",
+        "content": "Usuarios/Usuarias"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Roles",
+        "content": "Roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Permissions",
+        "content": "Permisos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Extend",
+        "content": "Extender"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Settings",
+        "content": "Ajustes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Advanced",
+        "content": "Avanzado/Avanzada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Manage",
+        "content": "Administrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Modules",
+        "content": "Módulos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Themes",
+        "content": "Temas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Medias",
+        "content": "Medios"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Taxonomies",
+        "content": "Taxonomías"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "User Settings",
+        "content": "Ajustes de usuario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Env Variables",
+        "content": "Variables ambientales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Localizations",
+        "content": "Localizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Notifications",
+        "content": "Notificaciones"
+    },
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Dashboard",
+        "content": "Tableau de bord"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Users & Access",
+        "content": "Utilisateurs et accès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Registrations",
+        "content": "Inscriptions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Users",
+        "content": "Utilisateurs/Utilisatrices"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Roles",
+        "content": "Les rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Permissions",
+        "content": "Autorisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Extend",
+        "content": "Étendre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Settings",
+        "content": "Paramètres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Advanced",
+        "content": "Avancé/Avancée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Manage",
+        "content": "Gérer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Modules",
+        "content": "Modules"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Themes",
+        "content": "Thèmes"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Medias",
+        "content": "Des médias"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Taxonomies",
+        "content": "Taxonomies"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "General",
+        "content": "Général/Générale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "User Settings",
+        "content": "Paramètres utilisateur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Env Variables",
+        "content": "Variables d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Update",
+        "content": "Mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Localizations",
+        "content": "Localisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Notifications",
+        "content": "Notifications"
     }
 ]
