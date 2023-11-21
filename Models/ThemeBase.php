@@ -1037,7 +1037,7 @@ class ThemeBase extends Model {
             return false;
         }
 
-        $dec = public_path('vaahcms/themes/'.$theme->slug.'/assets');
+        $dec = public_path(config('vaahcms.build_directory_name','vaahcms')'./themes/'.$theme->slug.'/assets');
 
         if(!\File::exists($dec)) {
             \File::makeDirectory($dec, 0755, true, true);
