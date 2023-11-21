@@ -23,11 +23,12 @@ const key = ref();
         <div class="col-12 md:col-8">
             <Card>
                 <template #content>
-                    <h5 class="text-xl font-semibold mb-1">Welcome to Vaah<b>Cms</b></h5>
-                    <p>We've assembled some links to get you started:</p>
+                    <h5 class="text-xl font-semibold mb-1">
+                        {{root.assets.language_string.dashboard.greeting}}</h5>
+                    <p>{{root.assets.language_string.dashboard.message}}</p>
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">Get Started</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.get_started}}</h6>
                             <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
                                     data-testid="dashboard-goto_theme"
                                     class="p-button-sm is-light"
@@ -36,22 +37,23 @@ const key = ref();
                                             && store.dashboard_items.success
                                             && store.dashboard_items.success.vaahcms
                                             && store.dashboard_items.success.vaahcms.has_activated_theme">
-                                     Go To Theme
+                                     {{root.assets.language_string.dashboard.go_to_theme}}
                                 </span>
                                 <span v-else>
-                                    Activate Theme
+                                    {{root.assets.language_string.dashboard.activate_theme}}
                                 </span>
                             </Button>
                             <p class="text-sm mt-1">
-                                or, <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
+                                {{root.assets.language_string.dashboard.or}},
+                                <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
                                        data-testid="dashboard-create_theme"
                                        target="_blank">
-                                create your own theme</a>
+                                    {{root.assets.language_string.dashboard.create_your_own_theme}}</a>
                             </p>
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">Next Steps</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.next_steps}}</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -72,7 +74,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">More Actions</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.more_actions}}</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -113,7 +115,7 @@ const key = ref();
                                                :data-testid="'dashboard-view_'+item.label"
                                                @click="store.goToLink(item.link, item.open_in_new_tab ?? null)"
                                                class="text-sm">
-                                                View Details
+                                                {{ module.card.link_text }}
                                             </a>
                                         </div>
 
@@ -159,12 +161,12 @@ const key = ref();
                                              :closable="false"
                                              icon="null"
                                     >
-                                        Enable <b>Laravel Queues</b> to run your jobs
+                                        {{ item.run_jobs }}
                                         <a @click="store.goToLink(root.base_url+'#/vaah/settings/general')"
                                            href="javascript:void(0)"
                                            data-testid="dashboard-view_setting"
                                         >
-                                            View Setting
+                                            {{ item.view_settings }}
                                         </a>
                                     </Message>
                                 </div>
@@ -210,7 +212,7 @@ const key = ref();
                                            class="text-sm"
                                            :data-testid="'dashboard-'+log.name+'_view'"
                                         >
-                                            View
+                                            {{item.view_log}}
                                         </a>
 
                                     </div>

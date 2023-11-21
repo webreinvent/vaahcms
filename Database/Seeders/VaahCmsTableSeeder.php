@@ -177,11 +177,6 @@ class VaahCmsTableSeeder extends Seeder
                 unset($item['locale_code_iso_639']);
 
                 \DB::table( 'vh_lang_strings' )->insert( $item );
-            } else {
-                if($exist->content === null) {
-                    $exist::update('content', $item['content']);
-                }
-
             }
         }
 
@@ -196,6 +191,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Localization'],
             ["name" => 'Login'],
             ["name" => 'Sidebar Menu'],
+            ["name" => 'Dashboard']
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

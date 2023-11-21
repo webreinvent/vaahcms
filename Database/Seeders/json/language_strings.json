@@ -491,6 +491,183 @@
     },
 
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Users and Roles"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Total User"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Total Role"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Total Permission"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Active Users"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "View Details"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Welcome to VaahCms"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "We\\'ve assembled some links to get you started:"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Get Started"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Next Steps"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "More Actions"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Go To Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activate Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "or",
+        "content": "or"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "create your own theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "View your Site"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Manage your Module"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Tasks that is kept in the queue to be performed one after another.Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Failed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Laravel Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Check Updates"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Getting Started"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Enable Laravel Queues to run your jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "View Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "View all recent logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "No Error Log Found"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "View"
+    },
+
+
 
     {
         "locale_code_iso_639": "es",
@@ -619,6 +796,184 @@
         "content": "Notificaciones"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Usuarios y Roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Usuario Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Rol Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Permiso Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Usuarios Activos/Activas"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "Ver Detalles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Bienvenido a VaahCms"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "Hemos reunido algunos enlaces para que pueda comenzar:"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Empezar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Próximos Pasos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "Mas Acciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Ir Al Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activar Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "or",
+        "content": "o"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "crea tu propio tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "Ver su Sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Gestiona tu Módulo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Las tareas que se mantienen en la cola se realizan una tras otra. Las colas le permiten diferir el procesamiento de una tarea que requiere mucho tiempo, como enviar un correo electrónico, hasta un momento posterior, lo que acelera drásticamente las solicitudes web a su aplicación."
+
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "Pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Fallido/Fallida"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Registros de Laravel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Revisa Actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Empezando"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Habilite Laravel Queues para ejecutar sus trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "Ver Configuraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "Ver todos los registros recientes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "No se encontró ningún registro de errores"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "Vista"
+    },
+
+
 
     {
         "locale_code_iso_639": "fr",
@@ -745,5 +1100,181 @@
         "category": "sidebar-menu",
         "name": "Notifications",
         "content": "Notifications"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Utilisateurs et Rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Utilisateur Total"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Rôle Total"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Autorisation Totale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Utilisateurs Actifs"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "Voir les Détails"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Bienvenue sur VaahCms"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "Nous avons rassemblé quelques liens pour vous aider à démarrer:"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Commencer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Prochaines Étapes"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "Plus D\\'actions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Aller au Thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activer le Thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "or",
+        "content": "ou"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "créez votre propre thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "Afficher votre Site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Gérez votre Module"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Tâches conservées dans la file d\\'attente pour être exécutées les unes après les autres. Les files d\\'attente vous permettent de différer le traitement d\\'une tâche fastidieuse, comme l\\'envoi d\\'un e-mail, à une date ultérieure, ce qui accélère considérablement les requêtes Web adressées à votre application."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "En attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Échoué"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Journaux Laravel"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Vérifier les mises à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Commencer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Activez les files d\\'attente Laravel pour exécuter vos tâches"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "Paramètres d\\'affichage"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "Afficher tous les journaux récents"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "Aucun journal d\\'erreurs trouvé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "Voir"
     }
 ]
