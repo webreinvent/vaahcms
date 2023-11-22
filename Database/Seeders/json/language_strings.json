@@ -94,7 +94,6 @@
     },
 
 
-
     {
         "locale_code_iso_639": "en",
         "category": "localization",
@@ -666,6 +665,144 @@
         "name": "View Log",
         "content": "View"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Registrations",
+        "content": "Registrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Create",
+        "content": "Create"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Filter",
+        "content": "Filter"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Trash All",
+        "content": "Trash All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Restore",
+        "content": "Restore"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Restore All",
+        "content": "Restore All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Delete",
+        "content": "Delete"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Delete All",
+        "content": "Delete All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Sort By",
+        "content": "Sort By"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "None",
+        "content": "None"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Updated Ascending",
+        "content": "Updated (Ascending)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Updated Descending",
+        "content": "Updated (Descending)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Trashed",
+        "content": "Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Exclude Trashed",
+        "content": "Exclude Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Include Trashed",
+        "content": "Include Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Only Trashed",
+        "content": "Only Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Status",
+        "content": "Status"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Email Verification Pending",
+        "content": "Email Verification Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "Email Verified",
+        "content": "Email Verified"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "common-fields",
+        "name": "User Created",
+        "content": "User Created"
+    },
 
 
 
@@ -691,7 +828,7 @@
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
         "name": "Users",
-        "content": "Usuarios/Usuarias"
+        "content": "Usuarios"
     },
     {
         "locale_code_iso_639": "es",
@@ -721,7 +858,7 @@
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
         "name": "Advanced",
-        "content": "Avanzado/Avanzada"
+        "content": "Avanzado"
     },
     {
         "locale_code_iso_639": "es",
@@ -824,7 +961,7 @@
         "locale_code_iso_639": "es",
         "category": "dashboard",
         "name": "Active Users",
-        "content": "Usuarios Activos/Activas"
+        "content": "Usuarios Activos"
     },
 
     {
@@ -922,7 +1059,7 @@
         "locale_code_iso_639": "es",
         "category": "dashboard",
         "name": "Failed",
-        "content": "Fallido/Fallida"
+        "content": "Fallido"
     },
     {
         "locale_code_iso_639": "es",
@@ -973,6 +1110,145 @@
         "content": "Vista"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Registrations",
+        "content": "Inscripciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Create",
+        "content": "Crear"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Filter",
+        "content": "Filtrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Trash",
+        "content": "Basura"
+    },
+    {
+    "locale_code_iso_639": "es",
+    "category": "common-fields",
+    "name": "Trash All",
+    "content": "Papelera Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Restore",
+        "content": "Restaurar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Restore All",
+        "content": "Restaura Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Delete",
+        "content": "Borrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Delete All",
+        "content": "Eliminar Todos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Sort By",
+        "content": "Ordenar Por"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "None",
+        "content": "Ninguno"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Updated Ascending",
+        "content": "Actualizado (Ascendente)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Updated Descending",
+        "content": "Actualizado (Descendente)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Trashed",
+        "content": "Destrozado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Exclude Trashed",
+        "content": "Excluir Papelera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Include Trashed",
+        "content": "Incluir Papelera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Only Trashed",
+        "content": "Solo tirado a la basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Status",
+        "content": "Estado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Email Verification Pending",
+        "content": "Verificación de correo electrónico pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "Email Verified",
+        "content": "Correo Electrónico Verificado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "common-fields",
+        "name": "User Created",
+        "content": "Usuario Creado"
+    },
+
 
 
     {
@@ -997,7 +1273,7 @@
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
         "name": "Users",
-        "content": "Utilisateurs/Utilisatrices"
+        "content": "Utilisateurs"
     },
     {
         "locale_code_iso_639": "fr",
@@ -1027,7 +1303,7 @@
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
         "name": "Advanced",
-        "content": "Avancé/Avancée"
+        "content": "Avancé"
     },
     {
         "locale_code_iso_639": "fr",
@@ -1063,7 +1339,7 @@
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
         "name": "General",
-        "content": "Général/Générale"
+        "content": "Général"
     },
     {
         "locale_code_iso_639": "fr",
@@ -1276,5 +1552,144 @@
         "category": "dashboard",
         "name": "View Log",
         "content": "Voir"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Registrations",
+        "content": "Inscriptions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Create",
+        "content": "Créer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Filter",
+        "content": "Filtre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Trash",
+        "content": "Poubelle"
+    },
+    {
+    "locale_code_iso_639": "fr",
+    "category": "common-fields",
+    "name": "Trash All",
+    "content": "Tout Jeter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Restore",
+        "content": "Restaurer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Restore All",
+        "content": "Tout Restaurer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Delete",
+        "content": "Supprimer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Delete All",
+        "content": "Supprimer Tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Sort By",
+        "content": "Trier Par"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "None",
+        "content": "Aucun"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Updated Ascending",
+        "content": "Mis à jour (Croissant)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Updated Descending",
+        "content": "Mis à jour (Décroissant)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Trashed",
+        "content": "Mis à la poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Exclude Trashed",
+        "content": "Exclure la corbeille"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Include Trashed",
+        "content": "Inclure la corbeille"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Only Trashed",
+        "content": "Seulement mis à la poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Status",
+        "content": "Statut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Email Verification Pending",
+        "content": "Vérification de l\\'e-mail en attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "Email Verified",
+        "content": "Email Verifié"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "common-fields",
+        "name": "User Created",
+        "content": "Utilisateur Créé"
     }
 ]

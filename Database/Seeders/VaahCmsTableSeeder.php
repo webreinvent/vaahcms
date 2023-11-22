@@ -157,18 +157,18 @@ class VaahCmsTableSeeder extends Seeder
                 ->where( 'locale_code_iso_639', $item['locale_code_iso_639'] )
                 ->first();
 
-            $exist = \DB::table( 'vh_lang_strings' )
-                ->where('vh_lang_language_id', $lang->id)
-                ->where( 'slug',  $item['slug'] )
-                ->first();
-
             $cat = \DB::table( 'vh_lang_categories' )
                 ->where( 'slug', $item['category'] )
                 ->first();
 
+            $exist = \DB::table( 'vh_lang_strings' )
+                ->where('vh_lang_language_id', $lang->id)
+                ->where( 'vh_lang_category_id',  $cat->id )
+                ->where( 'slug',  $item['slug'] )
+                ->first();
+
 
             if (!$exist && $lang && $cat){
-
                 $item['vh_lang_language_id'] = $lang->id;
 
                 $item['vh_lang_category_id'] = $cat->id;
@@ -191,7 +191,8 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Localization'],
             ["name" => 'Login'],
             ["name" => 'Sidebar Menu'],
-            ["name" => 'Dashboard']
+            ["name" => 'Dashboard'],
+            ["name" => 'Common Fields']
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

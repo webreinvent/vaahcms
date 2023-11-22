@@ -2,11 +2,13 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
+import { useRootStore } from "../../stores/root";
 import {useRegistrationStore} from '../../stores/store-registrations'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 
@@ -52,13 +54,14 @@ onMounted(async () => {
     <div class="grid">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small">
+            <Panel class="is-small" v-if="store.assets">
 
                 <template class="p-1" #header>
 
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Registrations</b>
+                        <div v-if="store.assets">
+                            <b class="mr-1">
+                                {{root.assets.language_string.common_fields.registrations}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -71,7 +74,7 @@ onMounted(async () => {
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
-                                label="Create"
+                                :label="root.assets.language_string.common_fields.create"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
                                 data-testid="registration-create"

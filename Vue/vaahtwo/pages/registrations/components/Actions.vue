@@ -1,9 +1,11 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import { useRegistrationStore } from '../../../stores/store-registrations'
+import { useRootStore } from "../../../stores/root";
 
 import Filters from './Filters.vue'
 
+const root = useRootStore();
 const store = useRegistrationStore();
 
 onMounted(async () => {
@@ -82,7 +84,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_string.common_fields.search"
                                        name="register-search_query_filter_q"
                                        data-testid="register-search_query_filter_q"
                                        class="p-inputtext-sm"
@@ -94,7 +96,7 @@ const toggleBulkMenuState = (event) => {
                                     data-testid="register-search_icon_query_filter_q"
                             />
 
-                            <Button label="Filters"
+                            <Button :label="root.assets.language_string.common_fields.filter"
                                     class="p-button-sm"
                                     @click="store.show_filters = true"
                                     data-testid="register-show_filters"
@@ -104,7 +106,7 @@ const toggleBulkMenuState = (event) => {
 
                             <Button icon="pi pi-filter-slash"
                                     class="p-button-sm"
-                                    label="Reset"
+                                    :label="root.assets.language_string.common_fields.reset"
                                     @click="store.resetQuery()"
                                     data-testid="register-reset_query"
                             />

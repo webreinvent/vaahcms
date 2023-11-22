@@ -118,6 +118,32 @@ class JsonController extends Controller
 
         }
 
+        $data['language_string']['common_fields'] = [
+            "registrations" => trans("vaahcms-common-fields.registrations"),
+            "create" => trans("vaahcms-common-fields.create"),
+            "search" => trans("vaahcms-common-fields.search"),
+            "filter" => trans("vaahcms-common-fields.filter"),
+            "reset" => trans("vaahcms-common-fields.reset"),
+            "trash" => trans("vaahcms-common-fields.trash"),
+            "trash_all" => trans("vaahcms-common-fields.trash_all"),
+            "restore" => trans("vaahcms-common-fields.restore"),
+            "restore_all" => trans("vaahcms-common-fields.restore_all"),
+            "delete" => trans("vaahcms-common-fields.delete"),
+            "delete_all" => trans("vaahcms-common-fields.delete_all"),
+            "sort_by" => trans("vaahcms-common-fields.sort_by"),
+            "none" => trans("vaahcms-common-fields.none"),
+            "updated_ascending" => trans("vaahcms-common-fields.updated_ascending"),
+            "updated_descending" => trans("vaahcms-common-fields.updated_descending"),
+            "trashed" => trans("vaahcms-common-fields.trashed"),
+            "exclude_trashed" => trans("vaahcms-common-fields.exclude_trashed"),
+            "include_trashed" => trans("vaahcms-common-fields.include_trashed"),
+            "only_trashed" => trans("vaahcms-common-fields.only_trashed"),
+            "status" => trans("vaahcms-common-fields.status"),
+            "email_verification_pending" => trans("vaahcms-common-fields.email_verification_pending"),
+            "email_verified" => trans("vaahcms-common-fields.email_verified"),
+            "user_created" => trans("vaahcms-common-fields.user_created"),
+        ];
+
         $data['language_string']['dashboard'] = [
             "greeting" => trans("vaahcms-dashboard.welcome_to_vaahcms"),
             'message' => trans("vaahcms-dashboard.welcome_message"),

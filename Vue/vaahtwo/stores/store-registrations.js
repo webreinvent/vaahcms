@@ -701,6 +701,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
                     label: 'Email Verification Pending',
@@ -742,21 +743,21 @@ export const useRegistrationStore = defineStore({
                     separator: true
                 },*/
                 {
-                    label: 'Trash',
+                    label: root.assets.language_string.common_fields.trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: 'Restore',
+                    label: root.assets.language_string.common_fields.restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: 'Delete',
+                    label: root.assets.language_string.common_fields.delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -768,6 +769,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
                     label: 'All Users Email Verification Pending',
@@ -809,21 +811,21 @@ export const useRegistrationStore = defineStore({
                     separator: true
                 },*/
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_string.common_fields.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_string.common_fields.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_string.common_fields.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
