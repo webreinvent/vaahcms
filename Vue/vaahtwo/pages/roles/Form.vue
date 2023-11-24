@@ -17,8 +17,12 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
+    watch(root, async (newVal, oldVal) => {
+        if(newVal.assets) {
+            await store.getFormMenu();
+        }
+    })
 
-    store.getFormMenu();
 
     await root.getIsActiveStatusOptions();
 });
@@ -36,7 +40,7 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-6" >
-        <Panel class="is-small">
+        <Panel class="is-small" v-if="root.assets">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -44,7 +48,7 @@ const toggleFormMenu = (event) => {
                             {{ store.item.name }}
                         </span>
                         <span v-else>
-                            Create
+                            {{root.assets.language_string.common_fields.create}}
                         </span>
                     </div>
                 </div>
@@ -61,7 +65,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
-                            label="Save"
+                            :label="root.assets.language_string.common_fields.save"
                             icon="pi pi-save"
                             data-testid="role-edit_save"
                             @click="store.itemAction('save')"
@@ -69,7 +73,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-else
                             class="p-button-sm"
-                            label="Create & New"
+                            :label="root.assets.language_string.common_fields.create_and_new"
                             icon="pi pi-save"
                             data-testid="role-new_save"
                             @click="store.itemAction('create-and-new')"
@@ -95,7 +99,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-roles')"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_string.common_fields.view"
                             data-testid="role-item_view"
                             @click="store.toView(store.item)"
                     />

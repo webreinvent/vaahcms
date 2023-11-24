@@ -980,15 +980,16 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Activate',
+                    label: root.assets.language_string.common_fields.activate,
                     command: async () => {
                         await this.updateList('activate')
                     }
                 },
                 {
-                    label: 'Deactivate',
+                    label: root.assets.language_string.common_fields.deactivate,
                     command: async () => {
                         await this.updateList('deactivate')
                     }
@@ -997,21 +998,21 @@ export const useUserStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash',
+                    label: root.assets.language_string.common_fields.trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: 'Restore',
+                    label: root.assets.language_string.common_fields.restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: 'Delete',
+                    label: root.assets.language_string.common_fields.delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -1023,15 +1024,16 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Mark all as active',
+                    label: root.assets.language_string.common_fields.mark_all_as_active,
                     command: async () => {
                         await this.listAction('activate-all')
                     }
                 },
                 {
-                    label: 'Mark all as inactive',
+                    label: root.assets.language_string.common_fields.mark_all_as_inactive,
                     command: async () => {
                         await this.listAction('deactivate-all')
                     }
@@ -1040,21 +1042,21 @@ export const useUserStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_string.common_fields.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_string.common_fields.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_string.common_fields.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -1065,13 +1067,14 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_string.common_fields.restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -1082,7 +1085,7 @@ export const useUserStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_string.common_fields.trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -1091,7 +1094,7 @@ export const useUserStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_string.common_fields.delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -1099,7 +1102,7 @@ export const useUserStore = defineStore({
             });
 
             item_menu.push({
-                label: 'Generate new API Token',
+                label: root.assets.language_string.common_fields.generate_new_api_token,
                 icon: 'pi pi-key',
                 command: () => {
                     this.itemAction('generate-new-token');
@@ -1110,15 +1113,16 @@ export const useUserStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getUserRolesMenuItems() {
+            const root = useRootStore();
             return this.user_roles_menu = [
                 {
-                    label: 'Active All Roles',
+                    label: root.assets.language_string.common_fields.active_all_roles,
                     command: async () => {
                         await this.bulkActions(1, 'toggle-role-active-status')
                     }
                 },
                 {
-                    label: 'Inactive All Roles',
+                    label: root.assets.language_string.common_fields.inactive_all_roles,
                     command: async () => {
                         await this.bulkActions(0, 'toggle-role-active-status')
                     }
@@ -1160,21 +1164,22 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
-            if(this.item && this.item.id)
+            if(this.item && this.item.id )
             {
+
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_string.common_fields.save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
-
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_string.common_fields.save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1183,7 +1188,7 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & New',
+                        label: root.assets.language_string.common_fields.save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -1192,14 +1197,14 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_string.common_fields.trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_string.common_fields.delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -1208,16 +1213,17 @@ export const useUserStore = defineStore({
                 ];
 
             } else{
+
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_string.common_fields.create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_string.common_fields.create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1226,7 +1232,7 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_string.common_fields.reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -1236,7 +1242,7 @@ export const useUserStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_string.common_fields.fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();

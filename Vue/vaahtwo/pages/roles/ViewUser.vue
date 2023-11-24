@@ -2,11 +2,13 @@
 import { h, onMounted, ref } from "vue";
 import { useRoute } from 'vue-router';
 
+import { useRootStore } from "../../stores/root";
 import { useRoleStore } from '../../stores/store-roles';
 import { vaah } from '../../vaahvue/pinia/vaah';
 import { useDialog } from "primevue/usedialog";
 import RoleUserDetailsView from "./components/RoleUserDetailsView.vue";
 
+const root = useRootStore();
 const store = useRoleStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -74,7 +76,7 @@ const openDetailsViewModal = () => {
 </script>
 
 <template>
-    <div class="col-6">
+    <div class="col-6" v-if="root.assets">
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
@@ -131,7 +133,7 @@ const openDetailsViewModal = () => {
                                        @keyup.enter="store.delayedRoleUsersSearch()"
                                        @keyup.enter.native="store.delayedRoleUsersSearch()"
                                        @keyup.13="store.delayedRoleUsersSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_string.common_fields.search"
                                        type="text"
                                        data-testid="role-user_search"
                                        class="w-full p-inputtext-sm"
@@ -140,7 +142,7 @@ const openDetailsViewModal = () => {
 
                         <Button class="p-button-sm"
                                 data-testid="role-user_search_reset"
-                                label="Reset"
+                                :label="root.assets.language_string.common_fields.reset"
                                 @click="store.resetRoleUserFilters()"
 
                         />
@@ -179,14 +181,14 @@ const openDetailsViewModal = () => {
                               v-if="store.hasPermission('can-update-roles')||
                                     store.hasPermission('can-manage-roles')"
                     >
-                        <Button label="Yes"
+                        <Button :label="root.assets.language_string.common_fields.yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeUserRole(prop.data)"
                                 data-testid="role-user_status_yes"
                         />
 
-                        <Button label="No"
+                        <Button :label="root.assets.language_string.common_fields.no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 data-testid="role-user_status_no"
                                 v-else
@@ -197,13 +199,13 @@ const openDetailsViewModal = () => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button label="Yes"
+                        <Button :label="root.assets.language_string.common_fields.yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button label="No"
+                        <Button :label="root.assets.language_string.common_fields.no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -216,7 +218,7 @@ const openDetailsViewModal = () => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
                                 icon="pi pi-eye"
-                                label="View"
+                                :label="root.assets.language_string.common_fields.view"
                                 data-testid="role-user_view_details"
                         />
                     </template>

@@ -1,7 +1,9 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
+import { useRootStore } from "../../../stores/root";
 import { useRegistrationStore } from '../../../stores/store-registrations'
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const useVaah = vaah();
 
@@ -118,14 +120,14 @@ const useVaah = vaah();
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 v-if="store.hasPermission('can-read-registrations')"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_string.common_fields.view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="register-table_to_view"
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_string.common_fields.update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 data-testid="register-table_to_edit"
@@ -133,9 +135,9 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-registrations')"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) && store.hasPermission('can-update-registrations')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_string.common_fields.trash"
                                 icon="pi pi-trash"
                                 data-testid="register-table_item_action_restore"
                         />
@@ -143,7 +145,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_string.common_fields.restore"
                                 icon="pi pi-replay"
                                 data-testid="register-table_item_action_delete"
                         />

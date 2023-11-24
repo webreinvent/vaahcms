@@ -836,13 +836,13 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
-
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_string.common_fields.restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -852,8 +852,9 @@ export const useRegistrationStore = defineStore({
 
             if(this.item && this.item.id && !this.item.deleted_at)
             {
+                const root = useRootStore();
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_string.common_fields.trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -862,7 +863,7 @@ export const useRegistrationStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_string.common_fields.delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -885,6 +886,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id )
@@ -892,14 +894,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_string.common_fields.save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_string.common_fields.save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -908,7 +910,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & New',
+                        label: root.assets.language_string.common_fields.save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -917,14 +919,14 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_string.common_fields.trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_string.common_fields.delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -936,14 +938,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_string.common_fields.create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_string.common_fields.create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -952,7 +954,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_string.common_fields.reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -962,7 +964,7 @@ export const useRegistrationStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_string.common_fields.fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();

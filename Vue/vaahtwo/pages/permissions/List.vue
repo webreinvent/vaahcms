@@ -2,11 +2,13 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
+import { useRootStore } from "../../stores/root";
 import {usePermissionStore} from '../../stores/store-permissions'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = usePermissionStore();
 const route = useRoute();
 
@@ -50,11 +52,11 @@ onMounted(async () => {
 <template>
     <div class="grid">
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small">
+            <Panel class="is-small" v-if="root.assets">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div>
-                            <b class="mr-1">Permission</b>
+                            <b class="mr-1">{{root.assets.language_string.common_fields.permissions}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />

@@ -1,10 +1,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
+import { useRootStore } from "../../stores/root";
 import { useRegistrationStore } from '../../stores/store-registrations'
 import { vaah } from '../../vaahvue/pinia/vaah'
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -68,7 +70,7 @@ const toggleUserStatusMenu = (event) => {
 </script>
 
 <template>
-    <div class="col-5">
+    <div class="col-5" v-if="root.assets">
         <Panel v-if="store && store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
@@ -86,7 +88,7 @@ const toggleUserStatusMenu = (event) => {
                             data-testid="registration-item_id"
                     />
 
-                    <Button label="Edit"
+                    <Button :label="root.assets.language_string.common_fields.edit"
                             class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
@@ -126,11 +128,11 @@ const toggleUserStatusMenu = (event) => {
                 >
                     <div class="flex align-items-center justify-content-between">
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.common_fields.restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
                                     data-testid="register-view_item_action_to_restore"

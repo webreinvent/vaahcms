@@ -20,7 +20,11 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    store.getFormMenu();
+    watch(root, async (newVal, oldVal) => {
+        if(newVal.assets) {
+            await store.getFormMenu();
+        }
+    })
 
     root.getIsActiveStatusOptions();
 });
@@ -46,7 +50,7 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel class="is-small">
+        <Panel class="is-small" v-if="root.assets">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="p-panel-title">
@@ -55,7 +59,7 @@ const toggleFormMenu = (event) => {
                         </span>
 
                         <span v-else>
-                            Create
+                            {{root.assets.language_string.common_fields.create}}
                         </span>
                     </div>
                 </div>
@@ -70,7 +74,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.common_fields.save"
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
@@ -78,7 +82,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-save"
                     />
 
-                    <Button label="Create & New"
+                    <Button :label="root.assets.language_string.common_fields.create_and_new"
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
@@ -106,7 +110,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_string.common_fields.view"
                             data-testid="user-form_view"
                             @click="store.toView(store.item)"
                     />

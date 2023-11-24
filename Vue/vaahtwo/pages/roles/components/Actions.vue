@@ -1,10 +1,13 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import {useRoleStore} from '../../../stores/store-roles'
+import { useRootStore } from "../../../stores/root";
+
 
 
 import Filters from './Filters.vue'
 
+const root = useRootStore();
 const store = useRoleStore();
 
 onMounted(async () => {
@@ -85,7 +88,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_string.common_fields.search"
                                        data-testid="role-action_search_input"
                             />
 
@@ -100,14 +103,14 @@ const toggleBulkMenuState = (event) => {
                                     @click="store.show_filters = true"
                                     data-testid="role-action_filter"
                             >
-                                Filters
+                                {{root.assets.language_string.common_fields.filters}}
                                 <Badge v-if="store.count_filters > 0"
                                        :value="store.count_filters"
                                 />
                             </Button>
 
                             <Button class="p-button-sm"
-                                    label="Reset"
+                                    :label="root.assets.language_string.common_fields.reset"
                                     icon="pi pi-filter-slash"
                                     type="button"
                                     @click="store.resetQuery()"

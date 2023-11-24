@@ -2,9 +2,11 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 import { vaah } from '../../vaahvue/pinia/vaah';
+import { useRootStore } from "../../stores/root"
 import { usePermissionStore } from '../../stores/store-permissions';
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
+const root = useRootStore();
 const store = usePermissionStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -76,7 +78,7 @@ const toggleItemMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            label="Edit"
+                            :label="root.assets.language_string.common_fields.edit"
                             icon="pi pi-pencil"
                             data-testid="permission-item_edit"
                             @click="store.toEdit(store.item)"
@@ -119,11 +121,11 @@ const toggleItemMenu = (event) => {
                     <div class="flex align-items-center justify-content-between">
 
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.common_fields.restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')">
                             </Button>

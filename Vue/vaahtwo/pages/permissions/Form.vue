@@ -17,7 +17,11 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    store.getFormMenu();
+    watch(root, async (newVal, oldVal) => {
+        if(newVal.assets) {
+            await store.getFormMenu();
+        }
+    })
 
     await root.getIsActiveStatusOptions();
 });
@@ -33,7 +37,7 @@ const toggleFormMenu = (event) => {
 <template>
 
     <div class="col-5">
-        <Panel class="is-small">
+        <Panel class="is-small" v-if="root.assets">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -55,7 +59,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            label="Save"
+                            :label="root.assets.language_string.common_fields.save"
                             icon="pi pi-save"
                             data-testid="permission-form_save"
                             @click="store.itemAction('save')"
@@ -80,7 +84,7 @@ const toggleFormMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_string.common_fields.view"
                             data-testid="permission-item_view"
                             @click="store.toView(store.item)"
                             v-if="store.hasPermission('can-read-permissions')"

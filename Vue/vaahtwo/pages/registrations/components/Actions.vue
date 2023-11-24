@@ -96,7 +96,7 @@ const toggleBulkMenuState = (event) => {
                                     data-testid="register-search_icon_query_filter_q"
                             />
 
-                            <Button :label="root.assets.language_string.common_fields.filter"
+                            <Button :label="root.assets.language_string.common_fields.filters"
                                     class="p-button-sm"
                                     @click="store.show_filters = true"
                                     data-testid="register-show_filters"

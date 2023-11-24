@@ -2,9 +2,11 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../../stores/store-users'
+import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
+const root = useRootStore();
 const store = useUserStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -74,7 +76,7 @@ const toggleItemMenu = (event) => {
                             data-testid="user-item_id"
                     />
 
-                    <Button label="Edit"
+                    <Button :label="root.assets.language_string.common_fields.edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             class="p-button-sm"
@@ -115,11 +117,11 @@ const toggleItemMenu = (event) => {
 
                     <div class="flex align-items-center justify-content-between">
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.common_fields.restore"
                                     class="p-button-sm"
                                     data-testid="user-item_restore"
                                     @click="store.itemAction('restore')"

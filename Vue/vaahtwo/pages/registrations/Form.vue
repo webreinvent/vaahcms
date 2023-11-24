@@ -1,5 +1,6 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
+import { useRootStore } from "../../stores/root";
 import { useRegistrationStore } from '../../stores/store-registrations'
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
@@ -7,6 +8,7 @@ import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah"
 
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -16,8 +18,11 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-    store.getFormMenu();
-
+    watch(root, async (newVal, oldVal) => {
+        if(newVal.assets) {
+            await store.getFormMenu();
+        }
+    })
 });
 
 
@@ -31,8 +36,8 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-5" >
-        <Panel class="is-small">
+    <div class="col-5">
+        <Panel class="is-small" v-if="root.assets">
             <Message severity="error"
                          class="p-container-message"
                          :closable="false"
@@ -41,11 +46,11 @@ const toggleFormMenu = (event) => {
             >
                 <div class="flex align-items-center justify-content-between">
                     <div>
-                        Deleted {{store.item.deleted_at}}
+                        {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
                     </div>
 
                     <div>
-                        <Button label="Restore"
+                        <Button :label="root.assets.language_string.common_fields.restore"
                                 class="p-button-sm"
                                 @click="store.itemAction('restore')"
                                 data-testid="register-form_item_action_restore"
@@ -62,7 +67,7 @@ const toggleFormMenu = (event) => {
                             {{ store.item.name }}
                         </span>
                         <span v-else>
-                            Create
+                            {{root.assets.language_string.common_fields.create}}
                         </span>
                     </div>
                 </div>
@@ -77,7 +82,7 @@ const toggleFormMenu = (event) => {
                             data-testid="registration-form_id"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.common_fields.save"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-registrations')"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"
@@ -86,7 +91,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button v-else-if="store.hasPermission('can-create-registrations')"
-                            label="Create & New"
+                            :label="root.assets.language_string.common_fields.create_and_new"
                             @click="store.itemAction('create-and-new')"
                             icon="pi pi-save"
                             data-testid="register-form_item_action_create_and_new"
@@ -111,7 +116,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_string.common_fields.create"
                             @click="store.toView(store.item)"
                     />
 

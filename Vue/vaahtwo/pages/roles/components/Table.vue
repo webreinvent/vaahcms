@@ -1,8 +1,10 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
+import { useRootStore } from "../../../stores/root";
 import {useRoleStore} from '../../../stores/store-roles'
 
 
+const root = useRootStore();
 const store = useRoleStore();
 const useVaah = vaah();
 
@@ -47,7 +49,7 @@ const useVaah = vaah();
                      <Button class="p-button-tiny p-button-text p-0 mr-2"
 
                              data-testid="role-list_slug_copy"
-                             v-tooltip.top="'Copy Slug'"
+                             v-tooltip.top="root.assets.language_string.common_fields.copy_slug"
                              @click="useVaah.copy(prop.data.slug)"
                              icon="pi pi-copy"
                              :label="prop.data.slug"
@@ -61,7 +63,7 @@ const useVaah = vaah();
              >
                  <template #body="props">
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
-                             v-tooltip.top="'View Permissions'"
+                             v-tooltip.top="root.assets.language_string.common_fields.view_permissions"
                              @click="store.toPermission(props.data)"
                              data-testid="role-list_permission_view"
                              v-if="store.hasPermission('can-read-roles')"
@@ -76,7 +78,7 @@ const useVaah = vaah();
             >
                  <template #body="props">
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
-                             v-tooltip.top="'View Users'"
+                             v-tooltip.top="root.assets.language_string.common_fields.view_users"
                              @click="store.toUser(props.data)"
                              v-if="store.hasPermission('can-read-roles')"
                              data-testid="role-list_user_view"
@@ -120,7 +122,7 @@ const useVaah = vaah();
                     <div class="p-inputgroup ">
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_string.common_fields.view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="role-item_view"
@@ -128,7 +130,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_string.common_fields.update"
                                 @click="store.toEdit(prop.data)"
                                 v-if="store.hasPermission('can-update-roles')"
                                 icon="pi pi-pencil"
@@ -139,7 +141,7 @@ const useVaah = vaah();
                                 v-if="store.isViewLarge() && !prop.data.deleted_at
                                 && store.hasPermission('can-update-roles')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_string.common_fields.trash"
                                 icon="pi pi-trash"
                                 data-testid="role-item_trash"
                         />
@@ -147,7 +149,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_string.common_fields.restore"
                                 icon="pi pi-replay"
                                 data-testid="role-item_restore"
                         />
