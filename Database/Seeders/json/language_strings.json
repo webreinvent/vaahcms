@@ -608,13 +608,13 @@
     {
         "locale_code_iso_639": "en",
         "category": "dashboard",
-        "name": "Pending",
+        "name": "Pending Jobs",
         "content": "Pending"
     },
     {
         "locale_code_iso_639": "en",
         "category": "dashboard",
-        "name": "Failed",
+        "name": "Failed Jobs",
         "content": "Failed"
     },
     {
@@ -667,7 +667,7 @@
     },
     {
         "locale_code_iso_639": "en",
-        "category": "common-fields",
+        "category": "common-fields ",
         "name": "Registrations",
         "content": "Registrations"
     },
@@ -1071,6 +1071,310 @@
 
 
     {
+        "locale_code_iso_639": "en",
+        "category": "registration ",
+        "name": "Registrations Title",
+        "content": "Registrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Email Verification Pending",
+        "content": "Email Verification Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Email Verified",
+        "content": "Email Verified"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter User Created",
+        "content": "User Created"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Table Gender Male",
+        "content": "Male"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Table Gender Female",
+        "content": "Female"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Table Gender Others",
+        "content": "Others"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Create Button",
+        "content": "Create"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filters Button",
+        "content": "Filters"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Bulk Activate",
+        "content": "Activate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Mark all as active",
+        "content": "Mark all as active"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Bulk Deactivate",
+        "content": "Deactivate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Mark all as inactive",
+        "content": "Mark all as inactive"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Bulk Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Trash All",
+        "content": "Trash All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Bulk Restore",
+        "content": "Restore"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Restore All",
+        "content": "Restore All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Bulk Delete",
+        "content": "Delete"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Delete All",
+        "content": "Delete All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Sort By",
+        "content": "Sort By"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Sort By None",
+        "content": "None"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Sort By Updated Ascending",
+        "content": "Updated (Ascending)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Sort By Updated Descending",
+        "content": "Updated (Descending)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Trashed",
+        "content": "Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Exclude Trashed",
+        "content": "Exclude Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Include Trashed",
+        "content": "Include Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Only Trashed",
+        "content": "Only Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Status",
+        "content": "Status"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Is Active",
+        "content": "Is Active"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Is Active All",
+        "content": "All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Filter Only Active",
+        "content": "Only Active"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Toolkit Text View",
+        "content": "View"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Toolkit Text Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Toolkit Text Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Toolkit Text Restore",
+        "content": "Restore"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Edit Button",
+        "content": "Edit"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Save and Close",
+        "content": "Save & Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Save and Clone",
+        "content": "Save & Clone"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Save and New",
+        "content": "Save & New"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Create and New",
+        "content": "Create & New"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Create and Close",
+        "content": "Create & Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Create and Clone",
+        "content": "Create & Clone"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Fill",
+        "content": "Fill"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Text Deleted",
+        "content": "Deleted"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Delete",
+        "content": "Delete"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
+        "name": "Form Reset",
+        "content": "Reset"
+    },
+
+
+
+    {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
         "name": "Dashboard",
@@ -1316,13 +1620,13 @@
     {
         "locale_code_iso_639": "es",
         "category": "dashboard",
-        "name": "Pending",
+        "name": "Pending Jobs",
         "content": "Pendiente"
     },
     {
         "locale_code_iso_639": "es",
         "category": "dashboard",
-        "name": "Failed",
+        "name": "Failed Jobs",
         "content": "Fallido"
     },
     {
@@ -1784,6 +2088,322 @@
     },
 
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Registrations Title",
+        "content": "Inscripciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Email Verification Pending",
+        "content": "Verificación de correo electrónico pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Email Verified",
+        "content": "Correo Electrónico Verificado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter User Created",
+        "content": "Usuario Creado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Table Gender Male",
+        "content": "Masculino"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Table Gender Female",
+        "content": "Femenina"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Table Gender Others",
+        "content": "Otros"
+    },
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Create Button",
+        "content": "Crear"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filters Button",
+        "content": "Filtros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Bulk Activate",
+        "content": "Activar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Mark all as active",
+        "content": "Marcar todos como activos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Bulk Deactivate",
+        "content": "Desactivar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Mark all as inactive",
+        "content": "Marcar todo como inactivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Bulk Trash",
+        "content": "Basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Trash All",
+        "content": "Papelera Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Bulk Restore",
+        "content": "Restaurar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Restore All",
+        "content": "Restaura Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Bulk Delete",
+        "content": "Borrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Delete All",
+        "content": "Eliminar Todos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Sort By",
+        "content": "Ordenar Por"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Sort By None",
+        "content": "Ninguno"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Sort By Updated Ascending",
+        "content": "Actualizado (Ascendente)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Sort By Updated Descending",
+        "content": "Actualizado (Descendente)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Trashed",
+        "content": "Destrozado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Exclude Trashed",
+        "content": "Excluir Papelera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Include Trashed",
+        "content": "Incluir Papelera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Only Trashed",
+        "content": "Solo tirado a la basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Status",
+        "content": "Estado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Is Active",
+        "content": "Está Activo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Is Active All",
+        "content": "Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Only Active",
+        "content": "Solo Activo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Filter Only Inactive",
+        "content": "Solo Inactivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Toolkit Text View",
+        "content": "Vista"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Toolkit Text Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Toolkit Text Edit",
+        "content": "Editar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Toolkit Text Restore",
+        "content": "Restaurar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Toolkit Text Trash",
+        "content": "Basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Edit Button",
+        "content": "Editar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Save and Close",
+        "content": "Guardar y Cerrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Save and Clone",
+        "content": "Guardar y Clonar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Save and New",
+        "content": "Guardar y Nuevo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Create and New",
+        "content": "Crear y Nuevo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Create and Close",
+        "content": "Crear y Cerrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Create and Clone",
+        "content": "Crear y Clonar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Fill",
+        "content": "Llenar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Text Deleted",
+        "content": "Eliminado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Trash",
+        "content": "Basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Delete",
+        "content": "Borrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
+        "name": "Form Reset",
+        "content": "Reiniciar"
+    },
+
+
 
     {
         "locale_code_iso_639": "fr",
@@ -2030,13 +2650,13 @@
     {
         "locale_code_iso_639": "fr",
         "category": "dashboard",
-        "name": "Pending",
+        "name": "Pending Jobs",
         "content": "En attente"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "dashboard",
-        "name": "Failed",
+        "name": "Failed Jobs",
         "content": "Échoué"
     },
     {
@@ -2501,5 +3121,315 @@
         "category": "common-fields",
         "name": "User",
         "content": "Utilisateur"
+    },
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Registrations Title",
+        "content": "Inscriptions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Email Verification Pending",
+        "content": "Vérification de l\\'e-mail en attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Email Verified",
+        "content": "Email Verifié"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter User Created",
+        "content": "Utilisateur Créé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Table Gender Male",
+        "content": "Mâle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Table Gender Female",
+        "content": "Femelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Table Gender Others",
+        "content": "Autres"
+    },
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Create Button",
+        "content": "Créer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Reset Button",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filters Button",
+        "content": "Filtres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Bulk Activate",
+        "content": "Activer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Mark all as active",
+        "content": "Marquer tout comme actif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Bulk Deactivate",
+        "content": "Désactiver"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Mark all as inactive",
+        "content": "Marquer tout comme inactif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Bulk Trash",
+        "content": "Poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Trash All",
+        "content": "Tout Jeter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Bulk Restore",
+        "content": "Restaurer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Restore All",
+        "content": "Tout Restaurer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Bulk Delete",
+        "content": "Supprimer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Delete All",
+        "content": "Supprimer Tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Sort By",
+        "content": "Trier Par"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Sort By None",
+        "content": "Aucun"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Sort By Updated Ascending",
+        "content": "Mis à jour (Croissant)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Sort By Updated Descending",
+        "content": "Mis à jour (Décroissant)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Trashed",
+        "content": "Mis à la poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Exclude Trashed",
+        "content": "Exclure la corbeille"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Include Trashed",
+        "content": "Inclure la corbeille"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Only Trashed",
+        "content": "Seulement mis à la poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Status",
+        "content": "Statut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Is Active",
+        "content": "C\\'est Actif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Is Active All",
+        "content": "Tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Only Active",
+        "content": "Uniquement Actif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Filter Only Inactive",
+        "content": "Uniquement Inactif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Toolkit Text View",
+        "content": "Voir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Toolkit Text Update",
+        "content": "Mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Toolkit Text Trash",
+        "content": "Poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Toolkit Text Restore",
+        "content": "Restaurer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Edit Button",
+        "content": "Modifier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Save and Close",
+        "content": "Sauvegarder et Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Save and Clone",
+        "content": "Enregistrer et Cloner"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Save and New",
+        "content": "Enregistrer et Nouveau"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Create and New",
+        "content": "Créer et Nouveau"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Create and Close",
+        "content": "Créer et Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Create and Clone",
+        "content": "Créer et Cloner"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Fill",
+        "content": "Remplir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Text Deleted",
+        "content": "Supprimé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Trash",
+        "content": "Poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Delete",
+        "content": "Supprimer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Reset",
+        "content": "Réinitialiser"
     }
 ]

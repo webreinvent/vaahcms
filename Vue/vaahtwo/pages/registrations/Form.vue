@@ -46,11 +46,11 @@ const toggleFormMenu = (event) => {
             >
                 <div class="flex align-items-center justify-content-between">
                     <div>
-                        {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
+                        {{root.assets.language_string.crud_actions.form_text_deleted}} {{store.item.deleted_at}}
                     </div>
 
                     <div>
-                        <Button :label="root.assets.language_string.common_fields.restore"
+                        <Button :label="root.assets.language_string.crud_actions.restore_button"
                                 class="p-button-sm"
                                 @click="store.itemAction('restore')"
                                 data-testid="register-form_item_action_restore"
@@ -67,7 +67,7 @@ const toggleFormMenu = (event) => {
                             {{ store.item.name }}
                         </span>
                         <span v-else>
-                            {{root.assets.language_string.common_fields.create}}
+                            {{root.assets.language_string.crud_actions.create_button}}
                         </span>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ const toggleFormMenu = (event) => {
                             data-testid="registration-form_id"
                     />
 
-                    <Button :label="root.assets.language_string.common_fields.save"
+                    <Button :label="root.assets.language_string.crud_actions.save_button"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-registrations')"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"
@@ -91,7 +91,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button v-else-if="store.hasPermission('can-create-registrations')"
-                            :label="root.assets.language_string.common_fields.create_and_new"
+                            :label="root.assets.language_string.crud_actions.form_create_and_new"
                             @click="store.itemAction('create-and-new')"
                             icon="pi pi-save"
                             data-testid="register-form_item_action_create_and_new"
@@ -113,10 +113,10 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
+                    <Button v-if="(store.item && store.item.id)"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.common_fields.create"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                             @click="store.toView(store.item)"
                     />
 

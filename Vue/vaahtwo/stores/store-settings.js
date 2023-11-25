@@ -109,6 +109,7 @@ export const useSettingStore = defineStore({
         role_permissions_query: vaah().clone(empty_states.role_permissions_query),
         role_users_query: vaah().clone(empty_states.role_users_query),
         is_btn_loading: false,
+        is_root_loaded: false,
     }),
     getters: {
 
@@ -1166,6 +1167,52 @@ export const useSettingStore = defineStore({
                     }
                 },
             ]
+        },
+        //---------------------------------------------------------------------
+        sidebarMenuItems() {
+            const root = useRootStore();
+            this.sidebar_menu_items = [
+                {
+                    label: root.assets.language_string.sidebar_menu.settings,
+                    items: [
+                        {
+                            label: root.assets.language_string.sidebar_menu.general,
+                            icon: 'pi pi-cog',
+                            to: {path: '/vaah/settings/general'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.user_settings,
+                            icon: 'pi pi-user',
+                            to: {path: '/vaah/settings/user-settings'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.env_variables,
+                            icon: 'pi pi-cog',
+                            to: {path: '/vaah/settings/env-variables'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.localizations,
+                            icon: 'pi pi-code',
+                            to: {path: '/vaah/settings/localization'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.notifications,
+                            icon: 'pi pi-bell',
+                            to: {path: '/vaah/settings/notifications'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.update,
+                            icon: 'pi pi-download',
+                            to: {path: '/vaah/settings/update'}
+                        },
+                        {
+                            label: root.assets.language_string.sidebar_menu.reset,
+                            icon: 'pi pi-refresh',
+                            to: {path: '/setup'}
+                        },
+                    ]
+                }]
+
         },
         //---------------------------------------------------------------------
         async getPermissionMenuItems() {

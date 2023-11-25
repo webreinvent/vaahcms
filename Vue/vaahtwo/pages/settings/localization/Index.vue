@@ -143,8 +143,23 @@ onMounted(async () => {
                 />
             </div>
 
-            <div class="col-5">
+            <div class="col">
                 <div class="p-inputgroup ">
+                    <InputText class="p-inputtext-sm"
+                               v-model="store.query_string.q"
+                               @keyup.enter="store.delayedSearch()"
+                               @keyup.enter.native="store.delayedSearch()"
+                               @input="store.delayedSearch()"
+                               placeholder="search"
+                               data-testid="role-action_search_input"
+                    />
+
+                    <Button class="p-button-sm"
+                            icon="pi pi-search"
+                            data-testid="user-action_search"
+                            @click="store.delayedSearch()"
+                    />
+
                     <Dropdown v-model="store.query_string.cat_id"
                               :data-testid="'localization-category_filter'"
                               :options="store.categories"

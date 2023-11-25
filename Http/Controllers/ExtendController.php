@@ -149,7 +149,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => "pi pi-box",
-                'label'=> trans("vaahcms-sidebar-menu.advanced"),
+                'label'=> trans("vaahcms-sidebar-menu.extend"),
                 'items'=> [],
             ];
 
@@ -338,7 +338,7 @@ class ExtendController extends Controller
             "list" => [
                 [
                     "count" => User::count(),
-                    "label" => trans("vaahcms-dashboard.total_role"),
+                    "label" => trans("vaahcms-dashboard.total_user"),
                     "icon" => "pi-users",
                     "type" => "info",
                     "link" => self::$link."/users/"
@@ -401,14 +401,14 @@ class ExtendController extends Controller
                 'is_job_enabled' => $is_job_enabled,
                 'footer' => [
                     [
-                        'name' => trans("vaahcms-dashboard.pending"),
+                        'name' => trans("vaahcms-dashboard.pending_jobs"),
                         'count' => Job::count(),
                         'type' => 'info',
                         'icon' => 'pi pi-envelope',
                         'link' => self::$link."/advanced/jobs/",
                     ],
                     [
-                        'name' => trans("vaahcms-dashboard.failed"),
+                        'name' => trans("vaahcms-dashboard.failed_jobs"),
                         'count' => FailedJob::count(),
                         'type' => 'danger',
                         'icon' => 'pi pi-ban text-red-500',

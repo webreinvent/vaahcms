@@ -192,7 +192,10 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Login'],
             ["name" => 'Sidebar Menu'],
             ["name" => 'Dashboard'],
-            ["name" => 'Common Fields']
+            ["name" => 'Common Fields'],
+            ["name" => 'Settings'],
+            ["name" => 'Registration'],
+            ["name" => 'Crud Action'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

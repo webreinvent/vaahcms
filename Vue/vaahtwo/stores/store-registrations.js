@@ -894,14 +894,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: root.assets.language_string.common_fields.save_and_close,
+                        label: root.assets.language_string.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.save_and_clone,
+                        label: root.assets.language_string.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -910,7 +910,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.save_and_new,
+                        label: root.assets.language_string.crud_actions.form_save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -919,14 +919,14 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.trash,
+                        label: root.assets.language_string.crud_actions.form_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.delete,
+                        label: root.assets.language_string.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -938,14 +938,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: root.assets.language_string.common_fields.create_and_close,
+                        label: root.assets.language_string.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.create_and_clone,
+                        label: root.assets.language_string.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -954,7 +954,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.common_fields.reset,
+                        label: root.assets.language_string.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -964,7 +964,7 @@ export const useRegistrationStore = defineStore({
             }
 
             form_menu.push({
-                label: root.assets.language_string.common_fields.fill,
+                label: root.assets.language_string.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
