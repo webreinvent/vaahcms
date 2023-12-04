@@ -44,33 +44,7 @@ onMounted(async () => {
 
         </template>
         <div class="grid">
-            <div class="col-12" v-if="store && store.assets && store.assets.notifications">
-                <div class="p-inputgroup">
-                    <Dropdown v-model="store.notification"
-                              :options="store.assets.notifications"
-                              optionLabel="name"
-                              optionValue="id"
-                              :filter="true"
-                              placeholder="Search"
-                              data-testid="notification-search"
-                              class="w-full"
-                              @change="store.callShowNotificationSettings()"
-                              inputClass="p-inputtext-sm"
-                    />
-
-                    <Button class="p-button-sm"
-                            label="Reset"
-                            @click="store.clearNotificationSearch"
-                            data-testid="notification-search_reset"
-                    />
-                </div>
-            </div>
-
             <div class="col-12" v-if="store.show_new_item_form">
-                <Message severity="error" :closable="false">
-                    These are notifications needs to be send manually.
-                </Message>
-
                 <div class="p-inputgroup">
                     <inputText data-testid="setting-notification_add_new_value"
                                v-model="store.new_item.name"
@@ -79,7 +53,6 @@ onMounted(async () => {
                                class="w-full"
                                inputClass="p-inputtext-sm"
                     />
-
                     <Button icon="pi pi-save"
                             label="save"
                             @click="store.create"
