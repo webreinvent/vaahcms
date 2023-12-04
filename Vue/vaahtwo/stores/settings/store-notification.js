@@ -443,10 +443,10 @@ export const useNotificationStore = defineStore({
             await vaah().ajax(ajax_url, this.createAfter, options);
         },
         //---------------------------------------------------------------------
-        createAfter(data, res){
+       async createAfter(data, res){
             this.show_new_item_form = false;
             this.active_notification = data.item;
-            this.getAssets();
+           await this.getAssets();
         },
         //---------------------------------------------------------------------
         searchNotificationVarialbles(event){
