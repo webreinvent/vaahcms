@@ -249,7 +249,7 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
-            this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id);
+            this.active_notification = vaah().findInArrayByKey(this.notifications.data, 'id', item.id);
 
             let options = {
                 method: 'post',
