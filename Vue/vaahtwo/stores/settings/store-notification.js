@@ -445,7 +445,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
        async createAfter(data, res){
             this.show_new_item_form = false;
-            this.active_notification = data.item;
+           this.notifications=data.list;
            await this.getAssets();
         },
         //---------------------------------------------------------------------
