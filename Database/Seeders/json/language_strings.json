@@ -727,409 +727,6 @@
         "name": "View Log",
         "content": "View"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields ",
-        "name": "Registrations",
-        "content": "Registrations"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Create",
-        "content": "Create"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Search",
-        "content": "Search"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Reset",
-        "content": "Reset"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Filters",
-        "content": "Filters"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Activate",
-        "content": "Activate"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Mark all as active",
-        "content": "Mark all as active"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Deactivate",
-        "content": "Deactivate"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Mark all as inactive",
-        "content": "Mark all as inactive"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Trash",
-        "content": "Trash"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Trash All",
-        "content": "Trash All"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Restore",
-        "content": "Restore"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Restore All",
-        "content": "Restore All"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Delete",
-        "content": "Delete"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Delete All",
-        "content": "Delete All"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Sort By",
-        "content": "Sort By"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "None",
-        "content": "None"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Updated Ascending",
-        "content": "Updated (Ascending)"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Updated Descending",
-        "content": "Updated (Descending)"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Trashed",
-        "content": "Trashed"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Exclude Trashed",
-        "content": "Exclude Trashed"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Include Trashed",
-        "content": "Include Trashed"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Only Trashed",
-        "content": "Only Trashed"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Status",
-        "content": "Status"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Email Verification Pending",
-        "content": "Email Verification Pending"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Email Verified",
-        "content": "Email Verified"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "User Created",
-        "content": "User Created"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Users",
-        "content": "Users"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Is Active",
-        "content": "Is Active"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "All",
-        "content": "All"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Only Active",
-        "content": "Only Active"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Roles",
-        "content": "Roles"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Permissions",
-        "content": "Permissions"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "View",
-        "content": "View"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Update",
-        "content": "Update"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Edit",
-        "content": "Edit"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Save",
-        "content": "Save"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Save and Close",
-        "content": "Save & Close"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Save and Clone",
-        "content": "Save & Clone"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Save and New",
-        "content": "Save & New"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Create and New",
-        "content": "Create & New"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Create and Close",
-        "content": "Create & Close"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Create and Clone",
-        "content": "Create & Clone"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Fill",
-        "content": "Fill"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Deleted",
-        "content": "Deleted"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Male",
-        "content": "Male"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Female",
-        "content": "Female"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Others",
-        "content": "Others"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Generate new API Token",
-        "content": "Generate new API Token"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Active All Roles",
-        "content": "Active All Roles"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Inactive All Roles",
-        "content": "Inactive All Roles"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Yes",
-        "content": "Yes"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "No",
-        "content": "No"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Copy Slug",
-        "content": "Copy Slug"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Impersonate",
-        "content": "Impersonate"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "View Permissions",
-        "content": "View Permissions"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "View Users",
-        "content": "View Users"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Active All Permissions",
-        "content": "Active All Permissions"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Inactive All Permissions",
-        "content": "Inactive All Permissions"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Attach To All Users",
-        "content": "Attach To All Users"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Detach To All Users",
-        "content": "Detach To All Users"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Select a Module",
-        "content": "Select a Module"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Active",
-        "content": "Active"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Inactive",
-        "content": "Inactive"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "Select a Section",
-        "content": "Select a Section"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "View Role",
-        "content": "View Role"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "common-fields",
-        "name": "User",
-        "content": "User"
-    },
-
 
 
     {
@@ -1689,6 +1286,235 @@
         "content": "Inactive All Roles"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Heading",
+        "content": "General Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Expand All",
+        "content": "Expand All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Collapse All",
+        "content": "Collapse All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Site Settings",
+        "content": "Site Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Site Settings Message",
+        "content": "After a successful password update, you will be redirected to the login page where you can log in with your new password."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Site Title",
+        "content": "Site Title"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Copyright Text",
+        "content": "Copyright Text"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Use App Name",
+        "content": "Use App Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Custom",
+        "content": "Custom"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Enter Custom Text",
+        "content": "Enter Custom Text"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Default Site Language",
+        "content": "Default Site Language"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Redirect after Frontend Login",
+        "content": "Redirect after Frontend Login"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Use App Url",
+        "content": "Use App Url"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Enter Custom Link",
+        "content": "Enter Custom Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Description",
+        "content": "Meta Description"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Copyright Year",
+        "content": "Copyright Year"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Use Current Year",
+        "content": "Use Current Year"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Search Engine Visibility",
+        "content": "Search Engine Visibility"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Enable",
+        "content": "Enable"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Disable",
+        "content": "Disable"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Assign Roles On Registration",
+        "content": "Assign Role(s) On Registration"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Max number of forget password attempts",
+        "content": "Max number of forget password attempts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Maximum number of login attempts",
+        "content": "Maximum number of login attempts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Allowed file types for upload",
+        "content": "Allowed file types for upload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Password Protection",
+        "content": "Password Protection"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Laravel Queues",
+        "content": "Laravel Queues"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Maintenance Mode",
+        "content": "Maintenance Mode"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Signup Page",
+        "content": "Signup Page"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Is Logo compressed with Sidebar",
+        "content": "Is Logo compressed with Sidebar"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Redirect after Backend Logout",
+        "content": "Redirect after Backend Logout"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "True",
+        "content": "True"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "False",
+        "content": "False"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Backend",
+        "content": "Backend"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Frontend",
+        "content": "Frontend"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Enter Redirection Link",
+        "content": "Enter Redirection Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Save Settings Button",
+        "content": "Save Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Clear Cache Button",
+        "content": "Clear Cache"
+    },
+
 
 
 
@@ -2055,415 +1881,6 @@
         "category": "dashboard",
         "name": "View Log",
         "content": "Vista"
-    },
-
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Registrations",
-        "content": "Inscripciones"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Create",
-        "content": "Crear"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Search",
-        "content": "Buscar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Reset",
-        "content": "Reiniciar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Filters",
-        "content": "Filtros"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Activate",
-        "content": "Activar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Mark all as active",
-        "content": "Marcar todos como activos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Deactivate",
-        "content": "Desactivar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Mark all as inactive",
-        "content": "Marcar todo como inactivo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Trash",
-        "content": "Basura"
-    },
-    {
-    "locale_code_iso_639": "es",
-    "category": "common-fields",
-    "name": "Trash All",
-    "content": "Papelera Todo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Restore",
-        "content": "Restaurar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Restore All",
-        "content": "Restaura Todo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Delete",
-        "content": "Borrar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Delete All",
-        "content": "Eliminar Todos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Sort By",
-        "content": "Ordenar Por"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "None",
-        "content": "Ninguno"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Updated Ascending",
-        "content": "Actualizado (Ascendente)"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Updated Descending",
-        "content": "Actualizado (Descendente)"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Trashed",
-        "content": "Destrozado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Exclude Trashed",
-        "content": "Excluir Papelera"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Include Trashed",
-        "content": "Incluir Papelera"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Only Trashed",
-        "content": "Solo tirado a la basura"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Status",
-        "content": "Estado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Email Verification Pending",
-        "content": "Verificación de correo electrónico pendiente"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Email Verified",
-        "content": "Correo Electrónico Verificado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "User Created",
-        "content": "Usuario Creado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Users",
-        "content": "Usuarios"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Is Active",
-        "content": "Está Activo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "All",
-        "content": "Todo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Only Active",
-        "content": "Solo Activo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Only Inactive",
-        "content": "Solo Inactivo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Roles",
-        "content": "Roles"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Permissions",
-        "content": "Permisos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "View",
-        "content": "Vista"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Update",
-        "content": "Actualizar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Edit",
-        "content": "Editar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Save",
-        "content": "Ahorrar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Save and Close",
-        "content": "Guardar y Cerrar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Save and Clone",
-        "content": "Guardar y Clonar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Save and New",
-        "content": "Guardar y Nuevo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Create and New",
-        "content": "Crear y Nuevo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Create and Close",
-        "content": "Crear y Cerrar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Create and Clone",
-        "content": "Crear y Clonar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Fill",
-        "content": "Llenar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Deleted",
-        "content": "Eliminado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Male",
-        "content": "Masculino"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Female",
-        "content": "Femenina"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Others",
-        "content": "Otros"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Generate new API Token",
-        "content": "Generar Nuevo Token API"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Active All Roles",
-        "content": "Activo todos los roles"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Inactive All Roles",
-        "content": "Inactivo todos los roles"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Yes",
-        "content": "Sí"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "No",
-        "content": "No"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Copy Slug",
-        "content": "Copiar Babosa"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Impersonate",
-        "content": "Personificar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "View Permissions",
-        "content": "Ver Permisos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "View Users",
-        "content": "Ver Usuarios"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Active All Permissions",
-        "content": "Activo todos los permisos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Inactive All Permissions",
-        "content": "Inactivo todos los permisos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Attach To All Users",
-        "content": "Adjuntar a todos los usuarios"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Detach To All Users",
-        "content": "Separar a todos los usuarios"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Select a Module",
-        "content": "Seleccione un Módulo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Active",
-        "content": "Activo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Inactive",
-        "content": "Inactif"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "Select a Section",
-        "content": "Seleccione una Sección"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "View Role",
-        "content": "Ver Rol"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "common-fields",
-        "name": "User",
-        "content": "Usuario"
     },
 
 
@@ -3024,6 +2441,235 @@
         "content": "Inactivo todos los roles"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Heading",
+        "content": "Configuración general"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Expand All",
+        "content": "Expandir todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Collapse All",
+        "content": "Desplegar todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Site Settings",
+        "content": "Configuración del sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Site Settings Message",
+        "content": "Después de una actualización exitosa de la contraseña, será redirigido a la página de inicio de sesión donde podrá iniciar sesión con su nueva contraseña."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Site Title",
+        "content": "Título del sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Copyright Text",
+        "content": "Texto de derechos de autor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Use App Name",
+        "content": "Usar nombre de la aplicación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Custom",
+        "content": "Costumbre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Enter Custom Text",
+        "content": "Ingrese texto personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Default Site Language",
+        "content": "Idioma predeterminado del sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Redirect after Frontend Login",
+        "content": "Redirigir después de iniciar sesión en el frontend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Use App Url",
+        "content": "Usar URL de la aplicación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Enter Custom Link",
+        "content": "Ingrese el enlace personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Description",
+        "content": "Metadescripción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Copyright Year",
+        "content": "Año de derechos de autor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Use Current Year",
+        "content": "Usar el año actual"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Search Engine Visibility",
+        "content": "Visibilidad del motor de búsqueda"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Enable",
+        "content": "Permitir"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Disable",
+        "content": "Desactivar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Assign Roles On Registration",
+        "content": "Asignar funciones al registrarse"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Max number of forget password attempts",
+        "content": "Número máximo de intentos de olvidar contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Maximum number of login attempts",
+        "content": "Número máximo de intentos de inicio de sesión"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Allowed file types for upload",
+        "content": "Tipos de archivos permitidos para cargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Password Protection",
+        "content": "Protección de contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Laravel Queues",
+        "content": "Colas de Laravel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Maintenance Mode",
+        "content": "Modo de mantenimiento"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Signup Page",
+        "content": "Página de registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Is Logo compressed with Sidebar",
+        "content": "¿El logotipo está comprimido con la barra lateral"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Redirect after Backend Logout",
+        "content": "Redirigir después del cierre de sesión del backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "True",
+        "content": "Verdadero"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "False",
+        "content": "Falso"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Backend",
+        "content": "Backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Frontend",
+        "content": "Interfaz"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Enter Redirection Link",
+        "content": "Ingrese el enlace de redirección"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Save Settings Button",
+        "content": "Guardar ajustes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Clear Cache Button",
+        "content": "Limpiar cache"
+    },
+
 
 
     {
@@ -3388,421 +3034,6 @@
         "category": "dashboard",
         "name": "View Log",
         "content": "Voir"
-    },
-
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Registrations",
-        "content": "Inscriptions"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Create",
-        "content": "Créer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Search",
-        "content": "Recherche"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Reset",
-        "content": "Réinitialiser"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Filters",
-        "content": "Filtres"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Activate",
-        "content": "Activer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Mark all as active",
-        "content": "Marquer tout comme actif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Deactivate",
-        "content": "Désactiver"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Mark all as inactive",
-        "content": "Marquer tout comme inactif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Trash",
-        "content": "Poubelle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Trash All",
-        "content": "Tout Jeter"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Restore",
-        "content": "Restaurer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Restore All",
-        "content": "Tout Restaurer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Delete",
-        "content": "Supprimer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Delete All",
-        "content": "Supprimer Tout"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Sort By",
-        "content": "Trier Par"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "None",
-        "content": "Aucun"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Updated Ascending",
-        "content": "Mis à jour (Croissant)"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Updated Descending",
-        "content": "Mis à jour (Décroissant)"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Trashed",
-        "content": "Mis à la poubelle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Exclude Trashed",
-        "content": "Exclure la corbeille"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Include Trashed",
-        "content": "Inclure la corbeille"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Only Trashed",
-        "content": "Seulement mis à la poubelle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Status",
-        "content": "Statut"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Email Verification Pending",
-        "content": "Vérification de l\\'e-mail en attente"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Email Verified",
-        "content": "Email Verifié"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "User Created",
-        "content": "Utilisateur Créé"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Users",
-        "content": "Utilisateurs"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Is Active",
-        "content": "C\\'est Actif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "All",
-        "content": "Tout"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Only Active",
-        "content": "Uniquement Actif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Only Inactive",
-        "content": "Uniquement Inactif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Roles",
-        "content": "Rôles"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Permissions",
-        "content": "Autorisations"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "View",
-        "content": "Voir"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Update",
-        "content": "Mise à jour"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Edit",
-        "content": "Modifier"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Save",
-        "content": "Sauvegarder"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Save and Close",
-        "content": "Sauvegarder et Fermer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Save and Clone",
-        "content": "Enregistrer et Cloner"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Save and New",
-        "content": "Enregistrer et Nouveau"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Create and New",
-        "content": "Créer et Nouveau"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Create and Close",
-        "content": "Créer et Fermer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Create and Clone",
-        "content": "Créer et Cloner"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Fill",
-        "content": "Remplir"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Deleted",
-        "content": "Supprimé"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Male",
-        "content": "Mâle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Female",
-        "content": "Femelle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Others",
-        "content": "Autres"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Generate new API Token",
-        "content": "Générer un nouveau Teton API"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Active All Roles",
-        "content": "Actif tous les rôles"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Inactive All Roles",
-        "content": "Inactif Tous les rôles"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Yes",
-        "content": "Oui"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "No",
-        "content": "Non"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Copy Slug",
-        "content": "Copier le limace"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Impersonate",
-        "content": "Imiter"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "View Permissions",
-        "content": "Afficher les autorisations"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "View Users",
-        "content": "Afficher les utilisateurs"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Active All Permissions",
-        "content": "Activer toutes les autorisations"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Inactive All Permissions",
-        "content": "Inactif Toutes les autorisations"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Attach To All Users",
-        "content": "Attacher à tous les utilisateurs"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Detach To All Users",
-        "content": "Détacher à tous les utilisateurs"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Select a Module",
-        "content": "Sélectionnez un Module"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Select a Section",
-        "content": "Sélectionnez une Rubrique"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Active",
-        "content": "Actif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Inactive",
-        "content": "Actif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "Select a Section",
-        "content": "Sélectionnez une rubrique"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "View Role",
-        "content": "Afficher le Rôle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "common-fields",
-        "name": "User",
-        "content": "Utilisateur"
     },
 
 
@@ -4361,5 +3592,234 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactif Tous les rôles"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Heading",
+        "content": "Réglages Généraux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Expand All",
+        "content": "Développer tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Collapse All",
+        "content": "Réduire tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Site Settings",
+        "content": "Paramètres du site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Site Settings Message",
+        "content": "Après une mise à jour réussie du mot de passe, vous serez redirigé vers la page de connexion où vous pourrez vous connecter avec votre nouveau mot de passe."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Site Title",
+        "content": "Titre du site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Copyright Text",
+        "content": "Texte du droit d\\'auteur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Use App Name",
+        "content": "Utiliser le nom de l\\'application"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Custom",
+        "content": "Coutume"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Enter Custom Text",
+        "content": "Saisir un texte personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Default Site Language",
+        "content": "Langue du site par défaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Redirect after Frontend Login",
+        "content": "Redirection après la connexion frontend"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Use App Url",
+        "content": "Utiliser l\\'URL de l\\'application"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Enter Custom link",
+        "content": "Entrez un lien personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Description",
+        "content": "Méta Description"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Copyright Year",
+        "content": "Année du droit d\\'auteur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Use Current Year",
+        "content": "Utiliser l\\'année en cours"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Search Engine Visibility",
+        "content": "Visibilité des moteurs de recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Enable",
+        "content": "Activer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Disable",
+        "content": "Désactiver"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Assign Roles On Registration",
+        "content": "Attribuer un ou plusieurs rôles lors de l\\'inscription"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Max number of forget password attempts",
+        "content": "Nombre maximum de tentatives d\\'oubli de mot de passe"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Maximum number of login attempts",
+        "content": "Nombre maximum de tentatives de connexion"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Allowed file types for upload",
+        "content": "Types de fichiers autorisés pour le téléchargement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Password Protection",
+        "content": "Mot de passe de protection"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Laravel Queues",
+        "content": "Files d\\'attente Laravel"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Maintenance Mode",
+        "content": "Mode de Maintenance"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Signup Page",
+        "content": "Page d\\'inscription"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Is Logo compressed with Sidebar",
+        "content": "Le logo est-il compressé avec la barre latérale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Redirect after Backend Logout",
+        "content": "Redirection après la déconnexion du backend"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "True",
+        "content": "Vrai"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "False",
+        "content": "Faux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Backend",
+        "content": "Back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Frontend",
+        "content": "L\\'extrémité avant"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Enter Redirection Link",
+        "content": "Entrez le lien de redirection"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Save Settings Button",
+        "content": "Enregistrer les paramètres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Clear Cache Button",
+        "content": "Vider le cache"
     }
 ]

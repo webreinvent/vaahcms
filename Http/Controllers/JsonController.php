@@ -239,7 +239,7 @@ class JsonController extends Controller
 
 
         $data['language_string']['general_settings'] = [
-            "heading" => trans("heading"),
+            "heading" => trans("vaahcms-general-setting.heading"),
             "expand_all" => trans("vaahcms-general-setting.expand_all"),
             "collapse_all" => trans("vaahcms-general-setting.collapse_all"),
             "site_settings" => trans("vaahcms-general-setting.site_settings"),
@@ -252,7 +252,7 @@ class JsonController extends Controller
             "default_site_language" => trans("vaahcms-general-setting.default_site_language"),
             "redirect_after_frontend_login" => trans("vaahcms-general-setting.redirect_after_frontend_login"),
             "use_app_url" => trans("vaahcms-general-setting.use_app_url"),
-            "enter_custom_url" => trans("vaahcms-general-setting.enter_custom_url"),
+            "enter_custom_link" => trans("vaahcms-general-setting.enter_custom_link"),
             "meta_description" => trans("vaahcms-general-setting.meta_description"),
             "copyright_year" => trans("vaahcms-general-setting.copyright_year"),
             "use_current_year" => trans("vaahcms-general-setting.use_current_year"),
@@ -263,7 +263,6 @@ class JsonController extends Controller
             "max_number_of_forgot_password_attempts" => trans("vaahcms-general-setting.max_number_of_forgot_password_attempts"),
             "maximum_number_of_login_attempts" => trans("vaahcms-general-setting.maximum_number_of_login_attempts"),
             "placeholder_search" => trans("vaahcms-general-setting.placeholder_search"),
-            "max_password_attempts" => trans("vaahcms-general-setting.max_password_attempts"),
             "allowed_file_types_for_upload" => trans("vaahcms-general-setting.allowed_file_types_for_upload"),
             "password_protection" => trans("vaahcms-general-setting.password_protection"),
             "laravel_queues" => trans("vaahcms-general-setting.laravel_queues"),
@@ -276,8 +275,8 @@ class JsonController extends Controller
             "enter_redirection_link" => trans("vaahcms-general-setting.enter_redirection_link"),
             "true" => trans("vaahcms-general-setting.true"),
             "false" => trans("vaahcms-general-setting.false"),
-            "save_settings" => trans("vaahcms-general-setting.save_settings"),
-            "clear_cache" => trans("vaahcms-general-setting.clear_cache"),
+            "save_settings_button" => trans("vaahcms-general-setting.save_settings_button"),
+            "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
 
         ];
 

@@ -10,7 +10,9 @@ import DateTime from './components/DateTime.vue';
 import SocialMediaLink from './components/SocialMediaLink.vue';
 import Script from './components/Scripts.vue';
 import MetaTags from './components/MetaTags.vue'
+import { useRootStore } from "../../../stores/root";
 
+const root = useRootStore();
 const store = useGeneralStore();
 const route = useRoute();
 
@@ -39,16 +41,18 @@ onMounted(async () => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div>
-                        <b class="mr-1">General Settings</b>
+                        <b class="mr-1">{{root.assets.language_string.general_settings.heading}}</b>
                      </div>
                 </div>
             </template>
 
             <template #icons>
                 <div class="buttons">
-                    <Button label="Expand all" icon="pi pi-angle-double-down" class="p-button-sm mr-2"
+                    <Button :label="root.assets.language_string.general_settings.expand_all"
+                            icon="pi pi-angle-double-down" class="p-button-sm mr-2"
                             @click="store.expandAll"></Button>
-                    <Button label="Collapse all" icon="pi pi-angle-double-up" class="p-button-sm"
+                    <Button :label="root.assets.language_string.general_settings.collapse_all"
+                            icon="pi pi-angle-double-up" class="p-button-sm"
                             @click="store.collapseAll"></Button>
                 </div>
             </template>
@@ -59,8 +63,7 @@ onMounted(async () => {
                         <div class="w-full">
                             <div>
                                 <h5 class="font-semibold text-sm">Site Settings</h5>
-                                <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
-                                    the login page where you can log in with your new password.</p>
+                                <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.site_settings_message}}</p>
                             </div>
                         </div>
                     </template>

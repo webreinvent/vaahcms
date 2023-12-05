@@ -62,20 +62,16 @@ export const useGeneralStore = defineStore({
         custom_field_list:null,
         active_index:[],
         languages: null,
-        visibitlity_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        maintenanceModeOptions: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        compressedLogoOptions: [{name:'True',value:"1"}, {name:'False',value:"0"}],
-        redirect_after_logout_options: [
-            {name:'Backend',value:'backend'},
-            {name:'Frontend',value:'frontend'},
-            {name:'Custom',value:'custom'}
-        ],
-        password_protection_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        copyright_text_options: [{name:'Use App Name',value:"app_name"}, {name:'Custom',value:"custom"}],
-        copyright_link_options: [{name:'Use App Url',value:"app_url"}, {name:'Custom',value:"custom"}],
-        copyright_year_options: [{name:'Use Current year',value:"use_current_year"}, {name:'Custom',value:"custom"}],
-        laravel_queues_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        sign_up_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        visibitlity_options: [],
+        maintenanceModeOptions: [],
+        compressedLogoOptions: [],
+        redirect_after_logout_options: [],
+        password_protection_options: [],
+        copyright_text_options: [],
+        copyright_link_options: [],
+        copyright_year_options: [],
+        laravel_queues_options: [],
+        sign_up_options: [],
         social_media_links: null,
         add_link: null,
         show_link_input: true,
@@ -113,11 +109,54 @@ export const useGeneralStore = defineStore({
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
+            const root = useRootStore()
             if(data)
             {
                 this.assets = data;
                 this.languages = data.languages;
                 this.allowed_files = data.file_types;
+
+                this.visibitlity_options = [
+                    {name: root.assets.language_string.general_settings.enable, value:"1"},
+                    {name: root.assets.language_string.general_settings.disable, value:"0"}
+                ];
+                this.maintenanceModeOptions = [
+                    {name: root.assets.language_string.general_settings.enable, value:"1"},
+                    {name: root.assets.language_string.general_settings.disable, value:"0"}
+                ];
+                this.compressedLogoOptions = [
+                    {name: root.assets.language_string.general_settings.true, value:"1"},
+                    {name: root.assets.language_string.general_settings.false, value:"0"}
+                ];
+                this.redirect_after_logout_options = [
+                    {name: root.assets.language_string.general_settings.backend, value:'backend'},
+                    {name: root.assets.language_string.general_settings.frontend, value:'frontend'},
+                    {name: root.assets.language_string.general_settings.custom, value:'custom'}
+                ];
+                this.password_protection_options = [
+                    {name: root.assets.language_string.general_settings.enable, value:"1"},
+                    {name: root.assets.language_string.general_settings.disable, value:"0"}
+                ];
+                this.sign_up_options = [
+                    {name: root.assets.language_string.general_settings.enable, value:"1"},
+                    {name: root.assets.language_string.general_settings.disable, value:"0"}
+                ];
+                this.laravel_queues_options = [
+                    {name: root.assets.language_string.general_settings.enable, value:"1"},
+                    {name: root.assets.language_string.general_settings.disable, value:"0"}
+                ];
+                this.copyright_text_options = [
+                    {name: root.assets.language_string.general_settings.use_app_name, value:"app_name"},
+                    {name: root.assets.language_string.general_settings.custom, value:"custom"}
+                ];
+                this.copyright_link_options = [
+                    {name: root.assets.language_string.general_settings.use_app_url, value:"app_url"},
+                    {name: root.assets.language_string.general_settings.custom, value:"custom"}
+                ],
+                this.copyright_year_options = [
+                    {name: root.assets.language_string.general_settings.use_current_year, value:"use_current_year"},
+                    {name: root.assets.language_string.general_settings.custom, value:"custom"}
+                ];
             }
         },
         //---------------------------------------------------------------------
