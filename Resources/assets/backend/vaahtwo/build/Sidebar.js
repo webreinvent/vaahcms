@@ -397,11 +397,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         text-align: center;
         padding: 0 .5rem;
     }
-    
+
     .p-overlay-badge {
         position: relative;
     }
-    
+
     .p-overlay-badge .p-badge {
         position: absolute;
         top: 0;
@@ -410,7 +410,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         transform-origin: 100% 0;
         margin: 0;
     }
-    
+
     .p-badge-dot {
         width: .5rem;
         min-width: .5rem;
@@ -418,7 +418,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         border-radius: 50%;
         padding: 0;
     }
-    
+
     .p-badge-no-gutter {
         padding: 0;
         border-radius: 50%;
@@ -469,7 +469,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     .p-ink {
         display: block;
         position: absolute;
@@ -478,11 +478,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         transform: scale(0);
         pointer-events: none;
     }
-    
+
     .p-ink-active {
         animation: ripple 0.4s linear;
     }
-    
+
     .p-ripple-disabled .p-ink {
         display: none !important;
     }
@@ -498,23 +498,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         height: 2rem;
         font-size: 1rem;
     }
-    
+
     .p-avatar.p-avatar-image {
         background-color: transparent;
     }
-    
+
     .p-avatar.p-avatar-circle {
         border-radius: 50%;
     }
-    
+
     .p-avatar-circle img {
         border-radius: 50%;
     }
-    
+
     .p-avatar .p-avatar-icon {
         font-size: 1rem;
     }
-    
+
     .p-avatar img {
         width: 100%;
         height: 100%;
@@ -528,11 +528,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         text-align: center;
         padding: 0 .5rem;
     }
-    
+
     .p-overlay-badge {
         position: relative;
     }
-    
+
     .p-overlay-badge .p-badge {
         position: absolute;
         top: 0;
@@ -541,7 +541,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         transform-origin: 100% 0;
         margin: 0;
     }
-    
+
     .p-badge-dot {
         width: .5rem;
         min-width: .5rem;
@@ -560,32 +560,32 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     .p-dialog-mask.p-component-overlay {
         pointer-events: auto;
     }
-    
+
     .p-dialog {
         max-height: 90%;
         transform: scale(1);
     }
-    
+
     .p-dialog-content {
         overflow-y: auto;
     }
-    
+
     .p-dialog-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-shrink: 0;
     }
-    
+
     .p-dialog-footer {
         flex-shrink: 0;
     }
-    
+
     .p-dialog .p-dialog-header-icons {
         display: flex;
         align-items: center;
     }
-    
+
     .p-dialog .p-dialog-header-icon {
         display: flex;
         align-items: center;
@@ -593,12 +593,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     /* Fluid */
     .p-fluid .p-dialog-footer .p-button {
         width: auto;
     }
-    
+
     /* Animation */
     /* Center */
     .p-dialog-enter-active {
@@ -612,7 +612,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         opacity: 0;
         transform: scale(0.7);
     }
-    
+
     /* Top, Bottom, Left, Right, Top* and Bottom* */
     .p-dialog-top .p-dialog,
     .p-dialog-bottom .p-dialog,
@@ -667,7 +667,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     .p-dialog-bottomright .p-dialog-leave-to {
         transform: translate3d(100%, 0px, 0px);
     }
-    
+
     /* Maximize */
     .p-dialog-maximized {
         -webkit-transition: none;
@@ -683,7 +683,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
     .p-dialog-maximized .p-dialog-content {
         flex-grow: 1;
     }
-    
+
     .p-confirm-dialog .p-dialog-content {
         display: flex;
         align-items: center;
@@ -701,7 +701,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         position: relative;
         overflow: hidden;
     }
-    
+
     .p-progressbar-determinate .p-progressbar-value {
         height: 100%;
         width: 0%;
@@ -713,15 +713,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         justify-content: center;
         overflow: hidden;
     }
-    
+
     .p-progressbar-determinate .p-progressbar-label {
         display: inline-flex;
     }
-    
+
     .p-progressbar-determinate .p-progressbar-value-animate {
         transition: width 1s ease-in-out;
     }
-    
+
     .p-progressbar-indeterminate .p-progressbar-value::before {
         content: '';
         position: absolute;
@@ -733,7 +733,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         -webkit-animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
         animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
     }
-    
+
     .p-progressbar-indeterminate .p-progressbar-value::after {
         content: '';
         position: absolute;
@@ -747,7 +747,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         -webkit-animation-delay: 1.15s;
         animation-delay: 1.15s;
     }
-    
+
     @-webkit-keyframes p-progressbar-indeterminate-anim {
         0% {
             left: -35%;
@@ -776,7 +776,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
             right: -90%;
         }
     }
-    
+
     @-webkit-keyframes p-progressbar-indeterminate-anim-short {
         0% {
             left: -200%;
@@ -813,7 +813,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         padding: 0;
         list-style: none;
     }
-    
+
     .p-menu .p-menuitem-link {
         cursor: pointer;
         display: flex;
@@ -822,7 +822,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     .p-menu .p-menuitem-text {
         line-height: 1;
     }
@@ -834,13 +834,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         display: flex;
         align-items: center;
     }
-    
+
     .p-menubar ul {
         margin: 0;
         padding: 0;
         list-style: none;
     }
-    
+
     .p-menubar .p-menuitem-link {
         cursor: pointer;
         display: flex;
@@ -849,51 +849,51 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     .p-menubar .p-menuitem-text {
         line-height: 1;
     }
-    
+
     .p-menubar .p-menuitem {
         position: relative;
     }
-    
+
     .p-menubar-root-list {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
     }
-    
+
     .p-menubar-root-list > li ul {
         display: none;
         z-index: 1;
     }
-    
+
     .p-menubar-root-list > .p-menuitem-active > .p-submenu-list {
         display: block;
     }
-    
+
     .p-menubar .p-submenu-list {
         display: none;
         position: absolute;
         z-index: 1;
     }
-    
+
     .p-menubar .p-submenu-list > .p-menuitem-active > .p-submenu-list {
         display: block;
         left: 100%;
         top: 0;
     }
-    
+
     .p-menubar .p-submenu-list .p-menuitem .p-menuitem-content .p-menuitem-link .p-submenu-icon {
         margin-left: auto;
     }
-    
+
     .p-menubar .p-menubar-end {
         margin-left: auto;
         align-self: center;
     }
-    
+
     .p-menubar-button {
         display: none;
         cursor: pointer;
@@ -912,17 +912,17 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         position: relative;
         text-decoration: none;
     }
-    
+
     .p-panelmenu .p-panelmenu-header-action:focus {
         z-index: 1;
     }
-    
+
     .p-panelmenu .p-submenu-list {
         margin: 0;
         padding: 0;
         list-style: none;
     }
-    
+
     .p-panelmenu .p-menuitem-link {
         display: flex;
         align-items: center;
@@ -932,7 +932,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         position: relative;
         overflow: hidden;
     }
-    
+
     .p-panelmenu .p-menuitem-text {
         line-height: 1;
     }
@@ -945,14 +945,14 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         padding: 0;
         list-style: none;
     }
-    
+
     .p-tieredmenu .p-submenu-list {
         position: absolute;
         min-width: 100%;
         z-index: 1;
         display: none;
     }
-    
+
     .p-tieredmenu .p-menuitem-link {
         cursor: pointer;
         display: flex;
@@ -961,19 +961,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     .p-tieredmenu .p-menuitem-text {
         line-height: 1;
     }
-    
+
     .p-tieredmenu .p-menuitem {
         position: relative;
     }
-    
+
     .p-tieredmenu .p-menuitem-link .p-submenu-icon {
         margin-left: auto;
     }
-    
+
     .p-tieredmenu .p-menuitem-active > .p-submenu-list {
         display: block;
         left: 100%;
@@ -987,33 +987,33 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         white-space: pre-line;
         word-break: break-word;
     }
-    
+
     .p-toast-message-icon {
         flex-shrink: 0;
     }
-    
+
     .p-toast-message-content {
         display: flex;
         align-items: flex-start;
     }
-    
+
     .p-toast-message-text {
         flex: 1 1 auto;
     }
-    
+
     .p-toast-top-center {
         transform: translateX(-50%);
     }
-    
+
     .p-toast-bottom-center {
         transform: translateX(-50%);
     }
-    
+
     .p-toast-center {
         min-width: 20vw;
         transform: translate(-50%, -50%);
     }
-    
+
     .p-toast-icon-close {
         display: flex;
         align-items: center;
@@ -1021,11 +1021,11 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         overflow: hidden;
         position: relative;
     }
-    
+
     .p-toast-icon-close.p-link {
         cursor: pointer;
     }
-    
+
     /* Animations */
     .p-toast-message-enter-from {
         opacity: 0;
@@ -1033,23 +1033,23 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         -ms-transform: translateY(50%);
         transform: translateY(50%);
     }
-    
+
     .p-toast-message-leave-from {
         max-height: 1000px;
     }
-    
+
     .p-toast .p-toast-message.p-toast-message-leave-to {
         max-height: 0;
         opacity: 0;
         margin-bottom: 0;
         overflow: hidden;
     }
-    
+
     .p-toast-message-enter-active {
         -webkit-transition: transform 0.3s, opacity 0.3s;
         transition: transform 0.3s, opacity 0.3s;
     }
-    
+
     .p-toast-message-leave-active {
         -webkit-transition: max-height 0.45s cubic-bezier(0, 1, 0, 1), opacity 0.3s, margin-bottom 0.3s;
         transition: max-height 0.45s cubic-bezier(0, 1, 0, 1), opacity 0.3s, margin-bottom 0.3s;

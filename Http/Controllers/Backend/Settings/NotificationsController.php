@@ -36,6 +36,7 @@ class NotificationsController extends Controller
             $data['help_urls'] = [
                 'send_notification' => 'https://docs.vaah.dev/vaahcms/basic/setting/notifications.html#sending-without-laravel-queues'
             ];
+            $data['rows'] = config('vaahcms.per_page');
 
             $data['app_url'] = url("/");
 
@@ -100,7 +101,7 @@ class NotificationsController extends Controller
 
         try {
             $rules = array(
-                'name' => 'required',
+                'name' => 'required|unique:vh_notifications',
             );
 
             $validator = \Validator::make( $request->all(), $rules);
@@ -109,6 +110,8 @@ class NotificationsController extends Controller
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'] = $errors;
+                $response['data']['list'] = Notification::getList($request);
+                dd($response['data']['list']);
                 return response()->json($response);
             }
 

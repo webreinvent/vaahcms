@@ -9,6 +9,31 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/settings/notifications";
 
+
+let empty_states = {
+    query: {
+        page: 1,
+        rows: 20,
+        filter: {
+            q: null,
+            // is_active: null,
+            // trashed: null,
+            // sort: null,
+        },
+        recount: null,
+    },
+
+    // action: {
+    //     type: null,
+    //     items: [],
+    // },
+    //
+    // user_roles_query: {
+    //     q: null,
+    //     page: null,
+    //     rows: null,
+    // }
+};
 export const useNotificationStore = defineStore({
     id: 'notifications',
     state: () => ({
@@ -20,7 +45,12 @@ export const useNotificationStore = defineStore({
         app: null,
         activeSubTab: 0,
         assets: null,
+        rows_per_page: [10,20,30,50,100,500],
         fillable: null,
+        empty_query:empty_states.query,
+        firstElement: null,
+        query: vaah().clone(empty_states.query),
+        list:null,
         route: null,
         view: 'large',
         show_filters: false,
@@ -67,6 +97,38 @@ export const useNotificationStore = defineStore({
     }),
     getters: {},
     actions: {
+        async onLoad(route)
+        {
+            /**
+             * Set initial routes
+             */
+            this.route = route;
+
+            /**
+             * Update with view and list css column number
+             */
+            // this.setViewAndWidth(route.name);
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            // this.rolesFirstElement = ((this.user_roles_query.page - 1) * this.user_roles_query.rows);
+            /**
+             * Update query state with the query parameters of url
+             */
+            this.updateQueryFromUrl(route);
+        },
+        async updateQueryFromUrl(route)
+        {
+            if(route.query)
+            {
+                if(Object.keys(route.query).length > 0)
+                {
+                    for(let key in route.query)
+                    {
+                        this.query[key] = route.query[key]
+                    }
+                    this.countFilters(route.query);
+                }
+            }
+        },
         //---------------------------------------------------------------------
         async getAssets() {
             if (this.assets_is_fetching === true) {
@@ -85,9 +147,80 @@ export const useNotificationStore = defineStore({
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
+                // this.query.rows = data.list.per_page;
                 this.help_urls = data.help_urls;
+                this.list = data.notifications;
+                this.firstElement = this.query.rows * (this.query.page - 1);
+                // if (data.rows) {
+                //     if (!this.query.rows) {
+                //         this.query.rows = data.rows;
+                //     } else {
+                //         this.query.rows = parseInt(this.query.rows);
+                //     }
+                // }
+
             }
             this.getUser();
+        },
+
+        async getList() {
+            let options = {
+                query: vaah().clone(this.query)
+            };
+            await this.updateUrlQueryString(this.query);
+            await vaah().ajax(
+                this.ajax_url+ '/assets',
+                await this.afterGetList,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async afterGetList (data, res) {
+
+            // this.is_btn_loading = false;
+            this.query.recount = null;
+
+            if (data) {
+                this.list = data.notifications;
+                this.notifications = data.notifications;
+                this.firstElement = this.query.rows * (this.query.page - 1);
+            }
+        },
+
+        async updateUrlQueryString(query)
+        {
+            //remove reactivity from source object
+            query = vaah().clone(query)
+
+            //create query string
+            let query_string = qs.stringify(query, {
+                skipNulls: true,
+            });
+            let query_object = qs.parse(query_string);
+
+            if(query_object.filter){
+                query_object.filter = vaah().cleanObject(query_object.filter);
+            }
+
+            //reset url query string
+            await this.$router.replace({query: null});
+
+            //replace url query string
+            await this.$router.replace({query: query_object});
+
+            //update applied filters
+            this.countFilters(query_object);
+
+        },
+        //---------------------------------------------------------------------
+        countFilters: function (query)
+        {
+            this.count_filters = 0;
+            if(query && query.filter)
+            {
+                let filter = vaah().cleanObject(query.filter);
+                this.count_filters = Object.keys(filter).length;
+            }
         },
         //---------------------------------------------------------------------
         async getUser(){
@@ -446,6 +579,7 @@ export const useNotificationStore = defineStore({
        async createAfter(data, res){
             this.show_new_item_form = false;
            this.notifications=data.list;
+           this.new_item.name=null;
            await this.getAssets();
         },
         //---------------------------------------------------------------------
@@ -480,7 +614,14 @@ export const useNotificationStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
+        async paginate(event) {
+            this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
+            await this.getList();
+        },
+
     }
 });
 

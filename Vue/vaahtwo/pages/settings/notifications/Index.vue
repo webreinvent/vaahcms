@@ -64,15 +64,15 @@ onMounted(async () => {
         </div>
 
 
-        <div class="grid" v-if="!store.active_notification">
-            <div class="col">
-                <DataTable :value="store.notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm">
+        <div  v-if="!store.active_notification">
+            <div class="col" v-if="store.notifications && store.notifications.data">
+                <DataTable :value="store.notifications && store.notifications.data" stripedRows dataKey="id" responsiveLayout="scroll" class="p-datatable-sm p-datatable-hoverable-rows">
                     <Column header="Notification Title">
                         <template #body="slotProps">
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit">
+                    <Column header="Edit" class="text-right">
                         <template #body="slotProps">
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
@@ -81,6 +81,12 @@ onMounted(async () => {
                         </template>
                     </Column>
                 </DataTable>
+                <Paginator v-model:first="store.firstElement"
+                           :rows="store.query.rows"
+                           :totalRecords="store.list.total"
+                           @page="store.paginate($event)"
+                           :rowsPerPageOptions="store.rows_per_page"
+                           class="bg-white-alpha-0 pt-2" />
             </div>
         </div>
         <div class="grid" v-else>
