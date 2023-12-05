@@ -150,7 +150,17 @@ class Notification extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
-        $list = static::orderBy('name')->get();
+        $query = static::orderBy('created_at', 'desc');
+
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
+        {
+            $rows = $request->rows;
+        }
+
+        $list = $query->paginate($rows);
+
         return $list;
     }
     //-------------------------------------------------
