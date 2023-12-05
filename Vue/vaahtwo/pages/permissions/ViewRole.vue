@@ -137,7 +137,7 @@ const openViewModal = () => {
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText  class="w-full p-inputtext-sm"
-                                        :placeholder="root.assets.language_string.common_fields.search"
+                                        :placeholder="root.assets.language_string.permissions.view_roles_placeholder_search"
                                         data-testid="permission-role_search"
                                         v-model="store.permission_roles_query.q"
                                         @keyup.enter="store.delayedItemUsersSearch()"
@@ -147,7 +147,7 @@ const openViewModal = () => {
                         </span>
 
                         <Button class="p-button-sm"
-                                :label="root.assets.language_string.common_fields.reset"
+                                :label="root.assets.language_string.permissions.view_roles_reset_button"
                                 data-testid="permission-role_reset"
                                 @click="store.resetPermissionRolesQuery()"
                         />
@@ -172,7 +172,7 @@ const openViewModal = () => {
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="permissions-role_id"
-                                v-tooltip.top="root.assets.language_string.common_fields.copy_slug"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
                         />
@@ -187,14 +187,14 @@ const openViewModal = () => {
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.permissions.view_roles_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 data-testid="permission-role_status_yes"
                                 @click="store.changePermission(prop.data)"
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.permissions.view_roles_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="store.changePermission(prop.data)"
@@ -206,13 +206,13 @@ const openViewModal = () => {
                               v-else
 
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.permissions.view_roles_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.permissions.view_roles_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 disabled
                                 v-else
@@ -226,7 +226,7 @@ const openViewModal = () => {
                                 @click="openViewModal(), store.active_permission_role = prop.data"
                                 icon="pi pi-eye"
                                 data-testid="permission-role_view_details"
-                                :label="root.assets.language_string.common_fields.view"
+                                :label="root.assets.language_string.permissions.view_roles_text_view"
                         />
                     </template>
                 </Column>

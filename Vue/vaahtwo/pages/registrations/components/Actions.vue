@@ -84,7 +84,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       :placeholder="root.assets.language_string.common_fields.search"
+                                       :placeholder="root.assets.language_string.crud_actions.placeholder_search"
                                        name="register-search_query_filter_q"
                                        data-testid="register-search_query_filter_q"
                                        class="p-inputtext-sm"
@@ -96,7 +96,7 @@ const toggleBulkMenuState = (event) => {
                                     data-testid="register-search_icon_query_filter_q"
                             />
 
-                            <Button :label="root.assets.language_string.common_fields.filters"
+                            <Button :label="root.assets.language_string.crud_actions.filters_button"
                                     class="p-button-sm"
                                     @click="store.show_filters = true"
                                     data-testid="register-show_filters"
@@ -106,7 +106,7 @@ const toggleBulkMenuState = (event) => {
 
                             <Button icon="pi pi-filter-slash"
                                     class="p-button-sm"
-                                    :label="root.assets.language_string.common_fields.reset"
+                                    :label="root.assets.language_string.crud_actions.reset_button"
                                     @click="store.resetQuery()"
                                     data-testid="register-reset_query"
                             />

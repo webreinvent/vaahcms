@@ -48,7 +48,7 @@ const toggleFormMenu = (event) => {
                             {{ store.item.name }}
                         </span>
                         <span v-else>
-                            {{root.assets.language_string.common_fields.create}}
+                            {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
-                            :label="root.assets.language_string.common_fields.save"
+                            :label="root.assets.language_string.crud_actions.save_button"
                             icon="pi pi-save"
                             data-testid="role-edit_save"
                             @click="store.itemAction('save')"
@@ -73,7 +73,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-else
                             class="p-button-sm"
-                            :label="root.assets.language_string.common_fields.create_and_new"
+                            :label="root.assets.language_string.crud_actions.form_create_and_new"
                             icon="pi pi-save"
                             data-testid="role-new_save"
                             @click="store.itemAction('create-and-new')"
@@ -99,7 +99,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-roles')"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.common_fields.view"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                             data-testid="role-item_view"
                             @click="store.toView(store.item)"
                     />

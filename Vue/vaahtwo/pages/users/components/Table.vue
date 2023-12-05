@@ -94,7 +94,7 @@ const useVaah = vaah();
 
                         <Button v-if="store.hasPermission('can-impersonate-users')"
                                 class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.common_fields.impersonate"
+                                v-tooltip.top="root.assets.language_string.users.toolkit_text_impersonate"
                                 @click="store.impersonate(prop.data)"
                                 icon="pi pi-user"
                                 :disabled="!prop.data.is_active"
@@ -102,7 +102,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.common_fields.view"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="user-list_data_view"
@@ -110,7 +110,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text "
-                                v-tooltip.top="root.assets.language_string.common_fields.update"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 data-testid="user-list_data_edit"
@@ -120,7 +120,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-users')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.trash"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                                 data-testid="user-list_data_trash"
                         />
@@ -128,7 +128,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.restore"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="user-list_data_restore"
                         />

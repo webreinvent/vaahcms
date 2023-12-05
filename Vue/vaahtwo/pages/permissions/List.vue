@@ -56,7 +56,7 @@ onMounted(async () => {
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div>
-                            <b class="mr-1">{{root.assets.language_string.common_fields.permissions}}</b>
+                            <b class="mr-1">{{root.assets.language_string.permissions.permissions_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />

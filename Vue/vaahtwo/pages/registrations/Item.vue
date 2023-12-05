@@ -88,7 +88,7 @@ const toggleUserStatusMenu = (event) => {
                             data-testid="registration-item_id"
                     />
 
-                    <Button :label="root.assets.language_string.common_fields.edit"
+                    <Button :label="root.assets.language_string.crud_actions.view_edit"
                             class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
@@ -128,11 +128,11 @@ const toggleUserStatusMenu = (event) => {
                 >
                     <div class="flex align-items-center justify-content-between">
                         <div class="">
-                            {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
+                            {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button :label="root.assets.language_string.common_fields.restore"
+                            <Button :label="root.assets.language_string.crud_actions.view_restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
                                     data-testid="register-view_item_action_to_restore"

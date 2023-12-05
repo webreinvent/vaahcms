@@ -67,7 +67,7 @@ const toggleFormMenu = (event) => {
                             {{ store.item.name }}
                         </span>
                         <span v-else>
-                            {{root.assets.language_string.crud_actions.create_button}}
+                            {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>

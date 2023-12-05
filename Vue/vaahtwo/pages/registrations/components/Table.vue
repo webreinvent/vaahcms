@@ -96,18 +96,18 @@ const useVaah = vaah();
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='m'"
-                         value="Male"
+                         :value="root.assets.language_string.registrations.table_gender_male"
                     />
 
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='f'"
-                         value="Female"
+                         :value="root.assets.language_string.registrations.table_gender_female"
                     />
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='o'"
-                         value="others"
+                         :value="root.assets.language_string.registrations.table_gender_others"
                     />
                 </template>
             </Column>
@@ -120,14 +120,14 @@ const useVaah = vaah();
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 v-if="store.hasPermission('can-read-registrations')"
-                                v-tooltip.top="root.assets.language_string.common_fields.view"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="register-table_to_view"
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.common_fields.update"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 data-testid="register-table_to_edit"
@@ -137,7 +137,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) && store.hasPermission('can-update-registrations')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.trash"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                                 data-testid="register-table_item_action_restore"
                         />
@@ -145,7 +145,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.restore"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="register-table_item_action_delete"
                         />

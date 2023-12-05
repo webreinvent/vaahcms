@@ -78,7 +78,7 @@ const toggleItemMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            :label="root.assets.language_string.common_fields.edit"
+                            :label="root.assets.language_string.crud_actions.view_edit"
                             icon="pi pi-pencil"
                             data-testid="permission-item_edit"
                             @click="store.toEdit(store.item)"
@@ -121,11 +121,11 @@ const toggleItemMenu = (event) => {
                     <div class="flex align-items-center justify-content-between">
 
                         <div class="">
-                            {{root.assets.language_string.common_fields.deleted}} {{store.item.deleted_at}}
+                            {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button :label="root.assets.language_string.common_fields.restore"
+                            <Button :label="root.assets.language_string.crud_actions.view_restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')">
                             </Button>

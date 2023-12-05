@@ -743,21 +743,21 @@ export const useRegistrationStore = defineStore({
                     separator: true
                 },*/
                 {
-                    label: root.assets.language_string.common_fields.trash,
+                    label: root.assets.language_string.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: root.assets.language_string.common_fields.restore,
+                    label: root.assets.language_string.crud_actions.bulk_restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: root.assets.language_string.common_fields.delete,
+                    label: root.assets.language_string.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -811,21 +811,21 @@ export const useRegistrationStore = defineStore({
                     separator: true
                 },*/
                 {
-                    label: root.assets.language_string.common_fields.trash_all,
+                    label: root.assets.language_string.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.common_fields.restore_all,
+                    label: root.assets.language_string.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.common_fields.delete_all,
+                    label: root.assets.language_string.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -842,7 +842,7 @@ export const useRegistrationStore = defineStore({
             if(this.item && this.item.deleted_at)
             {
                 item_menu.push({
-                    label: root.assets.language_string.common_fields.restore,
+                    label: root.assets.language_string.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -854,7 +854,7 @@ export const useRegistrationStore = defineStore({
             {
                 const root = useRootStore();
                 item_menu.push({
-                    label: root.assets.language_string.common_fields.trash,
+                    label: root.assets.language_string.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -863,7 +863,7 @@ export const useRegistrationStore = defineStore({
             }
 
             item_menu.push({
-                label: root.assets.language_string.common_fields.delete,
+                label: root.assets.language_string.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');

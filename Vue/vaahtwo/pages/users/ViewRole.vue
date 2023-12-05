@@ -100,7 +100,7 @@ const toggleItemMenu = (event) => {
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText class="w-full p-inputtext-sm"
-                                       :placeholder="root.assets.language_string.common_fields.search"
+                                       :placeholder="root.assets.language_string.users.view_role_placeholder_search"
                                        type="text"
                                        v-model="store.user_roles_query.q"
                                        @keyup.enter="store.delayedUserRolesSearch()"
@@ -110,7 +110,7 @@ const toggleItemMenu = (event) => {
                          </span>
 
                         <Button class="p-button-sm"
-                                :label="root.assets.language_string.common_fields.reset"
+                                :label="root.assets.language_string.users.view_role_reset_button"
                                 data-testid="user-role_reset"
                                 @click="store.resetUserRolesFilters()"
                         />
@@ -136,7 +136,7 @@ const toggleItemMenu = (event) => {
 
                                     <Button class="p-button-tiny p-button-text"
                                             data-testid="taxonomies-table-to-edit"
-                                            v-tooltip.top="root.assets.language_string.common_fields.copy_slug"
+                                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_copy_slug"
                                             @click="useVaah.copy(prop.data.slug)"
                                             icon="pi pi-copy"
                                     />
@@ -149,14 +149,14 @@ const toggleItemMenu = (event) => {
                                 <template #body="prop" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')">
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.common_fields.yes"
+                                            :label="root.assets.language_string.users.view_role_yes"
                                              data-testid="user-role_status_yes"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.common_fields.no"
+                                            :label="root.assets.language_string.users.view_role_no"
                                             data-testid="user-role_status_no"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
@@ -165,13 +165,13 @@ const toggleItemMenu = (event) => {
                                 <template #body="prop" v-else>
                                     <Button v-if="prop.data.pivot.is_active === 1"
                                             class="p-button-success p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.common_fields.yes"
+                                            :label="root.assets.language_string.users.view_role_yes"
                                             disabled
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.common_fields.no"
+                                            :label="root.assets.language_string.users.view_role_no"
                                             disabled
                                     />
                                 </template>
@@ -182,11 +182,11 @@ const toggleItemMenu = (event) => {
                             >
                                 <template #body="prop">
                                     <Button class="p-button-sm p-button-rounded p-button-outlined"
-                                            v-tooltip.top="root.assets.language_string.common_fields.view"
+                                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                                             @click="store.showModal(prop.data)"
                                             data-testid="user-role_details_view"
                                             icon="pi pi-eye"
-                                            :label="root.assets.language_string.common_fields.view"
+                                            :label="root.assets.language_string.users.view_role_text_view"
                                     />
                                 </template>
                             </Column>

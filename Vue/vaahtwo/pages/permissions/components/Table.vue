@@ -55,7 +55,7 @@ const useVaah = vaah();
                 <template #body="prop" class="text-xs">
                     <Button class="p-button-tiny p-button-text p-0"
                             data-testid="permission-list_slug_copy"
-                            v-tooltip.top="root.assets.language_string.common_fields.copy_slug"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_copy_slug"
                             @click="useVaah.copy(prop.data.slug)"
                             icon="pi pi-copy"
                             :label="prop.data.slug"
@@ -70,7 +70,7 @@ const useVaah = vaah();
              >
                  <template #body="prop">
                      <Button class="p-button p-button-rounded p-button-sm white-space-nowrap"
-                             v-tooltip.top="root.assets.language_string.common_fields.view_role"
+                             v-tooltip.top="root.assets.language_string.permissions.toolkit_text_view_role"
                              @click="store.toRole(prop.data)"
                              data-testid="permission-role_view"
                              v-if="store.hasPermission('can-read-permissions')"
@@ -85,7 +85,7 @@ const useVaah = vaah();
              >
                  <template #body="prop">
                      <Button class="p-button p-button-rounded p-button-sm white-space-nowrap"
-                             v-tooltip.top="root.assets.language_string.common_fields.user"
+                             v-tooltip.top="root.assets.language_string.permissions.toolkit_text_view_user"
                              disabled
                      >
                          {{ prop.data.count_users }} / {{store.total_users }}
@@ -128,7 +128,7 @@ const useVaah = vaah();
                     <div class="p-inputgroup has-shadowless">
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.common_fields.view"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 v-if="store.hasPermission('can-read-permissions')"
                                 icon="pi pi-eye"
@@ -136,7 +136,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.common_fields.update"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 v-if="store.hasPermission('can-update-permissions')"
                                 icon="pi pi-pencil"
@@ -146,7 +146,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-permissions')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.trash"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                                 data-testid="permission-list_trash"
                         />
@@ -154,7 +154,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="root.assets.language_string.common_fields.restore"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="permission-list_restore"
                         />

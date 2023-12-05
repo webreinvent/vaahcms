@@ -160,7 +160,7 @@ const confirmChangeStatus = (event, id) => {
                 <div v-if="store && store.assets">
                     <Dropdown v-model="store.role_permissions_query.module"
                               :options="store.assets.modules"
-                              :placeholder="root.assets.language_string.common_fields.select_a_module"
+                              :placeholder="root.assets.language_string.roles.view_permissions_select_a_module"
                               data-testid="role-permission_module"
                               @change="store.getModuleSection()"
                               class="is-small"
@@ -178,7 +178,7 @@ const confirmChangeStatus = (event, id) => {
                 >
                     <Dropdown v-model="store.role_permissions_query.section"
                               :options="store.module_section_list"
-                              :placeholder="root.assets.language_string.common_fields.select_a_section"
+                              :placeholder="root.assets.language_string.roles.view_permissions_select_a_section"
                               @click="store.getItemPermissions()"
                               data-testid="role-permission_section"
                               class="is-small"
@@ -200,14 +200,14 @@ const confirmChangeStatus = (event, id) => {
                                            @keyup.enter="store.delayedRolePermissionSearch()"
                                            @keyup.enter.native="store.delayedRolePermissionSearch()"
                                            @keyup.13="store.delayedRolePermissionSearch()"
-                                           :placeholder="root.assets.language_string.common_fields.search"
+                                           :placeholder="root.assets.language_string.roles.view_permissions_placeholder_search"
                                            type="text"
                                            class="w-full"
                                            data-testid="role-permission_search"
                                 />
                             </span>
 
-                            <Button :label="root.assets.language_string.common_fields.reset"
+                            <Button :label="root.assets.language_string.roles.view_permissions_reset_button"
                                     @click="store.resetRolePermissionFilters()"
                                     data-testid="role-permission_search_reset"
                             />
@@ -231,7 +231,7 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop">
                         <Button class="p-button-tiny p-button-text p-0 mr-2"
                                 data-testid="role-permission_name_copy"
-                                v-tooltip.top="root.assets.language_string.common_fields.copy_slug"
+                                v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
                                 :label="prop.data.name"
@@ -249,14 +249,14 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-roles') || store.hasPermission('can-manage-roles')"
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.roles.view_permissions_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeRolePermission(prop.data)"
                                 data-testid="role-permission_status_yes"
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.roles.view_permissions_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 data-testid="role-permission_status_no"
                                 v-else
@@ -267,13 +267,13 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.roles.view_permissions_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.roles.view_permissions_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -289,14 +289,14 @@ const confirmChangeStatus = (event, id) => {
                               v-if="(store.hasPermission('can-update-permissions')|| store.hasPermission('can-manage-permissions'))
                                && (store.hasPermission('can-update-roles')|| store.hasPermission('can-manage-roles'))"
                     >
-                        <Button :label="root.assets.language_string.common_fields.active"
+                        <Button :label="root.assets.language_string.roles.view_permissions_active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
                                 @click="confirmChangeStatus(event, prop.data.id)"
                                 data-testid="role-permission_status_active"
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.inactive"
+                        <Button :label="root.assets.language_string.roles.view_permissions_inactive"
                                 data-testid="role-permission_status_inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
@@ -307,13 +307,13 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button label="Active"
+                        <Button :label="root.assets.language_string.roles.view_permissions_active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
                                 disabled
                         />
 
-                        <Button label="Inactive"
+                        <Button :label="root.assets.language_string.roles.view_permissions_inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -326,7 +326,7 @@ const confirmChangeStatus = (event, id) => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
-                                :label="root.assets.language_string.common_fields.view"
+                                :label="root.assets.language_string.roles.view_permissions_text_view"
                                 data-testid="role-permission_view_modal"
                         />
                     </template>

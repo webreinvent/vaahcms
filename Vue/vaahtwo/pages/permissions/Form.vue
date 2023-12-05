@@ -59,7 +59,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            :label="root.assets.language_string.common_fields.save"
+                            :label="root.assets.language_string.crud_actions.save_button"
                             icon="pi pi-save"
                             data-testid="permission-form_save"
                             @click="store.itemAction('save')"
@@ -84,7 +84,7 @@ const toggleFormMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.common_fields.view"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                             data-testid="permission-item_view"
                             @click="store.toView(store.item)"
                             v-if="store.hasPermission('can-read-permissions')"

@@ -196,6 +196,8 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Settings'],
             ["name" => 'Registration'],
             ["name" => 'Crud Action'],
+            ["name" => 'Role'],
+            ["name" => 'Permission'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

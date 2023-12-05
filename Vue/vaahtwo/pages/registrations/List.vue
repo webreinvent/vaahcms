@@ -61,7 +61,7 @@ onMounted(async () => {
                     <div class="flex flex-row">
                         <div v-if="store.assets">
                             <b class="mr-1">
-                                {{root.assets.language_string.common_fields.registrations}}</b>
+                                {{root.assets.language_string.registrations.registrations_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -74,7 +74,7 @@ onMounted(async () => {
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
-                                :label="root.assets.language_string.common_fields.create"
+                                :label="root.assets.language_string.crud_actions.create_button"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
                                 data-testid="registration-create"

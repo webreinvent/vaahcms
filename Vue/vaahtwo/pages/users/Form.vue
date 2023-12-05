@@ -59,7 +59,7 @@ const toggleFormMenu = (event) => {
                         </span>
 
                         <span v-else>
-                            {{root.assets.language_string.common_fields.create}}
+                            {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button :label="root.assets.language_string.common_fields.save"
+                    <Button :label="root.assets.language_string.crud_actions.save_button"
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
@@ -82,7 +82,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-save"
                     />
 
-                    <Button :label="root.assets.language_string.common_fields.create_and_new"
+                    <Button :label="root.assets.language_string.crud_actions.form_create_and_new"
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
@@ -110,7 +110,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.common_fields.view"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
                             data-testid="user-form_view"
                             @click="store.toView(store.item)"
                     />

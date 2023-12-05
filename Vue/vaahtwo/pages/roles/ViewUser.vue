@@ -133,7 +133,7 @@ const openDetailsViewModal = () => {
                                        @keyup.enter="store.delayedRoleUsersSearch()"
                                        @keyup.enter.native="store.delayedRoleUsersSearch()"
                                        @keyup.13="store.delayedRoleUsersSearch()"
-                                       :placeholder="root.assets.language_string.common_fields.search"
+                                       :placeholder="root.assets.language_string.roles.view_users_placeholder_search"
                                        type="text"
                                        data-testid="role-user_search"
                                        class="w-full p-inputtext-sm"
@@ -142,7 +142,7 @@ const openDetailsViewModal = () => {
 
                         <Button class="p-button-sm"
                                 data-testid="role-user_search_reset"
-                                :label="root.assets.language_string.common_fields.reset"
+                                :label="root.assets.language_string.roles.view_users_reset_button"
                                 @click="store.resetRoleUserFilters()"
 
                         />
@@ -181,14 +181,14 @@ const openDetailsViewModal = () => {
                               v-if="store.hasPermission('can-update-roles')||
                                     store.hasPermission('can-manage-roles')"
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.roles.view_users_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeUserRole(prop.data)"
                                 data-testid="role-user_status_yes"
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.roles.view_users_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 data-testid="role-user_status_no"
                                 v-else
@@ -199,13 +199,13 @@ const openDetailsViewModal = () => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button :label="root.assets.language_string.common_fields.yes"
+                        <Button :label="root.assets.language_string.roles.view_users_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button :label="root.assets.language_string.common_fields.no"
+                        <Button :label="root.assets.language_string.roles.view_users_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -218,7 +218,7 @@ const openDetailsViewModal = () => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
                                 icon="pi pi-eye"
-                                :label="root.assets.language_string.common_fields.view"
+                                :label="root.assets.language_string.roles.view_users_text_view"
                                 data-testid="role-user_view_details"
                         />
                     </template>
