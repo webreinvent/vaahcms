@@ -111,7 +111,6 @@ class NotificationsController extends Controller
                 $response['success'] = false;
                 $response['errors'] = $errors;
                 $response['data']['list'] = Notification::getList($request);
-                dd($response['data']['list']);
                 return response()->json($response);
             }
 

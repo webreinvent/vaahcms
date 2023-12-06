@@ -16,9 +16,7 @@ let empty_states = {
         rows: 20,
         filter: {
             q: null,
-            // is_active: null,
-            // trashed: null,
-            // sort: null,
+
         },
         recount: null,
     },
@@ -27,12 +25,7 @@ let empty_states = {
     //     type: null,
     //     items: [],
     // },
-    //
-    // user_roles_query: {
-    //     q: null,
-    //     page: null,
-    //     rows: null,
-    // }
+
 };
 export const useNotificationStore = defineStore({
     id: 'notifications',
@@ -107,9 +100,7 @@ export const useNotificationStore = defineStore({
             /**
              * Update with view and list css column number
              */
-            // this.setViewAndWidth(route.name);
             this.firstElement = ((this.query.page - 1) * this.query.rows);
-            // this.rolesFirstElement = ((this.user_roles_query.page - 1) * this.user_roles_query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -129,6 +120,36 @@ export const useNotificationStore = defineStore({
                 }
             }
         },
+
+        watchRoutes(route)
+        {
+            //watch routes
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
+                {
+
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
+                    this.route = newVal;
+                }, { deep: true }
+            )
+
+
+        },
+        //---------------------------------------------------------------------
+        watchStates()
+        {
+            watch(this.query.filter, (newVal,oldVal) =>
+                {
+                    // this.delayedSearch();
+                },{deep: true}
+            );
+
+
+        },
         //---------------------------------------------------------------------
         async getAssets() {
             if (this.assets_is_fetching === true) {
@@ -147,17 +168,10 @@ export const useNotificationStore = defineStore({
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
-                // this.query.rows = data.list.per_page;
                 this.help_urls = data.help_urls;
                 this.list = data.notifications;
                 this.firstElement = this.query.rows * (this.query.page - 1);
-                // if (data.rows) {
-                //     if (!this.query.rows) {
-                //         this.query.rows = data.rows;
-                //     } else {
-                //         this.query.rows = parseInt(this.query.rows);
-                //     }
-                // }
+
 
             }
             this.getUser();
