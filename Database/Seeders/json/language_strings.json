@@ -1,6 +1,4 @@
-
 [
-
     {
         "locale_code_iso_639": "en",
         "category": "general",
@@ -1514,6 +1512,265 @@
         "name": "Clear Cache Button",
         "content": "Clear Cache"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Securities",
+        "content": "Securities"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Securities Message",
+        "content": "Enable and choose multiple methods of authentication."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication",
+        "content": "Multi-Factor Authentication"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Message",
+        "content": "Require a email OTP, sms OTP or authenticator app verification when you login with password."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Disable",
+        "content": "Disable"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Enable For All Users",
+        "content": "Enable For All Users"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Users will have option to enable it",
+        "content": "Users will have option to enable it"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "MFA Methods",
+        "content": "MFA Methods"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Email OTP Verification",
+        "content": "Email OTP Verification"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "SMS OTP Verification",
+        "content": "SMS OTP Verification"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Authenticator App",
+        "content": "Authenticator App (only user can enable this)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "MFA Switch Text",
+        "content": "We will prompt for additional verification when you log in from a new device or browser."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Securities Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Date and Time",
+        "content": "Date & Time"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Global Date and Time Settings",
+        "content": "Global date and time settings."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Date Format",
+        "content": "Date Format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Time Format",
+        "content": "Time Format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Date Time Format",
+        "content": "Date Time Format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Date and Time Custom",
+        "content": "Custom"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Date and Time Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Social Media and Links",
+        "content": "Social Media & Links"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Static links management",
+        "content": "Static links management."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Enter",
+        "content": "Enter"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Link",
+        "content": "Link"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Add Link",
+        "content": "Add Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Add Link Button",
+        "content": "Add Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Social Media and Links Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Scripts",
+        "content": "Scripts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Scripts Message",
+        "content": "Add scripts of Google Analytics and other tracking scripts."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "After head tag start",
+        "content": "After head tag start (<head>)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Before head tag close",
+        "content": "Before head tag close (</head>)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "After body tag start",
+        "content": "After body tag start (<body>)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Before body tag close",
+        "content": "Before body tag close (</body>)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Scripts Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tags",
+        "content": "Meta Tags"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Add Meta Tags Button",
+        "content": "Add Meta Tags"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag",
+        "content": "Meta Tag"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Global meta tags",
+        "content": "Global meta tags."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag Content",
+        "content": "content"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag Select Type",
+        "content": "Select a Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag Select Any",
+        "content": "Select any"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag Generate Button",
+        "content": "Generate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Meta Tag Save Button",
+        "content": "Save"
+    },
 
 
 
@@ -2669,6 +2926,265 @@
         "name": "Clear Cache Button",
         "content": "Limpiar cache"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Securities",
+        "content": "Valores"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Securities Message",
+        "content": "Habilite y elija múltiples métodos de autenticación."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication",
+        "content": "Autenticación multifactor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Message",
+        "content": "Solicite una OTP de correo electrónico, una OTP de SMS o una verificación de la aplicación de autenticación cuando inicie sesión con contraseña."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Disable",
+        "content": "Desactivar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Enable For All Users",
+        "content": "Habilitar para todos los usuarios"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Users will have option to enable it",
+        "content": "Los usuarios tendrán la opción de habilitarlo."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "MFA Methods",
+        "content": "Métodos MFA"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Email OTP Verification",
+        "content": "Verificación OTP por correo electrónico"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "SMS OTP Verification",
+        "content": "Verificación OTP por SMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Authenticator App",
+        "content": "Aplicación de autenticación (solo el usuario puede habilitarla)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "MFA Switch Text",
+        "content": "Le solicitaremos una verificación adicional cuando inicie sesión desde un nuevo dispositivo o navegador."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Securities Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Date and Time",
+        "content": "Fecha y hora"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Global Date and Time Settings",
+        "content": "Configuración global de fecha y hora."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Date Format",
+        "content": "Formato de fecha"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Time Format",
+        "content": "Formato de tiempo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Date Time Format",
+        "content": "Formato de fecha y hora"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Date and Time Custom",
+        "content": "Costumbre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Date and Time Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Social Media and Links",
+        "content": "Redes sociales y enlaces"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Static links management",
+        "content": "Gestión de enlaces estáticos."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Enter",
+        "content": "Ingresar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Link",
+        "content": "Enlace"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Add Link",
+        "content": "Añadir enlace"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Add Link Button",
+        "content": "Añadir enlace"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Social Media and Links Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Scripts",
+        "content": "Scripts"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Scripts Message",
+        "content": "Agregue scripts de Google Analytics y otros scripts de seguimiento."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "After head tag start",
+        "content": "Después head tag inicio (<head>)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Before head tag close",
+        "content": "Antes head tag cerrar (</head>)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "After body tag start",
+        "content": "Después body tag inicio (<body>)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Before body tag close",
+        "content": "Antes body tag cerrar (</body>)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Scripts Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tags",
+        "content": "Metaetiquetas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Add Meta Tags Button",
+        "content": "Agregar Meta Tags"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag",
+        "content": "Metaetiqueta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Global meta tags",
+        "content": "Metaetiquetas globales."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag Content",
+        "content": "contenido"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag Select Type",
+        "content": "Seleccione un tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag Select Any",
+        "content": "Seleccione cualquiera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag Generate Button",
+        "content": "Generar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Meta Tag Save Button",
+        "content": "Ahorrar"
+    },
+
 
 
 
@@ -3821,5 +4337,263 @@
         "category": "general-setting",
         "name": "Clear Cache Button",
         "content": "Vider le cache"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Securities",
+        "content": "Titres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Securities Message",
+        "content": "Activez et choisissez plusieurs méthodes d’authentification."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication",
+        "content": "Authentification multifacteur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Message",
+        "content": "Exigez un OTP par e-mail, un OTP par SMS ou une vérification de l\\'application d\\'authentification lorsque vous vous connectez avec un mot de passe."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Multi Factor Authentication Disable",
+        "content": "Désactiver"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Enable For All Users",
+        "content": "Activer pour tous les utilisateurs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Users will have option to enable it",
+        "content": "Les utilisateurs auront la possibilité de l\\'activer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "MFA Methods",
+        "content": "Méthodes MFA"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Email OTP Verification",
+        "content": "Vérification OTP par e-mail"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "SMS OTP Verification",
+        "content": "Vérification OTP par SMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Authenticator App",
+        "content": "Application Authenticator (seul l\\'utilisateur peut l\\'activer)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "MFA Switch Text",
+        "content": "Nous vous demanderons une vérification supplémentaire lorsque vous vous connecterez à partir d’un nouvel appareil ou navigateur."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Securities Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Date and Time",
+        "content": "Date et heure"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Global Date and Time Settings",
+        "content": "Paramètres globaux de date et d’heure."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Date Format",
+        "content": "Format de date"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Time Format",
+        "content": "Format de l\\'heure"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Date Time Format",
+        "content": "Format de date et d\\'heure"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Date and Time Custom",
+        "content": "Coutume"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Date and Time Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Social Media and Links",
+        "content": "Médias sociaux et liens"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Static links management",
+        "content": "Gestion des liens statiques."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Enter",
+        "content": "Entrer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Social Media Links Placeholder Text Link",
+        "content": "Lien"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Add Link",
+        "content": "Ajouter un lien"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Add Link Button",
+        "content": "Ajouter un lien"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Social Media and Links Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Scripts",
+        "content": "Scripts"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Scripts Message",
+        "content": "Ajoutez des scripts de Google Analytics et d\\'autres scripts de suivi."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "After head tag start",
+        "content": "Après le début de la balise head (<head>)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Before head tag close",
+        "content": "Avant la fermeture de la balise head (</head>)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "After body tag start",
+        "content": "Après le début de la balise body (<body>)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Before body tag close",
+        "content": "Avant la fermeture de la balise body (</body>)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Scripts Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tags",
+        "content": "Balises méta"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Add Meta Tags Button",
+        "content": "Ajouter des balises méta"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag",
+        "content": "Balise méta"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Global meta tags",
+        "content": "Balises méta globales."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag Content",
+        "content": "contenu"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag Select Type",
+        "content": "Sélectionnez un type"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag Select Any",
+        "content": "Sélectionnez n\\'importe quel"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag Generate Button",
+        "content": "Générer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Meta Tag Save Button",
+        "content": "Sauvegarder"
     }
 ]

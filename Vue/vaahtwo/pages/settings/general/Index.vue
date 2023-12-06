@@ -62,7 +62,7 @@ onMounted(async () => {
                     <template #header>
                         <div class="w-full">
                             <div>
-                                <h5 class="font-semibold text-sm">Site Settings</h5>
+                                <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.site_settings}}</h5>
                                 <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.site_settings_message}}</p>
                             </div>
                         </div>
@@ -74,8 +74,8 @@ onMounted(async () => {
                 <AccordionTab>
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Securities</h5>
-                            <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                            <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.securities}}</h5>
+                            <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.securities_message}}</p>
                         </div>
                     </template>
 
@@ -85,8 +85,8 @@ onMounted(async () => {
                 <AccordionTab>
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Date & Time</h5>
-                            <p class="text-color-secondary text-xs">Global date and time settings.</p>
+                            <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.date_and_time}}</h5>
+                            <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.global_date_and_time_settings}}</p>
                         </div>
                     </template>
 
@@ -96,8 +96,8 @@ onMounted(async () => {
                 <AccordionTab>
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Social Media & Links</h5>
-                            <p class="text-color-secondary text-xs">Static links management.</p>
+                            <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.social_media_and_links}}</h5>
+                            <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.static_links_management}}</p>
                         </div>
                     </template>
 
@@ -107,8 +107,8 @@ onMounted(async () => {
                 <AccordionTab>
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Scripts</h5>
-                            <p class="text-color-secondary text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
+                            <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.scripts}}</h5>
+                            <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.scripts_message}}</p>
                         </div>
                     </template>
 
@@ -118,8 +118,8 @@ onMounted(async () => {
                 <AccordionTab>
                     <template #header>
                         <div class="w-full">
-                            <h5 class="font-semibold text-sm">Meta Tags</h5>
-                            <p class="text-color-secondary text-xs">Global meta tags.</p>
+                            <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.meta_tags}}</h5>
+                            <p class="text-color-secondary text-xs">{{root.assets.language_string.general_settings.global_meta_tags}}</p>
                         </div>
                     </template>
 

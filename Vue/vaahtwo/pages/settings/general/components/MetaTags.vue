@@ -1,6 +1,8 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
+import { useRootStore } from "../../../../stores/root";
 
+const root = useRootStore();
 const store = useGeneralStore();
 </script>
 
@@ -8,7 +10,7 @@ const store = useGeneralStore();
     <div v-if="store">
         <div class="grid">
             <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
-                <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
+                <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.general_settings.meta_tag}}</h5>
 
                 <div class="p-inputgroup">
                     <Dropdown v-model="item.value.attribute"
@@ -16,7 +18,7 @@ const store = useGeneralStore();
                               optionLabel="name"
                               optionValue="slug"
                               data-testid="general-metatags_attributes"
-                              placeholder="Select any"
+                              :placeholder="root.assets.language_string.general_settings.meta_tag_select_any"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
@@ -26,7 +28,7 @@ const store = useGeneralStore();
                                class="p-inputtext-sm"
                     />
 
-                    <Button label="Content" disabled="" />
+                    <Button :label="root.assets.language_string.general_settings.meta_tag_content" disabled="" />
 
                     <InputText v-model="item.value.content"
                                data-testid="general-metatags_attributes_content"
@@ -46,11 +48,11 @@ const store = useGeneralStore();
                     <Button icon="pi pi-plus"
                             data-testid="general-add_newtag"
                             @click="store.addMetaTags"
-                            label="Add Meta Tag"
+                            :label="root.assets.language_string.general_settings.add_meta_tags_button"
                             class="p-button-sm"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.general_settings.meta_tag_save_button"
                             @click="store.storeTags"
                             data-testid="general-meta_tag-save"
                             class="p-button-sm"
@@ -74,12 +76,12 @@ const store = useGeneralStore();
                               data-testid="general-gegnerate_tag"
                               optionLabel="name"
                               optionValue="value"
-                              placeholder="Select a type"
+                              :placeholder="root.assets.language_string.general_settings.meta_tag_select_type"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
 
-                    <Button label="Generate"
+                    <Button :label="root.assets.language_string.general_settings.meta_tag_generate_button"
                             @click="store.generateTags"
                             class="p-button-sm"
                     />

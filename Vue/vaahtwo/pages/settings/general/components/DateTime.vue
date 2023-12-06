@@ -1,13 +1,15 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
+import { useRootStore } from "../../../../stores/root";
 
+const root = useRootStore();
 const store = useGeneralStore();
 </script>
 
 <template>
     <div v-if="store.list" class="grid">
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.general_settings.date_format}}</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.date_format"
@@ -33,7 +35,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Time Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.general_settings.time_format}}</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.time_format"
@@ -59,7 +61,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.general_settings.date_time_format}}</h5>
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.datetime_format"
                           data-testid="general-datetime_format"
@@ -86,7 +88,7 @@ const store = useGeneralStore();
 
         <div class="col-12">
             <Divider class="mt-0 mb-3"/>
-            <Button label="Save"
+            <Button :label="root.assets.language_string.general_settings.date_and_time_save_button"
                     @click="store.storeSiteSettings()"
                     data-testid="general-date_format_save"
                     icon="pi pi-save"

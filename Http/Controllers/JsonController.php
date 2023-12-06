@@ -302,19 +302,9 @@ class JsonController extends Controller
 
             "social_media_and_links" => trans("vaahcms-general-setting.social_media_and_links"),
             "static_links_management" => trans("vaahcms-general-setting.static_links_management"),
-            "facebook" => trans("vaahcms-general-setting.facebook"),
-            "enter_facebook_link" => trans("vaahcms-general-setting.enter_facebook_link"),
-            "twitter" => trans("vaahcms-general-setting.twitter"),
-            "enter_twitter_link" => trans("vaahcms-general-setting.enter_twitter_link"),
-            "linkedin" => trans("vaahcms-general-setting.linkedin"),
-            "enter_linkedin_link" => trans("vaahcms-general-setting.enter_linkedin_link"),
-            "youtube" => trans("vaahcms-general-setting.youtube"),
-            "enter_youtube_link" => trans("vaahcms-general-setting.enter_youtube_link"),
-            "instagram" => trans("vaahcms-general-setting.instagram"),
-            "enter_instagram_link" => trans("vaahcms-general-setting.enter_instagram_link"),
-            "github" => trans("vaahcms-general-setting.github"),
-            "enter_github_link" => trans("vaahcms-general-setting.enter_github_link"),
             "add_link" => trans("vaahcms-general-setting.add_link"),
+            "social_media_links_placeholder_text_enter" => trans("vaahcms-general-setting.social_media_links_placeholder_text_enter"),
+            "social_media_links_placeholder_text_link" => trans("vaahcms-general-setting.social_media_links_placeholder_text_link"),
             "add_link_button" => trans("vaahcms-general-setting.add_link_button"),
             "social_media_and_links_save_button" => trans("vaahcms-general-setting.social_media_and_links_save_button"),
 
@@ -327,16 +317,14 @@ class JsonController extends Controller
             "scripts_save_button" => trans("vaahcms-general-setting.scripts_save_button"),
 
             "meta_tags" => trans("vaahcms-general-setting.meta_tags"),
-            "add_meta_tag_button" => trans("vaahcms-general-setting.add_meta_tag_button"),
+            "add_meta_tags_button" => trans("vaahcms-general-setting.add_meta_tags_button"),
             "meta_tag" => trans("vaahcms-general-setting.meta_tag"),
             "global_meta_tags" => trans("vaahcms-general-setting.global_meta_tags"),
-            "meta_tag_name" => trans("vaahcms-general-setting.meta_tag_name"),
-            "meta_tag_property" => trans("vaahcms-general-setting.meta_tag_property"),
             "meta_tag_content" => trans("vaahcms-general-setting.meta_tag_content"),
             "meta_tag_select_type" => trans("vaahcms-general-setting.meta_tag_select_type"),
-            "google_webmaster" => trans("vaahcms-general-setting.google_webmaster"),
-            "open_graph" => trans("vaahcms-general-setting.open_graph"),
+            "meta_tag_select_any" => trans("vaahcms-general-setting.meta_tag_select_any"),
             "meta_tag_generate_button" => trans("vaahcms-general-setting.meta_tag_generate_button"),
+            "meta_tag_save_button" => trans("vaahcms-general-setting.meta_tag_save_button"),
 
         ];
 

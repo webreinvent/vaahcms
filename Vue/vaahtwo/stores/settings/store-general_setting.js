@@ -75,9 +75,9 @@ export const useGeneralStore = defineStore({
         social_media_links: null,
         add_link: null,
         show_link_input: true,
-        date_format_options: ['Y-m-d', 'y/m/d', 'y.m.d', 'custom'],
-        time_format_options: ['H:i:s', 'h:i A', 'h:i:s A', 'custom'],
-        date_time_format_options: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'custom'],
+        date_format_options: [],
+        time_format_options: [],
+        date_time_format_options: [],
         meta_tag: null,
         script_tag:{
             script_after_body_start:null,
@@ -152,11 +152,14 @@ export const useGeneralStore = defineStore({
                 this.copyright_link_options = [
                     {name: root.assets.language_string.general_settings.use_app_url, value:"app_url"},
                     {name: root.assets.language_string.general_settings.custom, value:"custom"}
-                ],
+                ];
                 this.copyright_year_options = [
                     {name: root.assets.language_string.general_settings.use_current_year, value:"use_current_year"},
                     {name: root.assets.language_string.general_settings.custom, value:"custom"}
                 ];
+                this.date_format_options = ['Y-m-d', 'y/m/d', 'y.m.d', root.assets.language_string.general_settings.date_and_time_custom ];
+                this.time_format_options = ['H:i:s', 'h:i A', 'h:i:s A', root.assets.language_string.general_settings.date_and_time_custom ];
+                this.date_time_format_options = ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', root.assets.language_string.general_settings.date_and_time_custom ];
             }
         },
         //---------------------------------------------------------------------
