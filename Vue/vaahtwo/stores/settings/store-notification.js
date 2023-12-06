@@ -12,8 +12,8 @@ let ajax_url = base_url + "/vaah/settings/notifications";
 
 let empty_states = {
     query: {
-        page: 1,
-        rows: 20,
+        page: null,
+        rows: null,
         filter: {
             q: null,
 
@@ -100,11 +100,11 @@ export const useNotificationStore = defineStore({
             /**
              * Update with view and list css column number
              */
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            // this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
-            this.updateQueryFromUrl(route);
+            await this.updateQueryFromUrl(route);
         },
         async updateQueryFromUrl(route)
         {
@@ -155,9 +155,15 @@ export const useNotificationStore = defineStore({
             if (this.assets_is_fetching === true) {
                 this.assets_is_fetching = false;
 
+                let options = {
+                    query: vaah().clone(this.query)
+                };
+                console.log(options);
+                await this.updateUrlQueryString(this.query);
                 await vaah().ajax(
-                    this.ajax_url + '/assets',
-                    this.afterGetAssets,
+                    this.ajax_url+ '/assets',
+                    await this.afterGetAssets,
+                    options.query
                 );
             }
         },
@@ -170,7 +176,8 @@ export const useNotificationStore = defineStore({
                 this.notification_actions = data.notification_actions.success;
                 this.help_urls = data.help_urls;
                 this.list = data.notifications;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.query.rows = data.notifications.per_page;
+                // this.firstElement = this.query.rows * (this.query.page - 1);
 
 
             }
@@ -580,10 +587,14 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async create() {
+            let query = {
+                item:this.new_item,
+                rows: this.query.rows
+            }
 
             let options = {
                 method: 'post',
-                params: this.new_item
+                params: query
             };
 
             let ajax_url = this.ajax_url+'/create';
@@ -593,8 +604,9 @@ export const useNotificationStore = defineStore({
        async createAfter(data, res){
             this.show_new_item_form = false;
            this.notifications=data.list;
+           this.query.rows = data.list.per_page;
            this.new_item.name=null;
-           await this.getAssets();
+           // await this.getAssets();
         },
         //---------------------------------------------------------------------
         searchNotificationVarialbles(event){

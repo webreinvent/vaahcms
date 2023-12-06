@@ -30,13 +30,12 @@ class NotificationsController extends Controller
         try {
             $data['notification_variables'] = vh_action('getNotificationVariables', null, 'array');
             $data['notification_actions'] = vh_action('getNotificationActions', null, 'array');
-            $data['notifications'] = Notification::getList($request);
+            $data['notifications'] = Notification::getList($request,$request->rows);
             $data['from'] = env('MAIL_FROM_NAME');
             $data['from_email'] = env('MAIL_FROM_ADDRESS');
             $data['help_urls'] = [
                 'send_notification' => 'https://docs.vaah.dev/vaahcms/basic/setting/notifications.html#sending-without-laravel-queues'
             ];
-            $data['rows'] = config('vaahcms.per_page');
 
             $data['app_url'] = url("/");
 
@@ -100,32 +99,35 @@ class NotificationsController extends Controller
         }
 
         try {
+            $input = $request->item;
+            $rows = $request->rows;
             $rules = array(
                 'name' => 'required|unique:vh_notifications',
             );
 
-            $validator = \Validator::make( $request->all(), $rules);
+            $validator = \Validator::make( $input, $rules);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'] = $errors;
-                $response['data']['list'] = Notification::getList($request);
+                $response['data']['list'] = Notification::getList($request, $rows);
                 return response()->json($response);
             }
 
             $data = [];
 
             $item = new Notification();
-            $item->fill($request->all());
-            $item->slug = Str::slug($request->name);
+
+            $item->fill($input);
+            $item->slug = Str::slug($input['name']);
             $item->save();
 
 
             $response['success'] = true;
             $response['messages'][] = 'Saved';
             $response['data']['item'] = $item;
-            $response['data']['list'] = Notification::getList($request);
+            $response['data']['list'] = Notification::getList($request,$rows);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
