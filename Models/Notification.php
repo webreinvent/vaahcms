@@ -148,20 +148,11 @@ class Notification extends Model {
         );
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function getList($request, $rows=null)
     {
         $query = static::orderBy('created_at', 'desc');
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $list = $query->paginate($rows);
-
-        return $list;
+        $row = $rows ?: config('vaahcms.per_page');
+        return $query->paginate($row);
     }
     //-------------------------------------------------
     public static function getContent($id)
