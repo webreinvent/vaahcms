@@ -359,6 +359,26 @@ class JsonController extends Controller
             "save_button" => trans("vaahcms-env-variable.save_button"),
         ];
 
+        $data['language_string']['localization_settings'] = [
+            "heading" => trans("vaahcms-localization-setting.heading"),
+            "add_language_button" => trans("vaahcms-localization-setting.add_language_button"),
+            "add_category_button" => trans("vaahcms-localization-setting.add_category_button"),
+            "localization_message" => trans("vaahcms-localization-setting.localization_message"),
+            "localization_placeholder_search" => trans("vaahcms-localization-setting.localization_placeholder_search"),
+            "localization_placeholder_select_a_category" => trans("vaahcms-localization-setting.localization_placeholder_select_a_category"),
+            "localization_placeholder_select_a_filter" => trans("vaahcms-localization-setting.localization_placeholder_select_a_filter"),
+            "localization_reset_button" => trans("vaahcms-localization-setting.localization_reset_button"),
+            "add_new_languages" => trans("vaahcms-localization-setting.add_new_languages"),
+            "add_new_languages_placeholder_name" => trans("vaahcms-localization-setting.add_new_languages_placeholder_name"),
+            "add_new_languages_save_button" => trans("vaahcms-localization-setting.add_new_languages_save_button"),
+            "add_new_category" => trans("vaahcms-localization-setting.add_new_category"),
+            "add_new_category_placeholder_category_name" => trans("vaahcms-localization-setting.add_new_category_placeholder_category_name"),
+            "add_new_category_save_button" => trans("vaahcms-localization-setting.add_new_category_save_button"),
+            "localization_add_string_button" => trans("vaahcms-localization-setting.localization_add_string_button"),
+            "localization_generate_language_files" => trans("vaahcms-localization-setting.localization_generate_language_files"),
+            "localization_save_button" => trans("vaahcms-localization-setting.localization_save_button"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),

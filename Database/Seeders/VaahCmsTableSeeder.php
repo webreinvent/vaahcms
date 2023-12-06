@@ -200,6 +200,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'General Setting'],
             ["name" => 'User Setting'],
             ["name" => 'Env Variable'],
+            ["name" => 'Localization Setting'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);
