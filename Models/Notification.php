@@ -152,6 +152,7 @@ class Notification extends Model {
     {
         $query = static::orderBy('created_at', 'desc');
         $row = $rows ?: config('vaahcms.per_page');
+
         return $query->paginate($row);
     }
     //-------------------------------------------------
@@ -176,6 +177,37 @@ class Notification extends Model {
 
         return $list;
 
+    }
+    //-------------------------------------------------
+    public static function deleteItem($request, $id)
+    {
+        // Find the notification item by ID
+        $notification = self::find($id);
+
+        // Check if the notification exists
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+        // Delete the content data for each via
+        $vias = [
+            'mail',
+            'sms',
+            'push',
+            'frontend',
+            'backend',
+        ];
+        foreach ($vias as $via) {
+            if ($notification->$via) {
+                $notification->$via->contents()->where('via', $via)->delete();
+            }
+        }
+        $notification->delete();
+
+        $response['success'] = true;
+        $response['data'] = [];
+        $response['messages'][] = 'Record has been deleted';
+
+        return $response;
     }
     //-------------------------------------------------
     public static function postStore($request)
