@@ -72,7 +72,10 @@ onMounted(async () => {
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit" class="text-right">
+                    <Column field="Edit" class="text-right">
+                        <template #header>
+                           <span class="edit-column-header">Edit</span>
+                        </template>
                         <template #body="slotProps">
 <!--                            <div class="p-inputgroup">-->
                             <Button icon="pi pi-pencil"
@@ -142,7 +145,7 @@ onMounted(async () => {
                             </div>
                         </div>
                     </template>
-                    <div class="mt-2 mb-2">
+                    <div class="p-inputgroup mt-2 mb-2">
                         <AutoComplete placeholder="Search"
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
@@ -616,4 +619,8 @@ onMounted(async () => {
     </Panel>
 </template>
 
-
+<style scoped>
+.edit-column-header {
+    margin-left: 28rem;
+}
+</style>
