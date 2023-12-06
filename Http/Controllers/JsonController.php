@@ -328,6 +328,29 @@ class JsonController extends Controller
 
         ];
 
+        $data['language_string']['user_settings'] = [
+            "heading" => trans("vaahcms-user-setting.heading"),
+            "expand_all" => trans("vaahcms-user-setting.expand_all"),
+            "collapse_all" => trans("vaahcms-user-setting.collapse_all"),
+            "fields" => trans("vaahcms-user-setting.fields"),
+            "field_name" => trans("vaahcms-user-setting.field_name"),
+            "is_hidden" => trans("vaahcms-user-setting.is_hidden"),
+            "apply_to_registration" => trans("vaahcms-user-setting.apply_to_registration"),
+            "custom_field_name" => trans("vaahcms-user-setting.custom_field_name"),
+            "custom_is_hidden" => trans("vaahcms-user-setting.custom_is_hidden"),
+            "custom_apply_to_registration" => trans("vaahcms-user-setting.custom_apply_to_registration"),
+            "custom_is_password_reveal" => trans("vaahcms-user-setting.custom_is_password_reveal"),
+            "custom_min_length" => trans("vaahcms-user-setting.custom_min_length"),
+            "custom_max_length" => trans("vaahcms-user-setting.custom_max_length"),
+            "excerpt" => trans("vaahcms-user-setting.excerpt"),
+            "custom_fields" => trans("vaahcms-user-setting.custom_fields"),
+            "custom_fields_message" => trans("vaahcms-user-setting.custom_fields_message"),
+            "no_records" => trans("vaahcms-user-setting.no_records"),
+            "select_a_type" => trans("vaahcms-user-setting.select_a_type"),
+            "custom_fields_add_button" => trans("vaahcms-user-setting.custom_fields_add_button"),
+            "custom_fields_save_button" => trans("vaahcms-user-setting.custom_fields_save_button"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),

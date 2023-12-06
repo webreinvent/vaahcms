@@ -1772,6 +1772,127 @@
         "content": "Save"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "heading",
+        "content": "User Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Expand All",
+        "content": "Expand All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Collapse All",
+        "content": "Collapse All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Fields",
+        "content": "Fields"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Field Name",
+        "content": "Field Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Is Hidden",
+        "content": "Is Hidden"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Apply to Registration",
+        "content": "Apply to Registration"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Field Name",
+        "content": "Field Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Is Hidden",
+        "content": "Is Hidden"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Apply to Registration",
+        "content": "Apply to Registration"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Is Password Reveal",
+        "content": "Is Password Reveal"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Min Length",
+        "content": "Min-Length"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Max Length",
+        "content": "Max-Length"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Excerpt",
+        "content": "Excerpt"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Fields",
+        "content": "Custom Fields"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Fields Message",
+        "content": "The inputs of these fields will be stored in meta column."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "No Records",
+        "content": "No Records"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Select a Type",
+        "content": "Select a Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Fields Add Button",
+        "content": "Add"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "user-setting",
+        "name": "Custom Fields Save Button",
+        "content": "Save"
+    },
+
 
 
 
@@ -3185,6 +3306,128 @@
         "content": "Ahorrar"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "heading",
+        "content": "Ajustes de usuario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Expand All",
+        "content": "Expandir todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Collapse All",
+        "content": "Desplegar todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Fields",
+        "content": "Campos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Field Name",
+        "content": "Nombre del campo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Is Hidden",
+        "content": "Está oculto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Apply to Registration",
+        "content": "Aplicar al registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Field Name",
+        "content": "Nombre del campo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Is Hidden",
+        "content": "Está oculto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Apply to Registration",
+        "content": "Aplicar al registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Is Password Reveal",
+        "content": "¿Es revelar contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Min Length",
+        "content": "Longitud mínima"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Max Length",
+        "content": "Longitud máxima"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Excerpt",
+        "content": "Extracto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Fields",
+        "content": "Campos Personalizados"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Fields Message",
+        "content": "Las entradas de estos campos se almacenarán en una metacolumna."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "No Records",
+        "content": "No hay registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Select a Type",
+        "content": "Seleccione un tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Fields Add Button",
+        "content": "Agregar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user-setting",
+        "name": "Custom Fields Save Button",
+        "content": "Ahorrar"
+    },
+
+
 
 
 
@@ -4594,6 +4837,127 @@
         "locale_code_iso_639": "fr",
         "category": "general-setting",
         "name": "Meta Tag Save Button",
+        "content": "Sauvegarder"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "heading",
+        "content": "Paramètres utilisateur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Expand All",
+        "content": "Développer tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Collapse All",
+        "content": "Réduire tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Fields",
+        "content": "Des champs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Field Name",
+        "content": "Nom de domaine"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Is Hidden",
+        "content": "Est caché"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Apply to Registration",
+        "content": "Faire une demande d\\'inscription"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Field Name",
+        "content": "Nom de domaine"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Is Hidden",
+        "content": "Est caché"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Apply to Registration",
+        "content": "Faire une demande d\\'inscription"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Is Password Reveal",
+        "content": "Le mot de passe est-il révélé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Min Length",
+        "content": "Longueur minimale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Max Length",
+        "content": "Longueur maximale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Excerpt",
+        "content": "Extrait"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Fields",
+        "content": "Les champs personnalisés"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Fields Message",
+        "content": "Les entrées de ces champs seront stockées dans la colonne méta."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "No Records",
+        "content": "Pas d\\'enregistrements"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Select a Type",
+        "content": "Sélectionnez un type"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Fields Add Button",
+        "content": "Ajouter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user-setting",
+        "name": "Custom Fields Save Button",
         "content": "Sauvegarder"
     }
 ]
