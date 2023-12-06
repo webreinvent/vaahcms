@@ -1893,6 +1893,37 @@
         "content": "Save"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "env-variable",
+        "name": "Heading",
+        "content": "Environment Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "env-variable",
+        "name": "Download",
+        "content": "Download"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "env-variable",
+        "name": "Refresh",
+        "content": "Refresh"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "env-variable",
+        "name": "Add Env Variable Button",
+        "content": "Add Env Variable"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "env-variable",
+        "name": "Save Button",
+        "content": "Save"
+    },
+
 
 
 
@@ -3427,7 +3458,36 @@
         "content": "Ahorrar"
     },
 
-
+    {
+        "locale_code_iso_639": "es",
+        "category": "env-variable",
+        "name": "Heading",
+        "content": "Variables de entorno"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "env-variable",
+        "name": "Download",
+        "content": "Descargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "env-variable",
+        "name": "Refresh",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "env-variable",
+        "name": "Add Env Variable Button",
+        "content": "Agregar variable de entorno"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "env-variable",
+        "name": "Save Button",
+        "content": "Ahorrar"
+    },
 
 
 
@@ -4958,6 +5018,37 @@
         "locale_code_iso_639": "fr",
         "category": "user-setting",
         "name": "Custom Fields Save Button",
+        "content": "Sauvegarder"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "env-variable",
+        "name": "Heading",
+        "content": "Variables d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "env-variable",
+        "name": "Download",
+        "content": "Télécharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "env-variable",
+        "name": "Refresh",
+        "content": "Rafraîchir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "env-variable",
+        "name": "Add Env Variable Button",
+        "content": "Ajouter une variable d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "env-variable",
+        "name": "Save Button",
         "content": "Sauvegarder"
     }
 ]

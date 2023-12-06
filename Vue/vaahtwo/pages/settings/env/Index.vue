@@ -3,7 +3,9 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useEnvStore} from '../../../stores/settings/store-env'
+import { useRootStore } from "../../../stores/root";
 
+const root = useRootStore();
 const store = useEnvStore();
 const route = useRoute();
 
@@ -35,7 +37,7 @@ onMounted(async () => {
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Environment Variables</b>
+                    <b class="mr-1">{{root.assets.language_string.env_variables.heading}}</b>
                 </div>
             </div>
         </template>
@@ -43,7 +45,7 @@ onMounted(async () => {
         <template #icons>
             <div class="buttons">
                 <Button
-                        label="Download"
+                        :label="root.assets.language_string.env_variables.download"
                         icon="pi pi-download"
                         class="p-button-sm mr-2"
                         data-testid="env-download_file"
@@ -52,7 +54,7 @@ onMounted(async () => {
                 />
 
                 <Button icon="pi pi-refresh"
-                        label="Refresh"
+                        :label="root.assets.language_string.env_variables.refresh"
                         class="p-button-sm"
                         data-testid="env_refresh"
                         @click="store.sync"
@@ -107,7 +109,7 @@ onMounted(async () => {
                                :data-testid="'env-add_variable_field'"
                     />
 
-                    <Button label="Add Env Variable"
+                    <Button :label="root.assets.language_string.env_variables.add_env_variable_button"
                             :data-testid="'env-add_variable'"
                             icon="pi pi-plus"
                             @click="store.addVariable"
@@ -120,7 +122,7 @@ onMounted(async () => {
             <div class="col-12">
                 <Divider class="mb-3 mt-0"/>
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.env_variables.save_button"
                             icon="pi pi-save"
                             @click="store.confirmChanges"
                             :data-testid="'env-save_variable'"

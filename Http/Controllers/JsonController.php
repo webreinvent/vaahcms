@@ -351,6 +351,14 @@ class JsonController extends Controller
             "custom_fields_save_button" => trans("vaahcms-user-setting.custom_fields_save_button"),
         ];
 
+        $data['language_string']['env_variables'] = [
+            "heading" => trans("vaahcms-env-variable.heading"),
+            "download" => trans("vaahcms-env-variable.download"),
+            "refresh" => trans("vaahcms-env-variable.refresh"),
+            "add_env_variable_button" => trans("vaahcms-env-variable.add_env_variable_button"),
+            "save_button" => trans("vaahcms-env-variable.save_button"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
