@@ -142,6 +142,31 @@ class NotificationsController extends Controller
 
         return response()->json($response);
     }
+    public function deleteItem(Request $request,$id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Notification::deleteItem($request, $id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     public function store(Request $request): JsonResponse
     {

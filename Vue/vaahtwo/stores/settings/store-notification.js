@@ -12,8 +12,8 @@ let ajax_url = base_url + "/vaah/settings/notifications";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
 
@@ -21,10 +21,10 @@ let empty_states = {
         recount: null,
     },
 
-    // action: {
-    //     type: null,
-    //     items: [],
-    // },
+    action: {
+        type: null,
+        items: [],
+    },
 
 };
 export const useNotificationStore = defineStore({
@@ -648,6 +648,62 @@ export const useNotificationStore = defineStore({
             await this.getList();
         },
 
+        itemAction(type, item=null){
+
+            if(!item)
+            {
+                item = this.item;
+            }
+
+            this.form.action = type;
+            console.log(this.form.action);
+
+            let ajax_url = this.ajax_url;
+
+            let options = {
+                method: 'post',
+            };
+
+            switch (type)
+            {
+
+                /**
+                 * Delete a record, hence method is `DELETE`
+                 * and no need to send entire `item` object
+                 * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
+                 */
+                case 'trash':
+                    options.method = 'DELETE';
+                    ajax_url += '/'+item.id
+                    break;
+                /**
+                 * Update a record's one column or very few columns,
+                 * hence the method is `PATCH`
+                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
+                 */
+                default:
+                    options.method = 'PATCH';
+                    ajax_url += '/'+item.id+'/action/'+type;
+                    break;
+            }
+
+            vaah().ajax(
+                ajax_url,
+                this.itemActionAfter,
+                options
+            );
+        },
+//---------------------------------------------------------------------
+        async itemActionAfter(data, res) {
+            if (data) {
+                this.item = data;
+                await this.getList();
+                // await this.formActionAfter();
+                // this.getItemMenu();
+
+
+            }
+        },
     }
 });
 

@@ -74,10 +74,19 @@ onMounted(async () => {
                     </Column>
                     <Column header="Edit" class="text-right">
                         <template #body="slotProps">
+<!--                            <div class="p-inputgroup">-->
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
                                     @click="store.showNotificationSettings(slotProps.data)"
-                                    class=" p-button-sm"></Button>
+                                    class="p-button-tiny p-button-text"></Button>
+
+                                <Button class="p-button-tiny p-button-danger p-button-text"
+                                                        @click="store.itemAction('trash', slotProps.data)"
+                                                        v-tooltip.top="'Trash'"
+                                                        icon="pi pi-trash"
+                                                        data-testid="setting-notification_data_trash"
+                                ></Button>
+<!--                            </div>-->
                         </template>
                     </Column>
                 </DataTable>

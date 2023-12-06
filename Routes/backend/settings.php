@@ -133,6 +133,11 @@ Route::group(
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
+        Route::delete('/{id}', 'NotificationsController@deleteItem')
+            ->name('vh.backend.settings.notifications.delete' );
+
+        Route::any('/{id}/action/{action}', 'NotificationsController@deleteItem')
+            ->name('vh.backend.users.users.item.action');
         //------------------------------------------------
         Route::get( '/assets', 'NotificationsController@getAssets' )
             ->name( 'vh.backend.settings.notifications.assets' );
@@ -162,6 +167,7 @@ Route::group(
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
     ],
     function () {
+
         //------------------------------------------------
         Route::post( '/assets', 'BackupsController@getAssets' )
             ->name( 'vh.backend.settings.localization.assets' );
