@@ -1924,6 +1924,132 @@
         "content": "Save"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "heading",
+        "content": "Localizations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add Language Button",
+        "content": "Add Language"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add Category Button",
+        "content": "Add Category"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Message",
+        "content": "When you make any changes in strings. You need to click on Generate Language Files button to reflect your changes."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Category",
+        "content": "Select a Category"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Filter",
+        "content": "Select a Filter"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Languages",
+        "content": "Add New Languages"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Name",
+        "content": "Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Languages Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Category",
+        "content": "Add New Category"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Category Placeholder Category Name",
+        "content": "Category Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Category Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Add String Button",
+        "content": "Add String"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Generate Language Files",
+        "content": "Generate Language Files"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Language",
+        "content": "Select a Language"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Empty Value",
+        "content": "Empty Value"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Filled Value",
+        "content": "Filled Value"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "No Language String Exist",
+        "content": "No Language String Exist"
+    },
 
 
 
@@ -3489,6 +3615,132 @@
         "content": "Ahorrar"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "heading",
+        "content": "Localizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add Language Button",
+        "content": "Agregar idioma"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add Category Button",
+        "content": "añadir categoría"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Message",
+        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón Generar archivos de idioma para reflejar sus cambios."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Category",
+        "content": "Seleccione una categoría"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Filter",
+        "content": "Seleccione un filtro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Languages",
+        "content": "Agregar nuevos idiomas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Name",
+        "content": "Nombre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Languages Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Category",
+        "content": "Añadir nueva categoria"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Category Placeholder Category Name",
+        "content": "nombre de la categoría"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Category Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Add String Button",
+        "content": "Agregar cadena"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Generate Language Files",
+        "content": "Generar archivos de idioma"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Language",
+        "content": "Selecciona un idioma"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Empty Value",
+        "content": "Valor vacío"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Filled Value",
+        "content": "Valor completado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "No Language String Exist",
+        "content": "No existe ninguna cadena de idioma"
+    },
 
 
     {
@@ -5050,5 +5302,132 @@
         "category": "env-variable",
         "name": "Save Button",
         "content": "Sauvegarder"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "heading",
+        "content": "Localisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add Language Button",
+        "content": "Ajouter une langue"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add Category Button",
+        "content": "ajouter une catégorie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Message",
+        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton Générer des fichiers de langue pour refléter vos modifications."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Category",
+        "content": "Choisir une catégorie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Filter",
+        "content": "Sélectionnez un filtre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Reset Button",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages",
+        "content": "Ajouter de nouvelles langues"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Name",
+        "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Category",
+        "content": "Ajouter une nouvelle catégorie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Category Placeholder Category Name",
+        "content": "Nom de catégorie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Category Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Add String Button",
+        "content": "Ajouter une chaîne"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Generate Language Files",
+        "content": "Générer des fichiers de langue"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Placeholder Select a Language",
+        "content": "Sélectionnez une langue"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Empty Value",
+        "content": "Valeur vide"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Filled Value",
+        "content": "Valeur remplie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "No Language String Exist",
+        "content": "Aucune chaîne de langue n\\'existe"
     }
 ]

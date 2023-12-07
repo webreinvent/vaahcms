@@ -2,6 +2,9 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import {useLocalizationStore} from '../../../stores/settings/store-localization'
+import { useRootStore } from "../../../stores/root";
+
+const root = useRootStore();
 const store = useLocalizationStore();
 const route = useRoute();
 import { useConfirm } from "primevue/useconfirm";
@@ -28,7 +31,7 @@ onMounted(async () => {
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Localizations</b>
+                    <b class="mr-1">{{root.assets.language_string.localization_settings.heading}}</b>
                 </div>
             </div>
         </template>
@@ -36,14 +39,14 @@ onMounted(async () => {
         <template #icons>
             <div class="buttons">
                 <Button icon="pi pi-plus"
-                        label="Add Language"
+                        :label="root.assets.language_string.localization_settings.add_language_button"
                         data-testid="localization-add_language"
                         @click="store.toggleLanguageForm"
                         class="p-button-sm mr-2"
                 />
 
                 <Button icon="pi pi-plus "
-                        label="Add Category"
+                        :label="root.assets.language_string.localization_settings.add_category_button"
                         data-testid="localization-add_category"
                         @click="store.toggleCategoryForm"
                         class="p-button-sm mr-2"
@@ -59,14 +62,12 @@ onMounted(async () => {
             </div>
         </template>
         <Message severity="warn" class="mt-1" :closable="false">
-        When you make any changes in strings.
-        You need to click on <strong>Generate Language Files</strong>
-        button to reflect your changes.
+            {{root.assets.language_string.localization_settings.localization_message}}
     </Message>
 
         <div class="flex align-items-center">
             <div class="mb-4" v-if="store.show_add_language">
-                <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
+                <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.localization_settings.add_new_languages}}</h5>
 
                 <div class="level has-padding-bottom-25">
                     <div class="level-left">
@@ -76,7 +77,7 @@ onMounted(async () => {
                                            name="localization-language-name"
                                            v-model="store.new_language.name"
                                            data-testid="localization-new_language_name"
-                                           placeholder="Name"
+                                           :placeholder="root.assets.language_string.localization_settings.add_new_languages_placeholder_name"
                                 />
 
                                 <inputText class="p-inputtext-sm"
@@ -89,7 +90,7 @@ onMounted(async () => {
                                 <Button @click="store.storeLanguage"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_language_save"
-                                        label="save"
+                                        :label="root.assets.language_string.localization_settings.add_new_languages_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
@@ -99,7 +100,7 @@ onMounted(async () => {
             </div>
 
             <div class="mb-4" v-if="store.show_add_category">
-                <h5 class="p-1 text-xs mb-1">Add New Category</h5>
+                <h5 class="p-1 text-xs mb-1">{{root.assets.language_string.localization_settings.add_new_category}}</h5>
 
                 <div class="level has-padding-bottom-25" >
 
@@ -110,13 +111,13 @@ onMounted(async () => {
                                 <inputText class="p-inputtext-sm"
                                            v-model="store.new_category.name"
                                            data-testid="localization-new_category_name"
-                                           placeholder="Category Name"
+                                           :placeholder="root.assets.language_string.localization_settings.add_new_category_placeholder_category_name"
                                 />
 
                                 <Button @click="store.storeCategory"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_category_save"
-                                        label="save"
+                                        :label="root.assets.language_string.localization_settings.add_new_category_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
@@ -137,7 +138,7 @@ onMounted(async () => {
                           optionLabel="option_label"
                           optionValue="id"
                           @change="store.getList()"
-                          placeholder="Select a Language"
+                          :placeholder="root.assets.language_string.localization_settings.localization_placeholder_select_a_language"
                           inputClass="p-inputtext-sm"
                           class="is-small"
                 />
@@ -150,7 +151,7 @@ onMounted(async () => {
                                @keyup.enter="store.delayedSearch()"
                                @keyup.enter.native="store.delayedSearch()"
                                @input="store.delayedSearch()"
-                               placeholder="search"
+                               :placeholder="root.assets.language_string.localization_settings.localization_placeholder_search"
                                data-testid="role-action_search_input"
                     />
 
@@ -166,24 +167,24 @@ onMounted(async () => {
                               optionLabel="name"
                               optionValue="id"
                               @change="store.getList()"
-                              placeholder="Select a Category"
+                              :placeholder="root.assets.language_string.localization_settings.localization_placeholder_select_a_category"
                               inputClass="p-inputtext-sm"
                     />
 
                     <Dropdown v-model="store.query_string.filter"
                               :options="[
-                                       {name:'Empty value', value:'empty'},
-                                       {name:'Filled value', value:'filled'}
+                                       {name:root.assets.language_string.localization_settings.localization_empty_value, value:'empty'},
+                                       {name:root.assets.language_string.localization_settings.localization_filled_value, value:'filled'}
                                   ]"
                               @change="store.getList()"
                               :data-testid="'localization-more_filter'"
                               optionLabel="name"
                               optionValue="value"
-                              placeholder="Select a Filter"
+                              :placeholder="root.assets.language_string.localization_settings.localization_placeholder_select_a_filter"
                               inputClass="p-inputtext-sm"
                     />
 
-                    <Button label="Reset"
+                    <Button :label="root.assets.language_string.localization_settings.localization_reset_button"
                             icon="pi pi-filter-slash"
                             @click="store.removeQueryString"
                             data-testid="localization-reset"
@@ -219,7 +220,7 @@ onMounted(async () => {
             </div>
 
             <div v-else>
-                No language string exist
+                {{root.assets.language_string.localization_settings.no_language_string_exist}}
             </div>
         </div>
 
@@ -239,7 +240,8 @@ onMounted(async () => {
                                data-testid="localization-add_string"
                     />
 
-                    <Button label="Add String" icon="pi pi-plus"
+                    <Button :label="root.assets.language_string.localization_settings.localization_add_string_button"
+                            icon="pi pi-plus"
                             @click="store.addVariable"
                             :disabled="!store.new_variable"
                             class="p-button-sm"
@@ -249,14 +251,14 @@ onMounted(async () => {
 
             <div class="col-12">
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Generate Language Files"
+                    <Button :label="root.assets.language_string.localization_settings.localization_generate_language_files"
                             data-testid="localization-generate_languafe_file"
                             icon="pi pi-refresh"
                             @click="store.generateLanguage"
                             class="p-button-sm"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.localization_settings.localization_save_button"
                             data-testid="localization-save"
                             icon="pi pi-save"
                             @click="store.storeData"

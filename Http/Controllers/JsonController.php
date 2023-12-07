@@ -377,6 +377,10 @@ class JsonController extends Controller
             "localization_add_string_button" => trans("vaahcms-localization-setting.localization_add_string_button"),
             "localization_generate_language_files" => trans("vaahcms-localization-setting.localization_generate_language_files"),
             "localization_save_button" => trans("vaahcms-localization-setting.localization_save_button"),
+            "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
+            "localization_empty_value" => trans("vaahcms-localization-setting.localization_empty_value"),
+            "localization_filled_value" => trans("vaahcms-localization-setting.localization_filled_value"),
+            "no_language_string_exist" => trans("vaahcms-localization-setting.no_language_string_exist"),
         ];
 
         $data['language_string']['sidebar_menu'] = [
