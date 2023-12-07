@@ -206,6 +206,17 @@ export const useNotificationStore = defineStore({
                 this.query.rows = data.per_page;
             }
         },
+        async delayedSearch()
+        {
+            let self = this;
+            this.query.page = 1;
+            this.action.items = [];
+            clearTimeout(this.search.delay_timer);
+            this.search.delay_timer = setTimeout(async function() {
+                await self.updateUrlQueryString(self.query);
+                await self.getList();
+            }, this.search.delay_time);
+        },
 
         async updateUrlQueryString(query)
         {
@@ -710,6 +721,208 @@ export const useNotificationStore = defineStore({
         onItemSelection(items)
         {
             this.action.items = items;
+        },
+        isViewLarge()
+        {
+            return this.view === 'large';
+        },
+        async listAction(type = null){
+
+            if(!type && this.action.type)
+            {
+                type = this.action.type;
+            } else{
+                this.action.type = type;
+            }
+
+            let url = this.ajax_url+'/action/'+type
+            let method = 'PUT';
+
+            switch (type)
+            {
+                case 'delete':
+                    url = this.ajax_url
+                    method = 'DELETE';
+                    break;
+                case 'delete-all':
+                    method = 'DELETE';
+                    break;
+            }
+
+            let options = {
+                params: this.action,
+                method: method,
+                show_success: false
+            };
+            await vaah().ajax(
+                url,
+                this.updateListAfter,
+                options
+            );
+        },
+
+
+        async updateList(type = null){
+
+            if(!type && this.action.type)
+            {
+                type = this.action.type;
+            } else{
+                this.action.type = type;
+            }
+
+            if(!this.isListActionValid())
+            {
+                return false;
+            }
+
+
+            let method = 'PUT';
+
+            switch (type)
+            {
+                case 'delete':
+                    method = 'DELETE';
+                    break;
+            }
+
+            let options = {
+                params: this.action,
+                method: method,
+                show_success: false
+            };
+            await vaah().ajax(
+                this.ajax_url,
+                this.updateListAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async updateListAfter(data, res) {
+            if(data)
+            {
+                this.action = vaah().clone(this.empty_action);
+                await this.getList();
+            }
+        },
+
+        confirmDelete()
+        {
+            if(this.action.items.length < 1)
+            {
+                vaah().toastErrors(['Select a record']);
+                return false;
+            }
+            this.action.type = 'delete';
+            vaah().confirmDialogDelete(this.listAction);
+        },
+        //---------------------------------------------------------------------
+        confirmDeleteAll()
+        {
+            this.action.type = 'delete-all';
+            vaah().confirmDialogDelete(this.listAction);
+        },
+
+        async getListSelectedMenu()
+        {
+            this.list_selected_menu = [
+                // {
+                //     label: 'Activate',
+                //     command: async () => {
+                //         await this.updateList('activate')
+                //     }
+                // },
+                // {
+                //     label: 'Deactivate',
+                //     command: async () => {
+                //         await this.updateList('deactivate')
+                //     }
+                // },
+                // {
+                //     separator: true
+                // },
+                {
+                    label: 'Trash',
+                    icon: 'pi pi-times',
+                    command: async () => {
+                        await this.updateList('trash')
+                    }
+                },
+                {
+                    label: 'Restore',
+                    icon: 'pi pi-replay',
+                    command: async () => {
+                        await this.updateList('restore')
+                    }
+                },
+                {
+                    label: 'Delete',
+                    icon: 'pi pi-trash',
+                    command: () => {
+                        this.confirmDelete()
+                    }
+                },
+            ]
+
+        },
+        //---------------------------------------------------------------------
+        getListBulkMenu()
+        {
+            this.list_bulk_menu = [
+                {
+                    label: 'Mark all as active',
+                    command: async () => {
+                        await this.listAction('activate-all')
+                    }
+                },
+                {
+                    label: 'Mark all as inactive',
+                    command: async () => {
+                        await this.listAction('deactivate-all')
+                    }
+                },
+                {
+                    separator: true
+                },
+                {
+                    label: 'Trash All',
+                    icon: 'pi pi-times',
+                    command: async () => {
+                        await this.listAction('trash-all')
+                    }
+                },
+                {
+                    label: 'Restore All',
+                    icon: 'pi pi-replay',
+                    command: async () => {
+                        await this.listAction('restore-all')
+                    }
+                },
+                {
+                    label: 'Delete All',
+                    icon: 'pi pi-trash',
+                    command: async () => {
+                        this.confirmDeleteAll();
+                    }
+                },
+            ];
+        },
+        async resetQuery()
+        {
+            //reset query strings
+            await this.resetQueryString();
+
+            //reload page list
+            await this.getList();
+        },
+        //---------------------------------------------------------------------
+        async resetQueryString()
+        {
+            for(let key in this.query.filter)
+            {
+                this.query.filter[key] = null;
+            }
+            await this.updateUrlQueryString(this.query);
         },
     }
 });

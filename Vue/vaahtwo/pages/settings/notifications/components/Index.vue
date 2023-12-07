@@ -2,8 +2,8 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
-import { vaah } from '../../../vaahvue/pinia/vaah'
-import {useNotificationStore} from "../../../stores/settings/store-notification";
+import { vaah } from '../../../../vaahvue/pinia/vaah'
+import {useNotificationStore} from "../../../../stores/settings/store-notification";
 
 const store = useNotificationStore();
 const route = useRoute();
@@ -24,26 +24,9 @@ onMounted(async () => {
 </script>
 <template>
     <Panel class="is-small">
-        <template class="p-1" #header>
-            <div class="flex flex-row">
-                <div>
-                    <b class="mr-1">Notifications</b>
-                </div>
-            </div>
-        </template>
 
-        <template #icons>
-            <div class="buttons">
-                <Button icon="pi pi-plus"
-                        label="Add"
-                        class="p-button-sm"
-                        @click="store.addNewNotification"
-                        data-testid="setting-notification_add_new"
-                />
-            </div>
-
-        </template>
-        <div class="grid">
+        <div class="
+        grid">
             <div class="col-12" v-if="store.show_new_item_form">
                 <div class="p-inputgroup">
                     <inputText data-testid="setting-notification_add_new_value"
