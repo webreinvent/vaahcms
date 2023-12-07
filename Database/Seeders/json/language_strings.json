@@ -2051,6 +2051,145 @@
         "content": "No Language String Exist"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Heading",
+        "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Button",
+        "content": "Add"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Error Message",
+        "content": "These are notifications needs to be send manually."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Enter New Notification Name",
+        "content": "Enter New Notification Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Column Notification Title",
+        "content": "Notification Title"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Column Edit",
+        "content": "Edit"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Go Back Button",
+        "content": "Go Back"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Variables",
+        "content": "Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Variables Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Options",
+        "content": "Notification Options"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Deliver via",
+        "content": "Deliver via"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Subject Button",
+        "content": "Add Subject"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Form Button",
+        "content": "Add Form"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Greetings Button",
+        "content": "Add Greetings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Line Button",
+        "content": "Add Line"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Action Button",
+        "content": "Add Action"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Save Button",
+        "content": "Save"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Test Button",
+        "content": "Test"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Test Send Button",
+        "content": "Send"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Error notifications",
+        "content": "Error notifications"
+    },
+
 
 
     {
@@ -3742,6 +3881,147 @@
         "content": "No existe ninguna cadena de idioma"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Heading",
+        "content": "Notificaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Button",
+        "content": "Agregar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Error Message",
+        "content": "Estas son notificaciones que deben enviarse manualmente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Enter New Notification Name",
+        "content": "Ingrese el nuevo nombre de notificación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Column Notification Title",
+        "content": "Título de la notificación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Column Edit",
+        "content": "Editar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Go Back Button",
+        "content": "Regresa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Variables",
+        "content": "Variables"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Variables Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Options",
+        "content": "Opciones de notificación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Deliver via",
+        "content": "Entregar a través de"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Subject Button",
+        "content": "Añadir tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Form Button",
+        "content": "Agregar formulario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Greetings Button",
+        "content": "Agregar saludos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Line Button",
+        "content": "Añadir línea"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Action Button",
+        "content": "Agregar acción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Save Button",
+        "content": "Ahorrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Test Button",
+        "content": "Prueba"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Test Send Button",
+        "content": "Enviar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Error notifications",
+        "content": "Notificaciones de errores"
+    },
+
+
+
 
     {
         "locale_code_iso_639": "fr",
@@ -5429,5 +5709,145 @@
         "category": "localization-setting",
         "name": "No Language String Exist",
         "content": "Aucune chaîne de langue n\\'existe"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Heading",
+        "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Button",
+        "content": "Ajouter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Reset Button",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Error Message",
+        "content": "Ce sont des notifications qui doivent être envoyées manuellement."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Enter New Notification Name",
+        "content": "Entrez le nouveau nom de notification"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Column Notification Title",
+        "content": "Titre de la notification"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Column Edit",
+        "content": "Modifier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Go Back Button",
+        "content": "Retourner"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Variables",
+        "content": "Variables"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Variables Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Options",
+        "content": "Options de notification"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Deliver via",
+        "content": "Livrer via"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Subject Button",
+        "content": "Ajouter un sujet"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Form Button",
+        "content": "Ajouter un formulaire"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Greetings Button",
+        "content": "Ajouter des salutations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Line Button",
+        "content": "Ajouter une ligne"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Action Button",
+        "content": "Ajouter une action"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Save Button",
+        "content": "Sauvegarder"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Test Button",
+        "content": "Test"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Test Send Button",
+        "content": "Envoyer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Error notifications",
+        "content": "Notifications d\\'erreur"
     }
+
 ]

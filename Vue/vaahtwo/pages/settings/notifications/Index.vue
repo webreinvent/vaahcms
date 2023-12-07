@@ -4,7 +4,9 @@ import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import {useNotificationStore} from "../../../stores/settings/store-notification";
+import { useRootStore } from "../../../stores/root";
 
+const root = useRootStore();
 const store = useNotificationStore();
 const route = useRoute();
 
@@ -27,7 +29,7 @@ onMounted(async () => {
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Notifications</b>
+                    <b class="mr-1">{{root.assets.language_string.notification_settings.heading}}</b>
                 </div>
             </div>
         </template>
@@ -35,7 +37,7 @@ onMounted(async () => {
         <template #icons>
             <div class="buttons">
                 <Button icon="pi pi-plus"
-                        label="Add"
+                        :label="root.assets.language_string.notification_settings.add_button"
                         class="p-button-sm"
                         @click="store.addNewNotification"
                         data-testid="setting-notification_add_new"
@@ -51,7 +53,7 @@ onMounted(async () => {
                               optionLabel="name"
                               optionValue="id"
                               :filter="true"
-                              placeholder="Search"
+                              :placeholder="root.assets.language_string.notification_settings.placeholder_search"
                               data-testid="notification-search"
                               class="w-full"
                               @change="store.callShowNotificationSettings()"
@@ -59,7 +61,7 @@ onMounted(async () => {
                     />
 
                     <Button class="p-button-sm"
-                            label="Reset"
+                            :label="root.assets.language_string.notification_settings.reset_button"
                             @click="store.clearNotificationSearch"
                             data-testid="notification-search_reset"
                     />
@@ -68,20 +70,20 @@ onMounted(async () => {
 
             <div class="col-12" v-if="store.show_new_item_form">
                 <Message severity="error" :closable="false">
-                    These are notifications needs to be send manually.
+                    {{root.assets.language_string.notification_settings.error_message}}
                 </Message>
 
                 <div class="p-inputgroup">
                     <inputText data-testid="setting-notification_add_new_value"
                                v-model="store.new_item.name"
-                               placeholder="Enter new notification name"
+                               :placeholder="root.assets.language_string.notification_settings.placeholder_enter_new_notification_name"
                                :autoResize="true"
                                class="w-full"
                                inputClass="p-inputtext-sm"
                     />
 
                     <Button icon="pi pi-save"
-                            label="save"
+                            :label="root.assets.language_string.notification_settings.save_button"
                             @click="store.create"
                             data-testid="setting-notification_save_new"
                             class="has-max-height p-button-sm"
@@ -94,12 +96,12 @@ onMounted(async () => {
         <div class="grid" v-if="!store.active_notification">
             <div class="col">
                 <DataTable :value="store.notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm">
-                    <Column header="Notification Title">
+                    <Column :header="root.assets.language_string.notification_settings.column_notification_title">
                         <template #body="slotProps">
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit">
+                    <Column :header="root.assets.language_string.notification_settings.column_edit">
                         <template #body="slotProps">
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
@@ -116,7 +118,7 @@ onMounted(async () => {
                     <div class="flex align-items-center">
 
                         <Button class="p-button-outlined p-button-sm mr-2"
-                                label="Go back"
+                                :label="root.assets.language_string.notification_settings.go_back"
                                 icon="pi pi-arrow-left"
                                 icon-class="text-xs"
                                 data-testid="setting-notification_back"
@@ -150,12 +152,12 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Variables</b>
+                                <b class="mr-1">{{root.assets.language_string.notification_settings.variables}}</b>
                             </div>
                         </div>
                     </template>
                     <div class="mt-2 mb-2">
-                        <AutoComplete placeholder="Search"
+                        <AutoComplete :placeholder="root.assets.language_string.notification_settings.variables_placeholder_search"
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
                                       optionLabel="name"
@@ -195,13 +197,13 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Notification Options</b>
+                                <b class="mr-1">{{root.assets.language_string.notification_settings.notification_options}}</b>
                             </div>
                         </div>
                     </template>
                     <div class="grid justify-content-between">
                         <div class="col-5">
-                            <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
+                            <h5 class="text-sm font-semibold mb-2">{{root.assets.language_string.notification_settings.deliver_via}}</h5>
 
                             <div class="flex justify-content-between">
                                 <span>
@@ -251,7 +253,7 @@ onMounted(async () => {
                         </div>
                         <div class="col-6 justify-content-end flex">
                             <span class="text-right">
-                                <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
+                                <h5 class="font-semibold text-xs mb-1">{{root.assets.language_string.notification_settings.error_notifications}}</h5>
                                 <InputSwitch v-model="store.active_notification.is_error"
                                              data-testid="setting-notification_error"
                                              class="is-small"
@@ -286,7 +288,7 @@ onMounted(async () => {
                                             </div>
                                             <div class="mb-3">
                                                 <h5 class="px-1 text-xs mb-1">From Email</h5>
-                                                <InputText placeholder="Enter From"
+                                                <InputText placeholder="Enter Email From"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_from_email"
                                                            class="p-inputtext-sm"
@@ -358,33 +360,33 @@ onMounted(async () => {
                                     </div>
 
                                     <div class="flex justify-content-end">
-                                        <Button label="Add Subject"
+                                        <Button :label="root.assets.language_string.notification_settings.add_subject_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addSubject"
                                                 data-testid="setting-notification_add_subject"
                                                 :disabled="store.is_add_subject_disabled"
                                         />
 
-                                        <Button label="Add From"
+                                        <Button :label="root.assets.language_string.notification_settings.add_form_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addFrom"
                                                 data-testid="setting-notification_add_from"
                                                 :disabled="store.is_add_from_disabled"
                                         />
 
-                                        <Button label="Add Greetings"
+                                        <Button :label="root.assets.language_string.notification_settings.add_greetings_button"
                                                 @click="store.addToMail('greetings')"
                                                 data-testid="setting-notification_add_greetings"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Line"
+                                        <Button :label="root.assets.language_string.notification_settings.add_line_button"
                                                 @click="store.addToMail('line')"
                                                 data-testid="setting-notification_add_line"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Action"
+                                        <Button :label="root.assets.language_string.notification_settings.add_action_button"
                                                 @click="store.addAction"
                                                 data-testid="setting-notification_add_action"
                                                 class="w-auto p-button-sm"
@@ -588,13 +590,14 @@ onMounted(async () => {
                             </TabView>
                             <Divider class="mb-3 mt-0" />
                             <div class="flex justify-content-end">
-                                <Button label="Save" icon="pi pi-save"
+                                <Button :label="root.assets.language_string.notification_settings.notification_save_button"
+                                        icon="pi pi-save"
                                         data-testid="setting-notification_store"
                                         @click="store.storeNotification"
                                         class="w-auto mr-3 p-button-sm"
                                 />
 
-                                <Button label="Test"
+                                <Button :label="root.assets.language_string.notification_settings.notification_test_button"
                                         data-testid="setting-notification_test"
                                         @click="store.is_testing=true"
                                         icon="pi pi-reply"
@@ -612,7 +615,7 @@ onMounted(async () => {
                                               inputClass="p-inputtext-sm"
                                 />
 
-                                <Button label="Send"
+                                <Button :label="root.assets.language_string.notification_settings.notification_test_send_button"
                                         data-testid="setting-notification_test_send"
                                         @click="store.sendNotification"
                                         icon="pi pi-reply"

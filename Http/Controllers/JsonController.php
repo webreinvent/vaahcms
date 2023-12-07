@@ -383,6 +383,32 @@ class JsonController extends Controller
             "no_language_string_exist" => trans("vaahcms-localization-setting.no_language_string_exist"),
         ];
 
+        $data['language_string']['notification_settings'] = [
+            "heading" => trans("vaahcms-notification-setting.heading"),
+            "add_button" => trans("vaahcms-notification-setting.add_button"),
+            "placeholder_search" => trans("vaahcms-notification-setting.placeholder_search"),
+            "reset_button" => trans("vaahcms-notification-setting.reset_button"),
+            "error_message" => trans("vaahcms-notification-setting.error_message"),
+            "placeholder_enter_new_notification_name" => trans("vaahcms-notification-setting.placeholder_enter_new_notification_name"),
+            "save_button" => trans("vaahcms-notification-setting.save_button"),
+            "column_notification_title" => trans("vaahcms-notification-setting.column_notification_title"),
+            "column_edit" => trans("vaahcms-notification-setting.column_edit"),
+            "go_back_button" => trans("vaahcms-notification-setting.go_back_button"),
+            "variables" => trans("vaahcms-notification-setting.variables"),
+            "variables_placeholder_search" => trans("vaahcms-notification-setting.variables_placeholder_search"),
+            "notification_options" => trans("vaahcms-notification-setting.notification_options"),
+            "deliver_via" => trans("vaahcms-notification-setting.deliver_via"),
+            "add_subject_button" => trans("vaahcms-notification-setting.add_subject_button"),
+            "add_form_button" => trans("vaahcms-notification-setting.add_form_button"),
+            "add_greetings_button" => trans("vaahcms-notification-setting.add_greetings_button"),
+            "add_line_button" => trans("vaahcms-notification-setting.add_line_button"),
+            "add_action_button" => trans("vaahcms-notification-setting.add_action_button"),
+            "notification_save_button" => trans("vaahcms-notification-setting.notification_save_button"),
+            "notification_test_button" => trans("vaahcms-notification-setting.notification_test_button"),
+            "notification_test_send_button" => trans("vaahcms-notification-setting.notification_test_send_button"),
+            "error_notifications" => trans("vaahcms-notification-setting.error_notifications"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
