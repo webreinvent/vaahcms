@@ -409,6 +409,22 @@ class JsonController extends Controller
             "error_notifications" => trans("vaahcms-notification-setting.error_notifications"),
         ];
 
+        $data['language_string']['update_settings'] = [
+            "heading" => trans("vaahcms-update-setting.heading"),
+            "check_for_update_button" => trans("vaahcms-update-setting.check_for_update_button"),
+            "check_for_update_message" => trans("vaahcms-update-setting.check_for_update_message"),
+            "current_version_of_vaahcms_is" => trans("vaahcms-update-setting.current_version_of_vaahcms_is"),
+            "a_newer_version" => trans("vaahcms-update-setting.a_newer_version"),
+            "of_vaahcms_is_available" => trans("vaahcms-update-setting.of_vaahcms_is_available"),
+            "new_updates" => trans("vaahcms-update-setting.new_updates"),
+            "new_updates_message" => trans("vaahcms-update-setting.new_updates_message"),
+            "update_now_button" => trans("vaahcms-update-setting.update_now_button"),
+            "downloading_latest_version" => trans("vaahcms-update-setting.downloading_latest_version"),
+            "reload" => trans("vaahcms-update-setting.reload"),
+            "major_release_message" => trans("vaahcms-update-setting.major_release_message"),
+            "steps_of_manually_upgrade" => trans("vaahcms-update-setting.steps_of_manually_upgrade"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),

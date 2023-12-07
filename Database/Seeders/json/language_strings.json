@@ -2190,6 +2190,85 @@
         "content": "Error notifications"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "heading",
+        "content": "Update VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Check for Update Button",
+        "content": "Check for Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Check for Update Message",
+        "content": "Current version of this VaahCMS is the latest version"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Current version of VaahCMS is",
+        "content": "Current version of VaahCMS is"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "A Newer Version",
+        "content": "A newer version"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "of VaahCMS is available.",
+        "content": "of VaahCMS is available."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "NEW Updates",
+        "content": "NEW Updates"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "New Updates Message",
+        "content": "Have you taken the backup of your files & database?"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Update Now Button",
+        "content": "Update Now"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Downloading latest version",
+        "content": "Downloading latest version (it can take upto 3 to 5 minutes)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Reload Button",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Major Release Message",
+        "content": "This is a major release. You have to do manual upgrade to update VaahCms."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Steps of Manually Upgrade",
+        "content": "Steps of Manually Upgrade"
+    },
+
 
 
     {
@@ -4020,6 +4099,85 @@
         "content": "Notificaciones de errores"
     },
 
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "heading",
+        "content": "Actualizar VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Check for Update Button",
+        "content": "Buscar actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Check for Update Message",
+        "content": "La versión actual de este VaahCMS es la última versión."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "A Newer Version",
+        "content": "Una versión más nueva de"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Current version of VaahCMS is",
+        "content": "La versión actual de VaahCMS es"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "of VaahCMS is available.",
+        "content": "de VaahCMS está disponible."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "NEW Updates",
+        "content": "Nuevas actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "New Updates Message",
+        "content": "¿Ha realizado la copia de seguridad de sus archivos y base de datos?"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Update Now Button",
+        "content": "Actualizar ahora"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Downloading latest version",
+        "content": "Descargando la última versión (puede tardar de 3 a 5 minutos)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Reload Button",
+        "content": "Recargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Major Release Message",
+        "content": "Este es un lanzamiento importante. Debe realizar una actualización manual para actualizar VaahCms."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Steps of Manually Upgrade",
+        "content": "Pasos para actualizar manualmente"
+    },
+
 
 
 
@@ -5848,6 +6006,84 @@
         "category": "notification-setting",
         "name": "Error notifications",
         "content": "Notifications d\\'erreur"
-    }
+    },
 
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "heading",
+        "content": "Mise à jour VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Check for Update Button",
+        "content": "Rechercher une mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Check for Update Message",
+        "content": "La version actuelle de ce VaahCMS est la dernière version"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Current version of VaahCMS is",
+        "content": "La version actuelle de VaahCMS est"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "A Newer Version",
+        "content": "Une version plus récente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "of VaahCMS is available.",
+        "content": "de VaahCMS est disponible."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "NEW Updates",
+        "content": "NOUVELLES mises à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "New Updates Message",
+        "content": "Avez-vous effectué la sauvegarde de vos fichiers et de votre base de données ?"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Update Now Button",
+        "content": "Mettez à jour maintenant"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Downloading latest version",
+        "content": "Téléchargement de la dernière version (cela peut prendre jusqu\\'à 3 à 5 minutes)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Reload Button",
+        "content": "Recharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Major Release Message",
+        "content": "Il s\\'agit d\\'une version majeure. Vous devez effectuer une mise à niveau manuelle pour mettre à jour VaahCms."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Steps of Manually Upgrade",
+        "content": "Étapes de mise à niveau manuelle"
+    }
 ]
