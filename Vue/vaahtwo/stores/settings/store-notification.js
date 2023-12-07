@@ -146,7 +146,7 @@ export const useNotificationStore = defineStore({
         {
             watch(this.query.filter, (newVal,oldVal) =>
                 {
-                    // this.delayedSearch();
+                    this.delayedSearch();
                 },{deep: true}
             );
 
@@ -744,6 +744,10 @@ export const useNotificationStore = defineStore({
                     url = this.ajax_url
                     method = 'DELETE';
                     break;
+                    case 'trash':
+                    url = this.ajax_url
+                    method = 'DELETE';
+                    break;
                 case 'delete-all':
                     method = 'DELETE';
                     break;
@@ -761,7 +765,23 @@ export const useNotificationStore = defineStore({
             );
         },
 
+        isListActionValid()
+        {
 
+            if(!this.action.type)
+            {
+                vaah().toastErrors(['Select an action type']);
+                return false;
+            }
+
+            if(this.action.items.length < 1)
+            {
+                vaah().toastErrors(['Select records']);
+                return false;
+            }
+
+            return true;
+        },
         async updateList(type = null){
 
             if(!type && this.action.type)
@@ -792,7 +812,7 @@ export const useNotificationStore = defineStore({
                 show_success: false
             };
             await vaah().ajax(
-                this.ajax_url,
+                this.ajax_url+'/action',
                 this.updateListAfter,
                 options
             );
@@ -906,6 +926,12 @@ export const useNotificationStore = defineStore({
                     }
                 },
             ];
+        },
+        async clearSearch()
+        {
+            this.query.filter.q = null;
+            await this.updateUrlQueryString(this.query);
+            await this.getList();
         },
         async resetQuery()
         {

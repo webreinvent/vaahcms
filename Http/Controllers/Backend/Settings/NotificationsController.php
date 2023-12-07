@@ -104,6 +104,32 @@ class NotificationsController extends Controller
 
         return response()->json($response);
     }
+
+    public function getItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Notification::getItem($id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
     public function createItem(Request $request)
     {
         try{
@@ -132,6 +158,34 @@ class NotificationsController extends Controller
 
         try {
             $response = Notification::deleteItem($request, $id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function itemAction(Request $request): JsonResponse
+    {
+        if(!Auth::user()->hasPermission('can-manage-users') &&
+            !Auth::user()->hasPermission('can-update-users')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Notification::itemAction($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
