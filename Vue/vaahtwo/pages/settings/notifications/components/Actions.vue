@@ -40,7 +40,7 @@ const toggleBulkMenuState = (event) => {
                 <Button class="p-button-sm"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
-                        data-testid="user-action_menu"
+                        data-testid="notification-action_menu"
                         @click="toggleSelectedMenuState"
 
                 >
@@ -61,7 +61,7 @@ const toggleBulkMenuState = (event) => {
                         icon="pi pi-ellipsis-h"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
-                        data-testid="user-action_bulk_menu"
+                        data-testid="notification-action_bulk_menu"
                         @click="toggleBulkMenuState"
 
                 />
@@ -86,18 +86,18 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        placeholder="Search"
-                                       data-testid="user-action_search_input"
+                                       data-testid="notification-action_search_input"
                             />
 
                             <Button class="p-button-sm"
                                     icon="pi pi-search"
-                                    data-testid="user-action_search"
+                                    data-testid="notification-action_search"
                                     @click="store.delayedSearch()"
                             />
 
                             <Button class="p-button-sm"
                                     label="Filters"
-                                    data-testid="user-action_filter"
+                                    data-testid="notification-action_filter"
                                     @click="store.show_filters = true"
                             >
 
@@ -109,13 +109,13 @@ const toggleBulkMenuState = (event) => {
                             <Button class="p-button-sm"
                                     label="Reset"
                                     icon="pi pi-filter-slash"
-                                    data-testid="user-action_reset"
+                                    data-testid="notification-action_reset"
                                     @click="store.resetQuery()"
                             />
                         </div>
                     </div>
 
-                    <Filters/>
+<!--                    <Filters/>-->
                 </div>
             </div>
             <!--/right-->

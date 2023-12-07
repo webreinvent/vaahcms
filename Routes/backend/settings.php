@@ -139,7 +139,7 @@ Route::group(
         Route::delete('/{id}', 'NotificationsController@deleteItem')
             ->name('vh.backend.settings.notifications.delete' );
 
-        Route::any('/{id}/action/{action}', 'NotificationsController@deleteItem')
+        Route::any('/action', 'NotificationsController@itemAction')
             ->name('vh.backend.users.users.item.action');
         //------------------------------------------------
         Route::get( '/assets', 'NotificationsController@getAssets' )
@@ -160,6 +160,7 @@ Route::group(
         Route::post( '/send', 'NotificationsController@send' )
             ->name( 'vh.backend.settings.notifications.send' );
         //------------------------------------------------
+        //---------------------------------------------------------
     });
 
 

@@ -201,16 +201,30 @@ class Notification extends Model {
     }
 
     //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+        if (!isset($filter['q'])) {
+            return $query;
+        }
+
+        $search = $filter['q'];
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%'. $search . '%');
+        });
+    }
+    //-------------------------------------------------
     public static function getList($request) : array
     {
-        $query = static::orderBy('created_at', 'desc');
+        $list = static::orderBy('created_at', 'desc');
 
         $rows = config('vaahcms.per_page');
 
         if ($request->has('rows')) {
             $rows = $request->rows;
         }
-        $list = $query->paginate($rows);
+        $list->searchFilter($request->filter);
+        $list = $list->paginate($rows);
 
         $response['success'] = true;
         $response['data'] = $list;
@@ -269,6 +283,59 @@ class Notification extends Model {
         $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = 'Record has been deleted';
+
+        return $response;
+    }
+
+    //-------------------------------------------------
+    public static function getItem($id,$excluded_columns = [])
+    {
+
+        $item = self::where('id', $id)->with(['createdByUser',
+            'updatedByUser', 'deletedByUser'])
+            ->withTrashed();
+
+        if(!$item)
+        {
+            $response['success'] = false;
+            $response['errors'][] = 'Record not found with ID: '.$id;
+            return $response;
+        }
+
+        if (!\Auth::user()->hasPermission('can-see-users-contact-details')) {
+            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        } else {
+            $item->exclude($excluded_columns);
+        }
+
+        $item = $item->first();
+
+        $response['success'] = true;
+        $response['data'] = $item;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function itemAction($request)
+    {
+        $type = $request->type;
+        $items = $request->items;
+
+        $itemIds = array_column($items, 'id');
+
+        switch ($type) {
+            case 'trash':
+                self::whereIn('id', $itemIds)->delete();
+                break;
+            case 'restore':
+                self::whereIn('id', $itemIds)->withTrashed()->restore();
+                break;
+        }
+
+        $response['success'] = true;
+        $response['data'] = true;
+        $response['messages'][] = 'Action was successful.';
 
         return $response;
     }
