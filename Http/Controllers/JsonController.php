@@ -425,6 +425,13 @@ class JsonController extends Controller
             "steps_of_manually_upgrade" => trans("vaahcms-update-setting.steps_of_manually_upgrade"),
         ];
 
+        $data['language_string']['extend_modules'] = [
+            "heading" => trans("vaahcms-sidebar-menu.heading"),
+            "install_button" => trans("vaahcms-sidebar-menu.install_button"),
+            "check_updates_button" => trans("vaahcms-sidebar-menu.check_updates_button"),
+            "toolkit_text_reload" => trans("vaahcms-sidebar-menu.toolkit_text_reload"),
+        ];
+
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),
             "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
