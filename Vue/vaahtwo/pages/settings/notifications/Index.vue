@@ -65,8 +65,15 @@ onMounted(async () => {
 
 
         <div v-if="!store.active_notification">
-            <div  v-if="store.notifications && store.notifications.data">
-                <DataTable :value="store.notifications && store.notifications.data" stripedRows dataKey="id" responsiveLayout="scroll" class="p-datatable-sm p-datatable-hoverable-rows">
+            <div  v-if="store.list && store.list.data">
+                <DataTable :value="store.list.data" stripedRows dataKey="id"  responsiveLayout="scroll"
+                           v-model:selection="store.action.items"
+                           class="p-datatable-sm p-datatable-hoverable-rows">
+
+                    <Column selectionMode="multiple"
+
+                            headerStyle="width: 3em"
+                    />
                     <Column header="Notification Title">
                         <template #body="slotProps">
                             <p>{{slotProps.data.name}}</p>
@@ -81,7 +88,7 @@ onMounted(async () => {
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
                                     @click="store.showNotificationSettings(slotProps.data)"
-                                    class="p-button-tiny p-button-text"></Button>
+                                    class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
 
                                 <Button class="p-button-tiny p-button-danger p-button-text"
                                                         @click="store.itemAction('trash', slotProps.data)"

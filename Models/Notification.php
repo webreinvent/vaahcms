@@ -3,6 +3,9 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Models\UserBase as User;
@@ -148,12 +151,71 @@ class Notification extends Model {
         );
     }
     //-------------------------------------------------
-    public static function getList($request, $rows=null)
+    public static function createItem($request)
+    {
+        $response = [];
+
+        try {
+            if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+                $response['success'] = false;
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                return $response;
+            }
+
+            $input = $request->item;
+            $rows = $request->rows;
+
+            $rules = [
+                'name' => 'required|unique:vh_notifications',
+            ];
+
+            $validator = \Validator::make($input, $rules);
+
+            if ($validator->fails()) {
+                $errors = errorsToArray($validator->errors());
+                $response['success'] = false;
+                $response['errors'] = $errors;
+                return $response;
+            }
+
+            $item = new self();
+            $item->fill($input);
+            $item->slug = Str::slug($input['name']);
+            $item->save();
+
+            $response['success'] = true;
+            $response['messages'][] = 'Saved';
+            $response['data']['item'] = $item;
+        } catch (\Exception $e) {
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return $response;
+    }
+
+    //-------------------------------------------------
+    public static function getList($request) : array
     {
         $query = static::orderBy('created_at', 'desc');
-        $row = $rows ?: config('vaahcms.per_page');
 
-        return $query->paginate($row);
+        $rows = config('vaahcms.per_page');
+
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+        $list = $query->paginate($rows);
+
+        $response['success'] = true;
+        $response['data'] = $list;
+        return $response;
+
     }
     //-------------------------------------------------
     public static function getContent($id)
@@ -169,6 +231,9 @@ class Notification extends Model {
         $list = [];
 
         $item = static::find($id);
+        if (!$item) {
+            return $list;
+        }
 
         foreach ($vias as $via){
             $list[$via] = $item->contents()->where('via', $via)
@@ -181,14 +246,11 @@ class Notification extends Model {
     //-------------------------------------------------
     public static function deleteItem($request, $id)
     {
-        // Find the notification item by ID
         $notification = self::find($id);
 
-        // Check if the notification exists
         if (!$notification) {
             return response()->json(['message' => 'Notification not found'], 404);
         }
-        // Delete the content data for each via
         $vias = [
             'mail',
             'sms',
@@ -201,6 +263,7 @@ class Notification extends Model {
                 $notification->$via->contents()->where('via', $via)->delete();
             }
         }
+        NotificationContent::where('vh_notification_id', $notification->id)->delete();
         $notification->delete();
 
         $response['success'] = true;
