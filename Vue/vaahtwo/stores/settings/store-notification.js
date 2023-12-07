@@ -43,6 +43,8 @@ export const useNotificationStore = defineStore({
         empty_query:empty_states.query,
         firstElement: null,
         query: vaah().clone(empty_states.query),
+        empty_action:empty_states.action,
+        action: vaah().clone(empty_states.action),
         list:null,
         route: null,
         view: 'large',
@@ -168,16 +170,14 @@ export const useNotificationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res) {
+        async afterGetAssets(data, res) {
             if (data) {
                 this.assets = data;
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
                 this.help_urls = data.help_urls;
-                this.list = data.notifications;
-                this.query.rows = data.notifications.per_page;
-                // this.firstElement = this.query.rows * (this.query.page - 1);
+                await this.getList();
 
 
             }
@@ -190,7 +190,7 @@ export const useNotificationStore = defineStore({
             };
             await this.updateUrlQueryString(this.query);
             await vaah().ajax(
-                this.ajax_url+ '/assets',
+                this.ajax_url,
                 await this.afterGetList,
                 options
             );
@@ -202,9 +202,8 @@ export const useNotificationStore = defineStore({
             this.query.recount = null;
 
             if (data) {
-                this.list = data.notifications;
-                this.notifications = data.notifications;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.list = data;
+                this.query.rows = data.per_page;
             }
         },
 
@@ -270,7 +269,7 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
-            this.active_notification = vaah().findInArrayByKey(this.notifications.data, 'id', item.id);
+            this.active_notification = vaah().findInArrayByKey(this.list.data, 'id', item.id);
 
             let options = {
                 method: 'post',
@@ -286,6 +285,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         afterShowNotificationSettings(data, res) {
             if (data) {
+                console.log(data)
                 this.active_notification.contents = data.list;
                 if(this.active_notification.via_mail)
                 {
@@ -602,10 +602,12 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
        async createAfter(data, res){
-            this.show_new_item_form = false;
-           this.notifications=data.list;
-           this.query.rows = data.list.per_page;
            this.new_item.name=null;
+           await this.getList();
+           //  this.show_new_item_form = false;
+           // this.notifications=data.notifications.data;
+           // this.query.rows = data.per_page;
+           // this.new_item.name=null;
            // await this.getAssets();
         },
         //---------------------------------------------------------------------
@@ -703,6 +705,11 @@ export const useNotificationStore = defineStore({
 
 
             }
+
+        },
+        onItemSelection(items)
+        {
+            this.action.items = items;
         },
     }
 });

@@ -133,6 +133,9 @@ Route::group(
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
+        Route::get('/', 'NotificationsController@getList')
+            ->name('vh.backend.settings.notifications.list');
+
         Route::delete('/{id}', 'NotificationsController@deleteItem')
             ->name('vh.backend.settings.notifications.delete' );
 
@@ -142,8 +145,8 @@ Route::group(
         Route::get( '/assets', 'NotificationsController@getAssets' )
             ->name( 'vh.backend.settings.notifications.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'NotificationsController@getList' )
-            ->name( 'vh.backend.settings.notifications.list' );
+        Route::post( '/list', 'NotificationsController@getItemData' )
+            ->name( 'vh.backend.settings.notifications.getItemData' );
         //------------------------------------------------
         Route::post( '/create', 'NotificationsController@createItem' )
             ->name( 'vh.backend.settings.notifications.create' );
