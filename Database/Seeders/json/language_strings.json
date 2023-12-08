@@ -2413,6 +2413,36 @@
         "name": "Toolkit Text Update Module",
         "content": "Update Module"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Install Modules",
+        "content": "Install Modules"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Install Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Installed Button",
+        "content": "Installed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "View Deleted Text",
+        "content": "Deleted"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "View Restore Button",
+        "content": "Restore"
+    },
 
 
 
@@ -4466,6 +4496,37 @@
         "name": "Toolkit Text Update Module",
         "content": "Módulo de actualización"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Install Modules",
+        "content": "Instalar módulos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Install Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Installed Button",
+        "content": "Instalado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "View Deleted Text",
+        "content": "Eliminado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "View Restore Button",
+        "content": "Restaurar"
+    },
+
 
 
 
@@ -6519,5 +6580,35 @@
         "category": "extend-module",
         "name": "Toolkit Text Update Module",
         "content": "Module de mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Install Modules",
+        "content": "Installer des modules"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Install Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Installed Button",
+        "content": "Installé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "View Deleted Text",
+        "content": "Supprimé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "View Restore Button",
+        "content": "Restaurer"
     }
 ]

@@ -126,7 +126,7 @@ function actionItems(item){
                     <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
                             :data-testid="'module-activate-'+item.slug"
                             v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_activate_module"
-                            label="Activate"
+                            :label="root.assets.language_string.extend_modules.activate_button"
                             class="mr-2 p-button-sm"
                             :loading="store.active_action.includes('activate_'+item.id)"
                             @click="store.toggleIsActive(item)"
