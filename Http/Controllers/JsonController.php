@@ -426,11 +426,26 @@ class JsonController extends Controller
         ];
 
         $data['language_string']['extend_modules'] = [
-            "heading" => trans("vaahcms-sidebar-menu.heading"),
-            "install_button" => trans("vaahcms-sidebar-menu.install_button"),
-            "check_updates_button" => trans("vaahcms-sidebar-menu.check_updates_button"),
-            "toolkit_text_reload" => trans("vaahcms-sidebar-menu.toolkit_text_reload"),
+            "heading" => trans("vaahcms-extend-module.heading"),
+            "install_button" => trans("vaahcms-extend-module.install_button"),
+            "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
+            "toolkit_text_reload" => trans("vaahcms-extend-module.toolkit_text_reload"),
+            "filter_button" => trans("vaahcms-extend-module.filter_button"),
+            "placeholder_search" => trans("vaahcms-extend-module.placeholder_search"),
+            "reset_button" => trans("vaahcms-extend-module.reset_button"),
+            "filter_all" => trans("vaahcms-extend-module.filter_all"),
+            "filter_active" => trans("vaahcms-extend-module.filter_active"),
+            "filter_inactive" => trans("vaahcms-extend-module.filter_inactive"),
+            "filter_update_available" => trans("vaahcms-extend-module.filter_update_available"),
+            "name" => trans("vaahcms-extend-module.name"),
+            "version" => trans("vaahcms-extend-module.version"),
+            "developed_by" => trans("vaahcms-extend-module.developed_by"),
+            "toolkit_text_activate_module" => trans("vaahcms-extend-module.toolkit_text_activate_module"),
+            "toolkit_text_view" => trans("vaahcms-extend-module.toolkit_text_view"),
+            "toolkit_text_trash" => trans("vaahcms-extend-module.toolkit_text_trash"),
+            "ecommerce_for_vaahcms" => trans("vaahcms-extend-module.ecommerce_for_vaahcms"),
         ];
+
 
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),

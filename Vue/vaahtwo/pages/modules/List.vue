@@ -3,10 +3,12 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useModuleStore} from '../../stores/store-modules'
+import {useRootStore} from "../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useModuleStore();
 const route = useRoute();
 
@@ -54,7 +56,7 @@ onMounted(async () => {
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Modules</b>
+                            <b class="mr-1">{{root.assets.language_string.extend_modules.heading}}</b>
                             <Badge v-if="store.list && store.list.length > 0"
                                    :value="store.list.length"
                             />
@@ -68,7 +70,7 @@ onMounted(async () => {
                                 tag="router-link"
                                 @click="store.setSixColumns()"
                                 icon="pi pi-plus"
-                                label="Install"
+                                :label="root.assets.language_string.extend_modules.install_button"
                                 data-testid="modules-list-action-install"
                                 v-if="store.hasPermission('can-install-module')"
                         />
@@ -77,7 +79,7 @@ onMounted(async () => {
                                 :loading="store.is_fetching_updates"
                                 @click="store.checkUpdate()"
                                 icon="pi pi-download"
-                                label="Check Updates"
+                                :label="root.assets.language_string.extend_modules.check_updates_button"
                                 data-testid="modules-list-action-check_updates"
                                 v-if="store.hasPermission('can-update-module')"
                         />
@@ -87,7 +89,7 @@ onMounted(async () => {
                                 :loading="store.is_btn_loading"
                                 data-testid="modules-list-action-refresh"
                                 icon="pi pi-refresh"
-                                v-tooltip.top="'Reload'"
+                                v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_reload"
                         />
                     </div>
                 </template>

@@ -2269,6 +2269,31 @@
         "content": "Steps of Manually Upgrade"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "heading",
+        "content": "Modules"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Install Button",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Check Updates Button",
+        "content": "Check Updates"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+
 
 
     {
@@ -4177,7 +4202,30 @@
         "name": "Steps of Manually Upgrade",
         "content": "Pasos para actualizar manualmente"
     },
-
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "heading",
+        "content": "Módulos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Install Button",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Check Updates Button",
+        "content": "Revisa actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
+    },
 
 
 
@@ -6085,5 +6133,30 @@
         "category": "update-setting",
         "name": "Steps of Manually Upgrade",
         "content": "Étapes de mise à niveau manuelle"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "heading",
+        "content": "Modules"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Install Button",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Check Updates Button",
+        "content": "Vérifier les mises à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Reload",
+        "content": "Recharger"
     }
 ]
