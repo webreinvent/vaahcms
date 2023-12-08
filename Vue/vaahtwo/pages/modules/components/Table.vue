@@ -1,9 +1,11 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useModuleStore } from '../../../stores/store-modules'
+import {useRootStore} from "../../../stores/root";
 import { useConfirm } from "primevue/useconfirm";
 import {ref} from "vue";
 
+const root = useRootStore();
 const store = useModuleStore();
 const useVaah = vaah();
 const confirm = useConfirm();
@@ -84,9 +86,15 @@ function actionItems(item){
 
             <div class="col-12 md:col-7">
                 <div class="flex justify-content-end mb-3">
-                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Name: {{ item.name }}</Tag>
-                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Version: {{ item.version }}</Tag>
-                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">Developed by: {{ item.author_name }}</Tag>
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">
+                        {{root.assets.language_string.extend_modules.name}}: {{ item.name }}
+                    </Tag>
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">
+                        {{root.assets.language_string.extend_modules.version}}: {{ item.version }}
+                    </Tag>
+                    <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold">
+                        {{root.assets.language_string.extend_modules.developed_by}}: {{ item.author_name }}
+                    </Tag>
                 </div>
 
                 <div class="flex justify-content-end">
@@ -98,7 +106,7 @@ function actionItems(item){
                                             class="p-button-sm bg-yellow-400 text-color"
                                             label="Deactivate"
                                             :loading="store.active_action.includes('deactivate_'+item.id)"
-                                            v-tooltip.top="'Deactivate Module'"
+                                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_deactivate_module"
                                             @click="store.toggleIsActive(item)"
                                     />
                                     <Button v-show="item.is_active && item.is_migratable
@@ -109,7 +117,7 @@ function actionItems(item){
                                             icon="pi pi-arrow-down"
                                             aria-haspopup="true"
                                             :aria-controls="'overlay_tmenu_'+item.slug"
-                                            v-tooltip.top="'Actions'"
+                                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_actions"
                                     />
                                     <TieredMenu ref="menu" :id="'overlay_tmenu_'+item.slug"
                                                 :model="actionItems(item)" popup />
@@ -117,7 +125,7 @@ function actionItems(item){
 
                     <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
                             :data-testid="'module-activate-'+item.slug"
-                            v-tooltip.top="'Activate Module'"
+                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_activate_module"
                             label="Activate"
                             class="mr-2 p-button-sm"
                             :loading="store.active_action.includes('activate_'+item.id)"
@@ -130,7 +138,7 @@ function actionItems(item){
                             :loading="store.active_action.includes('publish_assets_'+item.id)"
                             @click="store.publishAssets(item)"
                             icon="pi pi-arrow-up"
-                            v-tooltip.top="'Publish Assets'"
+                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_publish_assets"
                     />
 
                     <Button v-if="item.is_active && item.is_sample_data_available
@@ -139,7 +147,7 @@ function actionItems(item){
                             size="is-small mr-2"
                             icon="pi pi-database"
                             class="p-button-sm mr-2"
-                            v-tooltip.top="'Import Sample Data'"
+                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_import_sample_data"
                             :loading="store.active_action.includes('import_sample_data_'+item.id)"
                             @click="importSampleDataModal(item)"
                     />
@@ -150,14 +158,14 @@ function actionItems(item){
                             data-testid="modules-table-action-install-update"
                             icon="cloud-download-alt"
                             @click="store.confirmUpdate(item)"
-                            v-tooltip.top="'Update Module'"
+                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_update_module"
                             v-if="item.is_update_available && store.hasPermission('can-update-module')"
                     />
 
                     <Button class="p-button-sm mr-2"
                             icon="pi pi-eye"
                             :data-testid="'module-view-'+item.slug"
-                            v-tooltip.top=" 'View' "
+                            v-tooltip.top=" root.assets.language_string.extend_modules.toolkit_text_view "
                             @click="store.toView(item)"
                             v-if="store.hasPermission('can-read-module')"
                     />
@@ -166,7 +174,7 @@ function actionItems(item){
                             :data-testid="'module-trash-'+item.slug"
                             v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
                             @click="store.confirmDeleteItem(item)"
-                            v-tooltip.top="'Trash'"
+                            v-tooltip.top="root.assets.language_string.extend_modules.toolkit_text_trash"
                             icon="pi pi-trash"
                     />
 

@@ -2293,6 +2293,126 @@
         "name": "Toolkit Text Reload",
         "content": "Reload"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Filter Button",
+        "content": "Filter"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Filter All",
+        "content": "All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Filter Active",
+        "content": "Active"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Filter Inactive",
+        "content": "Inactive"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Filter Update Available",
+        "content": "Update Available"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Name",
+        "content": "Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Version",
+        "content": "Version"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Developed by",
+        "content": "Developed by"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Activate Button",
+        "content": "Activate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Deactivate Button",
+        "content": "Deactivate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Activate Module",
+        "content": "Activate Module"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Deactivate Module",
+        "content": "Deactivate Module"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text View",
+        "content": "View"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Actions",
+        "content": "Actions"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publish Assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Import Sample Data"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Toolkit Text Update Module",
+        "content": "Update Module"
+    },
 
 
 
@@ -4226,6 +4346,127 @@
         "name": "Toolkit Text Reload",
         "content": "Recargar"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Filter Button",
+        "content": "Filtrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Filter All",
+        "content": "Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Filter Active",
+        "content": "Activo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Filter Inactive",
+        "content": "Inactivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Filter Update Available",
+        "content": "Actualización disponible"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Name",
+        "content": "Nombre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Version",
+        "content": "Versión"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Developed by",
+        "content": "Desarrollado por"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Activate Button",
+        "content": "Activar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Deactivate Button",
+        "content": "Desactivar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Activate Module",
+        "content": "Activar módulo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Deactivate Module",
+        "content": "Desactivar módulo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text View",
+        "content": "Vista"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Trash",
+        "content": "Basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Actions",
+        "content": "Comportamiento"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Importar datos de muestra"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Toolkit Text Update Module",
+        "content": "Módulo de actualización"
+    },
+
 
 
 
@@ -6158,5 +6399,125 @@
         "category": "extend-module",
         "name": "Toolkit Text Reload",
         "content": "Recharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Filter Button",
+        "content": "Filtre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Reset Button",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Filter All",
+        "content": "Tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Filter Active",
+        "content": "Actif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Filter Inactive",
+        "content": "Inactif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Filter Update Available",
+        "content": "Mise à jour disponible"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Name",
+        "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Version",
+        "content": "Version"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Developed by",
+        "content": "Développé par"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Activate Button",
+        "content": "Activer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Deactivate Button",
+        "content": "Désactiver"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Activate Module",
+        "content": "Activer le module"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Deactivate Module",
+        "content": "Désactiver le module"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text View",
+        "content": "Voir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Trash",
+        "content": "Poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Actions",
+        "content": "Actions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publier des actifs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Importer des exemples de données"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Toolkit Text Update Module",
+        "content": "Module de mise à jour"
     }
 ]

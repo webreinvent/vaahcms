@@ -834,28 +834,29 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         getFilterMenu()
         {
+            const root = useRootStore();
             this.status_list = [
 
                 {
-                    label: 'All',
+                    label: root.assets.language_string.extend_modules.filter_all,
                     command: async () => {
                         this.query.filter.status = 'all';
                     }
                 },
                 {
-                    label: 'Active',
+                    label: root.assets.language_string.extend_modules.filter_active,
                     command: async () => {
                         this.query.filter.status = 'active';
                     }
                 },
                 {
-                    label: 'Inactive',
+                    label: root.assets.language_string.extend_modules.filter_inactive,
                     command: async () => {
                         this.query.filter.status = 'inactive';
                     }
                 },
                 {
-                    label: 'Update Available',
+                    label: root.assets.language_string.extend_modules.filter_update_available,
                     command: async () => {
                         this.query.filter.status = 'update_available';
                     }
@@ -1169,7 +1170,17 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         toLabel(text) {
-            return vaah().toLabel(text);
+            const root = useRootStore();
+            switch (text) {
+                case 'all':
+                    return root.assets.language_string.extend_modules.filter_all;
+                case 'active':
+                    return root.assets.language_string.extend_modules.filter_active;
+                case 'inactive':
+                    return root.assets.language_string.extend_modules.filter_inactive;
+                case 'update_available':
+                    return root.assets.language_string.extend_modules.filter_update_available;
+            }
         }
     }
 });

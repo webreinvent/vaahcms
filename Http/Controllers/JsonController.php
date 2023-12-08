@@ -440,10 +440,16 @@ class JsonController extends Controller
             "name" => trans("vaahcms-extend-module.name"),
             "version" => trans("vaahcms-extend-module.version"),
             "developed_by" => trans("vaahcms-extend-module.developed_by"),
+            "activate_button" => trans("vaahcms-extend-module.activate_button"),
+            "deactivate_button" => trans("vaahcms-extend-module.deactivate_button"),
             "toolkit_text_activate_module" => trans("vaahcms-extend-module.toolkit_text_activate_module"),
+            "toolkit_text_deactivate_module" => trans("vaahcms-extend-module.toolkit_text_deactivate_module"),
             "toolkit_text_view" => trans("vaahcms-extend-module.toolkit_text_view"),
             "toolkit_text_trash" => trans("vaahcms-extend-module.toolkit_text_trash"),
-            "ecommerce_for_vaahcms" => trans("vaahcms-extend-module.ecommerce_for_vaahcms"),
+            "toolkit_text_actions" => trans("vaahcms-extend-module.toolkit_text_actions"),
+            "toolkit_text_publish_assets" => trans("vaahcms-extend-module.toolkit_text_publish_assets"),
+            "toolkit_text_import_sample_data" => trans("vaahcms-extend-module.toolkit_text_import_sample_data"),
+            "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
         ];
 
 

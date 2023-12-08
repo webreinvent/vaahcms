@@ -1,9 +1,10 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import { useModuleStore } from '../../../stores/store-modules'
+import {useRootStore} from "../../../stores/root";
 
 const store = useModuleStore();
-
+const root = useRootStore();
 onMounted(async () => {
     store.getListSelectedMenu();
     store.getListBulkMenu();
@@ -41,7 +42,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         data-testid="themes-actions"
                         @click="toggleBulkMenuState"
-                        :label="store.query.filter.status?store.toLabel(store.query.filter.status):'Filter'"
+                        :label="store.query.filter.status?store.toLabel(store.query.filter.status):root.assets.language_string.extend_modules.filter_button"
                 />
 
                 <Menu ref="bulk_menu_state"
@@ -60,7 +61,7 @@ const toggleBulkMenuState = (event) => {
                                @keyup.enter.native="store.delayedSearch()"
                                @keyup.13="store.getList()"
                                data-testid="modules-actions-search"
-                               placeholder="Search"
+                               :placeholder="root.assets.language_string.extend_modules.placeholder_search"
                                class="p-inputtext-sm"
                     />
 
@@ -68,7 +69,7 @@ const toggleBulkMenuState = (event) => {
                     <Button class="p-button-sm"
                             icon="pi pi-filter-slash"
                             data-testid="modules-actions-reset-filters"
-                            label="Reset"
+                            :label="root.assets.language_string.extend_modules.reset_button"
                             @click="store.resetQuery()"
                     />
                 </div>
