@@ -184,6 +184,7 @@ class JsonController extends Controller
         $data['language_string']['crud_actions'] = [
             "create_button" => trans("vaahcms-crud-action.create_button"),
             "form_text_create" => trans("vaahcms-crud-action.form_text_create"),
+            "form_text_update" => trans("vaahcms-crud-action.form_text_update"),
             "placeholder_search" => trans("vaahcms-crud-action.placeholder_search"),
             "filters_button" => trans("vaahcms-crud-action.filters_button"),
             "reset_button" => trans("vaahcms-crud-action.reset_button"),

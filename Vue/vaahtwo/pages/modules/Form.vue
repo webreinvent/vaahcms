@@ -1,11 +1,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import { useModuleStore } from '../../stores/store-modules'
+import {useRootStore} from "../../stores/root";
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
 
-
+const root = useRootStore();
 const store = useModuleStore();
 const route = useRoute();
 
@@ -38,10 +39,10 @@ const toggleFormMenu = (event) => {
                 <div class="flex flex-row">
                     <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{root.assets.language_string.crud_actions.form_text_update}}
                         </span>
                         <span v-else>
-                            Create
+                            {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
 
@@ -54,13 +55,13 @@ const toggleFormMenu = (event) => {
 
 
                 <div class="p-inputgroup">
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.crud_actions.save_button"
                             v-if="store.item && store.item.id"
                             data-testid="modules-save"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"/>
 
-                    <Button label="Create & New"
+                    <Button :label="root.assets.language_string.crud_actions.form_create_and_new"
                             v-else
                             @click="store.itemAction('create-and-new')"
                             data-testid="modules-create-and-new"

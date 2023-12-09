@@ -785,6 +785,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "crud-action",
+        "name": "Form Text Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
         "name": "Placeholder Search",
         "content": "Search"
     },
@@ -2871,6 +2877,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "crud-action",
+        "name": "Form Text Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
         "name": "Placeholder Search",
         "content": "Buscar"
     },
@@ -4951,6 +4963,12 @@
         "category": "crud-action",
         "name": "Form Text Create",
         "content": "Créer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Text Update",
+        "content": "Mise à jour"
     },
     {
         "locale_code_iso_639": "fr",
