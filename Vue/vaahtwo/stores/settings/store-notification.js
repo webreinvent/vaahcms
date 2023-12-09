@@ -16,6 +16,8 @@ let empty_states = {
         rows: 20,
         filter: {
             q: null,
+            trashed: null,
+            sort: null,
 
         },
         recount: null,
@@ -102,12 +104,14 @@ export const useNotificationStore = defineStore({
             /**
              * Update with view and list css column number
              */
+            // this.setViewAndWidth(route.name);
             // this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
             await this.updateQueryFromUrl(route);
         },
+
         async updateQueryFromUrl(route)
         {
             if(route.query)
@@ -160,7 +164,6 @@ export const useNotificationStore = defineStore({
                 let options = {
                     query: vaah().clone(this.query)
                 };
-                console.log(options);
                 await this.updateUrlQueryString(this.query);
                 await vaah().ajax(
                     this.ajax_url+ '/assets',
@@ -296,7 +299,6 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         afterShowNotificationSettings(data, res) {
             if (data) {
-                console.log(data)
                 this.active_notification.contents = data.list;
                 if(this.active_notification.via_mail)
                 {
@@ -615,11 +617,6 @@ export const useNotificationStore = defineStore({
        async createAfter(data, res){
            this.new_item.name=null;
            await this.getList();
-           //  this.show_new_item_form = false;
-           // this.notifications=data.notifications.data;
-           // this.query.rows = data.per_page;
-           // this.new_item.name=null;
-           // await this.getAssets();
         },
         //---------------------------------------------------------------------
         searchNotificationVarialbles(event){
@@ -686,7 +683,7 @@ export const useNotificationStore = defineStore({
                  */
                 case 'trash':
                     options.method = 'DELETE';
-                    ajax_url += '/'+item.id
+                    ajax_url += '/'+item.id+'/action/'+type;
                     break;
                 /**
                  * Update a record's one column or very few columns,
@@ -694,7 +691,7 @@ export const useNotificationStore = defineStore({
                  * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
                  */
                 default:
-                    options.method = 'PATCH';
+                    options.method = 'PUT';
                     ajax_url += '/'+item.id+'/action/'+type;
                     break;
             }
@@ -842,21 +839,6 @@ export const useNotificationStore = defineStore({
         async getListSelectedMenu()
         {
             this.list_selected_menu = [
-                // {
-                //     label: 'Activate',
-                //     command: async () => {
-                //         await this.updateList('activate')
-                //     }
-                // },
-                // {
-                //     label: 'Deactivate',
-                //     command: async () => {
-                //         await this.updateList('deactivate')
-                //     }
-                // },
-                // {
-                //     separator: true
-                // },
                 {
                     label: 'Trash',
                     icon: 'pi pi-times',

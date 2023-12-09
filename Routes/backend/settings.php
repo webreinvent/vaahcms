@@ -135,8 +135,8 @@ Route::group(
         Route::get('/', 'NotificationsController@getList')
             ->name('vh.backend.settings.notifications.list');
         //-------------------------------------------------
-        Route::any('/action', 'NotificationsController@itemAction')
-            ->name('vh.backend.settings.notifications.item.action');
+        Route::any('/action', 'NotificationsController@listAction')
+            ->name('vh.backend.settings.notifications.list.action');
         //------------------------------------------------
         Route::get('/assets', 'NotificationsController@getAssets')
             ->name('vh.backend.settings.notifications.assets');
@@ -156,8 +156,9 @@ Route::group(
         Route::post('/send', 'NotificationsController@send')
             ->name('vh.backend.settings.notifications.send');
         //------------------------------------------------
-        Route::delete('/{id}', 'NotificationsController@deleteItem')
-            ->name('vh.backend.settings.notifications.delete' );
+        Route::match(['put', 'delete'], '/{id}/action/{type}', 'NotificationsController@itemAction')
+            ->name('vh.backend.settings.notifications.item.action');
+
         //---------------------------------------------------------
     });
 

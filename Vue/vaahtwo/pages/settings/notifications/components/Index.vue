@@ -57,8 +57,12 @@ onMounted(async () => {
 
                             headerStyle="width: 3em"
                     />
-                    <Column header="Notification Title">
+                    <Column  header="Notification Title">
                         <template #body="slotProps">
+                            <Badge v-if="slotProps.data.deleted_at"
+                                   value="Trashed"
+                                   severity="danger"
+                            />
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
@@ -74,11 +78,19 @@ onMounted(async () => {
                                     class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
 
                                 <Button class="p-button-tiny p-button-danger p-button-text"
+                                        v-if="store.isViewLarge() && !slotProps.data.deleted_at"
                                                         @click="store.itemAction('trash', slotProps.data)"
                                                         v-tooltip.top="'Trash'"
                                                         icon="pi pi-trash"
                                                         data-testid="setting-notification_data_trash"
                                 ></Button>
+                            <Button class="p-button-tiny p-button-success p-button-text"
+                                    v-if="store.isViewLarge() && slotProps.data.deleted_at"
+                                    @click="store.itemAction('restore', slotProps.data)"
+                                    v-tooltip.top="'Restore'"
+                                    icon="pi pi-replay"
+                                    data-testid="setting-notification-list_data_restore"
+                            />
 <!--                            </div>-->
                         </template>
                     </Column>

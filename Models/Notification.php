@@ -201,6 +201,40 @@ class Notification extends Model {
     }
 
     //-------------------------------------------------
+    public function scopeGetSorted($query, $filter)
+    {
+        if( !isset($filter['sort'])) {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+        $direction = Str::contains($sort, ':');
+
+        if (!$direction) {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+        if (!isset($filter['trashed'])) {
+            return $query;
+        }
+
+        $trashed = $filter['trashed'];
+
+        if ($trashed === 'include') {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+    }
+    //-------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
         if (!isset($filter['q'])) {
@@ -216,13 +250,15 @@ class Notification extends Model {
     //-------------------------------------------------
     public static function getList($request) : array
     {
-        $list = static::orderBy('created_at', 'desc');
+//        $list = static::orderBy('created_at', 'desc');
 
         $rows = config('vaahcms.per_page');
 
         if ($request->has('rows')) {
             $rows = $request->rows;
         }
+        $list = self::getSorted($request->filter);
+        $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
         $list = $list->paginate($rows);
 
@@ -258,13 +294,17 @@ class Notification extends Model {
 
     }
     //-------------------------------------------------
-    public static function deleteItem($request, $id)
+
+    public static function itemAction( $request)
     {
-        $notification = self::find($id);
+        $type = $request->type;
+        $id = $request->id;
+        $notification = self::withTrashed()->find($id);
 
         if (!$notification) {
             return response()->json(['message' => 'Notification not found'], 404);
         }
+
         $vias = [
             'mail',
             'sms',
@@ -272,20 +312,46 @@ class Notification extends Model {
             'frontend',
             'backend',
         ];
+
         foreach ($vias as $via) {
             if ($notification->$via) {
-                $notification->$via->contents()->where('via', $via)->delete();
+                if ($type === 'trash') {
+                    $notification->$via->contents()->where('via', $via)->delete();
+                } elseif ($type === 'restore') {
+                    if ($notification->withTrashed()) {
+                        $notification->$via->contents()->where('via', $via)->restore();
+                    }
+                }
             }
         }
+
         NotificationContent::where('vh_notification_id', $notification->id)->delete();
-        $notification->delete();
+
+        if ($type === 'trash') {
+            $notification->delete();
+            $message = 'Record has been deleted';
+        } elseif ($type === 'restore') {
+            if ($notification->withTrashed()) {
+                $notification->restore();
+                $message = 'Record has been restored';
+            } else {
+                $message = 'Record is not soft-deleted and cannot be restored';
+            }
+        } else {
+            return response()->json(['message' => 'Invalid action type'], 400);
+        }
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = $message;
 
         return $response;
     }
+
+
+
+
+
 
     //-------------------------------------------------
     public static function getItem($id,$excluded_columns = [])
@@ -317,7 +383,7 @@ class Notification extends Model {
 
     }
     //-------------------------------------------------
-    public static function itemAction($request)
+    public static function listAction($request)
     {
         $type = $request->type;
         $items = $request->items;
@@ -333,15 +399,17 @@ class Notification extends Model {
                 self::whereIn('id', $itemIds)->withTrashed()->restore();
                 break;
             case 'delete':
-                self::whereIn('id', $itemIds)->forceDelete();
+                NotificationContent::whereIn('vh_notification_id', $itemIds)->withTrashed()->forceDelete();
+                self::whereIn('id', $itemIds)->withTrashed()->forceDelete();
                 break;
             case 'trash-all':
                 $notification->query()->delete();
                 break;
             case 'restore-all':
-                $notification->query()->restore();
+                $notification->query()->withTrashed()->restore();
                 break;
-            case 'Delete All':
+            case 'delete-all':
+                NotificationContent::query()->forceDelete();
                 $notification->query()->forceDelete();
                 break;
 

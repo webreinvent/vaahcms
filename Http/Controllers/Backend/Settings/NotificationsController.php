@@ -147,7 +147,7 @@ class NotificationsController extends Controller
         }
     }
 
-    public function deleteItem(Request $request,$id): JsonResponse
+    public function itemAction(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
@@ -157,7 +157,7 @@ class NotificationsController extends Controller
         }
 
         try {
-            $response = Notification::deleteItem($request, $id);
+            $response = Notification::itemAction($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -173,7 +173,7 @@ class NotificationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function itemAction(Request $request): JsonResponse
+    public function listAction(Request $request): JsonResponse
     {
         if(!Auth::user()->hasPermission('can-manage-users') &&
             !Auth::user()->hasPermission('can-update-users')
@@ -185,7 +185,7 @@ class NotificationsController extends Controller
         }
 
         try {
-            $response = Notification::itemAction($request);
+            $response = Notification::listAction($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

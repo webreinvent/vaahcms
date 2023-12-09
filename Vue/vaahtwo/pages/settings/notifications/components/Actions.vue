@@ -3,8 +3,7 @@ import {ref, reactive, watch, onMounted} from 'vue';
 import {useNotificationStore} from '../../../../stores/settings/store-notification'
 
 
-// import Filters from './Filters.vue'
-
+import Filters from './Filters.vue';
 const store = useNotificationStore();
 
 onMounted(async () => {
@@ -120,6 +119,8 @@ const toggleBulkMenuState = (event) => {
             </div>
             <!--/right-->
         </div>
+        <Filters />
+        <RouterView />
         <!--/actions-->
     </div>
 </template>

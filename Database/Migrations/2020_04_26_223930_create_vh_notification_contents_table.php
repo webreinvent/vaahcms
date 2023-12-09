@@ -35,6 +35,7 @@ class CreateVhNotificationContentsTable extends Migration
                 $table->bigInteger('deleted_by')->unsigned()->nullable()->index();
                 $table->foreign('deleted_by')->references('id')->on('vh_users');
 
+
                 $table->timestamps();
                 $table->softDeletes();
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
