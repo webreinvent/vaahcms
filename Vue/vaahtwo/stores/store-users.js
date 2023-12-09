@@ -3,6 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
 import qs from 'qs'
+import {useUserSettingStore} from "./settings/store-user_setting";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\User';
 
@@ -1160,6 +1161,8 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
+            const store_setting = useUserSettingStore();
             let form_menu = [];
 
             if(this.item && this.item.id)
@@ -1235,13 +1238,22 @@ export const useUserStore = defineStore({
                 ];
             }
 
-            form_menu.push({
-                label: 'Fill',
-                icon: 'pi pi-pencil',
-                command: () => {
+            form_menu.push(
+                {
+                    label: 'Fill',
+                    icon: 'pi pi-pencil',
+                    command: () => {
                     this.getFaker();
-                }
-            },)
+                    }
+                },
+                {
+                    label: 'Add Custom Field',
+                    icon: 'pi pi-plus',
+                    command: () => {
+                        store_setting.active_index = [1];
+                        this.goToLink(root.base_url+'#/vaah/settings/user-settings');
+                    }
+                },)
 
             this.form_menu_list = form_menu;
 
@@ -1309,7 +1321,20 @@ export const useUserStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        goToLink (link, target = false) {
+
+            if(!link) {
+                return false;
+            }
+
+            if(target) {
+                window.open(link, '_blank');
+            } else {
+                window.location.href = link;
+            }
+        },
     }
 });
 
