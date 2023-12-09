@@ -68,6 +68,7 @@ onMounted(async () => {
                                 class="p-button-sm"
                                 @click="store.addNewNotification"
                                 data-testid="setting-notification_add_new"
+                                :disabled="store.active_notification"
                         />
                     </div>
                 </template>
