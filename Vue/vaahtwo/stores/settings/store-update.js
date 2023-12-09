@@ -1,7 +1,6 @@
 import { watch,nextTick  } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import qs from 'qs'
-import countriesData from "../../assets/data/country.json";
 import { useRootStore } from "../root.js";
 import { vaah } from '../../vaahvue/pinia/vaah'
 import semver from "semver";

@@ -1,7 +1,6 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
-import draggable from 'vuedraggable';
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import {useUpdateStore} from "../../../stores/settings/store-update";
 const store = useUpdateStore();
