@@ -74,6 +74,7 @@ onMounted(async () => {
 <!--                            <div class="p-inputgroup">-->
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
+                                    v-if="!slotProps.data.deleted_at"
                                     @click="store.showNotificationSettings(slotProps.data)"
                                     class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
 

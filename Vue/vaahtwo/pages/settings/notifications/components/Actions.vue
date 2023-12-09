@@ -27,7 +27,7 @@ const toggleBulkMenuState = (event) => {
 </script>
 
 <template>
-    <div>
+    <div v-if="!store.active_notification">
 
         <!--actions-->
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
@@ -98,6 +98,7 @@ const toggleBulkMenuState = (event) => {
                                     label="Filters"
                                     data-testid="notification-action_filter"
                                     @click="store.show_filters = true"
+                                    :disabled="store.active_notification"
                             >
 
                                 <Badge v-if="store.count_filters > 0"
