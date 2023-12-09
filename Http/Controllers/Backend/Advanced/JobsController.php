@@ -95,7 +95,7 @@ class JobsController extends Controller
     public function listAction(Request $request, $type): JsonResponse
     {
         try {
-            Job::listAction($request, $type);
+            $response = Job::listAction($request, $type);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
