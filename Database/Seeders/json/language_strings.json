@@ -2451,6 +2451,194 @@
     },
 
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "heading",
+        "content": "Themes"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Install Button",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Check Updates Button",
+        "content": "Check Updates"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Filter Button",
+        "content": "Filter"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Filter All",
+        "content": "All"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Filter Active",
+        "content": "Active"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Filter Inactive",
+        "content": "Inactive"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Filter Update Available",
+        "content": "Update Available"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Name",
+        "content": "Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Version",
+        "content": "Version"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Developed by",
+        "content": "Developed by"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Activate Button",
+        "content": "Activate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Deactivate Button",
+        "content": "Deactivate"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Activate Theme",
+        "content": "Activate Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Deactivate Theme",
+        "content": "Deactivate Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text View",
+        "content": "View"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Trash",
+        "content": "Trash"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Actions",
+        "content": "Actions"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publish Assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Import Sample Data"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Update Theme",
+        "content": "Update Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text This theme is marked as default",
+        "content": "This theme is marked as default"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Toolkit Text Mark this theme as default",
+        "content": "Mark this theme as default"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Install Themes",
+        "content": "Install Themes"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Install Placeholder Search",
+        "content": "Search"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "Installed Button",
+        "content": "Installed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "View Deleted Text",
+        "content": "Deleted"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
+        "name": "View Restore Button",
+        "content": "Restore"
+    },
+
+
 
     {
         "locale_code_iso_639": "es",
@@ -4539,7 +4727,192 @@
         "content": "Restaurar"
     },
 
-
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "heading",
+        "content": "Temas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Install Button",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Check Updates Button",
+        "content": "Revisa actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Filter Button",
+        "content": "Filtrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Filter All",
+        "content": "Todo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Filter Active",
+        "content": "Activo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Filter Inactive",
+        "content": "Inactivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Filter Update Available",
+        "content": "Actualización disponible"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Name",
+        "content": "Nombre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Version",
+        "content": "Versión"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Developed by",
+        "content": "Desarrollado por"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Activate Button",
+        "content": "Activar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Deactivate Button",
+        "content": "Desactivar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text This theme is marked as default",
+        "content": "Este tema está marcado como predeterminado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Mark this theme as Default",
+        "content": "Marcar este tema como predeterminado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Activate Theme",
+        "content": "Activar Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Deactivate Theme",
+        "content": "Desactivar Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text View",
+        "content": "Vista"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Trash",
+        "content": "Basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Actions",
+        "content": "Comportamiento"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Importar datos de muestra"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Toolkit Text Update Theme",
+        "content": "Actualizar tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Install Themes",
+        "content": "Instalar el tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Install Placeholder Search",
+        "content": "Buscar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "Installed Button",
+        "content": "Instalado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "View Deleted Text",
+        "content": "Eliminado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
+        "name": "View Restore Button",
+        "content": "Restaurar"
+    },
 
 
 
@@ -6626,6 +6999,193 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
+        "name": "View Restore Button",
+        "content": "Restaurer"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "heading",
+        "content": "Thèmes"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Install Button",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Check Updates Button",
+        "content": "Vérifier les mises à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Reload",
+        "content": "Recharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Filter Button",
+        "content": "Filtre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Reset Button",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Filter All",
+        "content": "Tout"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Filter Active",
+        "content": "Actif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Filter Inactive",
+        "content": "Inactif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Filter Update Available",
+        "content": "Mise à jour disponible"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Name",
+        "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Version",
+        "content": "Version"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Developed by",
+        "content": "Développé par"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Activate Button",
+        "content": "Activer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Deactivate Button",
+        "content": "Désactiver"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text This theme is marked as default",
+        "content": "Ce thème est marqué par défaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Mark this theme as Default",
+        "content": "Marquer ce thème comme thème par défaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Activate Theme",
+        "content": "Activer le thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Deactivate Theme",
+        "content": "Désactiver le thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text View",
+        "content": "Voir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Trash",
+        "content": "Poubelle"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Actions",
+        "content": "Actions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Publish Assets",
+        "content": "Publier des actifs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Import Sample Data",
+        "content": "Importer des exemples de données"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Toolkit Text Update Theme",
+        "content": "Thème de mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Install Themes",
+        "content": "Installer des thèmes"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Install Placeholder Search",
+        "content": "Recherche"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Installed Button",
+        "content": "Installé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "View Deleted Text",
+        "content": "Supprimé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
         "name": "View Restore Button",
         "content": "Restaurer"
     }

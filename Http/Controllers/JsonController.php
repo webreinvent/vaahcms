@@ -459,6 +459,40 @@ class JsonController extends Controller
 
         ];
 
+        $data['language_string']['extend_themes'] = [
+            "heading" => trans("vaahcms-extend-theme.heading"),
+            "install_button" => trans("vaahcms-extend-theme.install_button"),
+            "check_updates_button" => trans("vaahcms-extend-theme.check_updates_button"),
+            "toolkit_text_reload" => trans("vaahcms-extend-theme.toolkit_text_reload"),
+            "filter_button" => trans("vaahcms-extend-theme.filter_button"),
+            "placeholder_search" => trans("vaahcms-extend-theme.placeholder_search"),
+            "reset_button" => trans("vaahcms-extend-theme.reset_button"),
+            "filter_all" => trans("vaahcms-extend-theme.filter_all"),
+            "filter_active" => trans("vaahcms-extend-theme.filter_active"),
+            "filter_inactive" => trans("vaahcms-extend-theme.filter_inactive"),
+            "filter_update_available" => trans("vaahcms-extend-theme.filter_update_available"),
+            "name" => trans("vaahcms-extend-theme.name"),
+            "version" => trans("vaahcms-extend-theme.version"),
+            "developed_by" => trans("vaahcms-extend-theme.developed_by"),
+            "activate_button" => trans("vaahcms-extend-theme.activate_button"),
+            "deactivate_button" => trans("vaahcms-extend-theme.deactivate_button"),
+            "toolkit_text_activate_theme" => trans("vaahcms-extend-theme.toolkit_text_activate_theme"),
+            "toolkit_text_deactivate_theme" => trans("vaahcms-extend-theme.toolkit_text_deactivate_theme"),
+            "toolkit_text_view" => trans("vaahcms-extend-theme.toolkit_text_view"),
+            "toolkit_text_trash" => trans("vaahcms-extend-theme.toolkit_text_trash"),
+            "toolkit_text_actions" => trans("vaahcms-extend-theme.toolkit_text_actions"),
+            "toolkit_text_publish_assets" => trans("vaahcms-extend-theme.toolkit_text_publish_assets"),
+            "toolkit_text_import_sample_data" => trans("vaahcms-extend-theme.toolkit_text_import_sample_data"),
+            "toolkit_text_update_theme" => trans("vaahcms-extend-theme.toolkit_text_update_theme"),
+            "toolkit_text_this_theme_is_marked_as_default" => trans("vaahcms-extend-theme.toolkit_text_this_theme_is_marked_as_default"),
+            "toolkit_text_mark_this_theme_as_default" => trans("vaahcms-extend-theme.toolkit_text_mark_this_theme_as_default"),
+            "install_themes" => trans("vaahcms-extend-theme.install_themes"),
+            "install_placeholder_search" => trans("vaahcms-extend-theme.install_placeholder_search"),
+            "installed_button" => trans("vaahcms-extend-theme.installed_button"),
+            "view_deleted_text" => trans("vaahcms-extend-theme.view_deleted_text"),
+            "view_restore_button" => trans("vaahcms-extend-theme.view_restore_button"),
+
+        ];
 
         $data['language_string']['sidebar_menu'] = [
             "general" => trans("vaahcms-sidebar-menu.general"),

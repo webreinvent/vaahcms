@@ -203,6 +203,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Notification Setting'],
             ["name" => 'Update Setting'],
             ["name" => 'Extend Module'],
+            ["name" => 'Extend Theme'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);
