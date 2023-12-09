@@ -1,7 +1,7 @@
 <script setup>
     import {onMounted, reactive} from "vue";
 
-    import {vaah} from '../vaahvue/pinia/vaah.js'
+    import {vaah} from '../vaahvue/pinia/vaahExtend.js'
     import {useRootStore} from '../stores/root.js'
 
     import { useToast } from "primevue/usetoast";
@@ -16,12 +16,8 @@
     useVaah.setConfirm(confirm);
 
 
-    import Aside from '../components/molecules/Aside.vue';
-
     import TopnavExtended from "../components/molecules/TopnavExtended.vue";
-    import Footer from "../components/organisms/Footer.vue";
     import Sidebar from "../components/molecules/Sidebar.vue";
-    import Notices from '../components/molecules/Notices.vue'
 
 
     const rootStore = useRootStore();
@@ -81,7 +77,7 @@
 
 
         </div>
-        
+
         <!--            <Footer />-->
     </div>
 </template>
