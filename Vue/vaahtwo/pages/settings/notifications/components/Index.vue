@@ -27,7 +27,7 @@ onMounted(async () => {
 
         <div class="
         grid">
-            <div class="col-12" v-if="store.show_new_item_form">
+            <div class="col-12" v-if="store.show_new_item_form && !store.active_notification">
                 <div class="p-inputgroup">
                     <inputText data-testid="setting-notification_add_new_value"
                                v-model="store.new_item.name"
