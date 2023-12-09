@@ -669,7 +669,6 @@ export const useNotificationStore = defineStore({
             }
 
             this.form.action = type;
-            console.log(this.form.action);
 
             let ajax_url = this.ajax_url;
 
@@ -727,7 +726,6 @@ export const useNotificationStore = defineStore({
             return this.view === 'large';
         },
         async listAction(type = null){
-
             if(!type && this.action.type)
             {
                 type = this.action.type;
@@ -735,17 +733,15 @@ export const useNotificationStore = defineStore({
                 this.action.type = type;
             }
 
-            let url = this.ajax_url+'/action/'+type
+            let url = this.ajax_url+'/action'
             let method = 'PUT';
 
             switch (type)
             {
                 case 'delete':
-                    url = this.ajax_url
                     method = 'DELETE';
                     break;
                     case 'trash':
-                    url = this.ajax_url
                     method = 'DELETE';
                     break;
                 case 'delete-all':
@@ -889,21 +885,7 @@ export const useNotificationStore = defineStore({
         getListBulkMenu()
         {
             this.list_bulk_menu = [
-                {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },
+
                 {
                     label: 'Trash All',
                     icon: 'pi pi-times',

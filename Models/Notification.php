@@ -321,6 +321,7 @@ class Notification extends Model {
     {
         $type = $request->type;
         $items = $request->items;
+        $notification = new Notification;
 
         $itemIds = array_column($items, 'id');
 
@@ -331,6 +332,19 @@ class Notification extends Model {
             case 'restore':
                 self::whereIn('id', $itemIds)->withTrashed()->restore();
                 break;
+            case 'delete':
+                self::whereIn('id', $itemIds)->forceDelete();
+                break;
+            case 'trash-all':
+                $notification->query()->delete();
+                break;
+            case 'restore-all':
+                $notification->query()->restore();
+                break;
+            case 'Delete All':
+                $notification->query()->forceDelete();
+                break;
+
         }
 
         $response['success'] = true;
