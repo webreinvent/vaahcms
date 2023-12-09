@@ -1,5 +1,5 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
-import {vaah} from '../vaahvue/pinia/vaahExtend'
+import {vaah} from '../vaahvue/pinia/vaah'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url;

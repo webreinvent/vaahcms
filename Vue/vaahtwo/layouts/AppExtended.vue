@@ -1,7 +1,7 @@
 <script setup>
     import {onMounted, reactive} from "vue";
 
-    import {vaah} from '../vaahvue/pinia/vaahExtend.js'
+    import {vaah} from '../vaahvue/pinia/vaah.js'
     import {useRootStore} from '../stores/root.js'
 
     import { useToast } from "primevue/usetoast";
