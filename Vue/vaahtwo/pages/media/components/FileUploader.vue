@@ -139,7 +139,7 @@ function selectFile (data){
                 :mode="is_basic?'basic':'advanced'"
                 :multiple="can_select_multiple"
                 :customUpload="true"
-                @click="store.openUploader($event)"
+
                 @select="selectFile"
                 @uploader="uploadFile"
                 @removeUploadedFile="removeFile"

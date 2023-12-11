@@ -115,6 +115,7 @@ const toggleFormMenu = (event) => {
 
                     <div v-if="!store.item.id &&
                      (store.has_error_on_upload || store.item.url)" class="field mb-4">
+                        {{store.has_error_on_upload }}
                         <div class="p-fileupload-content"><!----><!---->
                             <div v-if="store.has_error_on_upload"  class="p-message p-component p-message-error"
                                  role="alert" aria-live="assertive"
@@ -123,7 +124,7 @@ const toggleFormMenu = (event) => {
                                     <span class="p-message-icon pi pi-times-circle"></span>
                                     <div class="p-message-text">
                                         Invalid file size,
-                                        file size should be smaller than 5 MB.
+                                        file size should be smaller than 5 MB.{{store.error}}
                                     </div>
                                     <button class="p-message-close p-link"
                                             @click="store.has_error_on_upload = false"

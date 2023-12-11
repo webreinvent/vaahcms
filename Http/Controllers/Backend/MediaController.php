@@ -352,6 +352,16 @@ class MediaController extends Controller
             $data['type'] = $type[0];
             $data['size'] = $request->file($input_file_name)->getSize();
 
+            $allowedFileTypesString = vh_file_pond_allowed_file_type();
+            $allowedFileTypes = explode(',', $allowedFileTypesString);
+
+// Check if the file type is allowed
+            if (!in_array($data['type'], $allowedFileTypes)) {
+                $response['success'] = false;
+                $response['errors'][] = 'Invalid file type. Allowed types: ' . implode(', ', $allowedFileTypes);
+                return response()->json($response);
+            }
+
             if ($request->file_name && !is_null($request->file_name)
                 && $request->file_name != 'null'
             ) {

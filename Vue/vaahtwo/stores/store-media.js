@@ -927,14 +927,18 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        uploadAfter(data) {
-
+        uploadAfter(data, errors) {
             if (data && data.original_name) {
                 let name = this.item.name;
                 this.item = data;
                 this.item.name = name;
             }
+            if (errors) {
+                this.error = errors;
+                console.log(errors[0]);
+            }
         },
+
         //---------------------------------------------------------------------
         setDateRange()
         {
