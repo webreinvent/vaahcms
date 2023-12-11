@@ -109,33 +109,26 @@ const toggleFormMenu = (event) => {
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
+
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>
 
                     <div v-if="!store.item.id &&
                      (store.has_error_on_upload || store.item.url)" class="field mb-4">
-                        {{store.has_error_on_upload }}
                         <div class="p-fileupload-content"><!----><!---->
                             <div v-if="store.has_error_on_upload"  class="p-message p-component p-message-error"
                                  role="alert" aria-live="assertive"
                                  aria-atomic="true">
                                 <div class="p-message-wrapper">
-                                    <span class="p-message-icon pi pi-times-circle"></span>
+                                    <span class="p-message-icon pi pi-times-circle" @click="store.has_error_on_upload = false"></span>
                                     <div class="p-message-text">
-                                        Invalid file size,
-                                        file size should be smaller than 5 MB.{{store.error}}
+                                       <span v-if="store.item.error" >{{store.item.error}}</span><span v-else>Invalid file size,
+                                        file size should be smaller than 5 MB.</span>
                                     </div>
-                                    <button class="p-message-close p-link"
-                                            @click="store.has_error_on_upload = false"
-                                            aria-label="Close"
-                                            type="button">
-                                        <i class="p-message-close-icon pi pi-times"></i>
-                                        <span class="p-ink" role="presentation" aria-hidden="true"></span>
-                                    </button>
                                 </div>
                             </div>
-                            <div v-if="store.item.url" class="p-fileupload-file">
+                            <div v-if="store.item.url||!store.item.error" class="p-fileupload-file">
                                 <img role="presentation"
                                      class="p-fileupload-file-thumbnail mr-2"
                                      :alt="store.item.name"

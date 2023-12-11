@@ -16,6 +16,7 @@ class MediaController extends Controller
     public function __construct()
     {
     }
+
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
@@ -59,7 +60,7 @@ class MediaController extends Controller
 
             $data['bulk_actions'] = vh_general_bulk_actions();
             $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
-            $data['download_url'] = route('vh.frontend.media.download').'/';
+            $data['download_url'] = route('vh.frontend.media.download') . '/';
             $data['date'] = $year_and_month;
 
             $response['success'] = true;
@@ -78,6 +79,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
@@ -104,6 +106,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
@@ -130,6 +133,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
@@ -158,6 +162,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
@@ -184,6 +189,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
@@ -210,6 +216,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function updateItem(Request $request, $id): JsonResponse
     {
@@ -236,6 +243,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
@@ -262,6 +270,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
@@ -290,8 +299,9 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
-    public function itemDownload(Request $request, $slug): BinaryFileResponse | JsonResponse
+    public function itemDownload(Request $request, $slug): BinaryFileResponse|JsonResponse
     {
         try {
             $media_data = Media::where('download_url', $slug)->first();
@@ -309,17 +319,18 @@ class MediaController extends Controller
             return response()->json($response);
         }
 
-        return response()->download(storage_path(str_replace('storage','',$media_data->path)));
+        return response()->download(storage_path(str_replace('storage', '', $media_data->path)));
     }
+
     //----------------------------------------------------------
-    public function upload(Request $request): JsonResponse
+    public function upload(Request $request)
     {
         $allowed_file_upload_size = config('vaahcms.allowed_file_upload_size');
 
         $input_file_name = null;
         $rules = array(
             'folder_path' => 'required',
-            'file' => 'max:'.$allowed_file_upload_size,
+            'file' => 'max:' . $allowed_file_upload_size,
         );
 
         if ($request->has('file_input_name')) {
@@ -330,9 +341,9 @@ class MediaController extends Controller
             $input_file_name = 'file';
         }
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validator = \Validator::make($request->all(), $rules);
 
-        if ( $validator->fails()) {
+        if ($validator->fails()) {
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'][] = $errors;
@@ -342,46 +353,49 @@ class MediaController extends Controller
         try {
             //add year and month folder
             if ($request->folder_path == 'public/media') {
-                $request->folder_path = $request->folder_path."/".date('Y')."/".date('m');
+                $request->folder_path = $request->folder_path . "/" . date('Y') . "/" . date('m');
             }
 
             $data['extension'] = $request->file($input_file_name)->extension();
             $data['original_name'] = $request->file($input_file_name)->getClientOriginalName();
             $data['mime_type'] = $request->file($input_file_name)->getClientMimeType();
-            $type = explode('/',$data['mime_type']);
+            $type = explode('/', $data['mime_type']);
             $data['type'] = $type[0];
             $data['size'] = $request->file($input_file_name)->getSize();
 
+//----- Checking allowed file types
             $allowedFileTypesString = vh_file_pond_allowed_file_type();
             $allowedFileTypes = explode(',', $allowedFileTypesString);
 
-// Check if the file type is allowed
             if (!in_array($data['type'], $allowedFileTypes)) {
                 $response['success'] = false;
-                $response['errors'][] = 'Invalid file type. Allowed types: ' . implode(', ', $allowedFileTypes);
-                return response()->json($response);
+                $response['data'] = $data;
+                $response['data']['error'] = 'Invalid file type. Allowedtypes: ' . implode(', ', $allowedFileTypes);
+//                    dd($response);
+                return $response;
             }
+
 
             if ($request->file_name && !is_null($request->file_name)
                 && $request->file_name != 'null'
             ) {
-                $upload_file_name = Str::slug($request->file_name).'.'.$data['extension'];
+                $upload_file_name = Str::slug($request->file_name) . '.' . $data['extension'];
 
-                $upload_file_path = 'storage/app/'.$request->folder_path.'/'.$upload_file_name;
+                $upload_file_path = 'storage/app/' . $request->folder_path . '/' . $upload_file_name;
 
                 $full_upload_file_path = base_path($upload_file_path);
 
                 //if file already exist then prefix if with microtime
                 if (File::exists($full_upload_file_path)) {
                     $time_stamp = \Carbon\Carbon::now()->timestamp;
-                    $upload_file_name = Str::slug($request->file_name).'-'.$time_stamp.'.'.$data['extension'];
+                    $upload_file_name = Str::slug($request->file_name) . '-' . $time_stamp . '.' . $data['extension'];
                 }
 
                 $path = $request->file($input_file_name)
                     ->storeAs($request->folder_path, $upload_file_name);
 
                 $data['name'] = $request->file_name;
-                $data['uploaded_file_name'] = $data['name'].'.'.$data['extension'];
+                $data['uploaded_file_name'] = $data['name'] . '.' . $data['extension'];
 
             } else {
                 $path = $request->file($input_file_name)->store($request->folder_path);
@@ -393,13 +407,13 @@ class MediaController extends Controller
             $data['slug'] = Str::slug($data['name']);
             //$data['extension'] = $name_details['extension'];
 
-            $data['path'] = 'storage/app/'.$path;
+            $data['path'] = 'storage/app/' . $path;
             $data['full_path'] = base_path($data['path']);
 
             $data['url'] = $path;
 
-            if (substr($path, 0, 6) =='public') {
-                $data['url'] = 'storage'.substr($path, 6);
+            if (substr($path, 0, 6) == 'public') {
+                $data['url'] = 'storage' . substr($path, 6);
             }
 
             $data['full_url'] = asset($data['url']);
@@ -410,12 +424,12 @@ class MediaController extends Controller
                     $constraint->aspectRatio();
                 });
                 $name_details = pathinfo($data['full_path']);
-                $thumbnail_name = $name_details['filename'].'-thumbnail.'.$name_details['extension'];
-                $thumbnail_path = $request->folder_path.'/'.$thumbnail_name;
-                \Storage::put($thumbnail_path, (string) $image->encode());
+                $thumbnail_name = $name_details['filename'] . '-thumbnail.' . $name_details['extension'];
+                $thumbnail_path = $request->folder_path . '/' . $thumbnail_name;
+                \Storage::put($thumbnail_path, (string)$image->encode());
 
-                if (substr($thumbnail_path, 0, 6) =='public') {
-                    $data['url_thumbnail'] = 'storage'.substr($thumbnail_path, 6);
+                if (substr($thumbnail_path, 0, 6) == 'public') {
+                    $data['url_thumbnail'] = 'storage' . substr($thumbnail_path, 6);
                     $data['thumbnail_size'] = \Storage::size($thumbnail_path);
                 }
 
@@ -424,13 +438,14 @@ class MediaController extends Controller
             $response['success'] = true;
             $response['data'] = $data;
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function postCreate(Request $request): JsonResponse
     {
@@ -457,6 +472,7 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
+
     //----------------------------------------------------------
     public function isDownloadableSlugAvailable(Request $request): JsonResponse
     {
@@ -465,8 +481,8 @@ class MediaController extends Controller
                 'download_url' => 'required',
             );
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;

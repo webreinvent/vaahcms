@@ -908,7 +908,6 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         upload(event,item) {
             let formData = new FormData();
-
             if (event.files.length > 0) {
                 formData.append('file', event.files[event.files.length - 1]);
                 formData.append('folder_path', 'public/media');
@@ -927,18 +926,13 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        uploadAfter(data, errors) {
+        uploadAfter(data) {
             if (data && data.original_name) {
                 let name = this.item.name;
                 this.item = data;
                 this.item.name = name;
             }
-            if (errors) {
-                this.error = errors;
-                console.log(errors[0]);
-            }
         },
-
         //---------------------------------------------------------------------
         setDateRange()
         {

@@ -101,6 +101,11 @@ function uploadFile(e){
             }).then(res=>{
                 if(res && res.data && res.data.data){
                     is_media_uploading.value = false;
+
+                    if(!res.success){
+                        store.item.error=res.data.data.error
+                        store.has_error_on_upload = true;
+                    }
                     store.updateMediaToNewItem(res.data.data);
                 }
             });
