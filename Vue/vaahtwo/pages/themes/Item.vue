@@ -3,9 +3,12 @@ import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
 import { useThemeStore } from '../../stores/store-themes'
+import {useRootStore} from "../../stores/root";
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 import {vaah} from "../../vaahvue/pinia/vaah";
+
+const root = useRootStore();
 const store = useThemeStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -85,11 +88,11 @@ const toggleItemMenu = (event) => {
                          v-if="store.item.deleted_at">
                     <div class="flex align-items-center justify-content-between">
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.extend_modules.view_deleted_text}} {{store.item.deleted_at}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.extend_themes.view_restore_button"
                                     class="p-button-sm"
                                     data-testid="themes-item-restore"
                                     @click="store.itemAction('restore')">

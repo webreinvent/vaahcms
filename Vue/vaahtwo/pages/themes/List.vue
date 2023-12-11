@@ -3,10 +3,12 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useThemeStore} from '../../stores/store-themes'
+import {useRootStore} from "../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useThemeStore();
 const route = useRoute();
 
@@ -55,7 +57,7 @@ onMounted(async () => {
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Themes</b>
+                            <b class="mr-1">{{root.assets.language_string.extend_themes.heading}}</b>
                             <Badge v-if="store.list && store.list.length > 0"
                                    :value="store.list.length"
                             />
@@ -71,7 +73,7 @@ onMounted(async () => {
                                 icon="pi pi-plus"
                                 class="p-button-sm"
                                 data-testid="themes-list-install"
-                                label="Install"
+                                :label="root.assets.language_string.extend_themes.install_button"
                         />
                         <Button :loading="store.is_fetching_updates"
                                 v-if="store.hasPermission('can-update-theme')"
@@ -79,7 +81,7 @@ onMounted(async () => {
                                 icon="pi pi-download"
                                 class="p-button-sm"
                                 data-testid="themes-list-check_updated"
-                                label="Check Updates"
+                                :label="root.assets.language_string.extend_themes.check_updates_button"
                         />
 
                         <Button type="is-light"
@@ -88,7 +90,7 @@ onMounted(async () => {
                                 class="p-button-sm"
                                 data-testid="themes-list-refresh"
                                 icon="pi pi-refresh"
-                                v-tooltip.top="'Reload'"
+                                v-tooltip.top="root.assets.language_string.extend_themes.toolkit_text_reload"
                         />
                     </div>
                 </template>

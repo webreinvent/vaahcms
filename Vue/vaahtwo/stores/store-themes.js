@@ -838,28 +838,29 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         getFilterMenu()
         {
+            const root = useRootStore();
             this.status_list = [
 
                 {
-                    label: 'All',
+                    label: root.assets.language_string.extend_themes.filter_all,
                     command: async () => {
                         this.query.filter.status = 'all';
                     }
                 },
                 {
-                    label: 'Active',
+                    label: root.assets.language_string.extend_themes.filter_active,
                     command: async () => {
                         this.query.filter.status = 'active';
                     }
                 },
                 {
-                    label: 'Inactive',
+                    label: root.assets.language_string.extend_themes.filter_inactive,
                     command: async () => {
                         this.query.filter.status = 'inactive';
                     }
                 },
                 {
-                    label: 'Update Available',
+                    label: root.assets.language_string.extend_themes.filter_update_available,
                     command: async () => {
                         this.query.filter.status = 'update_available';
                     }
@@ -880,21 +881,22 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
-            if(this.item && this.item.id)
+            if(this.item && this.item.id )
             {
+
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_string.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
-
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_string.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -903,14 +905,23 @@ export const useThemeStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_string.crud_actions.form_save_and_new,
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
+
+                        }
+                    },
+                    {
+                        label: root.assets.language_string.crud_actions.form_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_string.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -919,16 +930,17 @@ export const useThemeStore = defineStore({
                 ];
 
             } else{
+
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_string.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_string.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -937,7 +949,7 @@ export const useThemeStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_string.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -947,12 +959,13 @@ export const useThemeStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_string.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
                 }
             },)
+
 
             this.form_menu_list = form_menu;
 
@@ -1114,7 +1127,17 @@ export const useThemeStore = defineStore({
         },
         //---------------------------------------------------------------------
         toLabel(text) {
-            return vaah().toLabel(text);
+            const root = useRootStore();
+            switch (text) {
+                case 'all':
+                    return root.assets.language_string.extend_themes.filter_all;
+                case 'active':
+                    return root.assets.language_string.extend_themes.filter_active;
+                case 'inactive':
+                    return root.assets.language_string.extend_themes.filter_inactive;
+                case 'update_available':
+                    return root.assets.language_string.extend_themes.filter_update_available;
+            }
         }
     }
 });

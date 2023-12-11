@@ -3,10 +3,12 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useThemeStore} from '../../stores/store-themes'
+import {useRootStore} from "../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useThemeStore();
 const route = useRoute();
 
@@ -52,11 +54,11 @@ onMounted(async () => {
             <Card>
                 <template #header>
                     <div class="flex justify-content-between align-items-center">
-                        <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
+                        <h5 class="white-space-nowrap font-semibold text-lg">{{root.assets.language_string.extend_themes.install_themes}}</h5>
                         <div class="p-inputgroup justify-content-end w-6">
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
-                                <InputText placeholder="Search"
+                                <InputText :placeholder="root.assets.language_string.extend_themes.install_placeholder_search"
                                            class="w-full p-inputtext-sm"
                                            type="search"
                                            icon="search"
@@ -84,21 +86,24 @@ onMounted(async () => {
                             <template #content>
                                 <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>
                                 <p class="mb-3 text-sm">{{item.excerpt}}</p>
-                                <Tag class="mr-2 mb-2">Name:{{item.title}}</Tag>
-                                <Tag class="mr-2 mb-2">Version: {{item.version}}</Tag>
-                                <Tag class="mr-2 mb-2">Developed by: {{item.author_name}}</Tag>
+                                <Tag class="mr-2 mb-2">{{root.assets.language_string.extend_themes.name}}:{{item.title}}</Tag>
+                                <Tag class="mr-2 mb-2">{{root.assets.language_string.extend_themes.version}}: {{item.version}}</Tag>
+                                <Tag class="mr-2 mb-2">{{root.assets.language_string.extend_themes.developed_by}}: {{item.author_name}}</Tag>
                             </template>
                             <template #footer v-if="store.hasPermission('can-install-theme')">
                                 <Button icon="pi pi-check"
                                         class="p-button-success"
                                         v-if="store.isInstalled(item)"
                                         data-testid="themes-install-action-check_installed"
-                                        label="Installed"></Button>
+                                        :label="root.assets.language_string.extend_themes.installed_button">
+                                </Button>
                                 <Button icon="pi pi-download"
                                         class="p-button-outlined"
                                         data-testid="themes-install-action-install"
                                         v-else
-                                        @click="store.install(item)" label="Install"></Button>
+                                        @click="store.install(item)"
+                                        :label="root.assets.language_string.extend_themes.install_button">
+                                </Button>
                             </template>
                         </Card>
                     </div>

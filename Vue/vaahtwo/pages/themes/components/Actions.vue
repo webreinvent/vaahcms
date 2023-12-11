@@ -1,9 +1,9 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import { useThemeStore } from '../../../stores/store-themes'
+import {useRootStore} from "../../../stores/root";
 
-import Filters from './Filters.vue'
-
+const root = useRootStore();
 const store = useThemeStore();
 
 onMounted(async () => {
@@ -41,7 +41,7 @@ const toggleBulkMenuState = (event) => {
                             aria-haspopup="true"
                             data-testid="themes-actions"
                             @click="toggleBulkMenuState"
-                            :label="store.query.filter.status?store.toLabel(store.query.filter.status):'Filter'"
+                            :label="store.query.filter.status?store.toLabel(store.query.filter.status):root.assets.language_string.extend_themes.filter_button"
 
                     />
 
@@ -64,14 +64,14 @@ const toggleBulkMenuState = (event) => {
                                    @keyup.enter.native="store.delayedSearch()"
                                    @keyup.13="store.delayedSearch()"
                                    data-testid="themes-actions-search-input"
-                                   placeholder="Search"
+                                   :placeholder="root.assets.language_string.extend_themes.placeholder_search"
                                    class="p-inputtext-sm"
                         />
 
                         <Button class="p-button-sm"
                                 icon="pi pi-filter-slash"
                                 data-testid="themes-actions-reset-filters"
-                                label="Reset"
+                                :label="root.assets.language_string.extend_themes.reset_button"
                                 @click="store.resetQuery()"
                         />
                     </div>
