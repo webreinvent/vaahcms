@@ -24,7 +24,10 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
-
+const allowedFileTypes = Array.isArray(store.assets.allowed_file_types)
+    ? store.assets.allowed_file_types
+    : [];
+const file_type_accept = allowedFileTypes.map(type => store.typeToMimeType(type)).join(',');
 </script>
 <template>
     <div class="col-6">
@@ -109,7 +112,7 @@ const toggleFormMenu = (event) => {
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
-
+                                      :file_type_accept="file_type_accept"
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>
@@ -123,8 +126,8 @@ const toggleFormMenu = (event) => {
                                 <div class="p-message-wrapper">
                                     <span class="p-message-icon pi pi-times-circle" @click="store.has_error_on_upload = false"></span>
                                     <div class="p-message-text">
-                                       <span v-if="store.item.error" >{{store.item.error}}</span><span v-else>Invalid file size,
-                                        file size should be smaller than 5 MB.</span>
+                                        v-else>Invalid file size,
+                                        file size should be smaller than 5 MB.
                                     </div>
                                 </div>
                             </div>

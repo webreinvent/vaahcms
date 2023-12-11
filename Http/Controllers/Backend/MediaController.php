@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use WebReinvent\VaahCms\Models\Media;
+use function Monolog\toArray;
 
 class MediaController extends Controller
 {
@@ -57,9 +58,9 @@ class MediaController extends Controller
             $data['actions'] = [];
 
             $year_and_month = Media::getDateList();
-
+$allowed_types = vh_file_pond_allowed_file_type();
             $data['bulk_actions'] = vh_general_bulk_actions();
-            $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
+            $data['allowed_file_types'] = explode(',', $allowed_types);
             $data['download_url'] = route('vh.frontend.media.download') . '/';
             $data['date'] = $year_and_month;
 
@@ -355,7 +356,6 @@ class MediaController extends Controller
             if ($request->folder_path == 'public/media') {
                 $request->folder_path = $request->folder_path . "/" . date('Y') . "/" . date('m');
             }
-
             $data['extension'] = $request->file($input_file_name)->extension();
             $data['original_name'] = $request->file($input_file_name)->getClientOriginalName();
             $data['mime_type'] = $request->file($input_file_name)->getClientMimeType();
@@ -363,17 +363,6 @@ class MediaController extends Controller
             $data['type'] = $type[0];
             $data['size'] = $request->file($input_file_name)->getSize();
 
-//----- Checking allowed file types
-            $allowedFileTypesString = vh_file_pond_allowed_file_type();
-            $allowedFileTypes = explode(',', $allowedFileTypesString);
-
-            if (!in_array($data['type'], $allowedFileTypes)) {
-                $response['success'] = false;
-                $response['data'] = $data;
-                $response['data']['error'] = 'Invalid file type. Allowedtypes: ' . implode(', ', $allowedFileTypes);
-//                    dd($response);
-                return $response;
-            }
 
 
             if ($request->file_name && !is_null($request->file_name)

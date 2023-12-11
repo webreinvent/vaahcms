@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref, watch } from 'vue';
+import {computed, onMounted, reactive, ref, watch} from 'vue';
 import {vaah} from '../../../vaahvue/pinia/vaah'
 import { useMediaStore } from '../../../stores/store-media'
 import axios from 'axios';
@@ -52,7 +52,7 @@ const props = defineProps({
     },
     file_type_accept:{
         type: String,
-        default: 'image/*'
+        default: null
     },
     placeholder:{
         type: String,
@@ -64,12 +64,6 @@ const props = defineProps({
     }
 });
 
-
-// watch(store.reset_uploader, async (new_val, old_val) => {
-//     console.log('watch',new_val);
-//     upload_refs.value.files = [];
-//     upload_refs.value.uploadedFiles = [];
-// })
 
 /**----------------------
  * Data
@@ -101,11 +95,6 @@ function uploadFile(e){
             }).then(res=>{
                 if(res && res.data && res.data.data){
                     is_media_uploading.value = false;
-
-                    if(!res.success){
-                        store.item.error=res.data.data.error
-                        store.has_error_on_upload = true;
-                    }
                     store.updateMediaToNewItem(res.data.data);
                 }
             });
@@ -144,7 +133,7 @@ function selectFile (data){
                 :mode="is_basic?'basic':'advanced'"
                 :multiple="can_select_multiple"
                 :customUpload="true"
-
+                :accept="props.file_type_accept"
                 @select="selectFile"
                 @uploader="uploadFile"
                 @removeUploadedFile="removeFile"
