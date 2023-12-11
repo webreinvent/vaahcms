@@ -513,7 +513,12 @@ export const useJobStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        displayJobName(name) {
+            let split_slash =  name.split(/\\/g);
+            return split_slash[split_slash.length - 1];
+        },
     }
 });
 
