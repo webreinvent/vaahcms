@@ -52,7 +52,7 @@ const props = defineProps({
     },
     file_type_accept:{
         type: String,
-        default: 'image/*'
+        default: null
     },
     placeholder:{
         type: String,
