@@ -1,14 +1,12 @@
 <script setup>
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {onMounted, ref, watch} from "vue";
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from '../../stores/root'
 import { vaah } from "../../vaahvue/pinia/vaah"
 import FileUploader from "./components/FileUploader.vue";
 
-
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
-
 
 const store = useUserStore();
 const root = useRootStore();
@@ -28,15 +26,6 @@ onMounted(async () => {
 
     root.getIsActiveStatusOptions();
 });
-
-
-// if (store && store.item && store.item.email) {
-//     watchEffect(store.item.email, (currentValue, oldValue) => {
-//         alert(currentValue);
-//         store.item.email = currentValue;
-//         store.validateEmail(currentValue);
-//     });
-// }
 
 const myUploader = ref();
 

@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref, watch } from 'vue';
+import {reactive, ref } from 'vue';
 import {vaah} from '../../../vaahvue/pinia/vaah'
 import { useUserStore } from '../../../stores/store-users'
 import axios from 'axios';
@@ -63,13 +63,6 @@ const props = defineProps({
     }
 });
 
-
-// watch(store.reset_uploader, async (new_val, old_val) => {
-//     console.log('watch',new_val);
-//     upload_refs.value.files = [];
-//     upload_refs.value.uploadedFiles = [];
-// })
-
 /**----------------------
  * Data
  */
@@ -100,16 +93,10 @@ function uploadFile(e){
     })
 
 }
-function removeFile(e){
 
-     // store.item[props.store_label] = null;
-
-}
-
-function selectFile (data){
+function selectFile () {
 
     let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
-    // store.item[props.store_label] = null;
     upload_refs.value.files = [];
     upload_refs.value.uploadedFiles = [];
     upload_refs.value.files[0] = temp_file;
@@ -129,8 +116,6 @@ function selectFile (data){
                 :customUpload="true"
                 @select="selectFile"
                 @uploader="uploadFile"
-                @removeUploadedFile="removeFile"
-                @clear="removeFile"
                 :showUploadButton="!auto_upload"
                 :showCancelButton="!auto_upload"
                 :maxFileSize="max_file_size" >

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from "../../stores/root";
@@ -28,22 +28,6 @@ onMounted(async () => {
     if (!store.item) {
         await store.getItem(route.params.id);
     }
-
-    /**
-     * Watch if url record id is changed, if changed
-     * then fetch the new records from database
-     */
-    /*watch(route, async (newVal,oldVal) =>
-        {
-            if(newVal.params && !newVal.params.id
-                && newVal.name === 'articles.view')
-            {
-                store.toList();
-
-            }
-            await store.getItem(route.params.id);
-        }, { deep: true }
-    )*/
 
     await store.getItemMenu();
 
