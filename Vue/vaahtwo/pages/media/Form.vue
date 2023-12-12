@@ -24,10 +24,7 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
-const allowedFileTypes = Array.isArray(store.assets.allowed_file_types)
-    ? store.assets.allowed_file_types
-    : [];
-const file_type_accept = allowedFileTypes.map(type => store.typeToMimeType(type)).join(',');
+
 </script>
 <template>
     <div class="col-6">
@@ -112,7 +109,7 @@ const file_type_accept = allowedFileTypes.map(type => store.typeToMimeType(type)
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
-                                      :file_type_accept="file_type_accept"
+                                      :file_type_accept="store.assets.allowed_file_types"
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>

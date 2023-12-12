@@ -998,32 +998,7 @@ export const useMediaStore = defineStore({
                 document.title = this.title;
             }
         },
-        typeToMimeType(type) {
-            switch (type) {
-                case 'docs':
-                    return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-                case 'imagejpeg':
-                    return 'image/jpeg';
-                case 'imagepng':
-                    return 'image/png';
-                case 'texthtml':
-                    return 'text/html';
-                case 'imagex-icon':
-                    return 'image/x-icon';
-                case 'textplain':
-                    return 'text/plain';
-                case 'videompeg':
-                    return 'video/mpeg';
-                case 'audiompeg':
-                    return 'audio/mpeg';
-                case 'videomp4':
-                    return 'video/mp4';
-                case 'videoquicktime':
-                    return 'video/quicktime';
-                default:
-                    return '';
-            }
-        }
+
 
     }
 });
