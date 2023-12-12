@@ -36,7 +36,7 @@ class GeneralController extends Controller
 
             $vh_file_types_data = [];
             foreach (vh_file_types() as $key => $value){
-                $vh_file_types_data[$key] = $value['slug'];
+                $vh_file_types_data[$key] = $value['name'];
             }
 
             $response['success'] = true;
