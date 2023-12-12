@@ -53,7 +53,8 @@ const store = useGeneralStore();
                     </div>
                 </div>
                 <div class="field">
-                    <h5 class="mb-3 font-semibold text-sm">{{root.assets.language_string.general_settings.mfa_methods}}</h5>
+                    <h5 class="font-semibold text-sm">{{root.assets.language_string.general_settings.mfa_methods}}</h5>
+                    <small class="text-red-500">Authenticator App is temporarily unavailable.</small>
                     <div class="field-checkbox">
                         <Checkbox :disabled="!(store.list.mfa_status !== 'disable' && store.is_smtp_configured)"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
@@ -72,7 +73,6 @@ const store = useGeneralStore();
                                   value="authenticator-app" />
                         <label for="binary3">{{root.assets.language_string.general_settings.authenticator_app}}</label>
                     </div>
-                    <small class="text-red-500">This service is temporarily unavailable.</small>
                 </div>
 
                 <div class="field flex align-items-center">
