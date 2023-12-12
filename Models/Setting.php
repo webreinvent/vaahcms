@@ -113,7 +113,6 @@ class Setting extends Model {
             ->get()
             ->pluck('value', 'key' )
             ->toArray();
-
         return $global_settings;
 
     }
