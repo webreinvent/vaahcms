@@ -478,7 +478,7 @@ export const useGeneralStore = defineStore({
             }
             else {
                 this.filtered_allowed_files = this.assets.file_types.filter((files) => {
-                    return files.toLowerCase().search(event.query.toLowerCase());
+                    return files.toLowerCase().includes(event.query.toLowerCase());
                 });
             }
         },
