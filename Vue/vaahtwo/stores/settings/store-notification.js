@@ -745,10 +745,7 @@ export const useNotificationStore = defineStore({
                     method = 'DELETE';
                     break;
             }
-<<<<<<< HEAD
             this.action.filter = this.query.filter;
-=======
->>>>>>> shivam-vaah-setup
 
             let options = {
                 params: this.action,
