@@ -8,7 +8,7 @@
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '2.1.10',
+    'version' => '2.2.0',
     'php_version_required' => '8.1',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
@@ -28,6 +28,7 @@ $settings =  [
     'public_url' => env('APP_URL'),
     'backend_logo_url' => 'vaahcms/backend/vaahone/images/vaahcms-logo.svg', // vh_backend_logo()
     'per_page' => 20,
+    'build_directory_name' => 'vaahcms',    //config('vaahcms.build_directory_name')
     'minified' => 0,
     'api_route' => 'https://api.vaah.dev/cms/v2/',
     'debug' => 1,

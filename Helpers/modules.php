@@ -89,7 +89,7 @@ function vh_module_assets_url($name, $file_path)
 {
     $slug = \Str::slug($name);
     $version = config($slug.'.version');
-    $url = url("vaahcms/modules/".$slug."/assets/".$file_path)."?v=".$version;
+    $url = url(config('vaahcms.build_directory_name','vaahcms')."/modules/".$slug."/assets/".$file_path)."?v=".$version;
     return $url;
 }
 //-----------------------------------------------------------------------------------
