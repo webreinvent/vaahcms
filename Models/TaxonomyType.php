@@ -97,6 +97,14 @@ class TaxonomyType extends Model {
             'parent_id', 'id'
         )->with(['childrens'])->select('id', 'name', 'slug', 'parent_id');
     }
+
+    //-------------------------------------------------
+    public function taxonomies(): HasMany
+    {
+        return $this->hasMany(Taxonomy::class,
+            'vh_taxonomy_type_id', 'id'
+        );
+    }
     //-------------------------------------------------
     // this method is only used for rendering child nodes on primevue tree component
 

@@ -1,7 +1,10 @@
 import {defineStore, acceptHMRUpdate} from 'pinia'
 import axios from 'axios'
 import qs from "qs";
-import moment from 'moment-timezone';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
 
 export const vaah = defineStore({
     id: 'vaah',
@@ -200,6 +203,8 @@ export const vaah = defineStore({
         },
         //----------------------------------------------------------
         toastSuccess(messages){
+            this.toast.removeAllGroups();
+
             let data = this.getMessageAndDuration(messages);
             if(data && data.html !== "")
             {
@@ -213,6 +218,8 @@ export const vaah = defineStore({
 
         //----------------------------------------------------------
         toastErrors(messages){
+            this.toast.removeAllGroups();
+
             let data = this.getMessageAndDuration(messages);
             if(data && data.html !== "")
             {
@@ -258,8 +265,9 @@ export const vaah = defineStore({
             {
                 return null;
             }
-            let time = moment(value);
-            return time.from();
+
+            const timeAgo = new TimeAgo('en-US')
+            return timeAgo.format(new Date(value));
         },
         //----------------------------------------------------------
         cleanObject: function (obj)
