@@ -109,7 +109,7 @@ const toggleFormMenu = (event) => {
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
-                                      :file_type_accept="store.assets.allowed_file_types"
+                                      :file_type_accept="store.assets.allowed_file_types.join(', ')"
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>
@@ -123,7 +123,7 @@ const toggleFormMenu = (event) => {
                                 <div class="p-message-wrapper">
                                     <span class="p-message-icon pi pi-times-circle" @click="store.has_error_on_upload = false"></span>
                                     <div class="p-message-text">
-                                        v-else>Invalid file size,
+                                        Invalid file size,
                                         file size should be smaller than 5 MB.
                                     </div>
                                 </div>
