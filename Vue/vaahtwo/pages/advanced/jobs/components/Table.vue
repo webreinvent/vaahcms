@@ -33,11 +33,9 @@ const useVaah = vaah();
             <Column field="queue" header="Name">
 
                 <template #body="prop">
-                    <Tag v-tooltip.top="prop.data.payload.displayName"
-                         :style="{backgroundColor:'#e4e8f1',color:'#8393a5'}"
-                    >
+                    <p v-tooltip.top="prop.data.payload.displayName">
                         {{store.displayJobName(prop.data.payload.displayName)}}
-                    </Tag>
+                    </p>
                 </template>
             </Column>
 
