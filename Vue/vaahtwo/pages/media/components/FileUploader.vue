@@ -139,6 +139,7 @@ function selectFile (data){
                 :mode="is_basic?'basic':'advanced'"
                 :multiple="can_select_multiple"
                 :customUpload="true"
+                :accept="props.file_type_accept"
                 @click="store.openUploader($event)"
                 @select="selectFile"
                 @uploader="uploadFile"
