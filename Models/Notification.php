@@ -389,6 +389,7 @@ class Notification extends Model {
         $items = $request->items;
         $notification = new Notification;
 
+<<<<<<< HEAD
         $item_ids = array_column($items, 'id');
         $list = self::query();
         if($request->has('filter')){
@@ -407,16 +408,38 @@ class Notification extends Model {
             case 'delete':
                 NotificationContent::whereIn('vh_notification_id', $item_ids)->withTrashed()->forceDelete();
                 self::whereIn('id', $item_ids)->withTrashed()->forceDelete();
+=======
+        $itemIds = array_column($items, 'id');
+
+        switch ($type) {
+            case 'trash':
+                self::whereIn('id', $itemIds)->delete();
+                break;
+            case 'restore':
+                self::whereIn('id', $itemIds)->withTrashed()->restore();
+                break;
+            case 'delete':
+                NotificationContent::whereIn('vh_notification_id', $itemIds)->withTrashed()->forceDelete();
+                self::whereIn('id', $itemIds)->withTrashed()->forceDelete();
+>>>>>>> shivam-vaah-setup
                 break;
             case 'trash-all':
                 $notification->query()->delete();
                 break;
             case 'restore-all':
+<<<<<<< HEAD
                 $list->restore();
                 break;
             case 'delete-all':
                 NotificationContent::query()->forceDelete();
                 $list->forceDelete();
+=======
+                $notification->query()->withTrashed()->restore();
+                break;
+            case 'delete-all':
+                NotificationContent::query()->forceDelete();
+                $notification->query()->forceDelete();
+>>>>>>> shivam-vaah-setup
                 break;
 
         }
