@@ -389,28 +389,34 @@ class Notification extends Model {
         $items = $request->items;
         $notification = new Notification;
 
-        $itemIds = array_column($items, 'id');
+        $item_ids = array_column($items, 'id');
+        $list = self::query();
+        if($request->has('filter')){
+            $list->getSorted($request->filter);
+            $list->trashedFilter($request->filter);
+            $list->searchFilter($request->filter);
+        }
 
         switch ($type) {
             case 'trash':
-                self::whereIn('id', $itemIds)->delete();
+                self::whereIn('id', $item_ids)->delete();
                 break;
             case 'restore':
-                self::whereIn('id', $itemIds)->withTrashed()->restore();
+                self::whereIn('id', $item_ids)->withTrashed()->restore();
                 break;
             case 'delete':
-                NotificationContent::whereIn('vh_notification_id', $itemIds)->withTrashed()->forceDelete();
-                self::whereIn('id', $itemIds)->withTrashed()->forceDelete();
+                NotificationContent::whereIn('vh_notification_id', $item_ids)->withTrashed()->forceDelete();
+                self::whereIn('id', $item_ids)->withTrashed()->forceDelete();
                 break;
             case 'trash-all':
                 $notification->query()->delete();
                 break;
             case 'restore-all':
-                $notification->query()->withTrashed()->restore();
+                $list->restore();
                 break;
             case 'delete-all':
                 NotificationContent::query()->forceDelete();
-                $notification->query()->forceDelete();
+                $list->forceDelete();
                 break;
 
         }

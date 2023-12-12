@@ -745,6 +745,7 @@ export const useNotificationStore = defineStore({
                     method = 'DELETE';
                     break;
             }
+            this.action.filter = this.query.filter;
 
             let options = {
                 params: this.action,
