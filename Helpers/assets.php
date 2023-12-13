@@ -176,13 +176,10 @@ function vh_file_types()
 
     //get list from https://gist.github.com/plasticbrain/3887245
     $arr = [
-        'text/html',
-        'image/x-icon',
-        'text/plain',
-        'image/jpeg',
-        'video/mpeg', 'video/quicktime', 'audio/mpeg', 'audio/x-mpeg',
-        'image/png', 'application/msword', 'application/excel', 'image/jpeg',
-        'image/gif',  'audio/mp4',  'video/mp4',
+        'image/jpeg','image/png','image/gif','image/x-icon',
+        'text/html','text/plain','application/msword','application/excel',
+        'audio/mpeg','audio/x-mpeg','audio/mp4',
+        'video/mpeg', 'video/mp4','video/quicktime',
     ];
 
     $arr = array_unique(array_filter($arr));
