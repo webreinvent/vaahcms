@@ -10,7 +10,7 @@
     {"category": "global", "key": "copyright_link", "value": "app_url" },
     {"category": "global", "key": "copyright_year", "value": "use_current_year" },
     {"category": "global", "type":"json", "key": "registration_roles", "value": ["Registered"] },
-    {"category": "global", "type":"json", "key": "upload_allowed_files", "value": ["image/jpeg", "image/png"] },
+    {"category": "global", "type":"json", "key": "upload_allowed_files", "value": ["image/jpeg", "image/png","image/gif"] },
     {"category": "global", "key": "password_protection", "value": 0 },
     {"category": "global", "key": "site_password", "value": null },
     {"category": "global", "key": "date_format", "value": "Y-m-d" },
