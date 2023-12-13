@@ -102,14 +102,12 @@ const toggleFormMenu = (event) => {
                 <VhField label="Name">
                     <InputText class="w-full" v-model="store.item.name" data-testid="media_name" />
                 </VhField>
-
-
                     <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
-                                      :file_type_accept="store.assets.allowed_file_types.join(', ')"
+                                      :file_type_accept="store.assets.allowed_file_types"
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>
