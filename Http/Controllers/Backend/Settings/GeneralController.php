@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Models\Language;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\Setting;
@@ -76,6 +77,8 @@ class GeneralController extends Controller
             $data['links'] = Setting::getGlobalLinks($request);
             $data['scripts'] = Setting::getGlobalScripts($request);
             $data['meta_tags'] = Setting::getGlobalMetaTags($request);
+            $data['is_smtp_configured'] = config('mail.mailers.smtp.username') &&
+                config('mail.mailers.smtp.password');
 
             $response['success'] = true;
             $response['data'] = $data;

@@ -93,6 +93,7 @@ export const useGeneralStore = defineStore({
         tag_type:null,
         filtered_registration_roles:null,
         filtered_allowed_files:null,
+        is_smtp_configured: null,
     }),
     getters: {
 
@@ -142,6 +143,7 @@ export const useGeneralStore = defineStore({
                 this.meta_tag = data.meta_tags;
                 this.list.maximum_number_of_forgot_password_attempts_per_session = parseInt(this.list.maximum_number_of_forgot_password_attempts_per_session);
                 this.list.maximum_number_of_login_attempts_per_session = parseInt(this.list.maximum_number_of_login_attempts_per_session);
+                this.is_smtp_configured = data.is_smtp_configured;
             }
         },
         //---------------------------------------------------------------------
@@ -485,11 +487,9 @@ export const useGeneralStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
     }
 });
-
-
 
 // Pinia hot reload
 if (import.meta.hot) {
