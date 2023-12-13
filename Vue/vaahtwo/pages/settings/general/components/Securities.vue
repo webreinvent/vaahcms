@@ -8,6 +8,8 @@ const store = useGeneralStore();
     <div v-if="store && store.list">
         <div class="grid">
             <div class="col-12">
+                <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
+                <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"
@@ -19,8 +21,6 @@ const store = useGeneralStore();
                         You haven't configured SMTP. Please configured SMTP to enable <strong>&nbsp; Email OTP Verification &nbsp;</strong> method.
                     </div>
                 </Message>
-                <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
-                <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
             </div>
             <div class="col-12">
                 <div class="field">
@@ -50,7 +50,7 @@ const store = useGeneralStore();
                     </div>
                 </div>
                 <div class="field">
-                    <h5 class="font-semibold text-sm">MFA Methods</h5>
+                    <h5 class="font-semibold text-sm mb-2">MFA Methods</h5>
                     <div class="field-checkbox">
                         <Checkbox :disabled="store.list.mfa_status === 'disable' || !store.is_smtp_configured"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
