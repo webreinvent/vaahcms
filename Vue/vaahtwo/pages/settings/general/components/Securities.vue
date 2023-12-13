@@ -52,7 +52,7 @@ const store = useGeneralStore();
                 <div class="field">
                     <h5 class="font-semibold text-sm">MFA Methods</h5>
                     <div class="field-checkbox">
-                        <Checkbox :disabled="!(store.list.mfa_status !== 'disable' && store.is_smtp_configured)"
+                        <Checkbox :disabled="store.list.mfa_status === 'disable' || !store.is_smtp_configured"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
                                   inputId="binary1" class="is-small"
                                   v-model="store.list.mfa_methods"
