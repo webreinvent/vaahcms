@@ -22,7 +22,7 @@ const store = useGeneralStore();
                     </div>
                 </Message>
             </div>
-            <div class="col-12">
+            <div class="col-12 pt-0 ">
                 <div class="field">
                     <div class="field-radiobutton">
                         <RadioButton inputId="mfa-option-1"
