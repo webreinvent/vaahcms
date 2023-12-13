@@ -8,6 +8,17 @@ const store = useGeneralStore();
     <div v-if="store && store.list">
         <div class="grid">
             <div class="col-12">
+                <Message severity="error"
+                         class="p-container-message"
+                         :closable="false"
+                         icon="pi pi-exclamation-triangle"
+                         v-if="!store.is_smtp_configured"
+                >
+
+                    <div class="flex">
+                        You haven't configured SMTP. Please configured SMTP to enable email OTP verification method.
+                    </div>
+                </Message>
                 <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
                 <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
             </div>
@@ -39,22 +50,17 @@ const store = useGeneralStore();
                     </div>
                 </div>
                 <div class="field">
-                    <h5 class="mb-3 font-semibold text-sm">MFA Methods</h5>
+                    <h5 class="font-semibold text-sm">MFA Methods</h5>
+                    <small class="text-red-500">Authenticator App is temporarily unavailable.</small>
                     <div class="field-checkbox">
-                        <Checkbox :disabled="store.list.mfa_status === 'disable'"
+                        <Checkbox :disabled="!(store.list.mfa_status !== 'disable' && store.is_smtp_configured)"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
                                   inputId="binary1" class="is-small"
                                   v-model="store.list.mfa_methods"
                                   value="email-otp-verification" />
                         <label for="binary1">Email OTP Verification</label>
                     </div>
-                    <div class="field-checkbox">
-                        <Checkbox disabled inputId="binary2" class="is-small"
-                                  :data-testid="'general-securities_status_'+store.list.mfa_methods"
-                                  v-model="store.list.mfa_methods"
-                                  value="sms-otp-verification" />
-                        <label for="binary2">SMS OTP Verification</label>
-                    </div>
+
                     <div class="field-checkbox">
                         <Checkbox disabled inputId="binary3"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
