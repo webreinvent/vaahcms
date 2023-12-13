@@ -477,11 +477,12 @@ export const useGeneralStore = defineStore({
                 this.filtered_allowed_files = this.assets.file_types;
             }
             else {
-                this.filtered_allowed_files = this.assets.file_types.filter((files) => {
-                    return files.toLowerCase().includes(event.query.toLowerCase());
+                this.filtered_allowed_files = this.assets.file_types.filter((allowed_files) => {
+                    return allowed_files.toLowerCase().includes(event.query.toLowerCase()) && !this.list.upload_allowed_files.includes(allowed_files);
                 });
             }
         },
+
         //---------------------------------------------------------------------
         setPageTitle() {
             if (this.title) {
