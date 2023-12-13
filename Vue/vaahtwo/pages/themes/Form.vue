@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import { useThemeStore } from '../../stores/store-themes'
 import {useRootStore} from "../../stores/root";
 
@@ -16,7 +16,7 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    await store.watchItem();
+
 });
 
 //--------form_menu

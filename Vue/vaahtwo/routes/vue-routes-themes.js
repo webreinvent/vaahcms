@@ -19,12 +19,6 @@ routes_list = {
             props: true,
             children:[
                 {
-                    path: 'form/:id?',
-                    name: 'themes.form',
-                    component: Form,
-                    props: true,
-                },
-                {
                     path: 'view/:id?',
                     name: 'themes.view',
                     component: Item,
