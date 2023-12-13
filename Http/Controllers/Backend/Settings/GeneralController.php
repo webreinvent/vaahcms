@@ -77,7 +77,7 @@ class GeneralController extends Controller
             $data['links'] = Setting::getGlobalLinks($request);
             $data['scripts'] = Setting::getGlobalScripts($request);
             $data['meta_tags'] = Setting::getGlobalMetaTags($request);
-            $data['list']['smtp'] = config('mail.mailers.smtp');
+            $data['is_smtp_configured'] = config('mail.mailers.smtp.username') && config('mail.mailers.smtp.password');
 
             $response['success'] = true;
             $response['data'] = $data;
