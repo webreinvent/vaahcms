@@ -77,7 +77,7 @@ class GeneralController extends Controller
             $data['links'] = Setting::getGlobalLinks($request);
             $data['scripts'] = Setting::getGlobalScripts($request);
             $data['meta_tags'] = Setting::getGlobalMetaTags($request);
-            $data['list']['env'] = VaahSetup::getEnvFileVariables('.env');
+            $data['list']['smtp'] = config('mail.mailers.smtp');
 
             $response['success'] = true;
             $response['data'] = $data;

@@ -490,8 +490,8 @@ export const useGeneralStore = defineStore({
         },
         //---------------------------------------------------------------------
         checkSmtpConfiguration() {
-            let env = this.list.env;
-            if((env.MAIL_DRIVER && env.MAIL_HOST && env.MAIL_USERNAME && env.MAIL_PASSWORD && env.MAIL_PORT)) {
+            let smtp = this.list.smtp;
+            if((smtp.username && smtp.password)) {
                 this.is_smtp_configured = true;
             }
         }

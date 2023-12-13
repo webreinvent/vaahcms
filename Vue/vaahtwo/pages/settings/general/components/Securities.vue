@@ -16,7 +16,7 @@ const store = useGeneralStore();
                 >
 
                     <div class="flex">
-                        You haven't configured SMTP. Please configured SMTP to enable email OTP verification method.
+                        You haven't configured SMTP. Please configured SMTP to enable <strong>&nbsp; Email OTP Verification &nbsp;</strong> method.
                     </div>
                 </Message>
                 <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
@@ -51,7 +51,6 @@ const store = useGeneralStore();
                 </div>
                 <div class="field">
                     <h5 class="font-semibold text-sm">MFA Methods</h5>
-                    <small class="text-red-500">Authenticator App is temporarily unavailable.</small>
                     <div class="field-checkbox">
                         <Checkbox :disabled="!(store.list.mfa_status !== 'disable' && store.is_smtp_configured)"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
@@ -61,13 +60,16 @@ const store = useGeneralStore();
                         <label for="binary1">Email OTP Verification</label>
                     </div>
 
-                    <div class="field-checkbox">
+                    <div class="field-checkbox align-items-start">
                         <Checkbox disabled inputId="binary3"
                                   :data-testid="'general-securities_status_'+store.list.mfa_methods"
                                   class="is-small"
                                   v-model="store.list.mfa_methods"
                                   value="authenticator-app" />
-                        <label for="binary3">Authenticator App (only user can enable this)</label>
+                        <label for="binary3">
+                            Authenticator App (only user can enable this)
+                            <small class="block text-red-500 mt-1">Authenticator App is temporarily unavailable.</small>
+                        </label>
                     </div>
                 </div>
 
