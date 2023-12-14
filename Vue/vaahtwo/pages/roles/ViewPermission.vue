@@ -1,5 +1,5 @@
 <script setup>
-import { h, onMounted, ref} from "vue";
+import { onMounted, ref} from "vue";
 import { useRoute } from 'vue-router';
 import { useDialog } from 'primevue/usedialog';
 import { useConfirm } from "primevue/useconfirm";
