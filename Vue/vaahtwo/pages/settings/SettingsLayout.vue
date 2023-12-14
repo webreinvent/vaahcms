@@ -57,18 +57,11 @@ const updateSelectedItem = () => {
     sidebar_menu_items.value.forEach((item) => {
         item.items.forEach((sub_item) =>{
         const sub_item_path = sub_item.to.path ;
-        if (sub_item_path === route_path) {
-            console.log('Match found');
-            sub_item.class = 'p-menuitem p-focus';
-        } else {
-            sub_item.class = '';
-        }
+        sub_item.class = sub_item_path === route_path ? 'p-menuitem p-focus' : '';
     });
 });
 };
-watch(() => route.path, (newPath, oldPath) => {
-    updateSelectedItem(newPath);
-});
+watch(() => route.path, updateSelectedItem);
 onMounted(updateSelectedItem);
 onMounted(async () => {
 

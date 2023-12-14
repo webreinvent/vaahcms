@@ -35,6 +35,17 @@ onMounted(async () => {
 
 
 });
+const updateSelectedItem = () => {
+    const route_path = route.path;
+    sidebar_menu_items.value.forEach((item) => {
+        item.items.forEach((sub_item) =>{
+            const sub_item_path = sub_item.to.path ;
+            sub_item.class = sub_item_path === route_path ? 'p-menuitem p-focus' : '';
+        });
+    });
+};
+watch(() => route.path, updateSelectedItem);
+onMounted(updateSelectedItem);
 
 </script>
 
