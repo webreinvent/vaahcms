@@ -870,11 +870,6 @@ export const useUserStore = defineStore({
             this.user_roles_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'users.index'})
-        },
-        //---------------------------------------------------------------------
         toList()
         {
             this.item = null;

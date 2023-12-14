@@ -520,14 +520,6 @@ export const useRegistrationStore = defineStore({
                 });
             }
         },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
         //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
@@ -599,13 +591,6 @@ export const useRegistrationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
         async resetQuery()
         {
             //reset query strings
@@ -626,11 +611,6 @@ export const useRegistrationStore = defineStore({
             this.query.rows = this.rows;
 
             await this.updateUrlQueryString(this.query);
-        },
-        //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'registrations.index'})
         },
         //---------------------------------------------------------------------
         toList()
@@ -727,21 +707,6 @@ export const useRegistrationStore = defineStore({
                 {
                     separator: true
                 },
-              /*  {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
-                {
-                    separator: true
-                },*/
                 {
                     label: root.assets.language_string.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
@@ -795,21 +760,6 @@ export const useRegistrationStore = defineStore({
                 {
                     separator: true
                 },
-               /* {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },*/
                 {
                     label: root.assets.language_string.crud_actions.trash_all,
                     icon: 'pi pi-times',
