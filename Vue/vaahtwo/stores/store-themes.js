@@ -314,6 +314,7 @@ export const useThemeStore = defineStore({
                 case 'activate':
                 case 'deactivate':
                     this.item = null;
+                    this.toList()
                     break;
             }
         },
@@ -447,6 +448,16 @@ export const useThemeStore = defineStore({
             this.query.rows = this.rows;
 
             await this.updateUrlQueryString(this.query);
+        },
+        //---------------------------------------------------------------------
+        toList()
+        {
+
+            if (this.assets.empty_item !== undefined && this.assets.empty_item !== '') {
+                this.item = vaah().clone(this.assets.empty_item);
+            }
+
+            this.$router.push({name: 'modules.index'})
         },
         //---------------------------------------------------------------------
         toView(item)
