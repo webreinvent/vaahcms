@@ -777,11 +777,6 @@ export const useUserStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
@@ -850,13 +845,6 @@ export const useUserStore = defineStore({
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
-        },
-        //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
         },
         //---------------------------------------------------------------------
         async resetQuery()
