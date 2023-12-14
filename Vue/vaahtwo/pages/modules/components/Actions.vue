@@ -1,22 +1,13 @@
 <script  setup>
-import {ref, reactive, watch, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import { useModuleStore } from '../../../stores/store-modules'
 import {useRootStore} from "../../../stores/root";
 
 const store = useModuleStore();
 const root = useRootStore();
 onMounted(async () => {
-    store.getListSelectedMenu();
-    store.getListBulkMenu();
     store.getFilterMenu();
 });
-
-//--------selected_menu_state
-const selected_menu_state = ref();
-const toggleSelectedMenuState = (event) => {
-    selected_menu_state.value.toggle(event);
-};
-//--------/selected_menu_state
 
 //--------bulk_menu_state
 const bulk_menu_state = ref();
