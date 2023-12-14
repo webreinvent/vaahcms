@@ -52,21 +52,15 @@ const sidebar_menu_items = ref([
         ]},
 ]);
 
-const updateSelectedItem = () => {
-    const route_path = route.path;
-    sidebar_menu_items.value.forEach((item) => {
-        item.items.forEach((sub_item) =>{
-        const sub_item_path = sub_item.to.path ;
-        sub_item.class = sub_item_path === route_path ? 'p-menuitem p-focus' : '';
-    });
-});
-};
-watch(() => route.path, updateSelectedItem);
-onMounted(updateSelectedItem);
+
 onMounted(async () => {
 
     store.getAssets();
+    route.value = useRoute();
 
+});
+watch(() => useRoute(), (to) => {
+    route.value = to;
 });
 
 </script>
@@ -74,7 +68,13 @@ onMounted(async () => {
 <template>
     <div class="grid justify-content-center">
         <div class="col-fixed">
-            <Menu :model="sidebar_menu_items" />
+            <Menu :model="sidebar_menu_items"
+                  :pt="{
+                      menuitem: ({ props }) => ({
+                         class: route.value?.path === props.item.to.path ? 'p-focus' : ''
+                      })
+                  }"
+            />
         </div>
         <div class="col">
             <router-view></router-view>
