@@ -409,7 +409,7 @@ class Notification extends Model {
                 self::whereIn('id', $item_ids)->withTrashed()->forceDelete();
                 break;
             case 'trash-all':
-                $notification->query()->delete();
+                $list->delete();
                 break;
             case 'restore-all':
                 $list->restore();

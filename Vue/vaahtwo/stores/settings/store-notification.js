@@ -730,7 +730,7 @@ export const useNotificationStore = defineStore({
                 this.action.type = type;
             }
 
-            let url = this.ajax_url+'/action'
+            let url = this.ajax_url+'/action/'+type
             let method = 'PUT';
 
             switch (type)
@@ -806,7 +806,7 @@ export const useNotificationStore = defineStore({
                 show_success: false
             };
             await vaah().ajax(
-                this.ajax_url+'/action',
+                this.ajax_url+'/action/'+type,
                 this.updateListAfter,
                 options
             );

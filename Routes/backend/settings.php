@@ -135,7 +135,7 @@ Route::group(
         Route::get('/', 'NotificationsController@getList')
             ->name('vh.backend.settings.notifications.list');
         //-------------------------------------------------
-        Route::any('/action', 'NotificationsController@listAction')
+        Route::any('/action/{action}', 'NotificationsController@listAction')
             ->name('vh.backend.settings.notifications.list.action');
         //------------------------------------------------
         Route::get('/assets', 'NotificationsController@getAssets')
