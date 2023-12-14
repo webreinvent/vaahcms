@@ -7,17 +7,9 @@ const root = useRootStore();
 const store = useThemeStore();
 
 onMounted(async () => {
-    store.getListSelectedMenu();
-    store.getListBulkMenu();
     store.getFilterMenu();
 });
 
-//--------selected_menu_state
-const selected_menu_state = ref();
-const toggleSelectedMenuState = (event) => {
-    selected_menu_state.value.toggle(event);
-};
-//--------/selected_menu_state
 
 //--------bulk_menu_state
 const bulk_menu_state = ref();

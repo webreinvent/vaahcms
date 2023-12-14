@@ -394,6 +394,7 @@ class ThemesController extends Controller
         try {
             $theme = Theme::where('id',$id)->first();
             $response = Theme::deleteItem($theme->slug);
+            $response['data']['item'] = $theme;
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

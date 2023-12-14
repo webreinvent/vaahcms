@@ -3,7 +3,6 @@ let routes_list= [];
 
 import LayoutBackend from '../layouts/Backend.vue';
 import List from '../pages/themes/List.vue';
-import Form from '../pages/themes/Form.vue';
 import Item from '../pages/themes/Item.vue';
 import ThemeInstall from '../pages/themes/Install.vue';
 
