@@ -5,7 +5,6 @@ import {vaah} from '../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Theme';
 
-
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/themes";
 import { useRootStore } from "./root"
@@ -66,11 +65,8 @@ export const useThemeStore = defineStore({
         },
         is_list_loading: null,
         count_filters: 0,
-        list_selected_menu: [],
-        list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: [],
         is_fetching_updates: false,
         is_btn_loading: false,
         list_is_loading: false,
@@ -167,21 +163,6 @@ export const useThemeStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
-                        {
-                            if(newVal && newVal !== "")
-                            {
-                                this.item.name = vaah().capitalising(newVal);
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
 
             if(this.assets_is_fetching === true){
@@ -258,106 +239,8 @@ export const useThemeStore = defineStore({
             }else{
                 this.$router.push({name: 'themes.index'});
             }
-            // await this.getItemMenu();
-            await this.getFormMenu();
         },
-        //---------------------------------------------------------------------
-        isListActionValid()
-        {
 
-            if(!this.action.type)
-            {
-                vaah().toastErrors(['Select an action type']);
-                return false;
-            }
-
-            if(this.action.items.length < 1)
-            {
-                vaah().toastErrors(['Select records']);
-                return false;
-            }
-
-            return true;
-        },
-        //---------------------------------------------------------------------
-        async updateList(type = null){
-
-            if(!type && this.action.type)
-            {
-                type = this.action.type;
-            } else{
-                this.action.type = type;
-            }
-
-            if(!this.isListActionValid())
-            {
-                return false;
-            }
-
-
-            let method = 'PUT';
-
-            switch (type)
-            {
-                case 'delete':
-                    method = 'DELETE';
-                    break;
-            }
-
-            let options = {
-                params: this.action,
-                method: method,
-                show_success: false
-            };
-            await vaah().ajax(
-                this.ajax_url,
-                this.updateListAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        async updateListAfter(data, res) {
-            if(data)
-            {
-                this.action = vaah().clone(this.empty_action);
-                await this.getList();
-            }
-        },
-        //---------------------------------------------------------------------
-        async listAction(type = null){
-
-            if(!type && this.action.type)
-            {
-                type = this.action.type;
-            } else{
-                this.action.type = type;
-            }
-
-            let url = this.ajax_url+'/action/'+type
-            let method = 'PUT';
-
-            switch (type)
-            {
-                case 'delete':
-                    url = this.ajax_url
-                    method = 'DELETE';
-                    break;
-                case 'delete-all':
-                    method = 'DELETE';
-                    break;
-            }
-
-            let options = {
-                params: this.action,
-                method: method,
-                show_success: false
-            };
-            await vaah().ajax(
-                url,
-                this.updateListAfter,
-                options
-            );
-        },
         //---------------------------------------------------------------------
         itemAction(type, item=null)
         {
@@ -380,28 +263,7 @@ export const useThemeStore = defineStore({
              */
             switch (type)
             {
-                /**
-                 * Create a record, hence method is `POST`
-                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
-                 */
-                case 'create-and-new':
-                case 'create-and-close':
-                case 'create-and-clone':
-                    options.method = 'POST';
-                    options.params = item;
-                    break;
 
-                /**
-                 * Update a record with many columns, hence method is `PUT`
-                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
-                 */
-                case 'save':
-                case 'save-and-close':
-                case 'save-and-clone':
-                    options.method = 'PUT';
-                    options.params = item;
-                    ajax_url += '/'+item.id
-                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -442,32 +304,16 @@ export const useThemeStore = defineStore({
                 await this.formActionAfter();
                 this.resetActivateBtnLoader(this.form.action,data.item)
             }
-       },
+        },
         //---------------------------------------------------------------------
         async formActionAfter ()
         {
             switch (this.form.action)
             {
-                case 'create-and-new':
-                case 'save-and-new':
-                    this.setActiveItemAsEmpty();
-                    break;
-                case 'create-and-close':
-                case 'save-and-close':
-                    this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'themes.index'});
-                    break;
-                case 'save-and-clone':
-                    this.item.id = null;
-                    break;
-                case 'trash':
-                    this.item = null;
-                    break;
                 case 'delete':
                 case 'activate':
                 case 'deactivate':
                     this.item = null;
-                    this.toList();
                     break;
             }
         },
@@ -519,66 +365,6 @@ export const useThemeStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async getFaker () {
-            let params = {
-                model_namespace: this.model,
-                except: this.assets.fillable.except,
-            };
-
-            let url = this.base_url+'/faker';
-
-            let options = {
-                params: params,
-                method: 'post',
-            };
-
-            vaah().ajax(
-                url,
-                this.getFakerAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        getFakerAfter: function (data, res) {
-            if(data)
-            {
-                let self = this;
-                Object.keys(data.fill).forEach(function(key) {
-                    self.item[key] = data.fill[key];
-                });
-            }
-        },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
-        setActiveItemAsEmpty()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
-        },
-        //---------------------------------------------------------------------
-        confirmDelete()
-        {
-            if(this.action.items.length < 1)
-            {
-                vaah().toastErrors(['Select a record']);
-                return false;
-            }
-            this.action.type = 'delete';
-            vaah().confirmDialogDelete(this.listAction);
-        },
-        //---------------------------------------------------------------------
-        confirmDeleteAll()
-        {
-            this.action.type = 'delete-all';
-            vaah().confirmDialogDelete(this.listAction);
-        },
-        //---------------------------------------------------------------------
         async delayedSearch()
         {
             let self = this;
@@ -597,17 +383,6 @@ export const useThemeStore = defineStore({
                 {
                     await self.getList();
                 }
-            }, this.search.delay_time);
-        },
-        //---------------------------------------------------------------------
-        async delayedSearchThemes()
-        {
-            let self = this;
-            this.query.page = 1;
-            this.action.items = [];
-            clearTimeout(this.search.delay_timer);
-            this.search.delay_timer = setTimeout(async function() {
-                await self.getThemes();
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
@@ -647,14 +422,6 @@ export const useThemeStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            this.query.status= null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
         async resetQuery()
         {
             //reset query strings
@@ -682,33 +449,10 @@ export const useThemeStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'themes.index'})
-        },
-        //---------------------------------------------------------------------
-        toList()
-        {
-            // this.$router.go();
-        },
-        //---------------------------------------------------------------------
-        toForm()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
-            this.getFormMenu();
-            this.$router.push({name: 'themes.form'})
-        },
-        //---------------------------------------------------------------------
         toView(item)
         {
             this.item = vaah().clone(item);
             this.$router.push({name: 'themes.view', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        toEdit(item)
-        {
-            this.item = item;
-            this.$router.push({name: 'themes.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -750,91 +494,7 @@ export const useThemeStore = defineStore({
 
             return text;
         },
-        //---------------------------------------------------------------------
-        async getListSelectedMenu()
-        {
-            this.list_selected_menu = [
-                {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.updateList('trash')
-                    }
-                },
-                {
-                    label: 'Restore',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.updateList('restore')
-                    }
-                },
-                {
-                    label: 'Delete',
-                    icon: 'pi pi-trash',
-                    command: () => {
-                        this.confirmDelete()
-                    }
-                },
-            ]
 
-        },
-        //---------------------------------------------------------------------
-        getListBulkMenu()
-        {
-            this.list_bulk_menu = [
-                {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Trash All',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.listAction('trash-all')
-                    }
-                },
-                {
-                    label: 'Restore All',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.listAction('restore-all')
-                    }
-                },
-                {
-                    label: 'Delete All',
-                    icon: 'pi pi-trash',
-                    command: async () => {
-                        this.confirmDeleteAll();
-                    }
-                },
-            ];
-        },
         //---------------------------------------------------------------------
         getFilterMenu()
         {
@@ -877,98 +537,6 @@ export const useThemeStore = defineStore({
         confirmDeleteItemAfter()
         {
             this.itemAction('delete', this.item);
-        },
-        //---------------------------------------------------------------------
-        async getFormMenu()
-        {
-            const root = useRootStore();
-            let form_menu = [];
-
-            if(this.item && this.item.id )
-            {
-
-                form_menu = [
-                    {
-                        label: root.assets.language_string.crud_actions.form_save_and_close,
-                        icon: 'pi pi-check',
-                        command: () => {
-                            this.itemAction('save-and-close');
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_save_and_clone,
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('save-and-clone');
-
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_save_and_new,
-                        icon: 'pi pi-plus',
-                        command: () => {
-
-                            this.itemAction('save-and-new');
-
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_trash,
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.itemAction('trash');
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_delete,
-                        icon: 'pi pi-trash',
-                        command: () => {
-                            this.confirmDeleteItem('delete');
-                        }
-                    },
-                ];
-
-            } else{
-
-                form_menu = [
-                    {
-                        label: root.assets.language_string.crud_actions.form_create_and_close,
-                        icon: 'pi pi-check',
-                        command: () => {
-                            this.itemAction('create-and-close');
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_create_and_clone,
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('create-and-clone');
-
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_reset,
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.setActiveItemAsEmpty();
-                        }
-                    }
-                ];
-            }
-
-            form_menu.push({
-                label: root.assets.language_string.crud_actions.form_fill,
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.getFaker();
-                }
-            },)
-
-
-            this.form_menu_list = form_menu;
-
         },
         //---------------------------------------------------------------------
         checkUpdate() {
