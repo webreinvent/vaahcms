@@ -365,66 +365,6 @@ export const useModuleStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async getFaker () {
-            let params = {
-                model_namespace: this.model,
-                except: this.assets.fillable.except,
-            };
-
-            let url = this.base_url+'/faker';
-
-            let options = {
-                params: params,
-                method: 'post',
-            };
-
-            vaah().ajax(
-                url,
-                this.getFakerAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        getFakerAfter: function (data, res) {
-            if(data)
-            {
-                let self = this;
-                Object.keys(data.fill).forEach(function(key) {
-                    self.item[key] = data.fill[key];
-                });
-            }
-        },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
-        setActiveItemAsEmpty()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
-        },
-        //---------------------------------------------------------------------
-        confirmDelete()
-        {
-            if(this.action.items.length < 1)
-            {
-                vaah().toastErrors(['Select a record']);
-                return false;
-            }
-            this.action.type = 'delete';
-            vaah().confirmDialogDelete(this.listAction);
-        },
-        //---------------------------------------------------------------------
-        confirmDeleteAll()
-        {
-            this.action.type = 'delete-all';
-            vaah().confirmDialogDelete(this.listAction);
-        },
-        //---------------------------------------------------------------------
         async delayedSearch()
         {
             let self = this;
@@ -482,13 +422,6 @@ export const useModuleStore = defineStore({
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
-        },
-        //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
         },
         //---------------------------------------------------------------------
         async resetQuery()
