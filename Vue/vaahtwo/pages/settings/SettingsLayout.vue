@@ -52,6 +52,24 @@ const sidebar_menu_items = ref([
         ]},
 ]);
 
+const updateSelectedItem = () => {
+    const route_path = route.path;
+    sidebar_menu_items.value.forEach((item) => {
+        item.items.forEach((sub_item) =>{
+        const sub_item_path = sub_item.to.path ;
+        if (sub_item_path === route_path) {
+            console.log('Match found');
+            sub_item.class = 'p-menuitem p-focus';
+        } else {
+            sub_item.class = '';
+        }
+    });
+});
+};
+watch(() => route.path, (newPath, oldPath) => {
+    updateSelectedItem(newPath);
+});
+onMounted(updateSelectedItem);
 onMounted(async () => {
 
     store.getAssets();
