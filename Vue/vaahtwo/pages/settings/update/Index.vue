@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
 import { vaah } from '../../../vaahvue/pinia/vaah'
@@ -18,7 +18,6 @@ onMounted(async () => {
      * operation
      */
     await store.setPageTitle();
-    // await store.getAssets();
 
 });
 </script>
@@ -137,7 +136,6 @@ onMounted(async () => {
                         </div>
                         <div class="col-9">
                             <div id="terminal"></div>
-                            <!--                            <Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />-->
                         </div>
                     </div>
                 </Panel>

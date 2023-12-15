@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted} from "vue";
 import {useRoute} from 'vue-router';
 import {useLocalizationStore} from '../../../stores/settings/store-localization'
 import { useRootStore } from "../../../stores/root";

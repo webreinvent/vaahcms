@@ -48,18 +48,6 @@
                      :to="{name: 'setup.index'}">
         </b-menu-item>
 
-        <!--<b-menu-item label="Scheduled Actions"
-                     icon="stopwatch"
-                     tag="router-link"
-                     :active="!!($route.path == '/vaah/settings/general/')"
-                     :to="{name: 'general.index'}">
-        </b-menu-item>
-        <b-menu-item label="Backups"
-                     icon="hdd"
-                     tag="router-link"
-                     :active="!!($route.path == '/vaah/settings/backups/')"
-                     :to="{name: 'backups.index'}">
-        </b-menu-item>-->
     </b-menu-list>
 </b-menu>
 

@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, watch} from "vue";
 import {useRoute} from 'vue-router';
 
 import { useRootStore } from "../../stores/root"
