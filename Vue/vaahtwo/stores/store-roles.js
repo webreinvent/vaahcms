@@ -174,15 +174,6 @@ export const useRoleStore = defineStore({
             )
         },
         //---------------------------------------------------------------------
-        watchItem(name)
-        {
-            if(name && name !== "")
-            {
-                this.item.name = vaah().capitalising(name);
-                this.item.slug = vaah().strToSlug(name);
-            }
-        },
-        //---------------------------------------------------------------------
         watchStates()
         {
             watch(this.query.filter, (newVal,oldVal) =>
@@ -564,11 +555,6 @@ export const useRoleStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
@@ -637,13 +623,6 @@ export const useRoleStore = defineStore({
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
-        },
-        //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
         },
         //---------------------------------------------------------------------
         async resetQuery()
@@ -881,11 +860,6 @@ export const useRoleStore = defineStore({
         resetRoleUserFilters() {
             this.role_users_query.q = null;
             this.role_users_query.rows = this.assets.rows;
-        },
-        //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'roles.index'})
         },
         //---------------------------------------------------------------------
         toList()
