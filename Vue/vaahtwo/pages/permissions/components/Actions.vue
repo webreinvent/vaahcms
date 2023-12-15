@@ -1,5 +1,5 @@
 <script  setup>
-import {ref, reactive, watch, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import { useRootStore } from "../../../stores/root";
 import { usePermissionStore } from '../../../stores/store-permissions'
 

@@ -621,11 +621,6 @@ export const usePermissionStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
@@ -696,13 +691,6 @@ export const usePermissionStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
         async resetQuery()
         {
             //reset query strings
@@ -728,11 +716,6 @@ export const usePermissionStore = defineStore({
         resetPermissionRolesQuery() {
             this.permission_roles_query.q = null;
             this.permission_roles_query.rows = this.assets.rows;
-        },
-        //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'permissions.index'})
         },
         //---------------------------------------------------------------------
         toList()
