@@ -174,6 +174,15 @@ export const useRoleStore = defineStore({
             )
         },
         //---------------------------------------------------------------------
+        watchItem(name)
+        {
+            if(name && name !== "")
+            {
+                this.item.name = vaah().capitalising(name);
+                this.item.slug = vaah().strToSlug(name);
+            }
+        },
+        //---------------------------------------------------------------------
         watchStates()
         {
             watch(this.query.filter, (newVal,oldVal) =>
