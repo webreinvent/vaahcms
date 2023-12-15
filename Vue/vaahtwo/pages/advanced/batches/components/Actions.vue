@@ -1,5 +1,5 @@
 <script  setup>
-import {ref, reactive, watch, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import { useBatchStore } from '../../../../stores/advanced/store-batches'
 
 import Filters from './Filters.vue'

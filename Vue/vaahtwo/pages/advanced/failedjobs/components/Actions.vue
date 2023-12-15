@@ -1,5 +1,5 @@
 <script  setup>
-import {ref, reactive, watch, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import { useFailedJobStore } from '../../../../stores/advanced/store-failedjobs'
 
 import Filters from './Filters.vue'

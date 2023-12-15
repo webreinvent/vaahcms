@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useFailedJobStore} from '../../../stores/advanced/store-failedjobs'
