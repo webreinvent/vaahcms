@@ -10,7 +10,6 @@ import UserSettingIndex from "../pages/settings/user-settings/Index.vue";
 import LocalizationIndex from "../pages/settings/localization/Index.vue";
 import NotificationsIndex from "../pages/settings/notifications/Index.vue";
 import UpdateIndex from "../pages/settings/update/Index.vue";
-// import BackupsIndex from "../pages/settings/backups/Index.vue";
 
 
 routes_list = {
@@ -59,12 +58,6 @@ routes_list = {
                     component: UpdateIndex,
                     props: true,
                 },
-                /*{
-                    path: 'backups',
-                    name: 'backups.index',
-                    component: BackupsIndex,
-                    props: true,
-                },*/
 
             ]
         }
