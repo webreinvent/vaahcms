@@ -311,11 +311,6 @@ export const useJobStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
         confirmDelete()
         {
             if(this.action.items.length < 1)
@@ -379,13 +374,6 @@ export const useJobStore = defineStore({
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
-        },
-        //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
         },
         //---------------------------------------------------------------------
         async resetQuery()

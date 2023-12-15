@@ -149,21 +149,6 @@ export const useLogStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
-                        {
-                            if(newVal && newVal !== "")
-                            {
-                                this.item.name = vaah().capitalising(newVal);
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
@@ -366,28 +351,6 @@ export const useLogStore = defineStore({
             switch (type)
             {
                 /**
-                 * Create a record, hence method is `POST`
-                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
-                 */
-                case 'create-and-new':
-                case 'create-and-close':
-                case 'create-and-clone':
-                    options.method = 'POST';
-                    options.params = item;
-                    break;
-
-                /**
-                 * Update a record with many columns, hence method is `PUT`
-                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
-                 */
-                case 'save':
-                case 'save-and-close':
-                case 'save-and-clone':
-                    options.method = 'PUT';
-                    options.params = item;
-                    ajax_url += '/'+item.id
-                    break;
-                /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
                  * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
@@ -429,18 +392,6 @@ export const useLogStore = defineStore({
         {
             switch (this.form.action)
             {
-                case 'create-and-new':
-                case 'save-and-new':
-                    this.setActiveItemAsEmpty();
-                    break;
-                case 'create-and-close':
-                case 'save-and-close':
-                    this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'logs.index'});
-                    break;
-                case 'save-and-clone':
-                    this.item.id = null;
-                    break;
                 case 'trash':
                     this.item = null;
                     break;
@@ -469,49 +420,6 @@ export const useLogStore = defineStore({
             }
 
             this.is_btn_loading = false;
-        },
-        //---------------------------------------------------------------------
-        async getFaker () {
-            let params = {
-                model_namespace: this.model,
-                except: this.assets.fillable.except,
-            };
-
-            let url = this.base_url+'/faker';
-
-            let options = {
-                params: params,
-                method: 'post',
-            };
-
-            vaah().ajax(
-                url,
-                this.getFakerAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        getFakerAfter: function (data, res) {
-            if(data)
-            {
-                let self = this;
-                Object.keys(data.fill).forEach(function(key) {
-                    self.item[key] = data.fill[key];
-                });
-            }
-        },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
-        setActiveItemAsEmpty()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
         },
         //---------------------------------------------------------------------
         confirmDelete(item)
@@ -576,13 +484,6 @@ export const useLogStore = defineStore({
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
-        },
-        //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
         },
         //---------------------------------------------------------------------
         async resetQuery()
