@@ -32,12 +32,9 @@ const sidebar_menu_items = ref([
 ]);
 
 onMounted(async () => {
-    route.value = useRoute();
 
 });
-watch(() => useRoute(), (to) => {
-    route.value = to;
-});
+
 
 
 </script>
@@ -48,7 +45,7 @@ watch(() => useRoute(), (to) => {
             <Menu :model="sidebar_menu_items"
                   :pt="{
                       menuitem: ({ props }) => ({
-                         class: route.value?.path === props.item.to.path ? 'p-focus' : ''
+                         class: route.path === props.item.to.path ? 'p-focus' : ''
                       })
                   }"
             />
