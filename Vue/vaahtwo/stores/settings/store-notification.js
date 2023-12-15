@@ -1,7 +1,4 @@
-import { watch } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import qs from 'qs'
-import countriesData from "../../assets/data/country.json";
 import { vaah } from '../../vaahvue/pinia/vaah'
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 

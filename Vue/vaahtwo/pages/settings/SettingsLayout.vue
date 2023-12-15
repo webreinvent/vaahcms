@@ -1,17 +1,11 @@
 <script setup>
 import {onMounted, watch} from "vue";
-import {useRoute} from 'vue-router';
 
 import { useRootStore } from "../../stores/root"
 import {useSettingStore} from '../../stores/store-settings';
-import { vaah } from '../../vaahvue/pinia/vaah';
-
-import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
 const root = useRootStore();
 const store = useSettingStore();
-const route = useRoute();
-const useVaah = vaah();
 
 onMounted(async () => {
     store.getAssets();
