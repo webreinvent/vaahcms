@@ -33,15 +33,22 @@ const sidebar_menu_items = ref([
 
 onMounted(async () => {
 
-
 });
+
+
 
 </script>
 
 <template>
     <div class="grid justify-content-center">
         <div class="col-fixed">
-            <Menu :model="sidebar_menu_items" />
+            <Menu :model="sidebar_menu_items"
+                  :pt="{
+                      menuitem: ({ props }) => ({
+                         class: route.path === props.item.to.path ? 'p-focus' : ''
+                      })
+                  }"
+            />
         </div>
         <div class="col">
             <router-view></router-view>

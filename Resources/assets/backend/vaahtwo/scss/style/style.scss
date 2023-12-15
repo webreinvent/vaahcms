@@ -146,6 +146,11 @@ a{
             width: 0.7rem;
         }
     }
+    .p-accordion-header {
+        .p-accordion-header-link {
+            font-weight: normal !important;
+        }
+    }
 }
 
 /*Dropdown*/
