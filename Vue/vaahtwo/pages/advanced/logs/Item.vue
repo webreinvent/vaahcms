@@ -1,10 +1,9 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import { useLogStore } from '../../../stores/advanced/store-logs'
 
-import VhViewRow from '../../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useLogStore();
 const route = useRoute();
 
