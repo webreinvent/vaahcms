@@ -184,6 +184,7 @@ class LanguageString extends Model {
                     $new_string->fill($insert);
                     $new_string->save();
                 }
+
             }
         }
 
@@ -210,6 +211,14 @@ class LanguageString extends Model {
 
         if($request->vh_lang_category_id){
             $list->where('vh_lang_category_id', $request->vh_lang_category_id);
+        }
+
+        if($request->q){
+            $list->where(function ($query) use ($request)
+            {
+                $query->where('content', 'like', '%' . $request->q . '%')
+                    ->orWhere('name', 'like', '%' . $request->q . '%');
+            });
         }
 
         $list = $list->with('languageCategory')->paginate($request->rows);
@@ -281,7 +290,6 @@ class LanguageString extends Model {
             {
                 $item['name'] = $item['slug'];
             }
-
 
             $string->fill($item);
             $string->save();
