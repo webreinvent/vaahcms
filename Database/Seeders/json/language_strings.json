@@ -211,8 +211,6 @@
     },
 
 
-
-
     {
         "locale_code_iso_639": "en",
         "category": "localization",
@@ -578,19 +576,6 @@
         "name": "Incorrect reset password code",
         "content": "Incorrect reset password code"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "login",
-        "name": "Inactive account",
-        "content": "Inactive account"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "login",
-        "name": "Invalid credentials",
-        "content": "Invalid credentials"
-    },
-
 
 
     {
@@ -2804,62 +2789,6 @@
     },
 
 
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "The",
-        "content": "The"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "may not be greater than",
-        "content": "may not be greater than"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "characters",
-        "content": "characters."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "field is required",
-        "content": "field is required."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "must be a number",
-        "content": "must be a number."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "must be at least",
-        "content": "must be at least."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "must be a valid email address",
-        "content": "must be a valid email address."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "must be an integer",
-        "content": "must be an integer"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "may only contain",
-        "content": "may only contain letters, numbers, dashes and underscores."
-    },
-
-
 
 
 
@@ -2954,127 +2883,6 @@
         "name": "No module installed",
         "content": "Ningún módulo instalado/descargado"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Something went wrong",
-        "content": "Algo salió mal."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Permission denied",
-        "content": "Permiso denegado."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Saved",
-        "content": "Salvado"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Record does not exist",
-        "content": "El registro no existe."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Record has been deleted",
-        "content": "El registro ha sido eliminado."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Action type is required",
-        "content": "Se requiere el tipo de acción."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select items",
-        "content": "Seleccionar articulos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select a record",
-        "content": "Seleccione un registro"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select records",
-        "content": "Seleccionar registros"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select an action type",
-        "content": "Seleccione un tipo de acción"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Permission slug",
-        "content": "Permiso slug"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Super Admin Hint Message",
-        "content": "El superadministrador tiene todos los permisos de forma predeterminada."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "No Permission exist with slug",
-        "content": "No existe permiso con slug"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Permission exist hint message",
-        "content": "Verifique que migrations y seeds estén ejecutados correctamente."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Permission active hint message",
-        "content": "Habilite el estado del permiso para que se active desde el panel de control backend/admin."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "is active for",
-        "content": "Está activo para"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "is not active for",
-        "content": "No está activo para"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Record not found with ID",
-        "content": "Registro no encontrado con ID."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select IDs",
-        "content": "Seleccionar ID"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Select status",
-        "content": "Seleccionar estado"
-    },
-
 
 
     {
@@ -3352,45 +3160,6 @@
     },
     {
         "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "Registration not found",
-        "content": "Registro no encontrado."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "User does not exist",
-        "content": "El usuario no existe."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "User is not active",
-        "content": "El usuario no está activo."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "Impersonate permission denied",
-        "content": "Permiso denegado. El usuario debe tener\n puedo-iniciar-sesión-en-backend\n permiso en el rol especificado del usuario."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "Avatar updated",
-        "content": "Avatar actualizado."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "user",
-        "name": "Avatar removed",
-        "content": "Avatar eliminado."
-    },
-
-
-
-    {
-        "locale_code_iso_639": "es",
         "category": "login",
         "name": "Login OTP Sent",
         "content": "La contraseña de un solo uso (OTP) se envía a su correo electrónico."
@@ -3438,19 +3207,6 @@
         "name": "Incorrect reset password code",
         "content": "Código de restablecimiento de contraseña incorrecto."
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "login",
-        "name": "Inactive account",
-        "content": "Cuenta inactiva"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "login",
-        "name": "Invalid credentials",
-        "content": "Credenciales no válidas"
-    },
-
 
 
     {
@@ -5661,61 +5417,6 @@
         "content": "Restaurar"
     },
 
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "The",
-        "content": "El"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "may not be greater than",
-        "content": "no puede ser mayor que"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "characters",
-        "content": "caracteres."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "field is required",
-        "content": "Se requiere campo."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "must be a number",
-        "content": "Tiene que ser un número."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "must be at least",
-        "content": "al menos debe ser."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "must be a valid email address",
-        "content": "Debe ser una dirección de correo electrónico válida."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "must be an integer",
-        "content": "debe ser un entero."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "validation",
-        "name": "may only contain",
-        "content": "Solo puede contener letras, números, guiones y guiones bajos."
-    },
-
 
 
     {
@@ -5752,7 +5453,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Description Limit",
-        "content": "Le caractère de description n\\'est pas supérieur à 255."
+        "content": "Le caractère de description n'est pas supérieur à 255."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5764,7 +5465,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Detail Limit",
-        "content": "Le caractère de détail n\\'est pas supérieur à 255."
+        "content": "Le caractère de détail n'est pas supérieur à 255."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5776,13 +5477,13 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Category Limit",
-        "content": "Le caractère de catégorie n\\'est pas supérieur à 150."
+        "content": "Le caractère de catégorie n'est pas supérieur à 150."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Is Active Required",
-        "content": "L\\'option est actif est obligatoire."
+        "content": "L'option est actif est obligatoire."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5800,135 +5501,15 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Action successful",
-        "content": "L\\'action a réussi."
+        "content": "L'action a réussi."
     },
+
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "No module installed",
         "content": "Aucun module installé/téléchargé."
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Something went wrong",
-        "content": "Quelque chose s\\'est mal passé."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Permission denied",
-        "content": "Permission refusée."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Saved",
-        "content": "Enregistré"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Record does not exist",
-        "content": "L\\'enregistrement n\\'existe pas."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Record has been deleted",
-        "content": "L\\'enregistrement a été supprimé."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Action type is required",
-        "content": "Le type d’action est requis."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select items",
-        "content": "Sélectionner des éléments"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select a record",
-        "content": "Sélectionnez un enregistrement"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select records",
-        "content": "Sélectionner des enregistrements"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select an action type",
-        "content": "Sélectionnez un type d\\'action"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Permission slug",
-        "content": "Autorisation slug"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Super Admin Hint Message",
-        "content": "Le super administrateur dispose de toutes les autorisations par défaut."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "No Permission exist with slug",
-        "content": "Aucune autorisation n\\'existe avec slug"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Permission exist hint message",
-        "content": "Vérifiez que les migrations et seeds fonctionnent correctement."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Permission active hint message",
-        "content": "Activez l’état d’autorisation sur actif à partir du panneau de configuration backend/admin."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "is active for",
-        "content": "est actif pour"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "is not active for",
-        "content": "n\\'est pas actif pour"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Record not found with ID",
-        "content": "Enregistrement introuvable avec ID."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select IDs",
-        "content": "Sélectionnez les identifiants"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Select status",
-        "content": "Sélectionnez le statut"
-    },
-
 
 
 
@@ -5993,7 +5574,7 @@
         "locale_code_iso_639": "fr",
         "category": "media",
         "name": "Download url associate",
-        "content": "L\\'URL de téléchargement est associée à d\\'autres médias."
+        "content": "L'URL de téléchargement est associée à d'autres médias."
     },
 
     {
@@ -6186,7 +5767,7 @@
         "locale_code_iso_639": "fr",
         "category": "user",
         "name": "Username Limit",
-        "content": "Le caractère du nom d\\'utilisateur ne dépasse pas 20."
+        "content": "Le caractère du nom d'utilisateur ne dépasse pas 20."
     },
     {
         "locale_code_iso_639": "fr",
@@ -6206,46 +5787,6 @@
         "name": "Registration created when user not exist",
         "content": "L\\'inscription ne peut être créée que lorsque l\\'utilisateur n\\'existe pas"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "Registration not found",
-        "content": "Inscription introuvable."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "User does not exist",
-        "content": "L\\'utilisateur n\\'existe pas."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "User is not active",
-        "content": "L\\'utilisateur n\\'est pas actif."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "Impersonate permission denied",
-        "content": "Permission refusée. L\\'utilisateur doit avoir\n peut-se connecter dans le backend\n autorisation dans le rôle spécifié par l\\'utilisateur."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "Avatar updated",
-        "content": "Avatar mis à jour."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "user",
-        "name": "Avatar removed",
-        "content": "Avatar supprimé."
-    },
-
-
-
-
     {
         "locale_code_iso_639": "fr",
         "category": "login",
@@ -6275,13 +5816,13 @@
         "locale_code_iso_639": "fr",
         "category": "login",
         "name": "Email or Username Required",
-        "content": "Le champ email ou nom d\\'utilisateur est obligatoire."
+        "content": "Le champ email ou nom d'utilisateur est obligatoire."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "login",
         "name": "Email or Username Limit",
-        "content": "L'e-mail ou le nom d\\'utilisateur ne doit pas dépasser 150 caractères."
+        "content": "L'e-mail ou le nom d'utilisateur ne doit pas dépasser 150 caractères."
     },
     {
         "locale_code_iso_639": "fr",
@@ -6295,23 +5836,6 @@
         "name": "Incorrect reset password code",
         "content": "Code de mot de passe de réinitialisation incorrect"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "login",
-        "name": "Inactive account",
-        "content": "Compte inactif"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "login",
-        "name": "Invalid credentials",
-        "content": "les informations d\\'identification invalides"
-    },
-
-
-
-
-
 
     {
         "locale_code_iso_639": "fr",
@@ -8518,6 +8042,12 @@
         "category": "extend-theme",
         "name": "View Restore Button",
         "content": "Restaurer"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "login",
+        "name": "Inactive account",
+        "content": "Inactive account"
     },
 
     {
