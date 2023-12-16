@@ -1,3 +1,5 @@
 [
-    {"name": "English", "locale_code_iso_639": "en", "default": 1}
+    {"name": "English", "locale_code_iso_639": "en", "default": 1},
+    {"name": "Spanish", "locale_code_iso_639": "es"},
+    {"name": "French", "locale_code_iso_639": "fr"}
 ]
