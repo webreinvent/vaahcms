@@ -76,7 +76,7 @@ class ExtendController extends Controller
             $list[$n] = [
                 'link' => self::$link,
                 'icon' => 'compass',
-                'label'=> 'Dashboard',
+                'label'=> trans("vaahcms-sidebar-menu.dashboard"),
             ];
 
             $n++;
@@ -91,7 +91,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => 'user',
-                'label'=> 'Users & Access',
+                'label'=> trans("vaahcms-sidebar-menu.users_access"),
                 'items'=> [],
             ];
 
@@ -101,7 +101,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/registrations/",
                     'icon' => 'user-plus',
-                    'label'=> 'Registrations',
+                    'label'=> trans("vaahcms-sidebar-menu.registrations"),
                 ];
             }
 
@@ -110,7 +110,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/users/",
                     'icon' => 'users',
-                    'label'=> 'Users',
+                    'label'=>  trans("vaahcms-sidebar-menu.users"),
                 ];
             }
 
@@ -119,7 +119,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/roles/",
                     'icon' => 'tag',
-                    'label'=> 'Roles',
+                    'label'=> trans("vaahcms-sidebar-menu.roles"),
                 ];
             }
 
@@ -129,7 +129,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' =>  self::$link."/permissions/",
                     'icon' => 'key',
-                    'label'=> 'Permissions',
+                    'label'=> trans("vaahcms-sidebar-menu.permissions"),
                 ];
             }
 
@@ -146,7 +146,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => "pi pi-box",
-                'label'=> 'Extend',
+                'label'=> trans("vaahcms-sidebar-menu.advanced"),
                 'items'=> [],
             ];
 
@@ -155,7 +155,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/modules/",
                     'icon' => 'box',
-                    'label'=> 'Modules',
+                    'label'=> trans("vaahcms-sidebar-menu.modules"),
                 ];
             }
 
@@ -164,7 +164,7 @@ class ExtendController extends Controller
                 $list[$n]['items'][] =  [
                     'link' => self::$link."/themes/",
                     'icon' => 'palette',
-                    'label'=> 'Themes',
+                    'label'=> trans("vaahcms-sidebar-menu.themes"),
                 ];
             }
 
@@ -181,42 +181,42 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon'=> 'cog',
-                'label'=> 'Settings',
+                'label'=> trans("vaahcms-sidebar-menu.settings"),
                 'items' => [
                     [
                         'link' => self::$link."/settings/general",
                         'icon' => 'cog',
-                        'label'=> 'General',
+                        'label'=> trans("vaahcms-sidebar-menu.general"),
                     ],
                     [
                         'link' => self::$link."/settings/user-settings",
                         'icon' => 'user',
-                        'label'=> 'User Settings',
+                        'label'=> trans("vaahcms-sidebar-menu.user_settings"),
                     ],
                     [
                         'link' => self::$link."/settings/env-variables",
                         'icon' => 'code',
-                        'label'=> 'Env Variables',
+                        'label'=> trans("vaahcms-sidebar-menu.env_variables"),
                     ],
                     [
                         'link' => self::$link."/settings/localization",
                         'icon' => 'book',
-                        'label'=> 'Localizations',
+                        'label'=> trans("vaahcms-sidebar-menu.localizations"),
                     ],
                     [
                         'link' => self::$link."/settings/notifications",
                         'icon' => 'bell',
-                        'label'=> 'Notifications',
+                        'label'=> trans("vaahcms-sidebar-menu.notifications"),
                     ],
                     [
                         'link' => self::$link."/settings/update",
                         'icon' => 'download',
-                        'label'=> 'Update',
+                        'label'=> trans("vaahcms-sidebar-menu.update"),
                     ],
                     [
                         'link' => self::$base."setup",
                         'icon' => 'refresh',
-                        'label'=> 'Reset',
+                        'label'=> trans("vaahcms-sidebar-menu.reset"),
                     ],
                 ]
             ];
@@ -229,7 +229,7 @@ class ExtendController extends Controller
             $list[$n] = [
                 'link' => self::$link."/advanced/logs",
                 'icon'=> 'database',
-                'label'=> 'Advanced'
+                'label'=> trans("vaahcms-sidebar-menu.advanced")
             ];
             $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-jobs-section'))
@@ -237,7 +237,7 @@ class ExtendController extends Controller
             $list[$n] = [
                 'link' => self::$link."/advanced/jobs",
                 'icon'=> 'database',
-                'label'=> 'Advanced'
+                'label'=> trans("vaahcms-sidebar-menu.advanced")
             ];
             $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-failedjobs-section'))
@@ -245,7 +245,7 @@ class ExtendController extends Controller
             $list[$n] = [
                 'link' => self::$link."/advanced/failedjobs",
                 'icon'=> 'database',
-                'label'=> 'Advanced'
+                'label'=> trans("vaahcms-sidebar-menu.advanced")
             ];
             $n++;
         } else if (\Auth::user()->hasPermission('has-access-of-batches-section'))
@@ -253,7 +253,7 @@ class ExtendController extends Controller
             $list[$n] = [
                 'link' => self::$link."/advanced/batches",
                 'icon'=> 'database',
-                'label'=> 'Advanced'
+                'label'=> trans("vaahcms-sidebar-menu.advanced")
             ];
             $n++;
         }
@@ -263,17 +263,17 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon'=> 'images',
-                'label'=> 'Manage',
+                'label'=> trans("vaahcms-sidebar-menu.manage"),
                 'items' => [
                     [
                         'link' => self::$link."/manage/media",
                         'icon' => 'file',
-                        'label'=> 'Medias',
+                        'label'=> trans("vaahcms-sidebar-menu.medias")
                     ],
                     [
                         'link' => self::$link."/manage/taxonomies/",
                         'icon' => 'sitemap',
-                        'label'=> 'Taxonomies',
+                        'label'=> trans("vaahcms-sidebar-menu.taxonomies"),
                     ]
                 ]
             ];
@@ -468,6 +468,5 @@ class ExtendController extends Controller
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-
 
 }
