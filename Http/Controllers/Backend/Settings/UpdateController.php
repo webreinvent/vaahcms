@@ -95,7 +95,7 @@ class UpdateController extends Controller
         }
 
         try {
-            $response = $this->runCommand("composer", "update");
+           return $this->runCommand("composer", "update");
         } catch(\Exception $e) {
             $response['success'] = false;
 
