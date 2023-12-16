@@ -164,107 +164,94 @@ export const useUpdateStore = defineStore({
         },
         //---------------------------------------------------------------------
         onUpdateAfter(data, res) {
-            if(res && res.data && res.data.status){
-                this.status.download_latest_version = res.data.status;
+            if(data){
+                this.status.download_latest_version = 'success';
 
                 if(data.output)
                 {
                     this.term.writeln(data.output);
                 }
 
-                if(res.data.status === 'success'){
 
-                    if(!data){
-                        this.status.download_latest_version = 'failed';
-                        vaah().toastErrors(['Go to Root path','Run <b>Composer Update</b>']);
-                        return false;
-                    }
+                this.term.writeln('\nStep 2/4 : Public Publishable Assets');
+                this.term.writeln('-----------------------------------------');
+                this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=assets --force");
 
+                this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
 
-                    this.term.writeln('\nStep 2/4 : Public Publishable Assets');
-                    this.term.writeln('-----------------------------------------');
-                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=assets --force");
+                this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
 
-                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+                this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=seeds --force");
 
-                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+                this.status.publish_assets = 'pending';
+                vaah().ajax(
+                    this.ajax_url + '/publish',
+                    this.onPublishAfter,
+                );
 
-                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=seeds --force");
-
-                    this.status.publish_assets = 'pending';
-                    vaah().ajax(
-                        this.ajax_url + '/publish',
-                        this.onPublishAfter,
-                    );
-                }else{
-                    this.status.download_latest_version = 'failed';
-                }
+            }else{
+                this.status.download_latest_version = 'failed';
+                vaah().toastErrors(['Go to Root path','Run <b>Composer Update</b>']);
             }
 
 
         },
         //---------------------------------------------------------------------
         onPublishAfter(data, res) {
-            if(res && res.data && res.data.success){
+            if(data){
 
 
-                if(res.data.success === true){
-                    this.status.publish_assets = 'success';
-                    this.term.writeln('\nStep 3/4 : Running migrations & Seeds');
-                    this.term.writeln('-----------------------------------------');
-                    this.term.writeln("php artisan migrate");
-                    this.term.writeln("php artisan db:seed");
+                this.status.publish_assets = 'success';
+                this.term.writeln('\nStep 3/4 : Running migrations & Seeds');
+                this.term.writeln('-----------------------------------------');
+                this.term.writeln("php artisan migrate");
+                this.term.writeln("php artisan db:seed");
 
-                    this.status.migration_and_seeds = 'pending';
-                    vaah().ajax(
-                        this.ajax_url + '/run/migrations',
-                        this.onMigrationAndSeedsAfter,
-                    );
-                }else{
-                    this.status.publish_assets = 'failed';
-                }
+                this.status.migration_and_seeds = 'pending';
+                vaah().ajax(
+                    this.ajax_url + '/run/migrations',
+                    this.onMigrationAndSeedsAfter,
+                );
 
+
+            }else{
+                this.status.publish_assets = 'failed';
             }
         },
         //---------------------------------------------------------------------
         onMigrationAndSeedsAfter(data, res) {
-            if(res && res.data && res.data.success){
+            if(data){
 
+                this.status.migration_and_seeds = 'success';
+                this.term.writeln('\nStep 4/4 : Clear Cache');
+                this.term.writeln('-----------------------------------------');
+                this.term.writeln("php artisan cache:clear");
+                this.term.writeln("php artisan route:clear");
+                this.term.writeln("php artisan config:clear");
+                this.term.writeln("php artisan view:clear \n");
+                this.term.writeln('\u001b[32m' +"-----------------------------------------------------");
+                this.term.writeln(" Update was successful! Click on Reload button.");
+                this.term.writeln("-----------------------------------------------------");
 
-                if(res.data.success === true){
-                    this.status.migration_and_seeds = 'success';
-                    this.term.writeln('\nStep 4/4 : Clear Cache');
-                    this.term.writeln('-----------------------------------------');
-                    this.term.writeln("php artisan cache:clear");
-                    this.term.writeln("php artisan route:clear");
-                    this.term.writeln("php artisan config:clear");
-                    this.term.writeln("php artisan view:clear \n");
-                    this.term.writeln('\u001b[32m' +"-----------------------------------------------------");
-                    this.term.writeln(" Update was successful! Click on Reload button.");
-                    this.term.writeln("-----------------------------------------------------");
+                this.status.clear_cache = 'pending';
+                vaah().ajax(
+                    this.ajax_url + '/cache',
+                    this.onClearCacheAfter,
+                );
 
-                    this.status.clear_cache = 'pending';
-                    vaah().ajax(
-                        this.ajax_url + '/cache',
-                        this.onClearCacheAfter,
-                    );
-                }else{
-                    this.status.migration_and_seeds = 'failed';
-                }
-
+            }else{
+                this.status.migration_and_seeds = 'failed';
             }
         },
         //---------------------------------------------------------------------
         onClearCacheAfter (data, res) {
-            if(res && res.data && res.data.status){
-                this.status.clear_cache = res.data.status;
+            if(data){
+                this.status.clear_cache = 'success';
 
-                if(res.data.status === 'success'){
-                    this.status.page_refresh = 'pending';
-                    //location.reload();
-                }else{
-                    this.status.clear_cache = 'failed';
-                }
+                this.status.page_refresh = 'pending';
+
+            }else{
+                this.status.clear_cache = 'failed';
             }
         },
         //---------------------------------------------------------------------

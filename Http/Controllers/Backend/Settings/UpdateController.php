@@ -184,6 +184,7 @@ class UpdateController extends Controller
 
             $response['success'] = true;
         } catch (\Exception $e) {
+            $response['success'] = false;
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
@@ -213,6 +214,7 @@ class UpdateController extends Controller
             Notified::query()->where('vh_notification_id',$notification->id)->forceDelete();
 
             $response['success'] = true;
+            $response['data'] = 'Clear Cache';
         } catch (\Exception $e) {
 
             $response['success'] = false;
