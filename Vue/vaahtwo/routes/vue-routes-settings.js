@@ -8,7 +8,7 @@ import GeneralIndex from "../pages/settings/general/Index.vue";
 import EnvIndex from "../pages/settings/env/Index.vue";
 import UserSettingIndex from "../pages/settings/user-settings/Index.vue";
 import LocalizationIndex from "../pages/settings/localization/Index.vue";
-import NotificationsIndex from "../pages/settings/notifications/Index.vue";
+import NotificationsIndex from "../pages/settings/notifications/components/Index.vue";
 import UpdateIndex from "../pages/settings/update/Index.vue";
 // import BackupsIndex from "../pages/settings/backups/Index.vue";
 

@@ -2,8 +2,8 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
-import { vaah } from '../../../vaahvue/pinia/vaah'
-import {useNotificationStore} from "../../../stores/settings/store-notification";
+import { vaah } from '../../../../vaahvue/pinia/vaah'
+import {useNotificationStore} from "../../../../stores/settings/store-notification";
 
 const store = useNotificationStore();
 const route = useRoute();
@@ -24,53 +24,10 @@ onMounted(async () => {
 </script>
 <template>
     <Panel class="is-small">
-        <template class="p-1" #header>
-            <div class="flex flex-row">
-                <div>
-                    <b class="mr-1">Notifications</b>
-                </div>
-            </div>
-        </template>
 
-        <template #icons>
-            <div class="buttons">
-                <Button icon="pi pi-plus"
-                        label="Add"
-                        class="p-button-sm"
-                        @click="store.addNewNotification"
-                        data-testid="setting-notification_add_new"
-                />
-            </div>
-
-        </template>
-        <div class="grid">
-            <div class="col-12" v-if="store && store.assets && store.assets.notifications">
-                <div class="p-inputgroup">
-                    <Dropdown v-model="store.notification"
-                              :options="store.assets.notifications"
-                              optionLabel="name"
-                              optionValue="id"
-                              :filter="true"
-                              placeholder="Search"
-                              data-testid="notification-search"
-                              class="w-full"
-                              @change="store.callShowNotificationSettings()"
-                              inputClass="p-inputtext-sm"
-                    />
-
-                    <Button class="p-button-sm"
-                            label="Reset"
-                            @click="store.clearNotificationSearch"
-                            data-testid="notification-search_reset"
-                    />
-                </div>
-            </div>
-
-            <div class="col-12" v-if="store.show_new_item_form">
-                <Message severity="error" :closable="false">
-                    These are notifications needs to be send manually.
-                </Message>
-
+        <div class="
+        grid">
+            <div class="col-12" v-if="store.show_new_item_form && !store.active_notification">
                 <div class="p-inputgroup">
                     <inputText data-testid="setting-notification_add_new_value"
                                v-model="store.new_item.name"
@@ -79,7 +36,6 @@ onMounted(async () => {
                                class="w-full"
                                inputClass="p-inputtext-sm"
                     />
-
                     <Button icon="pi pi-save"
                             label="save"
                             @click="store.create"
@@ -91,23 +47,61 @@ onMounted(async () => {
         </div>
 
 
-        <div class="grid" v-if="!store.active_notification">
-            <div class="col">
-                <DataTable :value="store.notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm">
-                    <Column header="Notification Title">
+        <div v-if="!store.active_notification">
+            <div  v-if="store.list && store.list.data">
+                <DataTable :value="store.list.data" stripedRows dataKey="id"  responsiveLayout="scroll"
+                           v-model:selection="store.action.items"
+                           class="p-datatable-sm p-datatable-hoverable-rows">
+
+                    <Column selectionMode="multiple"
+
+                            headerStyle="width: 3em"
+                    />
+                    <Column  header="Notification Title">
                         <template #body="slotProps">
+                            <Badge v-if="slotProps.data.deleted_at"
+                                   value="Trashed"
+                                   severity="danger"
+                            />
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit">
+                    <Column field="Edit" class="text-right">
+                        <template #header>
+                            <span class="edit-column-header">Edit</span>
+                        </template>
                         <template #body="slotProps">
+                            <!--                            <div class="p-inputgroup">-->
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
+                                    v-if="!slotProps.data.deleted_at"
                                     @click="store.showNotificationSettings(slotProps.data)"
-                                    class=" p-button-sm"></Button>
+                                    class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
+
+                            <Button class="p-button-tiny p-button-danger p-button-text"
+                                    v-if="store.isViewLarge() && !slotProps.data.deleted_at"
+                                    @click="store.itemAction('trash', slotProps.data)"
+                                    v-tooltip.top="'Trash'"
+                                    icon="pi pi-trash"
+                                    data-testid="setting-notification_data_trash"
+                            ></Button>
+                            <Button class="p-button-tiny p-button-success p-button-text"
+                                    v-if="store.isViewLarge() && slotProps.data.deleted_at"
+                                    @click="store.itemAction('restore', slotProps.data)"
+                                    v-tooltip.top="'Restore'"
+                                    icon="pi pi-replay"
+                                    data-testid="setting-notification-list_data_restore"
+                            />
+                            <!--                            </div>-->
                         </template>
                     </Column>
                 </DataTable>
+                <Paginator v-model:rows="store.query.rows"
+                           :first="(store.query.page-1)*store.query.rows"
+                           :totalRecords="store.list.total"
+                           @page="store.paginate($event)"
+                           :rowsPerPageOptions="store.rows_per_page"
+                           class="bg-white-alpha-0 pt-2" />
             </div>
         </div>
         <div class="grid" v-else>
@@ -154,7 +148,7 @@ onMounted(async () => {
                             </div>
                         </div>
                     </template>
-                    <div class="mt-2 mb-2">
+                    <div class="p-inputgroup mt-2 mb-2">
                         <AutoComplete placeholder="Search"
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
@@ -291,7 +285,7 @@ onMounted(async () => {
                                                            data-testid="setting-notification_from_email"
                                                            class="p-inputtext-sm"
                                                 />
-                                                </div>
+                                            </div>
 
 
                                         </div>
@@ -303,8 +297,8 @@ onMounted(async () => {
                                              v-for="line in store.active_notification.contents.mail">
                                             <div  v-if="line.key == 'line' || line.key == 'greetings'">
                                                 <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">{{vaah().toLabel(line.key)}}</h5>
-                                                <div class="p-inputgroup">
+                                                    <h5 class="px-1 text-xs mb-1">{{vaah().toLabel(line.key)}}</h5>
+                                                    <div class="p-inputgroup">
                                                     <Textarea v-model="line.value"
                                                               v-if="line.key == 'line'"
                                                               :data-testid="'setting-notification_'+line.key"
@@ -312,19 +306,19 @@ onMounted(async () => {
                                                               class="p-inputtext-sm"
                                                     />
 
-                                                    <Textarea v-else
-                                                              v-model="line.value"
-                                                              :auto-resize="true"
-                                                              :data-testid="'setting-notification_'+line.key"
-                                                              class="w-full"
-                                                              placeholder="Content with variables"
-                                                    />
+                                                        <Textarea v-else
+                                                                  v-model="line.value"
+                                                                  :auto-resize="true"
+                                                                  :data-testid="'setting-notification_'+line.key"
+                                                                  class="w-full"
+                                                                  placeholder="Content with variables"
+                                                        />
 
-                                                    <Button icon="pi pi-trash"
-                                                            :data-testid="'setting-notification_remove_'+line.key"
-                                                            @click="store.removeContent(line,'mail')"
-                                                    />
-                                                </div>
+                                                        <Button icon="pi pi-trash"
+                                                                :data-testid="'setting-notification_remove_'+line.key"
+                                                                @click="store.removeContent(line,'mail')"
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -412,7 +406,7 @@ onMounted(async () => {
                                     <div v-else>
 
                                         <Message
-                                                 severity="primary" :closable="false" class="text-center pt-3">
+                                            severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
                                             <p>It looks like you haven't added any content to this section yet.</p>
 
@@ -628,4 +622,8 @@ onMounted(async () => {
     </Panel>
 </template>
 
-
+<style scoped>
+.edit-column-header {
+    margin-left: 28rem;
+}
+</style>

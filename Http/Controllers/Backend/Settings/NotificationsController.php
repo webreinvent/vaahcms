@@ -30,7 +30,7 @@ class NotificationsController extends Controller
         try {
             $data['notification_variables'] = vh_action('getNotificationVariables', null, 'array');
             $data['notification_actions'] = vh_action('getNotificationActions', null, 'array');
-            $data['notifications'] = Notification::getList($request);
+            $data['notifications'] = Notification::getList($request,$request->rows);
             $data['from'] = env('MAIL_FROM_NAME');
             $data['from_email'] = env('MAIL_FROM_ADDRESS');
             $data['help_urls'] = [
@@ -55,8 +55,24 @@ class NotificationsController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function getList(Request $request): JsonResponse
+
+    public function getList(Request $request)
+    {
+        try{
+            return Notification::getList($request);
+        }catch (\Exception $e){
+            $response = [];
+            $response['success'] = false;
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+            return $response;
+        }
+    }
+    public function getItemData(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
@@ -88,8 +104,50 @@ class NotificationsController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function createItem(Request $request): JsonResponse
+
+    public function getItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Notification::getItem($id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    public function createItem(Request $request)
+    {
+        try{
+            return Notification::createItem($request);
+        }catch (\Exception $e){
+            $response = [];
+            $response['success'] = false;
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+            return $response;
+        }
+    }
+
+    public function itemAction(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
@@ -99,36 +157,40 @@ class NotificationsController extends Controller
         }
 
         try {
-            $rules = array(
-                'name' => 'required',
-            );
-
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
-
-                $errors             = errorsToArray($validator->errors());
-                $response['success'] = false;
-                $response['errors'] = $errors;
-                return response()->json($response);
-            }
-
-            $data = [];
-
-            $item = new Notification();
-            $item->fill($request->all());
-            $item->slug = Str::slug($request->name);
-            $item->save();
-
-
-            $response['success'] = true;
-            $response['messages'][] = 'Saved';
-            $response['data']['item'] = $item;
-            $response['data']['list'] = Notification::getList($request);
+            $response = Notification::itemAction($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
-            if (env('APP_DEBUG')) {
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function listAction(Request $request): JsonResponse
+    {
+        if(!Auth::user()->hasPermission('can-manage-users') &&
+            !Auth::user()->hasPermission('can-update-users')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Notification::listAction($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
