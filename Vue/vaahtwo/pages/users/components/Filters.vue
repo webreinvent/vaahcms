@@ -1,8 +1,10 @@
 <script  setup>
 
 import { useUserStore } from '../../../stores/store-users'
+import { useRootStore } from "../../../stores/root";
 import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue'
 
+const root = useRootStore();
 const store = useUserStore();
 
 </script>
@@ -16,7 +18,7 @@ const store = useUserStore();
         >
             <VhFieldVertical >
                 <template #label>
-                    <b>Sort By:</b>
+                    <b>{{root.assets.language_string.crud_actions.filter_sort_by}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -24,21 +26,21 @@ const store = useUserStore();
                                  value=""
                                  data-testid="user-filter_sort_none"
                                  v-model="store.query.filter.sort" />
-                    <label for="sort-none">None</label>
+                    <label for="sort-none">{{root.assets.language_string.crud_actions.sort_by_none}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-ascending"
                                  value="updated_at"
                                  data-testid="user-filter_sort_asc"
                                  v-model="store.query.filter.sort" />
-                    <label for="sort-ascending">Updated (Ascending)</label>
+                    <label for="sort-ascending">{{root.assets.language_string.crud_actions.sort_by_updated_ascending}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
                                  value="updated_at:desc"
                                  data-testid="user-filter_sort_desc"
                                  v-model="store.query.filter.sort" />
-                    <label for="sort-descending">Updated (Descending)</label>
+                    <label for="sort-descending">{{root.assets.language_string.crud_actions.sort_by_updated_descending}}</label>
                 </div>
 
             </VhFieldVertical>
@@ -47,7 +49,7 @@ const store = useUserStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Is Active:</b>
+                    <b>{{root.assets.language_string.crud_actions.filter_is_active}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -55,28 +57,28 @@ const store = useUserStore();
                                  value="null"
                                  data-testid="user-filter_active_all"
                                  v-model="store.query.filter.is_active" />
-                    <label for="active-all">All</label>
+                    <label for="active-all">{{root.assets.language_string.crud_actions.filter_is_active_all}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="active-true"
                                  value="true"
                                  data-testid="user-filter_active_only"
                                  v-model="store.query.filter.is_active" />
-                    <label for="active-true">Only Active</label>
+                    <label for="active-true">{{root.assets.language_string.crud_actions.filter_only_active}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="active-false"
                                  value="false"
                                  data-testid="user-filter_inactive_only"
                                  v-model="store.query.filter.is_active" />
-                    <label for="active-false">Only Inactive</label>
+                    <label for="active-false">{{root.assets.language_string.crud_actions.filter_only_inactive}}</label>
                 </div>
 
             </VhFieldVertical>
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Trashed:</b>
+                    <b>{{root.assets.language_string.crud_actions.filter_trashed}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -84,21 +86,21 @@ const store = useUserStore();
                                  value=""
                                  data-testid="user-filter_trash_exclude"
                                  v-model="store.query.filter.trashed" />
-                    <label for="trashed-exclude">Exclude Trashed</label>
+                    <label for="trashed-exclude">{{root.assets.language_string.crud_actions.filter_exclude_trashed}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="trashed-include"
                                  value="include"
                                  data-testid="user-filter_trash_include"
                                  v-model="store.query.filter.trashed" />
-                    <label for="trashed-include">Include Trashed</label>
+                    <label for="trashed-include">{{root.assets.language_string.crud_actions.filter_include_trashed}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="trashed-only"
                                  value="only"
                                  data-testid="user-filter_trash_only"
                                  v-model="store.query.filter.trashed" />
-                    <label for="trashed-only">Only Trashed</label>
+                    <label for="trashed-only">{{root.assets.language_string.crud_actions.filter_only_trashed}}</label>
                 </div>
 
             </VhFieldVertical>
