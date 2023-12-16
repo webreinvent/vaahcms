@@ -2,9 +2,11 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../../stores/store-users'
+import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
+const root = useRootStore();
 const store = useUserStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -74,7 +76,7 @@ const toggleItemMenu = (event) => {
                             data-testid="user-item_id"
                     />
 
-                    <Button label="Edit"
+                    <Button :label="root.assets.language_string.crud_actions.view_edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             class="p-button-sm"
@@ -115,11 +117,11 @@ const toggleItemMenu = (event) => {
 
                     <div class="flex align-items-center justify-content-between">
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.crud_actions.view_restore"
                                     class="p-button-sm"
                                     data-testid="user-item_restore"
                                     @click="store.itemAction('restore')"
@@ -136,83 +138,83 @@ const toggleItemMenu = (event) => {
                                 :image="store.item.avatar"
                                 alt="Avatar"
                         />
-                            <template v-for="(value, column) in store.item ">
+                        <template v-for="(value, column) in store.item ">
 
-                                <template v-if="column === 'avatar_url' || column === 'avatar' || column === 'country_code'" />
-                                <template v-else-if="column === 'created_by' || column === 'updated_by'" />
+                            <template v-if="column === 'avatar_url' || column === 'avatar' || column === 'country_code'" />
+                            <template v-else-if="column === 'created_by' || column === 'updated_by'" />
 
-                                <template v-else-if="column === 'id' ||
+                            <template v-else-if="column === 'id' ||
                                                      column === 'uuid' ||
                                                      column === 'email' ||
                                                      column === 'username' ||
                                                      column === 'phone' ||
                                                      column === 'alternate_email' ||
                                                      column === 'registration_id'">
-                                    <VhViewRow :label="column"
-                                               :value="value"
-                                               :data-testid="'user-item_copy_'+column"
-                                               :can_copy="true"
-                                    />
-                                </template>
-
-                                <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null && !store.isHidden(column))"
-                                >
-                                    <VhViewRow :label="column"
-                                               :value="value"
-                                               type="user"
-                                    />
-                                </template>
-
-                                <template v-else-if="column === 'is_active'">
-                                    <VhViewRow :label="column"
-                                               :value="value"
-                                               type="yes-no"
-                                    />
-                                </template>
-                                <template v-else-if="column === 'bio' && !store.isHidden('bio')">
-                                    <tr>
-                                        <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
-                                        <td>
-                                            <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
-                                                    label="View"
-                                                    icon="pi pi-eye"
-                                                    data-testid="user-item_bio_modal"
-                                                    @click="store.displayBioModal(value)"
-                                                    v-if="value"
-                                            />
-                                        </td>
-                                    </tr>
-                                </template>
-
-                                <template v-else-if="column === 'meta'">
-                                    <tr>
-                                        <td><b>Meta</b></td>
-                                        <td v-if="value">
-                                            <Button icon="pi pi-eye"
-                                                    label="view"
-                                                    class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
-                                                    @click="store.openModal(value)"
-                                                    data-testid="register-open_meta_modal"
-                                            />
-                                        </td>
-                                    </tr>
-
-                                    <Dialog header="Meta"
-                                            v-model:visible="store.display_meta_modal"
-                                            :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-                                            :style="{width: '50vw'}" :modal="true"
-                                    >
-                                        <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
-                                    </Dialog>
-
-                                </template>
-                                <template v-else>
-                                    <VhViewRow :label="column"
-                                               :value="value"
-                                               v-if="!store.isHidden(column)"
-                                    />
-                                </template>
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           :data-testid="'user-item_copy_'+column"
+                                           :can_copy="true"
+                                />
                             </template>
+
+                            <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null && !store.isHidden(column))"
+                            >
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           type="user"
+                                />
+                            </template>
+
+                            <template v-else-if="column === 'is_active'">
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           type="yes-no"
+                                />
+                            </template>
+                            <template v-else-if="column === 'bio' && !store.isHidden('bio')">
+                                <tr>
+                                    <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
+                                    <td>
+                                        <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
+                                                label="View"
+                                                icon="pi pi-eye"
+                                                data-testid="user-item_bio_modal"
+                                                @click="store.displayBioModal(value)"
+                                                v-if="value"
+                                        />
+                                    </td>
+                                </tr>
+                            </template>
+
+                            <template v-else-if="column === 'meta'">
+                                <tr>
+                                    <td><b>Meta</b></td>
+                                    <td v-if="value">
+                                        <Button icon="pi pi-eye"
+                                                label="view"
+                                                class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
+                                                @click="store.openModal(value)"
+                                                data-testid="register-open_meta_modal"
+                                        />
+                                    </td>
+                                </tr>
+
+                                <Dialog header="Meta"
+                                        v-model:visible="store.display_meta_modal"
+                                        :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                        :style="{width: '50vw'}" :modal="true"
+                                >
+                                    <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
+                                </Dialog>
+
+                            </template>
+                            <template v-else>
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           v-if="!store.isHidden(column)"
+                                />
+                            </template>
+                        </template>
                         </tbody>
                     </table>
                 </div>
