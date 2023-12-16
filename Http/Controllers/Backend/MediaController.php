@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use WebReinvent\VaahCms\Models\Media;
+use WebReinvent\VaahCms\Models\Setting;
 
 class MediaController extends Controller
 {
@@ -59,6 +60,15 @@ class MediaController extends Controller
 
             $data['bulk_actions'] = vh_general_bulk_actions();
             $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
+            $upload_allowed_file_size = Setting::getValueByKey('upload_allowed_file_size');
+//            $upload_allowed_file_size_unit = Setting::getValueByKey('upload_allowed_file_size_unit');
+
+//            if ($upload_allowed_file_size_unit === 'MB') {
+//                $max_file_size = $upload_allowed_file_size * (1024 * 1024);
+//            } else {
+//                $max_file_size = $upload_allowed_file_size*1024;
+//            }
+            $data['max_file_size'] = $upload_allowed_file_size* (1024 * 1024);
             $data['download_url'] = route('vh.frontend.media.download').'/';
             $data['date'] = $year_and_month;
 

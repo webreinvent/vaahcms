@@ -117,16 +117,6 @@ function removeFile(e){
 
 }
 
-function selectFile (data){
-
-    let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
-    // store.item[props.store_label] = null;
-    upload_refs.value.files = [];
-    upload_refs.value.uploadedFiles = [];
-    upload_refs.value.files[0] = temp_file;
-
-}
-
 
 </script>
 
@@ -141,7 +131,6 @@ function selectFile (data){
                 :customUpload="true"
                 :accept="props.file_type_accept"
                 @click="store.openUploader($event)"
-                @select="selectFile"
                 @uploader="uploadFile"
                 @removeUploadedFile="removeFile"
                 @clear="removeFile"

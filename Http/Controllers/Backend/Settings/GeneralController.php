@@ -96,7 +96,7 @@ class GeneralController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+   // ----------------------------------------------------------
     public function storeSiteSettings(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -108,6 +108,9 @@ class GeneralController extends Controller
 
         try {
             foreach ($request->list as $key => $value){
+                if ($key === 'upload_allowed_file_size') {
+                    $value = ($value === null) ? 5 : $value;
+                }
                 $setting = Setting::query()
                     ->where('category', 'global')
                     ->where('key', $key)
@@ -126,6 +129,8 @@ class GeneralController extends Controller
                         ->update(['value' => $value]);
                 }
             }
+
+
 
             $response['success'] = true;
             $response['data'][] = '';

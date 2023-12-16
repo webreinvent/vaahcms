@@ -118,6 +118,19 @@ const store = useGeneralStore();
                                   data-testid="general-allowed_files"
                                   placeholder="Search"
                     />
+
+                    <h5 class="p-1 text-xs mb-1">Allowed file size for upload( in MB)</h5>
+                    <div class="p-inputgroup col-6 p-0">
+                        <InputNumber v-model="store.list.upload_allowed_file_size"
+                                     class="p-inputtext-sm h-2rem"
+                                     showButtons
+                                     mode="decimal"
+                                     data-testid="general-allowed_file_size"
+                                     placeholder="Default 5MB"
+                                     :min="1"
+                        />
+
+                    </div>
                 </div>
 
                 <div class="col-6 p-fluid">
