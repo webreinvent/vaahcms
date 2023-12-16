@@ -196,14 +196,5 @@ class Setting extends Model {
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    public static function getValueByKey($key)
-    {
-        $setting = Setting::where('key', $key)->first();
 
-        if ($setting) {
-            return $setting->value;
-        }
-
-        return null;
-    }
 }

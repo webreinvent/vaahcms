@@ -108,9 +108,6 @@ class GeneralController extends Controller
 
         try {
             foreach ($request->list as $key => $value){
-                if ($key === 'upload_allowed_file_size') {
-                    $value = ($value === null) ? 5 : $value;
-                }
                 $setting = Setting::query()
                     ->where('category', 'global')
                     ->where('key', $key)
