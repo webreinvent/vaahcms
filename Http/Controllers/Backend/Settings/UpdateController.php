@@ -214,7 +214,7 @@ class UpdateController extends Controller
             Notified::query()->where('vh_notification_id',$notification->id)->forceDelete();
 
             $response['success'] = true;
-            $response['data'] = 'Clear Cache';
+            $response['data'] = 'Cache cleared.';
         } catch (\Exception $e) {
 
             $response['success'] = false;
