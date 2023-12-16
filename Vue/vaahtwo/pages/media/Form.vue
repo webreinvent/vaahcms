@@ -109,6 +109,7 @@ const toggleFormMenu = (event) => {
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
                                       :auto_upload="true"
+                                      :file_type_accept="store.assets.allowed_file_types"
                                       :uploadUrl="store.ajax_url + '/upload'" >
                         </FileUploader>
                     </div>

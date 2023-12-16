@@ -52,7 +52,7 @@ const props = defineProps({
     },
     file_type_accept:{
         type: String,
-        default: 'image/*'
+        default: null
     },
     placeholder:{
         type: String,
@@ -139,6 +139,7 @@ function selectFile (data){
                 :mode="is_basic?'basic':'advanced'"
                 :multiple="can_select_multiple"
                 :customUpload="true"
+                :accept="props.file_type_accept"
                 @click="store.openUploader($event)"
                 @select="selectFile"
                 @uploader="uploadFile"
