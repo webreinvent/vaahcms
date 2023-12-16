@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use WebReinvent\VaahCms\Models\Media;
-use WebReinvent\VaahCms\Models\Setting;
 
 class MediaController extends Controller
 {
