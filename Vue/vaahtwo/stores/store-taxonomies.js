@@ -1,11 +1,10 @@
-import {watch,ref} from 'vue'
+import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Taxonomy';
-
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/manage/taxonomies";
@@ -575,11 +574,6 @@ export const useTaxonomyStore = defineStore({
             await this.reload();
         },
         //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
-        //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
@@ -650,13 +644,6 @@ export const useTaxonomyStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
         async resetQuery()
         {
             //reset query strings
@@ -675,11 +662,6 @@ export const useTaxonomyStore = defineStore({
             this.query.page = this.page;
             this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
-        },
-        //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'taxonomies.index'})
         },
         //---------------------------------------------------------------------
         toList()
@@ -1085,7 +1067,6 @@ export const useTaxonomyStore = defineStore({
     }
 
 });
-
 
 
 // Pinia hot reload

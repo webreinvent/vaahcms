@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import { useRootStore } from "../../stores/root";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
