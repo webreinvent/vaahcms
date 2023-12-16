@@ -163,6 +163,8 @@ class PublicController extends Controller
             $message = 'Login Successful';
 
             $response = [];
+            $user = User::find(Auth::id());
+            User::updateTimeZone($request->timezone,$user);
 
             $response['success'] = true;
             $response['messages'][] = $message;
