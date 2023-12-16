@@ -1,5 +1,5 @@
 <script  setup>
-import {ref, reactive, watch, onMounted} from 'vue';
+import {ref, onMounted} from 'vue';
 import { useMediaStore } from '../../../stores/store-media'
 
 import Filters from './Filters.vue'

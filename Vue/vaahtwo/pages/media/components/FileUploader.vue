@@ -1,6 +1,5 @@
 <script setup>
-import {reactive, ref, watch } from 'vue';
-import {vaah} from '../../../vaahvue/pinia/vaah'
+import {reactive, ref} from 'vue';
 import { useMediaStore } from '../../../stores/store-media'
 import axios from 'axios';
 /**----------------------
@@ -64,13 +63,6 @@ const props = defineProps({
     }
 });
 
-
-// watch(store.reset_uploader, async (new_val, old_val) => {
-//     console.log('watch',new_val);
-//     upload_refs.value.files = [];
-//     upload_refs.value.uploadedFiles = [];
-// })
-
 /**----------------------
  * Data
  */
@@ -80,8 +72,6 @@ const emit = defineEmits();
  * Methods
  */
 function uploadFile(e){
-
-
 
     let uploaded_files = upload_refs.value.files;
 
@@ -111,16 +101,10 @@ function uploadFile(e){
     })
 
 }
-function removeFile(e){
-
-     // store.item[props.store_label] = null;
-
-}
 
 function selectFile (data){
 
     let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
-    // store.item[props.store_label] = null;
     upload_refs.value.files = [];
     upload_refs.value.uploadedFiles = [];
     upload_refs.value.files[0] = temp_file;
@@ -142,8 +126,6 @@ function selectFile (data){
                 @click="store.openUploader($event)"
                 @select="selectFile"
                 @uploader="uploadFile"
-                @removeUploadedFile="removeFile"
-                @clear="removeFile"
                 :showUploadButton="!auto_upload"
                 :showCancelButton="!auto_upload"
                 :maxFileSize="props.max_file_size"

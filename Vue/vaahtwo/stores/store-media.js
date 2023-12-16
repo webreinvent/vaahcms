@@ -529,14 +529,6 @@ export const useMediaStore = defineStore({
                 });
             }
         },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        onItemSelection(items)
-        {
-            this.action.items = items;
-        },
         //---------------------------------------------------------------------
         setActiveItemAsEmpty()
         {
@@ -608,13 +600,6 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async clearSearch()
-        {
-            this.query.filter.q = null;
-            await this.updateUrlQueryString(this.query);
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
         async resetQuery()
         {
             //reset query strings
@@ -634,11 +619,6 @@ export const useMediaStore = defineStore({
             this.query.page = this.page;
             this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
-        },
-        //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'media.index'})
         },
         //---------------------------------------------------------------------
         toList()
