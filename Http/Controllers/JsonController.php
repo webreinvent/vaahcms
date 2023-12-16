@@ -117,6 +117,80 @@ class JsonController extends Controller
             $data['extended_views'] = $this->getExtendedViews();
 
         }
+        //---------------------------------------------------
+
+        $data['language_string']['users'] = [
+            "users_title" => trans("vaahcms-user.users_title"),
+            "view_role_active_all_roles" => trans("vaahcms-user.view_role_active_all_roles"),
+            "view_role_inactive_all_roles" => trans("vaahcms-user.view_role_inactive_all_roles"),
+            "view_generate_new_api_token" => trans("vaahcms-user.view_generate_new_api_token"),
+            "view_role_yes" => trans("vaahcms-user.view_role_yes"),
+            "view_role_no" => trans("vaahcms-user.view_role_no"),
+            "view_role_text_view" => trans("vaahcms-user.view_role_text_view"),
+            "view_role_placeholder_search" => trans("vaahcms-user.view_role_placeholder_search"),
+            "view_role_reset_button" => trans("vaahcms-user.view_role_reset_button"),
+            "toolkit_text_impersonate" => trans("vaahcms-user.toolkit_text_impersonate"),
+        ];
+
+        //---------------------------------------------------
+
+        $data['language_string']['crud_actions'] = [
+            "create_button" => trans("vaahcms-crud-action.create_button"),
+            "form_text_create" => trans("vaahcms-crud-action.form_text_create"),
+            "placeholder_search" => trans("vaahcms-crud-action.placeholder_search"),
+            "filters_button" => trans("vaahcms-crud-action.filters_button"),
+            "reset_button" => trans("vaahcms-crud-action.reset_button"),
+            "bulk_activate" => trans("vaahcms-crud-action.bulk_activate"),
+            "bulk_deactivate" => trans("vaahcms-crud-action.bulk_deactivate"),
+            "mark_all_as_active" => trans("vaahcms-crud-action.mark_all_as_active"),
+            "mark_all_as_inactive" => trans("vaahcms-crud-action.mark_all_as_inactive"),
+            "bulk_trash" => trans("vaahcms-crud-action.bulk_trash"),
+            "trash_all" => trans("vaahcms-crud-action.trash_all"),
+            "bulk_restore" => trans("vaahcms-crud-action.bulk_restore"),
+            "restore_all" => trans("vaahcms-crud-action.restore_all"),
+            "bulk_delete" => trans("vaahcms-crud-action.bulk_delete"),
+            "delete_all" => trans("vaahcms-crud-action.delete_all"),
+            "filter_sort_by" => trans("vaahcms-crud-action.filter_sort_by"),
+            "sort_by_none" => trans("vaahcms-crud-action.sort_by_none"),
+            "sort_by_updated_ascending" => trans("vaahcms-crud-action.sort_by_updated_ascending"),
+            "sort_by_updated_descending" => trans("vaahcms-crud-action.sort_by_updated_descending"),
+            "filter_trashed" => trans("vaahcms-crud-action.filter_trashed"),
+            "filter_exclude_trashed" => trans("vaahcms-crud-action.filter_exclude_trashed"),
+            "filter_include_trashed" => trans("vaahcms-crud-action.filter_include_trashed"),
+            "filter_only_trashed" => trans("vaahcms-crud-action.filter_only_trashed"),
+            "filter_status" => trans("vaahcms-crud-action.filter_status"),
+            "filter_is_active" => trans("vaahcms-crud-action.filter_is_active"),
+            "filter_is_active_all" => trans("vaahcms-crud-action.filter_is_active_all"),
+            "filter_only_active" => trans("vaahcms-crud-action.filter_only_active"),
+            "filter_only_inactive" => trans("vaahcms-crud-action.filter_only_inactive"),
+            "edit_button" => trans("vaahcms-crud-action.edit_button"),
+            "save_button" => trans("vaahcms-crud-action.save_button"),
+            "toolkit_text_update" => trans("vaahcms-crud-action.toolkit_text_update"),
+            "toolkit_text_view" => trans("vaahcms-crud-action.toolkit_text_view"),
+            "toolkit_text_trash" => trans("vaahcms-crud-action.toolkit_text_trash"),
+            "toolkit_text_restore" => trans("vaahcms-crud-action.toolkit_text_restore"),
+            "toolkit_text_edit" => trans("vaahcms-crud-action.toolkit_text_edit"),
+            "toolkit_text_copy_slug" => trans("vaahcms-crud-action.toolkit_text_copy_slug"),
+            "form_save_and_close" => trans("vaahcms-crud-action.form_save_and_close"),
+            "form_save_and_clone" => trans("vaahcms-crud-action.form_save_and_clone"),
+            "form_save_and_new" => trans("vaahcms-crud-action.form_save_and_new"),
+            "form_create_and_new" => trans("vaahcms-crud-action.form_create_and_new"),
+            "form_create_and_close" => trans("vaahcms-crud-action.form_create_and_close"),
+            "form_create_and_clone" => trans("vaahcms-crud-action.form_create_and_clone"),
+            "form_fill" => trans("vaahcms-crud-action.form_fill"),
+            "form_text_deleted" => trans("vaahcms-crud-action.form_text_deleted"),
+            "form_trash" => trans("vaahcms-crud-action.form_trash"),
+            "form_delete" => trans("vaahcms-crud-action.form_delete"),
+            "form_reset" => trans("vaahcms-crud-action.form_reset"),
+            "form_text_restore" => trans("vaahcms-crud-action.form_text_restore"),
+            "view_edit" => trans("vaahcms-crud-action.view_edit"),
+            "view_trash" => trans("vaahcms-crud-action.view_trash"),
+            "view_delete" => trans("vaahcms-crud-action.view_delete"),
+            "view_deleted" => trans("vaahcms-crud-action.view_deleted"),
+            "view_restore" => trans("vaahcms-crud-action.view_restore"),
+        ];
+
+
 
         $data['urls']['public'] = config('settings.global.backend_homepage_link');
         $data['urls']['theme'] = vh_get_backend_theme_url();
