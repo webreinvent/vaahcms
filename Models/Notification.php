@@ -155,12 +155,6 @@ class Notification extends Model {
     {
         $response = [];
 
-        try {
-            if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-                $response['success'] = false;
-                $response['errors'][] = trans("vaahcms::messages.permission_denied");
-                return $response;
-            }
 
             $input = $request->item;
             $rows = $request->rows;
@@ -186,18 +180,8 @@ class Notification extends Model {
             $response['success'] = true;
             $response['messages'][] = 'Saved';
             $response['data']['item'] = $item;
-        } catch (\Exception $e) {
-            $response['success'] = false;
+            return $response;
 
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return $response;
     }
 
     //-------------------------------------------------

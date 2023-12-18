@@ -104,8 +104,6 @@ export const useNotificationStore = defineStore({
             /**
              * Update with view and list css column number
              */
-            // this.setViewAndWidth(route.name);
-            // this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -201,7 +199,6 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         async afterGetList (data, res) {
 
-            // this.is_btn_loading = false;
             this.query.recount = null;
 
             if (data) {
@@ -291,7 +288,7 @@ export const useNotificationStore = defineStore({
             };
 
             vaah().ajax(
-                this.ajax_url + '/list',
+                this.ajax_url + '/get-item',
                 this.afterShowNotificationSettings,
                 options
             );
@@ -707,10 +704,6 @@ export const useNotificationStore = defineStore({
             if (data) {
                 this.item = data;
                 await this.getList();
-                // await this.formActionAfter();
-                // this.getItemMenu();
-
-
             }
 
         },

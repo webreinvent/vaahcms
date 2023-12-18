@@ -142,7 +142,7 @@ Route::group(
         Route::get('/assets', 'NotificationsController@getAssets')
             ->name('vh.backend.settings.notifications.assets');
         //------------------------------------------------
-        Route::post('/list', 'NotificationsController@getItemData')
+        Route::post('/get-item', 'NotificationsController@getItemData')
             ->name('vh.backend.settings.notifications.getItemData');
         //------------------------------------------------
         Route::post('/create', 'NotificationsController@createItem')

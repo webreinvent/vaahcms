@@ -106,6 +106,12 @@ class NotificationsController extends Controller
 
     public function createItem(Request $request)
     {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+        $response['success'] = false;
+        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+        return response()->json($response);
+    }
         try{
             return Notification::createItem($request);
         }catch (\Exception $e){
@@ -149,9 +155,7 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-manage-users') &&
-            !Auth::user()->hasPermission('can-update-users')
-        ) {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
