@@ -57,6 +57,12 @@ class NotificationsController extends Controller
 
     public function getList(Request $request)
     {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
         try{
             return Notification::getList($request);
         }catch (\Exception $e){

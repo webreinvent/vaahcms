@@ -654,6 +654,7 @@ export const useNotificationStore = defineStore({
             this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
+        //---------------------------------------------------------------------
 
         itemAction(type, item=null){
 
@@ -715,6 +716,8 @@ export const useNotificationStore = defineStore({
         {
             return this.view === 'large';
         },
+//---------------------------------------------------------------------------
+
         async listAction(type = null){
             if(!type && this.action.type)
             {
