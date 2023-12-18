@@ -7,7 +7,6 @@ import {useUserSettingStore} from "./settings/store-user_setting";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\User';
 
-
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/users";
 
@@ -395,16 +394,16 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_string.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_string.general.select_records]);
                 return false;
             }
 
@@ -790,9 +789,10 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         confirmDelete()
         {
+            const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select a record']);
+                vaah().toastErrors([root.assets.language_string.general.select_a_record]);
                 return false;
             }
             this.action.type = 'delete';
