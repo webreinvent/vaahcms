@@ -1786,12 +1786,25 @@ class UserBase extends Authenticatable
 
         );
 
+        $messages = array(
+            'email.required' => 'The :attribute field is required.',
+            'email.email' => 'The :attribute must be a valid email address.',
+            'email.max' => 'The :attribute may not be greater than :max characters.',
+            'first_name.required' => 'The :attribute field is required.',
+            'first_name.max' => 'The :attribute may not be greater than :max characters.',
+            'status.required' => 'The :attribute field is required.',
+            'is_active.required' => 'The :attribute field is required.',
+            'foreign_user_id.numeric' => 'The :attribute must be a number.',
+            'foreign_user_id.numeric.min' => 'The :attribute must be at least :min.',
+
+        );
+
         if(isset($inputs['username']))
         {
             $rules['username'] = 'required';
         }
 
-        $validator = \Validator::make($inputs,$rules);
+        $validator = \Validator::make($inputs,$rules,$messages);
 
         if ( $validator->fails() ) {
 
