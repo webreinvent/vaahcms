@@ -212,6 +212,7 @@
 
 
 
+
     {
         "locale_code_iso_639": "en",
         "category": "localization",
@@ -577,6 +578,19 @@
         "name": "Incorrect reset password code",
         "content": "Incorrect reset password code"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "login",
+        "name": "Inactive account",
+        "content": "Inactive account"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "login",
+        "name": "Invalid credentials",
+        "content": "Invalid credentials"
+    },
+
 
 
     {
@@ -2944,6 +2958,67 @@
         "name": "Select an action type",
         "content": "Seleccione un tipo de acción"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Permission slug",
+        "content": "Permiso slug"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Super Admin Hint Message",
+        "content": "El superadministrador tiene todos los permisos de forma predeterminada."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "No Permission exist with slug",
+        "content": "No existe permiso con slug"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Permission exist hint message",
+        "content": "Verifique que migrations y seeds estén ejecutados correctamente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Permission active hint message",
+        "content": "Habilite el estado del permiso para que se active desde el panel de control backend/admin."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "is active for",
+        "content": "Está activo para"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "is not active for",
+        "content": "No está activo para"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record not found with ID",
+        "content": "Registro no encontrado con ID."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select IDs",
+        "content": "Seleccionar ID"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select status",
+        "content": "Seleccionar estado"
+    },
+
 
 
     {
@@ -3243,6 +3318,18 @@
         "name": "Impersonate permission denied",
         "content": "Permiso denegado. El usuario debe tener\n puedo-iniciar-sesión-en-backend\n permiso en el rol especificado del usuario."
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "Avatar updated",
+        "content": "Avatar actualizado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "Avatar removed",
+        "content": "Avatar eliminado."
+    },
 
 
 
@@ -3295,6 +3382,19 @@
         "name": "Incorrect reset password code",
         "content": "Código de restablecimiento de contraseña incorrecto."
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "login",
+        "name": "Inactive account",
+        "content": "Cuenta inactiva"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "login",
+        "name": "Invalid credentials",
+        "content": "Credenciales no válidas"
+    },
+
 
 
     {
@@ -5541,7 +5641,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Description Limit",
-        "content": "Le caractère de description n'est pas supérieur à 255."
+        "content": "Le caractère de description n\\'est pas supérieur à 255."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5553,7 +5653,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Detail Limit",
-        "content": "Le caractère de détail n'est pas supérieur à 255."
+        "content": "Le caractère de détail n\\'est pas supérieur à 255."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5565,13 +5665,13 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Category Limit",
-        "content": "Le caractère de catégorie n'est pas supérieur à 150."
+        "content": "Le caractère de catégorie n\\'est pas supérieur à 150."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Is Active Required",
-        "content": "L'option est actif est obligatoire."
+        "content": "L\\'option est actif est obligatoire."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5589,7 +5689,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Action successful",
-        "content": "L'action a réussi."
+        "content": "L\\'action a réussi."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5601,7 +5701,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Something went wrong",
-        "content": "Quelque chose s'est mal passé."
+        "content": "Quelque chose s\\'est mal passé."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5657,6 +5757,67 @@
         "name": "Select an action type",
         "content": "Sélectionnez un type d\\'action"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Permission slug",
+        "content": "Autorisation slug"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Super Admin Hint Message",
+        "content": "Le super administrateur dispose de toutes les autorisations par défaut."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "No Permission exist with slug",
+        "content": "Aucune autorisation n\\'existe avec slug"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Permission exist hint message",
+        "content": "Vérifiez que les migrations et seeds fonctionnent correctement."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Permission active hint message",
+        "content": "Activez l’état d’autorisation sur actif à partir du panneau de configuration backend/admin."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "is active for",
+        "content": "est actif pour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "is not active for",
+        "content": "n\\'est pas actif pour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record not found with ID",
+        "content": "Enregistrement introuvable avec ID."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select IDs",
+        "content": "Sélectionnez les identifiants"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select status",
+        "content": "Sélectionnez le statut"
+    },
+
 
 
 
@@ -5721,7 +5882,7 @@
         "locale_code_iso_639": "fr",
         "category": "media",
         "name": "Download url associate",
-        "content": "L'URL de téléchargement est associée à d'autres médias."
+        "content": "L\\'URL de téléchargement est associée à d\\'autres médias."
     },
 
     {
@@ -5914,7 +6075,7 @@
         "locale_code_iso_639": "fr",
         "category": "user",
         "name": "Username Limit",
-        "content": "Le caractère du nom d'utilisateur ne dépasse pas 20."
+        "content": "Le caractère du nom d\\'utilisateur ne dépasse pas 20."
     },
     {
         "locale_code_iso_639": "fr",
@@ -5958,6 +6119,19 @@
         "name": "Impersonate permission denied",
         "content": "Permission refusée. L\\'utilisateur doit avoir\n peut-se connecter dans le backend\n autorisation dans le rôle spécifié par l\\'utilisateur."
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "Avatar updated",
+        "content": "Avatar mis à jour."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "Avatar removed",
+        "content": "Avatar supprimé."
+    },
+
 
 
 
@@ -5990,13 +6164,13 @@
         "locale_code_iso_639": "fr",
         "category": "login",
         "name": "Email or Username Required",
-        "content": "Le champ email ou nom d'utilisateur est obligatoire."
+        "content": "Le champ email ou nom d\\'utilisateur est obligatoire."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "login",
         "name": "Email or Username Limit",
-        "content": "L'e-mail ou le nom d'utilisateur ne doit pas dépasser 150 caractères."
+        "content": "L'e-mail ou le nom d\\'utilisateur ne doit pas dépasser 150 caractères."
     },
     {
         "locale_code_iso_639": "fr",
@@ -6010,6 +6184,23 @@
         "name": "Incorrect reset password code",
         "content": "Code de mot de passe de réinitialisation incorrect"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "login",
+        "name": "Inactive account",
+        "content": "Compte inactif"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "login",
+        "name": "Invalid credentials",
+        "content": "les informations d\\'identification invalides"
+    },
+
+
+
+
+
 
     {
         "locale_code_iso_639": "fr",
