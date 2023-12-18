@@ -250,8 +250,6 @@ class Notification extends Model {
     //-------------------------------------------------
     public static function getList($request) : array
     {
-//        $list = static::orderBy('created_at', 'desc');
-
         $rows = config('vaahcms.per_page');
 
         if ($request->has('rows')) {
@@ -304,29 +302,7 @@ class Notification extends Model {
         if (!$notification) {
             return response()->json(['message' => 'Notification not found'], 404);
         }
-
-        $vias = [
-            'mail',
-            'sms',
-            'push',
-            'frontend',
-            'backend',
-        ];
-
-        foreach ($vias as $via) {
-            if ($notification->$via) {
-                if ($type === 'trash') {
-                    $notification->$via->contents()->where('via', $via)->delete();
-                } elseif ($type === 'restore') {
-                    if ($notification->withTrashed()) {
-                        $notification->$via->contents()->where('via', $via)->restore();
-                    }
-                }
-            }
-        }
-
-        NotificationContent::where('vh_notification_id', $notification->id)->delete();
-
+        $response = [];
         if ($type === 'trash') {
             $notification->delete();
             $message = 'Record has been deleted';
@@ -348,41 +324,7 @@ class Notification extends Model {
         return $response;
     }
 
-
-
-
-
-
-    //-------------------------------------------------
-    public static function getItem($id,$excluded_columns = [])
-    {
-
-        $item = self::where('id', $id)->with(['createdByUser',
-            'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
-
-        if(!$item)
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
-            return $response;
-        }
-
-        if (!\Auth::user()->hasPermission('can-see-users-contact-details')) {
-            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        } else {
-            $item->exclude($excluded_columns);
-        }
-
-        $item = $item->first();
-
-        $response['success'] = true;
-        $response['data'] = $item;
-
-        return $response;
-
-    }
-    //-------------------------------------------------
+//-------------------------------------------------
     public static function listAction($request)
     {
         $type = $request->type;

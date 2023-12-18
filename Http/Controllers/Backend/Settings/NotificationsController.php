@@ -30,7 +30,6 @@ class NotificationsController extends Controller
         try {
             $data['notification_variables'] = vh_action('getNotificationVariables', null, 'array');
             $data['notification_actions'] = vh_action('getNotificationActions', null, 'array');
-            $data['notifications'] = Notification::getList($request,$request->rows);
             $data['from'] = env('MAIL_FROM_NAME');
             $data['from_email'] = env('MAIL_FROM_ADDRESS');
             $data['help_urls'] = [
@@ -105,31 +104,6 @@ class NotificationsController extends Controller
         return response()->json($response);
     }
 
-    public function getItem(Request $request, $id): JsonResponse
-    {
-        if (!Auth::user()->hasPermission('can-read-users')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        try {
-            $response = Notification::getItem($id);
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if(env('APP_DEBUG')){
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
     public function createItem(Request $request)
     {
         try{
