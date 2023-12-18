@@ -72,6 +72,23 @@ onMounted(async () => {
                         />
                     </div>
                 </template>
+                <div v-if="store.show_new_item_form && !store.active_notification">
+                    <div class="p-inputgroup">
+                        <inputText data-testid="setting-notification_add_new_value"
+                                   v-model="store.new_item.name"
+                                   placeholder="Enter new notification name"
+                                   :autoResize="true"
+                                   class="w-full"
+                                   inputClass="p-inputtext-sm"
+                        />
+                        <Button icon="pi pi-save"
+                                label="save"
+                                @click="store.create"
+                                data-testid="setting-notification_save_new"
+                                class="has-max-height p-button-sm"
+                        />
+                    </div>
+                </div>
 
 
                 <Actions/>

@@ -23,27 +23,9 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <Panel class="is-small">
 
-        <div class="
-        grid">
-            <div class="col-12" v-if="store.show_new_item_form && !store.active_notification">
-                <div class="p-inputgroup">
-                    <inputText data-testid="setting-notification_add_new_value"
-                               v-model="store.new_item.name"
-                               placeholder="Enter new notification name"
-                               :autoResize="true"
-                               class="w-full"
-                               inputClass="p-inputtext-sm"
-                    />
-                    <Button icon="pi pi-save"
-                            label="save"
-                            @click="store.create"
-                            data-testid="setting-notification_save_new"
-                            class="has-max-height p-button-sm"
-                    />
-                </div>
-            </div>
+        <div >
+
         </div>
 
 
@@ -66,12 +48,10 @@ onMounted(async () => {
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column field="Edit" class="text-right">
-                        <template #header>
-                            <span class="edit-column-header">Edit</span>
-                        </template>
+                    <Column header="Edit" field="Edit" class="text-right" :pt="{
+                        headercontent: {class: 'justify-content-end pr-3'}
+                        }">
                         <template #body="slotProps">
-                            <!--                            <div class="p-inputgroup">-->
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
                                     v-if="!slotProps.data.deleted_at"
@@ -92,7 +72,6 @@ onMounted(async () => {
                                     icon="pi pi-replay"
                                     data-testid="setting-notification-list_data_restore"
                             />
-                            <!--                            </div>-->
                         </template>
                     </Column>
                 </DataTable>
@@ -619,11 +598,8 @@ onMounted(async () => {
 
             </div>
         </div>
-    </Panel>
 </template>
 
 <style scoped>
-.edit-column-header {
-    margin-left: 28rem;
-}
+
 </style>
