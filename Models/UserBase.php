@@ -702,7 +702,7 @@ class UserBase extends Authenticatable
         if($user->is_active != 1)
         {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms::messages.inactive_account');
+            $response['errors'][] = trans('vaahcms-user.inactive_account');
             return $response;
         }
 
@@ -755,7 +755,7 @@ class UserBase extends Authenticatable
         if($user->is_active != 1)
         {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms::messages.inactive_account');
+            $response['errors'][] = trans('vaahcms-login.inactive_account');
             return $response;
         }
 
@@ -777,7 +777,7 @@ class UserBase extends Authenticatable
         {
 
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return $response;
         }
@@ -810,7 +810,7 @@ class UserBase extends Authenticatable
             $response['success'] = true;
         } else {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
+            $response['errors'][] = trans('vaahcms-login.invalid_credentials');
         }
 
         return $response;
@@ -827,7 +827,7 @@ class UserBase extends Authenticatable
         if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
             return $response;
         }
 
@@ -876,7 +876,7 @@ class UserBase extends Authenticatable
         {
 
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return $response;
         }
@@ -894,18 +894,6 @@ class UserBase extends Authenticatable
             return $response;
         }
 
-
-        /*if(count($request->login_otp) < 6
-            || is_null($user->login_otp)
-            || empty($user->login_otp)
-        )
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Invalid OTP';
-            return $response;
-        }
-
-        $login_otp = implode('', $request->login_otp);*/
         $login_otp = $request->login_otp;
         $login_otp = trim($login_otp);
 
@@ -927,7 +915,7 @@ class UserBase extends Authenticatable
 
         } else {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
+            $response['errors'][] = trans('vaahcms-login.invalid_credentials');
         }
         return $response;
 
@@ -946,7 +934,7 @@ class UserBase extends Authenticatable
         {
 
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return $response;
         }
@@ -1052,8 +1040,8 @@ class UserBase extends Authenticatable
                 $response['success'] = true;
                 if(env('APP_DEBUG'))
                 {
-                    $response['data']['permission'] = 'Permission slug: '.$permission_slug;
-                    $response['hint'][] = 'Super Admin has all permission by default.';
+                    $response['data']['permission'] = trans('vaahcms-general.permission_slug').': '.$permission_slug;
+                    $response['hint'][] = trans('vaahcms-general.super_admin_hint_message');
                 }
                 return $response;
 
@@ -1072,10 +1060,10 @@ class UserBase extends Authenticatable
             if($details)
             {
                 $response['success'] = false;
-                $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
+                $response['errors'][] = trans('vaahcms-general.no_permission_exist_with_slug').': ' . $permission_slug;
 
                 if (env('APP_DEBUG')) {
-                    $response['hint'][] = 'Check the migrations & seeds are properly run.';
+                    $response['hint'][] = trans('vaahcms-general.no_permission_exist_hint_message');
                 }
 
                 return $response;
@@ -1092,8 +1080,7 @@ class UserBase extends Authenticatable
                 $response['errors'][] = $permission_slug.' is inactive';
                 if(env('APP_DEBUG'))
                 {
-                    $response['hint'][] = 'Enable the permission status to active from
-                    backend/admin control panel.';
+                    $response['hint'][] = trans('vaahcms-general.no_permission_active_hint_message');
                 }
                 return $response;
 
@@ -1118,8 +1105,8 @@ class UserBase extends Authenticatable
                     $response['data'] = [];
                     if(env('APP_DEBUG'))
                     {
-                        $response['hint'][] = 'Permission slug: '.$permission_slug.'
-                        is active for '.\Auth::user()->email;
+                        $response['hint'][] = trans('vaahcms-general.no_permission_slug').': '.$permission_slug.
+                            ' '.trans('vaahcms-general.is_active_for').' '.\Auth::user()->email;
                     }
                     return $response;
 
@@ -1133,11 +1120,11 @@ class UserBase extends Authenticatable
         if($details)
         {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
             if(env('APP_DEBUG'))
             {
-                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active
-                for '.\Auth::user()->email;
+                $response['hint'][] = trans('vaahcms-general.no_permission_slug').': '.$permission_slug.
+                    ' '.trans('vaahcms-general.is_not_active_for').' '.\Auth::user()->email;
             }
             return $response;
 
@@ -1195,7 +1182,7 @@ class UserBase extends Authenticatable
     {
         if (!\Auth::user()->hasPermission('can-create-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return $response;
         }
@@ -1382,7 +1369,7 @@ class UserBase extends Authenticatable
         if(!$item)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = trans('vaahcms-general.record_not_found_with_id').': '.$id;
             return $response;
         }
 
@@ -1535,7 +1522,7 @@ class UserBase extends Authenticatable
 
 
         $response['success'] = true;
-        $response['messages'][] = 'Saved';
+        $response['messages'][] = trans('vaahcms-general.saved');
         $response['data'] = $item;
 
         return $response;
@@ -1549,14 +1536,14 @@ class UserBase extends Authenticatable
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans('vaahcms-general.select_ids');
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans('vaahcms-general.select_status');
             return $response;
         }
 
@@ -1610,7 +1597,7 @@ class UserBase extends Authenticatable
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans('vaahcms-general.select_ids');
             return $response;
         }
 
@@ -1651,14 +1638,14 @@ class UserBase extends Authenticatable
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans('vaahcms-general.select_ids');
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans('vaahcms-general.select_status');
             return $response;
         }
 
@@ -1704,7 +1691,6 @@ class UserBase extends Authenticatable
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
-            //'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now()
         ];
 
@@ -1746,14 +1732,14 @@ class UserBase extends Authenticatable
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans('vaahcms-general.select_ids');
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans('vaahcms-general.select_status');
             return $response;
         }
 
@@ -1986,7 +1972,7 @@ class UserBase extends Authenticatable
         $user->save();
 
         $response['success'] = true;
-        $response['messages'][] = 'Avatar updated.';
+        $response['messages'][] = trans('vaahcms-user.avatar_updated');
         $response['data']['avatar'] = $user->avatar;
         $response['data']['avatar_url'] = $user->avatar_url;
 
@@ -2009,7 +1995,7 @@ class UserBase extends Authenticatable
         $user->save();
 
         $response['success'] = true;
-        $response['messages'][] = 'Avatar removed.';
+        $response['messages'][] = trans('vaahcms-user.avatar_removed');
         $response['data']['avatar'] = $user->avatar;
         $response['data']['avatar_url'] = $user->avatar_url;
 
@@ -2126,7 +2112,7 @@ class UserBase extends Authenticatable
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 

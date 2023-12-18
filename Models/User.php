@@ -135,7 +135,7 @@ class User extends UserBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
         );
 
 
