@@ -160,7 +160,7 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
@@ -176,8 +176,8 @@ class User extends UserBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
-            'items.required' => 'Select items',
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
+            'items.required' => trans('vaahcms-general.select_items'),
         );
 
         $validator = \Validator::make($inputs, $rules, $messages);
@@ -202,7 +202,7 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
@@ -267,7 +267,7 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
@@ -371,7 +371,7 @@ class User extends UserBase
 
 
         $response['success'] = true;
-        $response['messages'][] = 'Saved';
+        $response['messages'][] = trans('vaahcms-general.saved');
         $response['data'] = $item;
 
         return $response;
@@ -382,7 +382,7 @@ class User extends UserBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['errors'][] = 'Record does not exist.';
+            $response['errors'][] = trans('vaahcms-general.record_does_not_exist');
             return $response;
         }
 
@@ -391,7 +391,7 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans('vaahcms-general.record_has_been_deleted');
 
         return $response;
     }
