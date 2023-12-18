@@ -211,6 +211,7 @@
     },
 
 
+
     {
         "locale_code_iso_639": "en",
         "category": "localization",
@@ -2883,6 +2884,66 @@
         "name": "No module installed",
         "content": "Ningún módulo instalado/descargado"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Something went wrong",
+        "content": "Algo salió mal."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Permission denied",
+        "content": "Permiso denegado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Saved",
+        "content": "Salvado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record does not exist",
+        "content": "El registro no existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record has been deleted",
+        "content": "El registro ha sido eliminado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Action type is required",
+        "content": "Se requiere el tipo de acción."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select items",
+        "content": "Seleccionar articulos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select a record",
+        "content": "Seleccione un registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select records",
+        "content": "Seleccionar registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Select an action type",
+        "content": "Seleccione un tipo de acción"
+    },
 
 
     {
@@ -3158,6 +3219,33 @@
         "name": "View Generate New Api Token",
         "content": "Generar nuevo token API"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "Registration not found",
+        "content": "Registro no encontrado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "User does not exist",
+        "content": "El usuario no existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "User is not active",
+        "content": "El usuario no está activo."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "user",
+        "name": "Impersonate permission denied",
+        "content": "Permiso denegado. El usuario debe tener\n puedo-iniciar-sesión-en-backend\n permiso en el rol especificado del usuario."
+    },
+
+
+
     {
         "locale_code_iso_639": "es",
         "category": "login",
@@ -5503,12 +5591,71 @@
         "name": "Action successful",
         "content": "L'action a réussi."
     },
-
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "No module installed",
         "content": "Aucun module installé/téléchargé."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Something went wrong",
+        "content": "Quelque chose s'est mal passé."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Permission denied",
+        "content": "Permission refusée."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Saved",
+        "content": "Enregistré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record does not exist",
+        "content": "L\\'enregistrement n\\'existe pas."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record has been deleted",
+        "content": "L\\'enregistrement a été supprimé."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Action type is required",
+        "content": "Le type d’action est requis."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select items",
+        "content": "Sélectionner des éléments"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select a record",
+        "content": "Sélectionnez un enregistrement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select records",
+        "content": "Sélectionner des enregistrements"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Select an action type",
+        "content": "Sélectionnez un type d\\'action"
     },
 
 
@@ -5787,6 +5934,33 @@
         "name": "Registration created when user not exist",
         "content": "L\\'inscription ne peut être créée que lorsque l\\'utilisateur n\\'existe pas"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "Registration not found",
+        "content": "Inscription introuvable."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "User does not exist",
+        "content": "L\\'utilisateur n\\'existe pas."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "User is not active",
+        "content": "L\\'utilisateur n\\'est pas actif."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "user",
+        "name": "Impersonate permission denied",
+        "content": "Permission refusée. L\\'utilisateur doit avoir\n peut-se connecter dans le backend\n autorisation dans le rôle spécifié par l\\'utilisateur."
+    },
+
+
+
     {
         "locale_code_iso_639": "fr",
         "category": "login",
