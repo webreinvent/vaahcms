@@ -38,11 +38,12 @@ class ExtendController extends Controller
     public static function topLeftMenu()
     {
 
-
-
+        $list = [
+            'url' => route('vh.backend.homepage-redirection'),
+        ];
 
         $response['success'] = true;
-        $response['data'] = [];
+        $response['data'] = $list;
 
         return $response;
     }
@@ -281,7 +282,7 @@ class ExtendController extends Controller
                 ]
             ];
         }
-        
+
 
         $response['success'] = true;
         $response['data'] = $list;

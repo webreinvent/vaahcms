@@ -346,7 +346,7 @@ export const useRootStore = defineStore({
                 },
                 {
                     label:'',
-                    url:this.assets.urls.public,
+                    url:this.assets.extended_views.top_left_menu.success.vaahcms.url,
                     tooltip:'Visit Site',
                     target:'_blank',
                     icon:'pi pi-external-link'

@@ -239,7 +239,6 @@ class JsonController extends Controller
         $locations = [
             'sidebar_menu'=>'sidebarMenu',
             'top_left_menu'=>'topLeftMenu',
-            'top_right_menu'=>'topRightMenu',
             'top_right_user_menu'=>'topRightUserMenu',
         ];
 
