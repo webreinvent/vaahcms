@@ -38,12 +38,8 @@ class ExtendController extends Controller
     public static function topLeftMenu()
     {
 
-        $list = [
-            'url' => route('vh.backend.homepage-redirection'),
-        ];
-
         $response['success'] = true;
-        $response['data'] = $list;
+        $response['data'] = [];
 
         return $response;
     }
