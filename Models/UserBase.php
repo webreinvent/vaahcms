@@ -1199,7 +1199,11 @@ class UserBase extends Authenticatable
             'password' => 'required',
         );
 
-        $validator = \Validator::make( $inputs, $rules);
+        $messages = array(
+            'password.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+        );
+
+        $validator = \Validator::make( $inputs, $rules, $messages);
 
         if ( $validator->fails() ) {
 
@@ -1678,7 +1682,7 @@ class UserBase extends Authenticatable
 
         $role = Role::find($inputs['inputs']['role_id']);
 
-        if($inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
+        if($role && $inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
             && $inputs['data']['is_active'] == 0)
         {
             $response['success'] = false;
@@ -1787,16 +1791,18 @@ class UserBase extends Authenticatable
         );
 
         $messages = array(
-            'email.required' => 'The :attribute field is required.',
-            'email.email' => 'The :attribute must be a valid email address.',
-            'email.max' => 'The :attribute may not be greater than :max characters.',
-            'first_name.required' => 'The :attribute field is required.',
-            'first_name.max' => 'The :attribute may not be greater than :max characters.',
-            'status.required' => 'The :attribute field is required.',
-            'is_active.required' => 'The :attribute field is required.',
-            'foreign_user_id.numeric' => 'The :attribute must be a number.',
-            'foreign_user_id.numeric.min' => 'The :attribute must be at least :min.',
-
+            'email.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'username.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'email.email' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_valid_email_address'),
+            'email.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'first_name.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'first_name.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'status.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'is_active.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'foreign_user_id.numeric' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_number'),
+            'foreign_user_id.min' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_at_least').' :min.',
         );
 
         if(isset($inputs['username']))
@@ -1824,13 +1830,31 @@ class UserBase extends Authenticatable
             'email' => 'required|email|max:150',
         );
 
+
+        $messages = array(
+            'email.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'username.alpha_dash' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_only_contain'),
+            'username.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'email.email' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_valid_email_address'),
+            'email.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'first_name.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'first_name.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'last_name.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'last_name.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+        );
+
+
         if($request->has('username'))
         {
             $rules['username'] = 'alpha_dash|max:15';
         }
 
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validator = \Validator::make( $request->all(), $rules, $messages);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -1907,7 +1931,19 @@ class UserBase extends Authenticatable
             'confirm_password' => 'required|max:25',
         );
 
-        $validator = \Validator::make($request->all(),$rules);
+        $messages = array(
+            'current_password.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'new_password.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'confirm_password' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'current_password.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'new_password.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'confirm_password.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+        );
+
+        $validator = \Validator::make($request->all(),$rules, $messages);
 
         if ( $validator->fails() ) {
 
@@ -1962,8 +1998,10 @@ class UserBase extends Authenticatable
         $rules = array(
             'url' => 'required',
         );
-
-        $validator = \Validator::make( $request->all(), $rules);
+        $messages = array(
+            'url.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+        );
+        $validator = \Validator::make( $request->all(), $rules, $messages);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());

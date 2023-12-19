@@ -402,8 +402,10 @@ class UsersController extends Controller
             $rules = array(
                 'inputs' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'inputs.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -543,8 +545,10 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -583,8 +587,10 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
