@@ -2846,6 +2846,18 @@
         "name": "must be a valid email address",
         "content": "must be a valid email address."
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "must be an integer",
+        "content": "must be an integer"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "may only contain",
+        "content": "may only contain letters, numbers, dashes and underscores."
+    },
 
 
 
@@ -5647,6 +5659,61 @@
         "category": "extend-theme",
         "name": "View Restore Button",
         "content": "Restaurar"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "The",
+        "content": "El"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "may not be greater than",
+        "content": "no puede ser mayor que"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "characters",
+        "content": "caracteres."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "field is required",
+        "content": "Se requiere campo."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "must be a number",
+        "content": "Tiene que ser un número."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "must be at least",
+        "content": "al menos debe ser."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "must be a valid email address",
+        "content": "Debe ser una dirección de correo electrónico válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "must be an integer",
+        "content": "debe ser un entero."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "may only contain",
+        "content": "Solo puede contener letras, números, guiones y guiones bajos."
     },
 
 
@@ -8452,12 +8519,6 @@
         "name": "View Restore Button",
         "content": "Restaurer"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "login",
-        "name": "Inactive account",
-        "content": "Inactive account"
-    },
 
     {
         "locale_code_iso_639": "fr",
@@ -8512,5 +8573,11 @@
         "category": "validation",
         "name": "may only contain",
         "content": "ne peut contenir que des lettres, des chiffres, des tirets et des traits de soulignement."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "login",
+        "name": "Inactive account",
+        "content": "Inactive account"
     }
 ]
