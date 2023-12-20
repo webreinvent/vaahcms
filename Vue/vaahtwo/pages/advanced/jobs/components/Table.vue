@@ -30,6 +30,15 @@ const useVaah = vaah();
                 </template>
             </Column>
 
+            <Column field="queue" header="Name">
+
+                <template #body="prop">
+                    <p v-tooltip.top="prop.data.payload.displayName">
+                        {{store.displayJobName(prop.data.payload.displayName)}}
+                    </p>
+                </template>
+            </Column>
+
             <Column field="payload" header="Payload">
                 <template #body="prop">
                     <Button v-if="store.hasPermission('can-read-jobs-payload')"
