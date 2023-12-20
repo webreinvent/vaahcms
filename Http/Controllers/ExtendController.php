@@ -38,9 +38,6 @@ class ExtendController extends Controller
     public static function topLeftMenu()
     {
 
-
-
-
         $response['success'] = true;
         $response['data'] = [];
 
@@ -281,7 +278,7 @@ class ExtendController extends Controller
                 ]
             ];
         }
-        
+
 
         $response['success'] = true;
         $response['data'] = $list;

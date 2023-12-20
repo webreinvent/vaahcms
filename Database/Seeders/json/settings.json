@@ -30,6 +30,8 @@
     {"category": "global", "key": "script_before_body_close", "value": null, "type": "script", "label": "Before body tag close (</body>)" },
     {"category": "global", "key": "redirect_after_backend_logout", "value": "backend" },
     {"category": "global", "key": "redirect_after_backend_logout_url", "value": "" },
+    {"category": "global", "key": "homepage_redirection", "value": "backend" },
+    {"category": "global", "key": "homepage_redirection_url", "value": "" },
     {"category": "global", "key": "redirect_after_frontend_login", "value": "" },
     {"category": "global", "key": "maximum_number_of_forgot_password_attempts_per_session", "value": "3" },
     {"category": "global", "key": "maximum_number_of_login_attempts_per_session", "value": "3" },
