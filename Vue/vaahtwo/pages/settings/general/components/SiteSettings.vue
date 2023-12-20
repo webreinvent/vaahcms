@@ -380,7 +380,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Homepage Redirection</h5>
+                    <h5 class="p-1 text-xs mb-1">Backend Home Page Link</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.homepage_redirection"
