@@ -37,7 +37,7 @@ class GeneralController extends Controller
 
             $vh_file_types_data = [];
             foreach (vh_file_types() as $key => $value){
-                $vh_file_types_data[$key] = $value['slug'];
+                $vh_file_types_data[$key] = $value['name'];
             }
 
             $response['success'] = true;
@@ -96,7 +96,7 @@ class GeneralController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+   // ----------------------------------------------------------
     public function storeSiteSettings(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -126,6 +126,8 @@ class GeneralController extends Controller
                         ->update(['value' => $value]);
                 }
             }
+
+
 
             $response['success'] = true;
             $response['data'][] = '';
