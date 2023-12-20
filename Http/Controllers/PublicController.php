@@ -328,15 +328,8 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function homepageRedirection()
     {
-        if(!\Auth::check())
-        {
-            return redirect()->route('vh.backend');
-        }
-
-        \Auth::logout();
 
         $redirect_value = config('settings.global.homepage_redirection');
-
 
         if(!isset($redirect_value))
         {
