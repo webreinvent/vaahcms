@@ -3,6 +3,9 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Models\UserBase as User;
@@ -148,10 +151,103 @@ class Notification extends Model {
         );
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function createItem($request)
     {
-        $list = static::orderBy('name')->get();
-        return $list;
+        $response = [];
+
+
+            $input = $request->item;
+            $rows = $request->rows;
+
+            $rules = [
+                'name' => 'required|unique:vh_notifications',
+            ];
+
+            $validator = \Validator::make($input, $rules);
+
+            if ($validator->fails()) {
+                $errors = errorsToArray($validator->errors());
+                $response['success'] = false;
+                $response['errors'] = $errors;
+                return $response;
+            }
+
+            $item = new self();
+            $item->fill($input);
+            $item->slug = Str::slug($input['name']);
+            $item->save();
+
+            $response['success'] = true;
+            $response['messages'][] = 'Saved';
+            $response['data']['item'] = $item;
+            return $response;
+
+    }
+
+    //-------------------------------------------------
+    public function scopeGetSorted($query, $filter)
+    {
+        if( !isset($filter['sort'])) {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+        $direction = Str::contains($sort, ':');
+
+        if (!$direction) {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+        if (!isset($filter['trashed'])) {
+            return $query;
+        }
+
+        $trashed = $filter['trashed'];
+
+        if ($trashed === 'include') {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+        if (!isset($filter['q'])) {
+            return $query;
+        }
+
+        $search = $filter['q'];
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%'. $search . '%');
+        });
+    }
+    //-------------------------------------------------
+    public static function getList($request) : array
+    {
+        $rows = config('vaahcms.per_page');
+
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+        $list = self::getSorted($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
+        $list = $list->paginate($rows);
+
+        $response['success'] = true;
+        $response['data'] = $list;
+        return $response;
+
     }
     //-------------------------------------------------
     public static function getContent($id)
@@ -167,6 +263,9 @@ class Notification extends Model {
         $list = [];
 
         $item = static::find($id);
+        if (!$item) {
+            return $list;
+        }
 
         foreach ($vias as $via){
             $list[$via] = $item->contents()->where('via', $via)
@@ -175,6 +274,84 @@ class Notification extends Model {
 
         return $list;
 
+    }
+    //-------------------------------------------------
+
+    public static function itemAction( $request)
+    {
+        $type = $request->type;
+        $id = $request->id;
+        $notification = self::withTrashed()->find($id);
+
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+        $response = [];
+        if ($type === 'trash') {
+            $notification->delete();
+            $message = 'Record has been deleted';
+        } elseif ($type === 'restore') {
+            if ($notification->withTrashed()) {
+                $notification->restore();
+                $message = 'Record has been restored';
+            } else {
+                $message = 'Record is not soft-deleted and cannot be restored';
+            }
+        } else {
+            return response()->json(['message' => 'Invalid action type'], 400);
+        }
+
+        $response['success'] = true;
+        $response['data'] = [];
+        $response['messages'][] = $message;
+
+        return $response;
+    }
+
+//-------------------------------------------------
+    public static function listAction($request)
+    {
+        $type = $request->type;
+        $items = $request->items;
+        $notification = new Notification;
+
+        $item_ids = array_column($items, 'id');
+        $list = self::query();
+        if($request->has('filter')){
+            $list->getSorted($request->filter);
+            $list->trashedFilter($request->filter);
+            $list->searchFilter($request->filter);
+        }
+
+        switch ($type) {
+            case 'trash':
+                self::whereIn('id', $item_ids)->delete();
+                break;
+            case 'restore':
+                self::whereIn('id', $item_ids)->withTrashed()->restore();
+                break;
+            case 'delete':
+                NotificationContent::whereIn('vh_notification_id', $item_ids)->withTrashed()->forceDelete();
+                self::whereIn('id', $item_ids)->withTrashed()->forceDelete();
+                break;
+            case 'trash-all':
+                $list->delete();
+                break;
+            case 'restore-all':
+                $list->restore();
+                break;
+            case 'delete-all':
+                NotificationContent::query()->forceDelete();
+                $list->forceDelete();
+                break;
+
+        }
+
+        $response['success'] = true;
+        $response['data'] = true;
+        $response['messages'][] = 'Action was successful.';
+
+        return $response;
     }
     //-------------------------------------------------
     public static function postStore($request)
