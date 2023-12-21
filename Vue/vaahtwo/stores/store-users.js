@@ -1165,6 +1165,7 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const store_setting = useUserSettingStore()
             const root = useRootStore();
             let form_menu = [];
 
