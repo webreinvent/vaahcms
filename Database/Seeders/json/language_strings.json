@@ -1202,6 +1202,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "crud-action",
+        "name": "Form Add Custom Field",
+        "content": "Add Custom Field"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "crud-action",
         "name": "Form Text Deleted",
         "content": "Deleted"
     },
@@ -4063,6 +4069,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "crud-action",
+        "name": "Form Add Custom Field",
+        "content": "Agregar campo personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "crud-action",
         "name": "Form Text Deleted",
         "content": "Eliminado"
     },
@@ -6918,6 +6930,12 @@
         "category": "crud-action",
         "name": "Form Fill",
         "content": "Remplir"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "crud-action",
+        "name": "Form Add Custom Field",
+        "content": "Ajouter un champ personnalisé"
     },
     {
         "locale_code_iso_639": "fr",

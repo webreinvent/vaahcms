@@ -184,6 +184,7 @@ class JsonController extends Controller
             "form_create_and_close" => trans("vaahcms-crud-action.form_create_and_close"),
             "form_create_and_clone" => trans("vaahcms-crud-action.form_create_and_clone"),
             "form_fill" => trans("vaahcms-crud-action.form_fill"),
+            "form_add_custom_field" => trans("vaahcms-crud-action.form_add_custom_field"),
             "form_text_deleted" => trans("vaahcms-crud-action.form_text_deleted"),
             "form_trash" => trans("vaahcms-crud-action.form_trash"),
             "form_delete" => trans("vaahcms-crud-action.form_delete"),
