@@ -1251,7 +1251,7 @@ export const useUserStore = defineStore({
                     }
                 },
                 {
-                    label: 'Add Custom Field',
+                    label: root.assets.language_string.crud_actions.form_add_custom_field,
                     icon: 'pi pi-plus',
                     command: () => {
                         store_setting.active_index = [1];
