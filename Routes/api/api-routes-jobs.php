@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/jobs',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/jobs',
+        'middleware' => ['auth:api'],
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
 function () {
 
