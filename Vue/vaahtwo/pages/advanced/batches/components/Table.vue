@@ -28,20 +28,39 @@ const useVaah = vaah();
 
             <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
-                    <span v-if="prop.data.pending_jobs > 0">
-                        <ProgressBar :value="store.getJobProgress(prop.data,1)"
-                                     data-testid="batches-table-progress-1"
-                        />
-                        <ProgressBar :value="store.getJobProgress(prop.data,2)"
-                                     data-testid="batches-table-progress-2"
-                        />
-                        <ProgressBar :value="store.getJobProgress(prop.data,3)"
-                                     data-testid="batches-table-progress-3"
-                        />
+                    <span >
+
+                        <div role="progressbar"
+                             class="p-progressbar p-component p-progressbar-determinate batch-progress-bar"
+                             aria-valuemin="0" aria-valuenow="12.5" aria-valuemax="100" data-pc-name="progressbar"
+                             data-pc-section="root">
+                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-success"
+                                 :style="'width: '+ store.getJobProgress(prop.data,1)+'%;'"
+                            >
+                                <div class="p-progressbar-label"
+                                     data-pc-section="label">
+                                    {{store.getJobProgress(prop.data,1,2)}}%
+                                </div>
+                            </div>
+                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-danger"
+                                 :style="'width: '+ store.getJobProgress(prop.data,2)+'%; left: '
+                                 + store.getJobProgress(prop.data,1)+'%;'"
+                            >
+                                <div class="p-progressbar-label" data-pc-section="label">
+                                    {{store.getJobProgress(prop.data,2,2)}}%
+                                </div>
+                            </div>
+                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-warning"
+                                 :style="'width: '+ store.getJobProgress(prop.data,3)+'%; left: '
+                                 + (store.getJobProgress(prop.data,1)+store.getJobProgress(prop.data,2))+'%;'"
+                            >
+                                <div class="p-progressbar-label" data-pc-section="label">
+                                    {{store.getJobProgress(prop.data,3,2)}}%
+                                </div>
+                            </div>
+                        </div>
                     </span>
-                    <span v-else>
-                        <ProgressBar :value="0" style="height:10px;" />
-                    </span>
+                    
                 </template>
             </Column>
 
@@ -72,7 +91,14 @@ const useVaah = vaah();
                              @click="store.displayFailedIdDetails(prop.data.failed_job_ids)"
                      >
                          <span class="pi pi-eye mr-1"></span>
-                         <span>{{ prop.data.failed_job_ids.length }}</span>
+                         <span v-if="prop.data.failed_job_ids &&
+                          (typeof prop.data.failed_job_ids === 'array' ||
+                          typeof prop.data.failed_job_ids === 'object' )">
+                             {{ prop.data.failed_job_ids.length }}
+                         </span>
+                         <span v-else>
+                             0
+                         </span>
                      </Button>
                  </template>
              </Column>

@@ -1695,3 +1695,20 @@ textarea.p-inputtextarea {
         }
     }
 }
+
+//batch progress bar
+.batch-progress-bar {
+    display: flex;
+    font-size: .65rem;
+    height: 1.3rem;
+    border-radius: 50px;
+    .progress-bar-danger {
+        background: #EF4444;
+    }
+    .progress-bar-warning {
+        background: #f97316;
+    }
+    .progress-bar-success {
+        background: #22C55E;
+    }
+}

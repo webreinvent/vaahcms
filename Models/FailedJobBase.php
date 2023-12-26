@@ -36,7 +36,7 @@ class FailedJobBase extends Model {
     {
         return Attribute::make(
             get: function (string $value = null) {
-                return VaahModel::getUserTimezoneDate($value,true);
+                return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
