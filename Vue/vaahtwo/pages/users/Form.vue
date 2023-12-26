@@ -334,7 +334,7 @@ const toggleFormMenu = (event) => {
                               autocomplete="off"
                               name="account-birth"
                               data-testid="account-birth"
-                              dateFormat="dd-mm-yy"
+                              dateFormat="yy-mm-dd"
                               :showTime="false"
                     />
                 </VhField>

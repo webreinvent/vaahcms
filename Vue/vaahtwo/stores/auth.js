@@ -44,6 +44,7 @@ export const useAuthStore = defineStore({
             login_otp:null,
             max_attempts: 5,
             is_password_disabled: null,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
         },
         sign_up_items: {
             first_name: null,
@@ -51,7 +52,7 @@ export const useAuthStore = defineStore({
             username: null,
             email: null,
             password: null,
-            confirm_password: null,
+            confirm_password: null
         },
         is_otp_btn_loading: false,
     }),

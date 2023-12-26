@@ -146,6 +146,11 @@ a{
             width: 0.7rem;
         }
     }
+    .p-accordion-header {
+        .p-accordion-header-link {
+            font-weight: normal !important;
+        }
+    }
 }
 
 /*Dropdown*/
@@ -1688,5 +1693,22 @@ textarea.p-inputtextarea {
                 border-bottom-right-radius: $borderRadius;
             }
         }
+    }
+}
+
+//batch progress bar
+.batch-progress-bar {
+    display: flex;
+    font-size: .65rem;
+    height: 1.3rem;
+    border-radius: 50px;
+    .progress-bar-danger {
+        background: #EF4444;
+    }
+    .progress-bar-warning {
+        background: #f97316;
+    }
+    .progress-bar-success {
+        background: #22C55E;
     }
 }

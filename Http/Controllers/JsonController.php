@@ -119,7 +119,7 @@ class JsonController extends Controller
         }
 
 
-        $data['urls']['public'] = url("/");
+        $data['urls']['public'] = route('vh.backend.homepage-redirection');
         $data['urls']['theme'] = vh_get_backend_theme_url();
         $data['urls']['image'] = vh_get_backend_theme_image_url();
         $data['urls']['upload'] = route('vh.backend.media.upload');
@@ -239,7 +239,6 @@ class JsonController extends Controller
         $locations = [
             'sidebar_menu'=>'sidebarMenu',
             'top_left_menu'=>'topLeftMenu',
-            'top_right_menu'=>'topRightMenu',
             'top_right_user_menu'=>'topRightUserMenu',
         ];
 

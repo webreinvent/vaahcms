@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
-class Language extends Model {
+class Language extends VaahModel {
 
     use SoftDeletes;
     use CrudObservantTrait;

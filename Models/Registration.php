@@ -32,7 +32,6 @@ class Registration extends RegistrationBase
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-
     //-------------------------------------------------
     public function getTableColumns()
     {

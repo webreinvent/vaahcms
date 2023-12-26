@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Models\Registration;
@@ -164,6 +165,8 @@ class PublicController extends Controller
 
             $response = [];
 
+            Session::put('user_timezone',$request->timezone);
+
             $response['success'] = true;
             $response['messages'][] = $message;
             $response['data']['redirect_url'] = $redirect_url;
@@ -313,6 +316,33 @@ class PublicController extends Controller
 
         if($redirect_value != 'frontend'){
             $redirect_value_custom = config('settings.global.redirect_after_backend_logout_url');
+
+            $redirect_value_url = $redirect_value;
+
+            if(isset($redirect_value_custom) && !empty($redirect_value_custom))
+            {
+                $redirect_value_url = $redirect_value_custom;
+            }
+        }
+
+        return redirect($redirect_value_url);
+    }
+
+    //----------------------------------------------------------
+    public function homepageRedirection()
+    {
+
+        $redirect_value = config('settings.global.homepage_redirection');
+
+        if(!isset($redirect_value))
+        {
+            return redirect()->route('vh.backend');
+        }
+
+        $redirect_value_url = '/';
+
+        if($redirect_value != 'frontend'){
+            $redirect_value_custom = config('settings.global.homepage_redirection_url');
 
             $redirect_value_url = $redirect_value;
 

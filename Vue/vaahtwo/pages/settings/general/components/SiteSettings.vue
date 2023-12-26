@@ -118,6 +118,18 @@ const store = useGeneralStore();
                                   data-testid="general-allowed_files"
                                   placeholder="Search"
                     />
+
+                    <h5 class="p-1 text-xs mb-1">Allowed file size for upload( in MB)</h5>
+                    <div class="p-inputgroup col-6 p-0">
+                        <InputNumber v-model="store.list.upload_allowed_file_size"
+                                     class="p-inputtext-sm h-2rem"
+                                     showButtons
+                                     mode="decimal"
+                                     data-testid="general-allowed_file_size"
+                                     min="1"
+                        />
+
+                    </div>
                 </div>
 
                 <div class="col-6 p-fluid">
@@ -373,6 +385,35 @@ const store = useGeneralStore();
                         <Button icon="pi pi-copy"
                                 data-testid="general-backend_logout_copy"
                                 @click="store.getCopy('redirect_after_backend_logout')"
+                                class="p-button-sm"
+                        />
+
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="p-1 text-xs mb-1">Backend Home Page Link</h5>
+
+                    <div class="p-inputgroup">
+                        <SelectButton v-model="store.list.homepage_redirection"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.redirect_after_logout_options"
+                                      data-testid="general-redirect_logout"
+                                      aria-labelledby="single"
+                                      class="p-button-sm"
+                        />
+
+                        <InputText placeholder="Enter Redirection Link"
+                                   v-model="store.list.homepage_redirection_url"
+                                   data-testid="general-redirect_logout_custom"
+                                   :disabled="store.list.homepage_redirection !== 'custom'"
+                                   class="p-inputtext-sm"
+                        />
+
+                        <Button icon="pi pi-copy"
+                                data-testid="general-backend_logout_copy"
+                                @click="store.getCopy('homepage_redirection')"
                                 class="p-button-sm"
                         />
 

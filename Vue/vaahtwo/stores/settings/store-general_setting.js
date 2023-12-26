@@ -1,4 +1,4 @@
-import { watch } from 'vue'
+import {ref, watch} from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { vaah } from '../../vaahvue/pinia/vaah'
 import { useRootStore } from "./../root";
@@ -93,6 +93,7 @@ export const useGeneralStore = defineStore({
         tag_type:null,
         filtered_registration_roles:null,
         filtered_allowed_files:null,
+        is_smtp_configured: null,
     }),
     getters: {
 
@@ -142,6 +143,7 @@ export const useGeneralStore = defineStore({
                 this.meta_tag = data.meta_tags;
                 this.list.maximum_number_of_forgot_password_attempts_per_session = parseInt(this.list.maximum_number_of_forgot_password_attempts_per_session);
                 this.list.maximum_number_of_login_attempts_per_session = parseInt(this.list.maximum_number_of_login_attempts_per_session);
+                this.is_smtp_configured = data.is_smtp_configured;
             }
         },
         //---------------------------------------------------------------------
@@ -475,8 +477,8 @@ export const useGeneralStore = defineStore({
                 this.filtered_allowed_files = this.assets.file_types;
             }
             else {
-                this.filtered_allowed_files = this.assets.file_types.filter((files) => {
-                    return files.toLowerCase().search(event.query.toLowerCase());
+                this.filtered_allowed_files = this.assets.file_types.filter((allowed_files) => {
+                    return allowed_files.toLowerCase().includes(event.query.toLowerCase())&& !this.list.upload_allowed_files.includes(allowed_files);
                 });
             }
         },
@@ -485,11 +487,9 @@ export const useGeneralStore = defineStore({
             if (this.title) {
                 document.title = this.title;
             }
-        }
+        },
     }
 });
-
-
 
 // Pinia hot reload
 if (import.meta.hot) {

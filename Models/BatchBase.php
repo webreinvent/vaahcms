@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -39,6 +40,33 @@ class BatchBase extends Model
         $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
+    }
+    //-------------------------------------------------
+    protected function finishedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value,true);
+            },
+        );
+    }
+    //-------------------------------------------------
+    protected function cancelledAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value,true);
+            },
+        );
+    }
+    //-------------------------------------------------
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
     }
 
     //-------------------------------------------------

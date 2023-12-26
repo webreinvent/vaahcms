@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Models\Language;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\Setting;
@@ -36,7 +37,7 @@ class GeneralController extends Controller
 
             $vh_file_types_data = [];
             foreach (vh_file_types() as $key => $value){
-                $vh_file_types_data[$key] = $value['slug'];
+                $vh_file_types_data[$key] = $value['name'];
             }
 
             $response['success'] = true;
@@ -76,6 +77,8 @@ class GeneralController extends Controller
             $data['links'] = Setting::getGlobalLinks($request);
             $data['scripts'] = Setting::getGlobalScripts($request);
             $data['meta_tags'] = Setting::getGlobalMetaTags($request);
+            $data['is_smtp_configured'] = config('mail.mailers.smtp.username') &&
+                config('mail.mailers.smtp.password');
 
             $response['success'] = true;
             $response['data'] = $data;
@@ -93,7 +96,7 @@ class GeneralController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+   // ----------------------------------------------------------
     public function storeSiteSettings(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -123,6 +126,8 @@ class GeneralController extends Controller
                         ->update(['value' => $value]);
                 }
             }
+
+
 
             $response['success'] = true;
             $response['data'][] = '';

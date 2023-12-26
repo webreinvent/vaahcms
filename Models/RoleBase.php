@@ -11,7 +11,7 @@ use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class RoleBase extends Model {
+class RoleBase extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

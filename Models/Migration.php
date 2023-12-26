@@ -4,7 +4,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use WebReinvent\VaahCms\Models\Theme;
 
-class Migration extends Model {
+class Migration extends VaahModel {
 
     //-------------------------------------------------
     protected $connection= 'mysql';

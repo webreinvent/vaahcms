@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -29,6 +30,16 @@ class FailedJobBase extends Model {
     protected $appends  = [
     ];
 
+
+    //-------------------------------------------------
+    protected function failedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
     //-------------------------------------------------
     public function getPayloadAttribute($value)
     {

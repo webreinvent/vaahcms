@@ -9,7 +9,7 @@ use VaahCms\Modules\Cms\Models\FormField;
 use VaahCms\Modules\Cms\Models\FormGroup;
 
 
-class ThemeTemplate extends Model {
+class ThemeTemplate extends VaahModel {
 
     //-------------------------------------------------
     protected $connection= 'mysql';
