@@ -54,7 +54,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item && store.assets" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -100,7 +100,7 @@ const toggleItemMenu = (event) => {
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText class="w-full p-inputtext-sm"
-                                       :placeholder="root.assets.language_string.users.view_role_placeholder_search"
+                                       :placeholder="store.assets.language_string.users.view_role_placeholder_search"
                                        type="text"
                                        v-model="store.user_roles_query.q"
                                        @keyup.enter="store.delayedUserRolesSearch()"
@@ -110,7 +110,7 @@ const toggleItemMenu = (event) => {
                          </span>
 
                         <Button class="p-button-sm"
-                                :label="root.assets.language_string.users.view_role_reset_button"
+                                :label="store.assets.language_string.users.view_role_reset_button"
                                 data-testid="user-role_reset"
                                 @click="store.resetUserRolesFilters()"
                         />
@@ -149,14 +149,14 @@ const toggleItemMenu = (event) => {
                                 <template #body="prop" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')">
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
-                                             :label="root.assets.language_string.users.view_role_yes"
+                                             :label="store.assets.language_string.users.view_role_yes"
                                              data-testid="user-role_status_yes"
                                              @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.users.view_role_no"
+                                            :label="store.assets.language_string.users.view_role_no"
                                             data-testid="user-role_status_no"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
@@ -165,13 +165,13 @@ const toggleItemMenu = (event) => {
                                 <template #body="prop" v-else>
                                     <Button v-if="prop.data.pivot.is_active === 1"
                                             class="p-button-success p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.users.view_role_yes"
+                                            :label="store.assets.language_string.users.view_role_yes"
                                             disabled
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="root.assets.language_string.users.view_role_no"
+                                            :label="store.assets.language_string.users.view_role_no"
                                             disabled
                                     />
                                 </template>
@@ -186,7 +186,7 @@ const toggleItemMenu = (event) => {
                                             @click="store.showModal(prop.data)"
                                             data-testid="user-role_details_view"
                                             icon="pi pi-eye"
-                                            :label="root.assets.language_string.users.view_role_text_view"
+                                            :label="store.assets.language_string.users.view_role_text_view"
                                     />
                                 </template>
                             </Column>

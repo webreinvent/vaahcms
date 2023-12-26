@@ -52,11 +52,11 @@ onMounted(async () => {
 <template>
     <div class="grid">
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small" v-if="root.assets">
+            <Panel class="is-small" v-if="root.assets && store.assets">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">{{root.assets.language_string.users.users_title}}</b>
+                            <b class="mr-1">{{store.assets.language_string.users.users_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
