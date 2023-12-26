@@ -1,12 +1,13 @@
 <?php
 
 /*
- * API url will be: <base-url>/public/api/users/users
+ * API url will be: <base-url>/public/api/users
  */
 Route::group(
     [
-        'prefix' => 'users/users',
-        'namespace' => 'Backend',
+        'prefix'     => 'api/users',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
     function () {
 

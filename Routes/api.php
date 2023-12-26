@@ -60,32 +60,6 @@ Route::group(
 
         Route::group(
             [
-                'prefix'     => '/users',
-            ],
-            function () {
-                //------------------------------------------------
-                Route::any( '/', 'UsersController@getList' );
-                //------------------------------------------------
-                Route::any( '/create', 'UsersController@create' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}', 'UsersController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'UsersController@update' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'UsersController@delete' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/roles/{role_slug}', 'UsersController@getItemRoles' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions/{permission_slug}', 'UsersController@getItemPermissions' );
-                //------------------------------------------------
-            });
-
-        Route::group(
-            [
                 'prefix'     => '/roles',
             ],
             function () {
@@ -160,4 +134,4 @@ Route::group(
             });
     });
 
-
+include('api/api-routes-users.php');
