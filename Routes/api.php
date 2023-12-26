@@ -40,26 +40,6 @@ Route::group(
 
         Route::group(
             [
-                'prefix'     => '/registrations',
-            ],
-            function () {
-                //------------------------------------------------
-                Route::any( '/', 'RegistrationsController@getList' );
-                //------------------------------------------------
-                Route::any( '/create', 'RegistrationsController@create' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'RegistrationsController@update' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'RegistrationsController@delete' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
-                //------------------------------------------------
-            });
-
-        Route::group(
-            [
                 'prefix'     => '/users',
             ],
             function () {
@@ -160,4 +140,4 @@ Route::group(
             });
     });
 
-
+include('api/api-routes-registrations.php');

@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/registrations',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/registrations',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
 function () {
 
