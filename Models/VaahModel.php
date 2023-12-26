@@ -40,7 +40,7 @@ class VaahModel extends Model
     }
 
     //-------------------------------------------------
-    public static function getUserTimezoneDate($value)
+    public static function getUserTimezoneDate($value,$is_timestamp = false)
     {
         if(!$value){
             return null;
@@ -56,7 +56,13 @@ class VaahModel extends Model
             return $value;
         }
 
-        return \Carbon::parse(strtotime($value))
+        if(!$is_timestamp){
+            $parsed_datetime = strtotime($value);
+        }else{
+            $parsed_datetime = (int)$value;
+        }
+
+        return \Carbon::parse($parsed_datetime)
             ->setTimezone($timezone)
             ->format(config('settings.global.datetime_format','Y-m-d H:i:s'));
 

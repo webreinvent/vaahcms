@@ -571,14 +571,7 @@ export const useNotificationStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/send';
-            await vaah().ajax(ajax_url, this.sendNotificationAfter, options);
-        },
-        //---------------------------------------------------------------------
-        sendNotificationAfter(data, res) {
-            if(data){
-                vaah().toastSucces(['Sent']);
-            }
-
+            await vaah().ajax(ajax_url, null, options);
         },
         //---------------------------------------------------------------------
         searchUser(event){

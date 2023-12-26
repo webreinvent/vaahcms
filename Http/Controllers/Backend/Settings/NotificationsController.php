@@ -252,7 +252,7 @@ class NotificationsController extends Controller
             $data = [];
             $response = [];
 
-            $response = Notification::send(Notification::find($request->notification_id),
+            $response = Notification::dispatch(Notification::find($request->notification_id),
                 User::query()->find($request->user_id), $request->all());
         } catch (\Exception $e) {
             $response = [];
