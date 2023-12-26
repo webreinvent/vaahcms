@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 
 class VaahModel extends Model
@@ -44,9 +45,20 @@ class VaahModel extends Model
         if(!$value){
             return null;
         }
+
+        $timezone = Session::get('user_timezone');
+
+        if(\Auth::check() && \Auth::user()->timezone){
+            $timezone = \Auth::user()->timezone;
+        }
+
+        if(!$timezone){
+            return $value;
+        }
+
         return \Carbon::parse(strtotime($value))
-            ->setTimezone(\Auth::user()->timezone)
-            ->format(config('settings.global.datetime_format'));
+            ->setTimezone($timezone)
+            ->format(config('settings.global.datetime_format','Y-m-d H:i:s'));
 
     }
     //-------------------------------------------------

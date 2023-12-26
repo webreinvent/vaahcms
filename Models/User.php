@@ -546,11 +546,6 @@ class User extends UserBase
 
     }
     //-------------------------------------------------
-    public static function updateTimeZone ($timezone,$user = User::class){
-        $user->timezone = $timezone;
-        $user->save();
-    }
-    //-------------------------------------------------
     //-------------------------------------------------
 
 

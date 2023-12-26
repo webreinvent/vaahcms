@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Models\Registration;
@@ -163,8 +164,8 @@ class PublicController extends Controller
             $message = 'Login Successful';
 
             $response = [];
-            $user = User::find(Auth::id());
-            User::updateTimeZone($request->timezone,$user);
+
+            Session::put('user_timezone',$request->timezone);
 
             $response['success'] = true;
             $response['messages'][] = $message;
