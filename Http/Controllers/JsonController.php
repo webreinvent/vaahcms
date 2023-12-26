@@ -118,21 +118,6 @@ class JsonController extends Controller
 
         }
         //---------------------------------------------------
-
-        $data['language_string']['users'] = [
-            "users_title" => trans("vaahcms-user.users_title"),
-            "view_role_active_all_roles" => trans("vaahcms-user.view_role_active_all_roles"),
-            "view_role_inactive_all_roles" => trans("vaahcms-user.view_role_inactive_all_roles"),
-            "view_generate_new_api_token" => trans("vaahcms-user.view_generate_new_api_token"),
-            "view_role_yes" => trans("vaahcms-user.view_role_yes"),
-            "view_role_no" => trans("vaahcms-user.view_role_no"),
-            "view_role_text_view" => trans("vaahcms-user.view_role_text_view"),
-            "view_role_placeholder_search" => trans("vaahcms-user.view_role_placeholder_search"),
-            "view_role_reset_button" => trans("vaahcms-user.view_role_reset_button"),
-            "toolkit_text_impersonate" => trans("vaahcms-user.toolkit_text_impersonate"),
-        ];
-
-        //---------------------------------------------------
         $data['language_string']['general'] = [
             "select_an_action_type" => trans("vaahcms-general.select_an_action_type"),
             "select_records" => trans("vaahcms-general.select_records"),

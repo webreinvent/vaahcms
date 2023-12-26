@@ -94,7 +94,7 @@ const useVaah = vaah();
 
                         <Button v-if="store.hasPermission('can-impersonate-users')"
                                 class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_string.users.toolkit_text_impersonate"
+                                v-tooltip.top="store.assets.language_string.users.toolkit_text_impersonate"
                                 @click="store.impersonate(prop.data)"
                                 icon="pi pi-user"
                                 :disabled="!prop.data.is_active"
