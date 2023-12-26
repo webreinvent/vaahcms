@@ -12,7 +12,7 @@ use WebReinvent\VaahCms\Models\UserBase as User;
 use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Notification extends Model {
+class Notification extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

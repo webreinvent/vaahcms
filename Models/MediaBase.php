@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
-class MediaBase extends Model {
+class MediaBase extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

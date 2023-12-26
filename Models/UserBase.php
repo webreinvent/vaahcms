@@ -2,6 +2,7 @@
 namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
@@ -39,7 +40,6 @@ class UserBase extends Authenticatable
         'affiliate_code_used_at' => 'datetime',
         'reset_password_code_sent_at' => 'datetime',
         'reset_password_code_used_at' => 'datetime',
-        'birth' => 'datetime',
         'activated_at' => 'datetime'
     ];
     //-------------------------------------------------
@@ -151,6 +151,106 @@ class UserBase extends Authenticatable
 
         return $name;
     }
+    //-------------------------------------------------
+    protected function updatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function deletedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function lastLoginAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function securityCodeExpiredAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function apiTokenUsedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function affiliateCodeUsedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function resetPasswordCodeSentAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function resetPasswordCodeUsedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function activatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     public function setFirstNameAttribute($value) {
         $this->attributes['first_name'] = ucfirst($value);

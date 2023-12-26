@@ -1,6 +1,8 @@
 <?php
 namespace WebReinvent\VaahCms\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 
 class User extends UserBase
@@ -37,6 +39,20 @@ class User extends UserBase
     {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
+    }
+
+    //-------------------------------------------------
+    protected function birth(): Attribute
+    {
+        return Attribute::make(
+            set: function (string $value = null) {
+                if(!$value){
+                    return null;
+                }
+                return Carbon::parse($value)
+                    ->setTimezone(\Auth::user()->timezone)->format('Y-m-d');
+            },
+        );
     }
 
     //-------------------------------------------------
@@ -297,14 +313,6 @@ class User extends UserBase
             }
         }
 
-
-
-
-        if($request->has('birth'))
-        {
-            $inputs['birth'] = \Illuminate\Support\Carbon::parse($request->birth)->format('Y-m-d');
-        }
-
         if($request->has('id'))
         {
 
@@ -537,7 +545,6 @@ class User extends UserBase
         return $response;
 
     }
-    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

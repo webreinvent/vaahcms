@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Setting extends Model {
+class Setting extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

@@ -15,7 +15,7 @@ use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
-class RegistrationBase extends Model
+class RegistrationBase extends VaahModel
 {
     use Notifiable;
     use SoftDeletes;

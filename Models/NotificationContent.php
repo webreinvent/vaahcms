@@ -4,7 +4,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class NotificationContent extends Model {
+class NotificationContent extends VaahModel {
 
     use SoftDeletes;
 

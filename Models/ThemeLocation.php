@@ -10,7 +10,7 @@ use VaahCms\Modules\Cms\Models\Menu;
 use VaahCms\Modules\Cms\Models\MenuItem;
 
 
-class ThemeLocation extends Model {
+class ThemeLocation extends VaahModel {
 
     //-------------------------------------------------
     protected $connection= 'mysql';

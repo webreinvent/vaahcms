@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class TaxonomyType extends Model {
+class TaxonomyType extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

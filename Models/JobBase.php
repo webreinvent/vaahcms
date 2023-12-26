@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -37,6 +38,36 @@ class JobBase extends Model
 
         return $date->format($date_time_format);
 
+    }
+
+    //-------------------------------------------------
+    protected function reservedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value,true);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function availableAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value,true);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
     }
     //-------------------------------------------------
     public function getPayloadAttribute($value)

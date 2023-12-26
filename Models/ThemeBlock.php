@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class ThemeBlock extends Model {
+class ThemeBlock extends VaahModel {
 
     use SoftDeletes;
     //-------------------------------------------------
