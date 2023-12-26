@@ -10,7 +10,7 @@ use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class PermissionBase extends Model {
+class PermissionBase extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

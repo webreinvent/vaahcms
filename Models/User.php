@@ -45,10 +45,10 @@ class User extends UserBase
     protected function birth(): Attribute
     {
         return Attribute::make(
-            get: function (string $value) {
-                return Carbon::parse(strtotime($value))->format('Y-m-d');
-            },
-            set: function (string $value) {
+            set: function (string $value = null) {
+                if(!$value){
+                    return null;
+                }
                 return Carbon::parse($value)
                     ->setTimezone(\Auth::user()->timezone)->format('Y-m-d');
             },

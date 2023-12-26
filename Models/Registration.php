@@ -1,7 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Notifications\Notice;
@@ -32,22 +31,6 @@ class Registration extends RegistrationBase
         return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
-    }
-
-    //-------------------------------------------------
-    protected function updatedAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string $value) => Carbon::parse(strtotime($value))->setTimezone(\Auth::user()->timezone)->toDateTimeLocalString(),
-        );
-    }
-
-    //-------------------------------------------------
-    protected function createAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn (string $value) => Carbon::parse(strtotime($value))->setTimezone(\Auth::user()->timezone)->toDateTimeLocalString(),
-        );
     }
     //-------------------------------------------------
     public function getTableColumns()

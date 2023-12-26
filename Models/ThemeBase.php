@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use ZanySoft\Zip\Zip;
 
 
-class ThemeBase extends Model {
+class ThemeBase extends VaahModel {
 
     use SoftDeletes;
     //-------------------------------------------------

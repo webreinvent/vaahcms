@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\ContentFormField;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class TaxonomyBase extends Model {
+class TaxonomyBase extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

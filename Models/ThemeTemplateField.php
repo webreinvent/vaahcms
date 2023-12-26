@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 
 
-class ThemeTemplateField extends Model {
+class ThemeTemplateField extends VaahModel {
 
     //-------------------------------------------------
     protected $connection= 'mysql';

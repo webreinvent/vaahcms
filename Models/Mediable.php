@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
-class Mediable extends Model {
+class Mediable extends VaahModel {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;

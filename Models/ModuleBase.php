@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ZanySoft\Zip\Zip;
 
-class ModuleBase extends Model
+class ModuleBase extends VaahModel
 {
     use SoftDeletes;
     //-------------------------------------------------
