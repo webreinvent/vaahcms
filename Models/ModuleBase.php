@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
@@ -54,6 +55,18 @@ class ModuleBase extends VaahModel
         return $date->format($date_time_format);
     }
 
+    //-------------------------------------------------
+
+
+    //-------------------------------------------------
+    protected function updateCheckedAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = Str::slug( $value );

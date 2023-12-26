@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -53,6 +54,46 @@ class Notified extends VaahModel {
 
         return $date->format($date_time_format);
 
+    }
+
+    //-------------------------------------------------
+    protected function lastAttemptAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function sentAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function readAt(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
+    }
+
+    //-------------------------------------------------
+    protected function markedDelivered(): Attribute
+    {
+        return Attribute::make(
+            get: function (string $value = null) {
+                return VaahModel::getUserTimezoneDate($value);
+            },
+        );
     }
     //-------------------------------------------------
     public function setMetaAttribute($value) {
