@@ -1,8 +1,9 @@
-import { watch } from 'vue'
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import {watch} from 'vue'
+import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import countriesData from "../../assets/data/country.json";
-import { vaah } from '../../vaahvue/pinia/vaah'
+import {vaah} from '../../vaahvue/pinia/vaah'
+
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
 
@@ -40,14 +41,14 @@ export const useNotificationStore = defineStore({
         app: null,
         activeSubTab: 0,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [10, 20, 30, 50, 100, 500],
         fillable: null,
-        empty_query:empty_states.query,
+        empty_query: empty_states.query,
         firstElement: null,
         query: vaah().clone(empty_states.query),
-        empty_action:empty_states.action,
+        empty_action: empty_states.action,
         action: vaah().clone(empty_states.action),
-        list:null,
+        list: null,
         route: null,
         view: 'large',
         show_filters: false,
@@ -81,21 +82,20 @@ export const useNotificationStore = defineStore({
         active_notification: null,
         is_add_from_disabled: false,
         is_add_subject_disabled: false,
-        is_testing:false,
-        send_to:null,
-        users:null,
-        user_list:null,
-        show_new_item_form:false,
+        is_testing: false,
+        send_to: null,
+        users: null,
+        user_list: null,
+        show_new_item_form: false,
         new_item: {
             name: null,
         },
-        searched_notification_variables:null,
+        searched_notification_variables: null,
         notification: null,
     }),
     getters: {},
     actions: {
-        async onLoad(route)
-        {
+        async onLoad(route) {
             /**
              * Set initial routes
              */
@@ -110,14 +110,10 @@ export const useNotificationStore = defineStore({
             await this.updateQueryFromUrl(route);
         },
 
-        async updateQueryFromUrl(route)
-        {
-            if(route.query)
-            {
-                if(Object.keys(route.query).length > 0)
-                {
-                    for(let key in route.query)
-                    {
+        async updateQueryFromUrl(route) {
+            if (route.query) {
+                if (Object.keys(route.query).length > 0) {
+                    for (let key in route.query) {
                         this.query[key] = route.query[key]
                     }
                     this.countFilters(route.query);
@@ -125,31 +121,27 @@ export const useNotificationStore = defineStore({
             }
         },
 
-        watchRoutes(route)
-        {
+        watchRoutes(route) {
             //watch routes
-            this.watch_stopper = watch(route, (newVal,oldVal) =>
-                {
+            this.watch_stopper = watch(route, (newVal, oldVal) => {
 
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if (this.watch_stopper && !newVal.name.includes(this.route_prefix)) {
                         this.watch_stopper();
 
                         return false;
                     }
 
                     this.route = newVal;
-                }, { deep: true }
+                }, {deep: true}
             )
 
 
         },
         //---------------------------------------------------------------------
-        watchStates()
-        {
-            watch(this.query.filter, (newVal,oldVal) =>
-                {
+        watchStates() {
+            watch(this.query.filter, (newVal, oldVal) => {
                     this.delayedSearch();
-                },{deep: true}
+                }, {deep: true}
             );
 
 
@@ -164,7 +156,7 @@ export const useNotificationStore = defineStore({
                 };
                 await this.updateUrlQueryString(this.query);
                 await vaah().ajax(
-                    this.ajax_url+ '/assets',
+                    this.ajax_url + '/assets',
                     await this.afterGetAssets,
                     options.query
                 );
@@ -173,12 +165,14 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         async afterGetAssets(data, res) {
             if (data) {
+                await this.getList();
                 this.assets = data;
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
                 this.help_urls = data.help_urls;
-                await this.getList();
+
+
 
 
             }
@@ -197,29 +191,30 @@ export const useNotificationStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async afterGetList (data, res) {
+        async afterGetList(data, res) {
 
             this.query.recount = null;
 
             if (data) {
                 this.list = data;
                 this.query.rows = data.per_page;
+                if (this.route.params.id) {
+                    await this.showNotificationSettings(this.route.params);
+                }
             }
         },
-        async delayedSearch()
-        {
+        async delayedSearch() {
             let self = this;
             this.query.page = 1;
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
-            this.search.delay_timer = setTimeout(async function() {
+            this.search.delay_timer = setTimeout(async function () {
                 await self.updateUrlQueryString(self.query);
                 await self.getList();
             }, this.search.delay_time);
         },
 
-        async updateUrlQueryString(query)
-        {
+        async updateUrlQueryString(query) {
             //remove reactivity from source object
             query = vaah().clone(query)
 
@@ -229,7 +224,7 @@ export const useNotificationStore = defineStore({
             });
             let query_object = qs.parse(query_string);
 
-            if(query_object.filter){
+            if (query_object.filter) {
                 query_object.filter = vaah().cleanObject(query_object.filter);
             }
 
@@ -244,25 +239,23 @@ export const useNotificationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        countFilters: function (query)
-        {
+        countFilters: function (query) {
             this.count_filters = 0;
-            if(query && query.filter)
-            {
+            if (query && query.filter) {
                 let filter = vaah().cleanObject(query.filter);
                 this.count_filters = Object.keys(filter).length;
             }
         },
         //---------------------------------------------------------------------
-        async getUser(){
+        async getUser() {
             await vaah().ajax(
-                this.base_url+'/json/users/',
+                this.base_url + '/json/users/',
                 this.afterGetUser,
             );
         },
         //---------------------------------------------------------------------
-        afterGetUser(data, res){
-            if(res){
+        afterGetUser(data, res) {
+            if (res) {
                 this.users = res.data;
             }
         },
@@ -280,11 +273,14 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
+
+            this.item = item;
+            this.$router.push({name: 'notification-form.index', params:{id:item.id}})
             this.active_notification = vaah().findInArrayByKey(this.list.data, 'id', item.id);
 
             let options = {
                 method: 'post',
-                query:  item,
+                query: item,
             };
 
             vaah().ajax(
@@ -292,38 +288,34 @@ export const useNotificationStore = defineStore({
                 this.afterShowNotificationSettings,
                 options
             );
+
         },
         //---------------------------------------------------------------------
         afterShowNotificationSettings(data, res) {
             if (data) {
                 this.active_notification.contents = data.list;
-                if(this.active_notification.via_mail)
-                {
-                    if(data.list.mail.length < 1){
+                if (this.active_notification.via_mail) {
+                    if (data.list.mail.length < 1) {
                         this.addMailContent();
-                    }else{
+                    } else {
                         this.setMailButton();
                     }
 
                 }
 
-                if(this.active_notification.via_sms && data.list.sms.length < 1)
-                {
+                if (this.active_notification.via_sms && data.list.sms.length < 1) {
                     this.addSmsContent();
                 }
 
-                if(this.active_notification.via_push && data.list.push.length < 1)
-                {
+                if (this.active_notification.via_push && data.list.push.length < 1) {
                     this.addPushContent();
                 }
 
-                if(this.active_notification.via_backend && data.list.backend.length < 1)
-                {
+                if (this.active_notification.via_backend && data.list.backend.length < 1) {
                     this.addBackendContent();
                 }
 
-                if(this.active_notification.via_frontend && data.list.frontend.length < 1)
-                {
+                if (this.active_notification.via_frontend && data.list.frontend.length < 1) {
                     this.addFrontendContent();
                 }
             }
@@ -332,8 +324,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         addToMail(key) {
             let sort = 0;
-            if(this.active_notification.contents && this.active_notification.contents.mail)
-            {
+            if (this.active_notification.contents && this.active_notification.contents.mail) {
                 sort = this.active_notification.contents.mail.length;
             }
 
@@ -351,8 +342,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         addAction() {
             let sort = 0;
-            if(this.active_notification.contents && this.active_notification.contents.mail)
-            {
+            if (this.active_notification.contents && this.active_notification.contents.mail) {
                 sort = this.active_notification.contents.mail.length;
             }
 
@@ -373,8 +363,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         addSubject() {
             let sort = 0;
-            if(this.active_notification.contents && this.active_notification.contents.mail)
-            {
+            if (this.active_notification.contents && this.active_notification.contents.mail) {
                 sort = this.active_notification.contents.mail.length;
             }
 
@@ -391,8 +380,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         addFrom() {
             let sort = 0;
-            if(this.active_notification.contents && this.active_notification.contents.mail)
-            {
+            if (this.active_notification.contents && this.active_notification.contents.mail) {
                 sort = this.active_notification.contents.mail.length;
             }
 
@@ -410,8 +398,7 @@ export const useNotificationStore = defineStore({
             this.active_notification.contents.mail.push(line);
         },
         //---------------------------------------------------------------------
-        addMailContent()
-        {
+        addMailContent() {
             let lines = [
                 {
                     vh_notification_id: this.active_notification.id,
@@ -427,24 +414,24 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         setMailButton() {
-            this.is_add_from_disabled =  false;
-            this.is_add_subject_disabled =  false;
+            this.is_add_from_disabled = false;
+            this.is_add_subject_disabled = false;
 
-            if(this.active_notification && this.active_notification.contents
-                && this.active_notification.contents.mail){
-                this.active_notification.contents.mail.forEach((mail,key) => {
-                    if(mail.key === 'from'){
-                        this.is_add_from_disabled =  true;
+            if (this.active_notification && this.active_notification.contents
+                && this.active_notification.contents.mail) {
+                this.active_notification.contents.mail.forEach((mail, key) => {
+                    if (mail.key === 'from') {
+                        this.is_add_from_disabled = true;
                     }
 
-                    if(mail.key === 'subject'){
-                        this.is_add_subject_disabled =  true;
+                    if (mail.key === 'subject') {
+                        this.is_add_subject_disabled = true;
                     }
                 });
             }
         },
         //---------------------------------------------------------------------
-        addSmsContent(){
+        addSmsContent() {
             let sms_lines = [
                 {
                     vh_notification_id: this.active_notification.id,
@@ -532,9 +519,16 @@ export const useNotificationStore = defineStore({
             this.active_notification.contents.frontend = lines;
         },
         //---------------------------------------------------------------------
-        hideNotificationSettings() {
+        async hideNotificationSettings() {
             this.active_notification = null;
-            this.getAssets();
+           await this.resetUrlQuery();
+            await this.getAssets();
+        },
+        async resetUrlQuery() {
+            this.route.params.id   = null;
+            await this.$router.replace({query: null});
+            await this.$router.push({name: 'notifications.index'})
+            await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
         getCopy(value) {
@@ -543,8 +537,7 @@ export const useNotificationStore = defineStore({
             vaah().toastSuccess(['Copied']);
         },
         //---------------------------------------------------------------------
-        removeContent(item, via)
-        {
+        removeContent(item, via) {
             let lines = vaah().removeInArrayByKey(this.active_notification.contents[via], item, 'sort');
 
             this.active_notification.contents[via] = lines;
@@ -556,7 +549,7 @@ export const useNotificationStore = defineStore({
                 params: this.active_notification
             };
 
-            let ajax_url = this.ajax_url+'/store';
+            let ajax_url = this.ajax_url + '/store';
             await vaah().ajax(ajax_url, null, options);
         },
         //---------------------------------------------------------------------
@@ -570,28 +563,27 @@ export const useNotificationStore = defineStore({
                 }
             };
 
-            let ajax_url = this.ajax_url+'/send';
+            let ajax_url = this.ajax_url + '/send';
             await vaah().ajax(ajax_url, null, options);
         },
         //---------------------------------------------------------------------
-        searchUser(event){
+        searchUser(event) {
             if (!event.query.trim().length) {
                 this.user_list = this.users;
-            }
-            else {
+            } else {
                 this.user_list = this.users.filter((user) => {
                     return user.name.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
         },
         //---------------------------------------------------------------------
-        addNewNotification(){
+        addNewNotification() {
             this.show_new_item_form = !this.show_new_item_form;
         },
         //---------------------------------------------------------------------
         async create() {
             let query = {
-                item:this.new_item,
+                item: this.new_item,
                 rows: this.query.rows
             }
 
@@ -600,20 +592,19 @@ export const useNotificationStore = defineStore({
                 params: query
             };
 
-            let ajax_url = this.ajax_url+'/create';
+            let ajax_url = this.ajax_url + '/create';
             await vaah().ajax(ajax_url, this.createAfter, options);
         },
         //---------------------------------------------------------------------
-        async createAfter(data, res){
-            this.new_item.name=null;
+        async createAfter(data, res) {
+            this.new_item.name = null;
             await this.getList();
         },
         //---------------------------------------------------------------------
-        searchNotificationVarialbles(event){
+        searchNotificationVarialbles(event) {
             if (!event.query.trim().length) {
                 this.searched_notification_variables = this.users;
-            }
-            else {
+            } else {
                 this.searched_notification_variables = this.notification_variables.filter((variables) => {
                     return variables.name.toLowerCase().startsWith(event.query.toLowerCase());
                 });
@@ -632,8 +623,8 @@ export const useNotificationStore = defineStore({
             await this.getAssets();
         },
         //---------------------------------------------------------------------
-        getNotificationDcoument(url){
-            window.open(url,'_blank');
+        getNotificationDcoument(url) {
+            window.open(url, '_blank');
         },
         //---------------------------------------------------------------------
         setPageTitle() {
@@ -642,17 +633,16 @@ export const useNotificationStore = defineStore({
             }
         },
         async paginate(event) {
-            this.query.page = event.page+1;
+            this.query.page = event.page + 1;
             this.query.rows = event.rows;
             this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
 
-        itemAction(type, item=null){
+        itemAction(type, item = null) {
 
-            if(!item)
-            {
+            if (!item) {
                 item = this.item;
             }
 
@@ -664,8 +654,7 @@ export const useNotificationStore = defineStore({
                 method: 'post',
             };
 
-            switch (type)
-            {
+            switch (type) {
 
                 /**
                  * Delete a record, hence method is `DELETE`
@@ -674,7 +663,7 @@ export const useNotificationStore = defineStore({
                  */
                 case 'trash':
                     options.method = 'DELETE';
-                    ajax_url += '/'+item.id+'/action/'+type;
+                    ajax_url += '/' + item.id + '/action/' + type;
                     break;
                 /**
                  * Update a record's one column or very few columns,
@@ -683,7 +672,7 @@ export const useNotificationStore = defineStore({
                  */
                 default:
                     options.method = 'PUT';
-                    ajax_url += '/'+item.id+'/action/'+type;
+                    ajax_url += '/' + item.id + '/action/' + type;
                     break;
             }
 
@@ -701,29 +690,25 @@ export const useNotificationStore = defineStore({
             }
 
         },
-        onItemSelection(items)
-        {
+        onItemSelection(items) {
             this.action.items = items;
         },
-        isViewLarge()
-        {
+        isViewLarge() {
             return this.view === 'large';
         },
 //---------------------------------------------------------------------------
 
-        async listAction(type = null){
-            if(!type && this.action.type)
-            {
+        async listAction(type = null) {
+            if (!type && this.action.type) {
                 type = this.action.type;
-            } else{
+            } else {
                 this.action.type = type;
             }
 
-            let url = this.ajax_url+'/action/'+type
+            let url = this.ajax_url + '/action/' + type
             let method = 'PUT';
 
-            switch (type)
-            {
+            switch (type) {
                 case 'delete':
                     method = 'DELETE';
                     break;
@@ -748,42 +733,36 @@ export const useNotificationStore = defineStore({
             );
         },
 
-        isListActionValid()
-        {
+        isListActionValid() {
 
-            if(!this.action.type)
-            {
+            if (!this.action.type) {
                 vaah().toastErrors(['Select an action type']);
                 return false;
             }
 
-            if(this.action.items.length < 1)
-            {
+            if (this.action.items.length < 1) {
                 vaah().toastErrors(['Select records']);
                 return false;
             }
 
             return true;
         },
-        async updateList(type = null){
+        async updateList(type = null) {
 
-            if(!type && this.action.type)
-            {
+            if (!type && this.action.type) {
                 type = this.action.type;
-            } else{
+            } else {
                 this.action.type = type;
             }
 
-            if(!this.isListActionValid())
-            {
+            if (!this.isListActionValid()) {
                 return false;
             }
 
 
             let method = 'PUT';
 
-            switch (type)
-            {
+            switch (type) {
                 case 'delete':
                     method = 'DELETE';
                     break;
@@ -795,24 +774,21 @@ export const useNotificationStore = defineStore({
                 show_success: false
             };
             await vaah().ajax(
-                this.ajax_url+'/action/'+type,
+                this.ajax_url + '/action/' + type,
                 this.updateListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
         async updateListAfter(data, res) {
-            if(data)
-            {
+            if (data) {
                 this.action = vaah().clone(this.empty_action);
                 await this.getList();
             }
         },
 
-        confirmDelete()
-        {
-            if(this.action.items.length < 1)
-            {
+        confirmDelete() {
+            if (this.action.items.length < 1) {
                 vaah().toastErrors(['Select a record']);
                 return false;
             }
@@ -820,14 +796,12 @@ export const useNotificationStore = defineStore({
             vaah().confirmDialogDelete(this.listAction);
         },
         //---------------------------------------------------------------------
-        confirmDeleteAll()
-        {
+        confirmDeleteAll() {
             this.action.type = 'delete-all';
             vaah().confirmDialogDelete(this.listAction);
         },
 
-        async getListSelectedMenu()
-        {
+        async getListSelectedMenu() {
             this.list_selected_menu = [
                 {
                     label: 'Trash',
@@ -854,8 +828,7 @@ export const useNotificationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        getListBulkMenu()
-        {
+        getListBulkMenu() {
             this.list_bulk_menu = [
 
                 {
@@ -881,14 +854,12 @@ export const useNotificationStore = defineStore({
                 },
             ];
         },
-        async clearSearch()
-        {
+        async clearSearch() {
             this.query.filter.q = null;
             await this.updateUrlQueryString(this.query);
             await this.getList();
         },
-        async resetQuery()
-        {
+        async resetQuery() {
             //reset query strings
             await this.resetQueryString();
 
@@ -896,17 +867,14 @@ export const useNotificationStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async resetQueryString()
-        {
-            for(let key in this.query.filter)
-            {
+        async resetQueryString() {
+            for (let key in this.query.filter) {
                 this.query.filter[key] = null;
             }
             await this.updateUrlQueryString(this.query);
         },
     }
 });
-
 
 
 // Pinia hot reload
