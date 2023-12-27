@@ -498,18 +498,26 @@ export const useBatchStore = defineStore({
             this.itemAction('delete', this.item);
         },
         //---------------------------------------------------------------------
-        getJobProgress(item,type,decimal = null) {
+        getJobProgress(item,type,decimal = null,is_job_value_return = false) {
             let d = item;
 
             let value = 0;
 
+            let job_value = 0
+
             if (type===1) {
-                value = ((d.total_jobs - d.pending_jobs - d.failed_jobs) * 100) / d.total_jobs;
+                job_value = d.total_jobs - d.pending_jobs - d.failed_jobs;
             }else if (type===2) {
-                value = (d.failed_jobs * 100) / d.total_jobs;
+                job_value = d.failed_jobs;
             }else if (type===3) {
-                value = (d.pending_jobs * 100) / d.total_jobs;
+                job_value = d.pending_jobs;
             }
+
+            if(is_job_value_return){
+                return job_value;
+            }
+
+            value = (job_value * 100) / d.total_jobs;
 
             if(decimal){
                 return value.toFixed(2);

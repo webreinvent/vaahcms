@@ -32,9 +32,8 @@ const useVaah = vaah();
 
                            <div role="progressbar"
                                 class="p-progressbar p-component p-progressbar-determinate batch-progress-bar">
-                            fsdfsdfsfsf
-                            <div v-tooltip.top="{
-                                    value: 'Passed'
+                            <div v-if="store.getJobProgress(prop.data,1,null,true)" v-tooltip.top="{
+                                    value: 'Passed ('+store.getJobProgress(prop.data,1,null,true)+')'
                                 }"
                                  class="p-progressbar-value p-progressbar-value-animate progress-bar-success"
                                  :style="'width: '+ store.getJobProgress(prop.data,1)+'%;'"
@@ -44,8 +43,8 @@ const useVaah = vaah();
                                     {{store.getJobProgress(prop.data,1,2)}}%
                                 </div>
                             </div>
-                            <div v-tooltip.top="{
-                                    value: 'Failed'
+                            <div v-if="store.getJobProgress(prop.data,2,null,true)" v-tooltip.top="{
+                                    value: 'Failed ('+store.getJobProgress(prop.data,2,null,true)+')'
                                 }"
                                  class="p-progressbar-value p-progressbar-value-animate progress-bar-danger"
                                  :style="'width: '+ store.getJobProgress(prop.data,2)+'%; left: '
@@ -55,8 +54,8 @@ const useVaah = vaah();
                                     {{store.getJobProgress(prop.data,2,2)}}%
                                 </div>
                             </div>
-                            <div v-tooltip.top="{
-                                    value: 'Pending'
+                            <div v-if="store.getJobProgress(prop.data,3,null,true)" v-tooltip.top="{
+                                    value: 'Pending ('+store.getJobProgress(prop.data,3,null,true)+')'
                                 }"
                                  class="p-progressbar-value p-progressbar-value-animate progress-bar-warning"
                                  :style="'width: '+ store.getJobProgress(prop.data,3)+'%; left: '
