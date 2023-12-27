@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/failedjobs',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/failedjobs',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
 function () {
 
@@ -31,22 +32,6 @@ function () {
     Route::delete('/', 'FailedJobsController@deleteList')
         ->name('vh.backend.vaah.api.failedjobs.list.delete');
 
-
-    /**
-     * Create Item
-     */
-    Route::post('/', 'FailedJobsController@createItem')
-        ->name('vh.backend.vaah.api.failedjobs.create');
-    /**
-     * Get Item
-     */
-    Route::get('/{id}', 'FailedJobsController@getItem')
-        ->name('vh.backend.vaah.api.failedjobs.read');
-    /**
-     * Update Item
-     */
-    Route::match(['put', 'patch'], '/{id}', 'FailedJobsController@updateItem')
-        ->name('vh.backend.vaah.api.failedjobs.update');
     /**
      * Delete Item
      */
@@ -58,13 +43,5 @@ function () {
      */
     Route::any('/action/{action}', 'FailedJobsController@listAction')
         ->name('vh.backend.vaah.api.failedjobs.list.action');
-
-    /**
-     * Item actions
-     */
-    Route::any('/{id}/action/{action}', 'FailedJobsController@itemAction')
-        ->name('vh.backend.vaah.api.failedjobs.item.action');
-
-
 
 });

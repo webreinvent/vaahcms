@@ -173,12 +173,5 @@ Route::group(
         Route::any('/action/{action}', 'FailedJobsController@listAction')
             ->name('vh.backend.vaah.failedjobs.list.actions');
 
-        /**
-         * Item actions
-         */
-        Route::any('/{id}/action/{action}', 'FailedJobsController@itemAction')
-            ->name('vh.backend.vaah.failedjobs.item.action');
-
-        //---------------------------------------------------------
     });
 

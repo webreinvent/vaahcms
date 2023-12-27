@@ -160,4 +160,4 @@ Route::group(
             });
     });
 
-
+include('api/api-routes-failedjobs.php');
