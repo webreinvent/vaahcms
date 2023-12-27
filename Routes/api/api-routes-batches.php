@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/batches',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/batches',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
 function () {
 
@@ -21,32 +22,11 @@ function () {
     Route::get('/', 'BatchesController@getList')
         ->name('vh.backend.vaah.api.batches.list');
     /**
-     * Update List
-     */
-    Route::match(['put', 'patch'], '/', 'BatchesController@updateList')
-        ->name('vh.backend.vaah.api.batches.list.update');
-    /**
      * Delete List
      */
     Route::delete('/', 'BatchesController@deleteList')
         ->name('vh.backend.vaah.api.batches.list.delete');
 
-
-    /**
-     * Create Item
-     */
-    Route::post('/', 'BatchesController@createItem')
-        ->name('vh.backend.vaah.api.batches.create');
-    /**
-     * Get Item
-     */
-    Route::get('/{id}', 'BatchesController@getItem')
-        ->name('vh.backend.vaah.api.batches.read');
-    /**
-     * Update Item
-     */
-    Route::match(['put', 'patch'], '/{id}', 'BatchesController@updateItem')
-        ->name('vh.backend.vaah.api.batches.update');
     /**
      * Delete Item
      */
@@ -64,7 +44,5 @@ function () {
      */
     Route::any('/{id}/action/{action}', 'BatchesController@itemAction')
         ->name('vh.backend.vaah.api.batches.item.action');
-
-
 
 });
