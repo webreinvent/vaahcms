@@ -165,15 +165,16 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         async afterGetAssets(data, res) {
             if (data) {
+                await this.getList();
+                if (this.route.params.id) {
+                    await this.showNotificationSettings(this.route.params);
+                }
                 this.assets = data;
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
                 this.help_urls = data.help_urls;
-                await this.getList();
-                if (this.route.query.id) {
-                    await this.showNotificationSettings(this.route.query);
-                }
+
 
 
 
@@ -272,10 +273,9 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
-            let query = {
-                id: item.id
-            }
-            await this.updateUrlQueryString(query);
+
+            this.item = item;
+            this.$router.push({name: 'notification-form.index', params:{id:item.id}})
             this.active_notification = vaah().findInArrayByKey(this.list.data, 'id', item.id);
 
             let options = {
@@ -288,6 +288,7 @@ export const useNotificationStore = defineStore({
                 this.afterShowNotificationSettings,
                 options
             );
+
         },
         //---------------------------------------------------------------------
         afterShowNotificationSettings(data, res) {
@@ -524,7 +525,9 @@ export const useNotificationStore = defineStore({
             await this.getAssets();
         },
         async resetUrlQuery() {
-            this.query.id = null
+            this.route.params.id   = null;
+            await this.$router.replace({query: null});
+            await this.$router.push({name: 'notifications.index'})
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
