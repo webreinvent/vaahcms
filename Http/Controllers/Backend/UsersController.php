@@ -247,6 +247,7 @@ class UsersController extends Controller
         }
 
         try {
+
             $item = User::query()->where('id', $id)->first();
 
             if (!$item) {
@@ -312,6 +313,15 @@ class UsersController extends Controller
         }
 
         try {
+
+            $is_restricted = User::restrictedActions($action, $id);
+
+            if($is_restricted)
+            {
+                $response =  User::getItem($id);
+                return response()->json($response);
+            }
+
             $response = User::itemAction($request,$id,$action);
         } catch (\Exception $e) {
             $response = [];
