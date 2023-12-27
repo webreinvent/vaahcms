@@ -180,7 +180,8 @@ class Setting extends VaahModel {
                     }
                     break;
                 case 'redirect_after_backend_logout':
-                    $global_settings[$key] = $global_settings['redirect_after_backend_logout_url']??'';
+                case 'backend_homepage_link':
+                    $global_settings[$key] = $global_settings[$key.'_url']??'';
                     if($value === 'backend'){
                         $global_settings[$key] = url('/backend');
                     }elseif($value === 'frontend'){
