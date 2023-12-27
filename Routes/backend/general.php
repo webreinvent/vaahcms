@@ -35,9 +35,6 @@ Route::group(
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
-        //------------------------------------------------
-        Route::get( '/homepage-redirection', 'PublicController@homepageRedirection' )
-            ->name( 'vh.backend.homepage-redirection' );
         //-----------------------------------------------
         Route::post( '/verify/post', 'PublicController@postVerify' )
             ->name( 'vh.backend.verify.post' );
