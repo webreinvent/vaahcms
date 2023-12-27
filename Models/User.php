@@ -155,6 +155,17 @@ class User extends UserBase
                 ->toArray();
         }
 
+        foreach($items_id as $key => $id) {
+
+            $is_restricted = self::restrictedActions($inputs['type'], $id);
+
+            if($is_restricted)
+            {
+                unset($items_id[$key]);
+            }
+
+        }
+
 
         $items = self::whereIn('id', $items_id)
             ->withTrashed();
@@ -208,6 +219,14 @@ class User extends UserBase
         $items_id = collect($inputs['items'])->pluck('id')->toArray();
 
         foreach($items_id as $id) {
+
+            $is_restricted = self::restrictedActions('delete', $id);
+
+            if($is_restricted)
+            {
+                continue;
+            }
+
             $item = self::query()->where('id', $id)->withTrashed()->first();
 
             if ($item) {

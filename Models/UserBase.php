@@ -600,17 +600,16 @@ class UserBase extends Authenticatable
     public static function restrictedActions($action_type, $user_id)
     {
 
-
         //restricted actions on logged in users
         $result = false;
-        if($user_id === \Auth::user()->id)
+        if((int)$user_id === \Auth::user()->id)
         {
             switch ($action_type)
             {
                 //------------------------
-                case 'bulk-trash':
-                case 'bulk-delete':
-                case 'bulk-change-status':
+                case 'trash':
+                case 'delete':
+                case 'deactivate':
                     $result = true;
                     break;
                 //------------------------
@@ -619,21 +618,25 @@ class UserBase extends Authenticatable
                 //------------------------
             }
 
+
+
             return $result;
         }
 
 
+
         //restricted action if this user is last super admin
         $result = false;
-        $user = self::find($user_id);
+        $user = self::withTrashed()->find($user_id);
         $is_last_super_admin = self::isLastSuperAdmin();
-
         if($user->hasRole('super-administrator') && $is_last_super_admin)
         {
             switch ($action_type)
             {
                 //------------------------
-                case 'bulk-change-status':
+                case 'trash':
+                case 'delete':
+                case 'deactivate':
                     $result = true;
                     break;
                 //------------------------
