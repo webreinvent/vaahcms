@@ -166,9 +166,6 @@ export const useNotificationStore = defineStore({
         async afterGetAssets(data, res) {
             if (data) {
                 await this.getList();
-                if (this.route.params.id) {
-                    await this.showNotificationSettings(this.route.params);
-                }
                 this.assets = data;
                 this.notifications = data.notifications;
                 this.notification_variables = data.notification_variables.success;
@@ -201,6 +198,9 @@ export const useNotificationStore = defineStore({
             if (data) {
                 this.list = data;
                 this.query.rows = data.per_page;
+                if (this.route.params.id) {
+                    await this.showNotificationSettings(this.route.params);
+                }
             }
         },
         async delayedSearch() {
