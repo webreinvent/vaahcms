@@ -107,21 +107,6 @@ Route::group(
                 //------------------------------------------------
             });
 
-        Route::group(
-            [
-                'prefix'     => '/permissions',
-            ],
-            function () {
-                //------------------------------------------------
-                Route::any( '/', 'PermissionsController@getList' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}', 'PermissionsController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'PermissionsController@getItemRoles' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/users', 'PermissionsController@getItemUsers' );
-                //------------------------------------------------
-            });
 
         Route::group(
             [
@@ -160,4 +145,5 @@ Route::group(
             });
     });
 
+include('api/api-routes-permissions.php');
 
