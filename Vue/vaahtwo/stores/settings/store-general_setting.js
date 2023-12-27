@@ -180,6 +180,7 @@ export const useGeneralStore = defineStore({
         //---------------------------------------------------------------------
         storeSiteSettingsAfter(){
             this.getList();
+            this.clearCache();
         },
         //---------------------------------------------------------------------
         async storeLinks(){
