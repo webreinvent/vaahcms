@@ -8,7 +8,7 @@
 Route::group(
     [
         'prefix'     => 'api/vaah/logs',
-        'middleware' => ['api','has.backend.access'],
+        'middleware' => ['auth:api'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced'
     ],
     function () {
