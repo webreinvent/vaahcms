@@ -29,7 +29,8 @@ onMounted(async () => {
         </div>
 
 
-        <div v-if="!store.active_notification && !store.query.id">
+
+        <div v-if="!store.active_notification">
             <div  v-if="store.list && store.list.data ">
                 <DataTable :value="store.list.data" stripedRows dataKey="id"  responsiveLayout="scroll"
                            v-model:selection="store.action.items"
@@ -83,7 +84,8 @@ onMounted(async () => {
                            class="bg-white-alpha-0 pt-2" />
             </div>
         </div>
-        <div class="grid" v-else-if="store.route.query.id">
+
+        <div class="grid" v-else-if="store.route.params.id">
             <div class="col-12 mt-2 mb-0">
                 <div class="level">
                     <div class="flex align-items-center">

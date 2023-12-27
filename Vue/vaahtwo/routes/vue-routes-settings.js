@@ -54,6 +54,12 @@ routes_list = {
                     props: true,
                 },
                 {
+                    path: 'notifications/form/:id?',
+                    name: 'notification-form.index',
+                    component: NotificationsIndex,
+                    props: true,
+                },
+                {
                     path: 'update',
                     name: 'update.index',
                     component: UpdateIndex,
