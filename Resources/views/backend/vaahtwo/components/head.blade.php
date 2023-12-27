@@ -34,6 +34,8 @@
 
         <!--CSS Support for PrimeVue-->
         <link href="{{vh_get_backend_assets_url()}}/build/vaahtwo.css" rel="stylesheet" media="screen">
+
+        <link href="{{vh_get_backend_assets('build/index.css','vaahtwo')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}
