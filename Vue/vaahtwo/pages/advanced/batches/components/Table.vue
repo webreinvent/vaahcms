@@ -30,11 +30,13 @@ const useVaah = vaah();
                 <template #body="prop">
                     <span >
 
-                        <div role="progressbar"
-                             class="p-progressbar p-component p-progressbar-determinate batch-progress-bar"
-                             aria-valuemin="0" aria-valuenow="12.5" aria-valuemax="100" data-pc-name="progressbar"
-                             data-pc-section="root">
-                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-success"
+                           <div role="progressbar"
+                                class="p-progressbar p-component p-progressbar-determinate batch-progress-bar">
+                            fsdfsdfsfsf
+                            <div v-tooltip.top="{
+                                    value: 'Passed'
+                                }"
+                                 class="p-progressbar-value p-progressbar-value-animate progress-bar-success"
                                  :style="'width: '+ store.getJobProgress(prop.data,1)+'%;'"
                             >
                                 <div class="p-progressbar-label"
@@ -42,7 +44,10 @@ const useVaah = vaah();
                                     {{store.getJobProgress(prop.data,1,2)}}%
                                 </div>
                             </div>
-                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-danger"
+                            <div v-tooltip.top="{
+                                    value: 'Failed'
+                                }"
+                                 class="p-progressbar-value p-progressbar-value-animate progress-bar-danger"
                                  :style="'width: '+ store.getJobProgress(prop.data,2)+'%; left: '
                                  + store.getJobProgress(prop.data,1)+'%;'"
                             >
@@ -50,7 +55,10 @@ const useVaah = vaah();
                                     {{store.getJobProgress(prop.data,2,2)}}%
                                 </div>
                             </div>
-                            <div class="p-progressbar-value p-progressbar-value-animate progress-bar-warning"
+                            <div v-tooltip.top="{
+                                    value: 'Pending'
+                                }"
+                                 class="p-progressbar-value p-progressbar-value-animate progress-bar-warning"
                                  :style="'width: '+ store.getJobProgress(prop.data,3)+'%; left: '
                                  + (store.getJobProgress(prop.data,1)+store.getJobProgress(prop.data,2))+'%;'"
                             >
@@ -60,7 +68,7 @@ const useVaah = vaah();
                             </div>
                         </div>
                     </span>
-                    
+
                 </template>
             </Column>
 
