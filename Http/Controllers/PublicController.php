@@ -329,32 +329,6 @@ class PublicController extends Controller
     }
 
     //----------------------------------------------------------
-    public function homepageRedirection()
-    {
-
-        $redirect_value = config('settings.global.homepage_redirection');
-
-        if(!isset($redirect_value))
-        {
-            return redirect()->route('vh.backend');
-        }
-
-        $redirect_value_url = '/';
-
-        if($redirect_value != 'frontend'){
-            $redirect_value_custom = config('settings.global.homepage_redirection_url');
-
-            $redirect_value_url = $redirect_value;
-
-            if(isset($redirect_value_custom) && !empty($redirect_value_custom))
-            {
-                $redirect_value_url = $redirect_value_custom;
-            }
-        }
-
-        return redirect($redirect_value_url);
-    }
-    //----------------------------------------------------------
     public function disableMfa(Request $request,$token)
     {
 
