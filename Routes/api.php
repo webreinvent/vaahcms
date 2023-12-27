@@ -84,28 +84,6 @@ Route::group(
                 //------------------------------------------------
             });
 
-        Route::group(
-            [
-                'prefix'     => '/roles',
-            ],
-            function () {
-                //------------------------------------------------
-                Route::any( '/', 'RolesController@getList' );
-                //------------------------------------------------
-                Route::any( '/create', 'RolesController@create' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}', 'RolesController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'RolesController@update' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'RolesController@delete' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/users', 'RolesController@getItemUsers' );
-
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'RolesController@getItemPermissions' );
-                //------------------------------------------------
-            });
 
         Route::group(
             [
@@ -160,4 +138,4 @@ Route::group(
             });
     });
 
-
+include('api/api-routes-roles.php');
