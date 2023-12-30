@@ -265,31 +265,6 @@ class User extends UserBase
 
 
         switch ($type) {
-            case 'deactivate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => null]);
-                }
-                break;
-            case 'activate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => 1]);
-                }
-                break;
-            case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->delete();
-                }
-                break;
-            case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->restore();
-                }
-                break;
-            case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->forceDelete();
-                }
-                break;
             case 'activate-all':
                 self::query()->update(['is_active' => 1]);
                 break;
