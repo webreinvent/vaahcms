@@ -738,15 +738,41 @@ class RoleBase extends VaahModel {
 
             $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], $data);
         } else {
+
+            $permission_ids = [];
+            $permission_list = Permission::query();
+            if(isset($inputs['inputs']['query'])){
+
+                if (isset($inputs['inputs']['query']['q'])) {
+                    $permission_list->where(function ($q) use($inputs){
+                        $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                            ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
+                    });
+                }
+
+                if (isset($inputs['inputs']['query']['module'])) {
+                    $permission_list->where('module',$inputs['inputs']['query']['module']);
+                }
+
+                if (isset($inputs['inputs']['query']['section'])) {
+                    $permission_list->where('section',$inputs['inputs']['query']['section']);
+                }
+                $permission_ids = $permission_list->pluck('id');
+            }
+
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
+                ->whereIn('vh_permission_id',$permission_ids)
                 ->update($data);
-//            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
         }
 
         self::recountRelations();
-        $response['messages'] = [];
+
+        $response['success'] = true;
+        $response['data'] = [];
+
+        return $response;
     }
     //-------------------------------------------------
     public static function bulkChangeUserStatus($request)
@@ -780,7 +806,10 @@ class RoleBase extends VaahModel {
                 ->update($data);
         }
         self::recountRelations();
-        $response['messages'] = [];
+        $response['success'] = true;
+        $response['data'] = [];
+
+        return $response;
     }
     //-------------------------------------------------
     public static function bulkPermissionStatusChange($request)

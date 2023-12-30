@@ -768,7 +768,7 @@ export const useRoleStore = defineStore({
 
             let inputs = {
                 id : this.item.id,
-                permission_id : item.id,
+                permission_id : item.id
             };
 
             let data = {};
@@ -807,6 +807,7 @@ export const useRoleStore = defineStore({
         bulkActions (input, action) {
             let params = {
                 id: this.item.id,
+                query : this.role_permissions_query,
                 permission_id: null,
                 user_id: null
             };
