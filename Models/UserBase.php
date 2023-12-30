@@ -612,8 +612,11 @@ class UserBase extends Authenticatable
             {
                 //------------------------
                 case 'trash':
+                case 'trash-all':
                 case 'delete':
+                case 'delete-all':
                 case 'deactivate':
+                case 'deactivate-all':
 
                     $response['success'] = false;
                     $response['errors'][] = "Actions cannot be performed on a user who is currently logged in.";
@@ -647,8 +650,11 @@ class UserBase extends Authenticatable
             {
                 //------------------------
                 case 'trash':
+                case 'trash-all':
                 case 'delete':
+                case 'delete-all':
                 case 'deactivate':
+                case 'deactivate-all':
                     $response['success'] = false;
                     $response['errors'][] = "Actions cannot be performed on users with a
                     role higher than that of the currently logged-in user.";
