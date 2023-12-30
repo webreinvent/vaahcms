@@ -316,9 +316,10 @@ class UsersController extends Controller
 
             $is_restricted = User::restrictedActions($action, $id);
 
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
                 $response =  User::getItem($id);
+                $response['errors'] = $is_restricted['errors'];
                 return response()->json($response);
             }
 

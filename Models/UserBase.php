@@ -610,7 +610,10 @@ class UserBase extends Authenticatable
                 case 'trash':
                 case 'delete':
                 case 'deactivate':
-                    $result = true;
+
+                    $response['success'] = false;
+                    $response['errors'] = ["Actions cannot be performed on a user who is currently logged in."];
+                    return $response;
                     break;
                 //------------------------
                 default:
@@ -629,7 +632,13 @@ class UserBase extends Authenticatable
         $result = false;
         $user = self::withTrashed()->find($user_id);
         $is_last_super_admin = self::isLastSuperAdmin();
-        if($user->hasRole('super-administrator') && $is_last_super_admin)
+
+        if((!\Auth::user()->hasRole('super-administrator')  &&
+            $user->hasRole('super-administrator')) ||
+            (!\Auth::user()->hasRole('super-administrator')
+                && !\Auth::user()->hasRole('administrator')) &&
+            ($user->hasRole('super-administrator')
+                || $user->hasRole('administrator')))
         {
             switch ($action_type)
             {
@@ -637,8 +646,10 @@ class UserBase extends Authenticatable
                 case 'trash':
                 case 'delete':
                 case 'deactivate':
-                    $result = true;
-                    break;
+                    $response['success'] = false;
+                    $response['errors'] = ["Actions cannot be performed on users with a
+                    role higher than that of the currently logged-in user."];
+                    return $response;
                 //------------------------
                 default:
                     break;
