@@ -118,7 +118,7 @@ export const useRootStore = defineStore({
         {
             if(data && data.is_logged_in == false)
             {
-                this.$router.push({name: 'sign.in'})
+                window.open(this.base_url);
                 return false;
             }
 
