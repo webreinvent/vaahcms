@@ -1732,10 +1732,20 @@ class UserBase extends Authenticatable
                 $inputs['inputs']['role_id'],
                 $data
             );
+
         }else{
+            $role_ids = [];
+            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
+                $role_ids = Role::where(function ($q) use($inputs){
+                    $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
+                })->pluck('id');
+            }
+
             $item->roles()
                 ->newPivotStatement()
                 ->where('vh_user_id', '=', $item->id)
+                ->whereIn('vh_role_id',$role_ids)
                 ->update($data);
         }
 
