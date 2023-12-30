@@ -28,8 +28,10 @@ DB_PASSWORD={{$data->db_password ?? '' }}
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
+CACHE_PREFIX={{$data->app_name ? strtolower($data->app_name): '' }}
 QUEUE_CONNECTION=sync
 SESSION_DRIVER=file
+SESSION_COOKIE={{$data->app_name ? strtolower($data->app_name): '' }}
 SESSION_LIFETIME=120
 
 REDIS_HOST=127.0.0.1
