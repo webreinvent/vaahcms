@@ -7,22 +7,22 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::post('/', 'UsersController@getProfile')
+        Route::post('/', 'ProfileController@getItem')
             ->name('backend.vaah.profile');
         //---------------------------------------------------------
-        Route::post('/assets', 'UsersController@getAssets')
+        Route::post('/assets', 'ProfileController@getAssets')
             ->name('backend.vaah.profile.assets');
         //---------------------------------------------------------
-        Route::post('/store', 'UsersController@storeProfile')
+        Route::post('/store', 'ProfileController@storeItem')
             ->name('backend.vaah.profile.store');
         //---------------------------------------------------------
-        Route::post('/store/password', 'UsersController@storeProfilePassword')
+        Route::post('/store/password', 'ProfileController@storePassword')
             ->name('backend.vaah.profile.store.password');
         //---------------------------------------------------------
-        Route::post('/avatar/store', 'UsersController@storeProfileAvatar')
+        Route::post('/avatar/store', 'ProfileController@storeAvatar')
             ->name('backend.vaah.profile.avatar.store');
         //---------------------------------------------------------
-        Route::post('/avatar/remove', 'UsersController@removeProfileAvatar')
+        Route::post('/avatar/remove', 'ProfileController@removeAvatar')
             ->name('backend.vaah.profile.avatar.remove');
         //---------------------------------------------------------
     });
