@@ -58,7 +58,7 @@ export const useSetupStore = defineStore({
 
             },
             env:{
-                app_name: "VaahCMS",
+                app_name: null,
                 app_key: null,
                 app_debug: 'true',
                 app_env: null,
@@ -622,7 +622,7 @@ export const useSetupStore = defineStore({
 
                 },
                 env:{
-                    app_name: "VaahCMS",
+                    app_name: null,
                     app_key: null,
                     app_debug: 'true',
                     app_env: null,
@@ -657,12 +657,12 @@ export const useSetupStore = defineStore({
 
            setTimeout(() => {
                 if (!event.query.trim().length) {
-                    this.filtered_country_codes = this.assets.country_calling_codes;
+                    this.filtered_country_codes = vaah().clone(this.assets.country_calling_codes);
                 }
                 else {
-                    this.filtered_country_codes = this.assets.country_calling_codes.filter((country) => {
+                    this.filtered_country_codes =  vaah().clone(this.assets.country_calling_codes.filter((country) => {
                         return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-                    });
+                    }));
                 }
             }, 250);
         },
