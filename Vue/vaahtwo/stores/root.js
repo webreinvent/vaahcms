@@ -118,7 +118,7 @@ export const useRootStore = defineStore({
         {
             if(data && data.is_logged_in == false)
             {
-                window.open(this.base_url+'#');
+                window.location.href = this.base_url+'#';
                 return false;
             }
 
