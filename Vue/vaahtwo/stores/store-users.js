@@ -519,6 +519,7 @@ export const useUserStore = defineStore({
 
             let params = {
                 id: this.item.id,
+                query: this.user_roles_query,
                 role_id: null
             };
 
