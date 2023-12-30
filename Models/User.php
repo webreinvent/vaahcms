@@ -251,40 +251,59 @@ class User extends UserBase
     //-------------------------------------------------
     public static function listAction($request, $type): array
     {
+        $response = [];
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
-            $items_id = collect($inputs['items'])
-                ->pluck('id')
-                ->toArray();
+        $list = self::getSorted($inputs['query']['filter']);
+        $list->isActiveFilter($inputs['query']['filter']);
+        $list->trashedFilter($inputs['query']['filter']);
+        $list->searchFilter($inputs['query']['filter']);
 
-            $items = self::whereIn('id', $items_id)
-                ->withTrashed();
+        if (isset($request['from']) && isset($request['to'])) {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        $list_array = $list->get()->toArray();
+
+
+        foreach($list_array as $item){
+            $is_restricted = self::restrictedActions($type, $item['id']);
+
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
+            {
+                $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
+                $list->where('id','!=',$item['id']);
+            }
         }
 
 
         switch ($type) {
             case 'activate-all':
-                self::query()->update(['is_active' => 1]);
+                $list->update(['is_active' => 1]);
                 break;
             case 'deactivate-all':
-                self::query()->update(['is_active' => null]);
+                $list->update(['is_active' => null]);
                 break;
             case 'trash-all':
-                self::query()->delete();
+                $list->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+                $list->withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=1');
                 break;
         }
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+
+        if(!isset($response['errors']) ||
+            (count($list_array) !== count($response['errors']))){
+            $response['messages'][] = 'Action was successful.';
+        }
 
         return $response;
     }
