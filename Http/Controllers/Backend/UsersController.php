@@ -506,30 +506,6 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getProfile(Request $request): JsonResponse
-    {
-        try {
-            $data['profile'] = User::query()->find(Auth::user()->id);
-            $data['mfa_methods'] = config('settings.global.mfa_methods');
-            $data['mfa_status'] = config('settings.global.mfa_status');
-
-            $response['success'] = true;
-            $response['data'] = $data;
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if(env('APP_DEBUG')){
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
     public function storeAvatar(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-update-users')) {
@@ -602,88 +578,6 @@ class UsersController extends Controller
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function storeProfile(Request $request): JsonResponse
-    {
-        try {
-            $response = User::storeProfile($request);
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if(env('APP_DEBUG')){
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function storeProfilePassword(Request $request): JsonResponse
-    {
-        try {
-            $response = User::storePassword($request);
-
-            if ($response['success'] === true) {
-                Auth::logout();
-
-                $response['data']['redirect_url'] = route('vh.backend');
-            }
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function storeProfileAvatar(Request $request): JsonResponse
-    {
-        try {
-            $response = User::storeAvatar($request);
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function removeProfileAvatar(Request $request): JsonResponse
-    {
-        try {
-            $response = User::removeAvatar();
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['errors'][] = 'Something went wrong.';
             }
         }
 
