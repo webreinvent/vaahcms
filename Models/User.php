@@ -159,8 +159,9 @@ class User extends UserBase
 
             $is_restricted = self::restrictedActions($inputs['type'], $id);
 
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
+                $response['errors'][] = '<b>'.$inputs['items'][$key]['email'].'</b>: '.$is_restricted['errors'][0];
                 unset($items_id[$key]);
             }
 
@@ -187,7 +188,11 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        if(!isset($response['errors']) ||
+            (count($inputs['items']) !== count($response['errors']))){
+            $response['messages'][] = 'Action was successful.';
+        }
 
         return $response;
     }
@@ -211,23 +216,22 @@ class User extends UserBase
         if ($validator->fails()) {
 
             $errors = errorsToArray($validator->errors());
-            $response['failed'] = true;
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
-        $items_id = collect($inputs['items'])->pluck('id')->toArray();
+        foreach($inputs['items'] as $item) {
 
-        foreach($items_id as $id) {
+            $is_restricted = self::restrictedActions('delete', $item['id']);
 
-            $is_restricted = self::restrictedActions('delete', $id);
-
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
+                $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
                 continue;
             }
 
-            $item = self::query()->where('id', $id)->withTrashed()->first();
+            $item = self::query()->where('id', $item['id'])->withTrashed()->first();
 
             if ($item) {
                 $item->roles()->detach();
@@ -237,7 +241,10 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        if(count($inputs['items']) !== count($response['errors'])){
+            $response['messages'][] = 'Action was successful.';
+        }
 
         return $response;
     }

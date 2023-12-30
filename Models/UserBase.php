@@ -606,7 +606,6 @@ class UserBase extends Authenticatable
     {
 
         //restricted actions on logged in users
-        $result = false;
         if((int)$user_id === \Auth::user()->id)
         {
             switch ($action_type)
@@ -617,9 +616,8 @@ class UserBase extends Authenticatable
                 case 'deactivate':
 
                     $response['success'] = false;
-                    $response['errors'] = ["Actions cannot be performed on a user who is currently logged in."];
+                    $response['errors'][] = "Actions cannot be performed on a user who is currently logged in.";
                     return $response;
-                    break;
                 //------------------------
                 default:
                     break;
@@ -628,15 +626,15 @@ class UserBase extends Authenticatable
 
 
 
-            return $result;
+            $response['success'] = true;
+            $response['message'][] = "Not restricted.";
+            return $response;
         }
 
 
 
         //restricted action if this user is last super admin
-        $result = false;
         $user = self::withTrashed()->find($user_id);
-        $is_last_super_admin = self::isLastSuperAdmin();
 
         if((!\Auth::user()->hasRole('super-administrator')  &&
             $user->hasRole('super-administrator')) ||
@@ -652,8 +650,8 @@ class UserBase extends Authenticatable
                 case 'delete':
                 case 'deactivate':
                     $response['success'] = false;
-                    $response['errors'] = ["Actions cannot be performed on users with a
-                    role higher than that of the currently logged-in user."];
+                    $response['errors'][] = "Actions cannot be performed on users with a
+                    role higher than that of the currently logged-in user.";
                     return $response;
                 //------------------------
                 default:
@@ -661,11 +659,12 @@ class UserBase extends Authenticatable
                 //------------------------
             }
 
-            return $result;
         }
 
 
-        return $result;
+        $response['success'] = true;
+        $response['message'][] = "Not restricted.";
+        return $response;
     }
     //-------------------------------------------------
     public static function beforeUserActionValidation($request)
