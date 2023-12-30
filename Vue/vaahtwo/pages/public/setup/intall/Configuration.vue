@@ -98,6 +98,8 @@ onMounted(async () => {
                                      class="p-inputtext-sm" id="app-name"
                                      data-testid="configuration-app_name"
                                      required
+                                     @update:modelValue="store.onUpdateAppName"
+                                     @keydown.space.prevent
                           />
                           <div class="required-field hidden"></div>
                       </div>

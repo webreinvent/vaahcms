@@ -652,6 +652,10 @@ export const useSetupStore = defineStore({
             this.config.count_installed_progress = 100;
         },
         //---------------------------------------------------------------------
+        onUpdateAppName: function (value) {
+            this.config.env.app_name = value.replace(/\s/g,'');
+        },
+        //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------
         async installDependencies() {
