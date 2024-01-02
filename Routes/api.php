@@ -160,4 +160,5 @@ Route::group(
             });
     });
 
+include('api/api-routes-settings.php');
 
