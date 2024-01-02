@@ -19,16 +19,7 @@ function () {
      */
     Route::get('/', 'ThemesController@getList')
         ->name('vh.backend.vaah.themes.list');
-    /**
-     * Update List
-     */
-    Route::match(['put', 'patch'], '/', 'ThemesController@updateList')
-        ->name('vh.backend.vaah.themes.list.update');
-    /**
-     * Delete List
-     */
-    Route::delete('/', 'ThemesController@deleteList')
-        ->name('vh.backend.vaah.themes.list.delete');
+
     /**
      * Get Item
      */
@@ -39,12 +30,6 @@ function () {
      */
     Route::delete('/{id}', 'ThemesController@deleteItem')
         ->name('vh.backend.vaah.themes.delete');
-
-    /**
-     * List Actions
-     */
-    Route::any('/action/{action}', 'ThemesController@listAction')
-        ->name('vh.backend.vaah.themes.list.actions');
 
     /**
      * Item actions
@@ -58,9 +43,6 @@ function () {
     Route::post( '/download', 'ThemesController@download' )
         ->name( 'vh.backend.themes.download' );
 
-    //------------------------------------------------
-    Route::post( '/get/slugs', 'ThemesController@ThemesSlugs' )
-        ->name( 'vh.backend.themes.get.slugs' );
     //------------------------------------------------
     Route::post( '/store/updates', 'ThemesController@storeUpdates' )
         ->name( 'vh.backend.themes.store.updates' );
