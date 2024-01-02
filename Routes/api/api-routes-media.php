@@ -1,11 +1,11 @@
 <?php
 
 /*
- * API url will be: <base-url>/public/api/vaah/media
+ * API url will be: <base-url>/public/api/vaah/manage/media
  */
 Route::group(
     [
-        'prefix' => 'api/vaah/media',
+        'prefix' => 'api/vaah/manage/media',
         'middleware' => ['auth:api'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
