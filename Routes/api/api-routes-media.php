@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/media',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/media',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
 function () {
 
@@ -35,7 +36,7 @@ function () {
     /**
      * Create Item
      */
-    Route::post('/', 'MediaController@createItem')
+    Route::post('/', 'MediaController@postCreate')
         ->name('vh.backend.vaah.api.media.create');
     /**
      * Get Item
@@ -65,6 +66,13 @@ function () {
     Route::any('/{id}/action/{action}', 'MediaController@itemAction')
         ->name('vh.backend.vaah.api.media.item.action');
 
+    //---------------------------------------------------------
+    Route::post( '/upload', 'MediaController@upload' )
+        ->name( 'vh.backend.vaah.api.media.upload' );
+    //------------------------------------------------
+    Route::post('/downloadable/slug/available', 'MediaController@isDownloadableSlugAvailable')
+        ->name('backend.vaah.api.media.downloadable.slug.available');
+    //---------------------------------------------------------
 
 
 });
