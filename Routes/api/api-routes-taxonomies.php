@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/manage/taxonomies',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/manage/taxonomies',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
     function () {
 
@@ -47,6 +48,12 @@ Route::group(
             ->name('vh.backend.vaah.api.taxonomies.read');
 
         /**
+         * Get List by type id
+         */
+        Route::get('/type/{id}', 'TaxonomiesController@getListByTypeId')
+            ->name('vh.backend.vaah.taxonomies.type.id');
+
+        /**
          * Update Item
          */
         Route::match(['put', 'patch'], '/{id}', 'TaxonomiesController@updateItem')
@@ -69,5 +76,43 @@ Route::group(
          */
         Route::any('/{id}/action/{action}', 'TaxonomiesController@itemAction')
             ->name('vh.backend.vaah.api.taxonomies.item.action');
+
+
+        /**
+         * Create taxonomy type
+         */
+        Route::post( '/create-taxonomy-type', 'TaxonomiesController@createTaxonomyType' )
+            ->name( 'vh.backend.leads.taxonomies.createTaxonomyType' );
+
+        /**
+         * Delete taxonomy type
+         */
+        Route::post( '/delete-taxonomy-type', 'TaxonomiesController@deleteTaxonomyType' )
+            ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
+
+        /**
+         * Update taxonomy type
+         */
+        Route::post( '/update-taxonomy-type', 'TaxonomiesController@updateTaxonomyType' )
+            ->name( 'vh.backend.leads.taxonomies.updateTaxonomyType' );
+
+        /**
+         * Update taxonomy type positions
+         */
+        Route::post( 'update-taxonomy-type-position', 'TaxonomiesController@updateTaxonomyTypePosition' )
+            ->name( 'vh.backend.leads.taxonomies.updateTaxonomyTypePosition' );
+
+        /**
+         * Get parent
+         */
+        Route::get('/json/parents/{id}/{name?}', 'TaxonomiesController@getParents' )
+            ->name( 'vh.backend.leads.taxonomies.countries' );
+
+        /**
+         * Get country by ID
+         */
+        Route::get( 'json/getCountryById/{id}', 'TaxonomiesController@getCountryById' )
+            ->name( 'vh.backend.leads.taxonomies.getCountryById' );
+        //---------------------------------------------------------
 
     });
