@@ -5,8 +5,9 @@
  */
 Route::group(
     [
-        'prefix' => 'vaah/modules',
-        'namespace' => 'Backend',
+        'prefix' => 'api/vaah/modules',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
 function () {
 
@@ -20,51 +21,36 @@ function () {
      */
     Route::get('/', 'ModulesController@getList')
         ->name('vh.backend.vaah.api.modules.list');
-    /**
-     * Update List
-     */
-    Route::match(['put', 'patch'], '/', 'ModulesController@updateList')
-        ->name('vh.backend.vaah.api.modules.list.update');
-    /**
-     * Delete List
-     */
-    Route::delete('/', 'ModulesController@deleteList')
-        ->name('vh.backend.vaah.api.modules.list.delete');
 
-
-    /**
-     * Create Item
-     */
-    Route::post('/', 'ModulesController@createItem')
-        ->name('vh.backend.vaah.api.modules.create');
     /**
      * Get Item
      */
     Route::get('/{id}', 'ModulesController@getItem')
         ->name('vh.backend.vaah.api.modules.read');
-    /**
-     * Update Item
-     */
-    Route::match(['put', 'patch'], '/{id}', 'ModulesController@updateItem')
-        ->name('vh.backend.vaah.api.modules.update');
-    /**
-     * Delete Item
-     */
-    Route::delete('/{id}', 'ModulesController@deleteItem')
-        ->name('vh.backend.vaah.api.modules.delete');
-
-    /**
-     * List Actions
-     */
-    Route::any('/action/{action}', 'ModulesController@listAction')
-        ->name('vh.backend.vaah.api.modules.list.action');
 
     /**
      * Item actions
      */
-    Route::any('/{id}/action/{action}', 'ModulesController@itemAction')
+    Route::any('/{id}/action/{action}', 'ModulesController@actions')
         ->name('vh.backend.vaah.api.modules.item.action');
 
+    //---------------------------------------------------------
 
+    //------------------------------------------------
+    Route::get( '/get/slugs', 'ModulesController@getModulesSlugs' )
+        ->name( 'vh.backend.vaah.api.modules.get.slugs' );
+    //------------------------------------------------
+    Route::post( '/store/updates', 'ModulesController@storeUpdates' )
+        ->name( 'vh.backend.vaah.api.modules.store.updates' );
+    //---------------------------------------------------------
+    Route::post( '/download', 'ModulesController@download' )
+        ->name( 'vh.backend.vaah.api.modules.download');
+    //------------------------------------------------
+    Route::post( '/install/updates', 'ModulesController@installUpdates' )
+        ->name( 'vh.backend.vaah.api.modules.install.updates');
+    //------------------------------------------------
+    Route::any( '/publish/assets', 'ModulesController@publishAssets' )
+        ->name( 'vh.setup.publish.assets' );
+    //------------------------------------------------
 
 });
