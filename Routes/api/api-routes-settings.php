@@ -44,3 +44,28 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'api/vaah/settings/env',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/assets', 'EnvController@getAssets' )
+            ->name( 'vh.backend.vaah.api.settings.env.assets' );
+        //------------------------------------------------
+        Route::get( '/list', 'EnvController@getList' )
+            ->name( 'vh.backend.vaah.api.settings.env.list' );
+        //------------------------------------------------
+        Route::get( '/download-file/{file_name}', 'EnvController@downloadFile')
+            ->name( 'vh.backend.vaah.api.settings.env.download.file' );;
+        //---------------------------------------------------------
+        Route::post( '/store', 'EnvController@store' )
+            ->name( 'vh.backend.vaah.api.settings.env.store' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
