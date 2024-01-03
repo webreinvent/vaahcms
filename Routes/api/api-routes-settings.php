@@ -69,3 +69,28 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'api/vaah/settings/user-setting',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/assets', 'UserSettingController@getAssets' )
+            ->name( 'vh.backend.vaah.api.settings.env.assets' );
+        //------------------------------------------------
+        Route::get( '/list', 'UserSettingController@getList' )
+            ->name( 'vh.backend.vaah.api.settings.env.list' );
+        //------------------------------------------------
+        Route::post( '/field/store', 'UserSettingController@storeField' )
+            ->name( 'vh.backend.vaah.api.settings.env.store.field' );
+        //------------------------------------------------
+        Route::post( '/custom-field/store', 'UserSettingController@storeCustomField' )
+            ->name( 'vh.backend.vaah.api.settings.env.store.custom-field' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
