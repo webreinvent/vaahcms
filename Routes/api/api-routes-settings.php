@@ -157,3 +157,22 @@ Route::group(
     });
 
 
+Route::group(
+    [
+        'prefix'     => 'api/vaah/settings/backups',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::post( '/assets', 'BackupsController@getAssets' )
+            ->name( 'vh.backend.vaah.api.settings.localization.assets' );
+        //------------------------------------------------
+        Route::post( '/list', 'BackupsController@getList' )
+            ->name( 'vh.backend.vaah.api.settings.localization.list' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+

@@ -175,24 +175,6 @@ Route::group(
         Route::post( '/list', 'BackupsController@getList' )
             ->name( 'vh.backend.settings.localization.list' );
         //------------------------------------------------
-        Route::post( '/store', 'BackupsController@store' )
-            ->name( 'vh.backend.settings.localization.store' );
-        //------------------------------------------------
-        Route::post( '/store/language', 'BackupsController@storeLanguage' )
-            ->name( 'vh.backend.settings.localization.store.language' );
-        //------------------------------------------------
-        Route::post( '/store/category', 'BackupsController@storeCategory' )
-            ->name( 'vh.backend.settings.localization.store.category' );
-        //------------------------------------------------
-        Route::post( '/sync', 'BackupsController@sync' )
-            ->name( 'vh.backend.settings.localization.sync' );
-        //------------------------------------------------
-        Route::post( '/delete', 'BackupsController@delete' )
-            ->name( 'vh.backend.settings.localization.delete' );
-        //------------------------------------------------
-        Route::post( '/upload', 'BackupsController@upload' )
-            ->name( 'vh.backend.settings.localization.upload' );
-        //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
     });
