@@ -122,3 +122,38 @@ Route::group(
         //---------------------------------------------------------
     });
 
+Route::group(
+    [
+        'prefix'     => 'api/vaah/settings/notifications',
+        'middleware' => ['auth:api'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
+    ],
+    function () {
+        Route::get('/', 'NotificationsController@getList')
+            ->name('vh.backend.vaah.api.settings.notifications.list');
+        //-------------------------------------------------
+        Route::any('/action/{action}', 'NotificationsController@listAction')
+            ->name('vh.backend.vaah.api.settings.notifications.list.action');
+        //------------------------------------------------
+        Route::get('/assets', 'NotificationsController@getAssets')
+            ->name('vh.backend.vaah.api.settings.notifications.assets');
+        //------------------------------------------------
+        Route::post('/get-item', 'NotificationsController@getItemData')
+            ->name('vh.backend.vaah.api.settings.notifications.getItemData');
+        //------------------------------------------------
+        Route::post('/create', 'NotificationsController@createItem')
+            ->name('vh.backend.vaah.api.settings.notifications.create');
+        //------------------------------------------------
+        Route::post('/store', 'NotificationsController@store')
+            ->name('vh.backend.vaah.api.settings.notifications.store');
+        //------------------------------------------------
+        Route::post('/send', 'NotificationsController@send')
+            ->name('vh.backend.vaah.api.settings.notifications.send');
+        //------------------------------------------------
+        Route::match(['put', 'delete'], '/{id}/action/{type}', 'NotificationsController@itemAction')
+            ->name('vh.backend.vaah.api.settings.notifications.item.action');
+
+        //---------------------------------------------------------
+    });
+
+

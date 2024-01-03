@@ -151,9 +151,6 @@ Route::group(
         Route::post('/store', 'NotificationsController@store')
             ->name('vh.backend.settings.notifications.store');
         //------------------------------------------------
-        Route::post('/content', 'NotificationsController@getContent')
-            ->name('vh.backend.settings.notifications.content');
-        //------------------------------------------------
         Route::post('/send', 'NotificationsController@send')
             ->name('vh.backend.settings.notifications.send');
         //------------------------------------------------
