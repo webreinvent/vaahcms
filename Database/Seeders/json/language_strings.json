@@ -8591,11 +8591,5 @@
         "category": "validation",
         "name": "may only contain",
         "content": "ne peut contenir que des lettres, des chiffres, des tirets et des traits de soulignement."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "login",
-        "name": "Inactive account",
-        "content": "Inactive account"
     }
 ]
