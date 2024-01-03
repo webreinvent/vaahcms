@@ -50,9 +50,15 @@ onMounted(async () => {
 
 </script>
 <template>
-    <div class="grid">
+    <div class="grid" v-if="root
+                            && root.assets
+                            && root.assets.language_string
+                            && store
+                            && store.assets
+                            && store.assets.language_string">
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small" v-if="root.assets && store.assets">
+            <Panel class="is-small" v-if="root.assets.language_string.crud_actions
+                                          && store.assets.language_string.users">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >

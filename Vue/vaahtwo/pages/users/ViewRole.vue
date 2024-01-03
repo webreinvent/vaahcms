@@ -54,7 +54,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store && store.item && store.assets" class="is-small">
+        <Panel v-if="store.item && store.assets.language_string.users" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -120,7 +120,7 @@ const toggleItemMenu = (event) => {
 
             <div>
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                    <div v-if="store && store.user_roles">
+                    <div v-if="store.user_roles">
                         <DataTable :value="store.user_roles.list.data"
                                    dataKey="id"
                                    class="p-datatable-sm"

@@ -30,14 +30,6 @@ onMounted(async () => {
 });
 
 
-// if (store && store.item && store.item.email) {
-//     watchEffect(store.item.email, (currentValue, oldValue) => {
-//         alert(currentValue);
-//         store.item.email = currentValue;
-//         store.validateEmail(currentValue);
-//     });
-// }
-
 const myUploader = ref();
 
 //--------form_menu
@@ -50,7 +42,7 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel class="is-small" v-if="root.assets">
+        <Panel class="is-small" v-if="root.assets.language_string.crud_actions">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="p-panel-title">
@@ -127,9 +119,9 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item && store.assets" class="pt-2">
+            <div v-if="store.item" class="pt-2">
                 <div class="field mb-4 flex justify-content-between align-items-center"
-                     v-if="root && root.assets && store.item.id">
+                     v-if="store.item.id">
 
                     <img v-if="store.item.avatar"
                          :src="store.item.avatar"
@@ -366,7 +358,7 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <SelectButton v-if="root && root.is_active_status_options"
+                    <SelectButton v-if="root.is_active_status_options"
                                   v-model="store.item.is_active"
                                   :options="root.is_active_status_options"
                                   option-label="label"
@@ -374,7 +366,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="store.assets && store.assets.custom_fields"
+                <template v-if="store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >

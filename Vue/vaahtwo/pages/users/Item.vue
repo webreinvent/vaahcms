@@ -29,22 +29,6 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    /**
-     * Watch if url record id is changed, if changed
-     * then fetch the new records from database
-     */
-    /*watch(route, async (newVal,oldVal) =>
-        {
-            if(newVal.params && !newVal.params.id
-                && newVal.name === 'articles.view')
-            {
-                store.toList();
-
-            }
-            await store.getItem(route.params.id);
-        }, { deep: true }
-    )*/
-
     await store.getItemMenu();
 
 });
@@ -59,7 +43,10 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store.item
+                     && root.assets.language_string.crud_actions"
+               class="is-small"
+        >
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
