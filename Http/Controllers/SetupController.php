@@ -299,7 +299,7 @@ class SetupController extends Controller
 
         $rules = array(
             'app_env' => 'required',
-            'app_name' => 'required',
+            'app_name' => 'required|alpha_dash',
             'app_timezone' => 'required',
             'mail_from_name' => 'required',
             'mail_from_address' => 'required',
@@ -326,23 +326,7 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-
-
-        //verify mail configuration if set
-        /*if($request->has('mail_is_valid') && $request->mail_is_valid == false)
-        {
-            if($request->has('mail_provider') && !empty($request->mail_provider))
-            {
-                $response['success'] = false;
-                $response['errors'][] = 'Test the mail configuration';
-                return response()->json($response);
-            }
-        }*/
-
-
         $response = VaahSetup::verifyAppUrl($request);
-
-
 
         if(!$response['success'])
         {
