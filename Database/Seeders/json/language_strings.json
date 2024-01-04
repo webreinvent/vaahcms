@@ -1127,7 +1127,7 @@
         "locale_code_iso_639": "en",
         "category": "dashboard",
         "name": "Welcome to VaahCms",
-        "content": "Welcome to VaahCms"
+        "content": "Welcome to Vaah<b>Cms</b>"
     },
     {
         "locale_code_iso_639": "en",
@@ -1235,7 +1235,7 @@
         "locale_code_iso_639": "en",
         "category": "dashboard",
         "name": "Run Jobs",
-        "content": "Enable Laravel Queues to run your jobs"
+        "content": "Enable <b>Laravel Queues</b> to run your jobs"
     },
     {
         "locale_code_iso_639": "en",
@@ -3992,7 +3992,7 @@
         "locale_code_iso_639": "es",
         "category": "dashboard",
         "name": "Welcome to VaahCms",
-        "content": "Bienvenido a VaahCms"
+        "content": "Bienvenido a Vaah<b>Cms</b>"
     },
     {
         "locale_code_iso_639": "es",
@@ -4101,7 +4101,7 @@
         "locale_code_iso_639": "es",
         "category": "dashboard",
         "name": "Run Jobs",
-        "content": "Habilite Laravel Queues para ejecutar sus trabajos"
+        "content": "Habilite <b>Laravel Queues</b> para ejecutar sus trabajos"
     },
     {
         "locale_code_iso_639": "es",
@@ -6858,7 +6858,7 @@
         "locale_code_iso_639": "fr",
         "category": "dashboard",
         "name": "Welcome to VaahCms",
-        "content": "Bienvenue sur VaahCms"
+        "content": "Bienvenue sur Vaah<b>Cms</b>"
     },
     {
         "locale_code_iso_639": "fr",
@@ -6966,7 +6966,7 @@
         "locale_code_iso_639": "fr",
         "category": "dashboard",
         "name": "Run Jobs",
-        "content": "Activez les files d\\'attente Laravel pour exécuter vos tâches"
+        "content": "Activez les <b>files d\\'attente Laravel</b> pour exécuter vos tâches"
     },
     {
         "locale_code_iso_639": "fr",
