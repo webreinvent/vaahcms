@@ -1,6 +1,6 @@
 {
     "name": "webreinvent/vaahcms",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "description": "VaahCMS is a laravel based open-source web application development platform shipped with headless content management system.",
     "keywords": ["vaahcms", "headless", "hmvc", "laravel", "cms", "vue", "pinia"],
     "homepage": "https://webreinvent.com",
