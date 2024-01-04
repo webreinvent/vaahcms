@@ -54,7 +54,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store.item && store.assets.language_string.users" class="is-small">
+        <Panel v-if="store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -96,7 +96,10 @@ const toggleItemMenu = (event) => {
 
             <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup"
+                         v-if="store.assets
+                               && store.assets.language_string
+                               && store.assets.language_string.users">
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText class="w-full p-inputtext-sm"
@@ -120,7 +123,11 @@ const toggleItemMenu = (event) => {
 
             <div>
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                    <div v-if="store.user_roles">
+                    <div v-if="store.user_roles
+                               && root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                    >
                         <DataTable :value="store.user_roles.list.data"
                                    dataKey="id"
                                    class="p-datatable-sm"

@@ -43,10 +43,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel v-if="store.item
-                     && root.assets.language_string.crud_actions"
-               class="is-small"
-        >
+        <Panel v-if="store.item" class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
@@ -56,7 +53,11 @@ const toggleItemMenu = (event) => {
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup"
+                     v-if="root.assets
+                           && root.assets.language_string
+                           && root.assets.language_string.crud_actions"
+                >
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
@@ -102,7 +103,11 @@ const toggleItemMenu = (event) => {
                          v-if="store.item.deleted_at"
                 >
 
-                    <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center justify-content-between"
+                         v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                    >
                         <div class="">
                             {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>

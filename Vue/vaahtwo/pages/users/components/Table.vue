@@ -85,14 +85,20 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-            <Column field="actions" style="width:150px;"
+            <Column field="actions"
+                    v-if="root.assets
+                          && root.assets.language_string
+                          && root.assets.language_string.crud_actions"
+                    style="width:150px;"
                     :style="{ width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
             >
                 <template #body="prop" >
                     <div class="p-inputgroup">
 
-                        <Button v-if="store.hasPermission('can-impersonate-users')"
+                        <Button v-if="store.hasPermission('can-impersonate-users')
+                                      && store.assets.language_string
+                                      && store.assets.language_string.users"
                                 class="p-button-tiny p-button-text"
                                 v-tooltip.top="store.assets.language_string.users.toolkit_text_impersonate"
                                 @click="store.impersonate(prop.data)"

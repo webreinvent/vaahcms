@@ -50,18 +50,15 @@ onMounted(async () => {
 
 </script>
 <template>
-    <div class="grid" v-if="root
-                            && root.assets
-                            && root.assets.language_string
-                            && store
-                            && store.assets
-                            && store.assets.language_string">
+    <div class="grid">
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small" v-if="root.assets.language_string.crud_actions
-                                          && store.assets.language_string.users">
+            <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div >
+                        <div v-if="store.assets
+                               && store.assets.language_string
+                               && store.assets.language_string.users"
+                        >
                             <b class="mr-1">{{store.assets.language_string.users.users_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
@@ -71,7 +68,11 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup"
+                         v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                    >
                         <Button class="p-button-sm"
                                 :label="root.assets.language_string.crud_actions.create_button"
                                 icon="pi pi-plus"
@@ -89,7 +90,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>

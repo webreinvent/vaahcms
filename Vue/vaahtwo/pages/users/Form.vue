@@ -42,15 +42,20 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
     <div class="col-5" >
-        <Panel class="is-small" v-if="root.assets.language_string.crud_actions">
+        <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title">
+                    <div class="p-panel-title"
+
+                    >
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
 
-                        <span v-else>
+                        <span v-else-if="root.assets
+                                         && root.assets.language_string
+                                         && root.assets.language_string.crud_actions"
+                        >
                             {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
@@ -58,7 +63,11 @@ const toggleFormMenu = (event) => {
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup"
+                     v-if="root.assets
+                           && root.assets.language_string
+                           && root.assets.language_string.crud_actions"
+                >
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
