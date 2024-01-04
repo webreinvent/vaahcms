@@ -153,13 +153,13 @@ class VaahCmsTableSeeder extends Seeder
 
             $item['slug'] = Str::slug($item['name'],'_');
 
-            $exist = \DB::table( 'vh_lang_strings' )
-                ->where( 'slug',  $item['slug'] )
+            $lang = \DB::table( 'vh_lang_languages' )
+                ->where( 'locale_code_iso_639', $item['locale_code_iso_639'] )
                 ->first();
 
-
-            $lang = \DB::table( 'vh_lang_languages' )
-                ->where( 'locale_code_iso_639', 'en' )
+            $exist = \DB::table( 'vh_lang_strings' )
+                ->where('vh_lang_language_id', $lang->id)
+                ->where( 'slug',  $item['slug'] )
                 ->first();
 
             $cat = \DB::table( 'vh_lang_categories' )
@@ -174,6 +174,7 @@ class VaahCmsTableSeeder extends Seeder
                 $item['vh_lang_category_id'] = $cat->id;
 
                 unset($item['category']);
+                unset($item['locale_code_iso_639']);
 
                 \DB::table( 'vh_lang_strings' )->insert( $item );
             }
@@ -188,7 +189,22 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'User'],
             ["name" => 'Media'],
             ["name" => 'Localization'],
-            ["name" => 'Login']
+            ["name" => 'Login'],
+            ["name" => 'Sidebar Menu'],
+            ["name" => 'Dashboard'],
+            ["name" => 'Registration'],
+            ["name" => 'Crud Action'],
+            ["name" => 'Role'],
+            ["name" => 'Permission'],
+            ["name" => 'General Setting'],
+            ["name" => 'User Setting'],
+            ["name" => 'Env Variable'],
+            ["name" => 'Localization Setting'],
+            ["name" => 'Notification Setting'],
+            ["name" => 'Update Setting'],
+            ["name" => 'Extend Module'],
+            ["name" => 'Extend Theme'],
+            ["name" => 'Validation'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

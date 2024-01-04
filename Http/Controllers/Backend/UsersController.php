@@ -22,7 +22,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-users-section')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -63,6 +63,22 @@ class UsersController extends Controller
 
             $roles_count = Role::all()->count();
 
+          //---------------------------------------------------
+
+            $data['language_string']['users'] = [
+                "users_title" => trans("vaahcms-user.users_title"),
+                "view_role_active_all_roles" => trans("vaahcms-user.view_role_active_all_roles"),
+                "view_role_inactive_all_roles" => trans("vaahcms-user.view_role_inactive_all_roles"),
+                "view_generate_new_api_token" => trans("vaahcms-user.view_generate_new_api_token"),
+                "view_role_yes" => trans("vaahcms-user.view_role_yes"),
+                "view_role_no" => trans("vaahcms-user.view_role_no"),
+                "view_role_text_view" => trans("vaahcms-user.view_role_text_view"),
+                "view_role_placeholder_search" => trans("vaahcms-user.view_role_placeholder_search"),
+                "view_role_reset_button" => trans("vaahcms-user.view_role_reset_button"),
+                "toolkit_text_impersonate" => trans("vaahcms-user.toolkit_text_impersonate"),
+            ];
+
+            //---------------------------------------------------
             $data['actions'] = [];
             $data['name_titles'] = vh_name_titles();
             $data['countries'] = vh_get_country_list();
@@ -82,7 +98,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -93,7 +109,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-users-section')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -108,7 +124,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
         return response()->json($response);
@@ -118,7 +134,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -133,7 +149,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -144,7 +160,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -159,7 +175,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -178,7 +194,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -189,7 +205,7 @@ class UsersController extends Controller
     {
         if(!Auth::user()->hasPermission('can-create-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -204,7 +220,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -215,7 +231,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -230,7 +246,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -241,7 +257,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -252,7 +268,7 @@ class UsersController extends Controller
 
             if (!$item) {
                 $response['success'] = false;
-                $response['errors'] = 'Registration not found.';
+                $response['errors'] = trans('vaahcms-user.registration_not_found');
                 return response()->json($response);
             }
 
@@ -266,7 +282,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -279,7 +295,7 @@ class UsersController extends Controller
             !Auth::user()->hasPermission('can-delete-users')
         ) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -294,7 +310,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -307,7 +323,7 @@ class UsersController extends Controller
             !Auth::user()->hasPermission('can-update-users')
         ) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -331,7 +347,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -342,7 +358,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -388,7 +404,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -402,8 +418,10 @@ class UsersController extends Controller
             $rules = array(
                 'inputs' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'inputs.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -425,7 +443,7 @@ class UsersController extends Controller
                         !Auth::user()->hasPermission('can-update-users')
                     ) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans('vaahcms-general.permission_denied');
 
                         return response()->json($response);
                     }
@@ -438,7 +456,7 @@ class UsersController extends Controller
 
                     if (!Auth::user()->hasPermission('can-update-users')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans('vaahcms-general.permission_denied');
 
                         return response()->json($response);
                     }
@@ -451,7 +469,7 @@ class UsersController extends Controller
 
                     if (!Auth::user()->hasPermission('can-update-users')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans('vaahcms-general.permission_denied');
 
                         return response()->json($response);
                     }
@@ -466,7 +484,7 @@ class UsersController extends Controller
                         !Auth::user()->hasPermission('can-delete-users')
                     ) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans('vaahcms-general.permission_denied');
 
                         return response()->json($response);
                     }
@@ -481,7 +499,7 @@ class UsersController extends Controller
                         !Auth::user()->hasPermission('can-update-users')
                     ) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans('vaahcms-general.permission_denied');
 
                         return response()->json($response);
                     }
@@ -499,7 +517,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -523,7 +541,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -534,7 +552,7 @@ class UsersController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -543,8 +561,10 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -562,7 +582,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -574,7 +594,7 @@ class UsersController extends Controller
 
         if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -583,8 +603,10 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-
-            $validator = \Validator::make( $request->all(), $rules);
+            $messages = array(
+                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            );
+            $validator = \Validator::make( $request->all(), $rules, $messages);
             if ( $validator->fails() ) {
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
@@ -601,7 +623,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['messages'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -620,7 +642,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -645,7 +667,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -664,7 +686,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -683,7 +705,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -695,7 +717,7 @@ class UsersController extends Controller
 
         if (!Auth::user()->hasPermission('can-impersonate-users')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
             return response()->json($response);
         }
@@ -707,21 +729,19 @@ class UsersController extends Controller
 
             if(!$user){
                 $response['success'] = false;
-                $response['errors'][] = 'User does not exist.';
+                $response['errors'][] = trans('vaahcms-user.user_does_not_exist');
                 return response()->json($response);
             }
 
             if($user->is_active != 1){
                 $response['success'] = false;
-                $response['errors'][] = 'User is not active.';
+                $response['errors'][] = trans('vaahcms-user.user_is_not_active');
                 return response()->json($response);
             }
 
             if(!$user->hasPermission('can-login-in-backend')){
                 $response['success'] = false;
-                $response['errors'][] = "Permission Denied. User must have
-                                        <strong>can-login-in-backend</strong>
-                                        permission in user's specified role.";
+                $response['errors'][] = trans('vaahcms-user.impersonate_permission_denied');
                 return response()->json($response);
             }
 
@@ -739,7 +759,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -768,7 +788,7 @@ class UsersController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 

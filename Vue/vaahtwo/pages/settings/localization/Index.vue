@@ -59,10 +59,10 @@ onMounted(async () => {
             </div>
         </template>
         <Message severity="warn" class="mt-1" :closable="false">
-        When you make any changes in strings.
-        You need to click on <strong>Generate Language Files</strong>
-        button to reflect your changes.
-    </Message>
+            When you make any changes in strings.
+            You need to click on <strong>Generate Language Files</strong>
+            button to reflect your changes.
+        </Message>
 
         <div class="flex align-items-center">
             <div class="mb-4" v-if="store.show_add_language">
@@ -143,8 +143,23 @@ onMounted(async () => {
                 />
             </div>
 
-            <div class="col-5">
+            <div class="col">
                 <div class="p-inputgroup ">
+                    <InputText class="p-inputtext-sm"
+                               v-model="store.query_string.q"
+                               @keyup.enter="store.delayedSearch()"
+                               @keyup.enter.native="store.delayedSearch()"
+                               @input="store.delayedSearch()"
+                               placeholder="Search"
+                               data-testid="role-action_search_input"
+                    />
+
+                    <Button class="p-button-sm"
+                            icon="pi pi-search"
+                            data-testid="user-action_search"
+                            @click="store.delayedSearch()"
+                    />
+
                     <Dropdown v-model="store.query_string.cat_id"
                               :data-testid="'localization-category_filter'"
                               :options="store.categories"

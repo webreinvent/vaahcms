@@ -20,19 +20,15 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    store.getFormMenu();
+    watch(root, async (newVal, oldVal) => {
+        if(newVal.assets) {
+            await store.getFormMenu();
+        }
+    })
 
     root.getIsActiveStatusOptions();
 });
 
-
-// if (store && store.item && store.item.email) {
-//     watchEffect(store.item.email, (currentValue, oldValue) => {
-//         alert(currentValue);
-//         store.item.email = currentValue;
-//         store.validateEmail(currentValue);
-//     });
-// }
 
 const myUploader = ref();
 
@@ -49,20 +45,29 @@ const toggleFormMenu = (event) => {
         <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title">
+                    <div class="p-panel-title"
+
+                    >
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
 
-                        <span v-else>
-                            Create
+                        <span v-else-if="root.assets
+                                         && root.assets.language_string
+                                         && root.assets.language_string.crud_actions"
+                        >
+                            {{root.assets.language_string.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup"
+                     v-if="root.assets
+                           && root.assets.language_string
+                           && root.assets.language_string.crud_actions"
+                >
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -70,7 +75,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_string.crud_actions.save_button"
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
@@ -78,7 +83,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-save"
                     />
 
-                    <Button label="Create & New"
+                    <Button :label="root.assets.language_string.crud_actions.form_create_and_new"
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
@@ -87,6 +92,13 @@ const toggleFormMenu = (event) => {
                             v-if="store.hasPermission('can-create-users')"
                     />
 
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
+                            data-testid="user-form_view"
+                            @click="store.toView(store.item)"
+                    />
 
                     <!--form_menu-->
                     <Button class="p-button-sm"
@@ -103,13 +115,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="'View'"
-                            data-testid="user-form_view"
-                            @click="store.toView(store.item)"
-                    />
+
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
@@ -123,9 +129,9 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item && store.assets" class="pt-2">
+            <div v-if="store.item" class="pt-2">
                 <div class="field mb-4 flex justify-content-between align-items-center"
-                     v-if="root && root.assets && store.item.id">
+                     v-if="store.item.id">
 
                     <img v-if="store.item.avatar"
                          :src="store.item.avatar"
@@ -362,7 +368,7 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <SelectButton v-if="root && root.is_active_status_options"
+                    <SelectButton v-if="root.is_active_status_options"
                                   v-model="store.item.is_active"
                                   :options="root.is_active_status_options"
                                   option-label="label"
@@ -370,7 +376,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="store.assets && store.assets.custom_fields"
+                <template v-if="store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
