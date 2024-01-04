@@ -1,304 +1,531 @@
 [
-
     {
-        "category": "general",
-        "name": "Title Required",
-        "content": "The title field is required."
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Users and Roles"
     },
     {
-        "category": "general",
-        "name": "Title Limit",
-        "content": "The title character is not greater than 200."
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Total User"
     },
     {
-        "category": "general",
-        "name": "Slug Required",
-        "content": "The slug field is required."
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Total Role"
     },
     {
-        "category": "general",
-        "name": "Slug Limit",
-        "content": "The slug character is not greater than 150."
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Total Permission"
     },
     {
-        "category": "general",
-        "name": "Description Required",
-        "content": "The description field is required."
-    },
-    {
-        "category": "general",
-        "name": "Description Limit",
-        "content": "The description character is not greater than 255."
-    },
-    {
-        "category": "general",
-        "name": "Detail Required",
-        "content": "The detail field is required."
-    },
-    {
-        "category": "general",
-        "name": "Detail Limit",
-        "content": "The detail character is not greater than 255."
-    },
-    {
-        "category": "general",
-        "name": "Category Required",
-        "content": "The category field is required."
-    },
-    {
-        "category": "general",
-        "name": "Category Limit",
-        "content": "The category character is not greater than 150."
-    },
-    {
-        "category": "general",
-        "name": "Is Active Required",
-        "content": "The is active option is required."
-    },
-    {
-        "category": "general",
-        "name": "Status Required",
-        "content": "The status is required."
-    },
-    {
-        "category": "general",
-        "name": "Saved successfully",
-        "content": "Saved successfully."
-    },
-    {
-        "category": "general",
-        "name": "Action successful",
-        "content": "Action was successful"
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Active Users"
     },
 
     {
-        "category": "general",
-        "name": "No module installed",
-        "content": "No module installed/downloaded"
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "View Details"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Welcome to Vaah<b>Cms</b>"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "We\\'ve assembled some links to get you started:"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Get Started"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Next Steps"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "More Actions"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Go To Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activate Theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "or",
+        "content": "or"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "create your own theme"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "View your Site"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Manage your Module"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Tasks that is kept in the queue to be performed one after another.Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Failed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Laravel Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Check Updates"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Getting Started"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Enable <b>Laravel Queues</b> to run your jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "View Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "View all recent logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "No Error Log Found"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "View"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Usuarios y Roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Usuario Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Rol Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Permiso Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Usuarios Activos/Activas"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "Ver Detalles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Bienvenido a Vaah<b>Cms</b>"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "Hemos reunido algunos enlaces para que pueda comenzar:"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Empezar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Próximos Pasos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "Mas Acciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Ir Al Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activar Tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "or",
+        "content": "o"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "crea tu propio tema"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "Ver su Sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Gestiona tu Módulo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Las tareas que se mantienen en la cola se realizan una tras otra. Las colas le permiten diferir el procesamiento de una tarea que requiere mucho tiempo, como enviar un correo electrónico, hasta un momento posterior, lo que acelera drásticamente las solicitudes web a su aplicación."
+
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "Pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Fallido/Fallida"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Registros de Laravel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Revisa Actualizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Empezando"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Habilite <b>Laravel Queues</b> para ejecutar sus trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "Ver Configuraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "Ver todos los registros recientes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "No se encontró ningún registro de errores"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "Vista"
     },
 
 
-
     {
-        "category": "localization",
-        "name": "Locale Code ISO 639 Required",
-        "content": "The locale code iso 639 field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Users and Roles",
+        "content": "Utilisateurs et Rôles"
     },
     {
-        "category": "localization",
-        "name": "Locale Code already exist",
-        "content": "Locale Code already exist"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total User",
+        "content": "Utilisateur Total"
     },
     {
-        "category": "localization",
-        "name": "Record already exist",
-        "content": "Record already exist"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total Role",
+        "content": "Rôle Total"
     },
     {
-        "category": "localization",
-        "name": "one string required",
-        "content": "At least one string is required"
-    },
-
-
-
-    {
-        "category": "media",
-        "name": "Alternate Text Required",
-        "content": "The alternate text field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Total Permission",
+        "content": "Autorisation Totale"
     },
     {
-        "category": "media",
-        "name": "Alternate Text Limit",
-        "content": "The alternate text character is not greater than 150."
-    },
-    {
-        "category": "media",
-        "name": "Caption Required",
-        "content": "The caption field is required."
-    },
-    {
-        "category": "media",
-        "name": "Caption Limit",
-        "content": "The caption character is not greater than 255."
-    },
-    {
-        "category": "media",
-        "name": "Is Downloadable Required",
-        "content": "The is downloadable option is required."
-    },
-    {
-        "category": "media",
-        "name": "Download url associate",
-        "content": "Download url is associated with other media."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Active Users",
+        "content": "Utilisateurs Actifs"
     },
 
-
-
-
     {
-        "category": "user",
-        "name": "Logged in to update profile",
-        "content": "You must be logged in to update your profile"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Details",
+        "content": "Voir les Détails"
     },
     {
-        "category": "user",
-        "name": "Confirm password not match",
-        "content": "Confirm password does not match"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Welcome to VaahCms",
+        "content": "Bienvenue sur Vaah<b>Cms</b>"
     },
     {
-        "category": "user",
-        "name": "Current password incorrect",
-        "content": "Current password is incorrect"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Welcome Message",
+        "content": "Nous avons rassemblé quelques liens pour vous aider à démarrer:"
     },
     {
-        "category": "user",
-        "name": "Email associate with other user",
-        "content": "Email is associated with other user."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Get Started",
+        "content": "Commencer"
     },
     {
-        "category": "user",
-        "name": "Username already taken",
-        "content": "Username already taken"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Next Steps",
+        "content": "Prochaines Étapes"
     },
     {
-        "category": "user",
-        "name": "Registration Status is Registered",
-        "content": "The registration status is \"registered\", hence user id is required"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "More Actions",
+        "content": "Plus D\\'actions"
     },
     {
-        "category": "user",
-        "name": "First user super administrator",
-        "content": "First user will always be an super administrator"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Go To Theme",
+        "content": "Aller au Thème"
     },
     {
-        "category": "user",
-        "name": "Email Already Registered",
-        "content": "Email is already registered."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Activate Theme",
+        "content": "Activer le Thème"
     },
     {
-        "category": "user",
-        "name": "Username Already Registered",
-        "content": "Username is already registered."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "or",
+        "content": "ou"
     },
     {
-        "category": "user",
-        "name": "Phone Already Registered",
-        "content": "Phone number is already registered."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "create your own theme",
+        "content": "créez votre propre thème"
     },
     {
-        "category": "user",
-        "name": "No user exist",
-        "content": "No user exist"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View your Site",
+        "content": "Afficher votre Site"
     },
     {
-        "category": "user",
-        "name": "First Name Required",
-        "content": "The first name field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Manage your Module",
+        "content": "Gérez votre Module"
     },
     {
-        "category": "user",
-        "name": "Last Name Required",
-        "content": "The last name field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Jobs",
+        "content": "Emplois"
     },
     {
-        "category": "user",
-        "name": "Phone Required",
-        "content": "The phone field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Content Description",
+        "content": "Tâches conservées dans la file d\\'attente pour être exécutées les unes après les autres. Les files d\\'attente vous permettent de différer le traitement d\\'une tâche fastidieuse, comme l\\'envoi d\\'un e-mail, à une date ultérieure, ce qui accélère considérablement les requêtes Web adressées à votre application."
     },
     {
-        "category": "user",
-        "name": "Phone Digit",
-        "content": "The phone character is in number."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Pending",
+        "content": "En attente"
     },
     {
-        "category": "user",
-        "name": "Name Required",
-        "content": "The name field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Failed",
+        "content": "Échoué"
     },
     {
-        "category": "user",
-        "name": "Name Limit",
-        "content": "The name character is not greater than 150."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Laravel Logs",
+        "content": "Journaux Laravel"
     },
     {
-        "category": "user",
-        "name": "Email Required",
-        "content": "The email field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Check Updates",
+        "content": "Vérifier les mises à jour"
     },
     {
-        "category": "user",
-        "name": "Email Limit",
-        "content": "The email character is not greater than 150."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Getting Started",
+        "content": "Commencer"
     },
     {
-        "category": "user",
-        "name": "Email Invalid",
-        "content": "The email is invalid."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Run Jobs",
+        "content": "Activez les <b>files d\\'attente Laravel</b> pour exécuter vos tâches"
     },
     {
-        "category": "user",
-        "name": "Username Required",
-        "content": "The name field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Settings",
+        "content": "Paramètres d\\'affichage"
     },
     {
-        "category": "user",
-        "name": "Username Limit",
-        "content": "The username character is not greater than 20."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View all recent logs",
+        "content": "Afficher tous les journaux récents"
     },
     {
-        "category": "user",
-        "name": "Display Name Required",
-        "content": "The display name field is required."
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "No Error Log Found",
+        "content": "Aucun journal d\\'erreurs trouvé"
     },
     {
-        "category": "user",
-        "name": "Display Name Limit",
-        "content": "The display name character is not greater than 50."
-    },
-    {
-        "category": "user",
-        "name": "Registration created when user not exist",
-        "content": "Registration can be created only when user does not exist"
-    },
-    {
-        "category": "login",
-        "name": "Login OTP Sent",
-        "content": "One time password (OTP) is sent to your email."
-    },
-    {
-        "category": "login",
-        "name": "Login Successful",
-        "content": "You have been successfully logged in."
-    },
-    {
-        "category": "login",
-        "name": "Reset Code Sent",
-        "content": "A password reset code is sent to your email."
-    },
-    {
-        "category": "login",
-        "name": "Password Has Been Reset",
-        "content": "Your password has been reset successfully."
-    },
-    {
-        "category": "login",
-        "name": "Email or Username Required",
-        "content": "The email or username field is required."
-    },
-    {
-        "category": "login",
-        "name": "Email or Username Limit",
-        "content": "The email or username may not be greater than 150 characters."
-    },
-    {
-        "category": "login",
-        "name": "OTP Sent",
-        "content": "A one time password (OTP) has been sent to your email."
-    },
-    {
-        "category": "login",
-        "name": "Incorrect reset password code",
-        "content": "Incorrect reset password code"
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "View Log",
+        "content": "Voir"
     }
 ]
