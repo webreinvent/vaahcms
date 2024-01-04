@@ -2,11 +2,13 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
+import { useRootStore } from "../../stores/root";
 import {useUserStore} from '../../stores/store-users'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useUserStore();
 const route = useRoute();
 
@@ -53,8 +55,11 @@ onMounted(async () => {
             <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Users</b>
+                        <div v-if="store.assets
+                               && store.assets.language_string
+                               && store.assets.language_string.users"
+                        >
+                            <b class="mr-1">{{store.assets.language_string.users.users_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
@@ -63,9 +68,13 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup"
+                         v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                    >
                         <Button class="p-button-sm"
-                                label="Create"
+                                :label="root.assets.language_string.crud_actions.create_button"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
                                 data-testid="user-create"
@@ -81,7 +90,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>

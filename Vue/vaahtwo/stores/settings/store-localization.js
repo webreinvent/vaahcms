@@ -31,6 +31,7 @@ export const useLocalizationStore = defineStore({
             cat_id: null,
             page: null,
             filter: null,
+            q: null,
         },
         assets_is_fetching: true,
         rows_per_page: [10,20,30,50,100,500],
@@ -128,7 +129,10 @@ export const useLocalizationStore = defineStore({
                     {
                         if(key === 'filter'){
                             this.query_string[key] = route.query[key];
-                        }else{
+                        } else if(key === 'q') {
+                            this.query_string[key] = route.query[key];
+                        }
+                        else{
                             this.query_string[key] = parseInt(route.query[key]);
                         }
 
@@ -166,10 +170,22 @@ export const useLocalizationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+
+        async delayedSearch()
+        {
+            let self = this;
+            clearTimeout(this.search.delay_timer);
+            this.search.delay_timer = setTimeout(async function() {
+                await self.getList();
+            }, this.search.delay_time);
+        },
+
+        //---------------------------------------------------------------------
         async getList(page = 1,sync = false) {
 
             this.filters.vh_lang_language_id = this.query_string.lang_id;
             this.filters.vh_lang_category_id = this.query_string.cat_id;
+            this.filters.q = this.query_string.q;
 
             this.updateUrlQueryString(this.query_string);
             this.filters.sync = sync;
@@ -375,6 +391,7 @@ export const useLocalizationStore = defineStore({
             this.query_string.lang_id = this.assets.languages.default.id;
             this.query_string.cat_id = null;
             this.query_string.page = null;
+            this.query_string.q = null;
             this.assets_is_fetching = true;
             this.getAssets();
         },
