@@ -146,7 +146,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => "pi pi-box",
-                'label'=> trans("vaahcms-sidebar-menu.advanced"),
+                'label'=> trans("vaahcms-sidebar-menu.extend"),
                 'items'=> [],
             ];
 
@@ -335,7 +335,7 @@ class ExtendController extends Controller
             "list" => [
                 [
                     "count" => User::count(),
-                    "label" => trans("vaahcms-dashboard.total_role"),
+                    "label" => trans("vaahcms-dashboard.total_user"),
                     "icon" => "pi-users",
                     "type" => "info",
                     "link" => self::$link."/users/"
