@@ -150,7 +150,7 @@ onMounted(async () => {
                                @keyup.enter="store.delayedSearch()"
                                @keyup.enter.native="store.delayedSearch()"
                                @input="store.delayedSearch()"
-                               placeholder="search"
+                               placeholder="Search"
                                data-testid="role-action_search_input"
                     />
 
