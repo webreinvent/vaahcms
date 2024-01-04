@@ -334,8 +334,6 @@ export const useUserStore = defineStore({
             }else{
                 this.$router.push({name: 'users.index'});
             }
-            this.getItemMenu();
-            await this.getFormMenu();
         },
         //---------------------------------------------------------------------
         storeAvatar(data) {
@@ -678,7 +676,6 @@ export const useUserStore = defineStore({
                 this.item = data;
                 await this.getList();
                 await this.formActionAfter();
-                this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
@@ -924,12 +921,14 @@ export const useUserStore = defineStore({
         toView(item)
         {
             this.item = vaah().clone(item);
+            this.getItemMenu();
             this.$router.push({name: 'users.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         toEdit(item)
         {
             this.item = item;
+            this.getFormMenu();
             this.$router.push({name: 'users.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
