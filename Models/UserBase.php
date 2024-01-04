@@ -92,7 +92,12 @@ class UserBase extends Authenticatable
 
         if($this->avatar_url)
         {
-            return asset($this->avatar_url);
+            $url = asset($this->avatar_url);
+            if (@getimagesize($url)) {
+                return $url;
+            } else {
+                return vh_get_avatar_by_email($this->email);
+            }
         }
 
         $grav_url = vh_get_avatar_by_email($this->email);
