@@ -92,6 +92,13 @@ const toggleFormMenu = (event) => {
                             v-if="store.hasPermission('can-create-users')"
                     />
 
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
+                            data-testid="user-form_view"
+                            @click="store.toView(store.item)"
+                    />
 
                     <!--form_menu-->
                     <Button class="p-button-sm"
@@ -108,13 +115,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
-                            data-testid="user-form_view"
-                            @click="store.toView(store.item)"
-                    />
+
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
