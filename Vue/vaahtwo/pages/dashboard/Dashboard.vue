@@ -21,7 +21,6 @@ const key = ref();
 <template>
     <div v-if="store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
         <div class="col-12 md:col-8">
-            {{}}
             <Card v-if="store.language_string">
                 <template #content>
                     <h5 class="text-xl font-semibold mb-1" v-html="store.language_string.greeting"></h5>
