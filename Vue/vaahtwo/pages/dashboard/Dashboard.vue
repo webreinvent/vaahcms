@@ -21,16 +21,14 @@ const key = ref();
 <template>
     <div v-if="store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
         <div class="col-12 md:col-8">
-            <Card v-if="root.assets
-                        && root.assets.language_string
-                        && root.assets.language_string.dashboard"
-            >
+            {{}}
+            <Card v-if="store.language_string">
                 <template #content>
-                    <h5 class="text-xl font-semibold mb-1" v-html="root.assets.language_string.dashboard.greeting"></h5>
-                    <p>{{root.assets.language_string.dashboard.message}}</p>
+                    <h5 class="text-xl font-semibold mb-1" v-html="store.language_string.greeting"></h5>
+                    <p>{{store.language_string.message}}</p>
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.get_started}}</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{store.language_string.get_started}}</h6>
                             <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
                                     data-testid="dashboard-goto_theme"
                                     class="p-button-sm is-light"
@@ -39,23 +37,23 @@ const key = ref();
                                             && store.dashboard_items.success
                                             && store.dashboard_items.success.vaahcms
                                             && store.dashboard_items.success.vaahcms.has_activated_theme">
-                                     {{root.assets.language_string.dashboard.go_to_theme}}
+                                     {{store.language_string.go_to_theme}}
                                 </span>
                                 <span v-else>
-                                    {{root.assets.language_string.dashboard.activate_theme}}
+                                    {{store.language_string.activate_theme}}
                                 </span>
                             </Button>
                             <p class="text-sm mt-1">
-                                {{root.assets.language_string.dashboard.or}},
+                                {{store.language_string.or}},
                                 <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
                                    data-testid="dashboard-create_theme"
                                    target="_blank">
-                                    {{root.assets.language_string.dashboard.create_your_own_theme}}</a>
+                                    {{store.language_string.create_your_own_theme}}</a>
                             </p>
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.next_steps}}</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{store.language_string.next_steps}}</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -76,7 +74,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-2 text-sm">{{root.assets.language_string.dashboard.more_actions}}</h6>
+                            <h6 class="font-semibold mb-2 text-sm">{{store.language_string.more_actions}}</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
