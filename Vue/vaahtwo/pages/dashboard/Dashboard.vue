@@ -19,9 +19,12 @@ const key = ref();
 </script>
 
 <template>
-    <div v-if="root.assets && store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
+    <div v-if="store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
         <div class="col-12 md:col-8">
-            <Card>
+            <Card v-if="root.assets
+                        && root.assets.language_string
+                        && root.assets.language_string.dashboard"
+            >
                 <template #content>
                     <h5 class="text-xl font-semibold mb-1" v-html="root.assets.language_string.dashboard.greeting"></h5>
                     <p>{{root.assets.language_string.dashboard.message}}</p>
@@ -160,7 +163,7 @@ const key = ref();
                                              :closable="false"
                                              icon="null"
                                     >
-                                        {{ item.run_jobs }}
+                                        <p v-html="item.run_jobs"></p>
                                         <a @click="store.goToLink(root.base_url+'#/vaah/settings/general')"
                                            href="javascript:void(0)"
                                            data-testid="dashboard-view_setting"
