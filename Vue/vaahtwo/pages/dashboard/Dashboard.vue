@@ -163,7 +163,7 @@ const key = ref();
                                              :closable="false"
                                              icon="null"
                                     >
-                                        {{ item.run_jobs }}
+                                        <p v-html="item.run_jobs"></p>
                                         <a @click="store.goToLink(root.base_url+'#/vaah/settings/general')"
                                            href="javascript:void(0)"
                                            data-testid="dashboard-view_setting"
