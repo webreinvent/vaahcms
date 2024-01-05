@@ -345,7 +345,7 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-            if(!item)
+           if(!item)
             {
                 item = this.item;
             }
@@ -701,7 +701,6 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
-            const root = useRootStore();
             this.list_selected_menu = [
                 {
                     label: 'Email Verification Pending',
@@ -727,37 +726,37 @@ export const useRegistrationStore = defineStore({
                 {
                     separator: true
                 },
-                /*  {
-                      label: 'Activate',
-                      command: async () => {
-                          await this.updateList('activate')
-                      }
-                  },
-                  {
-                      label: 'Deactivate',
-                      command: async () => {
-                          await this.updateList('deactivate')
-                      }
-                  },
-                  {
-                      separator: true
-                  },*/
+              /*  {
+                    label: 'Activate',
+                    command: async () => {
+                        await this.updateList('activate')
+                    }
+                },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_trash,
+                    label: 'Deactivate',
+                    command: async () => {
+                        await this.updateList('deactivate')
+                    }
+                },
+                {
+                    separator: true
+                },*/
+                {
+                    label: 'Trash',
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_restore,
+                    label: 'Restore',
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_delete,
+                    label: 'Delete',
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -769,7 +768,6 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
-            const root = useRootStore();
             this.list_bulk_menu = [
                 {
                     label: 'All Users Email Verification Pending',
@@ -795,37 +793,37 @@ export const useRegistrationStore = defineStore({
                 {
                     separator: true
                 },
-                /* {
-                     label: 'Mark all as active',
-                     command: async () => {
-                         await this.listAction('activate-all')
-                     }
-                 },
-                 {
-                     label: 'Mark all as inactive',
-                     command: async () => {
-                         await this.listAction('deactivate-all')
-                     }
-                 },
-                 {
-                     separator: true
-                 },*/
+               /* {
+                    label: 'Mark all as active',
+                    command: async () => {
+                        await this.listAction('activate-all')
+                    }
+                },
                 {
-                    label: root.assets.language_string.crud_actions.trash_all,
+                    label: 'Mark all as inactive',
+                    command: async () => {
+                        await this.listAction('deactivate-all')
+                    }
+                },
+                {
+                    separator: true
+                },*/
+                {
+                    label: 'Trash All',
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.restore_all,
+                    label: 'Restore All',
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.delete_all,
+                    label: 'Delete All',
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -836,13 +834,13 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
-            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
+
                 item_menu.push({
-                    label: root.assets.language_string.crud_actions.view_restore,
+                    label: 'Restore',
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -852,9 +850,8 @@ export const useRegistrationStore = defineStore({
 
             if(this.item && this.item.id && !this.item.deleted_at)
             {
-                const root = useRootStore();
                 item_menu.push({
-                    label: root.assets.language_string.crud_actions.view_trash,
+                    label: 'Trash',
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -863,7 +860,7 @@ export const useRegistrationStore = defineStore({
             }
 
             item_menu.push({
-                label: root.assets.language_string.crud_actions.view_delete,
+                label: 'Delete',
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -886,7 +883,6 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
-            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id )
@@ -894,14 +890,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_close,
+                        label: 'Save & Close',
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_clone,
+                        label: 'Save & Clone',
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -910,7 +906,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_new,
+                        label: 'Save & New',
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -919,14 +915,14 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_trash,
+                        label: 'Trash',
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_delete,
+                        label: 'Delete',
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -938,14 +934,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: root.assets.language_string.crud_actions.form_create_and_close,
+                        label: 'Create & Close',
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_create_and_clone,
+                        label: 'Create & Clone',
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -954,7 +950,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_reset,
+                        label: 'Reset',
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -964,7 +960,7 @@ export const useRegistrationStore = defineStore({
             }
 
             form_menu.push({
-                label: root.assets.language_string.crud_actions.form_fill,
+                label: 'Fill',
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
