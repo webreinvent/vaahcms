@@ -134,7 +134,7 @@ export const useAuthStore = defineStore({
                     this.title.description = 'You have received an email which contains two factor code.';
                     this.resendCountdown();
                 } else {
-                    window.location = data.redirect_url+'#/vaah';
+                    window.location = data.redirect_url;
                 }
             }
         },
