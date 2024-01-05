@@ -149,7 +149,7 @@ class PublicController extends Controller
                 $request->session()->forget('accessed_url');
             } else
             {
-                $redirect_url = \URL::route('vh.backend');
+                $redirect_url = \URL::route('vh.backend').'#/vaah';
             }
 
             $verify_response = Auth::user()->verifySecurityAuthentication();
