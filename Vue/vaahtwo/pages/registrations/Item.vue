@@ -1,10 +1,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
+import { useRootStore } from "../../stores/root";
 import { useRegistrationStore } from '../../stores/store-registrations'
 import { vaah } from '../../vaahvue/pinia/vaah'
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -29,21 +31,6 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    /**
-     * Watch if url record id is changed, if changed
-     * then fetch the new records from database
-     */
-    /*watch(route, async (newVal,oldVal) =>
-        {
-            if(newVal.params && !newVal.params.id
-                && newVal.name === 'articles.view')
-            {
-                store.toList();
-
-            }
-            await store.getItem(route.params.id);
-        }, { deep: true }
-    )*/
 
 });
 
@@ -86,12 +73,15 @@ const toggleUserStatusMenu = (event) => {
                             data-testid="registration-item_id"
                     />
 
-                    <Button label="Edit"
+                    <Button :label="root.assets.language_string.crud_actions.view_edit"
                             class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             data-testid="register-view_to_edit"
-                            v-if="store.hasPermission('can-update-registrations')"
+                            v-if="store.hasPermission('can-update-registrations')
+                                  && root.assets
+                                  && root.assets.language_string
+                                  && root.assets.language_string.crud_actions"
                     />
 
                     <!--item_menu-->
@@ -124,13 +114,18 @@ const toggleUserStatusMenu = (event) => {
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at"
                 >
-                    <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center justify-content-between"
+                         v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+
+                    >
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_string.crud_actions.view_restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
                                     data-testid="register-view_item_action_to_restore"
@@ -140,8 +135,8 @@ const toggleUserStatusMenu = (event) => {
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
-                    <tbody class="p-datatable-tbody">
+                    <table class="p-datatable-table">
+                        <tbody class="p-datatable-tbody">
                         <template v-for="(value, column) in store.item ">
                             <template v-if="column === 'created_by' || column === 'updated_by'"/>
 
@@ -273,7 +268,7 @@ const toggleUserStatusMenu = (event) => {
                                             <Button v-if="value == 'email-verified'"
                                                     label="Create User"
                                                     class="p-button-success p-button-xs"
-                                                     @click="store.confirmCreateUser()"
+                                                    @click="store.confirmCreateUser()"
                                                     data-testid="register-view_confirm_create_user"
                                             />
 
@@ -313,9 +308,9 @@ const toggleUserStatusMenu = (event) => {
 
 
                         </template>
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
 
                 </div>
             </div>
