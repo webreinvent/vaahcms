@@ -2,11 +2,13 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
+import { useRootStore } from "../../stores/root";
 import {useRegistrationStore} from '../../stores/store-registrations'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 
@@ -57,8 +59,11 @@ onMounted(async () => {
                 <template class="p-1" #header>
 
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Registrations</b>
+                        <div v-if="store.assets
+                                   && store.assets.language_string"
+                        >
+                            <b class="mr-1">
+                                {{store.assets.language_string.registrations_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -71,11 +76,14 @@ onMounted(async () => {
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
-                                label="Create"
+                                :label="root.assets.language_string.crud_actions.create_button"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
                                 data-testid="registration-create"
-                                v-if="store.hasPermission('can-create-registrations')"
+                                v-if="store.hasPermission('can-create-registrations')
+                                      && root.assets
+                                      && root.assets.language_string
+                                      && root.assets.language_string.crud_actions"
                         />
 
                         <Button class="p-button-sm"
@@ -87,7 +95,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_string
+                               && root.assets.language_string.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>
