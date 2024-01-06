@@ -800,10 +800,30 @@ class RoleBase extends VaahModel {
 
             $item->users()->updateExistingPivot($inputs['inputs']['user_id'], $data);
         } else {
-            $item->users()
+
+            $user_ids = [];
+            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
+                $user_ids = User::where(function ($q) use($inputs){
+                    $q->where('first_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('middle_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('last_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('display_name', 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('email', 'LIKE', '%' . $inputs['inputs']['query']['q'] .'%');
+                })->pluck('id');
+            }
+
+            $item_users = $item->users()
                 ->newPivotStatement()
-                ->where('vh_role_id', '=', $item->id)
-                ->update($data);
+                ->where('vh_role_id', '=', $item->id);
+
+            if(count($user_ids) > 0){
+                $item_users->whereIn('vh_user_id',$user_ids);
+            }
+
+            $item_users->update($data);
+
         }
         self::recountRelations();
         $response['success'] = true;

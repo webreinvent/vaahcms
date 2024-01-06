@@ -1744,7 +1744,7 @@ class UserBase extends Authenticatable
 
             $item_roles = $item->roles()
                 ->newPivotStatement()
-                ->where('vh_permission_id', '=', $item->id);
+                ->where('vh_user_id', '=', $item->id);
 
             if(count($role_ids) > 0){
                 $item_roles->whereIn('vh_role_id',$role_ids);
