@@ -17,11 +17,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-roles-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-roles-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -76,11 +75,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-roles-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-roles-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -102,11 +100,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -128,13 +125,11 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-roles') ||
-            !Auth::user()->hasPermission('can-manage-roles')
-        ) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slugs = ['can-update-roles','can-manage-roles'];
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -156,11 +151,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-delete-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -182,11 +176,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-create-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-create-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -208,11 +201,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -234,11 +226,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request,$id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -260,11 +251,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-delete-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -286,13 +276,11 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-manage-roles') ||
-            !Auth::user()->hasPermission('can-update-roles')
-        ) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slugs = ['can-manage-roles','can-update-roles'];
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -314,11 +302,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getItemPermission(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -340,11 +327,10 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getItemUser(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-roles')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-roles';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
