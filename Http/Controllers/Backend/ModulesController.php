@@ -21,11 +21,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-module-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-module-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -54,11 +53,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-module-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-module-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -126,11 +124,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-module';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -152,11 +149,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function download(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-install-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-install-module';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -192,11 +188,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function installUpdates(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-module';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -276,74 +271,68 @@ class ModulesController extends Controller
             {
                 //---------------------------------------
                 case 'activate':
-                    if (!Auth::user()->hasPermission('can-activate-module')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Module::activateItem($module->slug);
                     break;
                 //---------------------------------------
                 case 'deactivate':
-                    if (!\Auth::user()->hasPermission('can-deactivate-module')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-deactivate-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
 
                     $response = Module::deactivateItem($module->slug);
                     break;
                 //---------------------------------------
                 case 'refresh_migrations':
-                    if (!Auth::user()->hasPermission('can-activate-module')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Module::refreshMigrations($module->slug);
                     break;
                 //---------------------------------------
                 case 'run_migrations':
-                    if (!Auth::user()->hasPermission('can-activate-module')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Module::runMigrations($module->slug);
                     break;
                 //---------------------------------------
                 case 'run_seeds':
-                    if (!Auth::user()->hasPermission('can-activate-module')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Module::runSeeds($module->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':
-                    if (!\Auth::user()->hasPermission('can-import-sample-data-in-module')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-import-sample-data-in-module';
 
-                        return response()->json($response);
+                    if(!\Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
 
                     $response = Module::importSampleData($module->slug);
                     break;
                 //---------------------------------------
                 case 'delete':
-                    if (!Auth::user()->hasPermission('can-delete-module')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-delete-module';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
+
                     $response = Module::deleteItem($module->slug);
                     break;
                 //---------------------------------------
@@ -416,11 +405,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function updateModuleVersions(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-module';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -457,11 +445,10 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function storeUpdates(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-module';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
