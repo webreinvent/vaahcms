@@ -308,6 +308,7 @@ export const usePermissionStore = defineStore({
         async bulkActions (input, action) {
             let params = {
                 id: this.item.id,
+                query: this.permission_roles_query,
                 role_id: null
             };
 
