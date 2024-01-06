@@ -117,7 +117,7 @@ function vh_get_permission_denied_response($permission_slugs){
 
     $text = implode(', ',$permission_slugs);
 
-    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+    $response['errors'][] = trans("vaahcms-general.permission_denied");
     if(env('APP_DEBUG')){
         $response['hint'][] = 'You don\'t have "'.$text.'" permission.';
     }
