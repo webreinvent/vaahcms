@@ -23,7 +23,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'has-access-of-registrations-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -95,7 +95,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'has-access-of-registrations-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -121,7 +121,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'can-update-registrations';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -169,11 +169,11 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+        $permission_slugs = ['can-update-registrations','can-delete-registrations'];
 
-        if(!Auth::user()->hasPermission('can-update-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-update-registrations'));
-        } elseif(!Auth::user()->hasPermission('can-delete-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-delete-registrations'));
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -198,7 +198,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'can-create-registrations';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -223,7 +223,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'can-read-registrations';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -248,7 +248,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'can-update-registrations';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -270,10 +270,11 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-update-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-update-registrations'));
-        } elseif(!Auth::user()->hasPermission('can-delete-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-delete-registrations'));
+        $permission_slugs = ['can-update-registrations','can-delete-registrations'];
+
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -295,10 +296,11 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-update-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-update-registrations'));
-        } elseif(!Auth::user()->hasPermission('can-manage-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-manage-registrations'));
+        $permission_slugs = ['can-update-registrations','can-manage-registrations'];
+
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -342,7 +344,7 @@ class RegistrationsController extends Controller
         $permission_slug = 'can-create-users-from-registrations';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response($permission_slug));
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
