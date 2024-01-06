@@ -191,7 +191,9 @@ class User extends UserBase
 
         if(!isset($response['errors']) ||
             (count($inputs['items']) !== count($response['errors']))){
-            $response['messages'][] = 'Action was successful.';
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
         }
 
         return $response;
@@ -243,7 +245,9 @@ class User extends UserBase
         $response['data'] = true;
 
         if(count($inputs['items']) !== count($response['errors'])){
-            $response['messages'][] = 'Action was successful.';
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
         }
 
         return $response;
@@ -265,7 +269,6 @@ class User extends UserBase
 
         $list_array = $list->get()->toArray();
 
-
         foreach($list_array as $item){
             $is_restricted = self::restrictedActions($type, $item['id']);
 
@@ -275,7 +278,6 @@ class User extends UserBase
                 $list->where('id','!=',$item['id']);
             }
         }
-
 
         switch ($type) {
             case 'activate-all':
@@ -302,7 +304,9 @@ class User extends UserBase
 
         if(!isset($response['errors']) ||
             (count($list_array) !== count($response['errors']))){
-            $response['messages'][] = 'Action was successful.';
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
         }
 
         return $response;
