@@ -450,6 +450,9 @@ export const usePermissionStore = defineStore({
                 method: method,
                 show_success: false
             };
+
+            options.params.query = vaah().clone(this.query);
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,
