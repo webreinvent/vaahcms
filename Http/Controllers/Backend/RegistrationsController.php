@@ -143,11 +143,11 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
+        $permission_slugs = ['can-update-registrations','can-manage-registrations'];
 
-        if(!Auth::user()->hasPermission('can-update-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-update-registrations'));
-        } elseif(!Auth::user()->hasPermission('can-manage-registrations')) {
-            return response()->json(vh_get_permission_denied_response('can-manage-registrations'));
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
