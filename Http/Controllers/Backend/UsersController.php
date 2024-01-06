@@ -203,11 +203,11 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-create-users')) {
-            $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-general.permission_denied');
 
-            return response()->json($response);
+        $permission_slug = 'can-create-user';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response($permission_slug));
         }
 
         try {

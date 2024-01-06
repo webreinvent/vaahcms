@@ -112,5 +112,12 @@ function vh_get_backend_file($file_path)
     return vh_get_backend_theme_url()."/".$file_path;
 }
 //-----------------------------------------------------------------------------------
-
+function vh_get_permission_denied_response($permission_slug){
+    $response['success'] = false;
+    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+    if(env('APP_DEBUG')){
+        $response['hint'][] = 'You don\'t have "'.$permission_slug.'" permission.';
+    }
+    return $response;
+}
 //-----------------------------------------------------------------------------------
