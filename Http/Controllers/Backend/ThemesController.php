@@ -427,11 +427,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
