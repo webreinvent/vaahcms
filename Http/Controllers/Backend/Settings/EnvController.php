@@ -21,11 +21,10 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!\Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -57,12 +56,10 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -90,12 +87,10 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function downloadFile(Request $request, $file_name): BinaryFileResponse | string
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -121,11 +116,10 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function store(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
