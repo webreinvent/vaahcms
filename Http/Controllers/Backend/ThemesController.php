@@ -21,12 +21,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
+        $permission_slug = 'has-access-of-theme-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-theme-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -55,11 +53,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-theme-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-theme-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -123,11 +120,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function download(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-install-theme')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-install-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -163,11 +159,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function installUpdates(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-theme')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -245,81 +240,73 @@ class ThemesController extends Controller
             {
                 //---------------------------------------
                 case 'activate':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::activateItem($theme->slug);
                     break;
                 //---------------------------------------
                 case 'make_default':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::makeItemAsDefault($theme->slug);
                     break;
                 //---------------------------------------
                 case 'refresh_migrations':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::refreshMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'run_migrations':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::runMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'run_seeds':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-activate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::runSeeds($theme->slug);
                     break;
                 //---------------------------------------
                 case 'deactivate':
-                    if (!Auth::user()->hasPermission('can-deactivate-theme')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-deactivate-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::deactivateItem($theme->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':
-                    if (!Auth::user()->hasPermission('can-import-sample-data-in-theme')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-import-sample-data-in-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::importSampleData($theme->slug);
                     break;
                 //---------------------------------------
                 case 'delete':
-                    if (!Auth::user()->hasPermission('can-delete-theme')) {
-                        $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                    $permission_slug = 'can-delete-theme';
 
-                        return response()->json($response);
+                    if(!Auth::user()->hasPermission($permission_slug)) {
+                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
                     }
                     $response = Theme::deleteItem($theme->slug);
                     break;
@@ -344,11 +331,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function storeUpdates(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-theme')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -384,11 +370,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-theme')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-delete-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -442,11 +427,10 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-module')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-theme';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
