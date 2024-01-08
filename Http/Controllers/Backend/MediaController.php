@@ -19,11 +19,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-media-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-media-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -83,11 +82,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-media-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-media-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -109,11 +107,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -135,14 +132,13 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media') ||
-            !Auth::user()->hasPermission('can-manage-media')
-        ) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slugs = ['can-update-media','can-manage-media'];
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
+
 
         try {
             $response = Media::listAction($request, $type);
@@ -163,11 +159,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-delete-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -189,11 +184,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-read-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -215,11 +209,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -241,11 +234,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-update-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
@@ -267,13 +259,11 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media') ||
-            !Auth::user()->hasPermission('can-manage-media')
-        ) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slugs = ['can-update-media','can-manage-media'];
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
+            !Auth::user()->hasPermission($permission_slugs[1])) {
+            return response()->json(vh_get_permission_denied_response($permission_slugs));
         }
 
         try {
@@ -426,11 +416,10 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-create-media')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'can-create-media';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return response()->json(vh_get_permission_denied_response([$permission_slug]));
         }
 
         try {
