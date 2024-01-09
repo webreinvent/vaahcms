@@ -470,6 +470,48 @@ export const useSetupStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        runMigrationsAfterInstalled: function () {
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/migrations',
+                this.afterRunMigrations,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterRunMigrationsAfterInstalled: function (data, res) {
+            if(data)
+            {
+                console.log(data);
+            }
+
+        },
+
+        //---------------------------------------------------------------------
+        runSeeders: function () {
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/seeders',
+                this.afterRunSeeders,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterRunSeeders: function (data, res) {
+            if(data)
+            {
+                console.log(data);
+            }
+
+        },
+
+        //---------------------------------------------------------------------
         validateMigration: function () {
             if(this.status && !this.status.is_db_migrated)
             {
@@ -556,6 +598,18 @@ export const useSetupStore = defineStore({
                     label: 'Clear Cache',
                     command: () => {
                         this.clearCache()
+                    }
+                },
+                {
+                    label: 'Run Migrations',
+                    command: () => {
+                        this.runMigrationsAfterInstalled()
+                    }
+                },
+                {
+                    label: 'Run Seeders',
+                    command: () => {
+                        this.runSeeders();
                     }
                 },
             ];
