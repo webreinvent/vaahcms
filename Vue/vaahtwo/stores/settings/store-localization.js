@@ -435,7 +435,6 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         generateLanguage() {
 
-            let url = this.ajax_url+'/generateLanguage';
             let options = {
                 method:'post'
             };
@@ -443,6 +442,22 @@ export const useLocalizationStore = defineStore({
             let ajax_url = this.ajax_url+'/generateLanguage';
             vaah().ajax(ajax_url, null, options);
 
+        },
+        //---------------------------------------------------------------------
+        runLocalizationSeeder() {
+
+            let options = {
+                method:'post'
+            };
+
+            let ajax_url = this.ajax_url+'/localization-seeder';
+            vaah().ajax(ajax_url, this.afterRunLocalizationSeeder, options);
+
+        },
+        //---------------------------------------------------------------------
+        afterRunLocalizationSeeder() {
+            this.assets_is_fetching = true;
+            this.getAssets();
         },
         //---------------------------------------------------------------------
         async paginate(event) {
