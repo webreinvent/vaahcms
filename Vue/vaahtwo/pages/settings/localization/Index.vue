@@ -249,6 +249,13 @@ onMounted(async () => {
 
             <div class="col-12">
                 <div class="p-inputgroup justify-content-end">
+                    <Button label="Run Seeder"
+                            data-testid="localization-run_localization_seeder"
+                            icon="pi pi-sync"
+                            @click="store.runLocalizationSeeder"
+                            class="p-button-sm"
+                    />
+
                     <Button label="Generate Language Files"
                             data-testid="localization-generate_languafe_file"
                             icon="pi pi-refresh"

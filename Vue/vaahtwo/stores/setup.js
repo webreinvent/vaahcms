@@ -470,6 +470,44 @@ export const useSetupStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        runMigrationsAfterInstalled: function () {
+            this.showProgress();
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/migrations',
+                this.afterRunMigrationsAfterInstalled,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterRunMigrationsAfterInstalled: function (data, res) {
+            this.hideProgress();
+        },
+
+        //---------------------------------------------------------------------
+        runSeeders: function () {
+            this.showProgress();
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/seeders',
+                this.afterRunSeeders,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterRunSeeders: function (data, res) {
+            this.hideProgress();
+        },
+
+        //---------------------------------------------------------------------
         validateMigration: function () {
             if(this.status && !this.status.is_db_migrated)
             {
@@ -556,6 +594,18 @@ export const useSetupStore = defineStore({
                     label: 'Clear Cache',
                     command: () => {
                         this.clearCache()
+                    }
+                },
+                {
+                    label: 'Run Migrations',
+                    command: () => {
+                        this.runMigrationsAfterInstalled()
+                    }
+                },
+                {
+                    label: 'Run Seeders',
+                    command: () => {
+                        this.runSeeders();
                     }
                 },
             ];
