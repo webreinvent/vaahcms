@@ -471,27 +471,27 @@ export const useSetupStore = defineStore({
 
         //---------------------------------------------------------------------
         runMigrationsAfterInstalled: function () {
+            this.showProgress();
+
             let params = {
                 method: 'post',
             };
 
             vaah().ajax(
                 this.ajax_url+'/run/migrations',
-                this.afterRunMigrations,
+                this.afterRunMigrationsAfterInstalled,
                 params
             );
         },
         //---------------------------------------------------------------------
         afterRunMigrationsAfterInstalled: function (data, res) {
-            if(data)
-            {
-                console.log(data);
-            }
-
+            this.hideProgress();
         },
 
         //---------------------------------------------------------------------
         runSeeders: function () {
+            this.showProgress();
+
             let params = {
                 method: 'post',
             };
@@ -504,11 +504,7 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         afterRunSeeders: function (data, res) {
-            if(data)
-            {
-                console.log(data);
-            }
-
+            this.hideProgress();
         },
 
         //---------------------------------------------------------------------
