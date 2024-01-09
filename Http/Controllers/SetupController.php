@@ -788,6 +788,14 @@ class SetupController extends Controller
         try
         {
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
+            $response = VaahArtisan::publishMigrations($provider);
+
+            if(isset($response['success']) && !$response['success'])
+            {
+                return $response;
+            }
+
+            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
 
             //publish vaahcms seeds
             $response = VaahArtisan::publishSeeds($provider);
