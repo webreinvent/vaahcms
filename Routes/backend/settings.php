@@ -122,6 +122,9 @@ Route::group(
         //---------------------------------------------------------
         Route::post('/actions/{action_name}', 'LocalizationController@postActions');
         //---------------------------------------------------------
+        Route::post('/localization-seeder', 'LocalizationController@runLocalizationSeeder')
+            ->name('backend.vaah.localization.localization_seeder');
+        //---------------------------------------------------------
     });
 
 
