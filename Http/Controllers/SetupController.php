@@ -764,16 +764,11 @@ class SetupController extends Controller
     public function runMigrationsAfterInstalled() {
         try {
 
-             $response = VaahArtisan::migrate();
-             if(isset($response['success']) && !$response['success'])
-             {
-                 return $response;
-             }
+             VaahArtisan::migrate();
 
-            $response =[];
-            $response['success'] = true;
-            $response['messages'][] = 'Migrations were successful';
-            return response()->json($response);
+             $response['success'] = true;
+             $response['messages'][] = 'Migrations were successful';
+             return response()->json($response);
         }
         catch(\Exception $e) {
 
@@ -787,14 +782,6 @@ class SetupController extends Controller
     {
         try
         {
-            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
-            $response = VaahArtisan::publishMigrations($provider);
-
-            if(isset($response['success']) && !$response['success'])
-            {
-                return $response;
-            }
-
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
 
             //publish vaahcms seeds
