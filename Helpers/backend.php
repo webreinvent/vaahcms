@@ -113,15 +113,18 @@ function vh_get_backend_file($file_path)
 }
 //-----------------------------------------------------------------------------------
 function vh_get_permission_denied_json_response($permission_slugs){
+    $response = vh_get_permission_denied_response($permission_slugs);
+    return response()->json($response);
+}
+//-----------------------------------------------------------------------------------
+function vh_get_permission_denied_response($permission_slugs){
     $response = [];
     $response['success'] = false;
 
-    $text = implode(', ',$permission_slugs);
-
     $response['errors'][] = trans("vaahcms-general.permission_denied");
     if(env('APP_DEBUG')){
-        $response['hint'][] = 'You don\'t have "'.$text.'" permission.';
+        $response['hint'][] = 'You don\'t have "'.$permission_slugs.'" permission.';
     }
-    return response()->json($response);
+    return $response;
 }
 //-----------------------------------------------------------------------------------
