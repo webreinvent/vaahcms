@@ -53,10 +53,10 @@ const toggleFormMenu = (event) => {
                         </span>
 
                         <span v-else-if="root.assets
-                                         && root.assets.language_string
-                                         && root.assets.language_string.crud_actions"
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
                         >
-                            {{root.assets.language_string.crud_actions.form_text_create}}
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
@@ -65,8 +65,8 @@ const toggleFormMenu = (event) => {
             <template #icons>
                 <div class="p-inputgroup"
                      v-if="root.assets
-                           && root.assets.language_string
-                           && root.assets.language_string.crud_actions"
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
                 >
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
@@ -75,7 +75,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button :label="root.assets.language_string.crud_actions.save_button"
+                    <Button :label="root.assets.language_strings.crud_actions.save_button"
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
@@ -83,7 +83,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-save"
                     />
 
-                    <Button :label="root.assets.language_string.crud_actions.form_create_and_new"
+                    <Button :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
@@ -95,7 +95,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="user-form_view"
                             @click="store.toView(store.item)"
                     />

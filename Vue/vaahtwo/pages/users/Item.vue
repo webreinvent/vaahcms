@@ -55,8 +55,8 @@ const toggleItemMenu = (event) => {
             <template #icons>
                 <div class="p-inputgroup"
                      v-if="root.assets
-                           && root.assets.language_string
-                           && root.assets.language_string.crud_actions"
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
                 >
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -64,7 +64,7 @@ const toggleItemMenu = (event) => {
                             data-testid="user-item_id"
                     />
 
-                    <Button :label="root.assets.language_string.crud_actions.view_edit"
+                    <Button :label="root.assets.language_strings.crud_actions.view_edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             class="p-button-sm"
@@ -105,15 +105,15 @@ const toggleItemMenu = (event) => {
 
                     <div class="flex align-items-center justify-content-between"
                          v-if="root.assets
-                               && root.assets.language_string
-                               && root.assets.language_string.crud_actions"
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
                     >
                         <div class="">
-                            {{root.assets.language_string.crud_actions.view_deleted}} {{store.item.deleted_at}}
+                            {{root.assets.language_strings.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button :label="root.assets.language_string.crud_actions.view_restore"
+                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
                                     class="p-button-sm"
                                     data-testid="user-item_restore"
                                     @click="store.itemAction('restore')"
