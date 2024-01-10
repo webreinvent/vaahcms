@@ -23,7 +23,7 @@ class UsersController extends Controller
         $permission_slug = 'has-access-of-users-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -109,7 +109,7 @@ class UsersController extends Controller
         $permission_slug = 'has-access-of-users-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -133,7 +133,7 @@ class UsersController extends Controller
         $permission_slug = 'can-update-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -158,7 +158,7 @@ class UsersController extends Controller
         $permission_slug = 'can-update-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -203,7 +203,7 @@ class UsersController extends Controller
         $permission_slug = 'can-create-user';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -228,7 +228,7 @@ class UsersController extends Controller
         $permission_slug = 'can-read-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -253,7 +253,7 @@ class UsersController extends Controller
         $permission_slug = 'can-update-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -287,9 +287,10 @@ class UsersController extends Controller
     {
         $permission_slugs = ['can-update-users','can-delete-users'];
 
-        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
-            !Auth::user()->hasPermission($permission_slugs[1])) {
-            return response()->json(vh_get_permission_denied_response($permission_slugs));
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
@@ -313,9 +314,10 @@ class UsersController extends Controller
     {
         $permission_slugs = ['can-manage-users','can-update-users'];
 
-        if(!Auth::user()->hasPermission($permission_slugs[0]) &&
-            !Auth::user()->hasPermission($permission_slugs[1])) {
-            return response()->json(vh_get_permission_denied_response($permission_slugs));
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
@@ -349,7 +351,7 @@ class UsersController extends Controller
         $permission_slug = 'can-read-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -430,9 +432,10 @@ class UsersController extends Controller
 
                     $permission_slugs = ['can-manage-users','can-update-users'];
 
-                    if(!Auth::user()->hasPermission($permission_slugs[0]) &&
-                        !Auth::user()->hasPermission($permission_slugs[1])) {
-                        return response()->json(vh_get_permission_denied_response($permission_slugs));
+                    $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                        return response()->json($permission_response);
                     }
 
                     $response = User::bulkStatusChange($request);
@@ -444,7 +447,7 @@ class UsersController extends Controller
                     $permission_slug = 'can-update-users';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = User::bulkTrash($request);
@@ -456,7 +459,7 @@ class UsersController extends Controller
                     $permission_slug = 'can-update-users';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = User::bulkRestore($request);
@@ -467,9 +470,10 @@ class UsersController extends Controller
 
                     $permission_slugs = ['can-update-users','can-delete-users'];
 
-                    if(!Auth::user()->hasPermission($permission_slugs[0]) ||
-                        !Auth::user()->hasPermission($permission_slugs[1])) {
-                        return response()->json(vh_get_permission_denied_response($permission_slugs));
+                    $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                        return response()->json($permission_response);
                     }
 
                     $response = User::bulkDelete($request);
@@ -480,9 +484,10 @@ class UsersController extends Controller
 
                     $permission_slugs = ['can-manage-users','can-update-users'];
 
-                    if(!Auth::user()->hasPermission($permission_slugs[0]) &&
-                        !Auth::user()->hasPermission($permission_slugs[1])) {
-                        return response()->json(vh_get_permission_denied_response($permission_slugs));
+                    $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                        return response()->json($permission_response);
                     }
 
                     $response = User::bulkChangeRoleStatus($request);
@@ -534,7 +539,7 @@ class UsersController extends Controller
         $permission_slug = 'can-update-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -574,7 +579,7 @@ class UsersController extends Controller
         $permission_slug = 'can-update-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -695,7 +700,7 @@ class UsersController extends Controller
         $permission_slug = 'can-impersonate-users';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
