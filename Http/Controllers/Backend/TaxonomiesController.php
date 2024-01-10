@@ -21,7 +21,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'has-access-of-taxonomies-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -84,7 +84,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'has-access-of-taxonomies-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -108,9 +108,10 @@ class TaxonomiesController extends Controller
     {
         $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
 
-        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
-            !Auth::user()->hasPermission($permission_slugs[1])) {
-            return response()->json(vh_get_permission_denied_response($permission_slugs));
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
@@ -134,9 +135,10 @@ class TaxonomiesController extends Controller
     {
         $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
 
-        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
-            !Auth::user()->hasPermission($permission_slugs[1])) {
-            return response()->json(vh_get_permission_denied_response($permission_slugs));
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
@@ -161,7 +163,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-delete-taxonomies';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -186,7 +188,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-create-taxonomies';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -211,7 +213,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-read-taxonomies';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -260,7 +262,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-update-taxonomies';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -285,7 +287,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-delete-taxonomies';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -309,9 +311,10 @@ class TaxonomiesController extends Controller
     {
         $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
 
-        if(!Auth::user()->hasPermission($permission_slugs[0]) ||
-            !Auth::user()->hasPermission($permission_slugs[1])) {
-            return response()->json(vh_get_permission_denied_response($permission_slugs));
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
@@ -336,7 +339,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-manage-taxonomy-type';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -384,7 +387,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-manage-taxonomy-type';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -437,7 +440,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-manage-taxonomy-type';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -500,7 +503,7 @@ class TaxonomiesController extends Controller
         $permission_slug = 'can-manage-taxonomy-type';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
 
