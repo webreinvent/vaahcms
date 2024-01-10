@@ -117,10 +117,11 @@ class JsonController extends Controller
             $data['extended_views'] = $this->getExtendedViews();
 
         }
+        $data['language_strings'] = [];
         //---------------------------------------------------
-        $data['language_string'] = $this->getGeneralStrings();
+        $data['language_strings']['general'] = $this->getGeneralStrings();
         //---------------------------------------------------
-        $data['language_string'] = $this->getCrudActionStrings();
+        $data['language_strings']['crud_actions'] = $this->getCrudActionStrings();
         //---------------------------------------------------
 
         $data['urls']['public'] = config('settings.global.backend_homepage_link');
@@ -275,7 +276,7 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getCrudActionStrings() : array {
 
-        $language_strig['crud_actions'] = [
+        return  [
             "create_button" => trans("vaahcms-crud-action.create_button"),
             "form_text_create" => trans("vaahcms-crud-action.form_text_create"),
             "placeholder_search" => trans("vaahcms-crud-action.placeholder_search"),
@@ -331,18 +332,14 @@ class JsonController extends Controller
             "view_deleted" => trans("vaahcms-crud-action.view_deleted"),
             "view_restore" => trans("vaahcms-crud-action.view_restore"),
         ];
-
-        return $language_strig;
     }
     //----------------------------------------------------------
     public function getGeneralStrings() :array {
-        $language_string['general'] = [
+        return [
             "select_an_action_type" => trans("vaahcms-general.select_an_action_type"),
             "select_records" => trans("vaahcms-general.select_records"),
             "select_a_record" => trans("vaahcms-general.select_a_record"),
         ];
-
-        return $language_string;
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
