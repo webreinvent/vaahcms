@@ -1140,6 +1140,23 @@ class UserBase extends Authenticatable
     }
 
     //-------------------------------------------------
+    public function hasPermissions($permission_slugs)
+    {
+        $permission_slugs_string = implode(', ',$permission_slugs);
+
+        foreach($permission_slugs as $permission_slug){
+            if(!Auth::user()->hasPermission($permission_slug)){
+                return vh_get_permission_denied_json_response($permission_slugs_string);
+            }
+        }
+
+        $response = [];
+        $response['success'] = true;
+        return $response;
+
+    }
+
+    //-------------------------------------------------
 
 
     //-------------------------------------------------
