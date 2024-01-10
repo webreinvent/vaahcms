@@ -24,7 +24,7 @@ class ThemesController extends Controller
         $permission_slug = 'has-access-of-theme-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -56,7 +56,7 @@ class ThemesController extends Controller
         $permission_slug = 'has-access-of-theme-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -123,7 +123,7 @@ class ThemesController extends Controller
         $permission_slug = 'can-install-theme';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -162,7 +162,7 @@ class ThemesController extends Controller
         $permission_slug = 'can-update-theme';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -243,7 +243,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-activate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::activateItem($theme->slug);
                     break;
@@ -252,7 +252,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-activate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::makeItemAsDefault($theme->slug);
                     break;
@@ -261,7 +261,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-activate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::refreshMigrations($theme->slug);
                     break;
@@ -270,7 +270,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-activate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::runMigrations($theme->slug);
                     break;
@@ -279,7 +279,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-activate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::runSeeds($theme->slug);
                     break;
@@ -288,7 +288,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-deactivate-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::deactivateItem($theme->slug);
                     break;
@@ -297,7 +297,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-import-sample-data-in-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::importSampleData($theme->slug);
                     break;
@@ -306,7 +306,7 @@ class ThemesController extends Controller
                     $permission_slug = 'can-delete-theme';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Theme::deleteItem($theme->slug);
                     break;
@@ -334,7 +334,7 @@ class ThemesController extends Controller
         $permission_slug = 'can-update-theme';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -373,7 +373,7 @@ class ThemesController extends Controller
         $permission_slug = 'can-delete-theme';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -430,7 +430,7 @@ class ThemesController extends Controller
         $permission_slug = 'can-read-theme';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
