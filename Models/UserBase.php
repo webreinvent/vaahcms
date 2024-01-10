@@ -1146,7 +1146,7 @@ class UserBase extends Authenticatable
 
         foreach($permission_slugs as $permission_slug){
             if(!Auth::user()->hasPermission($permission_slug)){
-                return vh_get_permission_denied_json_response($permission_slugs_string);
+                return vh_get_permission_denied_response($permission_slugs_string);
             }
         }
 
