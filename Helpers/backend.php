@@ -112,7 +112,8 @@ function vh_get_backend_file($file_path)
     return vh_get_backend_theme_url()."/".$file_path;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_permission_denied_response($permission_slugs){
+function vh_get_permission_denied_json_response($permission_slugs){
+    $response = [];
     $response['success'] = false;
 
     $text = implode(', ',$permission_slugs);
@@ -121,6 +122,6 @@ function vh_get_permission_denied_response($permission_slugs){
     if(env('APP_DEBUG')){
         $response['hint'][] = 'You don\'t have "'.$text.'" permission.';
     }
-    return $response;
+    return response()->json($response);
 }
 //-----------------------------------------------------------------------------------
