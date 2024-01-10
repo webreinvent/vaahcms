@@ -112,11 +112,11 @@ Route::group(
         Route::any( '/publish/assets', 'SetupController@publishAssets' )
             ->name( 'vh.setup.publish.assets' );
         //------------------------------------------------
-        Route::post( '/run/seeders', 'SetupController@runSeedersAfterInstalled' )
-            ->name( 'vh.setup.run.seeders' );
+        Route::post( '/run/artisan-seeds', 'SetupController@runArtisanSeeds' )
+            ->name( 'vh.setup.run.artisan_seeds' );
         //------------------------------------------------
-        Route::post( '/run/migrations', 'SetupController@runMigrationsAfterInstalled' )
-            ->name( 'vh.setup.run.migrations_after_installed' );
+        Route::post( '/run/artisan-migrate', 'SetupController@runArtisanMigrate' )
+            ->name( 'vh.setup.run.artisan_migrate' );
         //------------------------------------------------
         //------------------------------------------------
     });
