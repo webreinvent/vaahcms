@@ -470,43 +470,31 @@ export const useSetupStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-        runMigrationsAfterInstalled: function () {
-            this.showProgress();
+        runArtisanMigrate: function () {
 
             let params = {
                 method: 'post',
             };
 
             vaah().ajax(
-                this.ajax_url+'/run/migrations',
-                this.afterRunMigrationsAfterInstalled,
+                this.ajax_url+'/run/artisan-migrate',
+                null,
                 params
             );
         },
         //---------------------------------------------------------------------
-        afterRunMigrationsAfterInstalled: function (data, res) {
-            this.hideProgress();
-        },
-
-        //---------------------------------------------------------------------
-        runSeeders: function () {
-            this.showProgress();
+        runArtisanSeeds: function () {
 
             let params = {
                 method: 'post',
             };
 
             vaah().ajax(
-                this.ajax_url+'/run/seeders',
-                this.afterRunSeeders,
+                this.ajax_url+'/run/artisan-seeds',
+                null,
                 params
             );
         },
-        //---------------------------------------------------------------------
-        afterRunSeeders: function (data, res) {
-            this.hideProgress();
-        },
-
         //---------------------------------------------------------------------
         validateMigration: function () {
             if(this.status && !this.status.is_db_migrated)
@@ -599,13 +587,13 @@ export const useSetupStore = defineStore({
                 {
                     label: 'Run Migrations',
                     command: () => {
-                        this.runMigrationsAfterInstalled()
+                        this.runArtisanMigrate()
                     }
                 },
                 {
-                    label: 'Run Seeders',
+                    label: 'Run Seeds',
                     command: () => {
-                        this.runSeeders();
+                        this.runArtisanSeeds();
                     }
                 },
             ];

@@ -444,18 +444,18 @@ export const useLocalizationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        runLocalizationSeeder() {
+        runSeeds() {
 
             let options = {
                 method:'post'
             };
 
-            let ajax_url = this.ajax_url+'/localization-seeder';
-            vaah().ajax(ajax_url, this.afterRunLocalizationSeeder, options);
+            let ajax_url = this.ajax_url+'/run-seeds';
+            vaah().ajax(ajax_url, this.afterRunSeeds, options);
 
         },
         //---------------------------------------------------------------------
-        afterRunLocalizationSeeder() {
+        afterRunSeeds() {
             this.assets_is_fetching = true;
             this.getAssets();
         },
@@ -464,6 +464,22 @@ export const useLocalizationStore = defineStore({
             await this.getList(event.page+1);
         },
         //---------------------------------------------------------------------
+        getItemMenuList: function (){
+            this.item_menu_list =  [
+                {
+                    label: 'Run Seeds',
+                    command: () => {
+                        this.runSeeds();
+                    }
+                },
+                {
+                    label: 'Generate Language Files',
+                    command: () => {
+                        this.generateLanguage()
+                    }
+                }
+            ];
+        },
         //---------------------------------------------------------------------
         setPageTitle() {
             if (this.title) {

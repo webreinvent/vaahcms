@@ -761,7 +761,7 @@ class SetupController extends Controller
         }
     }
     //----------------------------------------------------------
-    public function runMigrationsAfterInstalled() {
+    public function runArtisanMigrate() {
         try {
 
              VaahArtisan::migrate();
@@ -778,7 +778,7 @@ class SetupController extends Controller
         }
     }
     //----------------------------------------------------------
-    public function runSeedersAfterInstalled(Request $request)
+    public function runArtisanSeeds(Request $request)
     {
         try
         {
@@ -803,7 +803,7 @@ class SetupController extends Controller
 
             $response =[];
             $response['success'] = true;
-            $response['messages'][] = 'Seeder were successful';
+            $response['messages'][] = 'Seeds were successful';
             return response()->json($response);
         }
         catch(\Exception $e) {

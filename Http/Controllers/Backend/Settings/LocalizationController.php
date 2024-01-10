@@ -231,7 +231,7 @@ class LocalizationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function runLocalizationSeeder(Request $request): JsonResponse
+    public function runSeeds(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
@@ -250,7 +250,7 @@ class LocalizationController extends Controller
 
             LanguageString::syncAndGenerateStrings($request);
 
-            $response['messages'][] = "Seeder were successful and language files generated.";
+            $response['messages'][] = "Action was successful";
 
         } catch (\Exception $e) {
             $response = [];
