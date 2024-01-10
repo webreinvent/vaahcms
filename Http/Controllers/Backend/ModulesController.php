@@ -24,7 +24,7 @@ class ModulesController extends Controller
         $permission_slug = 'has-access-of-module-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -56,7 +56,7 @@ class ModulesController extends Controller
         $permission_slug = 'has-access-of-module-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -127,7 +127,7 @@ class ModulesController extends Controller
         $permission_slug = 'can-read-module';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -152,7 +152,7 @@ class ModulesController extends Controller
         $permission_slug = 'can-install-module';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -191,7 +191,7 @@ class ModulesController extends Controller
         $permission_slug = 'can-update-module';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -274,7 +274,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-activate-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::activateItem($module->slug);
                     break;
@@ -283,7 +283,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-deactivate-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::deactivateItem($module->slug);
@@ -293,7 +293,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-activate-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::refreshMigrations($module->slug);
                     break;
@@ -302,7 +302,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-activate-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::runMigrations($module->slug);
                     break;
@@ -311,7 +311,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-activate-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::runSeeds($module->slug);
                     break;
@@ -320,7 +320,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-import-sample-data-in-module';
 
                     if(!\Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::importSampleData($module->slug);
@@ -330,7 +330,7 @@ class ModulesController extends Controller
                     $permission_slug = 'can-delete-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
-                        return response()->json(vh_get_permission_denied_response([$permission_slug]));
+                        return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::deleteItem($module->slug);
@@ -408,7 +408,7 @@ class ModulesController extends Controller
         $permission_slug = 'can-update-module';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -448,7 +448,7 @@ class ModulesController extends Controller
         $permission_slug = 'can-update-module';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
