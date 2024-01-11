@@ -19,7 +19,7 @@ class FailedJobsController extends Controller
         $permission_slug = 'has-access-of-advanced-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -70,7 +70,7 @@ class FailedJobsController extends Controller
         $permission_slug = 'has-access-of-failed-jobs-section';
 
         if(!Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
