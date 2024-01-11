@@ -24,7 +24,7 @@ class SettingsController extends Controller
         $permission_slug = 'has-access-of-setting-section';
 
         if(!\Auth::user()->hasPermission($permission_slug)) {
-            return response()->json(vh_get_permission_denied_response([$permission_slug]));
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         return view($this->theme.'.pages.dashboard');
