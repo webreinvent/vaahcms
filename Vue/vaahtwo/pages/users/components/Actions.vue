@@ -35,7 +35,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
