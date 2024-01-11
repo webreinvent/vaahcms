@@ -22,14 +22,13 @@ onMounted(async () => {
         return false;
     }
 
-    /**
-     * Fetch the record from the database
-     */
-    if (!store.item) {
-        await store.getItem(route.params.id);
-    }
+    if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
+        if (!store.item) {
+            await store.getItem(route.params.id);
+        }
 
-    await store.getItemMenu();
+        await store.getItemMenu();
+    }
 
 });
 
@@ -39,6 +38,19 @@ const toggleItemMenu = (event) => {
     item_menu_state.value.toggle(event);
 };
 //--------/toggle item menu
+
+watch(
+    () => root.assets,
+     async () => {
+        if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
+            if (!store.item) {
+                await store.getItem(route.params.id);
+            }
+
+            await store.getItemMenu();
+        }
+    }
+)
 
 </script>
 <template>
