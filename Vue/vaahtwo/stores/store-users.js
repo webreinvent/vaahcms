@@ -332,8 +332,6 @@ export const useUserStore = defineStore({
             }else{
                 this.$router.push({name: 'users.index'});
             }
-            this.getItemMenu();
-            await this.getFormMenu();
         },
         //---------------------------------------------------------------------
         storeAvatar(data) {
@@ -676,11 +674,16 @@ export const useUserStore = defineStore({
                 this.item = data;
                 await this.getList();
                 await this.formActionAfter();
-                this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
                 }
+
+                if(this.assets && this.assets.language_strings) {
+                    await this.getItemMenu();
+                }
+
+                await this.getFormMenu();
             }
         },
         //---------------------------------------------------------------------
@@ -922,12 +925,16 @@ export const useUserStore = defineStore({
         toView(item)
         {
             this.item = vaah().clone(item);
+            if(this.assets && this.assets.language_strings) {
+                this.getItemMenu();
+            }
             this.$router.push({name: 'users.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         toEdit(item)
         {
             this.item = item;
+            this.getFormMenu();
             this.$router.push({name: 'users.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
@@ -1168,7 +1175,6 @@ export const useUserStore = defineStore({
 
             if(this.item && this.item.id )
             {
-
                 form_menu = [
                     {
                         label: root.assets.language_strings.crud_actions.form_save_and_close,
@@ -1196,13 +1202,6 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_strings.crud_actions.form_trash,
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.itemAction('trash');
-                        }
-                    },
-                    {
                         label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
@@ -1211,6 +1210,28 @@ export const useUserStore = defineStore({
                     },
                 ];
 
+                if(this.item && this.item.id && !this.item.deleted_at)
+                {
+                    form_menu.push({
+                        label: root.assets.language_strings.crud_actions.view_trash,
+                        icon: 'pi pi-times',
+                        command: () => {
+                            this.itemAction('trash');
+                        }
+                    });
+                }
+
+                if(this.item && this.item.deleted_at)
+                {
+
+                    form_menu.push({
+                        label: root.assets.language_strings.crud_actions.view_restore,
+                        icon: 'pi pi-refresh',
+                        command: () => {
+                            this.itemAction('restore');
+                        }
+                    });
+                }
             } else{
 
                 form_menu = [
