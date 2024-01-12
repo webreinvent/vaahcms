@@ -18,7 +18,7 @@ const store = useRegistrationStore();
         >
             <VhFieldVertical >
                 <template #label>
-                    <b>{{root.assets.language_string.crud_actions.filter_sort_by}}:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_sort_by}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -27,7 +27,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.sort"
                                  data-testid="register-query_filter_sort_none"
                     />
-                    <label for="sort-none">{{root.assets.language_string.crud_actions.sort_by_none}}</label>
+                    <label for="sort-none">{{root.assets.language_strings.crud_actions.sort_by_none}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-ascending"
@@ -35,7 +35,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.sort"
                                  data-testid="register-query_filter_sort_ascending"
                     />
-                    <label for="sort-ascending">{{root.assets.language_string.crud_actions.sort_by_updated_ascending}}</label>
+                    <label for="sort-ascending">{{root.assets.language_strings.crud_actions.sort_by_updated_ascending}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
@@ -43,7 +43,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.sort"
                                  data-testid="register-query_filter_sort_descending"
                     />
-                    <label for="sort-descending">{{root.assets.language_string.crud_actions.sort_by_updated_descending}}</label>
+                    <label for="sort-descending">{{root.assets.language_strings.crud_actions.sort_by_updated_descending}}</label>
                 </div>
 
             </VhFieldVertical>
@@ -52,7 +52,7 @@ const store = useRegistrationStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>{{root.assets.language_string.crud_actions.filter_trashed}}:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_trashed}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -61,7 +61,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.trashed"
                                  data-testid="register-query_filter_trashed_exclude"
                     />
-                    <label for="trashed-exclude">{{root.assets.language_string.crud_actions.filter_exclude_trashed}}</label>
+                    <label for="trashed-exclude">{{root.assets.language_strings.crud_actions.filter_exclude_trashed}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="trashed-include"
@@ -69,7 +69,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.trashed"
                                  data-testid="register-query_filter_trashed_include"
                     />
-                    <label for="trashed-include">{{root.assets.language_string.crud_actions.filter_include_trashed}}</label>
+                    <label for="trashed-include">{{root.assets.language_strings.crud_actions.filter_include_trashed}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="trashed-only"
@@ -77,7 +77,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.trashed"
                                  data-testid="register-query_filter_trashed_only"
                     />
-                    <label for="trashed-only">{{root.assets.language_string.crud_actions.filter_only_trashed}}</label>
+                    <label for="trashed-only">{{root.assets.language_strings.crud_actions.filter_only_trashed}}</label>
                 </div>
 
             </VhFieldVertical>
@@ -85,7 +85,7 @@ const store = useRegistrationStore();
             <Divider/>
             <VhFieldVertical >
                 <template #label>
-                    <b>{{root.assets.language_string.crud_actions.filter_status}}:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_status}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -94,7 +94,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.status"
                                  data-testid="register-query_filter_status_email_verification_pending"
                     />
-                    <label for="email-verification-pending">{{store.assets.language_string.filter_email_verification_pending}}</label>
+                    <label for="email-verification-pending">{{store.assets.language_strings.filter_email_verification_pending}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="email-verified"
@@ -102,7 +102,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.status"
                                  data-testid="register-query_filter_status_email_verified"
                     />
-                    <label for="email-verified">{{store.assets.language_string.filter_email_verified}}</label>
+                    <label for="email-verified">{{store.assets.language_strings.filter_email_verified}}</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="user-created"
@@ -110,7 +110,7 @@ const store = useRegistrationStore();
                                  v-model="store.query.filter.status"
                                  data-testid="register-query_filter_status_user-created"
                     />
-                    <label for="user-created">{{store.assets.language_string.filter_user_created}}</label>
+                    <label for="user-created">{{store.assets.language_strings.filter_user_created}}</label>
                 </div>
 
             </VhFieldVertical>
