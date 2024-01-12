@@ -39,8 +39,9 @@ class DashboardController extends Controller
     public function getItem(Request $request)
     {
         $response['success'] = true;
+        $response['data'] = [];
         $response['data']['item'] = vh_action('getDashboardItems');
-        $response['data']['language_string'] = [
+        $response['data']['language_strings'] = [
             "greeting" => trans("vaahcms-dashboard.welcome_to_vaahcms"),
             'message' => trans("vaahcms-dashboard.welcome_message"),
             'get_started' => trans("vaahcms-dashboard.get_started"),
