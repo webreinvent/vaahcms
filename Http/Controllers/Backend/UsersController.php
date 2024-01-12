@@ -268,7 +268,7 @@ class UsersController extends Controller
 
             if (!$item) {
                 $response['success'] = false;
-                $response['errors'] = trans('vaahcms-user.registration_not_found');
+                $response['errors'][] = trans('vaahcms-user.registration_not_found');
                 return response()->json($response);
             }
 
