@@ -118,14 +118,14 @@ class JsonController extends Controller
 
         }
         //---------------------------------------------------
-        $data['language_string']['general'] = [
+        $data['language_strings']['general'] = [
             "select_an_action_type" => trans("vaahcms-general.select_an_action_type"),
             "select_records" => trans("vaahcms-general.select_records"),
             "select_a_record" => trans("vaahcms-general.select_a_record"),
             ];
         //---------------------------------------------------
 
-        $data['language_string']['crud_actions'] = [
+        $data['language_strings']['crud_actions'] = [
             "create_button" => trans("vaahcms-crud-action.create_button"),
             "form_text_create" => trans("vaahcms-crud-action.form_text_create"),
             "placeholder_search" => trans("vaahcms-crud-action.placeholder_search"),
