@@ -1101,7 +1101,7 @@ export const useUserStore = defineStore({
             });
 
             item_menu.push({
-                label: this.assets.language_strings.users.view_generate_new_api_token,
+                label: this.assets.language_strings.view_generate_new_api_token,
                 icon: 'pi pi-key',
                 command: () => {
                     this.itemAction('generate-new-token');
@@ -1114,13 +1114,13 @@ export const useUserStore = defineStore({
         async getUserRolesMenuItems() {
             return this.user_roles_menu = [
                 {
-                    label: this.assets.language_strings.users.view_role_active_all_roles,
+                    label: this.assets.language_strings.view_role_active_all_roles,
                     command: async () => {
                         await this.bulkActions(1, 'toggle-role-active-status')
                     }
                 },
                 {
-                    label: this.assets.language_strings.users.view_role_inactive_all_roles,
+                    label: this.assets.language_strings.view_role_inactive_all_roles,
                     command: async () => {
                         await this.bulkActions(0, 'toggle-role-active-status')
                     }
