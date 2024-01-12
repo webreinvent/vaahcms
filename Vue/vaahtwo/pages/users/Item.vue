@@ -22,11 +22,13 @@ onMounted(async () => {
         return false;
     }
 
-    if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
-        if (!store.item) {
-            await store.getItem(route.params.id);
-        }
+    if (!store.item) {
+        await store.getItem(route.params.id);
+    }
 
+    if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions
+        && store.assets && store.assets.language_strings)
+    {
         await store.getItemMenu();
     }
 
@@ -40,13 +42,11 @@ const toggleItemMenu = (event) => {
 //--------/toggle item menu
 
 watch(
-    () => root.assets,
+    () => root.assets && store.assets,
      async () => {
-        if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
-            if (!store.item) {
-                await store.getItem(route.params.id);
-            }
-
+        if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions
+            && store.assets && store.assets.language_strings)
+        {
             await store.getItemMenu();
         }
     }

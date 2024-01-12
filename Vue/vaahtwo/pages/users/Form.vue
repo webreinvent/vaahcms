@@ -17,12 +17,14 @@ const useVaah = vaah();
 
 onMounted(async () => {
 
-    if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
-        if (route.params && route.params.id) {
-            await store.getItem(route.params.id);
-        }
+    if (route.params && route.params.id) {
+        await store.getItem(route.params.id);
+    }
 
-        await store.getFormMenu();
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+       await store.getFormMenu();
     }
 
     root.getIsActiveStatusOptions();
@@ -40,11 +42,8 @@ const toggleFormMenu = (event) => {
 watch(
     () => root.assets,
     async () => {
-        if (root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions) {
-            if (route.params && route.params.id) {
-                await store.getItem(route.params.id);
-            }
-
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
             await store.getFormMenu();
         }
 
@@ -211,7 +210,7 @@ watch(
                     />
                 </VhField>
 
-                <template v-if="!store.isHidden('title')">
+                <template v-if="!store.isHidden('title') && store.assets">
                     <VhField label="Title">
                         <Dropdown class="w-full"
                                   v-model="store.item.title"
@@ -286,7 +285,7 @@ watch(
                     />
                 </VhField>
 
-                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')">
+                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code') && store.assets">
                     <Dropdown class="w-full"
                               v-model="store.item.country_calling_code"
                               :options="store.assets.countries"
@@ -323,7 +322,7 @@ watch(
                     />
                 </VhField>
 
-                <VhField label="Timezone" v-if="!store.isHidden('timezone')">
+                <VhField label="Timezone" v-if="!store.isHidden('timezone') && store.assets">
                     <Dropdown v-model="store.item.timezone"
                               :options="store.assets.timezones"
                               optionLabel="name"
@@ -388,7 +387,7 @@ watch(
                     />
                 </VhField>
 
-                <template v-if="store.assets.custom_fields"
+                <template v-if="store.assets && store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
