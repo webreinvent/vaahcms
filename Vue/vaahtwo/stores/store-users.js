@@ -518,6 +518,7 @@ export const useUserStore = defineStore({
 
             let params = {
                 id: this.item.id,
+                query: this.user_roles_query,
                 role_id: null
             };
 
@@ -591,6 +592,9 @@ export const useUserStore = defineStore({
                 method: method,
                 show_success: false
             };
+
+            options.params.query = vaah().clone(this.query);
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,

@@ -429,43 +429,43 @@
     {
         "name": "Has Access Of Taxonomies Section",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to see the link of taxonomy section."
     },
     {
         "name": "Can Create Taxonomies",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to add anything in the taxonomy section."
     },
     {
         "name": "Can Read Taxonomies",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to view anything in the taxonomy section."
     },
     {
         "name": "Can Update Taxonomies",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to edit anything in the taxonomy section."
     },
     {
         "name": "Can Delete Taxonomies",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to delete anything in the taxonomy section."
     },
     {
         "name": "Can Manage Taxonomies",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to manage anything in the taxonomy section."
     },
     {
         "name": "Can Manage Taxonomy Types",
         "module": "vaahcms",
-        "section": "user",
+        "section": "taxonomy",
         "details": "This will allow user to manage anything in the taxonomy type modal."
     }
 ]

@@ -474,7 +474,7 @@ class Role extends RoleBase
 
         }
 
-        return response()->json($response);
+        return $response;
     }
     //-------------------------------------------------
 }

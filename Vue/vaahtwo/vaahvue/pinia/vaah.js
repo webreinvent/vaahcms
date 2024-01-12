@@ -128,6 +128,13 @@ export const vaah = defineStore({
         //----------------------------------------------------------
         processResponse: function(response)
         {
+
+
+            if(response.data.errors || response.data.messages)
+            {
+                this.toast.removeAllGroups();
+            }
+
             if(response.data.errors)
             {
                 this.toastErrors(response.data.errors);
@@ -203,7 +210,6 @@ export const vaah = defineStore({
         },
         //----------------------------------------------------------
         toastSuccess(messages){
-            this.toast.removeAllGroups();
 
             let data = this.getMessageAndDuration(messages);
             if(data && data.html !== "")
@@ -218,7 +224,6 @@ export const vaah = defineStore({
 
         //----------------------------------------------------------
         toastErrors(messages){
-            this.toast.removeAllGroups();
 
             let data = this.getMessageAndDuration(messages);
             if(data && data.html !== "")

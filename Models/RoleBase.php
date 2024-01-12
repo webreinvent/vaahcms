@@ -738,15 +738,41 @@ class RoleBase extends VaahModel {
 
             $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], $data);
         } else {
+
+            $permission_ids = [];
+            $permission_list = Permission::query();
+            if(isset($inputs['inputs']['query'])){
+
+                if (isset($inputs['inputs']['query']['q'])) {
+                    $permission_list->where(function ($q) use($inputs){
+                        $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                            ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
+                    });
+                }
+
+                if (isset($inputs['inputs']['query']['module'])) {
+                    $permission_list->where('module',$inputs['inputs']['query']['module']);
+                }
+
+                if (isset($inputs['inputs']['query']['section'])) {
+                    $permission_list->where('section',$inputs['inputs']['query']['section']);
+                }
+                $permission_ids = $permission_list->pluck('id');
+            }
+
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
+                ->whereIn('vh_permission_id',$permission_ids)
                 ->update($data);
-//            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
         }
 
         self::recountRelations();
-        $response['messages'] = [];
+
+        $response['success'] = true;
+        $response['data'] = [];
+
+        return $response;
     }
     //-------------------------------------------------
     public static function bulkChangeUserStatus($request)
@@ -774,13 +800,36 @@ class RoleBase extends VaahModel {
 
             $item->users()->updateExistingPivot($inputs['inputs']['user_id'], $data);
         } else {
-            $item->users()
+
+            $user_ids = [];
+            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
+                $user_ids = User::where(function ($q) use($inputs){
+                    $q->where('first_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('middle_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('last_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('display_name', 'like', '%' . $inputs['inputs']['query']['q'] . '%')
+                        ->orWhere('email', 'LIKE', '%' . $inputs['inputs']['query']['q'] .'%');
+                })->pluck('id');
+            }
+
+            $item_users = $item->users()
                 ->newPivotStatement()
-                ->where('vh_role_id', '=', $item->id)
-                ->update($data);
+                ->where('vh_role_id', '=', $item->id);
+
+            if(count($user_ids) > 0){
+                $item_users->whereIn('vh_user_id',$user_ids);
+            }
+
+            $item_users->update($data);
+
         }
         self::recountRelations();
-        $response['messages'] = [];
+        $response['success'] = true;
+        $response['data'] = [];
+
+        return $response;
     }
     //-------------------------------------------------
     public static function bulkPermissionStatusChange($request)

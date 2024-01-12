@@ -301,6 +301,14 @@ class UsersController extends Controller
         }
 
         try {
+            $is_restricted = User::restrictedActions('delete', $id);
+
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
+            {
+                $response['success'] = false;
+                $response['errors'] = $is_restricted['errors'];
+                return response()->json($response);
+            }
             $response = User::deleteItem($request, $id);
         } catch (\Exception $e) {
             $response = [];
@@ -332,9 +340,10 @@ class UsersController extends Controller
 
             $is_restricted = User::restrictedActions($action, $id);
 
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
                 $response =  User::getItem($id);
+                $response['errors'] = $is_restricted['errors'];
                 return response()->json($response);
             }
 
