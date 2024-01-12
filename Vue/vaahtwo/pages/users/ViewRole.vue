@@ -3,7 +3,7 @@ import { vaah } from '../../vaahvue/pinia/vaah'
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from "../../stores/root";
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import Dialog from 'primevue/dialog';
 
@@ -55,6 +55,18 @@ const toggleItemMenu = (event) => {
     user_roles_menu_state.value.toggle(event);
 };
 //--------toggle item menu--------//
+
+watch(
+    () => store.assets,
+    async () => {
+        if ( store.assets.language_strings)
+        {
+            await store.getUserRolesMenuItems();
+        }
+
+    }
+)
+
 
 </script>
 <template>
