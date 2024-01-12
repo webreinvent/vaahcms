@@ -38,9 +38,14 @@ onMounted(async () => {
     }
 
     /**
-     * Fetch user roles menu items
-     */
-    await store.getUserRolesMenuItems();
+    * Fetch user roles menu items
+    */
+
+    if (store.assets && store.assets.language_strings)
+    {
+        await store.getUserRolesMenuItems();
+    }
+
 });
 
 //--------toggle item menu--------//
@@ -183,6 +188,7 @@ const toggleItemMenu = (event) => {
                             </Column>
 
                             <Column field="view"
+                                    v-if="store.assets && store.assets.language_strings"
                                     header="View"
                             >
                                 <template #body="prop">
