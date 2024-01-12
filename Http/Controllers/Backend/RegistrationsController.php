@@ -75,7 +75,7 @@ class RegistrationsController extends Controller
             $data['custom_fields'] = $custom_fields;
 
             //---------------------------------------------
-            $data['language_strings'] = [
+            $data['language_string'] = [
                 "registrations_title" => trans("vaahcms-registration.registrations_title"),
                 "filter_email_verification_pending" => trans("vaahcms-registration.filter_email_verification_pending"),
                 "filter_email_verified" => trans("vaahcms-registration.filter_email_verified"),
