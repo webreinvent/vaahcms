@@ -56,7 +56,7 @@ onMounted(async () => {
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div v-if="store.assets && store.assets.language_strings">
-                            <b class="mr-1">{{store.assets.language_strings.users_title}}</b>
+                            <b class="mr-1">{{store.assets.language_strings.page_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />

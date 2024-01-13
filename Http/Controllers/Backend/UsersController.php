@@ -66,7 +66,7 @@ class UsersController extends Controller
           //---------------------------------------------------
 
             $data['language_strings'] = [
-                "users_title" => trans("vaahcms-user.users_title"),
+                "page_title" => trans("vaahcms-user.users_title"),
                 "view_role_active_all_roles" => trans("vaahcms-user.view_role_active_all_roles"),
                 "view_role_inactive_all_roles" => trans("vaahcms-user.view_role_inactive_all_roles"),
                 "view_generate_new_api_token" => trans("vaahcms-user.view_generate_new_api_token"),
