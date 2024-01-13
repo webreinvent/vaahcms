@@ -376,6 +376,9 @@ export const useRoleStore = defineStore({
                 method: method,
                 show_success: false
             };
+
+            options.params.query = vaah().clone(this.role_permissions_query);
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,
@@ -768,7 +771,7 @@ export const useRoleStore = defineStore({
 
             let inputs = {
                 id : this.item.id,
-                permission_id : item.id,
+                permission_id : item.id
             };
 
             let data = {};
@@ -804,9 +807,10 @@ export const useRoleStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        bulkActions (input, action) {
+        bulkActions (input, action, query = this.role_permissions_query) {
             let params = {
                 id: this.item.id,
+                query : query,
                 permission_id: null,
                 user_id: null
             };
@@ -1227,13 +1231,13 @@ export const useRoleStore = defineStore({
                 {
                     label: 'Attach To All Users',
                     command: () => {
-                        this.bulkActions(1, 'toggle-user-active-status');
+                        this.bulkActions(1, 'toggle-user-active-status',this.role_users_query);
                     }
                 },
                 {
                     label: 'Detach To All Users',
                     command: () => {
-                        this.bulkActions(0, 'toggle-user-active-status');
+                        this.bulkActions(0, 'toggle-user-active-status',this.role_users_query);
                     }
                 }
             ]
