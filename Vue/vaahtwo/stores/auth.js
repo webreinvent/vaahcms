@@ -44,7 +44,8 @@ export const useAuthStore = defineStore({
             login_otp:null,
             max_attempts: 5,
             is_password_disabled: null,
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            hash_path:null
         },
         sign_up_items: {
             first_name: null,
@@ -124,7 +125,6 @@ export const useAuthStore = defineStore({
         //---------------------------------------------------------------------
         signInAfter (data, res) {
             this.is_btn_loading = false
-            console.log(data.redirect_url);
 
             if(data) {
                 if(data.verification_response && data.verification_response.success) {
@@ -134,6 +134,7 @@ export const useAuthStore = defineStore({
                     this.title.description = 'You have received an email which contains two factor code.';
                     this.resendCountdown();
                 } else {
+                    this.sign_in_items.hash_path = null;
                     window.location = data.redirect_url;
                 }
             }

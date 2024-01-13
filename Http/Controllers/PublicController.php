@@ -145,7 +145,7 @@ class PublicController extends Controller
             }
 
             if ($request->session()->has('accessed_url')) {
-                $redirect_url = $request->session()->get('accessed_url');
+                $redirect_url = $request->session()->get('accessed_url').'#'.$request->hash_path;
                 $request->session()->forget('accessed_url');
             } else
             {
