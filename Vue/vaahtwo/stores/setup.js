@@ -470,6 +470,32 @@ export const useSetupStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        runArtisanMigrate: function () {
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/artisan-migrate',
+                null,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        runArtisanSeeds: function () {
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/artisan-seeds',
+                null,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
         validateMigration: function () {
             if(this.status && !this.status.is_db_migrated)
             {
@@ -556,6 +582,18 @@ export const useSetupStore = defineStore({
                     label: 'Clear Cache',
                     command: () => {
                         this.clearCache()
+                    }
+                },
+                {
+                    label: 'Run Migrations',
+                    command: () => {
+                        this.runArtisanMigrate()
+                    }
+                },
+                {
+                    label: 'Run Seeds',
+                    command: () => {
+                        this.runArtisanSeeds();
                     }
                 },
             ];

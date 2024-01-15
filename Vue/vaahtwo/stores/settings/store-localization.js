@@ -435,7 +435,6 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         generateLanguage() {
 
-            let url = this.ajax_url+'/generateLanguage';
             let options = {
                 method:'post'
             };
@@ -445,10 +444,42 @@ export const useLocalizationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
+        runSeeds() {
+
+            let options = {
+                method:'post'
+            };
+
+            let ajax_url = this.ajax_url+'/run-seeds';
+            vaah().ajax(ajax_url, this.afterRunSeeds, options);
+
+        },
+        //---------------------------------------------------------------------
+        afterRunSeeds() {
+            this.assets_is_fetching = true;
+            this.getAssets();
+        },
+        //---------------------------------------------------------------------
         async paginate(event) {
             await this.getList(event.page+1);
         },
         //---------------------------------------------------------------------
+        getItemMenuList: function (){
+            this.item_menu_list =  [
+                {
+                    label: 'Run Seeds',
+                    command: () => {
+                        this.runSeeds();
+                    }
+                },
+                {
+                    label: 'Generate Language Files',
+                    command: () => {
+                        this.generateLanguage()
+                    }
+                }
+            ];
+        },
         //---------------------------------------------------------------------
         setPageTitle() {
             if (this.title) {

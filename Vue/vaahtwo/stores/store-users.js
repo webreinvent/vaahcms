@@ -197,9 +197,7 @@ export const useUserStore = defineStore({
                     }
 
                     this.route = newVal;
-                    if (newVal.params.id) {
-                        this.getItem(newVal.params.id);
-                    }
+
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
@@ -334,8 +332,6 @@ export const useUserStore = defineStore({
             }else{
                 this.$router.push({name: 'users.index'});
             }
-            this.getItemMenu();
-            await this.getFormMenu();
         },
         //---------------------------------------------------------------------
         storeAvatar(data) {
@@ -397,13 +393,13 @@ export const useUserStore = defineStore({
             const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors([root.assets.language_string.general.select_an_action_type]);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors([root.assets.language_string.general.select_records]);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -682,11 +678,16 @@ export const useUserStore = defineStore({
                 this.item = data;
                 await this.getList();
                 await this.formActionAfter();
-                this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
                 }
+
+                if(this.assets && this.assets.language_strings) {
+                    await this.getItemMenu();
+                }
+
+                await this.getFormMenu();
             }
         },
         //---------------------------------------------------------------------
@@ -796,7 +797,7 @@ export const useUserStore = defineStore({
             const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors([root.assets.language_string.general.select_a_record]);
+                vaah().toastErrors([root.assets.language_strings.general.select_a_record]);
                 return false;
             }
             this.action.type = 'delete';
@@ -928,12 +929,16 @@ export const useUserStore = defineStore({
         toView(item)
         {
             this.item = vaah().clone(item);
+            if(this.assets && this.assets.language_strings) {
+                this.getItemMenu();
+            }
             this.$router.push({name: 'users.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         toEdit(item)
         {
             this.item = item;
+            this.getFormMenu();
             this.$router.push({name: 'users.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
@@ -988,13 +993,13 @@ export const useUserStore = defineStore({
             const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: root.assets.language_string.crud_actions.bulk_activate,
+                    label: root.assets.language_strings.crud_actions.bulk_activate,
                     command: async () => {
                         await this.updateList('activate')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_deactivate,
+                    label: root.assets.language_strings.crud_actions.bulk_deactivate,
                     command: async () => {
                         await this.updateList('deactivate')
                     }
@@ -1003,21 +1008,21 @@ export const useUserStore = defineStore({
                     separator: true
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_trash,
+                    label: root.assets.language_strings.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_restore,
+                    label: root.assets.language_strings.crud_actions.bulk_restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.bulk_delete,
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -1032,13 +1037,13 @@ export const useUserStore = defineStore({
             const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: root.assets.language_string.crud_actions.mark_all_as_active,
+                    label: root.assets.language_strings.crud_actions.mark_all_as_active,
                     command: async () => {
                         await this.listAction('activate-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.mark_all_as_inactive,
+                    label: root.assets.language_strings.crud_actions.mark_all_as_inactive,
                     command: async () => {
                         await this.listAction('deactivate-all')
                     }
@@ -1047,21 +1052,21 @@ export const useUserStore = defineStore({
                     separator: true
                 },
                 {
-                    label: root.assets.language_string.crud_actions.trash_all,
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.restore_all,
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.delete_all,
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -1079,7 +1084,7 @@ export const useUserStore = defineStore({
             {
 
                 item_menu.push({
-                    label: root.assets.language_string.crud_actions.view_restore,
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -1090,7 +1095,7 @@ export const useUserStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: root.assets.language_string.crud_actions.view_trash,
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -1099,7 +1104,7 @@ export const useUserStore = defineStore({
             }
 
             item_menu.push({
-                label: root.assets.language_string.crud_actions.view_delete,
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -1107,7 +1112,7 @@ export const useUserStore = defineStore({
             });
 
             item_menu.push({
-                label: this.assets.language_string.users.view_generate_new_api_token,
+                label: this.assets.language_strings.view_generate_new_api_token,
                 icon: 'pi pi-key',
                 command: () => {
                     this.itemAction('generate-new-token');
@@ -1120,13 +1125,13 @@ export const useUserStore = defineStore({
         async getUserRolesMenuItems() {
             return this.user_roles_menu = [
                 {
-                    label: this.assets.language_string.users.view_role_active_all_roles,
+                    label: this.assets.language_strings.view_role_active_all_roles,
                     command: async () => {
                         await this.bulkActions(1, 'toggle-role-active-status')
                     }
                 },
                 {
-                    label: this.assets.language_string.users.view_role_inactive_all_roles,
+                    label: this.assets.language_strings.view_role_inactive_all_roles,
                     command: async () => {
                         await this.bulkActions(0, 'toggle-role-active-status')
                     }
@@ -1174,17 +1179,16 @@ export const useUserStore = defineStore({
 
             if(this.item && this.item.id )
             {
-
                 form_menu = [
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_close,
+                        label: root.assets.language_strings.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_clone,
+                        label: root.assets.language_strings.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1193,7 +1197,7 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_save_and_new,
+                        label: root.assets.language_strings.crud_actions.form_save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -1202,14 +1206,7 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_trash,
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.itemAction('trash');
-                        }
-                    },
-                    {
-                        label: root.assets.language_string.crud_actions.form_delete,
+                        label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -1217,18 +1214,40 @@ export const useUserStore = defineStore({
                     },
                 ];
 
+                if(this.item && this.item.id && !this.item.deleted_at)
+                {
+                    form_menu.push({
+                        label: root.assets.language_strings.crud_actions.view_trash,
+                        icon: 'pi pi-times',
+                        command: () => {
+                            this.itemAction('trash');
+                        }
+                    });
+                }
+
+                if(this.item && this.item.deleted_at)
+                {
+
+                    form_menu.push({
+                        label: root.assets.language_strings.crud_actions.view_restore,
+                        icon: 'pi pi-refresh',
+                        command: () => {
+                            this.itemAction('restore');
+                        }
+                    });
+                }
             } else{
 
                 form_menu = [
                     {
-                        label: root.assets.language_string.crud_actions.form_create_and_close,
+                        label: root.assets.language_strings.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_create_and_clone,
+                        label: root.assets.language_strings.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1237,7 +1256,7 @@ export const useUserStore = defineStore({
                         }
                     },
                     {
-                        label: root.assets.language_string.crud_actions.form_reset,
+                        label: root.assets.language_strings.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -1247,14 +1266,14 @@ export const useUserStore = defineStore({
             }
 
             form_menu.push({
-                label: root.assets.language_string.crud_actions.form_fill,
+                label: root.assets.language_strings.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
                     }
                 },
                 {
-                    label: root.assets.language_string.crud_actions.form_add_custom_field,
+                    label: root.assets.language_strings.crud_actions.form_add_custom_field,
                     icon: 'pi pi-plus',
                     command: () => {
                         store_setting.active_index = [1];

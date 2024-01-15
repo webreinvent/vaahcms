@@ -146,7 +146,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => "pi pi-box",
-                'label'=> trans("vaahcms-sidebar-menu.advanced"),
+                'label'=> trans("vaahcms-sidebar-menu.extend"),
                 'items'=> [],
             ];
 
