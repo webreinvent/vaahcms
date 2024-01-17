@@ -116,7 +116,19 @@ class Registration extends RegistrationBase
             'password' => 'required',
         );
 
-        $validator = \Validator::make( $inputs, $rules);
+        $messages = array(
+            'email.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'email.email' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_valid_email_address'),
+            'email.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'first_name.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+            'first_name.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
+                .' :max '.trans('vaahcms-validation.characters'),
+            'password.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
+        );
+
+
+        $validator = \Validator::make( $inputs, $rules, $messages);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -131,7 +143,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This email is already exist.";
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
         // check if username exist
@@ -139,7 +151,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This username is already exist.";
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -172,7 +184,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -521,7 +533,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
 
 
         return $response;
