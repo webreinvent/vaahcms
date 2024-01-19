@@ -286,7 +286,6 @@ class UsersController extends Controller
     public function deleteItem(Request $request,$id): JsonResponse
     {
         $permission_slugs = ['can-update-users','can-delete-users'];
-
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
         if(isset($permission_response['success']) && $permission_response['success'] == false) {
@@ -478,7 +477,6 @@ class UsersController extends Controller
                 case 'bulk-delete':
 
                     $permission_slugs = ['can-update-users','can-delete-users'];
-
                     $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
                     if(isset($permission_response['success']) && $permission_response['success'] == false) {
@@ -492,7 +490,6 @@ class UsersController extends Controller
                 case 'toggle-role-active-status':
 
                     $permission_slugs = ['can-manage-users','can-update-users'];
-
                     $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
                     if(isset($permission_response['success']) && $permission_response['success'] == false) {
