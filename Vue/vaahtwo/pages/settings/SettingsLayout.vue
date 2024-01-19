@@ -12,8 +12,7 @@ const useVaah = vaah();
 
 const menu_pt = ref({
     menuitem: ({ props }) => ({
-        class: route.matched && route.matched[1] &&
-        route.path === props.item.route ? 'p-focus' : ''
+        class: route.path === props.item.route ? 'p-focus' : ''
     })
 });
 
