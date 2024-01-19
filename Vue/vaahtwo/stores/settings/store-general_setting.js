@@ -143,6 +143,7 @@ export const useGeneralStore = defineStore({
                 this.meta_tag = data.meta_tags;
                 this.list.maximum_number_of_forgot_password_attempts_per_session = parseInt(this.list.maximum_number_of_forgot_password_attempts_per_session);
                 this.list.maximum_number_of_login_attempts_per_session = parseInt(this.list.maximum_number_of_login_attempts_per_session);
+                this.list.upload_allowed_file_size = parseInt(this.list.upload_allowed_file_size);
                 this.is_smtp_configured = data.is_smtp_configured;
             }
         },
