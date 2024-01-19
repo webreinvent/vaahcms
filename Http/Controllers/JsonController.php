@@ -116,6 +116,18 @@ class JsonController extends Controller
 
             $data['extended_views'] = $this->getExtendedViews();
 
+            $data['language_string']['dashboard'] = [
+                "greeting" => trans("vaahcms-dashboard.welcome_to_vaahcms"),
+                'message' => trans("vaahcms-dashboard.welcome_message"),
+                'get_started' => trans("vaahcms-dashboard.get_started"),
+                'next_steps' => trans("vaahcms-dashboard.next_steps"),
+                'more_actions' => trans("vaahcms-dashboard.more_actions"),
+                'go_to_theme' => trans("vaahcms-dashboard.go_to_theme"),
+                'activate_theme' => trans("vaahcms-dashboard.activate_theme"),
+                'or' => trans("vaahcms-dashboard.or"),
+                'create_your_own_theme' => trans("vaahcms-dashboard.create_your_own_theme"),
+            ];
+
         }
         $data['language_strings'] = [];
         //---------------------------------------------------
