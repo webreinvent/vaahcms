@@ -93,11 +93,13 @@ onMounted(async () => {
                       <h5 class="text-left p-1 title is-6">App/Website Name</h5>
                       <div class="p-input">
                           <InputText v-model="store.config.env.app_name"
-                                     placeholder="App/Website Name"
+                                     placeholder="Enter your website or app name"
                                      name="config-app_name"
                                      class="p-inputtext-sm" id="app-name"
                                      data-testid="configuration-app_name"
                                      required
+                                     @update:modelValue="store.onUpdateAppName"
+                                     @keydown.space.prevent
                           />
                           <div class="required-field hidden"></div>
                       </div>
