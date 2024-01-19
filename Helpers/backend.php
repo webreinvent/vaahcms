@@ -112,5 +112,19 @@ function vh_get_backend_file($file_path)
     return vh_get_backend_theme_url()."/".$file_path;
 }
 //-----------------------------------------------------------------------------------
+function vh_get_permission_denied_json_response($permission_slugs){
+    $response = vh_get_permission_denied_response($permission_slugs);
+    return response()->json($response);
+}
+//-----------------------------------------------------------------------------------
+function vh_get_permission_denied_response($permission_slugs){
+    $response = [];
+    $response['success'] = false;
 
+    $response['errors'][] = trans("vaahcms-general.permission_denied");
+    if(env('APP_DEBUG')){
+        $response['hint'][] = 'You don\'t have "'.$permission_slugs.'" permission.';
+    }
+    return $response;
+}
 //-----------------------------------------------------------------------------------
