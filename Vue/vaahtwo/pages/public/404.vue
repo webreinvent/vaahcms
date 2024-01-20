@@ -11,7 +11,9 @@ const authStore = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
-    authStore.sign_in_items.accessed_route = vaah().clone(route);
+    authStore.sign_in_items.accessed_route = {};
+    authStore.sign_in_items.accessed_route.path = route.path;
+    authStore.sign_in_items.accessed_route.query = route.query;
     authStore.sign_in_items.accessed_route.is_accessed = true;
     root.toSignIn();
 });

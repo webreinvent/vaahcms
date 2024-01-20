@@ -17,7 +17,11 @@ const authStore = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
-    await authStore.setRoute(route);
+    authStore.sign_in_items.accessed_route = {};
+    authStore.sign_in_items.accessed_route.path = route.path;
+    authStore.sign_in_items.accessed_route.query = route.query;
+
+
     await rootStore.checkLoggedIn();
     await rootStore.getAssets();
     await rootStore.getPermission();
