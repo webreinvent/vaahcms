@@ -1,5 +1,6 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
+import {useRootStore} from '../stores/root'
 import {watch} from "vue";
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore({
             max_attempts: 5,
             is_password_disabled: null,
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            hash_path:null
+            accessed_route:null
         },
         sign_up_items: {
             first_name: null,
@@ -134,8 +135,10 @@ export const useAuthStore = defineStore({
                     this.title.description = 'You have received an email which contains two factor code.';
                     this.resendCountdown();
                 } else {
-                    this.sign_in_items.hash_path = null;
+                    this.sign_in_items.accessed_route = null;
+                    useRootStore().reloadAssets();
                     window.location = data.redirect_url;
+
                 }
             }
         },

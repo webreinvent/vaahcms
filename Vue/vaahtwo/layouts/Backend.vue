@@ -4,19 +4,20 @@ import {onMounted, reactive, ref} from "vue";
 import Aside from '../components/molecules/Aside.vue';
 
 import { useRootStore } from '../stores/root'
+import { useAuthStore } from '../stores/auth';
+import {useRoute} from "vue-router";
 import Topnav from "../components/molecules/Topnav.vue";
 import Footer from "../components/organisms/Footer.vue";
 import Sidebar from "../components/molecules/Sidebar.vue";
 import Notices from '../components/molecules/Notices.vue'
-
+import {vaah} from "../vaahvue/pinia/vaah";
 
 const rootStore = useRootStore();
-
-
-
+const authStore = useAuthStore();
+const route = useRoute();
 
 onMounted(async () => {
-
+    authStore.sign_in_items.accessed_route = vaah().clone(route);
     await rootStore.checkLoggedIn();
     await rootStore.getAssets();
     await rootStore.getPermission();

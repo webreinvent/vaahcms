@@ -11,8 +11,6 @@ onMounted(async () => {
     await store.setTitle();
     await store.getItem();
     root.verifyInstallStatus();
-    await root.reloadAssets();
-
 });
 
 const key = ref();
