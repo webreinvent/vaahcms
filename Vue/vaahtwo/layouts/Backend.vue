@@ -17,7 +17,7 @@ const authStore = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
-    authStore.sign_in_items.accessed_route = vaah().clone(route);
+
     await rootStore.checkLoggedIn();
     await rootStore.getAssets();
     await rootStore.getPermission();
