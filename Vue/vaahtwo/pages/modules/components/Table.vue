@@ -148,7 +148,7 @@ function actionItems(item){
                             label="Update"
                             :data-testid="'module-update-'+item.slug"
                             data-testid="modules-table-action-install-update"
-                            icon="cloud-download-alt"
+                            icon="pi pi-download"
                             @click="store.confirmUpdate(item)"
                             v-tooltip.top="'Update Module'"
                             v-if="item.is_update_available && store.hasPermission('can-update-module')"
