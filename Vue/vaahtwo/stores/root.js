@@ -102,13 +102,13 @@ export const useRootStore = defineStore({
             await this.getAssets();
         },
         //---------------------------------------------------------------------
-        checkLoggedIn()
+        async checkLoggedIn()
         {
             let params = {
                 method: 'post'
             };
 
-            vaah().ajax(
+            await vaah().ajax(
                 this.json_url+'/is-logged-in',
                 this.afterCheckLoggedIn,
                 params
