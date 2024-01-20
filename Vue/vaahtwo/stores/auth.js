@@ -18,6 +18,7 @@ export const useAuthStore = defineStore({
         is_resend_disabled: false,
         is_installation_verified: false,
         is_forgot_password_btn_loading: false,
+        route: null,
         forgot_password_items: {
             email: null,
         },
@@ -284,6 +285,14 @@ export const useAuthStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        setRoute(route)
+        {
+            this.route = route;
+        },
+        setAccessedRoute()
+        {
+            this.sign_in_items.accessed_route = vaah().clone(this.route);
         }
     }
 })

@@ -445,7 +445,6 @@ export const useLocalizationStore = defineStore({
         },
         //---------------------------------------------------------------------
         runSeeds() {
-
             let options = {
                 method:'post'
             };
@@ -457,6 +456,7 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         afterRunSeeds() {
             this.assets_is_fetching = true;
+            this.generateLanguage();
             this.getAssets();
         },
         //---------------------------------------------------------------------
@@ -467,15 +467,9 @@ export const useLocalizationStore = defineStore({
         getItemMenuList: function (){
             this.item_menu_list =  [
                 {
-                    label: 'Run Seeds',
+                    label: 'Run & Generate Seeds',
                     command: () => {
                         this.runSeeds();
-                    }
-                },
-                {
-                    label: 'Generate Language Files',
-                    command: () => {
-                        this.generateLanguage()
                     }
                 }
             ];

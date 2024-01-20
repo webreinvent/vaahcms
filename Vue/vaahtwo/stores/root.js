@@ -1,5 +1,6 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
+import {useAuthStore} from '../stores/auth'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url;
@@ -118,6 +119,7 @@ export const useRootStore = defineStore({
         {
             if(data && data.is_logged_in == false)
             {
+                useAuthStore().setAccessedRoute();
                 window.location.href = this.base_url+'#';
                 return false;
             }
