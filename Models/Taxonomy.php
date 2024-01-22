@@ -82,7 +82,10 @@ class Taxonomy extends TaxonomyBase
 
 
         // check if name exist
-        $item = self::where('name', $inputs['name'])->withTrashed()->first();
+        $item = self::where([
+            'name' => $inputs['name'],
+            'vh_taxonomy_type_id' => $inputs['vh_taxonomy_type_id']
+        ])->withTrashed()->first();
 
         if ($item) {
             $response['success'] = false;
@@ -91,7 +94,10 @@ class Taxonomy extends TaxonomyBase
         }
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
+        $item = self::where([
+            'slug' => $inputs['slug'],
+            'vh_taxonomy_type_id' => $inputs['vh_taxonomy_type_id']
+        ])->withTrashed()->first();
 
         if ($item) {
             $response['success'] = false;
@@ -414,7 +420,10 @@ class Taxonomy extends TaxonomyBase
         // check if name exist
         $item = self::where('id', '!=', $inputs['id'])
             ->withTrashed()
-            ->where('name', $inputs['name'])->first();
+            ->where([
+                'name' => $inputs['name'],
+                'vh_taxonomy_type_id' => $inputs['vh_taxonomy_type_id']
+            ])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -425,7 +434,10 @@ class Taxonomy extends TaxonomyBase
         // check if slug exist
         $item = self::where('id', '!=', $inputs['id'])
             ->withTrashed()
-            ->where('slug', $inputs['slug'])->first();
+            ->where([
+                'slug' => $inputs['slug'],
+                'vh_taxonomy_type_id' => $inputs['vh_taxonomy_type_id']
+            ])->first();
 
         if ($item) {
             $response['success'] = false;

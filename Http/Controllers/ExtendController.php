@@ -146,7 +146,7 @@ class ExtendController extends Controller
         {
             $list[$n] = [
                 'icon' => "pi pi-box",
-                'label'=> trans("vaahcms-sidebar-menu.advanced"),
+                'label'=> trans("vaahcms-sidebar-menu.extend"),
                 'items'=> [],
             ];
 
@@ -330,32 +330,33 @@ class ExtendController extends Controller
         $data = array();
 
         $data['card'] = [
-            "title" => "Users and Roles",
+            "title" => trans("vaahcms-dashboard.users_and_roles"),
+            "link_text" => trans("vaahcms-dashboard.view_details"),
             "list" => [
                 [
                     "count" => User::count(),
-                    "label" => 'Total User',
+                    "label" => trans("vaahcms-dashboard.total_user"),
                     "icon" => "pi-users",
                     "type" => "info",
                     "link" => self::$link."/users/"
                 ],
                 [
                     "count" => Role::count(),
-                    "label" => 'Total Role',
+                    "label" => trans("vaahcms-dashboard.total_role"),
                     "icon" => "pi-tags",
                     "type" => "info",
                     "link" => self::$link."/roles/"
                 ],
                 [
                     "count" => Permission::count(),
-                    "label" => 'Total Permission',
+                    "label" => trans("vaahcms-dashboard.total_permission"),
                     "icon" => "pi-key",
                     "type" => "info",
                     "link" => self::$link."/permissions/"
                 ],
                 [
                     "count" => User::where('is_active',1)->count(),
-                    "label" => 'Active Users',
+                    "label" => trans("vaahcms-dashboard.active_users"),
                     "icon" => "pi-user",
                     "type" => "success",
                     "link" => self::$link."/users?status=active"
@@ -389,23 +390,22 @@ class ExtendController extends Controller
 
         $data['expanded_item'] = [
             [
-                'title' => 'Jobs',
+                'title' => trans("vaahcms-dashboard.jobs"),
+                'run_jobs' => trans("vaahcms-dashboard.run_jobs"),
+                'view_settings' => trans("vaahcms-dashboard.view_settings"),
                 'type' => 'content',
-                'description' => 'Tasks that is kept in the queue to be performed one after another.
-                Queues allow you to defer the processing of a time consuming task,
-                such as sending an e-mail, until a later time which drastically
-                speeds up web requests to your application.',
+                'description' => trans("vaahcms-dashboard.content_description"),
                 'is_job_enabled' => $is_job_enabled,
                 'footer' => [
                     [
-                        'name' => 'Pending',
+                        'name' => trans("vaahcms-dashboard.pending_jobs"),
                         'count' => Job::count(),
                         'type' => 'info',
                         'icon' => 'pi pi-envelope',
                         'link' => self::$link."/advanced/jobs/",
                     ],
                     [
-                        'name' => 'Failed',
+                        'name' => trans("vaahcms-dashboard.failed_jobs"),
                         'count' => FailedJob::count(),
                         'type' => 'danger',
                         'icon' => 'pi pi-ban text-red-500',
@@ -414,25 +414,26 @@ class ExtendController extends Controller
                 ]
             ],
             [
-                'title' => 'Laravel Logs',
+                'title' => trans("vaahcms-dashboard.laravel_logs"),
+                'view_log' => trans("vaahcms-dashboard.view_log"),
                 'type' => 'list',
                 'list' => $log_list,
                 'list_limit' => 5,
-                'link_text' => "View all recent logs",
+                'link_text' => trans("vaahcms-dashboard.view_all_recent_logs"),
                 'link' => self::$link."/advanced/logs/",
-                'empty_response_note' => "No Error Log Found",
+                'empty_response_note' => trans("vaahcms-dashboard.no_error_log_found"),
             ]
         ];
 
 
         $data['expanded_header_links'] = [
             [
-                'name' => 'Check Updates',
+                'name' => trans("vaahcms-dashboard.check_updates"),
                 'icon' => 'pi pi-refresh',
                 'link' => self::$link."/settings/update"
             ],
             [
-                'name' => 'Getting Started',
+                'name' => trans("vaahcms-dashboard.getting_started"),
                 'icon' => 'pi pi-play',
                 'open_in_new_tab' => true,
                 'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
@@ -446,7 +447,7 @@ class ExtendController extends Controller
 
         $data['next_steps'] = [
             [
-                'name' => 'View your Site',
+                'name' => trans("vaahcms-dashboard.view_your_site"),
                 'icon' => 'pi pi-desktop',
                 'link' => url('/')
             ]
@@ -455,7 +456,7 @@ class ExtendController extends Controller
 
         $data['actions'] = [
             [
-                'name' => 'Manage your Module',
+                'name' => trans("vaahcms-dashboard.manage_your_module"),
                 'icon' => 'pi pi-box',
                 'link' => self::$link."/modules"
             ]

@@ -308,6 +308,7 @@ export const usePermissionStore = defineStore({
         async bulkActions (input, action) {
             let params = {
                 id: this.item.id,
+                query: this.permission_roles_query,
                 role_id: null
             };
 
@@ -449,6 +450,9 @@ export const usePermissionStore = defineStore({
                 method: method,
                 show_success: false
             };
+
+            options.params.query = vaah().clone(this.query);
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,

@@ -16,19 +16,19 @@ const route = useRoute();
 const useVaah = vaah();
 
 onMounted(async () => {
+
     if (route.params && route.params.id) {
         await store.getItem(route.params.id);
     }
 
-    watch(root, async (newVal, oldVal) => {
-        if(newVal.assets) {
-            await store.getFormMenu();
-        }
-    })
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+       await store.getFormMenu();
+    }
 
     root.getIsActiveStatusOptions();
 });
-
 
 const myUploader = ref();
 
@@ -38,6 +38,17 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+
+watch(
+    () => root.assets,
+    async () => {
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
+            await store.getFormMenu();
+        }
+
+    }
+)
 
 </script>
 <template>
@@ -53,10 +64,10 @@ const toggleFormMenu = (event) => {
                         </span>
 
                         <span v-else-if="root.assets
-                                         && root.assets.language_string
-                                         && root.assets.language_string.crud_actions"
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
                         >
-                            {{root.assets.language_string.crud_actions.form_text_create}}
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
@@ -65,8 +76,8 @@ const toggleFormMenu = (event) => {
             <template #icons>
                 <div class="p-inputgroup"
                      v-if="root.assets
-                           && root.assets.language_string
-                           && root.assets.language_string.crud_actions"
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
                 >
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
@@ -75,7 +86,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button :label="root.assets.language_string.crud_actions.save_button"
+                    <Button :label="root.assets.language_strings.crud_actions.save_button"
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
@@ -83,7 +94,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-save"
                     />
 
-                    <Button :label="root.assets.language_string.crud_actions.form_create_and_new"
+                    <Button :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
@@ -95,7 +106,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="user-form_view"
                             @click="store.toView(store.item)"
                     />
@@ -148,7 +159,7 @@ const toggleFormMenu = (event) => {
                                 label="Remove"></Button>
                     </div>
 
-                    <div class="w-max">
+                    <div class="w-max" v-if="root.assets && root.assets.urls">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="true"
                                       data-testid="user-form_upload_avatar"
@@ -199,7 +210,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="!store.isHidden('title')">
+                <template v-if="!store.isHidden('title') && store.assets">
                     <VhField label="Title">
                         <Dropdown class="w-full"
                                   v-model="store.item.title"
@@ -274,7 +285,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')">
+                <VhField label="Country Code" v-if="!store.isHidden('country_calling_code') && store.assets">
                     <Dropdown class="w-full"
                               v-model="store.item.country_calling_code"
                               :options="store.assets.countries"
@@ -311,7 +322,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <VhField label="Timezone" v-if="!store.isHidden('timezone')">
+                <VhField label="Timezone" v-if="!store.isHidden('timezone') && store.assets">
                     <Dropdown v-model="store.item.timezone"
                               :options="store.assets.timezones"
                               optionLabel="name"
@@ -376,7 +387,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="store.assets.custom_fields"
+                <template v-if="store.assets && store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >

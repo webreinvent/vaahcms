@@ -3,7 +3,7 @@ import { vaah } from '../../vaahvue/pinia/vaah'
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from "../../stores/root";
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import Dialog from 'primevue/dialog';
 
@@ -38,9 +38,14 @@ onMounted(async () => {
     }
 
     /**
-     * Fetch user roles menu items
-     */
-    await store.getUserRolesMenuItems();
+    * Fetch user roles menu items
+    */
+
+    if (store.assets && store.assets.language_strings)
+    {
+        await store.getUserRolesMenuItems();
+    }
+
 });
 
 //--------toggle item menu--------//
@@ -50,6 +55,18 @@ const toggleItemMenu = (event) => {
     user_roles_menu_state.value.toggle(event);
 };
 //--------toggle item menu--------//
+
+watch(
+    () => store.assets,
+    async () => {
+        if ( store.assets.language_strings)
+        {
+            await store.getUserRolesMenuItems();
+        }
+
+    }
+)
+
 
 </script>
 <template>
@@ -97,13 +114,11 @@ const toggleItemMenu = (event) => {
             <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
                     <div class="p-inputgroup"
-                         v-if="store.assets
-                               && store.assets.language_string
-                               && store.assets.language_string.users">
+                         v-if="store.assets && store.assets.language_strings">
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText class="w-full p-inputtext-sm"
-                                       :placeholder="store.assets.language_string.users.view_role_placeholder_search"
+                                       :placeholder="store.assets.language_strings.view_role_placeholder_search"
                                        type="text"
                                        v-model="store.user_roles_query.q"
                                        @keyup.enter="store.delayedUserRolesSearch()"
@@ -113,7 +128,7 @@ const toggleItemMenu = (event) => {
                          </span>
 
                         <Button class="p-button-sm"
-                                :label="store.assets.language_string.users.view_role_reset_button"
+                                :label="store.assets.language_strings.view_role_reset_button"
                                 data-testid="user-role_reset"
                                 @click="store.resetUserRolesFilters()"
                         />
@@ -125,8 +140,8 @@ const toggleItemMenu = (event) => {
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                     <div v-if="store.user_roles
                                && root.assets
-                               && root.assets.language_string
-                               && root.assets.language_string.crud_actions"
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
                     >
                         <DataTable :value="store.user_roles.list.data"
                                    dataKey="id"
@@ -143,7 +158,7 @@ const toggleItemMenu = (event) => {
 
                                     <Button class="p-button-tiny p-button-text"
                                             data-testid="taxonomies-table-to-edit"
-                                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_copy_slug"
+                                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                             @click="useVaah.copy(prop.data.slug)"
                                             icon="pi pi-copy"
                                     />
@@ -152,21 +167,18 @@ const toggleItemMenu = (event) => {
 
                             <Column field="role"
                                     header="Has Role"
-                                    v-if="store.assets
-                                          && store.assets.language_string
-                                          && store.assets.language_string.users"
-                            >
+                                    v-if="store.assets && store.assets.language_strings">
                                 <template #body="prop" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')">
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
-                                             :label="store.assets.language_string.users.view_role_yes"
+                                             :label="store.assets.language_strings.view_role_yes"
                                              data-testid="user-role_status_yes"
                                              @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="store.assets.language_string.users.view_role_no"
+                                            :label="store.assets.language_strings.view_role_no"
                                             data-testid="user-role_status_no"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
@@ -175,28 +187,29 @@ const toggleItemMenu = (event) => {
                                 <template #body="prop" v-else>
                                     <Button v-if="prop.data.pivot.is_active === 1"
                                             class="p-button-success p-button-sm p-button-rounded"
-                                            :label="store.assets.language_string.users.view_role_yes"
+                                            :label="store.assets.language_strings.view_role_yes"
                                             disabled
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
-                                            :label="store.assets.language_string.users.view_role_no"
+                                            :label="store.assets.language_strings.view_role_no"
                                             disabled
                                     />
                                 </template>
                             </Column>
 
                             <Column field="view"
+                                    v-if="store.assets && store.assets.language_strings"
                                     header="View"
                             >
                                 <template #body="prop">
                                     <Button class="p-button-sm p-button-rounded p-button-outlined"
-                                            v-tooltip.top="root.assets.language_string.crud_actions.toolkit_text_view"
+                                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                             @click="store.showModal(prop.data)"
                                             data-testid="user-role_details_view"
                                             icon="pi pi-eye"
-                                            :label="store.assets.language_string.users.view_role_text_view"
+                                            :label="store.assets.language_strings.view_role_text_view"
                                     />
                                 </template>
                             </Column>

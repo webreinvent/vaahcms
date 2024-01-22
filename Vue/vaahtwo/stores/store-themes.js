@@ -69,6 +69,7 @@ export const useThemeStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         item_menu_list: [],
+        updates_list: [],
         item_menu_state: null,
         form_menu_list: [],
         is_fetching_updates: false,
@@ -974,17 +975,20 @@ export const useThemeStore = defineStore({
             this.is_fetching_updates = false;
             if(data)
             {
-                this.update('updates_list', data);
+                this.updates_list = data;
                 this.storeUpdates();
             }
         },
         //---------------------------------------------------------------------
         storeUpdates() {
             let params = {
-                themes: this.page.updates_list
+                method:'POST',
+                params: {
+                    themes: this.updates_list
+                }
             };
             let url = this.ajax_url+'/store/updates';
-            this.$vaah.ajax(url, params, this.storeUpdatesAfter);
+            vaah().ajax(url, this.storeUpdatesAfter,params);
         },
         //---------------------------------------------------------------------
         storeUpdatesAfter(data, res) {
@@ -993,6 +997,51 @@ export const useThemeStore = defineStore({
             {
                 this.getList();
             }
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        confirmUpdate: function(theme)
+        {
+            this.theme = theme;
+            vaah().confirmDialog(
+                'Update Theme',
+                'It is recommended to create a backup before this action. This will <b>download</b> the updates for theme <b>'+theme.name+'</b>. This action cannot be undone.',
+                this.getThemeDetails
+            )
+
+        },
+        //---------------------------------------------------------------------
+        getThemeDetails: function () {
+            let params = {};
+            let url = this.assets.vaahcms_api_route+'theme/by/slug/'+this.theme.slug;
+            vaah().ajax(url, this.getThemeDetailsAfter, params);
+        },
+        //---------------------------------------------------------------------
+        async getThemeDetailsAfter(data) {
+
+            if(data)
+            {
+                this.selected_item = data;
+                await this.installUpdate();
+            }
+        },
+        //---------------------------------------------------------------------
+        installUpdate() {
+            let params = {
+                method:'POST',
+                params: this.selected_item
+            }
+            let url = this.ajax_url+'/install/updates';
+            vaah().ajax(url, this.installUpdateAfter, params);
+        },
+        //---------------------------------------------------------------------
+        installUpdateAfter(data) {
+            if(data)
+            {
+                this.selected_item = null;
+                this.getList();
+            }
+
         },
         //---------------------------------------------------------------------
 

@@ -612,10 +612,24 @@ class PermissionBase extends VaahModel {
 
             $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], $data);
         }else{
-            $item->roles()
+
+            $role_ids = [];
+            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
+                $role_ids = Role::where(function ($q) use($inputs){
+                    $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
+                })->pluck('id');
+            }
+
+            $item_roles = $item->roles()
                 ->newPivotStatement()
-                ->where('vh_permission_id', '=', $item->id)
-                ->update($data);
+                ->where('vh_permission_id', '=', $item->id);
+
+            if(count($role_ids) > 0){
+                $item_roles->whereIn('vh_role_id',$role_ids);
+            }
+
+            $item_roles->update($data);
         }
 
 

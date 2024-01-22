@@ -159,8 +159,9 @@ class User extends UserBase
 
             $is_restricted = self::restrictedActions($inputs['type'], $id);
 
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
+                $response['errors'][] = '<b>'.$inputs['items'][$key]['email'].'</b>: '.$is_restricted['errors'][0];
                 unset($items_id[$key]);
             }
 
@@ -187,7 +188,13 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        if(!isset($response['errors']) ||
+            (count($inputs['items']) !== count($response['errors']))){
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        }
 
         return $response;
     }
@@ -211,23 +218,22 @@ class User extends UserBase
         if ($validator->fails()) {
 
             $errors = errorsToArray($validator->errors());
-            $response['failed'] = true;
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
-        $items_id = collect($inputs['items'])->pluck('id')->toArray();
+        foreach($inputs['items'] as $item) {
 
-        foreach($items_id as $id) {
+            $is_restricted = self::restrictedActions('delete', $item['id']);
 
-            $is_restricted = self::restrictedActions('delete', $id);
-
-            if($is_restricted)
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
             {
+                $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
                 continue;
             }
 
-            $item = self::query()->where('id', $id)->withTrashed()->first();
+            $item = self::query()->where('id', $item['id'])->withTrashed()->first();
 
             if ($item) {
                 $item->roles()->detach();
@@ -237,72 +243,71 @@ class User extends UserBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        if(count($inputs['items']) !== count($response['errors'])){
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        }
 
         return $response;
     }
     //-------------------------------------------------
     public static function listAction($request, $type): array
     {
+        $response = [];
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
-            $items_id = collect($inputs['items'])
-                ->pluck('id')
-                ->toArray();
+        $list = self::getSorted($inputs['query']['filter']);
+        $list->isActiveFilter($inputs['query']['filter']);
+        $list->trashedFilter($inputs['query']['filter']);
+        $list->searchFilter($inputs['query']['filter']);
 
-            $items = self::whereIn('id', $items_id)
-                ->withTrashed();
+        if (isset($request['from']) && isset($request['to'])) {
+            $list->betweenDates($request['from'],$request['to']);
         }
 
+        $list_array = $list->get()->toArray();
+
+        foreach($list_array as $item){
+            $is_restricted = self::restrictedActions($type, $item['id']);
+
+            if(isset($is_restricted['success']) && !$is_restricted['success'])
+            {
+                $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
+                $list->where('id','!=',$item['id']);
+            }
+        }
 
         switch ($type) {
-            case 'deactivate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => null]);
-                }
-                break;
-            case 'activate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => 1]);
-                }
-                break;
-            case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->delete();
-                }
-                break;
-            case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->restore();
-                }
-                break;
-            case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->forceDelete();
-                }
-                break;
             case 'activate-all':
-                self::query()->update(['is_active' => 1]);
+                $list->update(['is_active' => 1]);
                 break;
             case 'deactivate-all':
-                self::query()->update(['is_active' => null]);
+                $list->update(['is_active' => null]);
                 break;
             case 'trash-all':
-                self::query()->delete();
+                $list->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+                $list->withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=1');
                 break;
         }
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        if(!isset($response['errors']) ||
+            (count($list_array) !== count($response['errors']))){
+
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+
+        }
 
         return $response;
     }

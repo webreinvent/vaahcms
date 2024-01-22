@@ -66,6 +66,7 @@ export const useModuleStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         item_menu_list: [],
+        updates_list: [],
         item_menu_state: null,
         form_menu_list: [],
         modules: {
@@ -1047,15 +1048,16 @@ export const useModuleStore = defineStore({
             this.is_fetching_updates = false;
             if(data)
             {
-                this.update('updates_list', data);
+                this.updates_list = data;
                 this.storeUpdates();
             }
         },
         //---------------------------------------------------------------------
         storeUpdates() {
             let params = {
-                query: {
-                    modules: this.page.updates_list
+                method:'POST',
+                params: {
+                    modules: this.updates_list
                 }
 
             };
@@ -1126,7 +1128,10 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         installUpdate() {
-            let params = { query: this.selected_item}
+            let params = {
+                method:'POST',
+                params: this.selected_item
+            }
             let url = this.ajax_url+'/install/updates';
             vaah().ajax(url, this.installUpdateAfter, params);
         },
@@ -1135,7 +1140,7 @@ export const useModuleStore = defineStore({
             if(data)
             {
                 this.selected_item = null;
-                this.$emit('eReloadList');
+                this.getList();
             }
 
         },

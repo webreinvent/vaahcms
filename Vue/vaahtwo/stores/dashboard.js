@@ -11,6 +11,7 @@ export const useDashboardStore = defineStore({
     id: 'dashboard',
     state: () => ({
         title: 'Dashboard',
+        language_strings: null,
         active_index: [0,1],
         ajax_url: ajax_url,
         assets_is_fetching: true,
@@ -38,6 +39,7 @@ export const useDashboardStore = defineStore({
         afterGetItem(data, res) {
             if (data) {
                 this.dashboard_items = data.item;
+                this.language_strings = data.language_strings;
             }
         },
         //-----------------------------------------------------------------------

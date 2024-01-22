@@ -24,11 +24,10 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function storeUpdate(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -87,11 +86,10 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function upgrade(): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -112,12 +110,10 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function publish()
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -158,12 +154,10 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function runMigrations(): JsonResponse
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try{
@@ -198,12 +192,10 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function clearCache(): JsonResponse
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {

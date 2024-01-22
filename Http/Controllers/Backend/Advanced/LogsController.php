@@ -18,11 +18,10 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-advanced-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -69,11 +68,10 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-logs-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-logs-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -164,11 +162,10 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $name): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-advanced-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -230,11 +227,10 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function downloadFile(Request $request, $file_name): BinaryFileResponse | string | JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-advanced-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -262,12 +258,10 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action): JsonResponse
     {
+        $permission_slug = 'has-access-of-advanced-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {

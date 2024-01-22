@@ -24,13 +24,10 @@ class BackupsController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!\Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         $response['success'] = true;
@@ -41,13 +38,10 @@ class BackupsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!\Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         $response = VaahBackup::create($request);

@@ -17,10 +17,17 @@ onMounted(async () => {
      */
     await store.setPageTitle();
     await store.getAssets();
+    store.getItemMenuList()
     /**
      * Change to upper case
      */
 });
+
+const item_menu_list = ref();
+const toggleItemMenuList = (event) => {
+    item_menu_list.value.toggle(event);
+};
+
 </script>
 
 <template>
@@ -47,6 +54,19 @@ onMounted(async () => {
                         data-testid="localization-add_category"
                         @click="store.toggleCategoryForm"
                         class="p-button-sm mr-2"
+                />
+
+                <Button class="p-button-sm mr-2"
+                        icon="pi pi-ellipsis-h"
+                        aria-haspopup="true"
+                        aria-controls="item_menu_list"
+                        data-testid="localization-item_menu_list"
+                        @click="toggleItemMenuList"
+                />
+
+                <Menu ref="item_menu_list"
+                      :model="store.item_menu_list"
+                      :popup="true"
                 />
 
                 <Button icon="pi pi-refresh"

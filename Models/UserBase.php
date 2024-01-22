@@ -606,17 +606,21 @@ class UserBase extends Authenticatable
     {
 
         //restricted actions on logged in users
-        $result = false;
         if((int)$user_id === \Auth::user()->id)
         {
             switch ($action_type)
             {
                 //------------------------
                 case 'trash':
+                case 'trash-all':
                 case 'delete':
+                case 'delete-all':
                 case 'deactivate':
-                    $result = true;
-                    break;
+                case 'deactivate-all':
+
+                    $response['success'] = false;
+                    $response['errors'][] = "Actions cannot be performed on a user who is currently logged in.";
+                    return $response;
                 //------------------------
                 default:
                     break;
@@ -625,36 +629,48 @@ class UserBase extends Authenticatable
 
 
 
-            return $result;
+            $response['success'] = true;
+            $response['message'][] = "Not restricted.";
+            return $response;
         }
 
 
 
         //restricted action if this user is last super admin
-        $result = false;
         $user = self::withTrashed()->find($user_id);
-        $is_last_super_admin = self::isLastSuperAdmin();
-        if($user->hasRole('super-administrator') && $is_last_super_admin)
+
+        if((!\Auth::user()->hasRole('super-administrator')  &&
+            $user->hasRole('super-administrator')) ||
+            (!\Auth::user()->hasRole('super-administrator')
+                && !\Auth::user()->hasRole('administrator')) &&
+            ($user->hasRole('super-administrator')
+                || $user->hasRole('administrator')))
         {
             switch ($action_type)
             {
                 //------------------------
                 case 'trash':
+                case 'trash-all':
                 case 'delete':
+                case 'delete-all':
                 case 'deactivate':
-                    $result = true;
-                    break;
+                case 'deactivate-all':
+                    $response['success'] = false;
+                    $response['errors'][] = "Actions cannot be performed on users with a
+                    role higher than that of the currently logged-in user.";
+                    return $response;
                 //------------------------
                 default:
                     break;
                 //------------------------
             }
 
-            return $result;
         }
 
 
-        return $result;
+        $response['success'] = true;
+        $response['message'][] = "Not restricted.";
+        return $response;
     }
     //-------------------------------------------------
     public static function beforeUserActionValidation($request)
@@ -1136,6 +1152,23 @@ class UserBase extends Authenticatable
         } else{
             return false;
         }
+
+    }
+
+    //-------------------------------------------------
+    public function hasPermissions($permission_slugs)
+    {
+        $permission_slugs_string = implode(', ',$permission_slugs);
+
+        foreach($permission_slugs as $permission_slug){
+            if(!Auth::user()->hasPermission($permission_slug)){
+                return vh_get_permission_denied_response($permission_slugs_string);
+            }
+        }
+
+        $response = [];
+        $response['success'] = true;
+        return $response;
 
     }
 
@@ -1716,11 +1749,25 @@ class UserBase extends Authenticatable
                 $inputs['inputs']['role_id'],
                 $data
             );
+
         }else{
-            $item->roles()
+            $role_ids = [];
+            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
+                $role_ids = Role::where(function ($q) use($inputs){
+                    $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
+                })->pluck('id');
+            }
+
+            $item_roles = $item->roles()
                 ->newPivotStatement()
-                ->where('vh_user_id', '=', $item->id)
-                ->update($data);
+                ->where('vh_user_id', '=', $item->id);
+
+            if(count($role_ids) > 0){
+                $item_roles->whereIn('vh_role_id',$role_ids);
+            }
+
+            $item_roles->update($data);
         }
 
         Role::recountRelations();
@@ -1865,7 +1912,7 @@ class UserBase extends Authenticatable
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
-            return response()->json($response);
+            return $response;
         }
 
         if(!\Auth::check())

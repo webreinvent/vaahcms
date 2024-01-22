@@ -58,7 +58,7 @@ export const useSetupStore = defineStore({
 
             },
             env:{
-                app_name: "VaahCMS",
+                app_name: null,
                 app_key: null,
                 app_debug: 'true',
                 app_env: null,
@@ -470,6 +470,32 @@ export const useSetupStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        runArtisanMigrate: function () {
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/artisan-migrate',
+                null,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        runArtisanSeeds: function () {
+
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/artisan-seeds',
+                null,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
         validateMigration: function () {
             if(this.status && !this.status.is_db_migrated)
             {
@@ -558,6 +584,18 @@ export const useSetupStore = defineStore({
                         this.clearCache()
                     }
                 },
+                {
+                    label: 'Run Migrations',
+                    command: () => {
+                        this.runArtisanMigrate()
+                    }
+                },
+                {
+                    label: 'Run Seeds',
+                    command: () => {
+                        this.runArtisanSeeds();
+                    }
+                },
             ];
         },
         //---------------------------------------------------------------------
@@ -584,7 +622,7 @@ export const useSetupStore = defineStore({
 
                 },
                 env:{
-                    app_name: "VaahCMS",
+                    app_name: null,
                     app_key: null,
                     app_debug: 'true',
                     app_env: null,
@@ -619,12 +657,12 @@ export const useSetupStore = defineStore({
 
            setTimeout(() => {
                 if (!event.query.trim().length) {
-                    this.filtered_country_codes = this.assets.country_calling_codes;
+                    this.filtered_country_codes = vaah().clone(this.assets.country_calling_codes);
                 }
                 else {
-                    this.filtered_country_codes = this.assets.country_calling_codes.filter((country) => {
+                    this.filtered_country_codes =  vaah().clone(this.assets.country_calling_codes.filter((country) => {
                         return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-                    });
+                    }));
                 }
             }, 250);
         },
@@ -650,6 +688,10 @@ export const useSetupStore = defineStore({
         //---------------------------------------------------------------------
         skipDependencies: function () {
             this.config.count_installed_progress = 100;
+        },
+        //---------------------------------------------------------------------
+        onUpdateAppName: function (value) {
+            this.config.env.app_name = value.replace(/\s/g,'');
         },
         //---------------------------------------------------------------------
 

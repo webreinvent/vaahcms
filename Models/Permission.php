@@ -205,57 +205,33 @@ class Permission extends PermissionBase
     {
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
-            $items_id = collect($inputs['items'])
-                ->pluck('id')
-                ->toArray();
+        $list = self::getSorted($inputs['query']['filter']);
+        $list->isActiveFilter($inputs['query']['filter']);
+        $list->trashedFilter($inputs['query']['filter']);
+        $list->searchFilter($inputs['query']['filter']);
 
-            $items = self::whereIn('id', $items_id)
-                ->withTrashed();
+        if (isset($request['from']) && isset($request['to'])) {
+            $list->betweenDates($request['from'],$request['to']);
         }
 
 
         switch ($type) {
-            case 'deactivate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => null]);
-                }
-                break;
-            case 'activate':
-                if($items->count() > 0) {
-                    $items->update(['is_active' => 1]);
-                }
-                break;
-            case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->delete();
-                }
-                break;
-            case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->restore();
-                }
-                break;
-            case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->forceDelete();
-                }
-                break;
             case 'activate-all':
-                self::query()->update(['is_active' => 1]);
+                $list->update(['is_active' => 1]);
                 break;
             case 'deactivate-all':
-                self::query()->update(['is_active' => null]);
+                $list->update(['is_active' => null]);
                 break;
             case 'trash-all':
-                self::query()->delete();
+                $list->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=0');
+                $list->withTrashed()->forceDelete();
+                \DB::statement('SET FOREIGN_KEY_CHECKS=1');
                 break;
             case 'toggle-role-active-status':
                 $response = self::bulkChangeRoleStatus($request);

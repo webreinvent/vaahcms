@@ -73,28 +73,25 @@ class CrudWithUuidObserver
 
     //-----------------------------------------------------------
     public function deleting( $model ) {
-        $model->updated_by = $this->user_id;
-        $model->updated_at = \Carbon::now();
 
-        $model->deleted_by = $this->user_id;
-
-        return $model;
     }
 
     //-----------------------------------------------------------
     public function deleted( $model )
     {
+        $model->deleted_by = $this->user_id;
+        $model->save();
     }
 
     //-----------------------------------------------------------
     public function restoring( $model ) {
-        $model->updated_by = $this->user_id;
-        $model->updated_at = \Carbon::now();
+        
     }
 
     //-----------------------------------------------------------
     public function restored( $model ) {
-        return $model;
+        $model->deleted_by = null;
+        $model->save();
     }
 	//-----------------------------------------------------------
 

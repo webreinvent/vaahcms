@@ -65,11 +65,14 @@ onMounted(async () => {
                 <h5 class="p-1 text-xs mb-1">{{item.key}}</h5>
                 <form>
                     <div class="p-inputgroup">
-                        <password v-if="store.inputType(item) == 'password'"
+                        <Password v-if="store.inputType(item) == 'password'"
                                   v-model="item.value"
                                   class="w-full"
                                   :disabled="store.isDisable(item)"
                                   toggleMask
+                                  :inputProps="{
+                                      autocomplete:'on'
+                                  }"
                                   :auto-resize="true"
                                   :data-testid="'env-'+item.key"
                         />

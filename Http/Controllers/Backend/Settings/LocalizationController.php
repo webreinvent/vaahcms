@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder;
 use WebReinvent\VaahCms\Models\Language;
 use WebReinvent\VaahCms\Models\LanguageCategory;
 use WebReinvent\VaahCms\Models\LanguageString;
@@ -22,11 +23,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -62,12 +62,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
+        $permission_slug = 'has-access-of-setting-section';
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -89,11 +87,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function generateLanguage(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -118,11 +115,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -144,11 +140,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function storeLanguage(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -171,11 +166,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function storeCategory(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -198,11 +192,10 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -230,4 +223,39 @@ class LocalizationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function runSeeds(Request $request): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+
+            $language_seeder = new VaahCmsTableSeeder();
+
+            $language_seeder->seedLanguages();
+            $language_seeder->seedLanguageCategories();
+            $language_seeder->seedLanguageStrings();
+
+            LanguageString::syncAndGenerateStrings($request);
+
+            $response['messages'][] = "Action was successful";
+
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
 }

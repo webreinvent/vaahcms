@@ -4,6 +4,12 @@ import {useRoute} from 'vue-router';
 
 const route = useRoute();
 
+const menu_pt = ref({
+    menuitem: ({ props }) => ({
+        class: route.path === props.item.route ? 'p-focus' : ''
+    })
+});
+
 const sidebar_menu_items = ref([
     {
         label: 'ADVANCED',
@@ -11,31 +17,26 @@ const sidebar_menu_items = ref([
             {
                 label: 'Logs',
                 icon: 'pi pi-book',
-                to:{ path: '/vaah/advanced/logs' }
+                route: '/vaah/advanced/logs'
             },
             {
                 label: 'Jobs',
                 icon: 'pi pi-align-justify',
-                to:{ path: '/vaah/advanced/jobs' }
+                route: '/vaah/advanced/jobs'
             },
             {
                 label: 'Failed Jobs',
                 icon: 'pi pi-times-circle',
-                to:{ path: '/vaah/advanced/failedjobs' }
+                route: '/vaah/advanced/failedjobs'
             },
             {
                 label: 'Batches',
                 icon: 'pi pi-server',
-                to:{ path: '/vaah/advanced/batches' }
+                route: '/vaah/advanced/batches'
             }
         ]},
 ]);
-const menu_pt = ref({
-    menuitem: ({ props }) => ({
-        class: route.matched && route.matched[3] &&
-        route.matched[3].path === props.item.to.path ? 'p-focus' : ''
-    })
-});
+
 onMounted(async () => {
 
 });
@@ -46,7 +47,21 @@ onMounted(async () => {
 <template>
     <div class="grid justify-content-center">
         <div class="col-fixed">
-            <Menu :model="sidebar_menu_items" :pt="menu_pt" />
+            <Menu :model="sidebar_menu_items"  class="w-full"
+                  :pt="menu_pt">
+                <template #item="{ item, props }">
+                    <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                            <span :class="item.icon" />
+                            <span class="ml-2">{{ item.label }}</span>
+                        </a>
+                    </router-link>
+                    <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </template>
+            </Menu>
         </div>
         <div class="col">
             <router-view></router-view>

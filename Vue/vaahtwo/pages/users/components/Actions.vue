@@ -35,7 +35,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
@@ -86,7 +86,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       :placeholder="root.assets.language_string.crud_actions.placeholder_search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                        data-testid="user-action_search_input"
                             />
 
@@ -97,7 +97,7 @@ const toggleBulkMenuState = (event) => {
                             />
 
                             <Button class="p-button-sm"
-                                    :label="root.assets.language_string.crud_actions.filters_button"
+                                    :label="root.assets.language_strings.crud_actions.filters_button"
                                     data-testid="user-action_filter"
                                     @click="store.show_filters = true"
                             >
@@ -108,7 +108,7 @@ const toggleBulkMenuState = (event) => {
                             </Button>
 
                             <Button class="p-button-sm"
-                                    :label="root.assets.language_string.crud_actions.reset_button"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     icon="pi pi-filter-slash"
                                     data-testid="user-action_reset"
                                     @click="store.resetQuery()"

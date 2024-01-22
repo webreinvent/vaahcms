@@ -5,10 +5,16 @@ import {useRoute} from 'vue-router';
 import {useSettingStore} from '../../stores/store-settings';
 import { vaah } from '../../vaahvue/pinia/vaah';
 
-import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useSettingStore();
 const route = useRoute();
 const useVaah = vaah();
+
+
+const menu_pt = ref({
+    menuitem: ({ props }) => ({
+        class: route.path === props.item.route ? 'p-focus' : ''
+    })
+});
 
 const sidebar_menu_items = ref([
     {
@@ -17,37 +23,37 @@ const sidebar_menu_items = ref([
             {
                 label: 'General',
                 icon: 'pi pi-cog',
-                to:{ path: '/vaah/settings/general' }
+                route: '/vaah/settings/general'
             },
             {
                 label: 'User Settings',
                 icon: 'pi pi-user',
-                to:{ path: '/vaah/settings/user-settings' }
+                route: '/vaah/settings/user-settings'
             },
             {
                 label: 'Env Variables',
                 icon: 'pi pi-cog',
-                to:{ path: '/vaah/settings/env-variables' }
+                route: '/vaah/settings/env-variables'
             },
             {
                 label: 'Localizations',
                 icon: 'pi pi-code',
-                to:{ path: '/vaah/settings/localization' }
+                route: '/vaah/settings/localization'
             },
             {
                 label: 'Notifications',
                 icon: 'pi pi-bell',
-                to:{ path: '/vaah/settings/notifications' }
+                route: '/vaah/settings/notifications'
             },
             {
                 label: 'Update',
                 icon: 'pi pi-download',
-                to:{ path: '/vaah/settings/update' }
+                route: '/vaah/settings/update'
             },
             {
                 label: 'Reset',
                 icon: 'pi pi-refresh',
-                to:{ path: '/setup' }
+                route: '/setup'
             },
         ]},
 ]);
@@ -65,13 +71,21 @@ onMounted(async () => {
 <template>
     <div class="grid justify-content-center">
         <div class="col-fixed">
-            <Menu :model="sidebar_menu_items"
-                  :pt="{
-                      menuitem: ({ props }) => ({
-                         class: route.path === props.item.to.path ? 'p-focus' : ''
-                      })
-                  }"
-            />
+            <Menu :model="sidebar_menu_items"  class="w-full"
+                  :pt="menu_pt">
+                <template #item="{ item, props }">
+                    <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                            <span :class="item.icon" />
+                            <span class="ml-2">{{ item.label }}</span>
+                        </a>
+                    </router-link>
+                    <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </template>
+            </Menu>
         </div>
         <div class="col">
             <router-view></router-view>

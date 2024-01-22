@@ -22,11 +22,10 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -63,11 +62,10 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -99,11 +97,10 @@ class GeneralController extends Controller
    // ----------------------------------------------------------
     public function storeSiteSettings(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -149,11 +146,10 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeLinks(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -227,11 +223,10 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeMetaTags(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
@@ -288,11 +283,10 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function deleteMetaTags(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $permission_slug = 'has-access-of-setting-section';
 
-            return response()->json($response);
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {

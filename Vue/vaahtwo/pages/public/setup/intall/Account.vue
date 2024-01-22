@@ -130,7 +130,6 @@ onMounted(async () => {
                         :suggestions="store.filtered_country_codes"
                         :completeOnFocus="store.autocomplete_on_focus"
                         @complete="store.searchCountryCode"
-                        @blur="store.setFocusDropDownToTrue"
                         @item-select="store.onSelectCountryCode"
                         placeholder="Enter Your Country"
                         optionLabel="name"
