@@ -127,7 +127,7 @@ const store = useGeneralStore();
                                      showButtons
                                      mode="decimal"
                                      data-testid="general-allowed_file_size"
-                                     min="1"
+                                     :min="1"
                         />
 
                     </div>

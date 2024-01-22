@@ -81,7 +81,6 @@ const openTaxonomyTypeModal = () => {
                     </div>
                 </template>
             </Column>
-             <column></column>
              <Column field="type" header="Type"
                      :sortable="false"
                      class="flex align-items-center justify-content-between"

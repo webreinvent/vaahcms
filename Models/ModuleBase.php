@@ -785,8 +785,9 @@ class ModuleBase extends VaahModel
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            $zip = new Zip();
+            $zip->check($zip_file);
+            $zip =  $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();

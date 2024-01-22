@@ -1912,7 +1912,7 @@ class UserBase extends Authenticatable
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
-            return response()->json($response);
+            return $response;
         }
 
         if(!\Auth::check())

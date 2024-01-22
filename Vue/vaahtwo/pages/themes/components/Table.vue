@@ -166,6 +166,16 @@ function actionItems(item){
                             @click="importSampleDataModal(item)"
                     />
 
+                    <Button class="p-button-info p-button-sm mr-2"
+                            label="Update"
+                            :data-testid="'module-update-'+item.slug"
+                            data-testid="modules-table-action-install-update"
+                            icon="pi pi-download"
+                            @click="store.confirmUpdate(item)"
+                            v-tooltip.top="'Update Module'"
+                            v-if="item.is_update_available && store.hasPermission('can-update-module')"
+                    />
+
                     <Button class="p-button-sm mr-2"
                             icon="pi pi-eye"
                             v-tooltip.top=" 'View' "
