@@ -8,7 +8,7 @@
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '2.2.4',
+    'version' => '2.2.5',
     'php_version_required' => '8.1',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
