@@ -79,13 +79,18 @@ class CrudWithUuidObserver
     //-----------------------------------------------------------
     public function deleted( $model )
     {
+
+        if($model->isForceDeleting()){
+            return false;
+        }
+
         $model->deleted_by = $this->user_id;
         $model->save();
     }
 
     //-----------------------------------------------------------
     public function restoring( $model ) {
-        
+
     }
 
     //-----------------------------------------------------------
