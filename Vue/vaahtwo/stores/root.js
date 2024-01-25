@@ -337,19 +337,6 @@ export const useRootStore = defineStore({
                         }
 
                     }
-                },
-                {
-                    label:'',
-                    url:this.assets.urls.dashboard,
-                    tooltip:'Dashboard',
-                    icon:'pi pi-home'
-                },
-                {
-                    label:'',
-                    url:this.assets.urls.public,
-                    tooltip:'Visit Site',
-                    target:'_blank',
-                    icon:'pi pi-external-link'
                 }
 
             ]
