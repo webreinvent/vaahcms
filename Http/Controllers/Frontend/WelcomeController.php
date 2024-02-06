@@ -72,6 +72,8 @@ class WelcomeController extends Controller
             return true;
         }
 
+        return redirect(config('settings.global.redirect_after_backend_logout'));
+
         $errors = [];
 
         $message = 'Install VaahCMS and activate the CMS module or define your own routes.';
