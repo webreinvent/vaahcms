@@ -9,19 +9,8 @@ const root = useRootStore();
 
         <p v-if="root.assets.server">
             &copy; {{root.assets.server.current_year}}.
-            <a :href="root.assets.vaahcms.website"
-               class="text-blue-400"
-               name="copyright-vaahcms_name"
-               data-testid="signin-vaahcms_name"
-               target="_blank" >
-                {{root.assets.vaahcms.name}}
-            </a>
+            {{root.assets.vaahcms.name}}
             v{{root.assets.versions.vaahcms_version}}
-            | <a :href="root.assets.vaahcms.docs"
-                 class="text-blue-400"
-                 name="copyright-vaahcms_documentation"
-                 data-testid="signin-vaahcms_documentation"
-                 target="_blank">Documentation</a>
         </p>
 
         <p v-if="root.assets.versions">
