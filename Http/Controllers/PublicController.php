@@ -160,7 +160,7 @@ class PublicController extends Controller
                 $request->session()->forget('accessed_url');
             } else
             {
-                $redirect_url = \URL::route('vh.backend').'#'.($is_accessed || !$path?'/vaah':$path.'?'.$query);
+                $redirect_url = \URL::route('vh.backend').'/pim#'.($is_accessed || !$path?'/dashboard':$path.'?'.$query);
             }
 
             $verify_response = Auth::user()->verifySecurityAuthentication();
