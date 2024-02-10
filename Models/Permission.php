@@ -155,7 +155,7 @@ class Permission extends PermissionBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -196,7 +196,7 @@ class Permission extends PermissionBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -240,7 +240,7 @@ class Permission extends PermissionBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }

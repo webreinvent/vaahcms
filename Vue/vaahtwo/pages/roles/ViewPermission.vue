@@ -321,7 +321,7 @@ const confirmChangeStatus = (event, id) => {
                     </template>
                 </Column>
 
-                <Column>
+                <Column field="actions">
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_role_permission = prop.data"

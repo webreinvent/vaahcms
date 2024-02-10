@@ -182,7 +182,7 @@ class Module extends ModuleBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -200,7 +200,7 @@ class Module extends ModuleBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -265,7 +265,7 @@ class Module extends ModuleBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -328,7 +328,7 @@ class Module extends ModuleBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }

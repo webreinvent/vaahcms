@@ -359,6 +359,10 @@ class LanguageString extends VaahModel {
 
                     $file_name = 'vaahcms-'.$category->slug.'.php';
 
+                    if($category->slug === 'validation'){
+                        $file_name = $category->slug.'.php';
+                    }
+
                     $file_path = base_path($folder_path.'/'.$file_name);
 
                     File::delete($file_path);

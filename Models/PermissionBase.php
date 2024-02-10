@@ -364,7 +364,7 @@ class PermissionBase extends VaahModel {
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -390,7 +390,7 @@ class PermissionBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }

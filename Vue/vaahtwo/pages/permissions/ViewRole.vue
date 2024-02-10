@@ -218,7 +218,7 @@ const openViewModal = () => {
                     </template>
                 </Column>
 
-                <Column>
+                <Column field="actions">
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded"
                                 @click="openViewModal(), store.active_permission_role = prop.data"

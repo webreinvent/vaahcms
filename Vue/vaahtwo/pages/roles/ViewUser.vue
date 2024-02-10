@@ -211,7 +211,7 @@ const openDetailsViewModal = () => {
                     </template>
                 </Column>
 
-                <Column>
+                <Column field="actions">
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
