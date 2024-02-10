@@ -172,7 +172,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -315,7 +315,7 @@ class Registration extends RegistrationBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -362,7 +362,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -378,7 +378,7 @@ class Registration extends RegistrationBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -396,7 +396,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -465,7 +465,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -521,7 +521,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
 
 
         return $response;
