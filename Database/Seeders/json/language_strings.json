@@ -5957,57 +5957,334 @@
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "The",
-        "content": "El"
+        "name": "accepted",
+        "content": "El :attribute debe ser aceptado."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "may not be greater than",
-        "content": "no puede ser mayor que"
+        "name": "active_url",
+        "content": "El :attribute no es una URL válida."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "characters",
-        "content": "caracteres."
+        "name": "after",
+        "content": "El :attribute debe ser una fecha posterior a :date."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "field is required",
-        "content": "Se requiere campo."
+        "name": "after_or_equal",
+        "content": "El :attribute debe ser una fecha posterior o igual a :date."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be a number",
-        "content": "Tiene que ser un número."
+        "name": "alpha",
+        "content": "El :attribute sólo puede contener letras."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be at least",
-        "content": "al menos debe ser."
+        "name": "alpha_dash",
+        "content": "El :attribute sólo puede contener letras, números, guiones y guiones bajos."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be a valid email address",
-        "content": "Debe ser una dirección de correo electrónico válida."
+        "name": "alpha_num",
+        "content": "El :attribute sólo puede contener letras y números."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be an integer",
-        "content": "debe ser un entero."
+        "name": "array",
+        "content": "El :attribute debe ser una matriz."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "may only contain",
-        "content": "Solo puede contener letras, números, guiones y guiones bajos."
+        "name": "before",
+        "content": "El :attribute debe ser una fecha anterior a :date."
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "before_or_equal",
+        "content": "El :attribute debe ser una fecha anterior o igual a :date."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "boolean",
+        "content": "El campo :attribute debe ser verdadero o falso."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "confirmed",
+        "content": "La :attribute confirmación del no coincide."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date",
+        "content": "El :attribute no es una fecha válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date_equals",
+        "content": "El :attribute debe ser una fecha igual a :date."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date_format",
+        "content": "El :attribute no coincide con el formato :format."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "different",
+        "content": "El :attribute y :other deben ser diferentes."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "digits",
+        "content": "El :attribute debe ser :digits dígitos."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "digits_between",
+        "content": "El attribute :debe estar entre los dígitos :min y :max."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "dimensions",
+        "content": "El  :attribute tiene dimensiones de imagen no válidas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "distinct",
+        "content": "El campo :attribute tiene un valor duplicado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "email",
+        "content": "El :attribute debe ser una dirección de correo electrónico válida."
+    },{
+    "locale_code_iso_639": "es",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "El :attribute debe terminar con uno de los siguientes: :values"
+},
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "exists",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "file",
+        "content": "El :attribute debe ser un archivo."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "filled",
+        "content": "El campo :attribute debe tener un valor."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "image",
+        "content": "El :attribute debe ser una imagen."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "in",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "in_array",
+        "content": "El campo :attribute no existe en :other."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "integer",
+        "content": "El :attribute debe ser un número entero."
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ip",
+        "content": "El  :attribute debe ser una dirección IP válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ipv4",
+        "content": "El  :attribute debe ser una dirección IPv4 válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ipv6",
+        "content": "El  :attribute debe ser una dirección IPv6 válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "json",
+        "content": "El :attribute debe ser una cadena JSON válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "mimes",
+        "content": "El :attribute debe ser un archivo de tipo: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "mimetypes",
+        "content": "El :attribute debe ser un archivo de tipo: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "not_in",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "not_regex",
+        "content": "El formato :attribute no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "numeric",
+        "content": "El :attribute debe ser un número."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "present",
+        "content": "El campo :attribute debe estar presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "regex",
+        "content": "El formato :attribute no es válido"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required",
+        "content": "El campo :attribute es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_if",
+        "content": "El campo :attribute es obligatorio cuando :other es :value."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_unless",
+        "content": "El campo :attribute es obligatorio a menos que :other esté en :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_with",
+        "content": "El campo :attribute es obligatorio cuando :values está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_with_all",
+        "content": "El campo :attribute es obligatorio cuando :values están presentes."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_without",
+        "content": "El campo :attribute es obligatorio cuando :values no está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_without_all",
+        "content": "El campo :attribute es obligatorio cuando ninguno de los :values está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "same",
+        "content": "El :attribute y :other deben coincidir."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "starts_with",
+        "content": "El :attribute debe comenzar con uno de los siguientes: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "string",
+        "content": "El :attribute debe ser una cadena."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "timezone",
+        "content": "El :attribute debe ser una zona válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "unique",
+        "content": "El :attribute ya ha sido tomado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "uploaded",
+        "content": "El :attribute no se pudo cargar."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "url",
+        "content": "El formato :attribute no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "uuid",
+        "content": "El :attribute debe ser un UUID válido."
+    },
+
 
 
 
