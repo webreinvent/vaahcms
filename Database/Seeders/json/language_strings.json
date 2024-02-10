@@ -2849,12 +2849,6 @@
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "must be a valid email address",
-        "content": "must be a valid email address."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "validation",
         "name": "alpha_num",
         "content": "The :attribute may only contain letters and numbers."
     },
@@ -6138,13 +6132,13 @@
         "locale_code_iso_639": "es",
         "category": "validation",
         "name": "ipv4",
-        "content": "El  :attribute debe ser una dirección IPv4 válida."
+        "content": "El :attribute debe ser una dirección IPv4 válida."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
         "name": "ipv6",
-        "content": "El  :attribute debe ser una dirección IPv6 válida."
+        "content": "El :attribute debe ser una dirección IPv6 válida."
     },
     {
         "locale_code_iso_639": "es",
@@ -9107,7 +9101,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "active_url",
-        "content": "Le :attribute n'est pas une URL valide."
+        "content": "Le :attribute n\\'est pas une URL valide."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9125,7 +9119,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "alpha",
-        "content": "L'attribute :ne peut contenir que des lettres."
+        "content": "L\\'attribute :ne peut contenir que des lettres."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9173,7 +9167,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "date",
-        "content": "Le champ :attribute n'est pas une date valide."
+        "content": "Le champ :attribute n\\'est pas une date valide."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9185,7 +9179,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "date_format",
-        "content": "L'attribut :attribute ne correspond pas au format :format."
+        "content": "L\\'attribut :attribute ne correspond pas au format :format."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9206,10 +9200,10 @@
         "content": "Le :attribute doit être compris entre les chiffres :min et :max."
     },
     {
-        "locale_code_iso_639": "en",
+        "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "dimensions",
-        "content": "L'attribut :attribute a des dimensions d'image non valides."
+        "content": "L\\'attribut :attribute a des dimensions d\\'image non valides."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9226,7 +9220,7 @@
     "locale_code_iso_639": "fr",
     "category": "validation",
     "name": "ends_with",
-    "content": "Le champ :attribute doit se terminer par l'une des valeurs suivantes : :values."
+    "content": "Le champ :attribute doit se terminer par l\\'une des valeurs suivantes : :values."
 },
     {
         "locale_code_iso_639": "fr",
@@ -9262,7 +9256,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "in_array",
-        "content": "Le champ :attribute n'existe pas dans :other."
+        "content": "Le champ :attribute n\\'existe pas dans :other."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9274,19 +9268,19 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "ip",
-        "content": "L'adresse IP :attribute doit être valide."
+        "content": "L\\'adresse IP :attribute doit être valide."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "ipv4",
-        "content": "L'adresse IPv4 :attribute doit être valide."
+        "content": "L\\'adresse IPv4 :attribute doit être valide."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "ipv6",
-        "content": "L'adresse IPv6 :attribute doit être valide."
+        "content": "L\\'adresse IPv6 :attribute doit être valide."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9370,13 +9364,13 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "required_without",
-        "content": "Le champ :attribute est requis lorsque :values n'est pas présent."
+        "content": "Le champ :attribute est requis lorsque :values n\\'est pas présent."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "required_without_all",
-        "content": "Le champ :attribute est requis lorsque aucun des :values n'est présent."    },
+        "content": "Le champ :attribute est requis lorsque aucun des :values n\\'est présent."    },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
@@ -9386,7 +9380,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "starts_with",
-        "content": "Le champ :attribute doit commencer par l'une des valeurs suivantes : :values."    },
+        "content": "Le champ :attribute doit commencer par l\\'une des valeurs suivantes : :values."    },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
@@ -9403,13 +9397,13 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "unique",
-        "content": "L':attribute a déjà été pris."
+        "content": "L\\':attribute a déjà été pris."
     },
     {
-        "locale_code_iso_639": "en",
+        "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "uploaded",
-        "content": "The :attribute failed to upload."
+        "content": "La :attribute n\\'a pas pu être téléchargée."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9421,7 +9415,7 @@
         "locale_code_iso_639": "fr",
         "category": "validation",
         "name": "uuid",
-        "content": "L':attribute doit être un UUID valide."
+        "content": "L\\':attribute doit être un UUID valide."
     }
 
 
