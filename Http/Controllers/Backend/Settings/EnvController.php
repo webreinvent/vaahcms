@@ -47,7 +47,7 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -78,7 +78,7 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -107,7 +107,7 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -137,7 +137,7 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
