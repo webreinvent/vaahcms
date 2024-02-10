@@ -6189,7 +6189,7 @@
         "content": "El formato :attribute no es válido"
     },
     {
-        "locale_code_iso_639": "en",
+        "locale_code_iso_639": "es",
         "category": "validation",
         "name": "required",
         "content": "El campo :attribute es obligatorio."
