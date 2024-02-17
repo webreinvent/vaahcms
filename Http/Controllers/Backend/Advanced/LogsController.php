@@ -97,6 +97,7 @@ class LogsController extends Controller
 
                 if (count($files) > 0) {
                     foreach ($files as $file) {
+
                         if ($request['filter'] && isset($request['filter']['file_type'])
                             && count($request['filter']['file_type']) > 0)
                         {
@@ -112,6 +113,7 @@ class LogsController extends Controller
                                             'id' => $i,
                                             'name' => $file,
                                             'path' => $folder_path . '/' . $file,
+                                            'size' => $this->getFileSize($folder_path . '/' . $file)
                                         ];
                                     }
                                 } else {
@@ -119,6 +121,7 @@ class LogsController extends Controller
                                         'id' => $i,
                                         'name' => $file,
                                         'path' => $folder_path . '/' . $file,
+                                        'size' => $this->getFileSize($folder_path . '/' . $file)
                                     ];
                                 }
 
@@ -135,6 +138,7 @@ class LogsController extends Controller
                                 'id' => $i,
                                 'name' => $file,
                                 'path' => $folder_path . '/' . $file,
+                                'size' => $this->getFileSize($folder_path . '/' . $file)
                             ];
 
                             $i++;
@@ -144,6 +148,7 @@ class LogsController extends Controller
                                 'id' => $i,
                                 'name' => $file,
                                 'path' => $folder_path . '/' . $file,
+                                'size' => $this->getFileSize($folder_path . '/' . $file)
                             ];
 
                             $i++;
@@ -326,6 +331,16 @@ class LogsController extends Controller
 
         return response()->json($response);
 
+    }
+    //----------------------------------------------------------
+    public function getFileSize($file_path)
+    {
+        $size = File::size($file_path);
+
+        $base = log($size) / log(1024);
+        $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+        return round(pow(1024, $base - floor($base)),1) . $suffixes[floor($base)];
     }
     //----------------------------------------------------------
 }
