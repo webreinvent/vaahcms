@@ -288,16 +288,16 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -1014,15 +1014,16 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Mark all as active',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_active,
                     command: async () => {
                         await this.listAction('activate-all')
                     }
                 },
                 {
-                    label: 'Mark all as inactive',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_inactive,
                     command: async () => {
                         await this.listAction('deactivate-all')
                     }
@@ -1031,21 +1032,21 @@ export const useRoleStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -1056,13 +1057,14 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -1073,7 +1075,7 @@ export const useRoleStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -1082,7 +1084,7 @@ export const useRoleStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
