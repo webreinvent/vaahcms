@@ -232,7 +232,7 @@ class Role extends RoleBase
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-role.name_already_exist");
             return $response;
         }
 
@@ -242,7 +242,7 @@ class Role extends RoleBase
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-role.slug_already_exist");
             return $response;
         }
 
@@ -254,7 +254,7 @@ class Role extends RoleBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = 'Updated Successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved');
         return $response;
     }
     //-------------------------------------------------
@@ -263,14 +263,14 @@ class Role extends RoleBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['errors'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }

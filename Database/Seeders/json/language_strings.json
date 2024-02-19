@@ -1269,6 +1269,18 @@
     {
         "locale_code_iso_639": "en",
         "category": "role",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
         "name": "Toolkit Text View Users",
         "content": "View Users"
     },
@@ -4407,6 +4419,18 @@
         "category": "role",
         "name": "Roles Title",
         "content": "Roles"
+    },
+    {
+    "locale_code_iso_639": "es",
+    "category": "role",
+    "name": "Name Already Exist",
+    "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Slug Already Exist",
+        "content": "Esta babosa ya existe."
     },
     {
         "locale_code_iso_639": "es",
@@ -7549,6 +7573,18 @@
         "category": "role",
         "name": "Roles Title",
         "content": "Les rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Slug Already Exist",
+        "content": "Cette limace existe déjà."
     },
     {
         "locale_code_iso_639": "fr",
