@@ -1,10 +1,11 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import {useRoleStore} from '../../../stores/store-roles'
-
+import {useRootStore} from "../../../stores/root";
 
 import Filters from './Filters.vue'
 
+const root = useRootStore();
 const store = useRoleStore();
 
 onMounted(async () => {
@@ -34,7 +35,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
@@ -85,7 +86,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                        data-testid="role-action_search_input"
                             />
 
@@ -97,17 +98,17 @@ const toggleBulkMenuState = (event) => {
 
                             <Button class="p-button-sm"
                                     type="button"
+                                    :label="root.assets.language_strings.crud_actions.filters_button"
                                     @click="store.show_filters = true"
                                     data-testid="role-action_filter"
                             >
-                                Filters
                                 <Badge v-if="store.count_filters > 0"
                                        :value="store.count_filters"
                                 />
                             </Button>
 
                             <Button class="p-button-sm"
-                                    label="Reset"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     icon="pi pi-filter-slash"
                                     type="button"
                                     @click="store.resetQuery()"
