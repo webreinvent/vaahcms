@@ -54,7 +54,8 @@ class RolesController extends Controller
             $modules = Permission::withTrashed()->get()->unique('module')->pluck('module');
             $data['language_strings'] = [
                 "roles_title" => trans("vaahcms-role.roles_title"),
-//                "filter_email_verification_pending" => trans("vaahcms-registration.filter_email_verification_pending"),
+                "view_users" => trans("vaahcms-role.toolkit_text_view_users"),
+                "view_permissions" => trans("vaahcms-role.toolkit_text_view_permissions"),
 //                "filter_email_verified" => trans("vaahcms-registration.filter_email_verified"),
 //                "filter_user_created" => trans("vaahcms-registration.filter_user_created"),
 //                "table_gender_male" => trans("vaahcms-registration.table_gender_male"),
