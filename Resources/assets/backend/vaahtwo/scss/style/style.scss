@@ -379,6 +379,12 @@ a{
     margin: 55px 10px 0 auto;
     transition: $sideBarAnimation;
 }
+
+.extend-main-container{
+    width: calc(100% - 215px);
+    margin: 46px 10px 0 auto;
+    transition: $sideBarAnimation;
+}
 .top-nav-fixed.p-menubar .p-menubar-end {
     margin-left: auto;
     align-self: center;

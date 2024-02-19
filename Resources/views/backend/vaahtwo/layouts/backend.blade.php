@@ -40,7 +40,7 @@
 
         </div>
 
-        <div class="main-container">
+        <div class="extend-main-container">
             @yield('content')
         </div>
 
