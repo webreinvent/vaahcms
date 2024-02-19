@@ -62,7 +62,7 @@ class RegistrationsController extends Controller
             }
 
             //---------------------------------------------------
-            
+
             $data['language_strings'] = [
                 "page_title" => trans("vaahcms-registration.registrations_title"),
                 "filter_email_verification_pending" => trans("vaahcms-registration.filter_email_verification_pending"),
