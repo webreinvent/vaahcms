@@ -780,14 +780,14 @@ export const useRegistrationStore = defineStore({
             if (this.assets && this.assets.language_strings) {
                 this.list_bulk_menu = [
                     {
-                        label: 'All Users Email Verification Pending',
+                        label: this.assets.language_strings.filter_users_email_verification_pending,
                         icon: 'pi pi-calendar-times',
                         command: async () => {
                             await this.listAction('email-verification-pending')
                         }
                     },
                     {
-                        label: 'All Users Email Verified',
+                        label: this.assets.language_strings.filter_users_email_verified,
                         icon: 'pi pi-envelope',
                         command: async () => {
                             await this.listAction('email-verified')
