@@ -3,7 +3,9 @@ import {ref, reactive, watch, onMounted} from 'vue';
 import { useRegistrationStore } from '../../../stores/store-registrations'
 
 import Filters from './Filters.vue'
+import {useRootStore} from "../../../stores/root";
 
+const root = useRootStore();
 const store = useRegistrationStore();
 
 onMounted(async () => {
@@ -33,7 +35,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
@@ -82,7 +84,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                        name="register-search_query_filter_q"
                                        data-testid="register-search_query_filter_q"
                                        class="p-inputtext-sm"
@@ -94,9 +96,9 @@ const toggleBulkMenuState = (event) => {
                                     data-testid="register-search_icon_query_filter_q"
                             />
 
-                            <Button label="Filters"
-                                    class="p-button-sm"
-                                    @click="store.show_filters = true"
+                            <Button  class="p-button-sm"
+                                     :label="root.assets.language_strings.crud_actions.filters_button"
+                                     @click="store.show_filters = true"
                                     data-testid="register-show_filters"
                             >
                                 <Badge v-if="store.count_filters > 0" :value="store.count_filters" />
@@ -104,7 +106,7 @@ const toggleBulkMenuState = (event) => {
 
                             <Button icon="pi pi-filter-slash"
                                     class="p-button-sm"
-                                    label="Reset"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     @click="store.resetQuery()"
                                     data-testid="register-reset_query"
                             />

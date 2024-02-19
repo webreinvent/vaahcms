@@ -6,11 +6,12 @@ import {useRegistrationStore} from '../../stores/store-registrations'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
-
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
+import {useRootStore} from "../../stores/root";
 const confirm = useConfirm();
 
 
@@ -57,11 +58,11 @@ onMounted(async () => {
                 <template class="p-1" #header>
 
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Registrations</b>
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.page_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
 
                     </div>
@@ -69,9 +70,12 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup"
+                         v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions">
                         <Button class="p-button-sm"
-                                label="Create"
+                                :label="root.assets.language_strings.crud_actions.create_button"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
                                 data-testid="registration-create"
@@ -87,7 +91,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>

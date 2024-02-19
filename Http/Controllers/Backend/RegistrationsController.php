@@ -61,6 +61,20 @@ class RegistrationsController extends Controller
                 }
             }
 
+            //---------------------------------------------------
+            
+            $data['language_strings'] = [
+                "page_title" => trans("vaahcms-registration.registrations_title"),
+                "filter_email_verification_pending" => trans("vaahcms-registration.filter_email_verification_pending"),
+                "filter_email_verified" => trans("vaahcms-registration.filter_email_verified"),
+                "filter_user_created" => trans("vaahcms-registration.filter_user_created"),
+                "table_gender_male" => trans("vaahcms-registration.table_gender_male"),
+                "table_gender_female" => trans("vaahcms-registration.table_gender_female"),
+                "table_gender_others" => trans("vaahcms-registration.table_gender_others"),
+            ];
+
+            //---------------------------------------------------
+
             $data['actions'] = [];
 
             $data['country_calling_code'] = vh_get_country_list();
