@@ -907,6 +907,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "This alternate email should be different."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Email Verification Pending"
     },
@@ -4056,6 +4062,12 @@
         "category": "registration",
         "name": "Registrations Title",
         "content": "Inscripciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
     },
     {
         "locale_code_iso_639": "es",
@@ -7216,6 +7228,12 @@
         "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Vérification de l\\'e-mail en attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
     },
     {
         "locale_code_iso_639": "fr",

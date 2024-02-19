@@ -131,7 +131,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This email is already exist.";
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
         // check if username exist
@@ -139,7 +139,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This username is already exist.";
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -148,7 +148,7 @@ class Registration extends RegistrationBase
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['errors'][] = "The alternate email id should be different";
+             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
         if(!isset($inputs['username']))
@@ -507,7 +507,7 @@ class Registration extends RegistrationBase
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['errors'][] = "This alternate email should be different";
+             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
 
@@ -532,14 +532,14 @@ class Registration extends RegistrationBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }
