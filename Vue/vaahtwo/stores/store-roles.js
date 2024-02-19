@@ -238,6 +238,10 @@ export const useRoleStore = defineStore({
                 }
 
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getPermissionMenuItems();
+
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -1213,20 +1217,22 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getPermissionMenuItems() {
-            this.permission_menu_items = [
-                {
-                    label: 'Active All Permissions',
-                    command: () => {
-                        this.bulkActions(1, 'toggle-permission-active-status');
+            if (this.assets && this.assets.language_strings) {
+                this.permission_menu_items = [
+                    {
+                        label: this.assets.language_strings.view_permissions_active_all_permissions,
+                        command: () => {
+                            this.bulkActions(1, 'toggle-permission-active-status');
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.view_permissions_inactive_all_permissions,
+                        command: () => {
+                            this.bulkActions(0, 'toggle-permission-active-status');
+                        }
                     }
-                },
-                {
-                    label: 'Inactive All Permissions',
-                    command: () => {
-                        this.bulkActions(0, 'toggle-permission-active-status');
-                    }
-                }
-            ]
+                ]
+            }
         },
         //---------------------------------------------------------------------
         async getRoleUserMenuItems() {
