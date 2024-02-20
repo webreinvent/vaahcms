@@ -132,11 +132,11 @@ const openViewModal = () => {
 
             <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
-                    <div class="p-inputgroup ">
+                    <div class="p-inputgroup " v-if="store.assets && store.assets.language_strings">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText  class="w-full p-inputtext-sm"
-                                        placeholder="Search"
+                                        :placeholder="store.assets.language_strings.view_roles_placeholder_search"
                                         data-testid="permission-role_search"
                                         v-model="store.permission_roles_query.q"
                                         @keyup.enter="store.delayedItemUsersSearch()"
@@ -145,7 +145,8 @@ const openViewModal = () => {
                             />
                         </span>
 
-                        <Button class="p-button-sm" label="Reset"
+                        <Button class="p-button-sm"
+                                :label="store.assets.language_strings.view_roles_reset_button"
                                 data-testid="permission-role_reset"
                                 @click="store.resetPermissionRolesQuery()"
                         />
@@ -224,7 +225,7 @@ const openViewModal = () => {
                                 @click="openViewModal(), store.active_permission_role = prop.data"
                                 icon="pi pi-eye"
                                 data-testid="permission-role_view_details"
-                                label="View"
+                                :label=store.assets.language_strings.view_roles_text_view
                         />
                     </template>
                 </Column>

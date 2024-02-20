@@ -56,6 +56,7 @@ class PermissionsController extends Controller
                 "view_roles_inactive_all_roles" => trans("vaahcms-permission.view_roles_inactive_all_roles"),
                 "view_roles_placeholder_search" => trans("vaahcms-permission.view_roles_placeholder_search"),
                 "view_roles_reset_button" => trans("vaahcms-permission.view_roles_reset_button"),
+                "view_roles_text_view" => trans("vaahcms-permission.view_roles_text_view"),
 
             ];
 

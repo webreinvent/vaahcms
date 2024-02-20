@@ -213,6 +213,10 @@ export const usePermissionStore = defineStore({
                 }
 
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getRoleMenu();
+
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -1029,20 +1033,22 @@ export const usePermissionStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getRoleMenu() {
-            return this.roles_menu_items = [
-                {
-                    label: 'Active All Roles',
-                    command: async () => {
-                        await this.bulkActions(1, 'toggle-role-active-status');
+            if (this.assets && this.assets.language_strings) {
+                return this.roles_menu_items = [
+                    {
+                        label: this.assets.language_strings.view_roles_active_all_roles,
+                        command: async () => {
+                            await this.bulkActions(1, 'toggle-role-active-status');
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.view_roles_inactive_all_roles,
+                        command: async () => {
+                            await this.bulkActions(0, 'toggle-role-active-status');
+                        }
                     }
-                },
-                {
-                    label: 'Inactive All Roles',
-                    command: async () => {
-                        await this.bulkActions(0, 'toggle-role-active-status');
-                    }
-                }
-            ];
+                ];
+            }
         },
         //---------------------------------------------------------------------
         hasPermission(slug) {
