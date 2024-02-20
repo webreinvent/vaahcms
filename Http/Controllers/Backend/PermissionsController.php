@@ -52,6 +52,10 @@ class PermissionsController extends Controller
                 "permissions_title" => trans("vaahcms-permission.permissions_title"),
                 "toolkit_text_view_role" => trans("vaahcms-permission.toolkit_text_view_role"),
                 "toolkit_text_view_user" => trans("vaahcms-permission.toolkit_text_view_user"),
+                "view_roles_active_all_roles" => trans("vaahcms-permission.view_roles_active_all_roles"),
+                "view_roles_inactive_all_roles" => trans("vaahcms-permission.view_roles_inactive_all_roles"),
+                "view_roles_placeholder_search" => trans("vaahcms-permission.view_roles_placeholder_search"),
+                "view_roles_reset_button" => trans("vaahcms-permission.view_roles_reset_button"),
 
             ];
 
