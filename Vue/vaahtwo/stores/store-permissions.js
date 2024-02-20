@@ -812,15 +812,16 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Activate',
+                    label: root.assets.language_strings.crud_actions.bulk_activate,
                     command: async () => {
                         await this.updateList('activate')
                     }
                 },
                 {
-                    label: 'Deactivate',
+                    label: root.assets.language_strings.crud_actions.bulk_deactivate,
                     command: async () => {
                         await this.updateList('deactivate')
                     }
@@ -829,21 +830,21 @@ export const usePermissionStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.bulk_restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: 'Delete',
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -855,15 +856,16 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Mark all as active',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_active,
                     command: async () => {
                         await this.listAction('activate-all')
                     }
                 },
                 {
-                    label: 'Mark all as inactive',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_inactive,
                     command: async () => {
                         await this.listAction('deactivate-all')
                     }
@@ -872,21 +874,21 @@ export const usePermissionStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -897,13 +899,14 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -914,7 +917,7 @@ export const usePermissionStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -923,7 +926,7 @@ export const usePermissionStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -946,13 +949,14 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id)
             {
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_strings.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
 
@@ -960,7 +964,7 @@ export const usePermissionStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_strings.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -969,14 +973,14 @@ export const usePermissionStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_strings.crud_actions.view_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -987,14 +991,14 @@ export const usePermissionStore = defineStore({
             } else{
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_strings.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_strings.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1003,7 +1007,7 @@ export const usePermissionStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_strings.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -1013,7 +1017,7 @@ export const usePermissionStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_strings.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
