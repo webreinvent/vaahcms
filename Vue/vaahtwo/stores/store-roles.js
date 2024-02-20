@@ -240,6 +240,7 @@ export const useRoleStore = defineStore({
             }
             if (this.assets && this.assets.language_strings) {
                 this.getPermissionMenuItems();
+                this.getRoleUserMenuItems();
 
             }
         },
@@ -1236,20 +1237,22 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getRoleUserMenuItems() {
-            this.role_user_menu_items = [
-                {
-                    label: 'Attach To All Users',
-                    command: () => {
-                        this.bulkActions(1, 'toggle-user-active-status',this.role_users_query);
+            if (this.assets && this.assets.language_strings) {
+                this.role_user_menu_items = [
+                    {
+                        label: this.assets.language_strings.view_users_attach_to_all_users,
+                        command: () => {
+                            this.bulkActions(1, 'toggle-user-active-status', this.role_users_query);
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.view_users_detach_to_all_users,
+                        command: () => {
+                            this.bulkActions(0, 'toggle-user-active-status', this.role_users_query);
+                        }
                     }
-                },
-                {
-                    label: 'Detach To All Users',
-                    command: () => {
-                        this.bulkActions(0, 'toggle-user-active-status',this.role_users_query);
-                    }
-                }
-            ]
+                ]
+            }
         },
         //---------------------------------------------------------------------
         hasPermission(slug) {

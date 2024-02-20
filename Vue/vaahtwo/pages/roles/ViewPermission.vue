@@ -329,7 +329,7 @@ const confirmChangeStatus = (event, id) => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
-                                label="View"
+                                :label=store.assets.language_strings.view_permissions_text_view
                                 v-tooltip.top="store.assets.language_strings.view_permissions_text_view"
                                 data-testid="role-permission_view_modal"
                         />

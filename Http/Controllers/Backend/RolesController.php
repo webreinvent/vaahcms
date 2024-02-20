@@ -66,6 +66,13 @@ class RolesController extends Controller
                 "view_permissions_inactive" => trans("vaahcms-role.view_permissions_inactive"),
                 "view_permissions_active_all_permissions" => trans("vaahcms-role.view_permissions_active_all_permissions"),
                 "view_permissions_inactive_all_permissions" => trans("vaahcms-role.view_permissions_inactive_all_permissions"),
+                "view_users_placeholder_search" => trans("vaahcms-role.view_users_placeholder_search"),
+                "view_users_reset_button" => trans("vaahcms-role.view_users_reset_button"),
+                "view_users_attach_to_all_users" => trans("vaahcms-role.view_users_attach_to_all_users"),
+                "view_users_detach_to_all_users" => trans("vaahcms-role.view_users_detach_to_all_users"),
+                "view_users_yes" => trans("vaahcms-role.view_users_yes"),
+                "view_users_no" => trans("vaahcms-role.view_users_no"),
+                "view_users_text_view" => trans("vaahcms-role.view_users_text_view"),
             ];
             $data['actions'] = [];
             $data['modules'] = $modules;
