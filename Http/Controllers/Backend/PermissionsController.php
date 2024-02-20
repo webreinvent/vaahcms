@@ -50,6 +50,8 @@ class PermissionsController extends Controller
 
             $data['language_strings'] = [
                 "permissions_title" => trans("vaahcms-permission.permissions_title"),
+                "toolkit_text_view_role" => trans("vaahcms-permission.toolkit_text_view_role"),
+                "toolkit_text_view_user" => trans("vaahcms-permission.toolkit_text_view_user"),
 
             ];
 
