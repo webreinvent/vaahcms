@@ -39,6 +39,12 @@ class ModulesController extends Controller
                 "toolkit_text_reload" => trans("vaahcms-extend-module.toolkit_text_reload"),
                 "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
                 "install_button" => trans("vaahcms-extend-module.install_button"),
+                "filter_button" => trans("vaahcms-extend-module.filter_button"),
+                "install_placeholder_search" => trans("vaahcms-extend-module.install_placeholder_search"),
+                "filter_all" => trans("vaahcms-extend-module.filter_all"),
+                "filter_active" => trans("vaahcms-extend-module.filter_active"),
+                "filter_inactive" => trans("vaahcms-extend-module.filter_inactive"),
+                "filter_update_available" => trans("vaahcms-extend-module.filter_update_available"),
 
             ];
 
