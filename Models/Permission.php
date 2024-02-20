@@ -204,11 +204,13 @@ class Permission extends PermissionBase
     public static function listAction($request, $type): array
     {
         $inputs = $request->all();
+        
+        $filter = $inputs['query']['filter'] ?? [];
 
-        $list = self::getSorted($inputs['query']['filter']);
-        $list->isActiveFilter($inputs['query']['filter']);
-        $list->trashedFilter($inputs['query']['filter']);
-        $list->searchFilter($inputs['query']['filter']);
+        $list = self::getSorted($filter);
+        $list->isActiveFilter($filter);
+        $list->trashedFilter($filter);
+        $list->searchFilter($filter);
 
         if (isset($request['from']) && isset($request['to'])) {
             $list->betweenDates($request['from'],$request['to']);
