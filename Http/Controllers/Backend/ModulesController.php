@@ -34,6 +34,14 @@ class ModulesController extends Controller
             $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
             $data['rows'] = config('vaahcms.per_page');
 
+            $data['language_strings'] = [
+                "module_title" => trans("vaahcms-sidebar-menu.modules"),
+                "toolkit_text_reload" => trans("vaahcms-extend-module.toolkit_text_reload"),
+                "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
+                "install_button" => trans("vaahcms-extend-module.install_button"),
+
+            ];
+
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
