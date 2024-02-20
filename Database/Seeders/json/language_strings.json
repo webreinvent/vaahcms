@@ -1460,6 +1460,18 @@
         "name": "View Roles Inactive All Roles",
         "content": "Inactive All Roles"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
+    },
 
     {
         "locale_code_iso_639": "en",
@@ -4600,6 +4612,18 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactivo todos los roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "Esta babosa ya existe."
     },
 
     {
@@ -7742,6 +7766,18 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactif Tous les rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "Cette limace existe déjà."
     },
 
     {

@@ -281,7 +281,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-permission.name_already_exist");
             return $response;
         }
 
@@ -291,7 +291,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-permission.slug_already_exist");
             return $response;
         }
 
@@ -303,7 +303,7 @@ class Permission extends PermissionBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = 'Updated successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved');
         return $response;
     }
     //-------------------------------------------------
@@ -312,14 +312,14 @@ class Permission extends PermissionBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }
