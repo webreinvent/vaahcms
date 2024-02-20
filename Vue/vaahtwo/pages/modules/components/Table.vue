@@ -46,21 +46,21 @@ const confirmRefresh = (item) =>
 function actionItems(item){
     let list =[
         {
-            label: 'Run Migrations',
+            label: store.assets.language_strings.actions_run_migrations,
             icon: 'pi pi-database',
             command: () => {
                 store.runMigrations(item);
             }
         },
         {
-            label: 'Run Seeds',
+            label: store.assets.language_strings.actions_run_seeds,
             icon: 'pi pi-server',
             command: () => {
                 store.runSeeds(item);
             }
         },
         {
-            label: 'Refresh Migrations',
+            label: store.assets.language_strings.actions_refresh_migrations,
             icon: 'pi pi-refresh',
             command: () => {
                 confirmRefresh(item);
@@ -146,7 +146,7 @@ function actionItems(item){
                     />
 
                     <Button class="p-button-info p-button-sm mr-2"
-                            label="Update"
+                            :label=store.assets.language_strings.update_button
                             :data-testid="'module-update-'+item.slug"
                             data-testid="modules-table-action-install-update"
                             icon="pi pi-download"

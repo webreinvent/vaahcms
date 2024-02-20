@@ -56,6 +56,10 @@ class ModulesController extends Controller
                 "toolkit_text_import_sample_data" => trans("vaahcms-extend-module.toolkit_text_import_sample_data"),
                 "toolkit_text_publish_assets" => trans("vaahcms-extend-module.toolkit_text_publish_assets"),
                 "toolkit_text_actions" => trans("vaahcms-extend-module.toolkit_text_actions"),
+                "actions_run_migrations" => trans("vaahcms-extend-module.actions_run_migrations"),
+                "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
+                "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
+                "update_button" => trans("vaahcms-extend-module.update_button"),
 
             ];
 
