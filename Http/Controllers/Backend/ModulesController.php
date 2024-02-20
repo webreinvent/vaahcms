@@ -45,6 +45,17 @@ class ModulesController extends Controller
                 "filter_active" => trans("vaahcms-extend-module.filter_active"),
                 "filter_inactive" => trans("vaahcms-extend-module.filter_inactive"),
                 "filter_update_available" => trans("vaahcms-extend-module.filter_update_available"),
+                "name" => trans("vaahcms-extend-module.name"),
+                "version" => trans("vaahcms-extend-module.version"),
+                "developed_by" => trans("vaahcms-extend-module.developed_by"),
+                "activate_button" => trans("vaahcms-extend-module.activate_button"),
+                "toolkit_text_activate_module" => trans("vaahcms-extend-module.toolkit_text_activate_module"),
+                "deactivate_button" => trans("vaahcms-extend-module.deactivate_button"),
+                "toolkit_text_deactivate_module" => trans("vaahcms-extend-module.toolkit_text_deactivate_module"),
+                "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
+                "toolkit_text_import_sample_data" => trans("vaahcms-extend-module.toolkit_text_import_sample_data"),
+                "toolkit_text_publish_assets" => trans("vaahcms-extend-module.toolkit_text_publish_assets"),
+                "toolkit_text_actions" => trans("vaahcms-extend-module.toolkit_text_actions"),
 
             ];
 
