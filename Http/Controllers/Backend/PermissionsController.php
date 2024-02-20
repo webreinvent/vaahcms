@@ -48,6 +48,11 @@ class PermissionsController extends Controller
                 $data['empty_item'][$column] = null;
             }
 
+            $data['language_strings'] = [
+                "permissions_title" => trans("vaahcms-permission.permissions_title"),
+
+            ];
+
             $data['actions'] = [];
 
             $response['success'] = true;
