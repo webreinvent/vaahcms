@@ -60,6 +60,8 @@ class ModulesController extends Controller
                 "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
                 "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
                 "update_button" => trans("vaahcms-extend-module.update_button"),
+                "install_modules" => trans("vaahcms-extend-module.install_modules"),
+                "installed_button" => trans("vaahcms-extend-module.installed_button"),
 
             ];
 
