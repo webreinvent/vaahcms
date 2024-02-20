@@ -1409,6 +1409,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Details"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "View Role"
     },
@@ -4558,6 +4564,12 @@
         "category": "permission",
         "name": "Permissions Title",
         "content": "Permisos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Detalles"
     },
     {
         "locale_code_iso_639": "es",
@@ -7712,6 +7724,12 @@
         "category": "permission",
         "name": "Permissions Title",
         "content": "Autorisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Détails"
     },
     {
         "locale_code_iso_639": "fr",

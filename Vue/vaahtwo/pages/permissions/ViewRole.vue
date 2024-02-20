@@ -64,7 +64,7 @@ const dialog = useDialog();
 const openViewModal = () => {
     const dialogRef = dialog.open(RoleDetailsView, {
         props: {
-            header: 'Details',
+            header: store.assets.language_strings.details_dialogue,
             style: {
                 width: '50vw',
             },

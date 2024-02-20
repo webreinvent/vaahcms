@@ -59,6 +59,7 @@ class PermissionsController extends Controller
                 "view_roles_text_view" => trans("vaahcms-permission.view_roles_text_view"),
                 "view_roles_yes" => trans("vaahcms-permission.view_roles_yes"),
                 "view_roles_no" => trans("vaahcms-permission.view_roles_no"),
+                "details_dialogue" => trans("vaahcms-permission.details_dialogue"),
 
             ];
 
