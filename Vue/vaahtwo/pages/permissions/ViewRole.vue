@@ -171,7 +171,7 @@ const openViewModal = () => {
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="permissions-role_id"
-                                v-tooltip.top="'Copy Slug'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
                         />
@@ -181,19 +181,20 @@ const openViewModal = () => {
 
                 <Column field="has-permission"
                         header="Has Permission"
+                        v-if="store.assets && store.assets.language_strings"
                 >
 
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_roles_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 data-testid="permission-role_status_yes"
                                 @click="store.changePermission(prop.data)"
                         />
 
-                        <Button label="No"
+                        <Button :label="store.assets.language_strings.view_roles_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="store.changePermission(prop.data)"
@@ -205,13 +206,13 @@ const openViewModal = () => {
                               v-else
 
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_roles_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button label="No"
+                        <Button :label="store.assets.language_strings.view_roles_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 disabled
                                 v-else
