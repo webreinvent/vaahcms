@@ -1475,6 +1475,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Details"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "View Role"
     },
@@ -1525,6 +1531,24 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactive All Roles"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
+        "name": "Updated Successfully",
+        "content": "updated successfully."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
     },
 
     {
@@ -4682,6 +4706,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Detalles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "Ver rol"
     },
@@ -4732,6 +4762,24 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactivo todos los roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Updated Successfully",
+        "content": "actualizado exitosamente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "Esta babosa ya existe."
     },
 
     {
@@ -7890,6 +7938,12 @@
     {
         "locale_code_iso_639": "fr",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Détails"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "Afficher le rôle"
     },
@@ -7940,6 +7994,24 @@
         "category": "permission",
         "name": "View Roles Inactive All Roles",
         "content": "Inactif Tous les rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Updated Successfully",
+        "content": "Mis à jour avec succés."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Slug Already Exist",
+        "content": "Cette limace existe déjà."
     },
 
     {
