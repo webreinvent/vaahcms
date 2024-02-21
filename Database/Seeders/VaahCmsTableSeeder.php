@@ -191,6 +191,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Localization'],
             ["name" => 'Login'],
             ["name" => 'Sidebar Menu'],
+            ["name" => 'Taxonomy'],
             ["name" => 'Dashboard'],
             ["name" => 'Registration'],
             ["name" => 'Crud Action'],

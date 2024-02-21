@@ -60,6 +60,11 @@ class TaxonomiesController extends Controller
                 ->get();
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "taxonomy_title" => trans("vaahcms-taxonomy.taxonomy_title"),
+                "toolkit_text_view_type" => trans("vaahcms-taxonomy.toolkit_text_view_type"),
+
+            ];
             $data['types'] = $taxonomy_types->toArray();
 
             $response['success'] = true;

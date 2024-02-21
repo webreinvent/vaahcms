@@ -60,8 +60,8 @@ onMounted(async () => {
             <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Taxonomies</b>
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.taxonomy_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />

@@ -92,7 +92,7 @@ const openTaxonomyTypeModal = () => {
                      <template v-if="store.hasPermission('can-manage-taxonomy-types')">
                          <Button class="p-button-tiny p-button-text"
                                  data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
-                                 v-tooltip.top="'Manage Taxonomy Type'"
+                                 v-tooltip.top="store.assets.language_strings.toolkit_text_view_type"
                                  icon="pi pi-pencil"
                                  @click="openTaxonomyTypeModal"
                          />

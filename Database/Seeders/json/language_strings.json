@@ -2511,6 +2511,46 @@
         "content": "Error notifications"
     },
 
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Manage Taxonomy Type"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomías"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "\nAdministrar tipo de taxonomía"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Gérer le type de taxonomie"
+    },
+
     {
         "locale_code_iso_639": "en",
         "category": "update-setting",
