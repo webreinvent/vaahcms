@@ -3,8 +3,9 @@ import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 import {vaah} from '../../vaahvue/pinia/vaah';
 import { useMediaStore } from '../../stores/store-media';
+import { useRootStore } from "../../stores/root";
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
-
+const root = useRootStore();
 const store = useMediaStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -87,12 +88,14 @@ const toggleItemMenu = (event) => {
                             data-testid="media-item-id"
                     />
 
-                    <Button label="Edit"
+                    <Button  :label="root.assets.language_strings.crud_actions.view_edit"
                             class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
                             icon="pi pi-pencil"
-                            v-if="store.hasPermission('can-update-media')"
+                            v-if="store.hasPermission('can-update-media') && root.assets
+                                  && root.assets.language_strings
+                                  && root.assets.language_strings.crud_actions"
                     />
 
                     <!--item_menu-->
@@ -125,14 +128,17 @@ const toggleItemMenu = (event) => {
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at"
                 >
-                    <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center justify-content-between" v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                    >
 
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_strings.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
                                     class="p-button-sm"
                                     data-testid="media-item-restore"
                                     @click="store.itemAction('restore')"

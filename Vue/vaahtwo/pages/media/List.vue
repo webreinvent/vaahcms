@@ -2,11 +2,12 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useMediaStore} from '../../stores/store-media'
+import {useMediaStore} from '../../stores/store-media';
+import {useRootStore} from "../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
-
+const root = useRootStore();
 const store = useMediaStore();
 const route = useRoute();
 
@@ -63,7 +64,7 @@ onMounted(async () => {
                             </div>
 
                             <div class="flex flex-column align-items-start">
-                                <p class="text-sm font-semibold">Total Medias</p>
+                                <p class="text-sm font-semibold">{{store.assets.language_strings.total_medias_heading}}</p>
                                 <h6 v-if="store.list" class="text-xl font-semibold">
                                     {{ store.list.total}}
                                 </h6>
@@ -80,7 +81,7 @@ onMounted(async () => {
                             </span></div>
 
                             <div class="flex flex-column align-items-start">
-                                <p class="text-sm font-semibold">Total File Size</p>
+                                <p class="text-sm font-semibold">{{store.assets.language_strings.total_file_size_heading}}</p>
                                 <h6 v-if="store.list" class="text-xl font-semibold">
                                     {{ store.total_file_size }} MB
                                 </h6>
@@ -99,7 +100,7 @@ onMounted(async () => {
                             </div>
 
                             <div class="flex flex-column align-items-start">
-                                <p class="text-sm font-semibold">Trashed File Size</p>
+                                <p class="text-sm font-semibold">{{store.assets.language_strings.trashed_file_size_heading}}</p>
                                 <h6 v-if="store.list" class="text-xl font-semibold">
                                     {{ store.trashed_file_size}} MB
                                 </h6>
@@ -114,8 +115,8 @@ onMounted(async () => {
             <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div>
-                            <b class="mr-1">Media</b>
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.media_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
@@ -124,11 +125,14 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <span class="p-inputgroup">
+                    <span class="p-inputgroup" v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                    >
                         <Button data-testid="media-list-create"
                                 @click="store.toForm()"
                                 icon="pi pi-plus"
-                                label="Create"
+                                :label="root.assets.language_strings.crud_actions.create_button"
                                 class="p-button-sm"
                                 v-if="store.hasPermission('can-create-media')"
                         />
@@ -142,7 +146,10 @@ onMounted(async () => {
                     </span>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>

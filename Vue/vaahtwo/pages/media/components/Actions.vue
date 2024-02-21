@@ -1,9 +1,10 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
-import { useMediaStore } from '../../../stores/store-media'
+import { useMediaStore } from '../../../stores/store-media';
+import {useRootStore} from "../../../stores/root";
 
 import Filters from './Filters.vue'
-
+const root = useRootStore();
 const store = useMediaStore();
 
 onMounted(async () => {
@@ -33,7 +34,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button v-if="store.hasPermission('can-manage-media') || store.hasPermission('can-update-media')"
@@ -84,7 +85,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        data-testid="media-actions-search"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                             />
 
                             <Button @click="store.delayedSearch()"
@@ -94,7 +95,7 @@ const toggleBulkMenuState = (event) => {
                             />
 
                             <Button class="p-button-sm"
-                                    label="Filters"
+                                    :label="root.assets.language_strings.crud_actions.filters_button"
                                     data-testid="media-actions-show-filters"
                                     @click="store.show_filters = true"
                             >
@@ -104,7 +105,7 @@ const toggleBulkMenuState = (event) => {
                             <Button class="p-button-sm"
                                     icon="pi pi-filter-slash"
                                     data-testid="media-actions-reset-filters"
-                                    label="Reset"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     @click="store.resetQuery()"
                             />
                         </div>
