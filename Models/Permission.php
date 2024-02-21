@@ -204,7 +204,7 @@ class Permission extends PermissionBase
     public static function listAction($request, $type): array
     {
         $inputs = $request->all();
-        
+
         $filter = $inputs['query']['filter'] ?? [];
 
         $list = self::getSorted($filter);
@@ -305,7 +305,7 @@ class Permission extends PermissionBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = trans('vaahcms-general.saved');
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
     }
     //-------------------------------------------------
