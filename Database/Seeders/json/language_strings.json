@@ -2647,6 +2647,54 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
+        "name": "Run Migrations",
+        "content": "Migration run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Run Seeds",
+        "content": "Seeds run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Refresh Migrations",
+        "content": "Migration refresh is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "Module is activated"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Run Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "Run Seeds"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Refresh Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
         "name": "Toolkit Text View",
         "content": "View"
     },
@@ -5873,6 +5921,54 @@
         "category": "extend-module",
         "name": "Toolkit Text Deactivate Module",
         "content": "Desactivar módulo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Run Migrations",
+        "content": "La ejecución de la migración es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Run Seeds",
+        "content": "La ejecución de semillas es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Refresh Migrations",
+        "content": "La actualización de la migración se realizó correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "El módulo está activado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Ejecutar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "Ejecutar semillas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Actualizar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Actualizar"
     },
     {
         "locale_code_iso_639": "es",
@@ -9105,6 +9201,54 @@
         "category": "extend-module",
         "name": "Toolkit Text Deactivate Module",
         "content": "Désactiver le module"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Run Migrations",
+        "content": "L\\'exécution de la migration a réussi"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Run Seeds",
+        "content": "La course aux graines est réussie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Refresh Migrations",
+        "content": "L\\'actualisation de la migration a réussi"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "\nLe module est activé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Exécuter des migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "\nExécuter des graines"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Actualiser les migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Mise à jour"
     },
     {
         "locale_code_iso_639": "fr",

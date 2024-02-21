@@ -1,7 +1,9 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
 import { useModuleStore } from '../../../stores/store-modules'
+import {useRootStore} from "../../../stores/root";
 
+const root = useRootStore();
 const store = useModuleStore();
 
 onMounted(async () => {
@@ -33,7 +35,7 @@ const toggleBulkMenuState = (event) => {
 
             <!--left-->
 
-            <div class="">
+            <div class="" v-if="root.assets.language_strings.general">
 
                 <!--bulk_menu-->
                 <Button class="p-button-sm"
@@ -41,7 +43,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         data-testid="themes-actions"
                         @click="toggleBulkMenuState"
-                        :label="store.query.filter.status?store.toLabel(store.query.filter.status):'Filter'"
+                        :label="store.query.filter.status?store.toLabel(store.query.filter.status):store.assets.language_strings.filter_button"
                 />
 
                 <Menu ref="bulk_menu_state"
@@ -60,7 +62,7 @@ const toggleBulkMenuState = (event) => {
                                @keyup.enter.native="store.delayedSearch()"
                                @keyup.13="store.getList()"
                                data-testid="modules-actions-search"
-                               placeholder="Search"
+                               :placeholder=store.assets.language_strings.install_placeholder_search
                                class="p-inputtext-sm"
                     />
 
@@ -68,7 +70,7 @@ const toggleBulkMenuState = (event) => {
                     <Button class="p-button-sm"
                             icon="pi pi-filter-slash"
                             data-testid="modules-actions-reset-filters"
-                            label="Reset"
+                            :label="root.assets.language_strings.crud_actions.reset_button"
                             @click="store.resetQuery()"
                     />
                 </div>

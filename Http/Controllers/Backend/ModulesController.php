@@ -34,6 +34,37 @@ class ModulesController extends Controller
             $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
             $data['rows'] = config('vaahcms.per_page');
 
+            $data['language_strings'] = [
+                "module_title" => trans("vaahcms-sidebar-menu.modules"),
+                "toolkit_text_reload" => trans("vaahcms-extend-module.toolkit_text_reload"),
+                "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
+                "install_button" => trans("vaahcms-extend-module.install_button"),
+                "filter_button" => trans("vaahcms-extend-module.filter_button"),
+                "install_placeholder_search" => trans("vaahcms-extend-module.install_placeholder_search"),
+                "filter_all" => trans("vaahcms-extend-module.filter_all"),
+                "filter_active" => trans("vaahcms-extend-module.filter_active"),
+                "filter_inactive" => trans("vaahcms-extend-module.filter_inactive"),
+                "filter_update_available" => trans("vaahcms-extend-module.filter_update_available"),
+                "name" => trans("vaahcms-extend-module.name"),
+                "version" => trans("vaahcms-extend-module.version"),
+                "developed_by" => trans("vaahcms-extend-module.developed_by"),
+                "activate_button" => trans("vaahcms-extend-module.activate_button"),
+                "toolkit_text_activate_module" => trans("vaahcms-extend-module.toolkit_text_activate_module"),
+                "deactivate_button" => trans("vaahcms-extend-module.deactivate_button"),
+                "toolkit_text_deactivate_module" => trans("vaahcms-extend-module.toolkit_text_deactivate_module"),
+                "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
+                "toolkit_text_import_sample_data" => trans("vaahcms-extend-module.toolkit_text_import_sample_data"),
+                "toolkit_text_publish_assets" => trans("vaahcms-extend-module.toolkit_text_publish_assets"),
+                "toolkit_text_actions" => trans("vaahcms-extend-module.toolkit_text_actions"),
+                "actions_run_migrations" => trans("vaahcms-extend-module.actions_run_migrations"),
+                "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
+                "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
+                "update_button" => trans("vaahcms-extend-module.update_button"),
+                "install_modules" => trans("vaahcms-extend-module.install_modules"),
+                "installed_button" => trans("vaahcms-extend-module.installed_button"),
+
+            ];
+
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {

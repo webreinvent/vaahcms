@@ -42,15 +42,15 @@ onMounted(async () => {
 </script>
 <template>
     <div class="col-6" >
-        <div v-if="store.modules.list && store.modules.list.data">
+        <div v-if="store.modules.list && store.modules.list.data && store.assets">
             <Card>
                 <template #header>
                     <div class="flex justify-content-between align-items-center">
-                        <h5 class="white-space-nowrap font-semibold text-lg">Install Modules</h5>
+                        <h5 class="white-space-nowrap font-semibold text-lg">{{store.assets.language_strings.install_modules}}</h5>
                         <div class="p-inputgroup justify-content-end w-6">
                                 <span class="p-input-icon-left">
                                     <i class="pi pi-search" />
-                                    <InputText placeholder="Search"
+                                    <InputText :placeholder=store.assets.language_strings.install_placeholder_search
                                                class="w-full"
                                                type="search"
                                                icon="search"
@@ -77,20 +77,20 @@ onMounted(async () => {
                                 <template #content>
                                     <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>
                                     <p class="mb-3 text-sm">{{item.excerpt}}</p>
-                                    <Tag class="mr-2 mb-2">Name:{{item.title}}</Tag>
-                                    <Tag class="mr-2 mb-2">Version: {{item.version}}</Tag>
-                                    <Tag class="mr-2 mb-2">Developed by: {{item.author_name}}</Tag>
+                                    <Tag class="mr-2 mb-2">{{store.assets.language_strings.name}}:{{item.title}}</Tag>
+                                    <Tag class="mr-2 mb-2">{{store.assets.language_strings.version}}: {{item.version}}</Tag>
+                                    <Tag class="mr-2 mb-2">{{store.assets.language_strings.developed_by}}: {{item.author_name}}</Tag>
                                 </template>
                                 <template #footer v-if="store.hasPermission('can-install-module')">
                                     <Button icon="pi pi-check"
                                             class="p-button-success"
                                             data-testid="modules-install-installed-button"
-                                            v-if="store.isInstalled(item)" label="Installed"></Button>
+                                            v-if="store.isInstalled(item)" :label=store.assets.language_strings.installed_button></Button>
                                     <Button icon="pi pi-download"
                                             class="p-button-outlined"
                                             data-testid="modules-install-install-button"
                                             v-else
-                                            @click="store.install(item)" label="Install"></Button>
+                                            @click="store.install(item)" :label=store.assets.language_strings.install_button></Button>
                                 </template>
                             </Card>
                         </div>
