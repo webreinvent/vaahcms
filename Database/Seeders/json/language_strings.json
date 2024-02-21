@@ -907,6 +907,18 @@
     {
         "locale_code_iso_639": "en",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "This email is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "This username is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
         "name": "Alternate email should be different",
         "content": "This alternate email should be different."
     },
@@ -4062,6 +4074,18 @@
         "category": "registration",
         "name": "Registrations Title",
         "content": "Inscripciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Este correo electrónico ya existe"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Este nombre de usuario ya existe."
     },
     {
         "locale_code_iso_639": "es",
@@ -7222,6 +7246,18 @@
         "category": "registration",
         "name": "Registrations Title",
         "content": "Inscriptions"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Cet email existe déjà"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Ce nom d\\'utilisateur existe déjà."
     },
     {
         "locale_code_iso_639": "fr",

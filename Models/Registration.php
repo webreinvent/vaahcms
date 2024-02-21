@@ -131,7 +131,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-user.email_already_registered');
+            $response['errors'][] = trans("vaahcms-registration.email_already_exist");
             return $response;
         }
         // check if username exist
@@ -139,7 +139,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-user.username_already_registered');
+            $response['errors'][] = trans("vaahcms-registration.username_already_exist");
             return $response;
         }
 
