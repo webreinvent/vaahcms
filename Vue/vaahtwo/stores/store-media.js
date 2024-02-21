@@ -765,13 +765,14 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -782,7 +783,7 @@ export const useMediaStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -791,7 +792,7 @@ export const useMediaStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
