@@ -73,6 +73,10 @@ class RolesController extends Controller
                 "view_users_yes" => trans("vaahcms-role.view_users_yes"),
                 "view_users_no" => trans("vaahcms-role.view_users_no"),
                 "view_users_text_view" => trans("vaahcms-role.view_users_text_view"),
+                "changing_status_dialogue" => trans("vaahcms-role.changing_status_dialogue"),
+                "changing_status_message" => trans("vaahcms-role.changing_status_message"),
+                "permission_status_cancel_button" => trans("vaahcms-role.permission_status_cancel_button"),
+                "permission_status_change_button" => trans("vaahcms-role.permission_status_change_button"),
             ];
             $data['actions'] = [];
             $data['modules'] = $modules;

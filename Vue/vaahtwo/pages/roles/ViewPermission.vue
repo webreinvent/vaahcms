@@ -90,12 +90,12 @@ const confirm = useConfirm();
 const confirmChangeStatus = (event, id) => {
     confirm.require({
         group: 'templating',
-        message: 'Are you sure you want to change the status? This action will impact all roles that assign to this permission.',
-        header: 'Changing Status',
+        message: store.assets.language_strings.changing_status_message,
+        header: store.assets.language_strings.changing_status_dialogue,
         icon: 'pi pi-exclamation-circle text-red-600',
         acceptClass:'p-button p-button-danger is-small',
-        acceptLabel:'Change',
-        rejectLabel:'Cancel',
+        acceptLabel:store.assets.language_strings.permission_status_change_button,
+        rejectLabel:store.assets.language_strings.permission_status_cancel_button,
         rejectClass:' is-small btn-dark',
 
         accept: () => {

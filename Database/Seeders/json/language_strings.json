@@ -1269,6 +1269,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Changing Status"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "Are you sure you want to change the status? This action will impact all roles that assign to this permission."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Cancel"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "Change"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
         "name": "Name Already Exist",
         "content": "This name is already exist."
     },
@@ -4419,6 +4443,30 @@
         "category": "role",
         "name": "Roles Title",
         "content": "Roles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Cambiar estado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "¿Está seguro de que desea cambiar el estado? Esta acción afectará a todos los roles asignados a este permiso."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Cancelar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "Cambiar"
     },
     {
     "locale_code_iso_639": "es",
@@ -7573,6 +7621,30 @@
         "category": "role",
         "name": "Roles Title",
         "content": "Les rôles"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Changer de statut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "Êtes-vous sûr de vouloir modifier le statut ? Cette action aura un impact sur tous les rôles attribués à cette autorisation."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Annuler"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "\nChangement"
     },
     {
         "locale_code_iso_639": "fr",
