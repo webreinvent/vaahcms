@@ -260,16 +260,17 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
+            const root = useRootStore();
 
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 

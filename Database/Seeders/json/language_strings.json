@@ -273,6 +273,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Open Image"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
         "name": "Media Title",
         "content": "Media"
     },
@@ -3440,6 +3446,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Abrir imagen"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
         "name": "Media Title",
         "content": "Medios de comunicación"
     },
@@ -6600,6 +6612,12 @@
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "L’option téléchargeable est requise."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Ouvrir l\\'image"
     },
     {
         "locale_code_iso_639": "fr",
