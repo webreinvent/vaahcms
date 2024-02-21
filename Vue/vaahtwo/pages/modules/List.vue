@@ -56,8 +56,8 @@ onMounted(async () => {
                     <div class="flex flex-row">
                         <div v-if="store.assets && store.assets.language_strings">
                             <b class="mr-1">{{store.assets.language_strings.module_title}}</b>
-                            <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total"
+                            <Badge v-if="store.list && store.list.length > 0"
+                                   :value="store.list.length"
                             />
                         </div>
                     </div>
