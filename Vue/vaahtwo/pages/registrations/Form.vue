@@ -1,12 +1,13 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import { useRegistrationStore } from '../../stores/store-registrations'
+import { useRootStore } from "../../stores/root";
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah"
 
-
+const root = useRootStore();
 const store = useRegistrationStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -39,13 +40,15 @@ const toggleFormMenu = (event) => {
                          icon="pi pi-trash"
                          v-if="store.item && store.item.deleted_at"
             >
-                <div class="flex align-items-center justify-content-between">
+                <div class="flex align-items-center justify-content-between"  v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
                     <div>
-                        Deleted {{store.item.deleted_at}}
+                        {{root.assets.language_strings.crud_actions.form_text_deleted}} {{store.item.deleted_at}}
                     </div>
 
                     <div>
-                        <Button label="Restore"
+                        <Button :label="root.assets.language_strings.crud_actions.restore_button"
                                 class="p-button-sm"
                                 @click="store.itemAction('restore')"
                                 data-testid="register-form_item_action_restore"
@@ -61,15 +64,20 @@ const toggleFormMenu = (event) => {
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
-                        <span v-else>
-                            Create
+                        <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                        >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup"  v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -77,7 +85,7 @@ const toggleFormMenu = (event) => {
                             data-testid="registration-form_id"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_strings.crud_actions.save_button"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-registrations')"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"
@@ -86,7 +94,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button v-else-if="store.hasPermission('can-create-registrations')"
-                            label="Create & New"
+                            :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             @click="store.itemAction('create-and-new')"
                             icon="pi pi-save"
                             data-testid="register-form_item_action_create_and_new"
@@ -111,7 +119,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             @click="store.toView(store.item)"
                     />
 

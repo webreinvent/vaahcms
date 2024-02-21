@@ -1,7 +1,9 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useRegistrationStore } from '../../../stores/store-registrations'
+import { useRootStore } from "../../../stores/root";
 
+const root = useRootStore();
 const store = useRegistrationStore();
 const useVaah = vaah();
 
@@ -87,25 +89,26 @@ const useVaah = vaah();
 
              <Column field="gender"
                     header="Gender"
-                    v-if="store.isViewLarge()"
+                    v-if="store.isViewLarge() && store.assets
+                          && store.assets.language_strings"
                     :sortable="true"
              >
                 <template #body="prop">
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='m'"
-                         value="Male"
+                         :value="store.assets.language_strings.table_gender_male"
                     />
 
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='f'"
-                         value="Female"
+                         :value="store.assets.language_strings.table_gender_female"
                     />
                     <Tag severity="primary"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='o'"
-                         value="others"
+                         :value="store.assets.language_strings.table_gender_others"
                     />
                 </template>
             </Column>
@@ -113,19 +116,22 @@ const useVaah = vaah();
              <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
+                     v-if="root.assets
+                          && root.assets.language_strings
+                          && root.assets.language_strings.crud_actions"
             >
                 <template #body="prop">
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 v-if="store.hasPermission('can-read-registrations')"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="register-table_to_view"
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 data-testid="register-table_to_edit"
@@ -135,7 +141,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-registrations')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                                 data-testid="register-table_item_action_restore"
                         />
@@ -143,7 +149,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="register-table_item_action_delete"
                         />

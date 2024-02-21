@@ -907,8 +907,38 @@
     {
         "locale_code_iso_639": "en",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "This email is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "This username is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "This alternate email should be different."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Email Verification Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "All Users Email Verified"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "All Users Email Verification Pending"
     },
     {
         "locale_code_iso_639": "en",
@@ -4048,8 +4078,38 @@
     {
         "locale_code_iso_639": "es",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Este correo electrónico ya existe"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Este nombre de usuario ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Verificación de correo electrónico pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "Todas las usuarias correo electrónico verificado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "Verificación de correo electrónico de todas las usuarios pendiente"
     },
     {
         "locale_code_iso_639": "es",
@@ -7190,8 +7250,38 @@
     {
         "locale_code_iso_639": "fr",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Cet email existe déjà"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Ce nom d\\'utilisateur existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Vérification de l\\'e-mail en attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "Adresse e-mail de tous les utilisateurs vérifiée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "Vérification de l\\'e-mail de tous les utilisateurs en attente"
     },
     {
         "locale_code_iso_639": "fr",
