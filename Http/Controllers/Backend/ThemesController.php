@@ -34,6 +34,11 @@ class ThemesController extends Controller
             $data['installed'] = Theme::select('slug')->get()->pluck('slug')->toArray();
             $data['rows'] = config('vaahcms.per_page');
 
+            $data['language_strings'] = [
+                "themes_title" => trans("vaahcms-extend-theme.themes_title"),
+
+            ];
+
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {

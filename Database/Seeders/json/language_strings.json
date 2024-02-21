@@ -2727,6 +2727,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
+        "name": "Themes Title",
+        "content": "Themes"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-theme",
         "name": "Toolkit Text Deactivate Theme",
         "content": "Deactivate Theme"
     },
@@ -5878,6 +5884,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
+        "name": "Themes Title",
+        "content": "Temas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-theme",
         "name": "Toolkit Text Deactivate Theme",
         "content": "Desactivar Tema"
     },
@@ -9016,6 +9028,12 @@
         "category": "extend-theme",
         "name": "Toolkit Text Activate Theme",
         "content": "Activer le thème"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-theme",
+        "name": "Themes Title",
+        "content": "Thèmes"
     },
     {
         "locale_code_iso_639": "fr",
