@@ -279,6 +279,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "media",
+        "name": "Filter With Trashed",
+        "content": "with Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Month",
+        "content": "Month"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "Year"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Date"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
         "name": "Media Title",
         "content": "Media"
     },
@@ -3452,6 +3476,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "media",
+        "name": "Filter Month",
+        "content": "Mes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter With Trashed",
+        "content": "con basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "\nAño"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Fecha"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
         "name": "Media Title",
         "content": "Medios de comunicación"
     },
@@ -6618,6 +6666,30 @@
         "category": "media",
         "name": "Toolkit Text Open Image",
         "content": "Ouvrir l\\'image"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Month",
+        "content": "\nMois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter With Trashed",
+        "content": "avec Trashed"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "\nAnnée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Date"
     },
     {
         "locale_code_iso_639": "fr",

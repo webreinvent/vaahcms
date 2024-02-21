@@ -2,7 +2,8 @@
 
 import { useMediaStore } from '../../../stores/store-media';
 import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
-
+import {useRootStore} from "../../../stores/root";
+const root = useRootStore();
 const store = useMediaStore();
 </script>
 
@@ -16,7 +17,7 @@ const store = useMediaStore();
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Month:</b>
+                    <b>{{store.assets.language_strings.filter_month}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -24,7 +25,7 @@ const store = useMediaStore();
                                  data-testid="media-filters-date-month-all"
                                  value=""
                                  v-model="store.query.filter.month" />
-                    <label for="sort-none">None</label>
+                    <label for="sort-none">{{root.assets.language_strings.crud_actions.sort_by_none}}</label>
                 </div>
                 <div class="field-radiobutton" v-for="month in store.assets.date.month">
                     <RadioButton name="sort-ascending"
@@ -39,7 +40,7 @@ const store = useMediaStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Year:</b>
+                    <b>{{store.assets.language_strings.filter_year}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -47,7 +48,7 @@ const store = useMediaStore();
                                  value=""
                                  data-testid="media-filters-date-year-all"
                                  v-model="store.query.filter.year" />
-                    <label for="active-all">All</label>
+                    <label for="active-all">{{root.assets.language_strings.crud_actions.filter_is_active_all}}</label>
                 </div>
                 <div class="field-radiobutton" v-for="item in store.assets.date.year">
                     <RadioButton name="active-true"
@@ -60,20 +61,20 @@ const store = useMediaStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Trashed:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_trashed}}:</b>
                 </template>
                 <div class="field-radiobutton">
                     <Checkbox v-model="store.query.filter.trashed"
                               data-testid="media-filters-include_trashed"
                               :binary="true"
                     />
-                    <label for="trashed-only">with Trashed</label>
+                    <label for="trashed-only">{{store.assets.language_strings.filter_with_trashed}}</label>
                 </div>
 
             </VhFieldVertical>
             <VhFieldVertical >
                 <template #label>
-                    <b>Dates:</b>
+                    <b>{{store.assets.language_strings.filter_date}}:</b>
                 </template>
                 <div class="field-radiobutton">
                     <Calendar inputId="range"

@@ -59,6 +59,10 @@ class MediaController extends Controller
                 "total_file_size_heading" => trans("vaahcms-media.total_file_size_heading"),
                 "trashed_file_size_heading" => trans("vaahcms-media.trashed_file_size_heading"),
                 "toolkit_text_open_image" => trans("vaahcms-media.toolkit_text_open_image"),
+                "filter_month" => trans("vaahcms-media.filter_month"),
+                "filter_year" => trans("vaahcms-media.filter_year"),
+                "filter_date" => trans("vaahcms-media.filter_date"),
+                "filter_with_trashed" => trans("vaahcms-media.filter_with_trashed"),
 
             ];
 
