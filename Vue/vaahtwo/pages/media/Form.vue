@@ -3,9 +3,10 @@ import {onMounted, ref} from "vue";
 import { useMediaStore } from '../../stores/store-media'
 import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah";
+import { useRootStore } from '../../stores/root';
 import FileUploader from "./components/FileUploader.vue";
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-
+const root = useRootStore();
 const store = useMediaStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -35,14 +36,19 @@ const toggleFormMenu = (event) => {
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
-                        <span v-else>
-                            Create
+                        <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                        >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup" v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -50,7 +56,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_strings.crud_actions.save_button"
                             v-if="store.item && store.item.id"
                             data-testid="media-save"
                             @click="store.itemAction('save')"
@@ -58,7 +64,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                     />
 
-                    <Button label="Create & New"
+                    <Button :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             v-else
                             @click="store.itemAction('create-and-new')"
                             data-testid="media-create-and-new"
