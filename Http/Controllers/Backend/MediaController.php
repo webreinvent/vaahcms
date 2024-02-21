@@ -53,6 +53,13 @@ class MediaController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "media_title" => trans("vaahcms-media.media_title"),
+                "total_medias_heading" => trans("vaahcms-media.total_medias_heading"),
+                "total_file_size_heading" => trans("vaahcms-media.total_file_size_heading"),
+                "trashed_file_size_heading" => trans("vaahcms-media.trashed_file_size_heading"),
+
+            ];
 
             $year_and_month = Media::getDateList();
 

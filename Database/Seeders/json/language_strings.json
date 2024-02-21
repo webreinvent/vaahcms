@@ -273,6 +273,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "media",
+        "name": "Media Title",
+        "content": "Media"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Total Medias"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Total File Size"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Trashed File Size"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
         "name": "Download url associate",
         "content": "Download url is associated with other media."
     },
@@ -3416,6 +3440,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "media",
+        "name": "Media Title",
+        "content": "Medios de comunicación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Medias totales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Tamaño total del archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Tamaño del archivo en la papelera"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
         "name": "Download url associate",
         "content": "La URL de descarga está asociada a otros medios."
     },
@@ -6552,6 +6600,30 @@
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "L’option téléchargeable est requise."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Media Title",
+        "content": "Médias"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Total Médias"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Taille totale du fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Taille du fichier mis à la corbeille"
     },
     {
         "locale_code_iso_639": "fr",
