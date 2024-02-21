@@ -5,6 +5,8 @@ import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { vaah } from "../../vaahvue/pinia/vaah"
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+import {useRootStore} from "../../stores/root";
+const root = useRootStore();
 const store = useTaxonomyStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -76,15 +78,17 @@ const toggleItemMenu = (event) => {
             <template #icons>
 
 
-                <div class="p-inputgroup">
+                <div class="p-inputgroup" v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
+                >
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
                     />
 
                     <Button class="p-button-sm"
-                            label="Edit"
-                            icon="pi pi-pencil"
+                            :label="root.assets.language_strings.crud_actions.view_edit"                            icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
                             v-if="store.hasPermission('can-update-taxonomies')"
                     />
@@ -124,14 +128,17 @@ const toggleItemMenu = (event) => {
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at">
 
-                    <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center justify-content-between" v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                    >
 
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_strings.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
                                     class="p-button-sm"
                                     data-testid="taxonomies-item-restore"
                                     @click="store.itemAction('restore')">

@@ -2,7 +2,8 @@
 
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
 import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue'
-
+import {useRootStore} from "../../../stores/root";
+const root = useRootStore();
 const store = useTaxonomyStore();
 
 </script>
@@ -35,7 +36,7 @@ const store = useTaxonomyStore();
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Sort By:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_sort_by}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -44,7 +45,7 @@ const store = useTaxonomyStore();
                                  value=""
                                  v-model="store.query.filter.sort"
                     />
-                    <label for="sort-none">None</label>
+                    <label for="sort-none">{{root.assets.language_strings.crud_actions.sort_by_none}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -52,7 +53,7 @@ const store = useTaxonomyStore();
                                  data-testid="taxonomies-filters-sort-ascending"
                                  value="updated_at"
                                  v-model="store.query.filter.sort" />
-                    <label for="sort-ascending">Updated (Ascending)</label>
+                    <label for="sort-ascending">{{root.assets.language_strings.crud_actions.sort_by_updated_ascending}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -60,7 +61,7 @@ const store = useTaxonomyStore();
                                  data-testid="taxonomies-filters-sort-descending"
                                  value="updated_at:desc"
                                  v-model="store.query.filter.sort" />
-                    <label for="sort-descending">Updated (Descending)</label>
+                    <label for="sort-descending">{{root.assets.language_strings.crud_actions.sort_by_updated_descending}}</label>
                 </div>
             </VhFieldVertical>
 
@@ -68,7 +69,7 @@ const store = useTaxonomyStore();
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Is Active:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_is_active}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -77,7 +78,7 @@ const store = useTaxonomyStore();
                                  data-testid="taxonomies-filters-active-all"
                                  v-model="store.query.filter.is_active"
                     />
-                    <label for="active-all">All</label>
+                    <label for="active-all">{{root.assets.language_strings.crud_actions.filter_is_active_all}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -86,7 +87,7 @@ const store = useTaxonomyStore();
                                  value="true"
                                  v-model="store.query.filter.is_active"
                     />
-                    <label for="active-true">Only Active</label>
+                    <label for="active-true">{{root.assets.language_strings.crud_actions.filter_only_active}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -95,13 +96,13 @@ const store = useTaxonomyStore();
                                  value="false"
                                  v-model="store.query.filter.is_active"
                     />
-                    <label for="active-false">Only Inactive</label>
+                    <label for="active-false">{{root.assets.language_strings.crud_actions.filter_only_inactive}}</label>
                 </div>
             </VhFieldVertical>
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Trashed:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_trashed}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -110,7 +111,7 @@ const store = useTaxonomyStore();
                                  value=""
                                  v-model="store.query.filter.trashed"
                     />
-                    <label for="trashed-exclude">Exclude Trashed</label>
+                    <label for="trashed-exclude">{{root.assets.language_strings.crud_actions.filter_exclude_trashed}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -119,7 +120,7 @@ const store = useTaxonomyStore();
                                  value="include"
                                  v-model="store.query.filter.trashed"
                     />
-                    <label for="trashed-include">Include Trashed</label>
+                    <label for="trashed-include">{{root.assets.language_strings.crud_actions.filter_include_trashed}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -128,7 +129,7 @@ const store = useTaxonomyStore();
                                  value="only"
                                  v-model="store.query.filter.trashed"
                     />
-                    <label for="trashed-only">Only Trashed</label>
+                    <label for="trashed-only">{{root.assets.language_strings.crud_actions.filter_only_trashed}}</label>
                 </div>
             </VhFieldVertical>
         </Sidebar>
