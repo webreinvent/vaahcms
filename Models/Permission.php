@@ -305,7 +305,7 @@ class Permission extends PermissionBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = trans("vaahcms-general.saved_successfully");
+        $response['messages'][] = trans("vaahcms-permission.updated_successfully");
         return $response;
     }
     //-------------------------------------------------

@@ -1475,6 +1475,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "permission",
+        "name": "Updated Successfully",
+        "content": "updated successfully."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
         "name": "Slug Already Exist",
         "content": "This slug is already exist."
     },
@@ -4630,6 +4636,12 @@
         "category": "permission",
         "name": "Name Already Exist",
         "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
+        "name": "Updated Successfully",
+        "content": "actualizado exitosamente."
     },
     {
         "locale_code_iso_639": "es",
@@ -7790,6 +7802,12 @@
         "category": "permission",
         "name": "Name Already Exist",
         "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
+        "name": "Updated Successfully",
+        "content": "Mis à jour avec succés."
     },
     {
         "locale_code_iso_639": "fr",
