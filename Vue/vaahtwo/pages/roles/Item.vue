@@ -3,10 +3,12 @@ import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useRoleStore} from '../../stores/store-roles';
+import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useRoleStore();
+const root = useRootStore();
 const route = useRoute();
 const useVaah = vaah();
 
@@ -75,11 +77,13 @@ const toggleItemMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            label="Edit"
+                            :label="root.assets.language_strings.crud_actions.view_edit"
                             icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
                             data-testid="role-item_edit"
-                            v-if="store.hasPermission('can-update-roles')"
+                            v-if="store.hasPermission('can-update-roles') && root.assets
+                                  && root.assets.language_strings
+                                  && root.assets.language_strings.crud_actions"
                     />
 
                     <!--item_menu-->
@@ -114,14 +118,16 @@ const toggleItemMenu = (event) => {
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at"
                 >
-                    <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center justify-content-between" v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions">
 
                         <div class="">
-                            Deleted {{store.item.deleted_at}}
+                            {{root.assets.language_strings.crud_actions.view_deleted}} {{store.item.deleted_at}}
                         </div>
 
                         <div class="ml-3">
-                            <Button label="Restore"
+                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
                                     data-testid="role-item_restore"

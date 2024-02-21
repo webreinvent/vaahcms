@@ -90,12 +90,12 @@ const confirm = useConfirm();
 const confirmChangeStatus = (event, id) => {
     confirm.require({
         group: 'templating',
-        message: 'Are you sure you want to change the status? This action will impact all roles that assign to this permission.',
-        header: 'Changing Status',
+        message: store.assets.language_strings.changing_status_message,
+        header: store.assets.language_strings.changing_status_dialogue,
         icon: 'pi pi-exclamation-circle text-red-600',
         acceptClass:'p-button p-button-danger is-small',
-        acceptLabel:'Change',
-        rejectLabel:'Cancel',
+        acceptLabel:store.assets.language_strings.permission_status_change_button,
+        rejectLabel:store.assets.language_strings.permission_status_cancel_button,
         rejectClass:' is-small btn-dark',
 
         accept: () => {
@@ -157,10 +157,10 @@ const confirmChangeStatus = (event, id) => {
 
             <div class="flex justify-content-between mt-3 mb-1">
 
-                <div v-if="store && store.assets">
+                <div v-if="store && store.assets && store.assets.language_strings">
                     <Dropdown v-model="store.role_permissions_query.module"
                               :options="store.assets.modules"
-                              placeholder="Select a Module"
+                              :placeholder="store.assets.language_strings.view_permissions_select_a_module"
                               data-testid="role-permission_module"
                               @change="store.getModuleSection()"
                               class="is-small"
@@ -193,21 +193,21 @@ const confirmChangeStatus = (event, id) => {
 
                 <div class="grid p-fluid">
                     <div class="col-12">
-                        <div class="p-inputgroup">
+                        <div class="p-inputgroup" v-if="store.assets && store.assets.language_strings">
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
                                 <InputText v-model="store.role_permissions_query.q"
                                            @keyup.enter="store.delayedRolePermissionSearch()"
                                            @keyup.enter.native="store.delayedRolePermissionSearch()"
                                            @keyup.13="store.delayedRolePermissionSearch()"
-                                           placeholder="Search"
+                                           :placeholder="store.assets.language_strings.view_permissions_placeholder_search"
                                            type="text"
                                            class="w-full"
                                            data-testid="role-permission_search"
                                 />
                             </span>
 
-                            <Button label="Reset"
+                            <Button :label="store.assets.language_strings.view_permissions_reset_button"
                                     @click="store.resetRolePermissionFilters()"
                                     data-testid="role-permission_search_reset"
                             />
@@ -216,7 +216,9 @@ const confirmChangeStatus = (event, id) => {
                 </div>
             </div>
 
-            <DataTable v-if="store && store.role_permissions"
+            <DataTable v-if="store && store.role_permissions && root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
                        :value="store.role_permissions.list.data"
                        dataKey="id"
                        class="p-datatable-sm"
@@ -231,7 +233,7 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop">
                         <Button class="p-button-tiny p-button-text p-0 mr-2"
                                 data-testid="role-permission_name_copy"
-                                v-tooltip.top="'Copy Slug'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
                                 :label="prop.data.name"
@@ -244,19 +246,20 @@ const confirmChangeStatus = (event, id) => {
 
                 <Column field="has-permission"
                         header="Has Permission"
+                        v-if="store.assets && store.assets.language_strings"
                 >
 
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-roles') || store.hasPermission('can-manage-roles')"
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_permissions_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeRolePermission(prop.data)"
                                 data-testid="role-permission_status_yes"
                         />
 
-                        <Button label="No"
+                        <Button  :label="store.assets.language_strings.view_permissions_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 data-testid="role-permission_status_no"
                                 v-else
@@ -267,13 +270,13 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_permissions_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button label="No"
+                        <Button :label="store.assets.language_strings.view_permissions_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -289,14 +292,14 @@ const confirmChangeStatus = (event, id) => {
                               v-if="(store.hasPermission('can-update-permissions')|| store.hasPermission('can-manage-permissions'))
                                && (store.hasPermission('can-update-roles')|| store.hasPermission('can-manage-roles'))"
                     >
-                        <Button label="Active"
+                        <Button :label="store.assets.language_strings.view_permissions_active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
                                 @click="confirmChangeStatus(event, prop.data.id)"
                                 data-testid="role-permission_status_active"
                         />
 
-                        <Button label="Inactive"
+                        <Button :label="store.assets.language_strings.view_permissions_inactive"
                                 data-testid="role-permission_status_inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
@@ -326,7 +329,8 @@ const confirmChangeStatus = (event, id) => {
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
-                                label="View"
+                                :label=store.assets.language_strings.view_permissions_text_view
+                                v-tooltip.top="store.assets.language_strings.view_permissions_text_view"
                                 data-testid="role-permission_view_modal"
                         />
                     </template>

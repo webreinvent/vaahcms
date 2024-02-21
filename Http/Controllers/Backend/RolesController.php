@@ -52,7 +52,32 @@ class RolesController extends Controller
             }
 
             $modules = Permission::withTrashed()->get()->unique('module')->pluck('module');
-
+            $data['language_strings'] = [
+                "roles_title" => trans("vaahcms-role.roles_title"),
+                "view_users" => trans("vaahcms-role.toolkit_text_view_users"),
+                "view_permissions" => trans("vaahcms-role.toolkit_text_view_permissions"),
+                "view_permissions_select_a_module" => trans("vaahcms-role.view_permissions_select_a_module"),
+                "view_permissions_placeholder_search" =>  trans("vaahcms-role.view_permissions_placeholder_search"),
+                "view_permissions_reset_button" =>  trans("vaahcms-role.view_permissions_reset_button"),
+                "view_permissions_yes" =>  trans("vaahcms-role.view_permissions_yes"),
+                "view_permissions_no" =>  trans("vaahcms-role.view_permissions_no"),
+                "view_permissions_text_view" => trans("vaahcms-role.view_permissions_text_view"),
+                "view_permissions_active" => trans("vaahcms-role.view_permissions_active"),
+                "view_permissions_inactive" => trans("vaahcms-role.view_permissions_inactive"),
+                "view_permissions_active_all_permissions" => trans("vaahcms-role.view_permissions_active_all_permissions"),
+                "view_permissions_inactive_all_permissions" => trans("vaahcms-role.view_permissions_inactive_all_permissions"),
+                "view_users_placeholder_search" => trans("vaahcms-role.view_users_placeholder_search"),
+                "view_users_reset_button" => trans("vaahcms-role.view_users_reset_button"),
+                "view_users_attach_to_all_users" => trans("vaahcms-role.view_users_attach_to_all_users"),
+                "view_users_detach_to_all_users" => trans("vaahcms-role.view_users_detach_to_all_users"),
+                "view_users_yes" => trans("vaahcms-role.view_users_yes"),
+                "view_users_no" => trans("vaahcms-role.view_users_no"),
+                "view_users_text_view" => trans("vaahcms-role.view_users_text_view"),
+                "changing_status_dialogue" => trans("vaahcms-role.changing_status_dialogue"),
+                "changing_status_message" => trans("vaahcms-role.changing_status_message"),
+                "permission_status_cancel_button" => trans("vaahcms-role.permission_status_cancel_button"),
+                "permission_status_change_button" => trans("vaahcms-role.permission_status_change_button"),
+            ];
             $data['actions'] = [];
             $data['modules'] = $modules;
 
@@ -364,7 +389,7 @@ class RolesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -383,7 +408,7 @@ class RolesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

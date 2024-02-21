@@ -43,15 +43,20 @@ const toggleFormMenu = (event) => {
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
-                        <span v-else>
-                            Create
+                        <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                        >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup" v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -61,7 +66,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
-                            label="Save"
+                            :label="root.assets.language_strings.crud_actions.save_button"
                             icon="pi pi-save"
                             data-testid="role-edit_save"
                             @click="store.itemAction('save')"
@@ -69,7 +74,7 @@ const toggleFormMenu = (event) => {
 
                     <Button v-else
                             class="p-button-sm"
-                            label="Create & New"
+                            :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             icon="pi pi-save"
                             data-testid="role-new_save"
                             @click="store.itemAction('create-and-new')"
@@ -95,7 +100,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-roles')"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="role-item_view"
                             @click="store.toView(store.item)"
                     />

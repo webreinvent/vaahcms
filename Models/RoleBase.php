@@ -248,7 +248,7 @@ class RoleBase extends VaahModel {
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-role.name_already_exist");
             return $response;
         }
 
@@ -259,7 +259,7 @@ class RoleBase extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-role.slug_already_exist");
             return $response;
         }
 
