@@ -8,6 +8,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Jobs Message",
+        "content": "This list consist of only queued/pending jobs.Completed jobs gets deleted automatically ."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Name Already Exist",
         "content": "This name is already exist."
     },
@@ -3545,6 +3551,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Jobs Message",
+        "content": "Esta lista consta únicamente de trabajos en cola/pendientes. Los trabajos completados se eliminan automáticamente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Title Limit",
         "content": "El carácter del título no es mayor que 200."
     },
@@ -6894,6 +6906,12 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",

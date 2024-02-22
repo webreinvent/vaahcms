@@ -46,6 +46,11 @@ class JobsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "jobs_title" => trans("vaahcms-dashboard.jobs"),
+                "jobs_message" => trans("vaahcms-general.jobs_message"),
+
+            ];
 
             $response['success'] = true;
             $response['data'] = $data;
