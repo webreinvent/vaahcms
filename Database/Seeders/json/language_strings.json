@@ -8,50 +8,8 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
-        "name": "Successfully Delete All Logs",
-        "content": "Successfully delete all logs"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "Successfully Clear",
-        "content": "Successfully clear"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "ToolKit Text Clear File",
-        "content": "Clear File"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "ToolKit Text Download File",
-        "content": "Download File"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "ToolKit Text Close",
-        "content": "Close"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "View Log File",
-        "content": "Log"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
-        "name": "Filter By Extension",
-        "content": "Filter By Extension"
+        "name": "Jobs Message",
+        "content": "This list consist of only queued/pending jobs.Completed jobs gets deleted automatically ."
     },
     {
         "locale_code_iso_639": "en",
@@ -3594,44 +3552,8 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
-        "name": "Successfully Delete All Logs",
-        "content": "Eliminar con éxito todos los registros"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Successfully Clear",
-        "content": "Borrar con éxito"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "ToolKit Text Clear File",
-        "content": "Archivo vacio"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "ToolKit Text Download File",
-        "content": "Descargar archivo"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "ToolKit Text Close",
-        "content": "Cerca"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "View Log File",
-        "content": "Registro"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
+        "name": "Jobs Message",
+        "content": "Esta lista consta únicamente de trabajos en cola/pendientes. Los trabajos completados se eliminan automáticamente."
     },
     {
         "locale_code_iso_639": "es",
@@ -6996,50 +6918,8 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
-        "name": "Successfully Delete All Logs",
-        "content": "Supprimer avec succès tous les journaux"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Successfully Clear",
-        "content": "Effacer avec succès"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "ToolKit Text Clear File",
-        "content": "Effacer le fichier"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "ToolKit Text Download File",
-        "content": "Télécharger un fichier"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "ToolKit Text Close",
-        "content": "Fermer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "View Log File",
-        "content": "Enregistrer"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Toolkit Text Reload",
-        "content": "\nRecharger"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Filter By Extension",
-        "content": "Filtrer par extension"
+        "name": "Jobs Message",
+        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",
