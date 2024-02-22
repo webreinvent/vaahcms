@@ -155,13 +155,13 @@ const openTaxonomyTypeModal = () => {
                         <TreeSelect class="w-full"
                                     v-model="tree_select_value"
                                     :options="store.assets.types"
-                                    placeholder="Select a type"
+                                    :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_type"
                                     @node-select="store.selectType($event)"
                         />
 
                         <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
                                 class="p-button-sm"
-                                label="Manage"
+                                :label="store.assets.language_strings.form_manage_button"
                                 data-testid="taxonomies-form-to-manage-taxonomy-type-modal"
                                 @click="openTaxonomyTypeModal"
                         />
@@ -177,7 +177,7 @@ const openTaxonomyTypeModal = () => {
                               optionLabel="name"
                               optionValue="id"
                               :filter="true"
-                              placeholder="Select a Parent"
+                              :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent"
                               class="p-inputtext-sm w-full"
                     />
                 </VhField>

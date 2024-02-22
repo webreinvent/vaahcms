@@ -2578,7 +2578,48 @@
         "name": "Taxonomy Type Updated Successfully",
         "content": "Updated Successfully."
     },
-
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Select a Parent"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Select a Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Manage Taxonomy Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Manage"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "Add"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Select Types"
+    },
 
 
 
@@ -2648,6 +2689,48 @@
         "name": "Taxonomy Type Updated Successfully",
         "content": "Actualizado con éxito."
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Seleccione una madre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Seleccione un tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Administrar tipo de taxonomía"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Administrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAgregar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Seleccionar tipos"
+    },
 
 
 
@@ -2716,6 +2799,48 @@
         "category": "taxonomy",
         "name": "Taxonomy Type Updated Successfully",
         "content": "Mis à jour avec succés."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Sélectionnez un parent"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Sélectionnez un type"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Gérer le type de taxonomie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Gérer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAjouter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Taper"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Sélectionnez les types"
     },
 
 

@@ -63,6 +63,11 @@ class TaxonomiesController extends Controller
             $data['language_strings'] = [
                 "taxonomy_title" => trans("vaahcms-taxonomy.taxonomy_title"),
                 "toolkit_text_view_type" => trans("vaahcms-taxonomy.toolkit_text_view_type"),
+                "taxonomy_type_placeholder_select_type" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_type"),
+                "form_manage_button" => trans("vaahcms-taxonomy.form_manage_button"),
+                "taxonomy_type_placeholder_select_parent" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_parent"),
+                "taxonomy_type_manage_type_dialogue" => trans("vaahcms-taxonomy.taxonomy_type_manage_type_dialogue"),
+                "taxonomy_type_add_button" => trans("vaahcms-taxonomy.taxonomy_type_add_button"),
 
             ];
             $data['types'] = $taxonomy_types->toArray();

@@ -15,7 +15,7 @@ const dialog = useDialog();
 const openTaxonomyTypeModal = () => {
     const dialogRef = dialog.open(TaxonomyTypeModal, {
         props: {
-            header: 'Manage Taxonomy Type',
+            header: store.assets.language_strings.taxonomy_type_manage_type_dialogue,
             style: {
                 width: '50vw',
             },
