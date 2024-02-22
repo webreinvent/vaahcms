@@ -49,6 +49,11 @@ class JobsController extends Controller
             $data['language_strings'] = [
                 "jobs_title" => trans("vaahcms-dashboard.jobs"),
                 "jobs_message" => trans("vaahcms-general.jobs_message"),
+                "filter_queue" => trans("vaahcms-general.filter_queue"),
+                "filter_high" => trans("vaahcms-general.filter_high"),
+                "filter_default" => trans("vaahcms-general.filter_default"),
+                "filter_medium" => trans("vaahcms-general.filter_medium"),
+                "filter_low" => trans("vaahcms-general.filter_low"),
 
             ];
 
