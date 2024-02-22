@@ -289,7 +289,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFolder($folder_path);
 
-                    $response['messages'][] = 'Successfully delete all logs';
+                    $response['messages'][] = trans("vaahcms-general.successfully_delete_all_logs");
 
                     break;
 
@@ -298,7 +298,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFile($request->path);
 
-                    $response['messages'][] = 'Successfully delete';
+                    $response['messages'][] = trans("vaahcms-general.successfully_deleted");
 
                     break;
 
@@ -307,7 +307,7 @@ class LogsController extends Controller
 
                     VaahFiles::writeFile($request->path, '');
 
-                    $response['messages'][] = 'Successfully clear';
+                    $response['messages'][] = trans("vaahcms-general.successfully_clear");
 
                     break;
                 //------------------------------------

@@ -8,6 +8,18 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Successfully delete all logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Successfully clear"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "ToolKit Text Clear File",
         "content": "Clear File"
     },
@@ -3582,6 +3594,18 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Eliminar con éxito todos los registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Borrar con éxito"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "ToolKit Text Clear File",
         "content": "Archivo vacio"
     },
@@ -6968,6 +6992,18 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Supprimer avec succès tous les journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Effacer avec succès"
     },
     {
         "locale_code_iso_639": "fr",
