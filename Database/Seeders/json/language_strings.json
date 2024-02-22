@@ -8,6 +8,54 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "This name field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "Successfully Added."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "Successfully Deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Name is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Updated Successfully."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Data updated."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
     },
@@ -1374,18 +1422,7 @@
         "name": "Permission Status Change Button",
         "content": "Change"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "role",
-        "name": "Name Already Exist",
-        "content": "This name is already exist."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "role",
-        "name": "Slug Already Exist",
-        "content": "This slug is already exist."
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "role",
@@ -1586,24 +1623,9 @@
         "name": "View Roles Inactive All Roles",
         "content": "Inactive All Roles"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "permission",
-        "name": "Name Already Exist",
-        "content": "This name is already exist."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "permission",
-        "name": "Updated Successfully",
-        "content": "updated successfully."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "permission",
-        "name": "Slug Already Exist",
-        "content": "This slug is already exist."
-    },
+
+
+
 
     {
         "locale_code_iso_639": "en",
@@ -2510,6 +2532,184 @@
         "name": "Error notifications",
         "content": "Error notifications"
     },
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Manage Taxonomy Type"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Select a Parent"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Select a Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Manage Taxonomy Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Manage"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "Add"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Select Types"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomías"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "\nAdministrar tipo de taxonomía"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Seleccione una madre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Seleccione un tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Administrar tipo de taxonomía"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Administrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAgregar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Seleccionar tipos"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Gérer le type de taxonomie"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Sélectionnez un parent"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Sélectionnez un type"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Gérer le type de taxonomie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Gérer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAjouter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Taper"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Sélectionnez les types"
+    },
+
+
 
     {
         "locale_code_iso_639": "en",
@@ -3546,6 +3746,54 @@
         "category": "general",
         "name": "Select status",
         "content": "Seleccionar estado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Already Exist",
+        "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "Esta babosa ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "Este campo de nombre es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "Añadida con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "Eliminada con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Se requiere el nombre."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Actualizado con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Datos actualizados."
     },
 
 
@@ -4708,18 +4956,8 @@
         "name": "Permission Status Change Button",
         "content": "Cambiar"
     },
-    {
-    "locale_code_iso_639": "es",
-    "category": "role",
-    "name": "Name Already Exist",
-    "content": "Este nombre ya existe."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "role",
-        "name": "Slug Already Exist",
-        "content": "Esta babosa ya existe."
-    },
+
+
     {
         "locale_code_iso_639": "es",
         "category": "role",
@@ -4919,24 +5157,9 @@
         "name": "View Roles Inactive All Roles",
         "content": "Inactivo todos los roles"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "permission",
-        "name": "Name Already Exist",
-        "content": "Este nombre ya existe."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "permission",
-        "name": "Updated Successfully",
-        "content": "actualizado exitosamente."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "permission",
-        "name": "Slug Already Exist",
-        "content": "Esta babosa ya existe."
-    },
+
+
+
 
     {
         "locale_code_iso_639": "es",
@@ -6876,6 +7099,54 @@
         "name": "Select status",
         "content": "Sélectionnez le statut"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "Cette limace existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "Ce champ de nom est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "\nAjouté avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "\nSupprimé avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Le nom est requis."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Mis à jour avec succés."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Données mises à jour."
+    },
 
 
 
@@ -8042,18 +8313,8 @@
         "name": "Permission Status Change Button",
         "content": "\nChangement"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "role",
-        "name": "Name Already Exist",
-        "content": "Ce nom existe déjà."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "role",
-        "name": "Slug Already Exist",
-        "content": "Cette limace existe déjà."
-    },
+
+
     {
         "locale_code_iso_639": "fr",
         "category": "role",
@@ -8253,24 +8514,8 @@
         "name": "View Roles Inactive All Roles",
         "content": "Inactif Tous les rôles"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "permission",
-        "name": "Name Already Exist",
-        "content": "Ce nom existe déjà."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "permission",
-        "name": "Updated Successfully",
-        "content": "Mis à jour avec succés."
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "permission",
-        "name": "Slug Already Exist",
-        "content": "Cette limace existe déjà."
-    },
+
+
 
     {
         "locale_code_iso_639": "fr",

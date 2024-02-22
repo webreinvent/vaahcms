@@ -79,15 +79,21 @@ const openTaxonomyTypeModal = () => {
                             {{ store.item.name }}
                         </span>
 
-                        <span v-else>
-                            Create
+                            <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                            >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup" v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
+                >
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -99,15 +105,13 @@ const openTaxonomyTypeModal = () => {
                     store.hasPermission('can-update-taxonomies')">
                         <Button v-if="store.item && store.item.id"
                                 class="p-button-sm"
-                                label="Save"
-                                icon="pi pi-save"
+                                :label="root.assets.language_strings.crud_actions.save_button"                                icon="pi pi-save"
                                 @click="store.itemAction('save')"
                         />
 
                         <Button v-else
                                 class="p-button-sm"
-                                label="Create & New"
-                                icon="pi pi-save"
+                                :label="root.assets.language_strings.crud_actions.form_create_and_new"                                icon="pi pi-save"
                                 @click="store.itemAction('create-and-new')"
                         />
                     </template>
@@ -115,7 +119,7 @@ const openTaxonomyTypeModal = () => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             @click="store.toView(store.item)"
                     />
 
@@ -151,13 +155,13 @@ const openTaxonomyTypeModal = () => {
                         <TreeSelect class="w-full"
                                     v-model="tree_select_value"
                                     :options="store.assets.types"
-                                    placeholder="Select a type"
+                                    :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_type"
                                     @node-select="store.selectType($event)"
                         />
 
                         <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
                                 class="p-button-sm"
-                                label="Manage"
+                                :label="store.assets.language_strings.form_manage_button"
                                 data-testid="taxonomies-form-to-manage-taxonomy-type-modal"
                                 @click="openTaxonomyTypeModal"
                         />
@@ -173,7 +177,7 @@ const openTaxonomyTypeModal = () => {
                               optionLabel="name"
                               optionValue="id"
                               :filter="true"
-                              placeholder="Select a Parent"
+                              :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent"
                               class="p-inputtext-sm w-full"
                     />
                 </VhField>

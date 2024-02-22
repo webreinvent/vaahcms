@@ -248,7 +248,7 @@ class RoleBase extends VaahModel {
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-role.name_already_exist");
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -259,7 +259,7 @@ class RoleBase extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-role.slug_already_exist");
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -531,7 +531,7 @@ class RoleBase extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -547,7 +547,7 @@ class RoleBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['messages'][] = trans("vaahcms-general.data_updated");
 
         return $response;
 
@@ -559,14 +559,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -605,7 +605,7 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
@@ -636,14 +636,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -838,14 +838,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 

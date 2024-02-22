@@ -167,7 +167,7 @@ class TaxonomyType extends VaahModel {
         if($item)
         {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -178,7 +178,7 @@ class TaxonomyType extends VaahModel {
         if($item)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -271,7 +271,7 @@ class TaxonomyType extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -283,7 +283,7 @@ class TaxonomyType extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -296,7 +296,7 @@ class TaxonomyType extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['messages'][] = trans("vaahcms-general.data_updated");
 
         return $response;
 
@@ -308,14 +308,14 @@ class TaxonomyType extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -358,7 +358,7 @@ class TaxonomyType extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
@@ -387,14 +387,14 @@ class TaxonomyType extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -421,14 +421,14 @@ class TaxonomyType extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 

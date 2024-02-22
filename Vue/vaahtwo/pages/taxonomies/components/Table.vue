@@ -3,7 +3,8 @@ import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
 import { useDialog } from "primevue/usedialog";
 import TaxonomyTypeModal from "../components/TaxonomyTypeModal.vue"
-
+import {useRootStore} from "../../../stores/root";
+const root = useRootStore();
 const store = useTaxonomyStore();
 const useVaah = vaah();
 
@@ -14,7 +15,7 @@ const dialog = useDialog();
 const openTaxonomyTypeModal = () => {
     const dialogRef = dialog.open(TaxonomyTypeModal, {
         props: {
-            header: 'Manage Taxonomy Type',
+            header: store.assets.language_strings.taxonomy_type_manage_type_dialogue,
             style: {
                 width: '50vw',
             },
@@ -33,7 +34,7 @@ const openTaxonomyTypeModal = () => {
 </script>
 
 <template>
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
@@ -73,7 +74,7 @@ const openTaxonomyTypeModal = () => {
                     <div class="flex align-items-center">
                         <Button class="p-button-tiny p-button-text p-0 mr-2"
                                 data-testid="taxonomies-table-to-edit"
-                                v-tooltip.top="'Copy Slug'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
                         />
@@ -91,7 +92,7 @@ const openTaxonomyTypeModal = () => {
                      <template v-if="store.hasPermission('can-manage-taxonomy-types')">
                          <Button class="p-button-tiny p-button-text"
                                  data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
-                                 v-tooltip.top="'Manage Taxonomy Type'"
+                                 v-tooltip.top="store.assets.language_strings.toolkit_text_view_type"
                                  icon="pi pi-pencil"
                                  @click="openTaxonomyTypeModal"
                          />
@@ -128,13 +129,16 @@ const openTaxonomyTypeModal = () => {
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
+                    v-if="root.assets
+                          && root.assets.language_strings
+                          && root.assets.language_strings.crud_actions"
             >
                 <template #body="prop">
                     <div class="p-inputgroup">
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="taxonomies-table-to-view"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 v-if="store.hasPermission('can-read-taxonomies')"
                                 icon="pi pi-eye"
@@ -142,7 +146,7 @@ const openTaxonomyTypeModal = () => {
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="taxonomies-table-to-edit"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 v-if="store.hasPermission('can-update-taxonomies')"
@@ -152,7 +156,7 @@ const openTaxonomyTypeModal = () => {
                                 data-testid="taxonomies-table-action-trash"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-taxonomies')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                         />
 
@@ -160,7 +164,7 @@ const openTaxonomyTypeModal = () => {
                                 data-testid="taxonomies-table-action-restore"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                         />
                     </div>

@@ -60,6 +60,18 @@ class TaxonomiesController extends Controller
                 ->get();
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "taxonomy_title" => trans("vaahcms-taxonomy.taxonomy_title"),
+                "toolkit_text_view_type" => trans("vaahcms-taxonomy.toolkit_text_view_type"),
+                "taxonomy_type_placeholder_select_type" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_type"),
+                "form_manage_button" => trans("vaahcms-taxonomy.form_manage_button"),
+                "taxonomy_type_placeholder_select_parent" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_parent"),
+                "taxonomy_type_manage_type_dialogue" => trans("vaahcms-taxonomy.taxonomy_type_manage_type_dialogue"),
+                "taxonomy_type_add_button" => trans("vaahcms-taxonomy.taxonomy_type_add_button"),
+                "filter_type" => trans("vaahcms-taxonomy.filter_type"),
+                "filter_type_placeholder" => trans("vaahcms-taxonomy.filter_type_placeholder"),
+
+            ];
             $data['types'] = $taxonomy_types->toArray();
 
             $response['success'] = true;
@@ -345,7 +357,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->has('name') || !$request->name) {
                 $response['success'] = false;
-                $response['errors'][] = 'The name field is required.';
+                $response['errors'][] = trans("vaahcms-general.name_field_required");
                 return response()->json($response);
             }
 
@@ -355,7 +367,7 @@ class TaxonomiesController extends Controller
 
             if ($item) {
                 $response['success'] = false;
-                $response['errors'][] = "This name is already exist.";
+                $response['errors'][] =  trans("vaahcms-general.name_already_exist");
                 return response()->json($response);
             }
 
@@ -366,7 +378,7 @@ class TaxonomiesController extends Controller
             $add->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Successfully Added.';
+            $response['messages'][] = trans("vaahcms-general.successfully_added");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -406,7 +418,7 @@ class TaxonomiesController extends Controller
             $item->forceDelete();
 
             $response['success'] = true;
-            $response['messages'][] = 'Successfully Deleted.';
+            $response['messages'][] = trans("vaahcms-general.successfully_deleted");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -415,7 +427,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -446,7 +458,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->newName) {
                 $response['success']  = false;
-                $response['errors'][] = 'Name is required.';
+                $response['errors'][] = trans("vaahcms-general.name_is_required");
                 return response()->json($response);
             }
 
@@ -456,7 +468,7 @@ class TaxonomiesController extends Controller
 
             if ($name_exist) {
                 $response['success']  = false;
-                $response['errors'][] = 'Name already exist.';
+                $response['errors'][] = trans("vaahcms-general.name_already_exist");
                 return response()->json($response);
             }
 
@@ -468,7 +480,7 @@ class TaxonomiesController extends Controller
 
             if ($slug_exist){
                 $response['success']  = false;
-                $response['errors'][] = 'Slug already exist.';
+                $response['errors'][] = trans("vaahcms-general.slug_already_exist");
                 return response()->json($response);
             }
 
@@ -479,7 +491,7 @@ class TaxonomiesController extends Controller
             $list->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Updated Successfully.';
+            $response['messages'][] = trans("vaahcms-general.updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -488,7 +500,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -523,7 +535,7 @@ class TaxonomiesController extends Controller
             $item->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Updated Successfully.';
+            $response['messages'][] = trans("vaahcms-general.updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -532,7 +544,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -570,7 +582,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

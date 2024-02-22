@@ -347,7 +347,7 @@ class PermissionBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['messages'][] = trans("vaahcms-general.data_updated");
 
         return $response;
 
@@ -410,14 +410,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -463,14 +463,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -511,7 +511,7 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
@@ -550,14 +550,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
