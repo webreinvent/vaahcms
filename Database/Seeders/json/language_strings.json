@@ -8,6 +8,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Filter By Extension",
         "content": "Filter By Extension"
     },
@@ -2620,12 +2626,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
@@ -3353,6 +3354,12 @@
         "category": "general",
         "name": "Title Required",
         "content": "El campo del título es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
     },
     {
         "locale_code_iso_639": "es",
@@ -5964,12 +5971,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
@@ -6695,6 +6697,12 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "\nRecharger"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9310,12 +9318,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",

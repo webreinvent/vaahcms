@@ -36,7 +36,7 @@ class ModulesController extends Controller
 
             $data['language_strings'] = [
                 "module_title" => trans("vaahcms-sidebar-menu.modules"),
-                "toolkit_text_reload" => trans("vaahcms-extend-module.toolkit_text_reload"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
                 "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
                 "install_button" => trans("vaahcms-extend-module.install_button"),
                 "filter_button" => trans("vaahcms-extend-module.filter_button"),

@@ -51,6 +51,7 @@ class LogsController extends Controller
             $data['language_strings'] = [
                 "logs" => trans("vaahcms-sidebar-menu.logs"),
                 "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
 
             ];
             $response['success'] = true;
