@@ -350,7 +350,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->has('name') || !$request->name) {
                 $response['success'] = false;
-                $response['errors'][] = 'The name field is required.';
+                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_field_required");
                 return response()->json($response);
             }
 
@@ -360,7 +360,7 @@ class TaxonomiesController extends Controller
 
             if ($item) {
                 $response['success'] = false;
-                $response['errors'][] = "This name is already exist.";
+                $response['errors'][] =  trans("vaahcms-taxonomy.taxonomy_name_already_exist");
                 return response()->json($response);
             }
 
@@ -371,7 +371,7 @@ class TaxonomiesController extends Controller
             $add->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Successfully Added.';
+            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_successfully_added");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -411,7 +411,7 @@ class TaxonomiesController extends Controller
             $item->forceDelete();
 
             $response['success'] = true;
-            $response['messages'][] = 'Successfully Deleted.';
+            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_successfully_deleted");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -420,7 +420,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -451,7 +451,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->newName) {
                 $response['success']  = false;
-                $response['errors'][] = 'Name is required.';
+                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_is_required");
                 return response()->json($response);
             }
 
@@ -461,7 +461,7 @@ class TaxonomiesController extends Controller
 
             if ($name_exist) {
                 $response['success']  = false;
-                $response['errors'][] = 'Name already exist.';
+                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_already_exist");
                 return response()->json($response);
             }
 
@@ -473,7 +473,7 @@ class TaxonomiesController extends Controller
 
             if ($slug_exist){
                 $response['success']  = false;
-                $response['errors'][] = 'Slug already exist.';
+                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_slug_already_exist");
                 return response()->json($response);
             }
 
@@ -493,7 +493,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -537,7 +537,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -575,7 +575,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

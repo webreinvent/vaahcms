@@ -2521,6 +2521,54 @@
     {
         "locale_code_iso_639": "en",
         "category": "taxonomy",
+        "name": "Taxonomy Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Slug Already Exist",
+        "content": "This slug is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Field Required",
+        "content": "This name field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Added",
+        "content": "Successfully Added."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Deleted",
+        "content": "Successfully Deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Is Required",
+        "content": "Name is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Already Exist",
+        "content": "Name already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Slug already exist",
+        "content": "Slug already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
         "name": "Toolkit Text View Type",
         "content": "Manage Taxonomy Type"
     },
@@ -2530,6 +2578,54 @@
         "category": "taxonomy",
         "name": "Taxonomy Title",
         "content": "Taxonomías"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Name Already Exist",
+        "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Slug Already Exist",
+        "content": "Esta babosa ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Field Required",
+        "content": "Este campo de nombre es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Added",
+        "content": "Añadida con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Deleted",
+        "content": "Eliminada con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Is Required",
+        "content": "Se requiere el nombre."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Already Exist",
+        "content": "\nEl nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Slug already exist",
+        "content": "Las babosas ya existen."
     },
     {
         "locale_code_iso_639": "es",
@@ -2547,8 +2643,56 @@
     {
         "locale_code_iso_639": "fr",
         "category": "taxonomy",
+        "name": "Taxonomy Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Slug Already Exist",
+        "content": "Cette limace existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
         "name": "Toolkit Text View Type",
         "content": "Gérer le type de taxonomie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Field Required",
+        "content": "Ce champ de nom est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Added",
+        "content": "Ajouté avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Successfully Deleted",
+        "content": "\nSupprimé avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Is Required",
+        "content": "\nLe nom est requis."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Name Already Exist",
+        "content": "Le nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Slug already exist",
+        "content": "Slug existe déjà."
     },
 
     {
