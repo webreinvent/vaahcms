@@ -89,7 +89,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_name_already_exist");
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -101,7 +101,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_slug_already_exist");
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -427,7 +427,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_name_already_exist");
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -441,7 +441,7 @@ class Taxonomy extends TaxonomyBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_slug_already_exist");
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 

@@ -357,7 +357,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->has('name') || !$request->name) {
                 $response['success'] = false;
-                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_field_required");
+                $response['errors'][] = trans("vaahcms-general.name_field_required");
                 return response()->json($response);
             }
 
@@ -367,7 +367,7 @@ class TaxonomiesController extends Controller
 
             if ($item) {
                 $response['success'] = false;
-                $response['errors'][] =  trans("vaahcms-taxonomy.taxonomy_name_already_exist");
+                $response['errors'][] =  trans("vaahcms-general.name_already_exist");
                 return response()->json($response);
             }
 
@@ -378,7 +378,7 @@ class TaxonomiesController extends Controller
             $add->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_successfully_added");
+            $response['messages'][] = trans("vaahcms-general.successfully_added");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -418,7 +418,7 @@ class TaxonomiesController extends Controller
             $item->forceDelete();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_successfully_deleted");
+            $response['messages'][] = trans("vaahcms-general.successfully_deleted");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -458,7 +458,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->newName) {
                 $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_is_required");
+                $response['errors'][] = trans("vaahcms-general.name_is_required");
                 return response()->json($response);
             }
 
@@ -468,7 +468,7 @@ class TaxonomiesController extends Controller
 
             if ($name_exist) {
                 $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_name_already_exist");
+                $response['errors'][] = trans("vaahcms-general.name_already_exist");
                 return response()->json($response);
             }
 
@@ -480,7 +480,7 @@ class TaxonomiesController extends Controller
 
             if ($slug_exist){
                 $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-taxonomy.taxonomy_type_slug_already_exist");
+                $response['errors'][] = trans("vaahcms-general.slug_already_exist");
                 return response()->json($response);
             }
 
@@ -491,7 +491,7 @@ class TaxonomiesController extends Controller
             $list->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_updated_successfully");
+            $response['messages'][] = trans("vaahcms-general.updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -535,7 +535,7 @@ class TaxonomiesController extends Controller
             $item->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_updated_successfully");
+            $response['messages'][] = trans("vaahcms-general.updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
