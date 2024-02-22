@@ -8,6 +8,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filter By Extension"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
     },
@@ -688,6 +694,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Extend"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Logs"
     },
     {
         "locale_code_iso_639": "en",
@@ -3351,6 +3363,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrar por extensión"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Slug Required",
         "content": "El campo slug es obligatorio."
     },
@@ -4021,6 +4039,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Extender"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Registros"
     },
     {
         "locale_code_iso_639": "es",
@@ -6675,6 +6699,12 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrer par extension"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
         "name": "Title Limit",
         "content": "Le caractère du titre ne dépasse pas 200."
     },
@@ -7356,6 +7386,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Étendre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Journaux"
     },
     {
         "locale_code_iso_639": "fr",

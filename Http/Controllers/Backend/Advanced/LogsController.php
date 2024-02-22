@@ -48,6 +48,11 @@ class LogsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "logs" => trans("vaahcms-sidebar-menu.logs"),
+                "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
+
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
