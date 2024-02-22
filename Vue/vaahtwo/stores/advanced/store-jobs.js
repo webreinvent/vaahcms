@@ -318,9 +318,10 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         confirmDelete()
         {
+            const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select a record']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
             this.action.type = 'delete';
