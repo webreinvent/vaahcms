@@ -45,7 +45,7 @@ const toggleBulkMenuState = (event) => {
                            data-testid="logs-action_search_input"
                 />
 
-                <Button  :label="root.assets.language_strings.crud_actions.filters_button"
+                <Button  :label="root.assets.language_strings.crud_actions.reset_button"
                         class="p-button-sm"
                         data-testid="logs-action_search"
                         @click="store.resetSearch"
