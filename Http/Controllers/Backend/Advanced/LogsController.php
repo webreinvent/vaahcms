@@ -52,6 +52,10 @@ class LogsController extends Controller
                 "logs" => trans("vaahcms-sidebar-menu.logs"),
                 "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
                 "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                "toolkit_text_close" => trans("vaahcms-general.toolkit_text_close"),
+                "toolkit_text_clear_file" => trans("vaahcms-general.toolkit_text_clear_file"),
+                "toolkit_text_download_file" => trans("vaahcms-general.toolkit_text_download_file"),
+                "view_log_file" => trans("vaahcms-general.view_log_file"),
 
             ];
             $response['success'] = true;

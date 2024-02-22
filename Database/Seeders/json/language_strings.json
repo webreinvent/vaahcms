@@ -8,6 +8,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Clear File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Download File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Log"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Toolkit Text Reload",
         "content": "Reload"
     },
@@ -3358,6 +3382,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Archivo vacio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Descargar archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Cerca"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Toolkit Text Reload",
         "content": "Recargar"
     },
@@ -6697,6 +6745,30 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Effacer le fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Télécharger un fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Enregistrer"
     },
     {
         "locale_code_iso_639": "fr",
