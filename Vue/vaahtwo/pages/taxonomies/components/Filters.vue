@@ -18,7 +18,7 @@ const store = useTaxonomyStore();
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Type:</b>
+                    <b>{{store.assets.language_strings.filter_type}}:</b>
                 </template>
 
                 <div class="card flex justify-content-center">
@@ -26,7 +26,7 @@ const store = useTaxonomyStore();
                                  :options="store.assets.types"
                                  optionLabel="label"
                                  optionValue="data"
-                                 placeholder="Select Types"
+                                 :placeholder="store.assets.language_strings.filter_type_placeholder"
                                  :maxSelectedLabels="3"
                                  filter
                                  display="chip"
