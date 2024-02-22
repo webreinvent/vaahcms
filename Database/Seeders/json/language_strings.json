@@ -44,6 +44,48 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "This name field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "Successfully Added."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "Successfully Deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Name is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Updated Successfully."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Data updated."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
     },
@@ -3317,11 +3359,11 @@
         "name": "email",
         "content": "The :attribute must be a valid email address."
     },{
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "ends_with",
-        "content": "The :attribute must end with one of the following: :values"
-    },
+    "locale_code_iso_639": "en",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "The :attribute must end with one of the following: :values"
+},
     {
         "locale_code_iso_639": "en",
         "category": "validation",
