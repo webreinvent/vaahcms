@@ -484,7 +484,7 @@ class TaxonomiesController extends Controller
             $list->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Updated Successfully.';
+            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -528,7 +528,7 @@ class TaxonomiesController extends Controller
             $item->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Updated Successfully.';
+            $response['messages'][] = trans("vaahcms-taxonomy.taxonomy_type_updated_successfully");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

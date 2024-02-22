@@ -2572,6 +2572,15 @@
         "name": "Toolkit Text View Type",
         "content": "Manage Taxonomy Type"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Updated Successfully",
+        "content": "Updated Successfully."
+    },
+
+
+
 
     {
         "locale_code_iso_639": "es",
@@ -2633,6 +2642,14 @@
         "name": "Toolkit Text View Type",
         "content": "\nAdministrar tipo de taxonomía"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Updated Successfully",
+        "content": "Actualizado con éxito."
+    },
+
+
 
     {
         "locale_code_iso_639": "fr",
@@ -2694,6 +2711,14 @@
         "name": "Taxonomy Type Slug already exist",
         "content": "Slug existe déjà."
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Updated Successfully",
+        "content": "Mis à jour avec succés."
+    },
+
+
 
     {
         "locale_code_iso_639": "en",
