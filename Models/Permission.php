@@ -283,7 +283,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-permission.name_already_exist");
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -293,7 +293,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-permission.slug_already_exist");
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -305,7 +305,7 @@ class Permission extends PermissionBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = trans("vaahcms-permission.updated_successfully");
+        $response['messages'][] = trans("vaahcms-general.updated_successfully");
         return $response;
     }
     //-------------------------------------------------
