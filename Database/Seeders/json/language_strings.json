@@ -44,6 +44,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Slug Already Exist",
         "content": "This slug is already exist."
     },
