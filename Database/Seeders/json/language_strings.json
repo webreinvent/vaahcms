@@ -710,6 +710,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "Batches"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Registrations"
     },
@@ -4243,6 +4249,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLotes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Inscripciones"
     },
@@ -7597,6 +7609,12 @@
         "category": "sidebar-menu",
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLots"
     },
     {
         "locale_code_iso_639": "fr",

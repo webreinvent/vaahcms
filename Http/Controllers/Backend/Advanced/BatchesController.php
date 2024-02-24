@@ -46,6 +46,10 @@ class BatchesController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "batches_title" => trans("vaahcms-sidebar-menu.batches"),
+
+            ];
 
             $response['success'] = true;
             $response['data'] = $data;
