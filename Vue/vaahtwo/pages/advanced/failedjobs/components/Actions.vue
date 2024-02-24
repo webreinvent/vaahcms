@@ -3,7 +3,8 @@ import {ref, reactive, watch, onMounted} from 'vue';
 import { useFailedJobStore } from '../../../../stores/advanced/store-failedjobs'
 
 import Filters from './Filters.vue'
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useFailedJobStore();
 
 onMounted(async () => {
@@ -33,7 +34,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
@@ -81,7 +82,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        data-testid="failedjobs-actions-search"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                        class="p-inputtext-sm"
                             />
 
@@ -91,7 +92,7 @@ const toggleBulkMenuState = (event) => {
                                     class="p-button-sm"
                             />
 
-                            <Button label="Filters"
+                            <Button :label="root.assets.language_strings.crud_actions.filters_button"
                                     class="p-button-sm"
                                     data-testid="failedjobs-actions-show-filters"
                                     @click="store.show_filters = true"
@@ -103,7 +104,7 @@ const toggleBulkMenuState = (event) => {
                             <Button class="p-button-sm"
                                     icon="pi pi-filter-slash"
                                     data-testid="failedjobs-actions-reset-filters"
-                                    label="Reset"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     @click="store.resetQuery()"
                             />
                         </div>
