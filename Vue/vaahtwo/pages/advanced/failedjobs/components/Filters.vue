@@ -53,7 +53,7 @@ const store = useFailedJobStore();
             <Divider/>
 
             <VhFieldVertical>
-                <label for="range">Range</label>
+                <label for="range">{{store.assets.language_strings.filter_range}}:</label>
                 <Calendar inputId="range"
                           data-testid="failedjobs-filters-range"
                           v-model="store.dates2"
