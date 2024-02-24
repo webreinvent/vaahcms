@@ -38,28 +38,11 @@ class GeneralController extends Controller
             foreach (vh_file_types() as $key => $value){
                 $vh_file_types_data[$key] = $value['name'];
             }
-            $language['language_strings'] = [
-                "general_settings_title" => trans("vaahcms-general-setting.heading"),
-                "expand_all" => trans("vaahcms-general-setting.expand_all"),
-                "collapse_all" => trans("vaahcms-general-setting.collapse_all"),
-                "site_settings" => trans("vaahcms-general-setting.site_settings"),
-                "site_settings_message" => trans("vaahcms-general-setting.site_settings_message"),
-                "securities" => trans("vaahcms-general-setting.securities"),
-                "securities_message" => trans("vaahcms-general-setting.securities_message"),
-                "date_and_time" => trans("vaahcms-general-setting.date_and_time"),
-                "global_date_and_time_settings" => trans("vaahcms-general-setting.global_date_and_time_settings"),
-                "social_media_and_links" => trans("vaahcms-general-setting.social_media_and_links"),
-                "static_links_management" => trans("vaahcms-general-setting.static_links_management"),
-                "scripts" => trans("vaahcms-general-setting.scripts"),
-                "scripts_message" => trans("vaahcms-general-setting.scripts_message"),
-                "meta_tags" => trans("vaahcms-general-setting.meta_tags"),
-                "global_meta_tags" => trans("vaahcms-general-setting.global_meta_tags"),
-            ];
 
             $response['success'] = true;
             $response['data']['base_url'] = url('/');
             $response['data']['roles'] = $role_data;
-            $response['data']['language_strings'] = $language;
+            $response['data']['language_strings'] = $this->getLanguageStrings();
             $response['data']['file_types'] = $vh_file_types_data;
             $response['data']['vh_meta_attributes'] = vh_meta_attributes();
             $response['data']['languages'] = Language::select('name', 'locale_code_iso_639')->get();
@@ -76,6 +59,27 @@ class GeneralController extends Controller
         }
 
         return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getLanguageStrings() : array {
+
+        return  [
+            "general_settings_title" => trans("vaahcms-general-setting.heading"),
+            "expand_all" => trans("vaahcms-general-setting.expand_all"),
+            "collapse_all" => trans("vaahcms-general-setting.collapse_all"),
+            "site_settings" => trans("vaahcms-general-setting.site_settings"),
+            "site_settings_message" => trans("vaahcms-general-setting.site_settings_message"),
+            "securities" => trans("vaahcms-general-setting.securities"),
+            "securities_message" => trans("vaahcms-general-setting.securities_message"),
+            "date_and_time" => trans("vaahcms-general-setting.date_and_time"),
+            "global_date_and_time_settings" => trans("vaahcms-general-setting.global_date_and_time_settings"),
+            "social_media_and_links" => trans("vaahcms-general-setting.social_media_and_links"),
+            "static_links_management" => trans("vaahcms-general-setting.static_links_management"),
+            "scripts" => trans("vaahcms-general-setting.scripts"),
+            "scripts_message" => trans("vaahcms-general-setting.scripts_message"),
+            "meta_tags" => trans("vaahcms-general-setting.meta_tags"),
+            "global_meta_tags" => trans("vaahcms-general-setting.global_meta_tags"),
+        ];
     }
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse

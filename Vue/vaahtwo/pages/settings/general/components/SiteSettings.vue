@@ -5,7 +5,7 @@ const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store.list" class="grid justify-content-evenly">
+    <div v-if="store.list && store.assets" class="grid justify-content-evenly">
         <div class="col-12 md:col-6 pr-4">
             <div class="grid p-fluid">
                 <div class="col-12">
