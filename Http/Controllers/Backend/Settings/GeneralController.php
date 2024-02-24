@@ -102,6 +102,19 @@ class GeneralController extends Controller
             "max_number_of_forgot_password_attempts" => trans("vaahcms-general-setting.max_number_of_forgot_password_attempts"),
             "backend_home_page_link" => trans("vaahcms-general-setting.backend_home_page_link"),
             "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
+            "enter_custom_text" => trans("vaahcms-general-setting.enter_custom_text"),
+            "enter_custom_link" => trans("vaahcms-general-setting.enter_custom_link"),
+            "enter_redirection_link" => trans("vaahcms-general-setting.enter_redirection_link"),
+            "enable" => trans("vaahcms-general-setting.enable"),
+            "disable" => trans("vaahcms-general-setting.disable"),
+            "true" => trans("vaahcms-general-setting.true"),
+            "false" => trans("vaahcms-general-setting.false"),
+            "use_app_name" => trans("vaahcms-general-setting.use_app_name"),
+            "use_app_url" => trans("vaahcms-general-setting.use_app_url"),
+            "use_current_year" => trans("vaahcms-general-setting.use_current_year"),
+            "backend" => trans("vaahcms-general-setting.backend"),
+            "frontend" => trans("vaahcms-general-setting.frontend"),
+            "custom" => trans("vaahcms-general-setting.custom"),
         ];
     }
     //----------------------------------------------------------
@@ -173,7 +186,7 @@ class GeneralController extends Controller
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Settings successful saved';
+            $response['messages'][] = trans("vaahcms-general.settings_successful_saved");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -249,7 +262,7 @@ class GeneralController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Saved';
+            $response['messages'][] = trans("vaahcms-general.saved");
             $response['data'] = $data;
         } catch (\Exception $e) {
             $response = [];
@@ -309,7 +322,7 @@ class GeneralController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Saved';
+            $response['messages'][] = trans("vaahcms-general.saved");
             $response['data'] = $data;
         } catch (\Exception $e) {
             $response = [];

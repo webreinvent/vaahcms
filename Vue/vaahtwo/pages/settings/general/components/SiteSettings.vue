@@ -1,11 +1,12 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store.list && store.assets" class="grid justify-content-evenly">
+    <div v-if="store.list && store.assets && root.assets" class="grid justify-content-evenly">
         <div class="col-12 md:col-6 pr-4">
             <div class="grid p-fluid">
                 <div class="col-12">
@@ -102,7 +103,7 @@ const store = useGeneralStore();
                                   :suggestions="store.filtered_registration_roles"
                                   @complete="store.searchRegistrationRoles($event)"
                                   data-testid="general-registration_roles"
-                                  placeholder="Search"
+                                  :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                   class="p-inputtext-sm"
                     />
                 </div>
@@ -116,7 +117,7 @@ const store = useGeneralStore();
                                   @complete="store.searchAllowedFiles($event)"
                                   class="p-inputtext-sm"
                                   data-testid="general-allowed_files"
-                                  placeholder="Search"
+                                  :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                     />
                 </div>
                 <div class="col-12 p-fluid">
@@ -179,7 +180,7 @@ const store = useGeneralStore();
                     <InputText class="w-full p-inputtext-sm mt-2" v-if="store.list.copyright_text === 'custom'"
                                data-testid="general-copyright_custom_filed"
                                v-model="store.list.copyright_text_custom"
-                               placeholder="Enter Custom Text"
+                               :placeholder="store.assets.language_strings.enter_custom_text"
 
                     />
                 </div>
@@ -209,7 +210,7 @@ const store = useGeneralStore();
                                data-testid="general-copyright_custom_link_field"
                                v-if="store.list.copyright_link === 'custom'"
                                v-model="store.list.copyright_link_custom"
-                               placeholder="Enter Custom Link"
+                               :placeholder="store.assets.language_strings.enter_custom_link"
                     />
                 </div>
 
@@ -237,7 +238,7 @@ const store = useGeneralStore();
 
                     <InputNumber v-model="store.list.copyright_year_custom"
                                  name="config-db_port"
-                                 placeholder="Copyright Year"
+                                 :placeholder="store.assets.language_strings.copyright_year"
                                  class="w-full p-inputtext-sm mt-2"
                                  inputId="withoutgrouping" :useGrouping="false"
                                  :pt="{
@@ -376,7 +377,7 @@ const store = useGeneralStore();
                                       class="p-button-sm"
                         />
 
-                        <InputText placeholder="Enter Redirection Link"
+                        <InputText :placeholder="store.assets.language_strings.enter_redirection_link"
                                    v-model="store.list.redirect_after_backend_logout_url"
                                    data-testid="general-redirect_logout_custom"
                                    :disabled="store.list.redirect_after_backend_logout !== 'custom'"
@@ -405,7 +406,7 @@ const store = useGeneralStore();
                                       class="p-button-sm"
                         />
 
-                        <InputText placeholder="Enter Redirection Link"
+                        <InputText :placeholder="store.assets.language_strings.enter_redirection_link"
                                    v-model="store.list.backend_homepage_link_url"
                                    data-testid="general-backend_homepage_link_custom"
                                    :disabled="store.list.backend_homepage_link !== 'custom'"

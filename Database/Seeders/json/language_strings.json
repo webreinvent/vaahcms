@@ -8,6 +8,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Settings successful saved"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Name Already Exist",
         "content": "This name is already exist."
     },
@@ -3569,6 +3575,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Configuración guardada correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Title Limit",
         "content": "El carácter del título no es mayor que 200."
     },
@@ -6942,6 +6954,12 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Paramètres enregistrés avec succès"
     },
     {
         "locale_code_iso_639": "fr",

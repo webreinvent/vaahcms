@@ -62,20 +62,16 @@ export const useGeneralStore = defineStore({
         custom_field_list:null,
         active_index:[],
         languages: null,
-        visibitlity_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        maintenanceModeOptions: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        compressedLogoOptions: [{name:'True',value:"1"}, {name:'False',value:"0"}],
-        redirect_after_logout_options: [
-            {name:'Backend',value:'backend'},
-            {name:'Frontend',value:'frontend'},
-            {name:'Custom',value:'custom'}
-        ],
-        password_protection_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        copyright_text_options: [{name:'Use App Name',value:"app_name"}, {name:'Custom',value:"custom"}],
-        copyright_link_options: [{name:'Use App Url',value:"app_url"}, {name:'Custom',value:"custom"}],
-        copyright_year_options: [{name:'Use Current year',value:"use_current_year"}, {name:'Custom',value:"custom"}],
-        laravel_queues_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
-        sign_up_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        visibitlity_options: null,
+        maintenanceModeOptions: null,
+        compressedLogoOptions: null,
+        redirect_after_logout_options: null,
+        password_protection_options: null,
+        copyright_text_options: null,
+        copyright_link_options: null,
+        copyright_year_options: null,
+        laravel_queues_options: null,
+        sign_up_options: null,
         social_media_links: null,
         add_link: null,
         show_link_input: true,
@@ -112,15 +108,34 @@ export const useGeneralStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
-        {
-            if(data)
-            {
+        afterGetAssets(data, res) {
+            if (data) {
                 this.assets = data;
                 this.languages = data.languages;
                 this.allowed_files = data.file_types;
+
+                const generateOptions = (enableKey, disableKey) => [
+                    { name: this.assets.language_strings[enableKey], value: "1" },
+                    { name: this.assets.language_strings[disableKey], value: "0" }
+                ];
+
+                this.visibitlity_options = generateOptions('enable', 'disable');
+                this.maintenanceModeOptions = generateOptions('enable', 'disable');
+                this.compressedLogoOptions = generateOptions('true', 'false');
+                this.redirect_after_logout_options = [
+                    { name: this.assets.language_strings.backend, value: 'backend' },
+                    { name: this.assets.language_strings.frontend, value: 'frontend' },
+                    { name: this.assets.language_strings.custom, value: 'custom' }
+                ];
+                this.password_protection_options = generateOptions('enable', 'disable');
+                this.copyright_text_options = generateOptions('use_app_name', 'custom');
+                this.copyright_link_options = generateOptions('use_app_url', 'custom');
+                this.copyright_year_options = generateOptions('use_current_year', 'custom');
+                this.laravel_queues_options = generateOptions('enable', 'disable');
+                this.sign_up_options = generateOptions('enable', 'disable');
             }
         },
+
         //---------------------------------------------------------------------
         async getList() {
             let options = {
