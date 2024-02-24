@@ -8,6 +8,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Column"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Created"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelled"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finished"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Name Already Exist",
         "content": "This name is already exist."
     },
@@ -3551,6 +3575,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Columna"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Creada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finalizada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Title Limit",
         "content": "El carácter del título no es mayor que 200."
     },
@@ -6906,6 +6954,30 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Column",
+        "content": "Colonne"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Créé\n"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "\nAnnulé"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finie"
     },
     {
         "locale_code_iso_639": "fr",
