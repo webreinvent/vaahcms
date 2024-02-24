@@ -101,6 +101,7 @@ class GeneralController extends Controller
             "copyright_link" => trans("vaahcms-general-setting.copyright_link"),
             "max_number_of_forgot_password_attempts" => trans("vaahcms-general-setting.max_number_of_forgot_password_attempts"),
             "backend_home_page_link" => trans("vaahcms-general-setting.backend_home_page_link"),
+            "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
         ];
     }
     //----------------------------------------------------------

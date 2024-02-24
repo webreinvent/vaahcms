@@ -34,7 +34,7 @@ const store = useGeneralStore();
                               optionLabel="name"
                               data-testid="general-site_language"
                               optionValue="locale_code_iso_639"
-                              placeholder="Select a Language"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_language"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
