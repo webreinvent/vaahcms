@@ -1636,6 +1636,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Allowed file size for upload( in MB)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Max number of forgot password attempts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Copyright Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Expand All",
         "content": "Expand All"
     },
@@ -5170,6 +5194,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Enlace a la página de inicio del backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Tamaño de archivo permitido para cargar (en MB)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Número máximo de intentos de olvido de contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Enlace de derechos de autor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Expand All",
         "content": "Expandir todo"
     },
@@ -8540,6 +8588,30 @@
         "category": "general-setting",
         "name": "Site Settings",
         "content": "Paramètres du site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Lien vers la page d'accueil du back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Taille de fichier autorisée pour le téléchargement (en Mo)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Nombre maximum de tentatives d'oubli de mot de passe"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Lien de droit d\\'auteur"
     },
     {
         "locale_code_iso_639": "fr",

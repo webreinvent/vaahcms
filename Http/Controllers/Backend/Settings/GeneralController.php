@@ -97,6 +97,10 @@ class GeneralController extends Controller
             "redirect_after_backend_logout" => trans("vaahcms-general-setting.redirect_after_backend_logout"),
             "save_settings_button" => trans("vaahcms-general-setting.save_settings_button"),
             "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
+            "allowed_file_size_for_upload" => trans("vaahcms-general-setting.allowed_file_size_for_upload"),
+            "copyright_link" => trans("vaahcms-general-setting.copyright_link"),
+            "max_number_of_forgot_password_attempts" => trans("vaahcms-general-setting.max_number_of_forgot_password_attempts"),
+            "backend_home_page_link" => trans("vaahcms-general-setting.backend_home_page_link"),
         ];
     }
     //----------------------------------------------------------

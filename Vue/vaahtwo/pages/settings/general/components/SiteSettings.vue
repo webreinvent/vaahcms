@@ -120,7 +120,7 @@ const store = useGeneralStore();
                     />
                 </div>
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Allowed file size for upload( in MB)</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.allowed_file_size_for_upload }}</h5>
                     <div class="p-inputgroup col-6 p-0">
                         <InputNumber v-model="store.list.upload_allowed_file_size"
                                      class="p-inputtext-sm h-2rem"
@@ -185,7 +185,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.copyright_link }}</h5>
 
                     <div class="p-inputgroup">
 
@@ -250,7 +250,7 @@ const store = useGeneralStore();
 
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">
-                        Max number of forgot password attempts
+                        {{ store.assets.language_strings.max_number_of_forgot_password_attempts }}
                     </h5>
 
                     <div class="p-inputgroup">
@@ -393,7 +393,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Backend Home Page Link</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.backend_home_page_link }}</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.backend_homepage_link"
