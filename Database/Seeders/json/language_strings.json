@@ -716,6 +716,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Registrations"
     },
@@ -4255,6 +4261,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Inscripciones"
     },
@@ -7615,6 +7627,12 @@
         "category": "sidebar-menu",
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
     },
     {
         "locale_code_iso_639": "fr",
