@@ -1,7 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-
+import {useFailedJobStore} from "../../stores/advanced/store-failedjobs";
+const store = useFailedJobStore();
 const route = useRoute();
 
 const menu_pt = ref({
@@ -9,34 +10,43 @@ const menu_pt = ref({
         class: route.path === props.item.route ? 'p-focus' : ''
     })
 });
+const advanceValue = ref('');
+const sidebar_menu_items = ref([]);
 
-const sidebar_menu_items = ref([
-    {
-        label: 'ADVANCED',
-        items: [
-            {
-                label: 'Logs',
-                icon: 'pi pi-book',
-                route: '/vaah/advanced/logs'
-            },
-            {
-                label: 'Jobs',
-                icon: 'pi pi-align-justify',
-                route: '/vaah/advanced/jobs'
-            },
-            {
-                label: 'Failed Jobs',
-                icon: 'pi pi-times-circle',
-                route: '/vaah/advanced/failedjobs'
-            },
-            {
-                label: 'Batches',
-                icon: 'pi pi-server',
-                route: '/vaah/advanced/batches'
-            }
-        ]},
-]);
+const updateSidebarMenuItems = (languageStrings) => {
+    sidebar_menu_items.value = [
+        {
+            label: languageStrings.advanced,
+            items: [
+                {
+                    label: languageStrings.logs,
+                    icon: 'pi pi-book',
+                    route: '/vaah/advanced/logs'
+                },
+                {
+                    label: languageStrings.jobs,
+                    icon: 'pi pi-align-justify',
+                    route: '/vaah/advanced/jobs'
+                },
+                {
+                    label: languageStrings.failed_jobs_title,
+                    icon: 'pi pi-times-circle',
+                    route: '/vaah/advanced/failedjobs'
+                },
+                {
+                    label: languageStrings.batches,
+                    icon: 'pi pi-server',
+                    route: '/vaah/advanced/batches'
+                }
+            ]
+        },
+    ];
+};
 
+watch(() => store.assets, (newAssets) => {
+    advanceValue.value = newAssets.language_strings.advanced;
+    updateSidebarMenuItems(newAssets.language_strings);
+});
 onMounted(async () => {
 
 });
