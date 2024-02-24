@@ -49,6 +49,10 @@ class FailedJobsController extends Controller
             $data['language_strings'] = [
                 "failed_jobs_title" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
                 "filter_range" => trans("vaahcms-general.filter_range"),
+                "advanced" => trans("vaahcms-sidebar-menu.advanced"),
+                "logs" => trans("vaahcms-sidebar-menu.logs"),
+                "jobs" => trans("vaahcms-dashboard.jobs"),
+                "batches" => trans("vaahcms-sidebar-menu.batches"),
 
             ];
 

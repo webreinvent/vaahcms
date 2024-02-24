@@ -1,8 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-import {useRootStore} from "../../stores/root";
-const root = useRootStore();
+import {useFailedJobStore} from "../../stores/advanced/store-failedjobs";
+const store = useFailedJobStore();
 const route = useRoute();
 
 const menu_pt = ref({
@@ -10,33 +10,31 @@ const menu_pt = ref({
         class: route.path === props.item.route ? 'p-focus' : ''
     })
 });
-
-
-
+const advanceValue = ref('');
 const sidebar_menu_items = ref([]);
 
-const updateSidebarMenuItems = (advanced_layout) => {
+const updateSidebarMenuItems = (languageStrings) => {
     sidebar_menu_items.value = [
         {
-            label: advanced_layout?.advanced ?? '',
+            label: languageStrings.advanced,
             items: [
                 {
-                    label: advanced_layout?.logs ?? '',
+                    label: languageStrings.logs,
                     icon: 'pi pi-book',
                     route: '/vaah/advanced/logs'
                 },
                 {
-                    label: advanced_layout?.jobs ?? '',
+                    label: languageStrings.jobs,
                     icon: 'pi pi-align-justify',
                     route: '/vaah/advanced/jobs'
                 },
                 {
-                    label: advanced_layout?.failed_jobs ?? '',
+                    label: languageStrings.failed_jobs_title,
                     icon: 'pi pi-times-circle',
                     route: '/vaah/advanced/failedjobs'
                 },
                 {
-                    label: advanced_layout?.batches ?? '',
+                    label: languageStrings.batches,
                     icon: 'pi pi-server',
                     route: '/vaah/advanced/batches'
                 }
@@ -45,8 +43,10 @@ const updateSidebarMenuItems = (advanced_layout) => {
     ];
 };
 
-watch(() => root.assets?.language_strings?.advanced_layout, updateSidebarMenuItems);
-
+watch(() => store.assets, (newAssets) => {
+    advanceValue.value = newAssets.language_strings.advanced;
+    updateSidebarMenuItems(newAssets.language_strings);
+});
 onMounted(async () => {
     updateSidebarMenuItems(root.assets?.language_strings?.advanced_layout ?? {});
 });
