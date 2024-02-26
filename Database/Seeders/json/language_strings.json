@@ -8,6 +8,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Column"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Created"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelled"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finished"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Filter Range",
         "content": "Range"
     },
@@ -802,6 +826,12 @@
         "category": "sidebar-menu",
         "name": "Failed Jobs Title",
         "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "Batches"
     },
     {
         "locale_code_iso_639": "en",
@@ -3637,6 +3667,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Columna"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Creada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finalizada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Filter Range",
         "content": "Rango"
     },
@@ -4427,6 +4481,12 @@
         "category": "sidebar-menu",
         "name": "Failed Jobs Title",
         "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLotes"
     },
     {
         "locale_code_iso_639": "es",
@@ -7082,6 +7142,30 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Colonne"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Créé\n"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "\nAnnulé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
         "name": "Filter Range",
         "content": "Gamme"
     },
@@ -7877,6 +7961,12 @@
         "category": "sidebar-menu",
         "name": "Failed Jobs Title",
         "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLots"
     },
     {
         "locale_code_iso_639": "fr",
