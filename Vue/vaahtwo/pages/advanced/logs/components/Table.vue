@@ -2,7 +2,8 @@
 import {vaah} from '../../../../vaahvue/pinia/vaah'
 import {useLogStore} from '../../../../stores/advanced/store-logs'
 import {useRoute} from 'vue-router';
-
+import { useRootStore } from "../../../../stores/root";
+const root = useRootStore();
 const store = useLogStore();
 const useVaah = vaah();
 const route = useRoute();
@@ -12,7 +13,7 @@ const route = useRoute();
 
 <template>
 
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
         <DataTable :value="store.list"
                    dataKey="id"
@@ -35,7 +36,7 @@ const route = useRoute();
 
                         <Button v-if="store.hasPermission('can-read-log')"
                                 class="p-button-tiny p-button-text"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 :disabled="route.params.name === prop.data.name"
                                 @click="store.toView(prop.data)"
                                 data-testid="logs-item_view"
@@ -45,7 +46,7 @@ const route = useRoute();
                         <Button v-if="store.hasPermission('can-delete-log')"
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.confirmDelete(prop.data)"
-                                v-tooltip.top="'Delete'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.view_delete"
                                 data-testid="logs-item_trash"
                                 icon="pi pi-trash" >
                         </Button>

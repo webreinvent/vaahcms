@@ -54,7 +54,7 @@ const toggleItemMenu = (event) => {
                 <div class="flex flex-row">
 
                     <div class="p-panel-title">
-                        Log
+                        {{ store.assets.language_strings.view_log_file }}
                         <span v-if="store.item.name">
                            :  {{store.item.name}}
                         </span>
@@ -63,35 +63,39 @@ const toggleItemMenu = (event) => {
             </template>
 
             <template #icons>
+                <div  v-if="store.assets
+                           && store.assets.language_strings
+                           "
+                >
                 <Button icon="pi pi-trash"
                         @click="store.confirmClearFile(store.item)"
                         data-testid="logs-item_clear_file"
                         class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top=" 'Clear File' "
+                        v-tooltip.top="store.assets.language_strings.toolkit_text_clear_file"
                 />
 
                 <Button icon="pi pi-download"
                         @click="store.downloadFile(store.item)"
                         data-testid="logs-item_download_file"
                         class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top=" 'Download File' "
+                        v-tooltip.top="store.assets.language_strings.toolkit_text_download_file"
                 />
 
                 <Button icon="pi pi-refresh"
                         @click="store.getItem(store.item.name)"
                         data-testid="logs-item_refresh"
                         class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top=" 'Reload' "
+                        v-tooltip.top="store.assets.language_strings.toolkit_text_reload"
                 />
 
                 <Button icon="pi pi-times"
                         @click="store.toList()"
                         data-testid="logs-item_close"
                         class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top=" 'Close' "
+                        v-tooltip.top="store.assets.language_strings.toolkit_text_close"
                 />
+                </div>
             </template>
-
             <div class="card overflow-hidden">
                 <TabView class="is-small tab-panel-has-no-padding">
                     <TabPanel header="Logs">
