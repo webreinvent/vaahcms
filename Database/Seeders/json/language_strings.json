@@ -7142,6 +7142,12 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
+        "name": "Filter Range",
+        "content": "Gamme"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
         "name": "Successfully Delete All Logs",
         "content": "Supprimer avec succès tous les journaux"
     },

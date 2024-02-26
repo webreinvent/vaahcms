@@ -46,7 +46,11 @@ class FailedJobsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "failed_jobs_title" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
+                "filter_range" => trans("vaahcms-general.filter_range"),
 
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
