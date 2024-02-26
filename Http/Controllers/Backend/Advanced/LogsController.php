@@ -56,10 +56,6 @@ class LogsController extends Controller
                 "toolkit_text_clear_file" => trans("vaahcms-general.toolkit_text_clear_file"),
                 "toolkit_text_download_file" => trans("vaahcms-general.toolkit_text_download_file"),
                 "view_log_file" => trans("vaahcms-general.view_log_file"),
-                "failed_jobs" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
-                "advanced" => trans("vaahcms-sidebar-menu.advanced"),
-                "jobs" => trans("vaahcms-dashboard.jobs"),
-                "batches" => trans("vaahcms-sidebar-menu.batches"),
 
             ];
             $response['success'] = true;

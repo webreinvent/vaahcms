@@ -1,8 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-import {useLogStore} from "../../stores/advanced/store-logs";
-const store = useLogStore();
+import {useRootStore} from "../../stores/root";
+const root = useRootStore();
 const route = useRoute();
 
 const menu_pt = ref({
@@ -13,31 +13,30 @@ const menu_pt = ref({
 
 
 
-const advanceValue = ref('');
 const sidebar_menu_items = ref([]);
 
-const updateSidebarMenuItems = (languageStrings) => {
+const updateSidebarMenuItems = (advanced_layout) => {
     sidebar_menu_items.value = [
         {
-            label: languageStrings.advanced,
+            label: advanced_layout?.advanced ?? '',
             items: [
                 {
-                    label: languageStrings.logs,
+                    label: advanced_layout?.logs ?? '',
                     icon: 'pi pi-book',
                     route: '/vaah/advanced/logs'
                 },
                 {
-                    label: languageStrings.jobs,
+                    label: advanced_layout?.jobs ?? '',
                     icon: 'pi pi-align-justify',
                     route: '/vaah/advanced/jobs'
                 },
                 {
-                    label: languageStrings.failed_jobs,
+                    label: advanced_layout?.failed_jobs ?? '',
                     icon: 'pi pi-times-circle',
                     route: '/vaah/advanced/failedjobs'
                 },
                 {
-                    label: languageStrings.batches,
+                    label: advanced_layout?.batches ?? '',
                     icon: 'pi pi-server',
                     route: '/vaah/advanced/batches'
                 }
@@ -46,13 +45,10 @@ const updateSidebarMenuItems = (languageStrings) => {
     ];
 };
 
-watch(() => store.assets, (newAssets) => {
-    advanceValue.value = newAssets.language_strings.advanced;
-    updateSidebarMenuItems(newAssets.language_strings);
-});
-onMounted(async () => {
-    updateSidebarMenuItems(store.assets.language_strings);
+watch(() => root.assets?.language_strings?.advanced_layout, updateSidebarMenuItems);
 
+onMounted(async () => {
+    updateSidebarMenuItems(root.assets?.language_strings?.advanced_layout ?? {});
 });
 
 
