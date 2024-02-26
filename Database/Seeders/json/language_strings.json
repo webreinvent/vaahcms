@@ -2063,6 +2063,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Cache was successfully deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "After head tag start",
         "content": "After head tag start (<head>)"
     },
@@ -5626,6 +5632,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "\nLa caché se eliminó correctamente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "After head tag start",
         "content": "Después head tag inicio (<head>)"
     },
@@ -9008,6 +9020,12 @@
         "category": "general-setting",
         "name": "Scripts Message",
         "content": "Ajoutez des scripts de Google Analytics et d\\'autres scripts de suivi."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Le cache a été supprimé avec succès."
     },
     {
         "locale_code_iso_639": "fr",

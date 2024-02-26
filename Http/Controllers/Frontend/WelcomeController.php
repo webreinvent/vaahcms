@@ -47,7 +47,7 @@ class WelcomeController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Cache was successfully deleted.';
+            $response['messages'][] = trans("vaahcms-general-setting.cache_delete_message");
 
         }catch(\Exception $e)
         {
