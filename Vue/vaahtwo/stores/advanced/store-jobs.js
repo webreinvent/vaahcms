@@ -183,16 +183,16 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -318,9 +318,10 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         confirmDelete()
         {
+            const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select a record']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
             this.action.type = 'delete';
@@ -456,9 +457,10 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Delete',
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -470,9 +472,10 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
