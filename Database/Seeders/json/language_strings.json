@@ -50,8 +50,38 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
-        "name": "Filter By Extension",
-        "content": "Filter By Extension"
+        "name": "Filter Queue",
+        "content": "Queue"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Default"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter High",
+        "content": "High"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medium"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Low"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "This list consist of only queued/pending jobs.Completed jobs gets deleted automatically ."
     },
     {
         "locale_code_iso_639": "en",
@@ -106,6 +136,12 @@
         "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
+    },
+    {
+    "locale_code_iso_639": "en",
+    "category": "general",
+    "name": "Filter By Extension",
+    "content": "Filter by extension"
     },
     {
         "locale_code_iso_639": "en",
@@ -3081,12 +3117,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
@@ -3632,6 +3663,42 @@
         "category": "general",
         "name": "Toolkit Text Reload",
         "content": "Recargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "Cola"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Por defecto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Alta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Baja"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Esta lista consta únicamente de trabajos en cola/pendientes. Los trabajos completados se eliminan automáticamente."
     },
     {
         "locale_code_iso_639": "es",
@@ -6484,12 +6551,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
@@ -7038,14 +7100,50 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
-        "name": "Filter By Extension",
-        "content": "Filtrer par extension"
+        "name": "Filter Queue",
+        "content": "File d\\'attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "\nDéfaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Haut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Moyen"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "\nFaible"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Title Limit",
         "content": "Le caractère du titre ne dépasse pas 200."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrer par extension"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9889,12 +9987,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",

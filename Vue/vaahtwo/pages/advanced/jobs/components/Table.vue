@@ -1,13 +1,15 @@
 <script setup>
 import {vaah} from '../../../../vaahvue/pinia/vaah'
 import {useJobStore} from '../../../../stores/advanced/store-jobs'
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useJobStore();
 const useVaah = vaah();
 
 </script>
 
 <template>
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
         <DataTable :value="store.list.data"
                    dataKey="id"
@@ -43,7 +45,7 @@ const useVaah = vaah();
                 <template #body="prop">
                     <Button v-if="store.hasPermission('can-read-jobs-payload')"
                             class="p-button-tiny p-button-text"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="jobs-view_payload"
                             @click="store.viewPayloads(prop.data.payload)"
                             icon="pi pi-eye"
@@ -94,7 +96,7 @@ const useVaah = vaah();
                         <Button v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-jobs')"
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.itemAction('delete', prop.data)"
-                                v-tooltip.top="'Delete'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.view_delete"
                                 data-testid="jobs-trash"
                                 icon="pi pi-trash"
                         />

@@ -66,7 +66,7 @@ class Job extends JobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -336,7 +336,7 @@ class Job extends JobBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = trans("vaahcms-general.record_not_found_with_id").$id;
             return $response;
         }
         $response['success'] = true;
@@ -362,7 +362,7 @@ class Job extends JobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -373,7 +373,7 @@ class Job extends JobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['messages'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -393,14 +393,14 @@ class Job extends JobBase
         $item = self::where('id', $id)->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }
