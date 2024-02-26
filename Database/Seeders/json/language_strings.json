@@ -8,6 +8,48 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Successfully delete all logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Successfully clear"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Clear File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Download File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Log"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Filter Queue",
         "content": "Queue"
     },
@@ -3075,12 +3117,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
@@ -3584,6 +3621,48 @@
         "category": "general",
         "name": "Title Required",
         "content": "El campo del título es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Eliminar con éxito todos los registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Borrar con éxito"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Archivo vacio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Descargar archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Cerca"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
     },
     {
         "locale_code_iso_639": "es",
@@ -6472,12 +6551,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
@@ -6980,6 +7054,48 @@
         "category": "general",
         "name": "Title Required",
         "content": "Le champ titre est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Supprimer avec succès tous les journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Effacer avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Effacer le fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Télécharger un fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Enregistrer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "\nRecharger"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9871,12 +9987,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
