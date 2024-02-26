@@ -21,7 +21,7 @@ const dateColumns = [
         >
             <VhFieldVertical>
                 <template #label>
-                    <b>Column:</b>
+                    <b>{{store.assets.language_strings.filter_column}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -29,7 +29,7 @@ const dateColumns = [
                                  data-testid="batches-filters-created_at"
                                  value="created_at"
                                  v-model="store.query.filter.date_filter_by"/>
-                    <label for="sort-descending">Created</label>
+                    <label for="sort-descending">{{store.assets.language_strings.filter_created}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -37,7 +37,7 @@ const dateColumns = [
                                  data-testid="batches-filters-cancelled_at"
                                  value="cancelled_at"
                                  v-model="store.query.filter.date_filter_by" />
-                    <label for="sort-descending">Cancelled</label>
+                    <label for="sort-descending">{{store.assets.language_strings.filter_cancelled}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -45,13 +45,13 @@ const dateColumns = [
                                  data-testid="batches-filters-finished_at"
                                  value="finished_at"
                                  v-model="store.query.filter.date_filter_by"/>
-                    <label for="sort-descending">Finished</label>
+                    <label for="sort-descending">{{store.assets.language_strings.filter_finished}}</label>
                 </div>
             </VhFieldVertical>
 
             <VhFieldVertical>
                 <template #label>
-                    <b>Date Between:</b>
+                    <b>{{store.assets.language_strings.filter_range}}:</b>
                 </template>
 
                 <Calendar inputId="range"

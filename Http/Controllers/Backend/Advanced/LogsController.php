@@ -48,6 +48,16 @@ class LogsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "logs" => trans("vaahcms-sidebar-menu.logs"),
+                "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                "toolkit_text_close" => trans("vaahcms-general.toolkit_text_close"),
+                "toolkit_text_clear_file" => trans("vaahcms-general.toolkit_text_clear_file"),
+                "toolkit_text_download_file" => trans("vaahcms-general.toolkit_text_download_file"),
+                "view_log_file" => trans("vaahcms-general.view_log_file"),
+
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
@@ -279,7 +289,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFolder($folder_path);
 
-                    $response['messages'][] = 'Successfully delete all logs';
+                    $response['messages'][] = trans("vaahcms-general.successfully_delete_all_logs");
 
                     break;
 
@@ -288,7 +298,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFile($request->path);
 
-                    $response['messages'][] = 'Successfully delete';
+                    $response['messages'][] = trans("vaahcms-general.successfully_deleted");
 
                     break;
 
@@ -297,7 +307,7 @@ class LogsController extends Controller
 
                     VaahFiles::writeFile($request->path, '');
 
-                    $response['messages'][] = 'Successfully clear';
+                    $response['messages'][] = trans("vaahcms-general.successfully_clear");
 
                     break;
                 //------------------------------------

@@ -133,6 +133,8 @@ class JsonController extends Controller
         //---------------------------------------------------
         $data['language_strings']['general'] = $this->getGeneralStrings();
         //---------------------------------------------------
+        $data['language_strings']['advanced_layout'] = $this->getAdvancedLayoutStrings();
+        //---------------------------------------------------
         $data['language_strings']['crud_actions'] = $this->getCrudActionStrings();
         //---------------------------------------------------
 
@@ -351,6 +353,17 @@ class JsonController extends Controller
             "select_an_action_type" => trans("vaahcms-general.select_an_action_type"),
             "select_records" => trans("vaahcms-general.select_records"),
             "select_a_record" => trans("vaahcms-general.select_a_record"),
+        ];
+    }
+    //----------------------------------------------------------
+
+    public function getAdvancedLayoutStrings() :array {
+        return [
+            "advanced" => trans("vaahcms-sidebar-menu.advanced"),
+            "logs" => trans("vaahcms-sidebar-menu.logs"),
+            "failed_jobs" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
+            "jobs" => trans("vaahcms-dashboard.jobs"),
+            "batches" => trans("vaahcms-sidebar-menu.batches"),
         ];
     }
     //----------------------------------------------------------

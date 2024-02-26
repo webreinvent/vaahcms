@@ -139,16 +139,16 @@ export const useFailedJobStore = defineStore({
         watchItem()
         {
             if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
+                watch(() => this.item.name, (newVal,oldVal) =>
+                    {
+                        if(newVal && newVal !== "")
                         {
-                            if(newVal && newVal !== "")
-                            {
-                                this.item.name = vaah().capitalising(newVal);
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
+                            this.item.name = vaah().capitalising(newVal);
+                            this.item.slug = vaah().strToSlug(newVal);
+                        }
+                    },{deep: true}
+                )
+            }
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -203,16 +203,16 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -339,9 +339,10 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         confirmDelete()
         {
+            const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select a record']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
             this.action.type = 'delete';
@@ -483,9 +484,10 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Delete',
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -497,9 +499,10 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();

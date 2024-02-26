@@ -2,8 +2,9 @@
 
 import { useJobStore } from '../../../../stores/advanced/store-jobs'
 import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
+import {useRootStore} from "../../../../stores/root";
 
-
+const root = useRootStore();
 const store = useJobStore();
 
 </script>
@@ -17,7 +18,7 @@ const store = useJobStore();
         >
             <VhFieldVertical >
                 <template #label>
-                    <b>Sort By:</b>
+                    <b>{{root.assets.language_strings.crud_actions.filter_sort_by}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -27,7 +28,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.sort"
                     />
 
-                    <label for="sort-none">None</label>
+                    <label for="sort-none">{{root.assets.language_strings.crud_actions.sort_by_none}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -37,7 +38,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.sort"
                     />
 
-                    <label for="sort-ascending">Created (Ascending)</label>
+                    <label for="sort-ascending">{{root.assets.language_strings.crud_actions.sort_by_updated_ascending}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -47,7 +48,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.sort"
                     />
 
-                    <label for="sort-descending">Created (Descending)</label>
+                    <label for="sort-descending">{{root.assets.language_strings.crud_actions.sort_by_updated_descending}}</label>
                 </div>
 
             </VhFieldVertical>
@@ -56,7 +57,7 @@ const store = useJobStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Queue:</b>
+                    <b>{{store.assets.language_strings.filter_queue}}:</b>
                 </template>
 
                 <div class="field-radiobutton">
@@ -66,7 +67,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.queue"
                     />
 
-                    <label for="default">Default</label>
+                    <label for="default">{{store.assets.language_strings.filter_default}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -76,7 +77,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.queue"
                     />
 
-                    <label for="high">High</label>
+                    <label for="high">{{store.assets.language_strings.filter_high}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -86,7 +87,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.queue"
                     />
 
-                    <label for="medium">Medium</label>
+                    <label for="medium">{{store.assets.language_strings.filter_medium}}</label>
                 </div>
 
                 <div class="field-radiobutton">
@@ -96,7 +97,7 @@ const store = useJobStore();
                                  v-model="store.query.filter.queue"
                     />
 
-                    <label for="low">Low</label>
+                    <label for="low">{{store.assets.language_strings.filter_low}}</label>
                 </div>
             </VhFieldVertical>
         </Sidebar>

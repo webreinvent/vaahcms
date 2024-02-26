@@ -1,7 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-
+import {useRootStore} from "../../stores/root";
+const root = useRootStore();
 const route = useRoute();
 
 const menu_pt = ref({
@@ -10,35 +11,44 @@ const menu_pt = ref({
     })
 });
 
-const sidebar_menu_items = ref([
-    {
-        label: 'ADVANCED',
-        items: [
-            {
-                label: 'Logs',
-                icon: 'pi pi-book',
-                route: '/vaah/advanced/logs'
-            },
-            {
-                label: 'Jobs',
-                icon: 'pi pi-align-justify',
-                route: '/vaah/advanced/jobs'
-            },
-            {
-                label: 'Failed Jobs',
-                icon: 'pi pi-times-circle',
-                route: '/vaah/advanced/failedjobs'
-            },
-            {
-                label: 'Batches',
-                icon: 'pi pi-server',
-                route: '/vaah/advanced/batches'
-            }
-        ]},
-]);
+
+
+const sidebar_menu_items = ref([]);
+
+const updateSidebarMenuItems = (advanced_layout) => {
+    sidebar_menu_items.value = [
+        {
+            label: advanced_layout?.advanced ?? '',
+            items: [
+                {
+                    label: advanced_layout?.logs ?? '',
+                    icon: 'pi pi-book',
+                    route: '/vaah/advanced/logs'
+                },
+                {
+                    label: advanced_layout?.jobs ?? '',
+                    icon: 'pi pi-align-justify',
+                    route: '/vaah/advanced/jobs'
+                },
+                {
+                    label: advanced_layout?.failed_jobs ?? '',
+                    icon: 'pi pi-times-circle',
+                    route: '/vaah/advanced/failedjobs'
+                },
+                {
+                    label: advanced_layout?.batches ?? '',
+                    icon: 'pi pi-server',
+                    route: '/vaah/advanced/batches'
+                }
+            ]
+        },
+    ];
+};
+
+watch(() => root.assets?.language_strings?.advanced_layout, updateSidebarMenuItems);
 
 onMounted(async () => {
-
+    updateSidebarMenuItems(root.assets?.language_strings?.advanced_layout ?? {});
 });
 
 

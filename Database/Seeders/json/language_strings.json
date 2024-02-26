@@ -8,8 +8,110 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
-        "name": "Settings Successful Saved",
-        "content": "Settings successful saved"
+        "name": "Filter Column",
+        "content": "Column"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Created"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelled"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finished"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Range"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Successfully delete all logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Successfully clear"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Clear File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Download File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Log"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "Queue"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Default"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter High",
+        "content": "High"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medium"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Low"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "This list consist of only queued/pending jobs.Completed jobs gets deleted automatically ."
     },
     {
         "locale_code_iso_639": "en",
@@ -64,6 +166,12 @@
         "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
+    },
+    {
+    "locale_code_iso_639": "en",
+    "category": "general",
+    "name": "Filter By Extension",
+    "content": "Filter by extension"
     },
     {
         "locale_code_iso_639": "en",
@@ -716,6 +824,18 @@
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "Batches"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Registrations"
     },
@@ -742,6 +862,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Extend"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Logs"
     },
     {
         "locale_code_iso_639": "en",
@@ -2844,12 +2970,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
@@ -3068,12 +3189,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
@@ -3364,11 +3480,11 @@
         "name": "email",
         "content": "The :attribute must be a valid email address."
     },{
-        "locale_code_iso_639": "en",
-        "category": "validation",
-        "name": "ends_with",
-        "content": "The :attribute must end with one of the following: :values"
-    },
+    "locale_code_iso_639": "en",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "The :attribute must end with one of the following: :values"
+},
     {
         "locale_code_iso_639": "en",
         "category": "validation",
@@ -3581,14 +3697,122 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
-        "name": "Settings Successful Saved",
-        "content": "Configuración guardada correctamente"
+        "name": "Filter Column",
+        "content": "Columna"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Creada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finalizada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Rango"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Eliminar con éxito todos los registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Borrar con éxito"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Archivo vacio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Descargar archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Cerca"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "Cola"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Por defecto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Alta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Baja"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Esta lista consta únicamente de trabajos en cola/pendientes. Los trabajos completados se eliminan automáticamente."
     },
     {
         "locale_code_iso_639": "es",
         "category": "general",
         "name": "Title Limit",
         "content": "El carácter del título no es mayor que 200."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrar por extensión"
     },
     {
         "locale_code_iso_639": "es",
@@ -4285,6 +4509,18 @@
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLotes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Inscripciones"
     },
@@ -4311,6 +4547,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Extender"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Registros"
     },
     {
         "locale_code_iso_639": "es",
@@ -6235,12 +6477,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
@@ -6458,12 +6695,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
@@ -6970,14 +7202,122 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
-        "name": "Settings Successful Saved",
-        "content": "Paramètres enregistrés avec succès"
+        "name": "Filter Column",
+        "content": "Colonne"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Créé\n"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "\nAnnulé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Gamme"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Supprimer avec succès tous les journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Effacer avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Effacer le fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Télécharger un fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Enregistrer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "\nRecharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "File d\\'attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "\nDéfaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Haut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Moyen"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "\nFaible"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Title Limit",
         "content": "Le caractère du titre ne dépasse pas 200."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrer par extension"
     },
     {
         "locale_code_iso_639": "fr",
@@ -7679,6 +8019,18 @@
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Batches",
+        "content": "\nLots"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
         "name": "Registrations",
         "content": "Inscriptions"
     },
@@ -7705,6 +8057,12 @@
         "category": "sidebar-menu",
         "name": "Extend",
         "content": "Étendre"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Logs",
+        "content": "Journaux"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9627,12 +9985,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
@@ -9850,12 +10203,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
