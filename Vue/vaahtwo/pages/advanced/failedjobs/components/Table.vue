@@ -1,22 +1,23 @@
 <script setup>
 import { vaah } from '../../../../vaahvue/pinia/vaah'
 import { useFailedJobStore } from '../../../../stores/advanced/store-failedjobs'
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useFailedJobStore();
 const useVaah = vaah();
 
 </script>
 
 <template>
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
-         <DataTable :value="store.list.data"
-                    dataKey="id"
-                    class="p-datatable-sm p-datatable-hoverable-rows"
-                    v-model:selection="store.action.items"
-                    stripedRows
-                    responsiveLayout="scroll"
-         >
+        <DataTable :value="store.list.data"
+                   dataKey="id"
+                   class="p-datatable-sm p-datatable-hoverable-rows"
+                   v-model:selection="store.action.items"
+                   stripedRows
+                   responsiveLayout="scroll"
+        >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
@@ -27,68 +28,68 @@ const useVaah = vaah();
                     :sortable="true"
             />
 
-             <Column field="queue" header="Queue">
-                 <template #body="prop">
-                     {{ prop.data.queue }}
-                 </template>
-             </Column>
+            <Column field="queue" header="Queue">
+                <template #body="prop">
+                    {{ prop.data.queue }}
+                </template>
+            </Column>
 
-             <Column field="connection" header="Connection">
-                 <template #body="prop">
-                     {{ prop.data.connection }}
-                 </template>
-             </Column>
+            <Column field="connection" header="Connection">
+                <template #body="prop">
+                    {{ prop.data.connection }}
+                </template>
+            </Column>
 
-             <Column field="payload" header="Payload">
-                 <template #body="prop">
-                     <Button v-if="store.hasPermission('can-read-payload-failed-jobs')"
-                             class="p-button-tiny p-button-text"
-                             v-tooltip.top="'View'"
-                             data-testid="failedjobs-view_payload"
-                             @click="store.viewFailedJobsContent(prop.data.payload,'Payload')"
-                             icon="pi pi-eye"
-                     />
-                 </template>
-             </Column>
+            <Column field="payload" header="Payload">
+                <template #body="prop">
+                    <Button v-if="store.hasPermission('can-read-payload-failed-jobs')"
+                            class="p-button-tiny p-button-text"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
+                            data-testid="failedjobs-view_payload"
+                            @click="store.viewFailedJobsContent(prop.data.payload,'Payload')"
+                            icon="pi pi-eye"
+                    />
+                </template>
+            </Column>
 
-             <Column field="exception" header="Exception">
-                 <template #body="prop">
-                     <Button v-if="store.hasPermission('can-read-failed-jobs-exception')"
-                             class="p-button-tiny p-button-text"
-                             v-tooltip.top="'View'"
-                             data-testid="failedjobs-view_exception"
-                             @click="store.viewFailedJobsContent(prop.data.exception,'Exception')"
-                             icon="pi pi-eye"
-                     />
-                 </template>
-             </Column>
+            <Column field="exception" header="Exception">
+                <template #body="prop">
+                    <Button v-if="store.hasPermission('can-read-failed-jobs-exception')"
+                            class="p-button-tiny p-button-text"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
+                            data-testid="failedjobs-view_exception"
+                            @click="store.viewFailedJobsContent(prop.data.exception,'Exception')"
+                            icon="pi pi-eye"
+                    />
+                </template>
+            </Column>
 
-             <Column field="failed_at" header="Failed At"
-                     v-if="store.isViewLarge()"
-                     :sortable="true"
-                     style="width:150px;"
-             >
-                 <template #body="prop">
-                     {{ prop.data.failed_at }}
-                 </template>
-             </Column>
+            <Column field="failed_at" header="Failed At"
+                    v-if="store.isViewLarge()"
+                    :sortable="true"
+                    style="width:150px;"
+            >
+                <template #body="prop">
+                    {{ prop.data.failed_at }}
+                </template>
+            </Column>
 
-             <Column field="actions" style="width:150px;"
-                     :style="{width: store.getActionWidth() }"
-                     :header="store.getActionLabel()"
-             >
-                 <template #body="prop">
-                     <div class="p-inputgroup ">
-                         <Button v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-failed-jobs')"
-                                 class="p-button-tiny p-button-danger p-button-text"
-                                 @click="store.itemAction('delete', prop.data)"
-                                 v-tooltip.top="'Delete'"
-                                 icon="pi pi-trash"
-                                 data-testid="failedjobs-trash"
-                         />
-                     </div>
-                 </template>
-             </Column>
+            <Column field="actions" style="width:150px;"
+                    :style="{width: store.getActionWidth() }"
+                    :header="store.getActionLabel()"
+            >
+                <template #body="prop">
+                    <div class="p-inputgroup ">
+                        <Button v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-failed-jobs')"
+                                class="p-button-tiny p-button-danger p-button-text"
+                                @click="store.itemAction('delete', prop.data)"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.view_delete"
+                                icon="pi pi-trash"
+                                data-testid="failedjobs-trash"
+                        />
+                    </div>
+                </template>
+            </Column>
         </DataTable>
         <!--/table-->
 

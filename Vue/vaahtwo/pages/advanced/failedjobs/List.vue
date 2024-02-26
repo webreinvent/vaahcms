@@ -3,10 +3,11 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useFailedJobStore} from '../../../stores/advanced/store-failedjobs'
+import {useRootStore} from "../../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
-
+const root = useRootStore();
 const store = useFailedJobStore();
 const route = useRoute();
 
@@ -57,8 +58,8 @@ onMounted(async () => {
                 <template class="p-1" #header>
 
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Failed Jobs</b>
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.failed_jobs_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
@@ -77,7 +78,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions />
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
 
                 <Table />
             </Panel>
