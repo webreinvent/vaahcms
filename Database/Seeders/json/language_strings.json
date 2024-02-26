@@ -32,6 +32,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Filter Range",
+        "content": "Range"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Successfully Delete All Logs",
         "content": "Successfully delete all logs"
     },
@@ -814,6 +820,12 @@
         "category": "sidebar-menu",
         "name": "Users & Access",
         "content": "Users & Access"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
     },
     {
         "locale_code_iso_639": "en",
@@ -3679,6 +3691,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Filter Range",
+        "content": "Rango"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Successfully Delete All Logs",
         "content": "Eliminar con éxito todos los registros"
     },
@@ -4457,6 +4475,12 @@
         "category": "sidebar-menu",
         "name": "Users & Access",
         "content": "Usuarios y acceso"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
     },
     {
         "locale_code_iso_639": "es",
@@ -7116,25 +7140,25 @@
         "content": "Le champ titre est obligatoire."
     },
     {
-        "locale_code_iso_639": "es",
+        "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Filter Column",
         "content": "Colonne"
     },
     {
-        "locale_code_iso_639": "es",
+        "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Filter Created",
         "content": "Créé\n"
     },
     {
-        "locale_code_iso_639": "es",
+        "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Filter Cancelled",
         "content": "\nAnnulé"
     },
     {
-        "locale_code_iso_639": "es",
+        "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Filter Finished",
         "content": "Finie"
@@ -7931,6 +7955,12 @@
         "category": "sidebar-menu",
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "sidebar-menu",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
     },
     {
         "locale_code_iso_639": "fr",
