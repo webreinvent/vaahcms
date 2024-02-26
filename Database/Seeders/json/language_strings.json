@@ -96,6 +96,12 @@
         "content": "The title character is not greater than 200."
     },
     {
+    "locale_code_iso_639": "en",
+    "category": "general",
+    "name": "Filter By Extension",
+    "content": "Filter by extension"
+    },
+    {
         "locale_code_iso_639": "en",
         "category": "general",
         "name": "Slug Required",
@@ -7016,6 +7022,12 @@
         "category": "general",
         "name": "Title Limit",
         "content": "Le caractère du titre ne dépasse pas 200."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrer par extension"
     },
     {
         "locale_code_iso_639": "fr",
