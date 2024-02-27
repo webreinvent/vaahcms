@@ -41,6 +41,7 @@ class EnvController extends Controller
                 "download" => trans("vaahcms-env-variable.download"),
                 "refresh" => trans("vaahcms-env-variable.refresh"),
                 "add_env_variable_button" => trans("vaahcms-env-variable.add_env_variable_button"),
+                "env_variable_save_button" => trans("vaahcms-env-variable.env_variable_save_button"),
                 ];
             $response['success'] = true;
             $response['data'] = $data;

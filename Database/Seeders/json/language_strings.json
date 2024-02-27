@@ -2431,7 +2431,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Save"
     },
 
@@ -6122,7 +6122,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Ahorrar"
     },
 
@@ -9636,7 +9636,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Sauvegarder"
     },
 
