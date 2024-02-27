@@ -19,7 +19,8 @@ const store = useGeneralStore();
                 >
 
                     <div class="flex">
-                        You haven't configured SMTP. Please configured SMTP to enable <strong>&nbsp; Email OTP Verification &nbsp;</strong> method.
+                        <p v-html="store.assets.language_strings.securities_smtp_message"></p>
+
                     </div>
                 </Message>
             </div>

@@ -157,6 +157,7 @@ class GeneralController extends Controller
             "meta_tag_generate_button" => trans("vaahcms-general-setting.meta_tag_generate_button"),
             "meta_tag_save_button" => trans("vaahcms-general-setting.meta_tag_save_button"),
             "meta_tag_select_any" => trans("vaahcms-general-setting.meta_tag_select_any"),
+            "securities_smtp_message" => trans("vaahcms-general-setting.securities_smtp_message"),
         ];
     }
     //----------------------------------------------------------
