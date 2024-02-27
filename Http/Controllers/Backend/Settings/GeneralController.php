@@ -42,6 +42,7 @@ class GeneralController extends Controller
             $response['success'] = true;
             $response['data']['base_url'] = url('/');
             $response['data']['roles'] = $role_data;
+            $response['data']['language_strings'] = $this->getLanguageStrings();
             $response['data']['file_types'] = $vh_file_types_data;
             $response['data']['vh_meta_attributes'] = vh_meta_attributes();
             $response['data']['languages'] = Language::select('name', 'locale_code_iso_639')->get();
@@ -58,6 +59,63 @@ class GeneralController extends Controller
         }
 
         return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getLanguageStrings() : array {
+
+        return  [
+            "general_settings_title" => trans("vaahcms-general-setting.heading"),
+            "expand_all" => trans("vaahcms-general-setting.expand_all"),
+            "collapse_all" => trans("vaahcms-general-setting.collapse_all"),
+            "site_settings" => trans("vaahcms-general-setting.site_settings"),
+            "site_settings_message" => trans("vaahcms-general-setting.site_settings_message"),
+            "securities" => trans("vaahcms-general-setting.securities"),
+            "securities_message" => trans("vaahcms-general-setting.securities_message"),
+            "date_and_time" => trans("vaahcms-general-setting.date_and_time"),
+            "global_date_and_time_settings" => trans("vaahcms-general-setting.global_date_and_time_settings"),
+            "social_media_and_links" => trans("vaahcms-general-setting.social_media_and_links"),
+            "static_links_management" => trans("vaahcms-general-setting.static_links_management"),
+            "scripts" => trans("vaahcms-general-setting.scripts"),
+            "scripts_message" => trans("vaahcms-general-setting.scripts_message"),
+            "meta_tags" => trans("vaahcms-general-setting.meta_tags"),
+            "global_meta_tags" => trans("vaahcms-general-setting.global_meta_tags"),
+            "site_title" => trans("vaahcms-general-setting.site_title"),
+            "default_site_language" => trans("vaahcms-general-setting.default_site_language"),
+            "redirect_after_frontend_login" => trans("vaahcms-general-setting.redirect_after_frontend_login"),
+            "meta_description" => trans("vaahcms-general-setting.meta_description"),
+            "search_engine_visibility" => trans("vaahcms-general-setting.search_engine_visibility"),
+            "assign_roles_on_registration" => trans("vaahcms-general-setting.assign_roles_on_registration"),
+            "allowed_file_types_for_upload" => trans("vaahcms-general-setting.allowed_file_types_for_upload"),
+            "is_logo_compressed_with_sidebar" => trans("vaahcms-general-setting.is_logo_compressed_with_sidebar"),
+            "copyright_text" => trans("vaahcms-general-setting.copyright_text"),
+            "copyright_year" => trans("vaahcms-general-setting.copyright_year"),
+            "maximum_number_of_login_attempts" => trans("vaahcms-general-setting.maximum_number_of_login_attempts"),
+            "password_protection" => trans("vaahcms-general-setting.password_protection"),
+            "laravel_queues" => trans("vaahcms-general-setting.laravel_queues"),
+            "maintenance_mode" => trans("vaahcms-general-setting.maintenance_mode"),
+            "signup_page" => trans("vaahcms-general-setting.signup_page"),
+            "redirect_after_backend_logout" => trans("vaahcms-general-setting.redirect_after_backend_logout"),
+            "save_settings_button" => trans("vaahcms-general-setting.save_settings_button"),
+            "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
+            "allowed_file_size_for_upload" => trans("vaahcms-general-setting.allowed_file_size_for_upload"),
+            "copyright_link" => trans("vaahcms-general-setting.copyright_link"),
+            "max_number_of_forgot_password_attempts" => trans("vaahcms-general-setting.max_number_of_forgot_password_attempts"),
+            "backend_home_page_link" => trans("vaahcms-general-setting.backend_home_page_link"),
+            "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
+            "enter_custom_text" => trans("vaahcms-general-setting.enter_custom_text"),
+            "enter_custom_link" => trans("vaahcms-general-setting.enter_custom_link"),
+            "enter_redirection_link" => trans("vaahcms-general-setting.enter_redirection_link"),
+            "enable" => trans("vaahcms-general-setting.enable"),
+            "disable" => trans("vaahcms-general-setting.disable"),
+            "true" => trans("vaahcms-general-setting.true"),
+            "false" => trans("vaahcms-general-setting.false"),
+            "use_app_name" => trans("vaahcms-general-setting.use_app_name"),
+            "use_app_url" => trans("vaahcms-general-setting.use_app_url"),
+            "use_current_year" => trans("vaahcms-general-setting.use_current_year"),
+            "backend" => trans("vaahcms-general-setting.backend"),
+            "frontend" => trans("vaahcms-general-setting.frontend"),
+            "custom" => trans("vaahcms-general-setting.custom"),
+        ];
     }
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
@@ -128,7 +186,7 @@ class GeneralController extends Controller
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Settings successful saved';
+            $response['messages'][] = trans("vaahcms-general.settings_successful_saved");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -204,7 +262,7 @@ class GeneralController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Saved';
+            $response['messages'][] = trans("vaahcms-general.saved");
             $response['data'] = $data;
         } catch (\Exception $e) {
             $response = [];
@@ -264,7 +322,7 @@ class GeneralController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Saved';
+            $response['messages'][] = trans("vaahcms-general.saved");
             $response['data'] = $data;
         } catch (\Exception $e) {
             $response = [];

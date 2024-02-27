@@ -1768,6 +1768,36 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Allowed file size for upload( in MB)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Max number of forgot password attempts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Copyright Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Settings successful saved"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Expand All",
         "content": "Expand All"
     },
@@ -2161,6 +2191,12 @@
         "category": "general-setting",
         "name": "Scripts Message",
         "content": "Add scripts of Google Analytics and other tracking scripts."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Cache was successfully deleted."
     },
     {
         "locale_code_iso_639": "en",
@@ -5424,6 +5460,36 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Enlace a la página de inicio del backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Tamaño de archivo permitido para cargar (en MB)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Número máximo de intentos de olvido de contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Enlace de derechos de autor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Configuración guardada correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Expand All",
         "content": "Expandir todo"
     },
@@ -5816,6 +5882,12 @@
         "category": "general-setting",
         "name": "Scripts Message",
         "content": "Agregue scripts de Google Analytics y otros scripts de seguimiento."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "\nLa caché se eliminó correctamente."
     },
     {
         "locale_code_iso_639": "es",
@@ -8920,6 +8992,36 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Lien vers la page d'accueil du back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Taille de fichier autorisée pour le téléchargement (en Mo)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Nombre maximum de tentatives d'oubli de mot de passe"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Lien de droit d\\'auteur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Paramètres enregistrés avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
         "name": "Site Settings Message",
         "content": "Après une mise à jour réussie du mot de passe, vous serez redirigé vers la page de connexion où vous pourrez vous connecter avec votre nouveau mot de passe."
     },
@@ -9294,6 +9396,12 @@
         "category": "general-setting",
         "name": "Scripts Message",
         "content": "Ajoutez des scripts de Google Analytics et d\\'autres scripts de suivi."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Le cache a été supprimé avec succès."
     },
     {
         "locale_code_iso_639": "fr",
