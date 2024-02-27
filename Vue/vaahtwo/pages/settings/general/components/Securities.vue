@@ -69,7 +69,7 @@ const store = useGeneralStore();
                                   value="authenticator-app" />
                         <label for="binary3">
                             {{ store.assets.language_strings.authenticator_app }}
-                            <small class="block text-red-500 mt-1">Authenticator App is temporarily unavailable.</small>
+                            <small class="block text-red-500 mt-1">{{ store.assets.language_strings.authenticator_app_message }}</small>
                         </label>
                     </div>
                 </div>

@@ -126,6 +126,7 @@ class GeneralController extends Controller
             "authenticator_app" => trans("vaahcms-general-setting.authenticator_app"),
             "mfa_switch_text" => trans("vaahcms-general-setting.mfa_switch_text"),
             "securities_save_button" => trans("vaahcms-general-setting.securities_save_button"),
+            "authenticator_app_message" => trans("vaahcms-general-setting.authenticator_app_message"),
         ];
     }
     //----------------------------------------------------------

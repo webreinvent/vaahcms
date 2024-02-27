@@ -1810,6 +1810,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "Authenticator App is temporarily unavailable."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Site Settings",
         "content": "Site Settings"
     },
@@ -5514,6 +5520,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "La aplicación Authenticator no está disponible temporalmente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Site Settings Message",
         "content": "Después de una actualización exitosa de la contraseña, será redirigido a la página de inicio de sesión donde podrá iniciar sesión con su nueva contraseña."
     },
@@ -7323,7 +7335,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Jobs Message",
-        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
+        "content": "Cette liste comprend uniquement les tâches en file d\\'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",
@@ -8998,8 +9010,14 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "L\\'application Authenticator est temporairement indisponible."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
         "name": "Backend Home Page Link",
-        "content": "Lien vers la page d'accueil du back-end"
+        "content": "Lien vers la page d\\'accueil du back-end"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9011,7 +9029,7 @@
         "locale_code_iso_639": "fr",
         "category": "general-setting",
         "name": "Max number of forgot password attempts",
-        "content": "Nombre maximum de tentatives d'oubli de mot de passe"
+        "content": "Nombre maximum de tentatives d\\'oubli de mot de passe"
     },
     {
         "locale_code_iso_639": "fr",
