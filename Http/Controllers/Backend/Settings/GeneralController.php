@@ -136,6 +136,13 @@ class GeneralController extends Controller
             "placeholder_date_format" => trans("vaahcms-general-setting.placeholder_date_format"),
             "placeholder_time_format" => trans("vaahcms-general-setting.placeholder_time_format"),
             "placeholder_time_date_format" => trans("vaahcms-general-setting.placeholder_time_date_format"),
+
+
+            "add_link" => trans("vaahcms-general-setting.add_link"),
+            "add_link_button" => trans("vaahcms-general-setting.add_link_button"),
+            "social_media_and_links_save_button" => trans("vaahcms-general-setting.social_media_and_links_save_button"),
+            "social_media_links_placeholder_text_enter" => trans("vaahcms-general-setting.social_media_links_placeholder_text_enter"),
+            "social_media_links_placeholder_text_link" => trans("vaahcms-general-setting.social_media_links_placeholder_text_link"),
         ];
     }
     //----------------------------------------------------------

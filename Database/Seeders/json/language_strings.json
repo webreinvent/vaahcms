@@ -1774,6 +1774,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Placeholder Date Format",
         "content": "Enter Custom date format"
     },
