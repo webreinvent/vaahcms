@@ -79,9 +79,7 @@ const toggleItemMenuList = (event) => {
             </div>
         </template>
         <Message severity="warn" class="mt-1" :closable="false">
-            When you make any changes in strings.
-            You need to click on <strong>Generate Language Files</strong>
-            button to reflect your changes.
+            <p v-html="store.assets.language_strings.localization_message"></p>
         </Message>
 
         <div class="flex align-items-center">
@@ -192,8 +190,8 @@ const toggleItemMenuList = (event) => {
 
                     <Dropdown v-model="store.query_string.filter"
                               :options="[
-                                       {name:'Empty value', value:'empty'},
-                                       {name:'Filled value', value:'filled'}
+                                       {name:store.assets.language_strings.localization_empty_value, value:'empty'},
+                                       {name:store.assets.language_strings.localization_filled_value, value:'filled'}
                                   ]"
                               @change="store.getList()"
                               :data-testid="'localization-more_filter'"

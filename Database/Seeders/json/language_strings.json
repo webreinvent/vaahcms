@@ -2457,7 +2457,7 @@
         "locale_code_iso_639": "en",
         "category": "localization-setting",
         "name": "Localization Message",
-        "content": "When you make any changes in strings. You need to click on Generate Language Files button to reflect your changes."
+        "content": "When you make any changes in strings. You need to click on <b>Generate Language Files</b> button to reflect your changes."
     },
     {
         "locale_code_iso_639": "en",
@@ -6148,7 +6148,7 @@
         "locale_code_iso_639": "es",
         "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón Generar archivos de idioma para reflejar sus cambios."
+        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón <b>Generar archivos de idioma</b> para reflejar sus cambios."
     },
     {
         "locale_code_iso_639": "es",
@@ -9662,7 +9662,7 @@
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton Générer des fichiers de langue pour refléter vos modifications."
+        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton <b>Générer des fichiers de langue</b> pour refléter vos modifications."
     },
     {
         "locale_code_iso_639": "fr",

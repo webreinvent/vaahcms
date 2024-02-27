@@ -52,6 +52,8 @@ class LocalizationController extends Controller
                 "localization_placeholder_select_a_filter" => trans("vaahcms-localization-setting.localization_placeholder_select_a_filter"),
                 "localization_reset_button" => trans("vaahcms-localization-setting.localization_reset_button"),
                 "add_new_languages" => trans("vaahcms-localization-setting.add_new_languages"),
+                "localization_empty_value" => trans("vaahcms-localization-setting.localization_empty_value"),
+                "localization_filled_value" => trans("vaahcms-localization-setting.localization_filled_value"),
 
 
             ];
