@@ -40,6 +40,12 @@ class UserSettingController extends Controller
                 "custom_field_name" => trans("vaahcms-user-setting.custom_field_name"),
                 "is_hidden" => trans("vaahcms-user-setting.is_hidden"),
                 "no_records" => trans("vaahcms-user-setting.no_records"),
+                "field_name" => trans("vaahcms-user-setting.field_name"),
+                "select_a_type" => trans("vaahcms-user-setting.select_a_type"),
+                "custom_min_length" => trans("vaahcms-user-setting.custom_min_length"),
+                "custom_max_length" => trans("vaahcms-user-setting.custom_max_length"),
+                "excerpt" => trans("vaahcms-user-setting.excerpt"),
+                "custom_is_password_reveal" => trans("vaahcms-user-setting.custom_is_password_reveal"),
 
             ];
             $response['success'] = true;
