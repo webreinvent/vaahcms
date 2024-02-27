@@ -127,6 +127,15 @@ class GeneralController extends Controller
             "mfa_switch_text" => trans("vaahcms-general-setting.mfa_switch_text"),
             "securities_save_button" => trans("vaahcms-general-setting.securities_save_button"),
             "authenticator_app_message" => trans("vaahcms-general-setting.authenticator_app_message"),
+
+
+            "date_format" => trans("vaahcms-general-setting.date_format"),
+            "time_format" => trans("vaahcms-general-setting.time_format"),
+            "date_time_format" => trans("vaahcms-general-setting.date_time_format"),
+            "date_and_time_save_button" => trans("vaahcms-general-setting.date_and_time_save_button"),
+            "placeholder_date_format" => trans("vaahcms-general-setting.placeholder_date_format"),
+            "placeholder_time_format" => trans("vaahcms-general-setting.placeholder_time_format"),
+            "placeholder_time_date_format" => trans("vaahcms-general-setting.placeholder_time_date_format"),
         ];
     }
     //----------------------------------------------------------

@@ -1774,6 +1774,24 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Enter Custom date format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Enter Custom time format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Enter Custom date-time format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Allowed file size for upload",
         "content": "Allowed file size for upload( in MB)"
     },
@@ -5478,6 +5496,24 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "\nIngrese el formato de fecha personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Ingrese el formato de hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Ingrese el formato de fecha y hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Allowed file size for upload",
         "content": "Tamaño de archivo permitido para cargar (en MB)"
     },
@@ -9018,6 +9054,24 @@
         "category": "general-setting",
         "name": "Backend Home Page Link",
         "content": "Lien vers la page d\\'accueil du back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Entrez un format de date personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Entrez un format d\\'heure personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Entrez un format date-heure personnalisé"
     },
     {
         "locale_code_iso_639": "fr",
