@@ -31,11 +31,11 @@ const toggleItemMenuList = (event) => {
 </script>
 
 <template>
-    <Panel class="is-small">
+    <Panel class="is-small" v-if="store && store.assets">
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Localizations</b>
+                    <b class="mr-1">{{ store.assets.language_strings.localizations }}</b>
                 </div>
             </div>
         </template>
@@ -43,14 +43,14 @@ const toggleItemMenuList = (event) => {
         <template #icons>
             <div class="buttons">
                 <Button icon="pi pi-plus"
-                        label="Add Language"
+                        :label="store.assets.language_strings.add_language_button"
                         data-testid="localization-add_language"
                         @click="store.toggleLanguageForm"
                         class="p-button-sm mr-2"
                 />
 
                 <Button icon="pi pi-plus "
-                        label="Add Category"
+                        :label="store.assets.language_strings.add_category_button"
                         data-testid="localization-add_category"
                         @click="store.toggleCategoryForm"
                         class="p-button-sm mr-2"
@@ -86,7 +86,7 @@ const toggleItemMenuList = (event) => {
 
         <div class="flex align-items-center">
             <div class="mb-4" v-if="store.show_add_language">
-                <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.add_new_languages }}</h5>
 
                 <div class="level has-padding-bottom-25">
                     <div class="level-left">
@@ -170,7 +170,7 @@ const toggleItemMenuList = (event) => {
                                @keyup.enter="store.delayedSearch()"
                                @keyup.enter.native="store.delayedSearch()"
                                @input="store.delayedSearch()"
-                               placeholder="Search"
+                               :placeholder="store.assets.language_strings.localization_placeholder_search"
                                data-testid="role-action_search_input"
                     />
 
@@ -186,7 +186,7 @@ const toggleItemMenuList = (event) => {
                               optionLabel="name"
                               optionValue="id"
                               @change="store.getList()"
-                              placeholder="Select a Category"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_category"
                               inputClass="p-inputtext-sm"
                     />
 
@@ -199,11 +199,11 @@ const toggleItemMenuList = (event) => {
                               :data-testid="'localization-more_filter'"
                               optionLabel="name"
                               optionValue="value"
-                              placeholder="Select a Filter"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_filter"
                               inputClass="p-inputtext-sm"
                     />
 
-                    <Button label="Reset"
+                    <Button :label="store.assets.language_strings.localization_reset_button"
                             icon="pi pi-filter-slash"
                             @click="store.removeQueryString"
                             data-testid="localization-reset"

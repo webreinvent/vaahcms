@@ -42,7 +42,19 @@ class LocalizationController extends Controller
                 ->get();
             $data['categories']['default']['id'] = null;
 
+            $data['language_strings'] = [
+                "localizations" => trans("vaahcms-sidebar-menu.localizations"),
+                "add_language_button" => trans("vaahcms-localization-setting.add_language_button"),
+                "add_category_button" => trans("vaahcms-localization-setting.add_category_button"),
+                "localization_message" => trans("vaahcms-localization-setting.localization_message"),
+                "localization_placeholder_search" => trans("vaahcms-localization-setting.localization_placeholder_search"),
+                "localization_placeholder_select_a_category" => trans("vaahcms-localization-setting.localization_placeholder_select_a_category"),
+                "localization_placeholder_select_a_filter" => trans("vaahcms-localization-setting.localization_placeholder_select_a_filter"),
+                "localization_reset_button" => trans("vaahcms-localization-setting.localization_reset_button"),
+                "add_new_languages" => trans("vaahcms-localization-setting.add_new_languages"),
 
+
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
