@@ -115,6 +115,17 @@ class GeneralController extends Controller
             "backend" => trans("vaahcms-general-setting.backend"),
             "frontend" => trans("vaahcms-general-setting.frontend"),
             "custom" => trans("vaahcms-general-setting.custom"),
+
+            "multi_factor_authentication" => trans("vaahcms-general-setting.multi_factor_authentication"),
+            "multi_factor_authentication_message" => trans("vaahcms-general-setting.multi_factor_authentication_message"),
+            "multi_factor_authentication_disable" => trans("vaahcms-general-setting.multi_factor_authentication_disable"),
+            "enable_for_all_users" => trans("vaahcms-general-setting.enable_for_all_users"),
+            "users_will_have_option_to_enable_it" => trans("vaahcms-general-setting.users_will_have_option_to_enable_it"),
+            "mfa_methods" => trans("vaahcms-general-setting.mfa_methods"),
+            "email_otp_verification" => trans("vaahcms-general-setting.email_otp_verification"),
+            "authenticator_app" => trans("vaahcms-general-setting.authenticator_app"),
+            "mfa_switch_text" => trans("vaahcms-general-setting.mfa_switch_text"),
+            "securities_save_button" => trans("vaahcms-general-setting.securities_save_button"),
         ];
     }
     //----------------------------------------------------------

@@ -1828,6 +1828,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Site Title",
+        "content": "Site Title"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Copyright Text",
         "content": "Copyright Text"
     },
