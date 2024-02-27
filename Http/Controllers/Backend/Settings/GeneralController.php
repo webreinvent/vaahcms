@@ -150,6 +150,13 @@ class GeneralController extends Controller
             "before_head_tag_close" => trans("vaahcms-general-setting.before_head_tag_close"),
             "before_body_tag_close" => trans("vaahcms-general-setting.before_body_tag_close"),
             "scripts_save_button" => trans("vaahcms-general-setting.scripts_save_button"),
+
+
+            "add_meta_tags_button" => trans("vaahcms-general-setting.add_meta_tags_button"),
+            "meta_tag_select_type" => trans("vaahcms-general-setting.meta_tag_select_type"),
+            "meta_tag_generate_button" => trans("vaahcms-general-setting.meta_tag_generate_button"),
+            "meta_tag_save_button" => trans("vaahcms-general-setting.meta_tag_save_button"),
+            "meta_tag_select_any" => trans("vaahcms-general-setting.meta_tag_select_any"),
         ];
     }
     //----------------------------------------------------------
