@@ -43,7 +43,7 @@ class LocalizationController extends Controller
             $data['categories']['default']['id'] = null;
 
             $data['language_strings'] = [
-                "localizations" => trans("vaahcms-sidebar-menu.localizations"),
+                "localizations" => trans("vaahcms-localization-setting.localization_heading"),
                 "add_language_button" => trans("vaahcms-localization-setting.add_language_button"),
                 "add_category_button" => trans("vaahcms-localization-setting.add_category_button"),
                 "localization_message" => trans("vaahcms-localization-setting.localization_message"),

@@ -2492,7 +2492,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizations"
     },
     {
@@ -6237,7 +6237,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizaciones"
     },
     {
@@ -9811,7 +9811,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localisations"
     },
     {
