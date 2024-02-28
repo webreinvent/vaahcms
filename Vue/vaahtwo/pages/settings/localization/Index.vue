@@ -94,7 +94,7 @@ const toggleItemMenuList = (event) => {
                                            name="localization-language-name"
                                            v-model="store.new_language.name"
                                            data-testid="localization-new_language_name"
-                                           placeholder="Name"
+                                           :placeholder="store.assets.language_strings.add_new_languages_placeholder_name"
                                 />
 
                                 <inputText class="p-inputtext-sm"
@@ -107,7 +107,7 @@ const toggleItemMenuList = (event) => {
                                 <Button @click="store.storeLanguage"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_language_save"
-                                        label="save"
+                                        :label="store.assets.language_strings.add_new_languages_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
@@ -117,7 +117,7 @@ const toggleItemMenuList = (event) => {
             </div>
 
             <div class="mb-4" v-if="store.show_add_category">
-                <h5 class="p-1 text-xs mb-1">Add New Category</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.add_new_category }}</h5>
 
                 <div class="level has-padding-bottom-25" >
 
@@ -128,13 +128,13 @@ const toggleItemMenuList = (event) => {
                                 <inputText class="p-inputtext-sm"
                                            v-model="store.new_category.name"
                                            data-testid="localization-new_category_name"
-                                           placeholder="Category Name"
+                                           :placeholder="store.assets.language_strings.add_new_category_placeholder_category_name"
                                 />
 
                                 <Button @click="store.storeCategory"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_category_save"
-                                        label="save"
+                                        :label="store.assets.language_strings.add_new_category_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
