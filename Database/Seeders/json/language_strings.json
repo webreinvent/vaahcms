@@ -2292,13 +2292,13 @@
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Expand All"
     },
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Collapse All"
     },
     {
@@ -5983,13 +5983,13 @@
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Expandir todo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Desplegar todo"
     },
     {
@@ -9497,13 +9497,13 @@
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Développer tout"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Réduire tout"
     },
     {
