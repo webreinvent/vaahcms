@@ -4,11 +4,12 @@ import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
 import { vaah } from '../../../../vaahvue/pinia/vaah'
 import {useNotificationStore} from "../../../../stores/settings/store-notification";
-
+const root = useRootStore();
 const store = useNotificationStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
+import {useRootStore} from "../../../../stores/root";
 
 const confirm = useConfirm();
 onMounted(async () => {
@@ -31,7 +32,7 @@ onMounted(async () => {
 
 
         <div v-if="!store.active_notification">
-            <div  v-if="store.list && store.list.data ">
+            <div  v-if="store.list && store.assets && store.list.data ">
                 <DataTable :value="store.list.data" stripedRows dataKey="id"  responsiveLayout="scroll"
                            v-model:selection="store.action.items"
                            class="p-datatable-sm p-datatable-hoverable-rows">
@@ -51,25 +52,27 @@ onMounted(async () => {
                     </Column>
                     <Column header="Edit" field="Edit" class="text-right" :pt="{
                         headercontent: {class: 'justify-content-end pr-3'}
-                        }">
+                        }" v-if="root.assets
+                          && root.assets.language_strings
+                          && root.assets.language_strings.crud_actions">
                         <template #body="slotProps">
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
                                     v-if="!slotProps.data.deleted_at"
                                     @click="store.showNotificationSettings(slotProps.data)"
-                                    class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
+                                    class="p-button-tiny p-button-text" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_edit"></Button>
 
                             <Button class="p-button-tiny p-button-danger p-button-text"
                                     v-if="store.isViewLarge() && !slotProps.data.deleted_at"
                                     @click="store.itemAction('trash', slotProps.data)"
-                                    v-tooltip.top="'Trash'"
+                                    v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                     icon="pi pi-trash"
                                     data-testid="setting-notification_data_trash"
                             ></Button>
                             <Button class="p-button-tiny p-button-success p-button-text"
                                     v-if="store.isViewLarge() && slotProps.data.deleted_at"
                                     @click="store.itemAction('restore', slotProps.data)"
-                                    v-tooltip.top="'Restore'"
+                                    v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                     icon="pi pi-replay"
                                     data-testid="setting-notification-list_data_restore"
                             />
