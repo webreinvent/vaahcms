@@ -2613,7 +2613,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notifications"
     },
     {
@@ -6328,7 +6328,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notificaciones"
     },
     {
@@ -9872,7 +9872,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notifications"
     },
     {

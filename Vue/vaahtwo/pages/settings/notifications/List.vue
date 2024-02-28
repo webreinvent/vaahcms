@@ -6,11 +6,12 @@ import {useNotificationStore} from '../../../stores/settings/store-notification'
 
 import Actions from "../notifications/components/Actions.vue";
 import Index from "../notifications/components/Index.vue";
-
+const root = useRootStore();
 const store = useNotificationStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
+import {useRootStore} from "../../../stores/root";
 const confirm = useConfirm();
 
 
@@ -50,11 +51,11 @@ onMounted(async () => {
 <template>
     <div class="grid">
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small">
+            <Panel class="is-small" v-if="store.assets">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Notifications</b>
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.notification_heading}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
@@ -64,7 +65,7 @@ onMounted(async () => {
                 <template #icons>
                     <div class="buttons">
                         <Button icon="pi pi-plus"
-                                label="Add"
+                                :label="store.assets.language_strings.add_button"
                                 class="p-button-sm"
                                 @click="store.addNewNotification"
                                 data-testid="setting-notification_add_new"
@@ -76,13 +77,13 @@ onMounted(async () => {
                     <div class="p-inputgroup">
                         <inputText data-testid="setting-notification_add_new_value"
                                    v-model="store.new_item.name"
-                                   placeholder="Enter new notification name"
+                                   :placeholder="store.assets.language_strings.placeholder_enter_new_notification_name"
                                    :autoResize="true"
                                    class="w-full"
                                    inputClass="p-inputtext-sm"
                         />
                         <Button icon="pi pi-save"
-                                label="save"
+                                :label="store.assets.language_strings.notification_save_button"
                                 @click="store.create"
                                 data-testid="setting-notification_save_new"
                                 class="has-max-height p-button-sm"
@@ -91,7 +92,10 @@ onMounted(async () => {
                 </div>
 
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
                 <Index/>
             </Panel>
         </div>

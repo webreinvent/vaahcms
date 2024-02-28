@@ -37,6 +37,15 @@ class NotificationsController extends Controller
 
             $data['app_url'] = url("/");
 
+            $data['language_strings'] = [
+                "notification_heading" => trans("vaahcms-notification-setting.notification_heading"),
+                "add_button" => trans("vaahcms-notification-setting.add_button"),
+                "placeholder_enter_new_notification_name" => trans("vaahcms-notification-setting.placeholder_enter_new_notification_name"),
+                "notification_save_button" => trans("vaahcms-notification-setting.notification_save_button"),
+
+
+            ];
+
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
