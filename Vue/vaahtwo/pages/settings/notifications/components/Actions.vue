@@ -4,6 +4,8 @@ import {useNotificationStore} from '../../../../stores/settings/store-notificati
 
 
 import Filters from './Filters.vue';
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useNotificationStore();
 
 onMounted(async () => {
@@ -33,7 +35,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
+            <div v-if="store.view === 'large'&& root.assets.language_strings.general">
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
@@ -84,7 +86,7 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       placeholder="Search"
+                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                        data-testid="notification-action_search_input"
                             />
 
@@ -95,7 +97,7 @@ const toggleBulkMenuState = (event) => {
                             />
 
                             <Button class="p-button-sm"
-                                    label="Filters"
+                                    :label="root.assets.language_strings.crud_actions.filters_button"
                                     data-testid="notification-action_filter"
                                     @click="store.show_filters = true"
                                     :disabled="store.active_notification"
@@ -107,7 +109,7 @@ const toggleBulkMenuState = (event) => {
                             </Button>
 
                             <Button class="p-button-sm"
-                                    label="Reset"
+                                    :label="root.assets.language_strings.crud_actions.reset_button"
                                     icon="pi pi-filter-slash"
                                     data-testid="notification-action_reset"
                                     @click="store.resetQuery()"
