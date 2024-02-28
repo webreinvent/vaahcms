@@ -2407,7 +2407,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Environment Variables"
     },
     {
@@ -2431,7 +2431,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Save"
     },
 
@@ -6098,7 +6098,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Variables de entorno"
     },
     {
@@ -6122,7 +6122,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Ahorrar"
     },
 
@@ -9612,7 +9612,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Variables d\\'environnement"
     },
     {
@@ -9636,7 +9636,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Sauvegarder"
     },
 
