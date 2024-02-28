@@ -64,6 +64,9 @@ class GeneralController extends Controller
     public function getLanguageStrings() : array {
 
         return  [
+            /**
+             * Language Strings for Site settings
+             */
             "general_settings_title" => trans("vaahcms-general-setting.heading"),
             "expand_all" => trans("vaahcms-general-setting.expand_all"),
             "collapse_all" => trans("vaahcms-general-setting.collapse_all"),
@@ -116,6 +119,10 @@ class GeneralController extends Controller
             "frontend" => trans("vaahcms-general-setting.frontend"),
             "custom" => trans("vaahcms-general-setting.custom"),
 
+            /**
+             * Language Strings for Securities settings
+             */
+
             "multi_factor_authentication" => trans("vaahcms-general-setting.multi_factor_authentication"),
             "multi_factor_authentication_message" => trans("vaahcms-general-setting.multi_factor_authentication_message"),
             "multi_factor_authentication_disable" => trans("vaahcms-general-setting.multi_factor_authentication_disable"),
@@ -127,7 +134,11 @@ class GeneralController extends Controller
             "mfa_switch_text" => trans("vaahcms-general-setting.mfa_switch_text"),
             "securities_save_button" => trans("vaahcms-general-setting.securities_save_button"),
             "authenticator_app_message" => trans("vaahcms-general-setting.authenticator_app_message"),
+            "securities_smtp_message" => trans("vaahcms-general-setting.securities_smtp_message"),
 
+            /**
+             * Language Strings for Date & Time settings
+             */
 
             "date_format" => trans("vaahcms-general-setting.date_format"),
             "time_format" => trans("vaahcms-general-setting.time_format"),
@@ -137,6 +148,9 @@ class GeneralController extends Controller
             "placeholder_time_format" => trans("vaahcms-general-setting.placeholder_time_format"),
             "placeholder_time_date_format" => trans("vaahcms-general-setting.placeholder_time_date_format"),
 
+            /**
+             * Language Strings for Social Media & Links settings
+             */
 
             "add_link" => trans("vaahcms-general-setting.add_link"),
             "add_link_button" => trans("vaahcms-general-setting.add_link_button"),
@@ -144,6 +158,9 @@ class GeneralController extends Controller
             "social_media_links_placeholder_text_enter" => trans("vaahcms-general-setting.social_media_links_placeholder_text_enter"),
             "social_media_links_placeholder_text_link" => trans("vaahcms-general-setting.social_media_links_placeholder_text_link"),
 
+            /**
+             * Language Strings for Scripts settings
+             */
 
             "after_head_tag_start" => trans("vaahcms-general-setting.after_head_tag_start"),
             "after_body_tag_start" => trans("vaahcms-general-setting.after_body_tag_start"),
@@ -151,13 +168,15 @@ class GeneralController extends Controller
             "before_body_tag_close" => trans("vaahcms-general-setting.before_body_tag_close"),
             "scripts_save_button" => trans("vaahcms-general-setting.scripts_save_button"),
 
+            /**
+             * Language Strings for Meta Tags settings
+             */
 
             "add_meta_tags_button" => trans("vaahcms-general-setting.add_meta_tags_button"),
             "meta_tag_select_type" => trans("vaahcms-general-setting.meta_tag_select_type"),
             "meta_tag_generate_button" => trans("vaahcms-general-setting.meta_tag_generate_button"),
             "meta_tag_save_button" => trans("vaahcms-general-setting.meta_tag_save_button"),
             "meta_tag_select_any" => trans("vaahcms-general-setting.meta_tag_select_any"),
-            "securities_smtp_message" => trans("vaahcms-general-setting.securities_smtp_message"),
         ];
     }
     //----------------------------------------------------------
