@@ -168,6 +168,9 @@ export const useLocalizationStore = defineStore({
                 this.getList(this.query_string.page);
 
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getItemMenuList();
+            }
         },
         //---------------------------------------------------------------------
 
@@ -243,7 +246,9 @@ export const useLocalizationStore = defineStore({
         {
             this.assets_is_fetching = true;
             this.getAssets();
-            vaah().toastErrors(['Removed']);
+            if(this.assets && this.assets.language_strings) {
+                vaah().toastErrors([this.assets.language_strings.localization_string_removed]);
+            }
 
         },
         //---------------------------------------------------------------------
@@ -465,14 +470,16 @@ export const useLocalizationStore = defineStore({
         },
         //---------------------------------------------------------------------
         getItemMenuList: function (){
-            this.item_menu_list =  [
-                {
-                    label: 'Run & Generate Seeds',
-                    command: () => {
-                        this.runSeeds();
+            if (this.assets && this.assets.language_strings) {
+                this.item_menu_list = [
+                    {
+                        label: this.assets.language_strings.localization_item_menu,
+                        command: () => {
+                            this.runSeeds();
+                        }
                     }
-                }
-            ];
+                ];
+            }
         },
         //---------------------------------------------------------------------
         setPageTitle() {

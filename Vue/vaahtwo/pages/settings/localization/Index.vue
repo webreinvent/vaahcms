@@ -73,7 +73,7 @@ const toggleItemMenuList = (event) => {
                         data-testid="localization-sync"
                         @click="store.sync()"
                         class="p-button-sm"
-                        v-tooltip.top="'Sync'"
+                        v-tooltip.top="store.assets.language_strings.localization_toolkit_sync"
                         :loading="store.btn_is_loading"
                 />
             </div>
@@ -101,7 +101,7 @@ const toggleItemMenuList = (event) => {
                                            name="localization-language-local-code-iso-639"
                                            data-testid="localization-new_language_code"
                                            v-model="store.new_language.locale_code_iso_639"
-                                           placeholder="Locale ISO 639 Code"
+                                           :placeholder="store.assets.language_strings.add_new_languages_placeholder_locale_code"
                                 />
 
                                 <Button @click="store.storeLanguage"

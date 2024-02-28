@@ -2504,6 +2504,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Removed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
         "name": "Localization Message",
         "content": "When you make any changes in strings. You need to click on <b>Generate Language Files</b> button to reflect your changes."
     },
@@ -6237,6 +6243,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Remota"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
         "name": "Localization Message",
         "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón <b>Generar archivos de idioma</b> para reflejar sus cambios."
     },
@@ -9795,6 +9807,12 @@
         "category": "localization-setting",
         "name": "Add Category Button",
         "content": "ajouter une catégorie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Supprimé"
     },
     {
         "locale_code_iso_639": "fr",
