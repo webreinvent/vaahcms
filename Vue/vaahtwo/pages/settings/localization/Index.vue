@@ -155,7 +155,7 @@ const toggleItemMenuList = (event) => {
                           optionLabel="option_label"
                           optionValue="id"
                           @change="store.getList()"
-                          placeholder="Select a Language"
+                          :placeholder="store.assets.language_strings.localization_placeholder_select_a_language"
                           inputClass="p-inputtext-sm"
                           class="is-small"
                 />
@@ -237,7 +237,7 @@ const toggleItemMenuList = (event) => {
             </div>
 
             <div v-else>
-                No language string exist
+                {{ store.assets.language_strings.no_language_string_exist }}
             </div>
         </div>
 
@@ -257,7 +257,7 @@ const toggleItemMenuList = (event) => {
                                data-testid="localization-add_string"
                     />
 
-                    <Button label="Add String" icon="pi pi-plus"
+                    <Button :label="store.assets.language_strings.localization_add_string_button" icon="pi pi-plus"
                             @click="store.addVariable"
                             :disabled="!store.new_variable"
                             class="p-button-sm"
@@ -267,14 +267,14 @@ const toggleItemMenuList = (event) => {
 
             <div class="col-12">
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Generate Language Files"
+                    <Button :label="store.assets.language_strings.localization_generate_language_files"
                             data-testid="localization-generate_languafe_file"
                             icon="pi pi-refresh"
                             @click="store.generateLanguage"
                             class="p-button-sm"
                     />
 
-                    <Button label="Save"
+                    <Button :label="store.assets.language_strings.localization_save_button"
                             data-testid="localization-save"
                             icon="pi pi-save"
                             @click="store.storeData"

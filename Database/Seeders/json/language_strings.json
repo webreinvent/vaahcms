@@ -2546,6 +2546,24 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Locale ISO 639 Code"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sync"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Run & Generate Seeds"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
         "name": "Add New Languages Save Button",
         "content": "Save"
     },
@@ -6261,6 +6279,24 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Código local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sincronizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Ejecutar y generar semillas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
         "name": "Add New Languages Save Button",
         "content": "Ahorrar"
     },
@@ -9801,6 +9837,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Code local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Synchroniser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "\nExécuter et générer des graines"
     },
     {
         "locale_code_iso_639": "fr",

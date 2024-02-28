@@ -59,6 +59,11 @@ class LocalizationController extends Controller
                 "add_new_category" => trans("vaahcms-localization-setting.add_new_category"),
                 "add_new_category_placeholder_category_name" => trans("vaahcms-localization-setting.add_new_category_placeholder_category_name"),
                 "add_new_category_save_button" => trans("vaahcms-localization-setting.add_new_category_save_button"),
+                "localization_add_string_button" => trans("vaahcms-localization-setting.localization_add_string_button"),
+                "localization_generate_language_files" => trans("vaahcms-localization-setting.localization_generate_language_files"),
+                "localization_save_button" => trans("vaahcms-localization-setting.localization_save_button"),
+                "no_language_string_exist" => trans("vaahcms-localization-setting.no_language_string_exist"),
+                "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
 
 
             ];
