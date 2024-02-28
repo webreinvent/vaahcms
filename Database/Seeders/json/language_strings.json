@@ -1768,8 +1768,44 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "You haven\\'t configured SMTP. Please configured SMTP to enable <strong>Email OTP Verification</strong> method."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Backend Home Page Link",
         "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Enter Custom date format"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "No has configurado SMTP. Configure SMTP para habilitar el método de <strong>verificación OTP de correo electrónico</strong>."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Enter Custom time format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Enter Custom date-time format"
     },
     {
         "locale_code_iso_639": "en",
@@ -1810,6 +1846,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "Authenticator App is temporarily unavailable."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Site Settings",
         "content": "Site Settings"
     },
@@ -1818,6 +1860,12 @@
         "category": "general-setting",
         "name": "Site Settings Message",
         "content": "After a successful password update, you will be redirected to the login page where you can log in with your new password."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Site Title",
+        "content": "Site Title"
     },
     {
         "locale_code_iso_639": "en",
@@ -5466,6 +5514,24 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "\nIngrese el formato de fecha personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Ingrese el formato de hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Ingrese el formato de fecha y hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Allowed file size for upload",
         "content": "Tamaño de archivo permitido para cargar (en MB)"
     },
@@ -5504,6 +5570,12 @@
         "category": "general-setting",
         "name": "Site Settings",
         "content": "Configuración del sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "La aplicación Authenticator no está disponible temporalmente."
     },
     {
         "locale_code_iso_639": "es",
@@ -5875,7 +5947,7 @@
         "locale_code_iso_639": "es",
         "category": "general-setting",
         "name": "Scripts",
-        "content": "Scripts"
+        "content": "\nGuiones"
     },
     {
         "locale_code_iso_639": "es",
@@ -7317,7 +7389,7 @@
         "locale_code_iso_639": "fr",
         "category": "general",
         "name": "Jobs Message",
-        "content": "Cette liste comprend uniquement les tâches en file d'attente/en attente. Les tâches terminées sont automatiquement supprimées."
+        "content": "Cette liste comprend uniquement les tâches en file d\\'attente/en attente. Les tâches terminées sont automatiquement supprimées."
     },
     {
         "locale_code_iso_639": "fr",
@@ -8992,8 +9064,38 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "L\\'application Authenticator est temporairement indisponible."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
         "name": "Backend Home Page Link",
-        "content": "Lien vers la page d'accueil du back-end"
+        "content": "Lien vers la page d\\'accueil du back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Entrez un format de date personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "Vous n\\'avez pas configuré SMTP. Veuillez configurer SMTP pour activer la méthode de <strong>vérification OTP par e-mail</strong>."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Entrez un format d\\'heure personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Entrez un format date-heure personnalisé"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9005,7 +9107,7 @@
         "locale_code_iso_639": "fr",
         "category": "general-setting",
         "name": "Max number of forgot password attempts",
-        "content": "Nombre maximum de tentatives d'oubli de mot de passe"
+        "content": "Nombre maximum de tentatives d\\'oubli de mot de passe"
     },
     {
         "locale_code_iso_639": "fr",
