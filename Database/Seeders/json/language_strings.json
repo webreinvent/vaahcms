@@ -218,6 +218,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Language File Generated",
+        "content": "Language files successfully generated"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Category Limit",
         "content": "The category character is not greater than 150."
     },
@@ -3937,6 +3943,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Language File Generated",
+        "content": "Archivos de idioma generados exitosamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Category Limit",
         "content": "El carácter de categoría no es mayor que 150."
     },
@@ -7492,6 +7504,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "Le champ catégorie est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Fichiers de langue générés avec succès"
     },
     {
         "locale_code_iso_639": "fr",

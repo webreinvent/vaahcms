@@ -125,7 +125,7 @@ class LocalizationController extends Controller
             LanguageString::syncAndGenerateStrings($request);
 
             $response = LanguageString::getList($request);
-            $response['messages'][] = "Language files successfully generated";
+            $response['messages'][] = trans("vaahcms-general.language_file_generated");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -270,7 +270,7 @@ class LocalizationController extends Controller
 
             LanguageString::syncAndGenerateStrings($request);
 
-            $response['messages'][] = "Action was successful";
+            $response['messages'][] = trans("vaahcms-general.action_successful");
 
         } catch (\Exception $e) {
             $response = [];
