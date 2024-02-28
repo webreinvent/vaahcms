@@ -88,13 +88,13 @@ onMounted(async () => {
             </div>
         </div>
 
-        <div class="grid" v-else-if="store.route.params.id">
+        <div class="grid" v-else-if="store.route.params.id && store.assets">
             <div class="col-12 mt-2 mb-0">
                 <div class="level">
                     <div class="flex align-items-center">
 
                         <Button class="p-button-outlined p-button-sm mr-2"
-                                label="Go back"
+                                :label="store.assets.language_strings.go_back_button"
                                 icon="pi pi-arrow-left"
                                 icon-class="text-xs"
                                 data-testid="setting-notification_back"
@@ -128,12 +128,12 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Variables</b>
+                                <b class="mr-1">{{ store.assets.language_strings.variables }}</b>
                             </div>
                         </div>
                     </template>
                     <div class="p-inputgroup mt-2 mb-2">
-                        <AutoComplete placeholder="Search"
+                        <AutoComplete :placeholder="store.assets.language_strings.variables_placeholder_search"
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
                                       optionLabel="name"
@@ -173,13 +173,13 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Notification Options</b>
+                                <b class="mr-1">{{ store.assets.language_strings.notification_options }}</b>
                             </div>
                         </div>
                     </template>
                     <div class="grid justify-content-between">
                         <div class="col-5">
-                            <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
+                            <h5 class="text-sm font-semibold mb-2">{{ store.assets.language_strings.deliver_via }}</h5>
 
                             <div class="flex justify-content-between">
                                 <span>
@@ -229,7 +229,7 @@ onMounted(async () => {
                         </div>
                         <div class="col-6 justify-content-end flex">
                             <span class="text-right">
-                                <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
+                                <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.error_notifications }}</h5>
                                 <InputSwitch v-model="store.active_notification.is_error"
                                              data-testid="setting-notification_error"
                                              class="is-small"

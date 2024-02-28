@@ -42,6 +42,14 @@ class NotificationsController extends Controller
                 "add_button" => trans("vaahcms-notification-setting.add_button"),
                 "placeholder_enter_new_notification_name" => trans("vaahcms-notification-setting.placeholder_enter_new_notification_name"),
                 "notification_save_button" => trans("vaahcms-notification-setting.notification_save_button"),
+                "column_notification_title" => trans("vaahcms-notification-setting.column_notification_title"),
+                "column_edit" => trans("vaahcms-notification-setting.column_edit"),
+                "go_back_button" => trans("vaahcms-notification-setting.go_back_button"),
+                "notification_options" => trans("vaahcms-notification-setting.notification_options"),
+                "variables" => trans("vaahcms-notification-setting.variables"),
+                "variables_placeholder_search" => trans("vaahcms-notification-setting.variables_placeholder_search"),
+                "error_notifications" => trans("vaahcms-notification-setting.error_notifications"),
+                "deliver_via" => trans("vaahcms-notification-setting.deliver_via"),
 
 
             ];
