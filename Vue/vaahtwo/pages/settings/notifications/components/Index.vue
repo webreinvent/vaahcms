@@ -41,7 +41,7 @@ onMounted(async () => {
 
                             headerStyle="width: 3em"
                     />
-                    <Column  header="Notification Title">
+                    <Column  :header="store.assets.language_strings.column_notification_title">
                         <template #body="slotProps">
                             <Badge v-if="slotProps.data.deleted_at"
                                    value="Trashed"
@@ -50,7 +50,7 @@ onMounted(async () => {
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit" field="Edit" class="text-right" :pt="{
+                    <Column :header="store.assets.language_strings.column_edit" field="Edit" class="text-right" :pt="{
                         headercontent: {class: 'justify-content-end pr-3'}
                         }" v-if="root.assets
                           && root.assets.language_strings
@@ -336,7 +336,7 @@ onMounted(async () => {
                                     </div>
 
                                     <div class="flex justify-content-end">
-                                        <Button label="Add Subject"
+                                        <Button :label="store.assets.language_strings.add_subject_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addSubject"
                                                 data-testid="setting-notification_add_subject"
@@ -350,19 +350,19 @@ onMounted(async () => {
                                                 :disabled="store.is_add_from_disabled"
                                         />
 
-                                        <Button label="Add Greetings"
+                                        <Button :label="store.assets.language_strings.add_greetings_button"
                                                 @click="store.addToMail('greetings')"
                                                 data-testid="setting-notification_add_greetings"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Line"
+                                        <Button :label="store.assets.language_strings.add_line_button"
                                                 @click="store.addToMail('line')"
                                                 data-testid="setting-notification_add_line"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Action"
+                                        <Button :label="store.assets.language_strings.add_action_button"
                                                 @click="store.addAction"
                                                 data-testid="setting-notification_add_action"
                                                 class="w-auto p-button-sm"
@@ -566,13 +566,13 @@ onMounted(async () => {
                             </TabView>
                             <Divider class="mb-3 mt-0" />
                             <div class="flex justify-content-end">
-                                <Button label="Save" icon="pi pi-save"
+                                <Button :label="store.assets.language_strings.notification_save_button" icon="pi pi-save"
                                         data-testid="setting-notification_store"
                                         @click="store.storeNotification"
                                         class="w-auto mr-3 p-button-sm"
                                 />
 
-                                <Button label="Test"
+                                <Button :label="store.assets.language_strings.notification_test_button"
                                         data-testid="setting-notification_test"
                                         @click="store.is_testing=true"
                                         icon="pi pi-reply"
@@ -590,7 +590,7 @@ onMounted(async () => {
                                               inputClass="p-inputtext-sm"
                                 />
 
-                                <Button label="Send"
+                                <Button :label="store.assets.language_strings.notification_test_send_button"
                                         data-testid="setting-notification_test_send"
                                         @click="store.sendNotification"
                                         icon="pi pi-reply"
