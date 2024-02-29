@@ -20,6 +20,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Notification Not Found",
+        "content": "Notification not found"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "Record has been restored"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "Record is not soft-deleted and cannot be restored"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "Invalid action type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Filter Cancelled",
         "content": "Cancelled"
     },
@@ -2737,7 +2761,7 @@
         "name": "Notification Field From",
         "content": "From"
     },
-    
+
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
@@ -3882,6 +3906,30 @@
         "category": "general",
         "name": "Filter Created",
         "content": "Creada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Notification Not Found",
+        "content": "\nNotificación no encontrada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "\nEl registro ha sido restaurado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "El registro no se elimina temporalmente y no se puede restaurar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "\nTipo de acción no válido"
     },
     {
         "locale_code_iso_639": "es",
@@ -7540,6 +7588,30 @@
         "category": "general",
         "name": "Filter Created",
         "content": "Créé\n"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Notification Not Found",
+        "content": "\nNotification introuvable"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "L\\'enregistrement a été restauré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "L\\'enregistrement n\\'est pas supprimé de manière réversible et ne peut pas être restauré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "\nType d\\'action invalide"
     },
     {
         "locale_code_iso_639": "fr",

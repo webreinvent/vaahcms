@@ -67,8 +67,6 @@ class NotificationsController extends Controller
                 "notification_field_subject" => trans("vaahcms-notification-setting.notification_field_subject"),
                 "notification_field_from_email" => trans("vaahcms-notification-setting.notification_field_from_email"),
                 "notification_field_from" => trans("vaahcms-notification-setting.notification_field_from"),
-                "notification_field_line" => trans("vaahcms-notification-setting.notification_field_line"),
-                "notification_field_greetings" => trans("vaahcms-notification-setting.notification_field_greetings"),
                 "notification_field_action" => trans("vaahcms-notification-setting.notification_field_action"),
                 "notification_field_message" => trans("vaahcms-notification-setting.notification_field_message"),
                 "notification_field_push" => trans("vaahcms-notification-setting.notification_field_push"),

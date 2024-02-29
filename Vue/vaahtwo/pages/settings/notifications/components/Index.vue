@@ -343,7 +343,7 @@ onMounted(async () => {
                                                 :disabled="store.is_add_subject_disabled"
                                         />
 
-                                        <Button label="Add From"
+                                        <Button :label="store.assets.language_strings.add_from_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addFrom"
                                                 data-testid="setting-notification_add_from"
