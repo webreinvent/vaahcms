@@ -31,11 +31,11 @@ const toggleItemMenuList = (event) => {
 </script>
 
 <template>
-    <Panel class="is-small">
+    <Panel class="is-small" v-if="store && store.assets">
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Localizations</b>
+                    <b class="mr-1">{{ store.assets.language_strings.localizations }}</b>
                 </div>
             </div>
         </template>
@@ -43,14 +43,14 @@ const toggleItemMenuList = (event) => {
         <template #icons>
             <div class="buttons">
                 <Button icon="pi pi-plus"
-                        label="Add Language"
+                        :label="store.assets.language_strings.add_language_button"
                         data-testid="localization-add_language"
                         @click="store.toggleLanguageForm"
                         class="p-button-sm mr-2"
                 />
 
                 <Button icon="pi pi-plus "
-                        label="Add Category"
+                        :label="store.assets.language_strings.add_category_button"
                         data-testid="localization-add_category"
                         @click="store.toggleCategoryForm"
                         class="p-button-sm mr-2"
@@ -73,20 +73,18 @@ const toggleItemMenuList = (event) => {
                         data-testid="localization-sync"
                         @click="store.sync()"
                         class="p-button-sm"
-                        v-tooltip.top="'Sync'"
+                        v-tooltip.top="store.assets.language_strings.localization_toolkit_sync"
                         :loading="store.btn_is_loading"
                 />
             </div>
         </template>
         <Message severity="warn" class="mt-1" :closable="false">
-            When you make any changes in strings.
-            You need to click on <strong>Generate Language Files</strong>
-            button to reflect your changes.
+            <p v-html="store.assets.language_strings.localization_message"></p>
         </Message>
 
         <div class="flex align-items-center">
             <div class="mb-4" v-if="store.show_add_language">
-                <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.add_new_languages }}</h5>
 
                 <div class="level has-padding-bottom-25">
                     <div class="level-left">
@@ -96,20 +94,20 @@ const toggleItemMenuList = (event) => {
                                            name="localization-language-name"
                                            v-model="store.new_language.name"
                                            data-testid="localization-new_language_name"
-                                           placeholder="Name"
+                                           :placeholder="store.assets.language_strings.add_new_languages_placeholder_name"
                                 />
 
                                 <inputText class="p-inputtext-sm"
                                            name="localization-language-local-code-iso-639"
                                            data-testid="localization-new_language_code"
                                            v-model="store.new_language.locale_code_iso_639"
-                                           placeholder="Locale ISO 639 Code"
+                                           :placeholder="store.assets.language_strings.add_new_languages_placeholder_locale_code"
                                 />
 
                                 <Button @click="store.storeLanguage"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_language_save"
-                                        label="save"
+                                        :label="store.assets.language_strings.add_new_languages_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
@@ -119,7 +117,7 @@ const toggleItemMenuList = (event) => {
             </div>
 
             <div class="mb-4" v-if="store.show_add_category">
-                <h5 class="p-1 text-xs mb-1">Add New Category</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.add_new_category }}</h5>
 
                 <div class="level has-padding-bottom-25" >
 
@@ -130,13 +128,13 @@ const toggleItemMenuList = (event) => {
                                 <inputText class="p-inputtext-sm"
                                            v-model="store.new_category.name"
                                            data-testid="localization-new_category_name"
-                                           placeholder="Category Name"
+                                           :placeholder="store.assets.language_strings.add_new_category_placeholder_category_name"
                                 />
 
                                 <Button @click="store.storeCategory"
                                         icon="pi pi-plus"
                                         data-testid="localization-new_category_save"
-                                        label="save"
+                                        :label="store.assets.language_strings.add_new_category_save_button"
                                         class="p-button-sm"
                                 />
                             </div>
@@ -157,7 +155,7 @@ const toggleItemMenuList = (event) => {
                           optionLabel="option_label"
                           optionValue="id"
                           @change="store.getList()"
-                          placeholder="Select a Language"
+                          :placeholder="store.assets.language_strings.localization_placeholder_select_a_language"
                           inputClass="p-inputtext-sm"
                           class="is-small"
                 />
@@ -170,7 +168,7 @@ const toggleItemMenuList = (event) => {
                                @keyup.enter="store.delayedSearch()"
                                @keyup.enter.native="store.delayedSearch()"
                                @input="store.delayedSearch()"
-                               placeholder="Search"
+                               :placeholder="store.assets.language_strings.localization_placeholder_search"
                                data-testid="role-action_search_input"
                     />
 
@@ -186,24 +184,24 @@ const toggleItemMenuList = (event) => {
                               optionLabel="name"
                               optionValue="id"
                               @change="store.getList()"
-                              placeholder="Select a Category"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_category"
                               inputClass="p-inputtext-sm"
                     />
 
                     <Dropdown v-model="store.query_string.filter"
                               :options="[
-                                       {name:'Empty value', value:'empty'},
-                                       {name:'Filled value', value:'filled'}
+                                       {name:store.assets.language_strings.localization_empty_value, value:'empty'},
+                                       {name:store.assets.language_strings.localization_filled_value, value:'filled'}
                                   ]"
                               @change="store.getList()"
                               :data-testid="'localization-more_filter'"
                               optionLabel="name"
                               optionValue="value"
-                              placeholder="Select a Filter"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_filter"
                               inputClass="p-inputtext-sm"
                     />
 
-                    <Button label="Reset"
+                    <Button :label="store.assets.language_strings.localization_reset_button"
                             icon="pi pi-filter-slash"
                             @click="store.removeQueryString"
                             data-testid="localization-reset"
@@ -239,7 +237,7 @@ const toggleItemMenuList = (event) => {
             </div>
 
             <div v-else>
-                No language string exist
+                {{ store.assets.language_strings.no_language_string_exist }}
             </div>
         </div>
 
@@ -259,7 +257,7 @@ const toggleItemMenuList = (event) => {
                                data-testid="localization-add_string"
                     />
 
-                    <Button label="Add String" icon="pi pi-plus"
+                    <Button :label="store.assets.language_strings.localization_add_string_button" icon="pi pi-plus"
                             @click="store.addVariable"
                             :disabled="!store.new_variable"
                             class="p-button-sm"
@@ -269,14 +267,14 @@ const toggleItemMenuList = (event) => {
 
             <div class="col-12">
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Generate Language Files"
+                    <Button :label="store.assets.language_strings.localization_generate_language_files"
                             data-testid="localization-generate_languafe_file"
                             icon="pi pi-refresh"
                             @click="store.generateLanguage"
                             class="p-button-sm"
                     />
 
-                    <Button label="Save"
+                    <Button :label="store.assets.language_strings.localization_save_button"
                             data-testid="localization-save"
                             icon="pi pi-save"
                             @click="store.storeData"
