@@ -244,7 +244,7 @@ onMounted(async () => {
                                         <div v-if="line.key == 'subject'" >
                                             <div class="mb-3">
                                                 <h5 class="px-1 text-xs mb-1">Subject</h5>
-                                                <InputText placeholder="Enter Subject"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_subject"
                                                            data-testid="setting-notification_subject"
                                                            v-model="line.value"
                                                            class="p-inputtext-sm"
@@ -256,7 +256,7 @@ onMounted(async () => {
                                             <div class="mb-3">
                                                 <h5 class="px-1 text-xs mb-1">From</h5>
 
-                                                <InputText placeholder="Enter From"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.meta.name"
                                                            data-testid="setting-notification_from"
                                                            class="p-inputtext-sm"
@@ -264,7 +264,7 @@ onMounted(async () => {
                                             </div>
                                             <div class="mb-3">
                                                 <h5 class="px-1 text-xs mb-1">From Email</h5>
-                                                <InputText placeholder="Enter From"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_from_email"
                                                            class="p-inputtext-sm"
@@ -286,7 +286,7 @@ onMounted(async () => {
                                                     <Textarea v-model="line.value"
                                                               v-if="line.key == 'line'"
                                                               :data-testid="'setting-notification_'+line.key"
-                                                              placeholder="Content with variables"
+                                                              :placeholder="store.assets.language_strings.placeholder_content_with_variables"
                                                               class="p-inputtext-sm"
                                                     />
 
@@ -295,7 +295,7 @@ onMounted(async () => {
                                                                   :auto-resize="true"
                                                                   :data-testid="'setting-notification_'+line.key"
                                                                   class="w-full"
-                                                                  placeholder="Content with variables"
+                                                                  :placeholder="store.assets.language_strings.placeholder_content_with_variables"
                                                         />
 
                                                         <Button icon="pi pi-trash"
@@ -311,7 +311,7 @@ onMounted(async () => {
                                                 <div class="p-inputgroup">
                                                     <InputText v-model="line.value"
                                                                data-testid="setting-notification_action_value"
-                                                               placeholder="Enter action label"
+                                                               :placeholder="store.assets.language_strings.placeholder_action_label"
                                                                class="p-inputtext-sm"
                                                     />
 
@@ -320,7 +320,7 @@ onMounted(async () => {
                                                               optionLabel="name"
                                                               optionValue="name"
                                                               data-testid="setting-notification_action_option"
-                                                              placeholder="Choose an action"
+                                                              :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                               class="p-inputtext-sm is-small"
 
                                                     />
@@ -392,9 +392,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_sms"
                                                     @click="store.addSmsContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -424,13 +424,13 @@ onMounted(async () => {
                                             <h5 class="p-1 text-xs mb-1">Action</h5>
 
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_push_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
 
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -446,8 +446,8 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
-                                            <Button label="Add Content"
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_push"
                                                     @click="store.addPushContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -477,12 +477,12 @@ onMounted(async () => {
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
                                             <h5 class="p-1 text-xs mb-1">Action</h5>
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_backend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -498,9 +498,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_backend"
                                                     @click="store.addBackendContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -531,12 +531,12 @@ onMounted(async () => {
                                             <h5 class="p-1 text-xs mb-1">Action</h5>
 
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_frontend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -552,9 +552,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_frontend"
                                                     @click="store.addFrontendContent"
                                                     class="w-auto my-3 p-button-sm"

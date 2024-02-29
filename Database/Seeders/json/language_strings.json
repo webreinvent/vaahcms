@@ -2694,12 +2694,7 @@
         "name": "Add From Button",
         "content": "Add From"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "notification-setting",
-        "name": "Placeholder Email Otp Line",
-        "content": "Your one time login (OTP) password is:"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
@@ -6493,12 +6488,7 @@
         "name": "Add From Button",
         "content": "\nAgregar desde"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "notification-setting",
-        "name": "Placeholder Email Otp Line",
-        "content": "Su contraseña de inicio de sesión único (OTP) es:"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
@@ -10121,12 +10111,7 @@
         "name": "Add From Button",
         "content": "Ajouter à partir de"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "notification-setting",
-        "name": "Placeholder Email Otp Line",
-        "content": "Votre mot de passe de connexion unique (OTP) est :"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
