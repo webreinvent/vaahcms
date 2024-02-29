@@ -218,6 +218,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Language File Generated",
+        "content": "Language files successfully generated"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Category Limit",
         "content": "The category character is not greater than 150."
     },
@@ -2486,7 +2492,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizations"
     },
     {
@@ -2504,8 +2510,14 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Removed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "When you make any changes in strings. You need to click on Generate Language Files button to reflect your changes."
+        "content": "When you make any changes in strings. You need to click on <b>Generate Language Files</b> button to reflect your changes."
     },
     {
         "locale_code_iso_639": "en",
@@ -2542,6 +2554,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Locale ISO 639 Code"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sync"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Run & Generate Seeds"
     },
     {
         "locale_code_iso_639": "en",
@@ -3909,6 +3939,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "El campo de categoría es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Archivos de idioma generados exitosamente"
     },
     {
         "locale_code_iso_639": "es",
@@ -6201,7 +6237,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizaciones"
     },
     {
@@ -6219,8 +6255,14 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Remota"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón Generar archivos de idioma para reflejar sus cambios."
+        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón <b>Generar archivos de idioma</b> para reflejar sus cambios."
     },
     {
         "locale_code_iso_639": "es",
@@ -6257,6 +6299,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Nombre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Código local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sincronizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Ejecutar y generar semillas"
     },
     {
         "locale_code_iso_639": "es",
@@ -7444,6 +7504,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "Le champ catégorie est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Fichiers de langue générés avec succès"
     },
     {
         "locale_code_iso_639": "fr",
@@ -9745,7 +9811,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localisations"
     },
     {
@@ -9763,8 +9829,14 @@
     {
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Supprimé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton Générer des fichiers de langue pour refléter vos modifications."
+        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton <b>Générer des fichiers de langue</b> pour refléter vos modifications."
     },
     {
         "locale_code_iso_639": "fr",
@@ -9801,6 +9873,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Code local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Synchroniser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "\nExécuter et générer des graines"
     },
     {
         "locale_code_iso_639": "fr",
