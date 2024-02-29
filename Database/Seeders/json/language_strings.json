@@ -2649,6 +2649,60 @@
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Enter Subject"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "Enter From"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Content with variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Enter action label"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Choose an action"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "It looks like you haven\\'t added any content to this section yet."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Add Content"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "Add From"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Email Otp Line",
+        "content": "Your one time login (OTP) password is:"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
         "name": "Add Button",
         "content": "Add"
     },
@@ -6394,6 +6448,60 @@
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Ingresar Asunto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "Ingresar desde"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Contenido con variables"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Introducir etiqueta de acción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Elige una acción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "Parece que aún no has agregado ningún contenido a esta sección."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Agregar contenido"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "\nAgregar desde"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Email Otp Line",
+        "content": "Su contraseña de inicio de sesión único (OTP) es:"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
         "name": "Add Button",
         "content": "Agregar"
     },
@@ -9964,6 +10072,60 @@
         "category": "notification-setting",
         "name": "Notification Heading",
         "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Entrez le sujet"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "\nEntrer depuis"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Contenu avec des variables"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Saisissez le libellé de l\\'action"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Choisissez une action"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "\nIl semble que vous n'ayez pas encore ajouté de contenu à cette section."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Ajouter du contenu"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "Ajouter à partir de"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Email Otp Line",
+        "content": "Votre mot de passe de connexion unique (OTP) est :"
     },
     {
         "locale_code_iso_639": "fr",
