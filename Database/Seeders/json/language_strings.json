@@ -2722,6 +2722,50 @@
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Subject"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "From Email"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "From"
+    },
+    
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "Action"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "Message"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "Push"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "Mail"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
         "name": "Placeholder Enter New Notification Name",
         "content": "Enter New Notification Name"
     },
@@ -6522,6 +6566,50 @@
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Sujeta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "Desde el e-mail"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "De"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "\nAcción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "Mensaje"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "\nEmpujar"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "correo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
         "name": "Save Button",
         "content": "Ahorrar"
     },
@@ -10141,6 +10229,50 @@
         "category": "notification-setting",
         "name": "Placeholder Enter New Notification Name",
         "content": "Entrez le nouveau nom de notification"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Sujette"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "De l\\'email"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "Depuis"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "\nAction"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "\nMessage"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "Pousser"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "mail"
     },
     {
         "locale_code_iso_639": "fr",

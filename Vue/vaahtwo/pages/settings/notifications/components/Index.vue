@@ -183,7 +183,7 @@ onMounted(async () => {
 
                             <div class="flex justify-content-between">
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Mail</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_mail }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_mail"
                                                  data-testid="setting-notification_mail"
@@ -201,7 +201,7 @@ onMounted(async () => {
                                 </span>
 
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Push</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_push }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_push"
                                                  data-testid="setting-notification_push"
@@ -210,7 +210,7 @@ onMounted(async () => {
                                 </span>
 
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Backend</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.backend }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_backend"
                                                  data-testid="setting-notification_backend"
@@ -239,11 +239,11 @@ onMounted(async () => {
 
                         <div class="col-12 pt-0">
                             <TabView ref="tabview1" class="is-small tab-panel-has-no-padding">
-                                <TabPanel v-if="store.active_notification.via_mail" header="Mail" >
+                                <TabPanel v-if="store.active_notification.via_mail" :header="store.assets.language_strings.notification_field_mail" >
                                     <div v-if="store.active_notification.contents" v-for="line in store.active_notification.contents.mail">
                                         <div v-if="line.key == 'subject'" >
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">Subject</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_subject }}</h5>
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_enter_subject"
                                                            data-testid="setting-notification_subject"
                                                            v-model="line.value"
@@ -254,7 +254,7 @@ onMounted(async () => {
                                         </div>
                                         <div v-if="line.key == 'from'">
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">From</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_from }}</h5>
 
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.meta.name"
@@ -263,7 +263,7 @@ onMounted(async () => {
                                                 />
                                             </div>
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">From Email</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_from_email }}</h5>
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_from_email"
@@ -307,7 +307,7 @@ onMounted(async () => {
                                             </div>
 
                                             <div  v-if="line.key == 'action'" class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">Action</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
                                                 <div class="p-inputgroup">
                                                     <InputText v-model="line.value"
                                                                data-testid="setting-notification_action_value"
@@ -404,13 +404,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_push" header="Push">
+                                <TabPanel v-if="store.active_notification.via_push" :header="store.assets.language_strings.notification_field_push">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.push
                                                 && store.active_notification.contents.push.length > 0"
                                          v-for="line in store.active_notification.contents.push"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -421,7 +421,7 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
@@ -458,13 +458,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_backend" header="Backend">
+                                <TabPanel v-if="store.active_notification.via_backend" :header="store.assets.language_strings.backend">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.backend
                                                 && store.active_notification.contents.backend.length > 0"
                                          v-for="line in store.active_notification.contents.backend"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -475,7 +475,7 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
                                             <div class="p-inputgroup">
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
@@ -511,13 +511,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_frontend" header="Frontend">
+                                <TabPanel v-if="store.active_notification.via_frontend" :header="store.assets.language_strings.frontend">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.frontend
                                                 && store.active_notification.contents.frontend.length > 0"
                                          v-for="line in store.active_notification.contents.frontend"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -528,7 +528,7 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
