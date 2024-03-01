@@ -4,11 +4,12 @@ import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
 import { vaah } from '../../../../vaahvue/pinia/vaah'
 import {useNotificationStore} from "../../../../stores/settings/store-notification";
-
+const root = useRootStore();
 const store = useNotificationStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
+import {useRootStore} from "../../../../stores/root";
 
 const confirm = useConfirm();
 onMounted(async () => {
@@ -31,7 +32,7 @@ onMounted(async () => {
 
 
         <div v-if="!store.active_notification">
-            <div  v-if="store.list && store.list.data ">
+            <div  v-if="store.list && store.assets && store.list.data ">
                 <DataTable :value="store.list.data" stripedRows dataKey="id"  responsiveLayout="scroll"
                            v-model:selection="store.action.items"
                            class="p-datatable-sm p-datatable-hoverable-rows">
@@ -40,7 +41,7 @@ onMounted(async () => {
 
                             headerStyle="width: 3em"
                     />
-                    <Column  header="Notification Title">
+                    <Column  :header="store.assets.language_strings.column_notification_title">
                         <template #body="slotProps">
                             <Badge v-if="slotProps.data.deleted_at"
                                    value="Trashed"
@@ -49,27 +50,29 @@ onMounted(async () => {
                             <p>{{slotProps.data.name}}</p>
                         </template>
                     </Column>
-                    <Column header="Edit" field="Edit" class="text-right" :pt="{
+                    <Column :header="store.assets.language_strings.column_edit" field="Edit" class="text-right" :pt="{
                         headercontent: {class: 'justify-content-end pr-3'}
-                        }">
+                        }" v-if="root.assets
+                          && root.assets.language_strings
+                          && root.assets.language_strings.crud_actions">
                         <template #body="slotProps">
                             <Button icon="pi pi-pencil"
                                     :data-testid="'setting-notification_'+slotProps.data.name"
                                     v-if="!slotProps.data.deleted_at"
                                     @click="store.showNotificationSettings(slotProps.data)"
-                                    class="p-button-tiny p-button-text" v-tooltip.top="'Edit'"></Button>
+                                    class="p-button-tiny p-button-text" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_edit"></Button>
 
                             <Button class="p-button-tiny p-button-danger p-button-text"
                                     v-if="store.isViewLarge() && !slotProps.data.deleted_at"
                                     @click="store.itemAction('trash', slotProps.data)"
-                                    v-tooltip.top="'Trash'"
+                                    v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                     icon="pi pi-trash"
                                     data-testid="setting-notification_data_trash"
                             ></Button>
                             <Button class="p-button-tiny p-button-success p-button-text"
                                     v-if="store.isViewLarge() && slotProps.data.deleted_at"
                                     @click="store.itemAction('restore', slotProps.data)"
-                                    v-tooltip.top="'Restore'"
+                                    v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                     icon="pi pi-replay"
                                     data-testid="setting-notification-list_data_restore"
                             />
@@ -85,13 +88,13 @@ onMounted(async () => {
             </div>
         </div>
 
-        <div class="grid" v-else-if="store.route.params.id">
+        <div class="grid" v-else-if="store.route.params.id && store.assets">
             <div class="col-12 mt-2 mb-0">
                 <div class="level">
                     <div class="flex align-items-center">
 
                         <Button class="p-button-outlined p-button-sm mr-2"
-                                label="Go back"
+                                :label="store.assets.language_strings.go_back_button"
                                 icon="pi pi-arrow-left"
                                 icon-class="text-xs"
                                 data-testid="setting-notification_back"
@@ -125,12 +128,12 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Variables</b>
+                                <b class="mr-1">{{ store.assets.language_strings.variables }}</b>
                             </div>
                         </div>
                     </template>
                     <div class="p-inputgroup mt-2 mb-2">
-                        <AutoComplete placeholder="Search"
+                        <AutoComplete :placeholder="store.assets.language_strings.variables_placeholder_search"
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
                                       optionLabel="name"
@@ -170,17 +173,17 @@ onMounted(async () => {
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">Notification Options</b>
+                                <b class="mr-1">{{ store.assets.language_strings.notification_options }}</b>
                             </div>
                         </div>
                     </template>
                     <div class="grid justify-content-between">
                         <div class="col-5">
-                            <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
+                            <h5 class="text-sm font-semibold mb-2">{{ store.assets.language_strings.deliver_via }}</h5>
 
                             <div class="flex justify-content-between">
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Mail</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_mail }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_mail"
                                                  data-testid="setting-notification_mail"
@@ -198,7 +201,7 @@ onMounted(async () => {
                                 </span>
 
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Push</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_push }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_push"
                                                  data-testid="setting-notification_push"
@@ -207,7 +210,7 @@ onMounted(async () => {
                                 </span>
 
                                 <span>
-                                    <h5 class="font-semibold text-xs mb-1">Backend</h5>
+                                    <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.backend }}</h5>
 
                                     <InputSwitch v-model="store.active_notification.via_backend"
                                                  data-testid="setting-notification_backend"
@@ -226,7 +229,7 @@ onMounted(async () => {
                         </div>
                         <div class="col-6 justify-content-end flex">
                             <span class="text-right">
-                                <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
+                                <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.error_notifications }}</h5>
                                 <InputSwitch v-model="store.active_notification.is_error"
                                              data-testid="setting-notification_error"
                                              class="is-small"
@@ -236,12 +239,12 @@ onMounted(async () => {
 
                         <div class="col-12 pt-0">
                             <TabView ref="tabview1" class="is-small tab-panel-has-no-padding">
-                                <TabPanel v-if="store.active_notification.via_mail" header="Mail" >
+                                <TabPanel v-if="store.active_notification.via_mail" :header="store.assets.language_strings.notification_field_mail" >
                                     <div v-if="store.active_notification.contents" v-for="line in store.active_notification.contents.mail">
                                         <div v-if="line.key == 'subject'" >
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">Subject</h5>
-                                                <InputText placeholder="Enter Subject"
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_subject }}</h5>
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_subject"
                                                            data-testid="setting-notification_subject"
                                                            v-model="line.value"
                                                            class="p-inputtext-sm"
@@ -251,17 +254,17 @@ onMounted(async () => {
                                         </div>
                                         <div v-if="line.key == 'from'">
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">From</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_from }}</h5>
 
-                                                <InputText placeholder="Enter From"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.meta.name"
                                                            data-testid="setting-notification_from"
                                                            class="p-inputtext-sm"
                                                 />
                                             </div>
                                             <div class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">From Email</h5>
-                                                <InputText placeholder="Enter From"
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_from_email }}</h5>
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_enter_from"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_from_email"
                                                            class="p-inputtext-sm"
@@ -283,7 +286,7 @@ onMounted(async () => {
                                                     <Textarea v-model="line.value"
                                                               v-if="line.key == 'line'"
                                                               :data-testid="'setting-notification_'+line.key"
-                                                              placeholder="Content with variables"
+                                                              :placeholder="store.assets.language_strings.placeholder_content_with_variables"
                                                               class="p-inputtext-sm"
                                                     />
 
@@ -292,7 +295,7 @@ onMounted(async () => {
                                                                   :auto-resize="true"
                                                                   :data-testid="'setting-notification_'+line.key"
                                                                   class="w-full"
-                                                                  placeholder="Content with variables"
+                                                                  :placeholder="store.assets.language_strings.placeholder_content_with_variables"
                                                         />
 
                                                         <Button icon="pi pi-trash"
@@ -304,11 +307,11 @@ onMounted(async () => {
                                             </div>
 
                                             <div  v-if="line.key == 'action'" class="mb-3">
-                                                <h5 class="px-1 text-xs mb-1">Action</h5>
+                                                <h5 class="px-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
                                                 <div class="p-inputgroup">
                                                     <InputText v-model="line.value"
                                                                data-testid="setting-notification_action_value"
-                                                               placeholder="Enter action label"
+                                                               :placeholder="store.assets.language_strings.placeholder_action_label"
                                                                class="p-inputtext-sm"
                                                     />
 
@@ -317,7 +320,7 @@ onMounted(async () => {
                                                               optionLabel="name"
                                                               optionValue="name"
                                                               data-testid="setting-notification_action_option"
-                                                              placeholder="Choose an action"
+                                                              :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                               class="p-inputtext-sm is-small"
 
                                                     />
@@ -333,33 +336,33 @@ onMounted(async () => {
                                     </div>
 
                                     <div class="flex justify-content-end">
-                                        <Button label="Add Subject"
+                                        <Button :label="store.assets.language_strings.add_subject_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addSubject"
                                                 data-testid="setting-notification_add_subject"
                                                 :disabled="store.is_add_subject_disabled"
                                         />
 
-                                        <Button label="Add From"
+                                        <Button :label="store.assets.language_strings.add_from_button"
                                                 class="w-auto mr-2 p-button-sm"
                                                 @click="store.addFrom"
                                                 data-testid="setting-notification_add_from"
                                                 :disabled="store.is_add_from_disabled"
                                         />
 
-                                        <Button label="Add Greetings"
+                                        <Button :label="store.assets.language_strings.add_greetings_button"
                                                 @click="store.addToMail('greetings')"
                                                 data-testid="setting-notification_add_greetings"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Line"
+                                        <Button :label="store.assets.language_strings.add_line_button"
                                                 @click="store.addToMail('line')"
                                                 data-testid="setting-notification_add_line"
                                                 class="w-auto mr-2 p-button-sm"
                                         />
 
-                                        <Button label="Add Action"
+                                        <Button :label="store.assets.language_strings.add_action_button"
                                                 @click="store.addAction"
                                                 data-testid="setting-notification_add_action"
                                                 class="w-auto p-button-sm"
@@ -389,9 +392,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_sms"
                                                     @click="store.addSmsContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -401,13 +404,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_push" header="Push">
+                                <TabPanel v-if="store.active_notification.via_push" :header="store.assets.language_strings.notification_field_push">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.push
                                                 && store.active_notification.contents.push.length > 0"
                                          v-for="line in store.active_notification.contents.push"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -418,16 +421,16 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
 
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_push_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
 
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -443,8 +446,8 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
-                                            <Button label="Add Content"
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_push"
                                                     @click="store.addPushContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -455,13 +458,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_backend" header="Backend">
+                                <TabPanel v-if="store.active_notification.via_backend" :header="store.assets.language_strings.backend">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.backend
                                                 && store.active_notification.contents.backend.length > 0"
                                          v-for="line in store.active_notification.contents.backend"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -472,14 +475,14 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_backend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -495,9 +498,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_backend"
                                                     @click="store.addBackendContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -508,13 +511,13 @@ onMounted(async () => {
                                     </div>
                                 </TabPanel>
 
-                                <TabPanel v-if="store.active_notification.via_frontend" header="Frontend">
+                                <TabPanel v-if="store.active_notification.via_frontend" :header="store.assets.language_strings.frontend">
                                     <div v-if=" store.active_notification.contents && store.active_notification.contents.frontend
                                                 && store.active_notification.contents.frontend.length > 0"
                                          v-for="line in store.active_notification.contents.frontend"
                                     >
                                         <div class="col-12 px-0" v-if="line.key == 'content'">
-                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_message }}</h5>
 
                                             <div class="p-inputgroup">
                                                 <Textarea v-model="line.value"
@@ -525,15 +528,15 @@ onMounted(async () => {
                                         </div>
 
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
-                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.notification_field_action }}</h5>
 
                                             <div class="p-inputgroup">
-                                                <InputText placeholder="Enter action label"
+                                                <InputText :placeholder="store.assets.language_strings.placeholder_action_label"
                                                            v-model="line.value"
                                                            data-testid="setting-notification_frontend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown placeholder="Choose an action"
+                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -549,9 +552,9 @@ onMounted(async () => {
                                         <Message
                                             severity="primary" :closable="false" class="text-center pt-3">
                                             <p><i class="pi pi-sync"></i></p>
-                                            <p>It looks like you haven't added any content to this section yet.</p>
+                                            <p>{{ store.assets.language_strings.content_message }}</p>
 
-                                            <Button label="Add Content"
+                                            <Button :label="store.assets.language_strings.add_content_button"
                                                     data-testid="setting-notification_add_frontend"
                                                     @click="store.addFrontendContent"
                                                     class="w-auto my-3 p-button-sm"
@@ -563,13 +566,13 @@ onMounted(async () => {
                             </TabView>
                             <Divider class="mb-3 mt-0" />
                             <div class="flex justify-content-end">
-                                <Button label="Save" icon="pi pi-save"
+                                <Button :label="store.assets.language_strings.notification_save_button" icon="pi pi-save"
                                         data-testid="setting-notification_store"
                                         @click="store.storeNotification"
                                         class="w-auto mr-3 p-button-sm"
                                 />
 
-                                <Button label="Test"
+                                <Button :label="store.assets.language_strings.notification_test_button"
                                         data-testid="setting-notification_test"
                                         @click="store.is_testing=true"
                                         icon="pi pi-reply"
@@ -587,7 +590,7 @@ onMounted(async () => {
                                               inputClass="p-inputtext-sm"
                                 />
 
-                                <Button label="Send"
+                                <Button :label="store.assets.language_strings.notification_test_send_button"
                                         data-testid="setting-notification_test_send"
                                         @click="store.sendNotification"
                                         icon="pi pi-reply"
