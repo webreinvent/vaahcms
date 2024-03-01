@@ -46,7 +46,7 @@ onMounted(async () => {
             <div class="text-center" v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">
-                <p>Current Version of <strong>VaahCMS</strong> is</p>
+                <p v-html="root.assets.language_strings.update.current_version_of_vaahcms_is"></p>
                 <Button :label="root.assets.vaahcms.version"
                         data-testid="setting-notification_add_sms"
 
@@ -128,7 +128,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                             </ol>
-                            <Button label="Reload"
+                            <Button :label="root.assets.language_strings.update.reload_button"
                                     icon="pi pi-refresh"
                                     @click="store.reloadPage()"
                                     data-testid="setting-update_refresh"
@@ -145,8 +145,8 @@ onMounted(async () => {
         </div>
         <div v-if="store.manual_update">
             <div v-if="store.release">
-                A newer version <b>{{store.remote_version}}</b> of VaahCMS is available.
-                This is a <b>major release</b>. You have to do manual upgrade to update VaahCms.
+                {{ root.assets.language_strings.update.a_newer_version }} <b>{{store.remote_version}}</b> {{ root.assets.language_strings.update.of_vaahcms_is_available }}
+                {{ root.assets.language_strings.update.major_release_message }}
                 <hr/>
                 <b>New Updates:</b>
                 <div class="content">
@@ -154,11 +154,11 @@ onMounted(async () => {
                     {{store.release.body}}
                 </div>
 
-                <b>Steps of Manually Upgrade</b>
+                <b>{{ root.assets.language_strings.update.steps_of_manually_upgrade }}</b>
                 <ol class="ml-4">
-                    <li>Go to Root path</li>
-                    <li>Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json</li>
-                    <li>Run <b>Composer Update</b></li>
+                    <li>{{ root.assets.language_strings.update.go_to_root_path }}</li>
+                    <li v-html="root.assets.language_strings.update.verify_version_in_composer_json"></li>
+                    <li v-html="root.assets.language_strings.update.run_composer_update"></li>
                     <li>Publish assets</li>
                     <li>Run Migrations and Seeds</li>
                     <li>Clear Cache</li>

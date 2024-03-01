@@ -366,6 +366,13 @@ class JsonController extends Controller
             "of_vaahcms_is_available" => trans("vaahcms-update-setting.of_vaahcms_is_available"),
             "new_updates_message" => trans("vaahcms-update-setting.new_updates_message"),
             "downloading_latest_version" => trans("vaahcms-update-setting.downloading_latest_version"),
+            "reload_button" => trans("vaahcms-update-setting.reload_button"),
+            "major_release_message" => trans("vaahcms-update-setting.major_release_message"),
+            "steps_of_manually_upgrade" => trans("vaahcms-update-setting.steps_of_manually_upgrade"),
+            "go_to_root_path" => trans("vaahcms-update-setting.go_to_root_path"),
+            "current_version_of_vaahcms_is" => trans("vaahcms-update-setting.current_version_of_vaahcms_is"),
+            "verify_version_in_composer_json" => trans("vaahcms-update-setting.verify_version_in_composer_json"),
+            "run_composer_update" => trans("vaahcms-update-setting.run_composer_update"),
         ];
     }
     //----------------------------------------------------------
