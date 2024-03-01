@@ -373,6 +373,10 @@ class JsonController extends Controller
             "current_version_of_vaahcms_is" => trans("vaahcms-update-setting.current_version_of_vaahcms_is"),
             "verify_version_in_composer_json" => trans("vaahcms-update-setting.verify_version_in_composer_json"),
             "run_composer_update" => trans("vaahcms-update-setting.run_composer_update"),
+            "run_migrations_and_seeds" => trans("vaahcms-update-setting.run_migrations_and_seeds"),
+            "update_publish_assets" => trans("vaahcms-update-setting.update_publish_assets"),
+            "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
+            "heading_update_vaahcms" => trans("vaahcms-update-setting.heading_update_vaahcms"),
         ];
     }
     //----------------------------------------------------------

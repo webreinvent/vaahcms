@@ -26,7 +26,7 @@ onMounted(async () => {
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Update VaahCMS</b>
+                    <b class="mr-1">{{ root.assets.language_strings.update.heading_update_vaahcms }}</b>
                 </div>
             </div>
         </template>
@@ -101,7 +101,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li class="mb-2">
-                                    Publish assets
+                                    {{ root.assets.language_strings.update.update_publish_assets }}
                                     <i v-if="store.status.publish_assets === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.publish_assets === 'pending'"
@@ -110,7 +110,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li class="mb-2">
-                                    Run migrations and seeds
+                                    {{ root.assets.language_strings.update.run_migrations_and_seeds }}
                                     <i v-if="store.status.migration_and_seeds === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.migration_and_seeds === 'pending'"
@@ -119,7 +119,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li>
-                                    Clear cache
+                                    {{ root.assets.language_strings.update.clear_cache_button }}
                                     <i v-if="store.status.clear_cache === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.clear_cache === 'pending'"
@@ -159,9 +159,9 @@ onMounted(async () => {
                     <li>{{ root.assets.language_strings.update.go_to_root_path }}</li>
                     <li v-html="root.assets.language_strings.update.verify_version_in_composer_json"></li>
                     <li v-html="root.assets.language_strings.update.run_composer_update"></li>
-                    <li>Publish assets</li>
-                    <li>Run Migrations and Seeds</li>
-                    <li>Clear Cache</li>
+                    <li>{{ root.assets.language_strings.update.update_publish_assets }}</li>
+                    <li>{{ root.assets.language_strings.update.run_migrations_and_seeds }}</li>
+                    <li>{{ root.assets.language_strings.update.clear_cache_button }}</li>
                 </ol>
 
 

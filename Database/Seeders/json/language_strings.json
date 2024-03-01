@@ -3101,6 +3101,18 @@
     {
         "locale_code_iso_639": "en",
         "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Update VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publish Assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
         "name": "Go to Root path",
         "content": "Go to Root path"
     },
@@ -6815,6 +6827,18 @@
     {
         "locale_code_iso_639": "es",
         "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Actualizar VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "\nPublicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
         "name": "Go to Root path",
         "content": "\nIr a la ruta raíz"
     },
@@ -10520,6 +10544,18 @@
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
         "content": "\nLa version actuelle de <strong>VaahCMS</strong> est"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Mettre à jour VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publier des actifs"
     },
     {
         "locale_code_iso_639": "fr",
