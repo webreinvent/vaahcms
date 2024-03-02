@@ -47,7 +47,7 @@ class BatchesController extends Controller
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "batches_title" => trans("vaahcms-sidebar-menu.batches"),
+                "batches_title" => trans("vaahcms-advanced.batches_title"),
                 "filter_column" => trans("vaahcms-general.filter_column"),
                 "filter_created" => trans("vaahcms-general.filter_created"),
                 "filter_cancelled" => trans("vaahcms-general.filter_cancelled"),

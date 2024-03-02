@@ -875,18 +875,8 @@
         "name": "Users & Access",
         "content": "Users & Access"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Failed Jobs"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "Batches"
-    },
+
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -917,12 +907,7 @@
         "name": "Extend",
         "content": "Extend"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Logs"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -3263,6 +3248,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Batches"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
         "name": "Aside Logs",
         "content": "Logs"
     },
@@ -3315,6 +3324,30 @@
         "locale_code_iso_639": "es",
         "category": "advanced",
         "name": "Aside Batches",
+        "content": "Lotes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Batches Title",
         "content": "Lotes"
     },
 
@@ -3399,6 +3432,30 @@
         "category": "settings",
         "name": "Aside Notifications",
         "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Lots"
     },
 
 
@@ -5201,18 +5258,8 @@
         "name": "Users & Access",
         "content": "Usuarios y acceso"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Trabajos fallidos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "\nLotes"
-    },
+
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -5243,12 +5290,7 @@
         "name": "Extend",
         "content": "Extender"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Registros"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -9077,18 +9119,7 @@
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Travaux échoués"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "\nLots"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
@@ -9119,12 +9150,7 @@
         "name": "Extend",
         "content": "Étendre"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Journaux"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
