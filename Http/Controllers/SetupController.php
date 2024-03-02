@@ -106,8 +106,10 @@ class SetupController extends Controller
             "label_advanced_options" => trans("vaahcms-setup.label_advanced_options"),
             "toolkit_view_dashboard" => trans("vaahcms-setup.toolkit_view_dashboard"),
             "toolkit_view_documentation" => trans("vaahcms-setup.toolkit_view_documentation"),
-
-
+            "setup_label_publish_assets" => trans("vaahcms-setup.setup_label_publish_assets"),
+            "setup_label_clear_cache" => trans("vaahcms-setup.setup_label_clear_cache"),
+            "setup_label_run_migrations" => trans("vaahcms-setup.setup_label_run_migrations"),
+            "setup_label_run_seeds" => trans("vaahcms-setup.setup_label_run_seeds"),
             "install_button" => trans("vaahcms-extend-module.install_button"),
             "reset" => trans("vaahcms-sidebar-menu.reset"),
             "refresh" => trans("vaahcms-env-variable.refresh"),

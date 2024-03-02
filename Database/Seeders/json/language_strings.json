@@ -3169,6 +3169,30 @@
         "name": "Toolkit View Dashboard",
         "content": "Dashboard"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Run Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publish assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Clear Cache"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Run Seeds"
+    },
 
 
     {
@@ -6950,6 +6974,30 @@
         "category": "setup",
         "name": "Toolkit View Dashboard",
         "content": "Panel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Ejecutar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Limpiar cache"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Ejecutar semillas"
     },
 
     {
@@ -10739,6 +10787,30 @@
         "category": "setup",
         "name": "Toolkit View Dashboard",
         "content": "Tableau de bord"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Exécuter des migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publier des éléments"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Vider le cache"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Exécuter des graines"
     },
 
 
