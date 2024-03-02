@@ -3254,6 +3254,103 @@
         "content": "Run Seeds"
     },
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Advanced"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Batches"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avanzada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lotes"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avancée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lots"
+    },
+
 
     {
         "locale_code_iso_639": "en",
@@ -10849,7 +10946,7 @@
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
         "name": "Content Message",
-        "content": "\nIl semble que vous n'ayez pas encore ajouté de contenu à cette section."
+        "content": "\nIl semble que vous n\\'ayez pas encore ajouté de contenu à cette section."
     },
     {
         "locale_code_iso_639": "fr",

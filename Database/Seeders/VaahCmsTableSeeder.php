@@ -208,6 +208,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Validation'],
             ["name" => 'Setup'],
             ["name" => 'Settings'],
+            ["name" => 'Advanced'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

@@ -391,11 +391,11 @@ class JsonController extends Controller
 
     public function getAdvancedLayoutStrings() :array {
         return [
-            "advanced" => trans("vaahcms-sidebar-menu.advanced"),
-            "logs" => trans("vaahcms-sidebar-menu.logs"),
-            "failed_jobs" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
-            "jobs" => trans("vaahcms-dashboard.jobs"),
-            "batches" => trans("vaahcms-sidebar-menu.batches"),
+            "advanced" => trans("vaahcms-advanced.aside_advanced"),
+            "logs" => trans("vaahcms-advanced.aside_logs"),
+            "failed_jobs" => trans("vaahcms-advanced.aside_failed_jobs"),
+            "jobs" => trans("vaahcms-advanced.aside_jobs"),
+            "batches" => trans("vaahcms-advanced.aside_batches"),
         ];
     }
     //----------------------------------------------------------
