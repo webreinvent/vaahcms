@@ -126,6 +126,12 @@ class JsonController extends Controller
                 'activate_theme' => trans("vaahcms-dashboard.activate_theme"),
                 'or' => trans("vaahcms-dashboard.or"),
                 'create_your_own_theme' => trans("vaahcms-dashboard.create_your_own_theme"),
+                'topnav_tooltip_view_less_navigation' => trans("vaahcms-dashboard.topnav_tooltip_view_less_navigation"),
+                'topnav_tooltip_view_full_navigation' => trans("vaahcms-dashboard.topnav_tooltip_view_full_navigation"),
+                'topnav_tooltip_visit_site' => trans("vaahcms-dashboard.topnav_tooltip_visit_site"),
+                'topnav_profile' => trans("vaahcms-dashboard.topnav_profile"),
+                'topnav_logout' => trans("vaahcms-dashboard.topnav_logout"),
+                'topnav_tooltip_dashboard' => trans("vaahcms-dashboard.topnav_tooltip_dashboard"),
             ];
 
         }

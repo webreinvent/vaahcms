@@ -1024,6 +1024,42 @@
     {
         "locale_code_iso_639": "en",
         "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "View Less Navigation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "View Full Navigation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Dashboard"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visit Site"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Profile"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Logout"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
         "name": "Total Role",
         "content": "Total Role"
     },
@@ -5062,6 +5098,42 @@
     {
         "locale_code_iso_639": "es",
         "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "Ver menos navegación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "Ver navegación completa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Panel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visitar sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Perfil"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Cerrar sesión"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
         "name": "Total Role",
         "content": "Rol Total"
     },
@@ -8898,6 +8970,42 @@
         "category": "dashboard",
         "name": "Total User",
         "content": "Utilisateur Total"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "Voir moins Navigation"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "Afficher la navigation complète"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Tableau de bord"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visitez le site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Profil"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Se déconnecter"
     },
     {
         "locale_code_iso_639": "fr",
