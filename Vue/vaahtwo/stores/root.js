@@ -76,6 +76,9 @@ export const useRootStore = defineStore({
                     }
                 }
             }
+            if (this.assets && this.assets.language_string.dashboard){
+                this.getTopRightUserMenu();
+            }
         },
 
         //---------------------------------------------------------------------
@@ -191,18 +194,20 @@ export const useRootStore = defineStore({
         },
         //-----------------------------------------------------------------------
         async getTopRightUserMenu() {
-            return this.top_right_user_menu = [
-                {
-                    label: "Profile",
-                    icon:'pi pi-fw pi-user',
-                    url: this.base_url+"#/vaah/profile/"
-                },
-                {
-                    label: "Logout",
-                    icon:'pi pi-fw pi-sign-out',
-                    url: this.base_url+"/logout"
-                }
-            ]
+            if (this.assets && this.assets.language_string.dashboard) {
+                return this.top_right_user_menu = [
+                    {
+                        label: this.assets && this.assets.language_string.dashboard.topnav_profile,
+                        icon: 'pi pi-fw pi-user',
+                        url: this.base_url + "#/vaah/profile/"
+                    },
+                    {
+                        label: this.assets && this.assets.language_string.dashboard.topnav_logout,
+                        icon: 'pi pi-fw pi-sign-out',
+                        url: this.base_url + "/logout"
+                    }
+                ]
+            }
         },
         //-----------------------------------------------------------------------
         async getIsActiveStatusOptions() {
@@ -320,39 +325,40 @@ export const useRootStore = defineStore({
 
         //-----------------------------------------------------------------------
         setTopMenuItems(){
+            if (this.assets && this.assets.language_string.dashboard) {
+                this.top_menu_items = [
+                    {
+                        label: '',
+                        tooltip: this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation,
+                        icon: 'pi pi-align-justify',
+                        command: () => {
 
-            this.top_menu_items = [
-                {
-                    label:'',
-                    tooltip:'View Less Navigation',
-                    icon:'pi pi-align-justify',
-                    command: () => {
+                            if (document.body.classList.contains("has-sidebar-small")) {
+                                document.body.classList.remove("has-sidebar-small");
+                                this.top_menu_items[0].tooltip = this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;
+                            } else {
+                                document.body.classList.add("has-sidebar-small");
+                                this.top_menu_items[0].tooltip = this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation;
+                            }
 
-                        if(document.body.classList.contains("has-sidebar-small")){
-                            document.body.classList.remove("has-sidebar-small");
-                            this.top_menu_items[0].tooltip = 'View Less Navigation';
-                        }else{
-                            document.body.classList.add("has-sidebar-small");
-                            this.top_menu_items[0].tooltip = 'View Full Navigation';
                         }
-
+                    },
+                    {
+                        label: '',
+                        url: this.assets.urls.dashboard,
+                        tooltip: this.assets.language_string.dashboard.topnav_tooltip_dashboard,
+                        icon: 'pi pi-home'
+                    },
+                    {
+                        label: '',
+                        url: this.assets.urls.public,
+                        tooltip: this.assets.language_string.dashboard.topnav_tooltip_visit_site,
+                        target: '_blank',
+                        icon: 'pi pi-external-link'
                     }
-                },
-                {
-                    label:'',
-                    url:this.assets.urls.dashboard,
-                    tooltip:'Dashboard',
-                    icon:'pi pi-home'
-                },
-                {
-                    label:'',
-                    url:this.assets.urls.public,
-                    tooltip:'Visit Site',
-                    target:'_blank',
-                    icon:'pi pi-external-link'
-                }
 
-            ]
+                ]
+            }
         }
     }
 })

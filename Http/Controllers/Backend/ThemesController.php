@@ -33,6 +33,39 @@ class ThemesController extends Controller
             $data['debug'] = config('vaahcms.debug');
             $data['installed'] = Theme::select('slug')->get()->pluck('slug')->toArray();
             $data['rows'] = config('vaahcms.per_page');
+            $data['language_strings'] = [
+                "themes_heading" => trans("vaahcms-extend-theme.themes_heading"),
+                "themes_install_button" => trans("vaahcms-extend-theme.themes_install_button"),
+                "themes_check_updates_button" => trans("vaahcms-extend-theme.themes_check_updates_button"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                "themes_filter_button" => trans("vaahcms-extend-theme.themes_filter_button"),
+                "themes_placeholder_search" => trans("vaahcms-extend-theme.themes_placeholder_search"),
+                "themes_reset_button" => trans("vaahcms-extend-theme.themes_reset_button"),
+                "themes_filter_all" => trans("vaahcms-extend-theme.themes_filter_all"),
+                "themes_filter_active" => trans("vaahcms-extend-theme.themes_filter_active"),
+                "themes_filter_inactive" => trans("vaahcms-extend-theme.themes_filter_inactive"),
+                "themes_filter_update_available" => trans("vaahcms-extend-theme.themes_filter_update_available"),
+                "actions_run_migrations" => trans("vaahcms-extend-module.actions_run_migrations"),
+                "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
+                "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
+                "themes_name" => trans("vaahcms-extend-theme.themes_name"),
+                "themes_version" => trans("vaahcms-extend-theme.themes_version"),
+                "themes_developed_by" => trans("vaahcms-extend-theme.themes_developed_by"),
+                "themes_toolkit_text_actions" => trans("vaahcms-extend-theme.themes_toolkit_text_actions"),
+                "toolkit_text_activate_theme" => trans("vaahcms-extend-theme.toolkit_text_activate_theme"),
+                "themes_activate_button" => trans("vaahcms-extend-theme.themes_activate_button"),
+                "toolkit_text_deactivate_theme" => trans("vaahcms-extend-theme.toolkit_text_deactivate_theme"),
+                "toolkit_text_this_theme_is_marked_as_default" => trans("vaahcms-extend-theme.toolkit_text_this_theme_is_marked_as_default"),
+                "themes_toolkit_text_publish_assets" => trans("vaahcms-extend-theme.themes_toolkit_text_publish_assets"),
+                "themes_toolkit_text_import_sample_data" => trans("vaahcms-extend-theme.themes_toolkit_text_import_sample_data"),
+                "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
+                "update_button" => trans("vaahcms-extend-module.update_button"),
+                "install_themes" => trans("vaahcms-extend-theme.install_themes"),
+                "themes_install_placeholder_search" => trans("vaahcms-extend-theme.themes_install_placeholder_search"),
+                "themes_installed_button" => trans("vaahcms-extend-theme.themes_installed_button"),
+
+
+            ];
 
             $response['success'] = true;
             $response['data'] = $data;
@@ -412,7 +445,7 @@ class ThemesController extends Controller
             }
 
             $response['success']  = false;
-            $response['messages'][] = "Something went wrong.";
+            $response['messages'][] = trans("vaahcms-general.something_went_wrong");
             return $response;
         } catch(\Exception $e) {
             $response['success'] = false;

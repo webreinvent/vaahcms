@@ -460,7 +460,7 @@ class ModuleBase extends VaahModel
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-extend-module.run_migrations");
+            $response['messages'][] = trans("vaahcms-general.run_migrations");
 
             if(env('APP_DEBUG'))
             {
@@ -492,7 +492,7 @@ class ModuleBase extends VaahModel
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-extend-module.run_seeds");
+            $response['messages'][] = trans("vaahcms-general.run_seeds");
 
             if(env('APP_DEBUG'))
             {
@@ -540,7 +540,7 @@ class ModuleBase extends VaahModel
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-extend-module.refresh_migrations");
+            $response['messages'][] = trans("vaahcms-general.refresh_migrations");
 
         }catch(\Exception $e)
         {
@@ -837,7 +837,7 @@ class ModuleBase extends VaahModel
             \Artisan::call($command, $params);
 
             $response['success'] = true;
-            $response['messages'][] = 'Sample Data Successfully Imported';
+            $response['messages'][] = trans("vaahcms-general.sample_data_successfully_imported");
         }catch(\Exception $e)
         {
             $response['success'] = false;
