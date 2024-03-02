@@ -22,11 +22,11 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <Panel class="is-small">
+    <Panel class="is-small" v-if="root && root.assets">
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">Update VaahCMS</b>
+                    <b class="mr-1">{{ root.assets.language_strings.update.heading_update_vaahcms }}</b>
                 </div>
             </div>
         </template>
@@ -34,7 +34,7 @@ onMounted(async () => {
         <template #icons>
             <div class="buttons">
                 <Button icon="pi pi-refresh"
-                        label="Check for Update"
+                        :label="root.assets.language_strings.update.check_for_update_button"
                         data-testid="setting-update_check"
                         @click="store.checkForUpdate"
                         class="p-button-sm"></Button>
@@ -46,13 +46,13 @@ onMounted(async () => {
             <div class="text-center" v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">
-                <p>Current Version of <strong>VaahCMS</strong> is</p>
+                <p v-html="root.assets.language_strings.update.current_version_of_vaahcms_is"></p>
                 <Button :label="root.assets.vaahcms.version"
                         data-testid="setting-notification_add_sms"
 
                         class="w-auto my-2 p-button-sm"
                 />
-                <p v-if="store.is_up_to_data"><span class="subtitle">Current version of this VaahCMS is the latest version</span></p>
+                <p v-if="store.is_up_to_data"><span class="subtitle">{{root.assets.language_strings.update.check_for_update_message}}</span></p>
             </div>
         </Message>
 
@@ -60,14 +60,14 @@ onMounted(async () => {
             <div v-if="store.release" class="text-sm">
                 <Message class="py-2" icon="pi-sync pi"
                     severity="success" :closable="false">
-                    <p>A newer version <b>{{ store.remote_version }}</b> of VaahCMS is available.</p>
+                    <p>{{root.assets.language_strings.update.a_newer_version}}<b>{{ store.remote_version }}</b> {{root.assets.language_strings.update.of_vaahcms_is_available}}</p>
                 </Message>
 
                 <Panel class="is-small">
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">NEW Updates:</b>
+                                <b class="mr-1">{{root.assets.language_strings.update.new_updates}}:</b>
                             </div>
                         </div>
                     </template>
@@ -81,7 +81,7 @@ onMounted(async () => {
                                   @input="store.is_button_active = true"
                                   :binary="true"
                                   class="is-small"/>
-                        <label for="binary">Have you taken the backup of your files & database?</label>
+                        <label for="binary">{{root.assets.language_strings.update.new_updates_message}}</label>
                     </div>
                     <Button label="Update Now"
                             :disabled="!store.is_button_active"
@@ -92,7 +92,7 @@ onMounted(async () => {
                         <div class="col-3">
                             <ol class="pl-3">
                                 <li class="mb-2">
-                                    Downloading latest version (it can take upto 3 to 5 minutes)
+                                    {{root.assets.language_strings.update_vaah.downloading_latest_version}}
                                     <i v-if="store.status.download_latest_version === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.download_latest_version === 'pending'"
@@ -101,7 +101,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li class="mb-2">
-                                    Publish assets
+                                    {{ root.assets.language_strings.update.update_publish_assets }}
                                     <i v-if="store.status.publish_assets === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.publish_assets === 'pending'"
@@ -110,7 +110,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li class="mb-2">
-                                    Run migrations and seeds
+                                    {{ root.assets.language_strings.update.run_migrations_and_seeds }}
                                     <i v-if="store.status.migration_and_seeds === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.migration_and_seeds === 'pending'"
@@ -119,7 +119,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                                 <li>
-                                    Clear cache
+                                    {{ root.assets.language_strings.update.clear_cache_button }}
                                     <i v-if="store.status.clear_cache === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.clear_cache === 'pending'"
@@ -128,7 +128,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                             </ol>
-                            <Button label="Reload"
+                            <Button :label="root.assets.language_strings.update.reload_button"
                                     icon="pi pi-refresh"
                                     @click="store.reloadPage()"
                                     data-testid="setting-update_refresh"
@@ -145,8 +145,8 @@ onMounted(async () => {
         </div>
         <div v-if="store.manual_update">
             <div v-if="store.release">
-                A newer version <b>{{store.remote_version}}</b> of VaahCMS is available.
-                This is a <b>major release</b>. You have to do manual upgrade to update VaahCms.
+                {{ root.assets.language_strings.update.a_newer_version }} <b>{{store.remote_version}}</b> {{ root.assets.language_strings.update.of_vaahcms_is_available }}
+                {{ root.assets.language_strings.update.major_release_message }}
                 <hr/>
                 <b>New Updates:</b>
                 <div class="content">
@@ -154,14 +154,14 @@ onMounted(async () => {
                     {{store.release.body}}
                 </div>
 
-                <b>Steps of Manually Upgrade</b>
+                <b>{{ root.assets.language_strings.update.steps_of_manually_upgrade }}</b>
                 <ol class="ml-4">
-                    <li>Go to Root path</li>
-                    <li>Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json</li>
-                    <li>Run <b>Composer Update</b></li>
-                    <li>Publish assets</li>
-                    <li>Run Migrations and Seeds</li>
-                    <li>Clear Cache</li>
+                    <li>{{ root.assets.language_strings.update.go_to_root_path }}</li>
+                    <li v-html="root.assets.language_strings.update.verify_version_in_composer_json"></li>
+                    <li v-html="root.assets.language_strings.update.run_composer_update"></li>
+                    <li>{{ root.assets.language_strings.update.update_publish_assets }}</li>
+                    <li>{{ root.assets.language_strings.update.run_migrations_and_seeds }}</li>
+                    <li>{{ root.assets.language_strings.update.clear_cache_button }}</li>
                 </ol>
 
 

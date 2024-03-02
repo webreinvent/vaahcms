@@ -137,6 +137,8 @@ class JsonController extends Controller
         //---------------------------------------------------
         $data['language_strings']['crud_actions'] = $this->getCrudActionStrings();
         //---------------------------------------------------
+        $data['language_strings']['update'] = $this->getUpdateVaahCmsStrings();
+        //---------------------------------------------------
 
         $data['urls']['public'] = config('settings.global.backend_homepage_link');
         $data['urls']['theme'] = vh_get_backend_theme_url();
@@ -353,6 +355,28 @@ class JsonController extends Controller
             "select_an_action_type" => trans("vaahcms-general.select_an_action_type"),
             "select_records" => trans("vaahcms-general.select_records"),
             "select_a_record" => trans("vaahcms-general.select_a_record"),
+        ];
+    }
+    public function getUpdateVaahCmsStrings() :array {
+        return [
+            "check_for_update_button" => trans("vaahcms-update-setting.check_for_update_button"),
+            "check_for_update_message" => trans("vaahcms-update-setting.check_for_update_message"),
+            "new_updates" => trans("vaahcms-update-setting.new_updates"),
+            "a_newer_version" => trans("vaahcms-update-setting.a_newer_version"),
+            "of_vaahcms_is_available" => trans("vaahcms-update-setting.of_vaahcms_is_available"),
+            "new_updates_message" => trans("vaahcms-update-setting.new_updates_message"),
+            "downloading_latest_version" => trans("vaahcms-update-setting.downloading_latest_version"),
+            "reload_button" => trans("vaahcms-update-setting.reload_button"),
+            "major_release_message" => trans("vaahcms-update-setting.major_release_message"),
+            "steps_of_manually_upgrade" => trans("vaahcms-update-setting.steps_of_manually_upgrade"),
+            "go_to_root_path" => trans("vaahcms-update-setting.go_to_root_path"),
+            "current_version_of_vaahcms_is" => trans("vaahcms-update-setting.current_version_of_vaahcms_is"),
+            "verify_version_in_composer_json" => trans("vaahcms-update-setting.verify_version_in_composer_json"),
+            "run_composer_update" => trans("vaahcms-update-setting.run_composer_update"),
+            "run_migrations_and_seeds" => trans("vaahcms-update-setting.run_migrations_and_seeds"),
+            "update_publish_assets" => trans("vaahcms-update-setting.update_publish_assets"),
+            "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
+            "heading_update_vaahcms" => trans("vaahcms-update-setting.heading_update_vaahcms"),
         ];
     }
     //----------------------------------------------------------

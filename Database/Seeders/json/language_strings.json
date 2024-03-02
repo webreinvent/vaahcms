@@ -3096,7 +3096,43 @@
         "locale_code_iso_639": "en",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "Current version of VaahCMS is"
+        "content": "Current Version of <strong>VaahCMS</strong> is"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Update VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publish Assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "Go to Root path"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Run <b>Composer Update</b>"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "Run Migrations and Seeds"
     },
     {
         "locale_code_iso_639": "en",
@@ -6786,7 +6822,43 @@
         "locale_code_iso_639": "es",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "La versión actual de VaahCMS es"
+        "content": "\nLa versión actual de <strong>VaahCMS</strong> es"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Actualizar VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "\nPublicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "\nIr a la ruta raíz"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Verifique la <b>versión</b> de <b>webreinvent/vaahcms</b> en Composer.json"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Ejecute la <b>actualización de Composer</b>"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "Ejecutar migraciones y semillas"
     },
     {
         "locale_code_iso_639": "es",
@@ -10471,7 +10543,43 @@
         "locale_code_iso_639": "fr",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "La version actuelle de VaahCMS est"
+        "content": "\nLa version actuelle de <strong>VaahCMS</strong> est"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Mettre à jour VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publier des actifs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "\nAccédez au chemin racine"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Vérifiez la <b>version</b> de <b>webreinvent/vaahcms</b> dans Composer.json"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Exécuter la <b>mise à jour du compositeur</b></b>"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "\nExécuter des migrations et des semences"
     },
     {
         "locale_code_iso_639": "fr",
