@@ -4,7 +4,8 @@ import {useRoute} from 'vue-router';
 
 import {useSettingStore} from '../../stores/store-settings';
 import { vaah } from '../../vaahvue/pinia/vaah';
-
+import {useRootStore} from "../../stores/root";
+const root = useRootStore();
 const store = useSettingStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -15,53 +16,65 @@ const menu_pt = ref({
         class: route.path === props.item.route ? 'p-focus' : ''
     })
 });
+const sidebar_menu_items = ref([]);
 
-const sidebar_menu_items = ref([
-    {
-        label: 'Settings',
-        items: [
-            {
-                label: 'General',
-                icon: 'pi pi-cog',
-                route: '/vaah/settings/general'
-            },
-            {
-                label: 'User Settings',
-                icon: 'pi pi-user',
-                route: '/vaah/settings/user-settings'
-            },
-            {
-                label: 'Env Variables',
-                icon: 'pi pi-cog',
-                route: '/vaah/settings/env-variables'
-            },
-            {
-                label: 'Localizations',
-                icon: 'pi pi-code',
-                route: '/vaah/settings/localization'
-            },
-            {
-                label: 'Notifications',
-                icon: 'pi pi-bell',
-                route: '/vaah/settings/notifications'
-            },
-            {
-                label: 'Update',
-                icon: 'pi pi-download',
-                route: '/vaah/settings/update'
-            },
-            {
-                label: 'Reset',
-                icon: 'pi pi-refresh',
-                route: '/setup'
-            },
-        ]},
-]);
 
+const updateSidebarMenuItems = (settings_layout) => {
+    sidebar_menu_items.value = [
+        {
+            label: settings_layout?.settings ?? '',
+            items: [
+                {
+                    label: settings_layout?.general ?? '',
+                    icon: 'pi pi-cog',
+                    route: '/vaah/settings/general'
+                },
+                {
+                    label: settings_layout?.user_settings ?? '',
+                    icon: 'pi pi-user',
+                    route: '/vaah/settings/user-settings'
+                },
+                {
+                    label: settings_layout?.env_variables ?? '',
+                    icon: 'pi pi-cog',
+                    route: '/vaah/settings/env-variables'
+                },
+                {
+                    label: settings_layout?.localizations ?? '',
+                    icon: 'pi pi-code',
+                    route: '/vaah/settings/localization'
+                },
+                {
+                    label: settings_layout?.notifications ?? '',
+                    icon: 'pi pi-bell',
+                    route: '/vaah/settings/notifications'
+                },
+                {
+                    label: settings_layout?.update ?? '',
+                    icon: 'pi pi-download',
+                    route: '/vaah/settings/update'
+                },
+                {
+                    label: settings_layout?.reset ?? '',
+                    icon: 'pi pi-refresh',
+                    route: '/setup'
+                },
+            ]
+        },
+    ];
+};
+
+
+
+
+
+watch(() => root.assets?.language_strings?.settings_layout, updateSidebarMenuItems);
 
 onMounted(async () => {
 
     store.getAssets();
+    updateSidebarMenuItems(root.assets?.language_strings?.settings_layout ?? {});
+
 
 });
 

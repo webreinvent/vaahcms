@@ -3073,6 +3073,127 @@
     },
 
 
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Message",
+        "content": "VaahCMS is successfully setup"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Install Message VaahCms",
+        "content": "VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Install Message",
+        "content": "is a web application development platform shipped with headless content management system"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Message",
+        "content": "You can reset/re-install the application if you're logged in from \"Administrator\" account."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Confirmation Message",
+        "content": "You are going to <b>RESET</b> the application.This will remove all the data of the application."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Confirmation Message Warning",
+        "content": "After reset you <b>CANNOT</b> be restored data! Are you <b>ABSOLUTELY</b> sure?"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Confirmation Message For Setup",
+        "content": "This action can lead to data loss.To prevent accidental actions we ask you to confirm your intention."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Message Hint For Setup",
+        "content": "Please type <b>RESET</b> to proceed and click Confirm button or close this modal to cancel."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Reset Placeholder Type RESET To Confirm",
+        "content": "Type RESET to Confirm"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label Delete Files From Storage",
+        "content": "Delete Files From Storage (storage/app/public)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label Delete Dependencies",
+        "content": "Delete Dependencies (Modules & Themes)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label Confirm",
+        "content": "Confirm"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label No",
+        "content": "No"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "Advanced Options"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Dashboard"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Run Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publish assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Clear Cache"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Run Seeds"
+    },
+
 
     {
         "locale_code_iso_639": "en",
@@ -6792,6 +6913,127 @@
         "category": "notification-setting",
         "name": "Error notifications",
         "content": "Notificaciones de errores"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Message",
+        "content": "VaahCMS se configuró exitosamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Install Message VaahCms",
+        "content": "VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Install Message",
+        "content": "es una plataforma de desarrollo de aplicaciones web que se envía con un sistema de gestión de contenidos sin cabeza"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Message",
+        "content": "Puede restablecer/reinstalar la aplicación si ha iniciado sesión desde la cuenta \"Administrador\"."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Confirmation Message",
+        "content": "Vas a <b>RESETEAR</b> la aplicación. Esto eliminará todos los datos de la aplicación."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Confirmation Message Warning",
+        "content": "¡Después del reinicio, <b>NO PUEDE</b> recuperar datos! ¿Estás <b>ABSOLUTAMENTE</b> seguro?"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Confirmation Message For Setup",
+        "content": "Esta acción puede provocar la pérdida de datos. Para evitar acciones accidentales, le pedimos que confirme su intención."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Message Hint For Setup",
+        "content": "Escriba <b>RESET</b> para continuar y haga clic en el botón Confirmar o cierre este modo para cancelar."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Reset Placeholder Type RESET To Confirm",
+        "content": "\nEscriba RESET para confirmar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label Delete Files From Storage",
+        "content": "Eliminar archivos del almacenamiento (storage/app/public)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label Delete Dependencies",
+        "content": "Eliminar dependencias (Modules & Themes)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label Confirm",
+        "content": "Confirmar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label No",
+        "content": "No"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "Opciones avanzadas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Panel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Ejecutar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Limpiar cache"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Ejecutar semillas"
     },
 
     {
@@ -10520,6 +10762,129 @@
         "name": "Error notifications",
         "content": "Notifications d\\'erreur"
     },
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Message",
+        "content": "VaahCMS est configuré avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Install Message VaahCms",
+        "content": "VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Install Message",
+        "content": "est une plate-forme de développement d'applications Web livrée avec un système de gestion de contenu sans tête"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Message",
+        "content": "Vous pouvez réinitialiser/réinstaller l\\'application si vous êtes connecté à partir du compte « Administrateur »."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Confirmation Message",
+        "content": "Vous allez <b>RESET</b> l\\'application. Cela supprimera toutes les données de l\\'application."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Confirmation Message Warning",
+        "content": "Après la réinitialisation, vous <b>NE POUVEZ PAS</b> récupérer vos données ! Etes-vous <b>ABSOLUMENT</b> sûr ?"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Confirmation Message For Setup",
+        "content": "Cette action peut entraîner une perte de données. Pour éviter des actions accidentelles, nous vous demandons de confirmer votre intention."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Message Hint For Setup",
+        "content": "Veuillez taper <b>RESET</b> pour continuer et cliquez sur le bouton Confirmer ou fermez ce modal pour annuler."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Reset Placeholder Type RESET To Confirm",
+        "content": "Tapez RESET pour confirmer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label Delete Files From Storage",
+        "content": "Supprimer des fichiers du stockage (storage/app/public)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label Delete Dependencies",
+        "content": "Supprimer les dépendances (Modules & Themes)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label Confirm",
+        "content": "\nConfirmer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label No",
+        "content": "\nNon"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "\nOptions avancées"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentation"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Tableau de bord"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Run Migrations",
+        "content": "Exécuter des migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Publish assets",
+        "content": "Publier des éléments"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Clear Cache",
+        "content": "Vider le cache"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "setup Label Run Seeds",
+        "content": "Exécuter des graines"
+    },
+
 
     {
         "locale_code_iso_639": "fr",

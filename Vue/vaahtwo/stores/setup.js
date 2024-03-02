@@ -183,6 +183,9 @@ export const useSetupStore = defineStore({
                 this.config.env.app_url = this.assets.app_url;
 
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getAdvancedOptionMenu();
+            }
         },
         async getStatus() {
 
@@ -571,32 +574,34 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         getAdvancedOptionMenu: function (){
-            this.advanced_option_menu_list =  [
-                {
-                    label: 'Publish assets',
-                    command: () => {
-                        this.publishAssets()
-                    }
-                },
-                {
-                    label: 'Clear Cache',
-                    command: () => {
-                        this.clearCache()
-                    }
-                },
-                {
-                    label: 'Run Migrations',
-                    command: () => {
-                        this.runArtisanMigrate()
-                    }
-                },
-                {
-                    label: 'Run Seeds',
-                    command: () => {
-                        this.runArtisanSeeds();
-                    }
-                },
-            ];
+            if (this.assets && this.assets.language_strings) {
+                this.advanced_option_menu_list = [
+                    {
+                        label: this.assets.language_strings.setup_label_publish_assets,
+                        command: () => {
+                            this.publishAssets()
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.setup_label_clear_cache,
+                        command: () => {
+                            this.clearCache()
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.setup_label_run_migrations,
+                        command: () => {
+                            this.runArtisanMigrate()
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.setup_label_run_seeds,
+                        command: () => {
+                            this.runArtisanSeeds();
+                        }
+                    },
+                ];
+            }
         },
         //---------------------------------------------------------------------
         resetConfig() {
