@@ -6,11 +6,12 @@ import {useThemeStore} from '../../stores/store-themes'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
-
+const root = useRootStore();
 const store = useThemeStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
+import {useRootStore} from "../../stores/root";
 const confirm = useConfirm();
 
 

@@ -38,6 +38,13 @@ class ThemesController extends Controller
                 "themes_install_button" => trans("vaahcms-extend-theme.themes_install_button"),
                 "themes_check_updates_button" => trans("vaahcms-extend-theme.themes_check_updates_button"),
                 "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                "themes_filter_button" => trans("vaahcms-extend-theme.themes_filter_button"),
+                "themes_placeholder_search" => trans("vaahcms-extend-theme.themes_placeholder_search"),
+                "themes_reset_button" => trans("vaahcms-extend-theme.themes_reset_button"),
+                "themes_filter_all" => trans("vaahcms-extend-theme.themes_filter_all"),
+                "themes_filter_active" => trans("vaahcms-extend-theme.themes_filter_active"),
+                "themes_filter_inactive" => trans("vaahcms-extend-theme.themes_filter_inactive"),
+                "themes_filter_update_available" => trans("vaahcms-extend-theme.themes_filter_update_available"),
                 ];
 
             $response['success'] = true;
