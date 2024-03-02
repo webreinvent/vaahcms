@@ -30,7 +30,7 @@ onMounted(async () => {
                 <Card class="border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">Install</h4>
+                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.install_button }}</h4>
                             <div class="icons flex">
                                 <div v-if="root.assets.auth_user" class="m-1">
                                     <a @click="$router.push({name:'dashboard'})">
@@ -94,7 +94,7 @@ onMounted(async () => {
                 <Card class="h-full border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">Reset</h4>
+                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.reset }}</h4>
                             <div class="icons flex">
                                 <div class="m-1">
                                     <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"

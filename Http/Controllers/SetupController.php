@@ -89,6 +89,11 @@ class SetupController extends Controller
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
         $data['env_file'] = env('ENV_FILE');
         $data['app_url'] = url("/");
+        $data['language_strings'] = [
+            "setup_message" => trans("vaahcms-setup.setup_message"),
+            "install_button" => trans("vaahcms-extend-module.install_button"),
+            "reset" => trans("vaahcms-sidebar-menu.reset"),
+            ];
 
         $response['success'] = true;
         $response['data'] = $data;
