@@ -45,7 +45,25 @@ class ThemesController extends Controller
                 "themes_filter_active" => trans("vaahcms-extend-theme.themes_filter_active"),
                 "themes_filter_inactive" => trans("vaahcms-extend-theme.themes_filter_inactive"),
                 "themes_filter_update_available" => trans("vaahcms-extend-theme.themes_filter_update_available"),
-                ];
+                "actions_run_migrations" => trans("vaahcms-extend-module.actions_run_migrations"),
+                "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
+                "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
+                "themes_name" => trans("vaahcms-extend-theme.themes_name"),
+                "themes_version" => trans("vaahcms-extend-theme.themes_version"),
+                "themes_developed_by" => trans("vaahcms-extend-theme.themes_developed_by"),
+                "themes_toolkit_text_actions" => trans("vaahcms-extend-theme.themes_toolkit_text_actions"),
+                "toolkit_text_activate_theme" => trans("vaahcms-extend-theme.toolkit_text_activate_theme"),
+                "themes_activate_button" => trans("vaahcms-extend-theme.themes_activate_button"),
+                "toolkit_text_deactivate_theme" => trans("vaahcms-extend-theme.toolkit_text_deactivate_theme"),
+                "toolkit_text_this_theme_is_marked_as_default" => trans("vaahcms-extend-theme.toolkit_text_this_theme_is_marked_as_default"),
+                "themes_toolkit_text_publish_assets" => trans("vaahcms-extend-theme.themes_toolkit_text_publish_assets"),
+                "themes_toolkit_text_import_sample_data" => trans("vaahcms-extend-theme.themes_toolkit_text_import_sample_data"),
+                "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
+                "update_button" => trans("vaahcms-extend-module.update_button"),
+                "themes_toolkit_text_view" => trans("vaahcms-extend-theme.themes_toolkit_text_view"),
+                "themes_toolkit_text_trash" => trans("vaahcms-extend-theme.themes_toolkit_text_trash"),
+
+            ];
 
             $response['success'] = true;
             $response['data'] = $data;

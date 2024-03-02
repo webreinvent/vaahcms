@@ -3632,18 +3632,7 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Deactivate Theme"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text View",
-        "content": "View"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text Trash",
-        "content": "Trash"
-    },
+    
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
@@ -7409,7 +7398,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "Todo"
     },
     {
@@ -7484,18 +7473,7 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Desactivar Tema"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text View",
-        "content": "Vista"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text Trash",
-        "content": "Basura"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
@@ -11334,18 +11312,7 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Désactiver le thème"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text View",
-        "content": "Voir"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Themes Toolkit Text Trash",
-        "content": "Poubelle"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
