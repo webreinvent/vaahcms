@@ -91,8 +91,26 @@ class SetupController extends Controller
         $data['app_url'] = url("/");
         $data['language_strings'] = [
             "setup_message" => trans("vaahcms-setup.setup_message"),
+            "install_message" => trans("vaahcms-setup.install_message"),
+            "install_message_vaahcms" => trans("vaahcms-setup.install_message_vaahcms"),
+            "reset_message" => trans("vaahcms-setup.reset_message"),
+            "reset_confirmation_message" => trans("vaahcms-setup.reset_confirmation_message"),
+            "reset_confirmation_message_warning" => trans("vaahcms-setup.reset_confirmation_message_warning"),
+            "reset_confirmation_message_for_setup" => trans("vaahcms-setup.reset_confirmation_message_for_setup"),
+            "reset_message_hint_for_setup" => trans("vaahcms-setup.reset_message_hint_for_setup"),
+            "reset_placeholder_type_reset_to_confirm" => trans("vaahcms-setup.reset_placeholder_type_reset_to_confirm"),
+            "label_delete_files_from_storage" => trans("vaahcms-setup.label_delete_files_from_storage"),
+            "label_delete_dependencies" => trans("vaahcms-setup.label_delete_dependencies"),
+            "label_confirm" => trans("vaahcms-setup.label_confirm"),
+            "label_no" => trans("vaahcms-setup.label_no"),
+            "label_advanced_options" => trans("vaahcms-setup.label_advanced_options"),
+            "toolkit_view_dashboard" => trans("vaahcms-setup.toolkit_view_dashboard"),
+            "toolkit_view_documentation" => trans("vaahcms-setup.toolkit_view_documentation"),
+
+
             "install_button" => trans("vaahcms-extend-module.install_button"),
             "reset" => trans("vaahcms-sidebar-menu.reset"),
+            "refresh" => trans("vaahcms-env-variable.refresh"),
             ];
 
         $response['success'] = true;

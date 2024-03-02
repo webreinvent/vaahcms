@@ -24,7 +24,7 @@ onMounted(async () => {
         <Logo class="w-6 mx-auto" />
         <div class="grid justify-content-center">
             <div v-if="store.assets.is_installed" class="col-12">
-                <Message severity="success">VaahCMS is successfully setup</Message>
+                <Message severity="success">{{ store.assets.language_strings.setup_message }}</Message>
             </div>
             <div class="col-6">
                 <Card class="border-round-xl">
@@ -37,7 +37,7 @@ onMounted(async () => {
                                         <Button class="bg-gray-200 active:text-black
                                         p-2 p-button-rounded p-button-outlined"
                                                 data-testid="setup-dashboard_button"
-                                                v-tooltip.top="'Dashboard'"
+                                                v-tooltip.top="store.assets.language_strings.toolkit_view_dashboard"
                                                 icon=" pi pi-server"/>
                                     </a>
                                 </div>
@@ -55,7 +55,7 @@ onMounted(async () => {
                                         <Button class="bg-gray-200 active:text-black
                                         p-2 p-button-rounded p-button-outlined"
                                                 data-testid="setup-documentation_button"
-                                                v-tooltip.top="'Documentation'"
+                                                v-tooltip.top="store.assets.language_strings.toolkit_view_documentation"
                                                 icon=" pi pi-book"/>
                                     </a>
                                 </div>
@@ -64,16 +64,15 @@ onMounted(async () => {
                     </template>
                     <template #content>
                         <p class="text-left">
-                            <a href="https://vaah.dev/cms" target="_blank">VaahCMS
-                            </a> is a web application development platform shipped with headless
-                            content management system
+                            <a href="https://vaah.dev/cms" target="_blank">{{ store.assets.language_strings.install_message_vaahcms }}
+                            </a> {{ store.assets.language_strings.install_message }}
                         </p>
 
                     </template>
                     <template #footer>
                         <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.stage && store.status.stage === 'installed'"
-                                    disabled label="Install" icon="pi pi-server"
+                                    disabled :label="store.assets.language_strings.install_button" icon="pi pi-server"
                                     class="p-button p-button-sm bg-white border-gray-800 text-black-alpha-80"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
@@ -81,7 +80,7 @@ onMounted(async () => {
                                     class="p-button bg-white border-gray-800 text-black-alpha-80"
                                     data-testid="setup-install_vaahcms"/>
 
-                            <SplitButton label="Advanced Options"
+                            <SplitButton :label="store.assets.language_strings.label_advanced_options"
                                          :model="store.advanced_option_menu_list"
                                          class="p-button-sm">
 
@@ -99,28 +98,26 @@ onMounted(async () => {
                                 <div class="m-1">
                                     <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"
                                             icon="pi pi-refresh"
-                                            v-tooltip.top="'Refresh'"
+                                            v-tooltip.top="store.assets.language_strings.refresh"
                                             @click="store.getStatus()" />
                                 </div>
                             </div>
                         </div>
                     </template>
                     <template #content>
-                        <p class="text-left">
-                            You can reset/re-install the application if you're logged in from "Administrator" account.
-                        </p>
+                        <p class="text-left" v-html="store.assets.language_strings.reset_message"></p>
 
                     </template>
                     <template #footer >
                         <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.is_user_administrator"
                                     @click="store.show_reset_modal = true"
-                                    label="Reset"
+                                    :label="store.assets.language_strings.reset"
                                     icon="pi pi-refresh"
                                     class="p-button-danger" />
 
                             <Button v-else
-                                    label="Reset"
+                                    :label="store.assets.language_strings.reset"
                                     icon="pi pi-refresh"
                                     class="p-button-danger"
                                     disabled />
@@ -139,24 +136,19 @@ onMounted(async () => {
 
 
             <Message severity="error" icon="null" :closable="false">
-                <p>You are going to <b>RESET</b> the application.
-                    This will remove all the data of the application.</p>
-                <p>After reset you <b>CANNOT</b> be restored data!
-                    Are you <b>ABSOLUTELY</b> sure?</p>
+                <p v-html="store.assets.language_strings.reset_confirmation_message"></p>
+                <p v-html="store.assets.language_strings.reset_confirmation_message_warning"></p>
             </Message>
 
             <div>
-                <p>This action can lead to data loss.
-                    To prevent accidental actions we ask you to confirm your intention.</p>
+                <p>{{store.assets.language_strings.reset_confirmation_message_for_setup }}</p>
 
-                <p class="has-margin-bottom-5">
-                    Please type <b>RESET</b> to proceed and click
-                    Confirm button or close this modal to cancel.
-                </p>
+                <p class="has-margin-bottom-5" v-html="store.assets.language_strings.reset_message_hint_for_setup"></p>
+
             </div>
 
             <InputText v-model="store.reset_inputs.confirm"
-                       placeholder="Type RESET to Confirm" class="p-inputtext-md"
+                       :placeholder="store.assets.language_strings.reset_placeholder_type_reset_to_confirm" class="p-inputtext-md"
                        required
             />
 
@@ -167,7 +159,7 @@ onMounted(async () => {
                               value="true"
                     />
                     <label>
-                        Delete Files From Storage (storage/app/public)
+                        {{store.assets.language_strings.label_delete_files_from_storage}}
                     </label>
                 </div>
 
@@ -177,19 +169,19 @@ onMounted(async () => {
                               value="true"
                     />
                     <label>
-                        Delete Dependencies (Modules & Themes)
+                        {{store.assets.language_strings.label_delete_dependencies}}
                     </label>
                 </div>
             </div>
 
             <template #footer>
-                <Button label="No"
+                <Button :label="store.assets.language_strings.label_no"
                         icon="pi pi-times"
                         @click="store.show_reset_modal = false"
                         class="p-button-text"/>
 
                 <Button class="p-button-danger"
-                        label="Confirm"
+                        :label="store.assets.language_strings.label_confirm"
                         icon="pi pi-check"
                         :loading="store.reset_confirm"
                         @click="store.confirmReset()"

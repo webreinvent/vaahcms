@@ -3151,6 +3151,24 @@
         "name": "Label No",
         "content": "No"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "Advanced Options"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Dashboard"
+    },
 
 
     {
@@ -6914,6 +6932,24 @@
         "category": "setup",
         "name": "Label No",
         "content": "No"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "Opciones avanzadas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Panel"
     },
 
     {
@@ -10685,6 +10721,24 @@
         "category": "setup",
         "name": "Label No",
         "content": "\nNon"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Label Advanced Options",
+        "content": "\nOptions avancées"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Toolkit View Documentation",
+        "content": "Documentation"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Toolkit View Dashboard",
+        "content": "Tableau de bord"
     },
 
 
