@@ -26,6 +26,24 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Run Migrations",
+        "content": "Migration run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "Seeds run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "Migration refresh is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Record Has Been Restored",
         "content": "Record has been restored"
     },
@@ -3413,24 +3431,7 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Deactivate Module"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Run Migrations",
-        "content": "Migration run is successful"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Run Seeds",
-        "content": "Seeds run is successful"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Refresh Migrations",
-        "content": "Migration refresh is successful"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
@@ -3632,7 +3633,7 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Deactivate Theme"
     },
-    
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
@@ -4058,6 +4059,24 @@
         "category": "general",
         "name": "Notification Not Found",
         "content": "\nNotificación no encontrada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Run Migrations",
+        "content": "La ejecución de la migración es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "La ejecución de semillas es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "La actualización de la migración se realizó correctamente"
     },
     {
         "locale_code_iso_639": "es",
@@ -7243,24 +7262,7 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Desactivar módulo"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Run Migrations",
-        "content": "La ejecución de la migración es exitosa"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Run Seeds",
-        "content": "La ejecución de semillas es exitosa"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Refresh Migrations",
-        "content": "La actualización de la migración se realizó correctamente"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
@@ -7886,6 +7888,24 @@
         "category": "general",
         "name": "Notification Not Found",
         "content": "\nNotification introuvable"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Run Migrations",
+        "content": "L\\'exécution de la migration a réussi"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "La course aux graines est réussie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "L\\'actualisation de la migration a réussi"
     },
     {
         "locale_code_iso_639": "fr",
@@ -11082,24 +11102,7 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Désactiver le module"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Run Migrations",
-        "content": "L\\'exécution de la migration a réussi"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Run Seeds",
-        "content": "La course aux graines est réussie"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Refresh Migrations",
-        "content": "L\\'actualisation de la migration a réussi"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",

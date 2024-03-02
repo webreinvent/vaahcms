@@ -563,7 +563,7 @@ class ThemeBase extends VaahModel {
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration run is successful';
+            $response['messages'][] = trans("vaahcms-general.run_migrations");
 
             if(env('APP_DEBUG'))
             {
@@ -611,7 +611,7 @@ class ThemeBase extends VaahModel {
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Seeds run is successful';
+            $response['messages'][] = trans("vaahcms-general.run_seeds");
 
             if(env('APP_DEBUG'))
             {
@@ -658,7 +658,7 @@ class ThemeBase extends VaahModel {
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration refresh is successful';
+            $response['messages'][] = trans("vaahcms-general.refresh_migrations");
 
         }catch(\Exception $e)
         {
@@ -1008,14 +1008,14 @@ class ThemeBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 

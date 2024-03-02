@@ -60,8 +60,7 @@ class ThemesController extends Controller
                 "themes_toolkit_text_import_sample_data" => trans("vaahcms-extend-theme.themes_toolkit_text_import_sample_data"),
                 "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
                 "update_button" => trans("vaahcms-extend-module.update_button"),
-                "themes_toolkit_text_view" => trans("vaahcms-extend-theme.themes_toolkit_text_view"),
-                "themes_toolkit_text_trash" => trans("vaahcms-extend-theme.themes_toolkit_text_trash"),
+
 
             ];
 
@@ -443,7 +442,7 @@ class ThemesController extends Controller
             }
 
             $response['success']  = false;
-            $response['messages'][] = "Something went wrong.";
+            $response['messages'][] = trans("vaahcms-general.something_went_wrong");
             return $response;
         } catch(\Exception $e) {
             $response['success'] = false;
