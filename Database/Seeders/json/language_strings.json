@@ -3681,7 +3681,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module Heading",
         "content": "Modules"
     },
     {
@@ -7539,7 +7539,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Módulos"
     },
     {
@@ -11405,7 +11405,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Modules"
     },
     {

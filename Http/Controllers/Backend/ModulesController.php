@@ -35,7 +35,7 @@ class ModulesController extends Controller
             $data['rows'] = config('vaahcms.per_page');
 
             $data['language_strings'] = [
-                "module_title" => trans("vaahcms-sidebar-menu.modules"),
+                "module_title" => trans("vaahcms-extend-module.module_heading"),
                 "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
                 "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
                 "install_button" => trans("vaahcms-extend-module.install_button"),
