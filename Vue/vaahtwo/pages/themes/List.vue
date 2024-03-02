@@ -55,7 +55,7 @@ onMounted(async () => {
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Themes</b>
+                            <b class="mr-1">{{store.assets.language_strings.themes_heading}}</b>
                             <Badge v-if="store.list && store.list.length > 0"
                                    :value="store.list.length"
                             />
@@ -71,7 +71,7 @@ onMounted(async () => {
                                 icon="pi pi-plus"
                                 class="p-button-sm"
                                 data-testid="themes-list-install"
-                                label="Install"
+                                :label="store.assets.language_strings.themes_install_button"
                         />
                         <Button :loading="store.is_fetching_updates"
                                 v-if="store.hasPermission('can-update-theme')"
@@ -79,7 +79,7 @@ onMounted(async () => {
                                 icon="pi pi-download"
                                 class="p-button-sm"
                                 data-testid="themes-list-check_updated"
-                                label="Check Updates"
+                                :label="store.assets.language_strings.themes_check_updates_button"
                         />
 
                         <Button type="is-light"
@@ -88,12 +88,15 @@ onMounted(async () => {
                                 class="p-button-sm"
                                 data-testid="themes-list-refresh"
                                 icon="pi pi-refresh"
-                                v-tooltip.top="'Reload'"
+                                v-tooltip.top="store.assets.language_strings.toolkit_text_reload"
                         />
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
 
              <Table/>
 

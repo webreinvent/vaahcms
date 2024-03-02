@@ -33,6 +33,12 @@ class ThemesController extends Controller
             $data['debug'] = config('vaahcms.debug');
             $data['installed'] = Theme::select('slug')->get()->pluck('slug')->toArray();
             $data['rows'] = config('vaahcms.per_page');
+            $data['language_strings'] = [
+                "themes_heading" => trans("vaahcms-extend-theme.themes_heading"),
+                "themes_install_button" => trans("vaahcms-extend-theme.themes_install_button"),
+                "themes_check_updates_button" => trans("vaahcms-extend-theme.themes_check_updates_button"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                ];
 
             $response['success'] = true;
             $response['data'] = $data;

@@ -3532,92 +3532,92 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Themes"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Install"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Check Updates"
     },
 
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filter"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Search"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Reset"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "All"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Active"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactive"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Update Available"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Name"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Version"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Developed by"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activate"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Deactivate"
     },
     {
@@ -3635,31 +3635,31 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
+        "name": "Themes Toolkit Text View",
         "content": "View"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Trash",
+        "name": "Themes Toolkit Text Trash",
         "content": "Trash"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Actions"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publish Assets"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Import Sample Data"
     },
     {
@@ -3689,25 +3689,25 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Search"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Installed"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Deleted"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restore"
     },
 
@@ -7372,38 +7372,38 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Temas"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Instalar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Revisa actualizaciones"
     },
 
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filtrar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Buscar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Reiniciar"
     },
     {
@@ -7415,49 +7415,49 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Activo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactivo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Actualización disponible"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Nombre"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Versión"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Desarrollado por"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Desactivar"
     },
     {
@@ -7487,31 +7487,31 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
+        "name": "Themes Toolkit Text View",
         "content": "Vista"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Trash",
+        "name": "Themes Toolkit Text Trash",
         "content": "Basura"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Comportamiento"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publicar recursos"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Importar datos de muestra"
     },
     {
@@ -7529,25 +7529,25 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Buscar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Instalado"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Eliminado"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restaurar"
     },
 
@@ -11222,92 +11222,92 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Thèmes"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Installer"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
 
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filtre"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Recherche"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Réinitialiser"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "Tout"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Actif"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactif"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Mise à jour disponible"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Nom"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Version"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Développé par"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activer"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Désactiver"
     },
     {
@@ -11337,31 +11337,31 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
+        "name": "Themes Toolkit Text View",
         "content": "Voir"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Trash",
+        "name": "Themes Toolkit Text Trash",
         "content": "Poubelle"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Actions"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publier des actifs"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Importer des exemples de données"
     },
     {
@@ -11379,25 +11379,25 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Recherche"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Installé"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Supprimé"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restaurer"
     },
 
