@@ -60,6 +60,9 @@ class ThemesController extends Controller
                 "themes_toolkit_text_import_sample_data" => trans("vaahcms-extend-theme.themes_toolkit_text_import_sample_data"),
                 "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
                 "update_button" => trans("vaahcms-extend-module.update_button"),
+                "install_themes" => trans("vaahcms-extend-theme.install_themes"),
+                "themes_install_placeholder_search" => trans("vaahcms-extend-theme.themes_install_placeholder_search"),
+                "themes_installed_button" => trans("vaahcms-extend-theme.themes_installed_button"),
 
 
             ];
