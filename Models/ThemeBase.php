@@ -954,7 +954,7 @@ class ThemeBase extends VaahModel {
             \Artisan::call($command, $params);
 
             $response['success'] = true;
-            $response['messages'][] = 'Sample Data Successfully Imported';
+            $response['messages'][] = trans("vaahcms-general.sample_data_successfully_imported");
         }catch(\Exception $e)
         {
             $response['success'] = false;

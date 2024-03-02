@@ -56,6 +56,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Sample Data Successfully Imported"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Invalid Action Type",
         "content": "Invalid action type"
     },
@@ -4093,6 +4099,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Datos de muestra importados correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Invalid Action Type",
         "content": "\nTipo de acción no válido"
     },
@@ -7918,6 +7930,12 @@
         "category": "general",
         "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
         "content": "L\\'enregistrement n\\'est pas supprimé de manière réversible et ne peut pas être restauré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Exemples de données importées avec succès"
     },
     {
         "locale_code_iso_639": "fr",
