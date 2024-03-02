@@ -135,6 +135,8 @@ class JsonController extends Controller
         //---------------------------------------------------
         $data['language_strings']['advanced_layout'] = $this->getAdvancedLayoutStrings();
         //---------------------------------------------------
+        $data['language_strings']['settings_layout'] = $this->getSettingsLayoutStrings();
+        //---------------------------------------------------
         $data['language_strings']['crud_actions'] = $this->getCrudActionStrings();
         //---------------------------------------------------
 
@@ -367,6 +369,18 @@ class JsonController extends Controller
         ];
     }
     //----------------------------------------------------------
+    public function getSettingsLayoutStrings() :array {
+        return [
+            "settings" => trans("vaahcms-sidebar-menu.settings"),
+            "general" => trans("vaahcms-sidebar-menu.general"),
+            "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
+            "env_variables" => trans("vaahcms-sidebar-menu.env_variables"),
+            "localizations" => trans("vaahcms-sidebar-menu.localizations"),
+            "notifications" => trans("vaahcms-sidebar-menu.notifications"),
+            "update" => trans("vaahcms-sidebar-menu.update"),
+            "reset" => trans("vaahcms-sidebar-menu.reset"),
+        ];
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 
