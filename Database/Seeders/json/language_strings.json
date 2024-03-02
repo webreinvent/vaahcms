@@ -3127,6 +3127,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "setup",
+        "name": "Setup Install",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
         "name": "Install Message VaahCms",
         "content": "VaahCMS"
     },
@@ -7309,6 +7333,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "setup",
+        "name": "Setup Install",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
         "name": "Install Message VaahCms",
         "content": "VaahCMS"
     },
@@ -11170,6 +11218,30 @@
         "category": "setup",
         "name": "Setup Message",
         "content": "VaahCMS est configuré avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Install",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Réinitialiser"
     },
     {
         "locale_code_iso_639": "fr",
