@@ -401,14 +401,14 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getSettingsLayoutStrings() :array {
         return [
-            "settings" => trans("vaahcms-sidebar-menu.settings"),
-            "general" => trans("vaahcms-sidebar-menu.general"),
-            "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
-            "env_variables" => trans("vaahcms-sidebar-menu.env_variables"),
-            "localizations" => trans("vaahcms-sidebar-menu.localizations"),
-            "notifications" => trans("vaahcms-sidebar-menu.notifications"),
-            "update" => trans("vaahcms-sidebar-menu.update"),
-            "reset" => trans("vaahcms-sidebar-menu.reset"),
+            "settings" => trans("vaahcms-settings.aside_settings"),
+            "general" => trans("vaahcms-settings.aside_general"),
+            "user_settings" => trans("vaahcms-settings.aside_user_settings"),
+            "env_variables" => trans("vaahcms-settings.aside_env_variables"),
+            "localizations" => trans("vaahcms-settings.aside_localizations"),
+            "notifications" => trans("vaahcms-settings.aside_notifications"),
+            "update" => trans("vaahcms-settings.aside_update"),
+            "reset" => trans("vaahcms-settings.aside_reset"),
         ];
     }
     //----------------------------------------------------------

@@ -3155,7 +3155,7 @@
         "locale_code_iso_639": "en",
         "category": "setup",
         "name": "Reset Message",
-        "content": "You can reset/re-install the application if you're logged in from \"Administrator\" account."
+        "content": "You can reset/re-install the application if you\\'re logged in from \"Administrator\" account."
     },
     {
         "locale_code_iso_639": "en",
@@ -3253,6 +3253,160 @@
         "name": "setup Label Run Seeds",
         "content": "Run Seeds"
     },
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "User Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Env Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Ajustes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Ajustes de usuario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables ambientales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notificaciones"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Paramètres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "Générale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Paramètres utilisateur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+
 
 
     {
