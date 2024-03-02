@@ -28,7 +28,7 @@ class UserSettingController extends Controller
             $data['timezones'] = vh_get_timezones();
             $data['country_calling_codes'] = vh_get_countries_calling_codes();
             $data['language_strings'] = [
-                "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
+                "user_settings_heading" => trans("vaahcms-user-setting.user_settings_heading"),
                 "fields" => trans("vaahcms-user-setting.fields"),
                 "custom_fields" => trans("vaahcms-user-setting.custom_fields"),
                 "custom_fields_add_button" => trans("vaahcms-user-setting.custom_fields_add_button"),

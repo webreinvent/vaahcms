@@ -2424,7 +2424,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "User Settings"
     },
     {
@@ -6629,7 +6629,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Ajustes de usuario"
     },
     {
@@ -10509,7 +10509,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Paramètres utilisateur"
     },
     {

@@ -76,7 +76,7 @@ export const useRootStore = defineStore({
                     }
                 }
             }
-            if (this.assets && this.assets.language_string.dashboard){
+            if (this.assets && this.assets.language_string && this.assets.language_string.dashboard){
                 this.getTopRightUserMenu();
             }
         },
