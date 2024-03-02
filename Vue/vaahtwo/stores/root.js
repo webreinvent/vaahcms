@@ -194,7 +194,7 @@ export const useRootStore = defineStore({
         },
         //-----------------------------------------------------------------------
         async getTopRightUserMenu() {
-            if (this.assets && this.assets.language_string.dashboard) {
+            if (this.assets && this.assets.language_string && this.assets.language_string.dashboard) {
                 return this.top_right_user_menu = [
                     {
                         label: this.assets && this.assets.language_string.dashboard.topnav_profile,
@@ -325,7 +325,7 @@ export const useRootStore = defineStore({
 
         //-----------------------------------------------------------------------
         setTopMenuItems(){
-            if (this.assets && this.assets.language_string.dashboard) {
+            if (this.assets && this.assets.language_string &&  this.assets.language_string.dashboard) {
                 this.top_menu_items = [
                     {
                         label: '',
