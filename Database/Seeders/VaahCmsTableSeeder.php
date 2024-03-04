@@ -206,7 +206,6 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Extend Module'],
             ["name" => 'Extend Theme'],
             ["name" => 'Validation'],
-            ["name" => 'Setup'],
             ["name" => 'Settings'],
             ["name" => 'Advanced'],
         ];
