@@ -85,7 +85,7 @@ export const useSetupStore = defineStore({
                 test_email_to: null,
             },
             data_testid_app_env:{
-               'data-testid':"configuration-env"
+                'data-testid':"configuration-env"
             },
             data_testid_debug:{
                 'data-testid':"configuration-debug"
@@ -182,9 +182,6 @@ export const useSetupStore = defineStore({
 
                 this.config.env.app_url = this.assets.app_url;
 
-            }
-            if (this.assets && this.assets.language_strings) {
-                this.getAdvancedOptionMenu();
             }
         },
         async getStatus() {
@@ -574,34 +571,32 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         getAdvancedOptionMenu: function (){
-            if (this.assets && this.assets.language_strings) {
-                this.advanced_option_menu_list = [
-                    {
-                        label: this.assets.language_strings.setup_label_publish_assets,
-                        command: () => {
-                            this.publishAssets()
-                        }
-                    },
-                    {
-                        label: this.assets.language_strings.setup_label_clear_cache,
-                        command: () => {
-                            this.clearCache()
-                        }
-                    },
-                    {
-                        label: this.assets.language_strings.setup_label_run_migrations,
-                        command: () => {
-                            this.runArtisanMigrate()
-                        }
-                    },
-                    {
-                        label: this.assets.language_strings.setup_label_run_seeds,
-                        command: () => {
-                            this.runArtisanSeeds();
-                        }
-                    },
-                ];
-            }
+            this.advanced_option_menu_list =  [
+                {
+                    label: 'Publish assets',
+                    command: () => {
+                        this.publishAssets()
+                    }
+                },
+                {
+                    label: 'Clear Cache',
+                    command: () => {
+                        this.clearCache()
+                    }
+                },
+                {
+                    label: 'Run Migrations',
+                    command: () => {
+                        this.runArtisanMigrate()
+                    }
+                },
+                {
+                    label: 'Run Seeds',
+                    command: () => {
+                        this.runArtisanSeeds();
+                    }
+                },
+            ];
         },
         //---------------------------------------------------------------------
         resetConfig() {
@@ -660,7 +655,7 @@ export const useSetupStore = defineStore({
             this.country_calling_code_object = null;
             this.country_calling_code = null;
 
-           setTimeout(() => {
+            setTimeout(() => {
                 if (!event.query.trim().length) {
                     this.filtered_country_codes = vaah().clone(this.assets.country_calling_codes);
                 }
