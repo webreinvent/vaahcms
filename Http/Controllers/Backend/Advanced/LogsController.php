@@ -49,7 +49,7 @@ class LogsController extends Controller
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "logs" => trans("vaahcms-sidebar-menu.logs"),
+                "logs" => trans("vaahcms-advanced.logs_title"),
                 "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
                 "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
                 "toolkit_text_close" => trans("vaahcms-general.toolkit_text_close"),

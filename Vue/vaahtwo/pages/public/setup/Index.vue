@@ -30,7 +30,7 @@ onMounted(async () => {
                 <Card class="border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.install_button }}</h4>
+                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.setup_install }}</h4>
                             <div class="icons flex">
                                 <div v-if="root.assets.auth_user" class="m-1">
                                     <a @click="$router.push({name:'dashboard'})">
@@ -72,7 +72,7 @@ onMounted(async () => {
                     <template #footer>
                         <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.stage && store.status.stage === 'installed'"
-                                    disabled :label="store.assets.language_strings.install_button" icon="pi pi-server"
+                                    disabled :label="store.assets.language_strings.setup_install_button" icon="pi pi-server"
                                     class="p-button p-button-sm bg-white border-gray-800 text-black-alpha-80"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
@@ -93,7 +93,7 @@ onMounted(async () => {
                 <Card class="h-full border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.reset }}</h4>
+                            <h4 class="text-xl font-semi-bold">{{ store.assets.language_strings.setup_reset }}</h4>
                             <div class="icons flex">
                                 <div class="m-1">
                                     <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"
@@ -112,12 +112,12 @@ onMounted(async () => {
                         <div v-if="store.status" class="flex justify-content-between align-items-center">
                             <Button v-if="store.status.is_user_administrator"
                                     @click="store.show_reset_modal = true"
-                                    :label="store.assets.language_strings.reset"
+                                    :label="store.assets.language_strings.setup_reset_button"
                                     icon="pi pi-refresh"
                                     class="p-button-danger" />
 
                             <Button v-else
-                                    :label="store.assets.language_strings.reset"
+                                    :label="store.assets.language_strings.setup_reset_button"
                                     icon="pi pi-refresh"
                                     class="p-button-danger"
                                     disabled />

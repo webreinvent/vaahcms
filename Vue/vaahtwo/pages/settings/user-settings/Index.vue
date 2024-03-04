@@ -33,7 +33,7 @@ onMounted(async () => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div>
-                        <b class="mr-1">{{ store.assets.language_strings.user_settings }}</b>
+                        <b class="mr-1">{{ store.assets.language_strings.user_settings_heading }}</b>
                     </div>
                 </div>
             </template>

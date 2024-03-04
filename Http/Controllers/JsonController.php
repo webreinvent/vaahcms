@@ -391,24 +391,24 @@ class JsonController extends Controller
 
     public function getAdvancedLayoutStrings() :array {
         return [
-            "advanced" => trans("vaahcms-sidebar-menu.advanced"),
-            "logs" => trans("vaahcms-sidebar-menu.logs"),
-            "failed_jobs" => trans("vaahcms-sidebar-menu.failed_jobs_title"),
-            "jobs" => trans("vaahcms-dashboard.jobs"),
-            "batches" => trans("vaahcms-sidebar-menu.batches"),
+            "advanced" => trans("vaahcms-advanced.aside_advanced"),
+            "logs" => trans("vaahcms-advanced.aside_logs"),
+            "failed_jobs" => trans("vaahcms-advanced.aside_failed_jobs"),
+            "jobs" => trans("vaahcms-advanced.aside_jobs"),
+            "batches" => trans("vaahcms-advanced.aside_batches"),
         ];
     }
     //----------------------------------------------------------
     public function getSettingsLayoutStrings() :array {
         return [
-            "settings" => trans("vaahcms-sidebar-menu.settings"),
-            "general" => trans("vaahcms-sidebar-menu.general"),
-            "user_settings" => trans("vaahcms-sidebar-menu.user_settings"),
-            "env_variables" => trans("vaahcms-sidebar-menu.env_variables"),
-            "localizations" => trans("vaahcms-sidebar-menu.localizations"),
-            "notifications" => trans("vaahcms-sidebar-menu.notifications"),
-            "update" => trans("vaahcms-sidebar-menu.update"),
-            "reset" => trans("vaahcms-sidebar-menu.reset"),
+            "settings" => trans("vaahcms-settings.aside_settings"),
+            "general" => trans("vaahcms-settings.aside_general"),
+            "user_settings" => trans("vaahcms-settings.aside_user_settings"),
+            "env_variables" => trans("vaahcms-settings.aside_env_variables"),
+            "localizations" => trans("vaahcms-settings.aside_localizations"),
+            "notifications" => trans("vaahcms-settings.aside_notifications"),
+            "update" => trans("vaahcms-settings.aside_update"),
+            "reset" => trans("vaahcms-settings.aside_reset"),
         ];
     }
     //----------------------------------------------------------

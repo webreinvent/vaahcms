@@ -875,18 +875,8 @@
         "name": "Users & Access",
         "content": "Users & Access"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Failed Jobs"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "Batches"
-    },
+
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -917,12 +907,7 @@
         "name": "Extend",
         "content": "Extend"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Logs"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -2424,7 +2409,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "User Settings"
     },
     {
@@ -3142,6 +3127,30 @@
     {
         "locale_code_iso_639": "en",
         "category": "setup",
+        "name": "Setup Install",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Install"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "setup",
         "name": "Install Message VaahCms",
         "content": "VaahCMS"
     },
@@ -3155,7 +3164,7 @@
         "locale_code_iso_639": "en",
         "category": "setup",
         "name": "Reset Message",
-        "content": "You can reset/re-install the application if you're logged in from \"Administrator\" account."
+        "content": "You can reset/re-install the application if you\\'re logged in from \"Administrator\" account."
     },
     {
         "locale_code_iso_639": "en",
@@ -3253,6 +3262,329 @@
         "name": "setup Label Run Seeds",
         "content": "Run Seeds"
     },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Advanced"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Batches"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Batches"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avanzada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lotes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Lotes"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avancée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lots"
+    },
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "User Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Env Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Lots"
+    },
+
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Ajustes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Ajustes de usuario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables ambientales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notificaciones"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Paramètres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "Générale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Paramètres utilisateur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+
 
 
     {
@@ -3373,7 +3705,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module Heading",
         "content": "Modules"
     },
     {
@@ -4950,18 +5282,8 @@
         "name": "Users & Access",
         "content": "Usuarios y acceso"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Trabajos fallidos"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "\nLotes"
-    },
+
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -4992,12 +5314,7 @@
         "name": "Extend",
         "content": "Extender"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Registros"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -6475,7 +6792,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Ajustes de usuario"
     },
     {
@@ -7016,6 +7333,30 @@
     {
         "locale_code_iso_639": "es",
         "category": "setup",
+        "name": "Setup Install",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Instalar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "setup",
         "name": "Install Message VaahCms",
         "content": "VaahCMS"
     },
@@ -7246,7 +7587,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Módulos"
     },
     {
@@ -8826,18 +9167,7 @@
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Failed Jobs Title",
-        "content": "Travaux échoués"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Batches",
-        "content": "\nLots"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
@@ -8868,12 +9198,7 @@
         "name": "Extend",
         "content": "Étendre"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "sidebar-menu",
-        "name": "Logs",
-        "content": "Journaux"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
@@ -10355,7 +10680,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Paramètres utilisateur"
     },
     {
@@ -10695,7 +11020,7 @@
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
         "name": "Content Message",
-        "content": "\nIl semble que vous n'ayez pas encore ajouté de contenu à cette section."
+        "content": "\nIl semble que vous n\\'ayez pas encore ajouté de contenu à cette section."
     },
     {
         "locale_code_iso_639": "fr",
@@ -10893,6 +11218,30 @@
         "category": "setup",
         "name": "Setup Message",
         "content": "VaahCMS est configuré avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Install",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Install Button",
+        "content": "Installer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "setup",
+        "name": "Setup Reset Button",
+        "content": "Réinitialiser"
     },
     {
         "locale_code_iso_639": "fr",
@@ -11128,7 +11477,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Modules"
     },
     {
