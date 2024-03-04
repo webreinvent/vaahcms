@@ -1022,6 +1022,17 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+// log badge small
+.p-badge{
+    &.is-size-small{
+        font-size: .6rem;
+        font-weight: 100;
+        height: 1rem;
+        line-height: 1rem;
+        min-width: 2rem;
+    }
+}
+
 //checkbox small
 .p-checkbox{
     &.is-small{

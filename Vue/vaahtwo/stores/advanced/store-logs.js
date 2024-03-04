@@ -615,7 +615,6 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         toView(item)
         {
-            this.getItem(item.name);
             this.$router.push({name: 'logs.view', params:{name:item.name}})
         },
         isViewLarge()
