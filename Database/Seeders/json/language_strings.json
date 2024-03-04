@@ -782,7 +782,7 @@
         "locale_code_iso_639": "en",
         "category": "user",
         "name": "Impersonate permission denied",
-        "content": "Permission Denied. User must have\n can-login-in-backend \n permission in user\\'s specified role."
+        "content": "Permission Denied. User must have <strong>can-login-in-backend</strong> permission in user\\'s specified role."
     },
     {
         "locale_code_iso_639": "en",
@@ -11020,7 +11020,7 @@
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
         "name": "Content Message",
-        "content": "\nIl semble que vous n\\'ayez pas encore ajouté de contenu à cette section."
+        "content": "Il semble que vous n\\'ayez pas encore ajouté de contenu à cette section."
     },
     {
         "locale_code_iso_639": "fr",
@@ -11253,7 +11253,7 @@
         "locale_code_iso_639": "fr",
         "category": "setup",
         "name": "Install Message",
-        "content": "est une plate-forme de développement d'applications Web livrée avec un système de gestion de contenu sans tête"
+        "content": "est une plate-forme de développement d\\'applications Web livrée avec un système de gestion de contenu sans tête"
     },
     {
         "locale_code_iso_639": "fr",
