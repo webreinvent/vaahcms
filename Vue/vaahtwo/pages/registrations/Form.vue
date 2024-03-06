@@ -17,7 +17,12 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-    store.getFormMenu();
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+        await store.getFormMenu();
+    }
+    // store.getFormMenu();
 
 });
 
@@ -29,7 +34,16 @@ const toggleFormMenu = (event) => {
 
 };
 //--------/form_menu
+watch(
+    () => root.assets,
+    async () => {
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
+            await store.getFormMenu();
+        }
 
+    }
+)
 </script>
 <template>
     <div class="col-5" >
