@@ -22,7 +22,6 @@ onMounted(async () => {
     {
         await store.getFormMenu();
     }
-    // store.getFormMenu();
 
 });
 
