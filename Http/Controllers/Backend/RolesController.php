@@ -89,7 +89,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -114,7 +114,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -139,7 +139,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -166,7 +166,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -191,7 +191,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -216,7 +216,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -241,7 +241,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -266,7 +266,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -291,7 +291,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -318,7 +318,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -343,7 +343,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -368,7 +368,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -387,7 +387,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
@@ -406,7 +406,7 @@ class RolesController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }

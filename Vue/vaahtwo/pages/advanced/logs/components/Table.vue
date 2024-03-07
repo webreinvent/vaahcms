@@ -25,7 +25,14 @@ const route = useRoute();
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
 
-            <Column field="name" header="Name"></Column>
+            <Column field="name" header="Name">
+                <template #body="prop">
+                    {{ prop.data.name }}
+                    <Badge class="is-size-small" v-if="prop.data.size"
+                           :value="prop.data.size"
+                    />
+                </template>
+            </Column>
 
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
@@ -36,12 +43,21 @@ const route = useRoute();
 
                         <Button v-if="store.hasPermission('can-read-log')"
                                 class="p-button-tiny p-button-text"
-                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
-                                :disabled="route.params.name === prop.data.name"
+                                v-tooltip.top="'View'"
+                                :disabled="route.params.name === prop.data.name ||
+                                 prop.data.name.substring(prop.data.name.lastIndexOf('.') + 1) !== 'log'"
                                 @click="store.toView(prop.data)"
                                 data-testid="logs-item_view"
                                 icon="pi pi-eye"
                         ></Button>
+
+                        <Button  v-if="store.hasPermission('can-read-log')"
+                                 icon="pi pi-download"
+                                 @click="store.downloadFile(prop.data)"
+                                 data-testid="logs-list_download_file"
+                                 class="p-button-sm p-button-rounded p-button-text"
+                                 v-tooltip.top=" 'Download File' "
+                        />
 
                         <Button v-if="store.hasPermission('can-delete-log')"
                                 class="p-button-tiny p-button-danger p-button-text"

@@ -42,9 +42,20 @@ function slug_to_str($slug)
     return $str;
 }
 //-------------------------------------------------------------
+function str_contain($string,$value = ' ')
+{
+    $string = trim($string);
+
+    if (str_contains($string, $value)) {
+        return true;
+    }
+
+    return false;
+}
+//-------------------------------------------------------------
 function str_to_slug($string)
 {
-    return \Str::slug($string);;
+    return \Str::slug($string);
 }
 //-------------------------------------------------------------
 function generate_random_string($length=8)
