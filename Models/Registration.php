@@ -151,6 +151,12 @@ class Registration extends RegistrationBase
              $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
+        $mailers = config('mail.mailers.smtp', []);
+        if (empty($mailers['host']) || empty($mailers['port'])|| empty($mailers['username'])|| empty($mailers['password'])) {
+            $response['success'] = false;
+            $response['errors'][] = 'Mail configuration not set. Please configure Mail settings.';
+            return $response;
+        }
         if(!isset($inputs['username']))
         {
             $inputs['username'] = Str::slug($inputs['email']);
