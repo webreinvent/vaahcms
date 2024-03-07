@@ -718,7 +718,7 @@ class RoleBase extends VaahModel {
         {
             $response['success'] = false;
             $response['errors'][] = 'Super Admin permission can not be changed';
-            return response()->json($response);
+            return $response;
 
         }
 
