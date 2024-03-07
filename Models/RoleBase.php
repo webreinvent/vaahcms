@@ -768,6 +768,7 @@ class RoleBase extends VaahModel {
         }
 
         self::recountRelations();
+        Permission::recountRelations();
 
         $response['success'] = true;
         $response['data'] = [];

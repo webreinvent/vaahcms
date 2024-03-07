@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import { useMediaStore } from '../../stores/store-media'
 import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah";
@@ -16,8 +16,11 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-    store.getFormMenu();
-});
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+        await store.getFormMenu();
+    }});
 
 //--------form_menu
 const form_menu = ref();
@@ -25,7 +28,16 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+watch(
+    () => root.assets,
+    async () => {
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
+            await store.getFormMenu();
+        }
 
+    }
+)
 </script>
 <template>
     <div class="col-6">
