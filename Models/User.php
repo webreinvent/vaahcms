@@ -222,7 +222,7 @@ class User extends UserBase
             $response['errors'] = $errors;
             return $response;
         }
-
+        $response['errors'] = [];
         foreach($inputs['items'] as $item) {
 
             $is_restricted = self::restrictedActions('delete', $item['id']);
