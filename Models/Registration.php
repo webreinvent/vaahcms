@@ -154,7 +154,7 @@ class Registration extends RegistrationBase
         $mailers = config('mail.mailers.smtp', []);
         if (empty($mailers['host']) || empty($mailers['port'])|| empty($mailers['username'])|| empty($mailers['password'])) {
             $response['success'] = false;
-            $response['errors'][] = 'Mail configuration not set. Please configure Mail settings.';
+            $response['errors'][] = trans("vaahcms-general.mail_configuration_not_set");
             return $response;
         }
         if(!isset($inputs['username']))
