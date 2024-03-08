@@ -570,7 +570,7 @@ class RegistrationBase extends VaahModel
         if($user)
         {
             $response['success'] = false;
-            $response['messages'][] = 'This email is already registered.';
+            $response['messages'][] = trans("vaahcms-general.this_email_is_already_registered");
             return $response;
         }
 
