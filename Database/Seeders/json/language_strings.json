@@ -20,6 +20,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "Super Admin permission can not be changed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Filter Created",
         "content": "Created"
     },
@@ -4294,6 +4300,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "El permiso de superadministrador no se puede cambiar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Filter Created",
         "content": "Creada"
     },
@@ -8033,6 +8045,12 @@
         "category": "general",
         "name": "Mail Configuration Not Set",
         "content": "Configuration de messagerie non définie. Veuillez configurer les paramètres de messagerie."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "L\\'autorisation du super-administrateur ne peut pas être modifiée"
     },
     {
         "locale_code_iso_639": "fr",
