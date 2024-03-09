@@ -154,6 +154,7 @@ class PermissionBase extends VaahModel {
 
         $users = User::whereHas('roles', function ($q) use ($roles_ids){
             $q->whereIn('vh_roles.id', $roles_ids);
+            $q->where('vh_user_roles.is_active', true);
         })->count();
 
         return $users;
