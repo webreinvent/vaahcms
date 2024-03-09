@@ -151,6 +151,7 @@ class Registration extends RegistrationBase
              $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
+
         if(!isset($inputs['username']))
         {
             $inputs['username'] = Str::slug($inputs['email']);
@@ -168,7 +169,14 @@ class Registration extends RegistrationBase
 
         $request_item = new Request([$item->id]);
 
-        static::sendVerificationEmail($request_item);
+
+        try{
+            static::sendVerificationEmail($request_item);
+        }catch (\Exception $e){
+            $response['errors'][] = $e->getMessage();
+        }
+
+
 
         $response['success'] = true;
         $response['data']['item'] = $item;
@@ -481,7 +489,7 @@ class Registration extends RegistrationBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = trans("vaahcms-general.record_not_found_with_id").$id;
             return $response;
         }
         $response['success'] = true;
