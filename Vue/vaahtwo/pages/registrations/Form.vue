@@ -61,7 +61,7 @@ watch(
                     </div>
 
                     <div>
-                        <Button :label="root.assets.language_strings.crud_actions.restore_button"
+                        <Button :label="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 class="p-button-sm"
                                 @click="store.itemAction('restore')"
                                 data-testid="register-form_item_action_restore"

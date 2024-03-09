@@ -42,6 +42,29 @@ watch(
 <template>
     <div class="col-6">
         <Panel class="is-small">
+            <Message severity="error"
+                     class="p-container-message"
+                     :closable="false"
+                     icon="pi pi-trash"
+                     v-if="store.item && store.item.deleted_at"
+            >
+                <div class="flex align-items-center justify-content-between"  v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
+                    <div>
+                        {{root.assets.language_strings.crud_actions.form_text_deleted}} {{store.item.deleted_at}}
+                    </div>
+
+                    <div>
+                        <Button :label="root.assets.language_strings.crud_actions.toolkit_text_restore"
+                                class="p-button-sm"
+                                @click="store.itemAction('restore')"
+                                data-testid="media-form_item_action_restore"
+                        >
+                        </Button>
+                    </div>
+                </div>
+            </Message>
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
