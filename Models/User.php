@@ -443,7 +443,9 @@ class User extends UserBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
                 break;
             case 'restore':
                 self::where('id', $id)
