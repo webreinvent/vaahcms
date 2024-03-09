@@ -254,7 +254,7 @@ class Media extends MediaBase
                 ->withTrashed();
         }
 
-
+        $list=self::query();
         switch ($type) {
             case 'deactivate':
                 if($items->count() > 0) {
@@ -291,7 +291,8 @@ class Media extends MediaBase
                 self::query()->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->onlyTrashed()->update(['deleted_by' => null]);
+                $list->restore();
                 break;
             case 'delete-all':
                 self::withTrashed()->forceDelete();
@@ -395,7 +396,12 @@ class Media extends MediaBase
         switch($type)
         {
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = auth()->user()->id;
+                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
