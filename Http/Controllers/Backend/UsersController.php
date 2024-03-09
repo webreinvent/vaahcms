@@ -34,6 +34,7 @@ class UsersController extends Controller
 
             $data['fillable']['except'] = [
                 'uuid',
+                'meta',
                 'created_by',
                 'updated_by',
                 'deleted_by',
