@@ -14,12 +14,6 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
-        "name": "Mail Configuration Not Set",
-        "content": "Mail configuration not set. Please configure Mail settings."
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "general",
         "name": "This Email Is Already Registered",
         "content": "This email is already registered."
     },
@@ -4300,12 +4294,6 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
-        "name": "Mail Configuration Not Set",
-        "content": "Configuración de correo no establecida. Configure los ajustes de correo."
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "general",
         "name": "This Email Is Already Registered",
         "content": "Este correo electrónico ya está registrado."
     },
@@ -8051,12 +8039,6 @@
         "category": "general",
         "name": "Filter Column",
         "content": "Colonne"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "general",
-        "name": "Mail Configuration Not Set",
-        "content": "Configuration de messagerie non définie. Veuillez configurer les paramètres de messagerie."
     },
     {
         "locale_code_iso_639": "fr",

@@ -151,12 +151,7 @@ class Registration extends RegistrationBase
              $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
-        $mailers = config('mail.mailers.smtp', []);
-        if (empty($mailers['host']) || empty($mailers['port'])|| empty($mailers['username'])|| empty($mailers['password'])) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.mail_configuration_not_set");
-            return $response;
-        }
+
         if(!isset($inputs['username']))
         {
             $inputs['username'] = Str::slug($inputs['email']);
@@ -174,7 +169,14 @@ class Registration extends RegistrationBase
 
         $request_item = new Request([$item->id]);
 
-        static::sendVerificationEmail($request_item);
+
+        try{
+            static::sendVerificationEmail($request_item);
+        }catch (\Exception $e){
+            $response['errors'][] = $e->getMessage();
+        }
+
+
 
         $response['success'] = true;
         $response['data']['item'] = $item;
