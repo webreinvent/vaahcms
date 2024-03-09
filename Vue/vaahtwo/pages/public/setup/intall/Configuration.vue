@@ -217,6 +217,8 @@ onMounted(async () => {
                       label="Test Database connection"
                       :loading="store.is_btn_loading_db_connection"
                       icon="pi pi-database" class="p-button-sm mt-2 mb-3"
+                      outlined
+                      severity="info"
                       data-testid="configuration-test_db_connection"
                       :pt="{
                                     label: {
@@ -350,6 +352,8 @@ onMounted(async () => {
                       label="Test Mail Configuration"
                       icon="pi pi-envelope"
                       class="p-button-sm mt-2 mb-3"
+                      outlined
+                      severity="info"
                       data-testid="configuration-test_mail"
                       :pt="{
                                     label: {

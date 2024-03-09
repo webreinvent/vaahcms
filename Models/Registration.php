@@ -172,6 +172,8 @@ class Registration extends RegistrationBase
 
         try{
             static::sendVerificationEmail($request_item);
+        }catch (\TypeError $e){
+            $response['errors'][] = $e->getMessage();
         }catch (\Exception $e){
             $response['errors'][] = $e->getMessage();
         }
