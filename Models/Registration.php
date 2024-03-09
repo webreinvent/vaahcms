@@ -424,6 +424,7 @@ class Registration extends RegistrationBase
             $items = self::whereIn('id', $items_id)
                 ->withTrashed();
         }
+        $list = self::query();
 
         switch ($type) {
             case 'deactivate':
@@ -461,7 +462,8 @@ class Registration extends RegistrationBase
                 self::query()->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->onlyTrashed()->update(['deleted_by' => null]);
+                $list->restore();
                 break;
             case 'delete-all':
                 self::withTrashed()->forceDelete();
