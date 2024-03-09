@@ -109,6 +109,7 @@ onMounted(async () => {
                             :loading="store.is_btn_loading_dependency"
                             label="Download & install Dependencies"
                             class="p-button-sm mr-2 is-small"
+                            outlined severity="info"
                             data-testid="dependencies-install_dependencies"
                             :pt="{
                                  label: {
@@ -119,6 +120,7 @@ onMounted(async () => {
                     <Button label="Skip"
                             @click="store.skipDependencies()"
                             class="btn-dark p-button-sm is-small"
+                            outlined severity="info"
                             data-testid="dependencies-skip"
                             :pt="{
                                  label: {

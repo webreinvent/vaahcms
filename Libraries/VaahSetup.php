@@ -350,7 +350,8 @@ class VaahSetup{
         $i = 0;
         foreach ($list as $key => $value)
         {
-            $value = trim($value,'"');;
+            $value = trim($value);
+            $value = trim($value,'"');
 
             if($key_lower)
             {
@@ -370,7 +371,7 @@ class VaahSetup{
 
             $i++;
         }
-        
+
         return $result;
 
     }

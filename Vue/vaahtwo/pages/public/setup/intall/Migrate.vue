@@ -68,7 +68,8 @@ const confirmDelete = (event) => {
         <Button v-else label="Migrate & Run Seeds"
                 icon="pi pi-database" iconPos="left"
                 :loading="store.btn_is_migration"
-                @click="confirmDelete" class="is-small" outlined
+                @click="confirmDelete" class="is-small"
+                outlined severity="info"
                 data-testid="migrate-run_migration"
                 :pt="{
                       label: {
