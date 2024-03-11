@@ -358,6 +358,7 @@ class ModulesController extends Controller
                     break;
                 //---------------------------------------
                 case 'delete':
+
                     $permission_slug = 'can-delete-module';
 
                     if(!Auth::user()->hasPermission($permission_slug)) {
@@ -380,7 +381,6 @@ class ModulesController extends Controller
             }
         }
 
-        $response['data']['item'] = $module;
         return response()->json($response);
     }
     //----------------------------------------------------------
