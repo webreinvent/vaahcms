@@ -145,7 +145,7 @@ watch(
                 </VhField>
 
 
-                    <div v-if="!store.item.id" class="field mb-4 relative">
+                    <div class="field mb-4 relative">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
@@ -156,8 +156,7 @@ watch(
                         </FileUploader>
                     </div>
 
-                    <div v-if="!store.item.id &&
-                     (store.has_error_on_upload || store.item.url)" class="field mb-4">
+                    <div v-if="store.has_error_on_upload || store.item.url" class="field mb-4">
                         <div class="p-fileupload-content"><!----><!---->
                             <div v-if="store.has_error_on_upload"  class="p-message p-component p-message-error"
                                  role="alert" aria-live="assertive"
