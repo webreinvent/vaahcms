@@ -430,8 +430,8 @@ export const useRegistrationStore = defineStore({
             {
 
                 this.item = data.item;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
             }
         },
@@ -445,9 +445,6 @@ export const useRegistrationStore = defineStore({
                 case 'create-and-new':
                     this.setActiveItemAsEmpty();
                     break;
-                case 'create-and-clone':
-                    this.item.id = null;
-                    break;
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
                     this.route.params.id = null;
@@ -459,7 +456,10 @@ export const useRegistrationStore = defineStore({
                     this.$router.push({name: 'registrations.index'});
                     break;
                 case 'save-and-clone':
+                case 'create-and-clone':
                     this.item.id = null;
+                    await this.$router.push({name: 'registrations.form',query:this.query,params: { id: null }});
+
                     break;
                 case 'trash':
                     // this.item = null;
