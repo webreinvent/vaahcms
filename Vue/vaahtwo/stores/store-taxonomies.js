@@ -457,8 +457,8 @@ export const useTaxonomyStore = defineStore({
             {
                 this.item = data;
                 this.selected_parent_id = null;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
@@ -483,6 +483,7 @@ export const useTaxonomyStore = defineStore({
                 case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
+                    await this.$router.push({name: 'taxonomies.form',query:this.query,params: { id: null }});
                     break;
                 case 'trash':
                     this.item = null;

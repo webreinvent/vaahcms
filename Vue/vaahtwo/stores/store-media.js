@@ -431,8 +431,8 @@ export const useMediaStore = defineStore({
             if(data)
             {
                 this.item = data;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
                 await this.getFormMenu();
 
@@ -461,6 +461,7 @@ export const useMediaStore = defineStore({
                 case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
+                    await this.$router.push({name: 'media.form',query:this.query,params: { id: null }});
                     break;
                 case 'trash':
                     this.item = null;
