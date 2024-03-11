@@ -868,7 +868,7 @@ class ThemeBase extends VaahModel {
             }
 
             vh_delete_folder($zip_file);
-
+            Theme::syncAll();
             $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." theme is installed.";

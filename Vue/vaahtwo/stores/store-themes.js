@@ -444,7 +444,10 @@ export const useThemeStore = defineStore({
                 this.item = data;
                 await root.reloadAssets();
                 await this.formActionAfter();
-                this.resetActivateBtnLoader(this.form.action,data.item)
+                if(data.item){
+                    await this.resetActivateBtnLoader(this.form.action,data.item)
+                }
+
             }
        },
         //---------------------------------------------------------------------
@@ -471,7 +474,6 @@ export const useThemeStore = defineStore({
                 case 'activate':
                 case 'deactivate':
                     this.item = null;
-                    this.toList();
                     break;
             }
         },

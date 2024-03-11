@@ -69,10 +69,10 @@ onMounted(async () => {
                 </template>
                 <template #content>
                     <div class="flex flex-wrap">
-                        <div class="col-6" v-for="item in store.modules.list.data">
+                        <div class="col-12 lg:col-6" v-for="item in store.modules.list.data">
                             <Card>
                                 <template #header>
-                                    <img :src="item.thumbnail"/>
+                                    <img class="w-full" :src="item.thumbnail"/>
                                 </template>
                                 <template #content>
                                     <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>

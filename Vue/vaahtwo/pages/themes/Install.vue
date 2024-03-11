@@ -52,7 +52,9 @@ onMounted(async () => {
             <Card>
                 <template #header>
                     <div class="flex justify-content-between align-items-center">
-                        <h5 class="white-space-nowrap font-semibold text-lg">{{store.assets.language_strings.install_themes}}</h5>
+                        <h5 class="white-space-nowrap font-semibold text-lg">
+                            {{store.assets.language_strings.install_themes}}
+                        </h5>
                         <div class="p-inputgroup justify-content-end w-6">
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
@@ -76,10 +78,10 @@ onMounted(async () => {
                     </div>
                 </template>
                 <template #content>
-                    <div class="col-12 md:col-6" v-for="item in store.themes.data">
+                    <div class="col-12 lg:col-6" v-for="item in store.themes.data">
                         <Card>
                             <template #header>
-                                <img :src="item.thumbnail" style="height: 15rem" />
+                                <img class="w-full" :src="item.thumbnail" />
                             </template>
                             <template #content>
                                 <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>

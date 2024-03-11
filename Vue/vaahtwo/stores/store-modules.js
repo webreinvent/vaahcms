@@ -446,7 +446,9 @@ export const useModuleStore = defineStore({
                 await root.reloadAssets();
                 await this.formActionAfter();
                 this.getItemMenu();
-                this.resetActivateBtnLoader(this.form.action,data.item);
+                if(data.item){
+                    await this.resetActivateBtnLoader(this.form.action,data.item);
+                }
             }
         },
         //---------------------------------------------------------------------

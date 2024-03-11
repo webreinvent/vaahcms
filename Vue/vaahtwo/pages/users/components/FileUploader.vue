@@ -47,7 +47,7 @@ const props = defineProps({
     },
     max_file_size:{
         type: Number,
-        default: 1000000
+        default: 10000000
     },
     file_type_accept:{
         type: String,
@@ -84,20 +84,22 @@ function uploadFile(e){
 
     upload_refs.value.files = [];
 
-    uploaded_files.forEach(async (file) => {
-        let formData = new FormData();
-        formData.append("file", file);
-        formData.append('folder_path', props.folderPath);
-        formData.append('file_name', props.fileName);
-        axios.post(props.uploadUrl, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(res=>{
-            upload_refs.value.uploadedFiles[0] = file;
-            store.storeAvatar(res.data.data);
-        });
-    })
+    if(uploaded_files.length > 0){
+        uploaded_files.forEach(async (file) => {
+            let formData = new FormData();
+            formData.append("file", file);
+            formData.append('folder_path', props.folderPath);
+            formData.append('file_name', props.fileName);
+            axios.post(props.uploadUrl, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res=>{
+                upload_refs.value.uploadedFiles[0] = file;
+                store.storeAvatar(res.data.data);
+            });
+        })
+    }
 
 }
 function removeFile(e){
@@ -108,11 +110,8 @@ function removeFile(e){
 
 function selectFile (data){
 
-    let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
-    // store.item[props.store_label] = null;
-    upload_refs.value.files = [];
-    upload_refs.value.uploadedFiles = [];
-    upload_refs.value.files[0] = temp_file;
+    vaah().toastErrors(upload_refs.value.messages);
+    upload_refs.value.messages = [];
 
 }
 
