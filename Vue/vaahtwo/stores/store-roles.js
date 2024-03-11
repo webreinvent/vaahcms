@@ -470,8 +470,8 @@ export const useRoleStore = defineStore({
             if(data)
             {
                 this.item = data;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
@@ -496,12 +496,9 @@ export const useRoleStore = defineStore({
                     this.$router.push({name: 'roles.index'});
                     break;
                 case 'create-and-clone':
-                    this.item.id = null;
-                    break;
                 case 'save-and-clone':
                     this.item.id = null;
-                    this.route.params.id = null;
-                    this.$router.push({name: 'roles.form'});
+                    await this.$router.push({name: 'roles.form',query:this.query,params: { id: null }});
                     break;
                 case 'trash':
                     this.item = null;
