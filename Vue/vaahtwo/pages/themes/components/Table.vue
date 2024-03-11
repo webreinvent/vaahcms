@@ -4,8 +4,10 @@ import { ref } from "vue";
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useThemeStore } from '../../../stores/store-themes'
 import { useConfirm } from "primevue/useconfirm";
+import { useRootStore } from "../../../stores/root";
 
 const store = useThemeStore();
+const root = useRootStore();
 const useVaah = vaah();
 const menu = ref();
 
