@@ -42,7 +42,7 @@ const key = ref();
                             </Button>
                             <p class="text-sm mt-1">
                                 {{store.language_strings.or}},
-                                <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
+                                <a :href="store.theme_doc_url"
                                    data-testid="dashboard-create_theme"
                                    target="_blank">
                                     {{store.language_strings.create_your_own_theme}}</a>
