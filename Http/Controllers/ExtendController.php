@@ -359,7 +359,7 @@ class ExtendController extends Controller
                     "label" => trans("vaahcms-dashboard.active_users"),
                     "icon" => "pi-user",
                     "type" => "success",
-                    "link" => self::$link."/users?status=active"
+                    "link" => self::$link."/users?filter[is_active]=true"
                 ]
             ]
 

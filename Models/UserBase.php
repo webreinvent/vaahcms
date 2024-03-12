@@ -1323,9 +1323,12 @@ class UserBase extends Authenticatable
         $is_active = $filter['is_active'];
 
         if ($is_active === 'true' || $is_active === true) {
-            return $query->whereNotNull('is_active');
+            return $query->where('is_active',1);
         } else {
-            return $query->whereNull('is_active');
+            return $query->where(function ($f){
+                $f->where('is_active',0);
+                $f->orWhereNull('is_active');
+            });
         }
     }
     //-------------------------------------------------
