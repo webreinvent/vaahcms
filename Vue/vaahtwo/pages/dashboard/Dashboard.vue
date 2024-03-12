@@ -26,20 +26,20 @@ const key = ref();
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-2 text-sm">{{store.language_strings.get_started}}</h6>
-                            <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
-                                    data-testid="dashboard-goto_theme"
-                                    class="p-button-sm is-light"
-                            >
+                            <a data-testid="dashboard-goto_theme" :href="root.base_url + '#/vaah/themes/'">
+                                <Button class="p-button-sm is-light">
                                 <span v-if="store.dashboard_items
                                             && store.dashboard_items.success
                                             && store.dashboard_items.success.vaahcms
                                             && store.dashboard_items.success.vaahcms.has_activated_theme">
                                      {{store.language_strings.go_to_theme}}
                                 </span>
-                                <span v-else>
+                                    <span v-else>
                                     {{store.language_strings.activate_theme}}
                                 </span>
-                            </Button>
+                                </Button>
+                            </a>
+
                             <p class="text-sm mt-1">
                                 {{store.language_strings.or}},
                                 <a :href="store.theme_doc_url"
@@ -133,12 +133,13 @@ const key = ref();
                 <template v-if="module.expanded_header_links"
                           v-for="h_item in module.expanded_header_links"
                 >
-                    <Button :label="h_item.name"
-                            :icon="h_item.icon"
-                            :data-testid="'dashboard-'+h_item.name"
-                            class="p-button-sm p-button-outlined mr-2 mb-3 pi"
-                            @click="store.goToLink(h_item.link,h_item.open_in_new_tab?h_item.open_in_new_tab:null)"
-                    />
+                    <a :data-testid="'dashboard-'+h_item.name"
+                       :href="h_item.link"
+                       :target="h_item.open_in_new_tab?'_blank':''">
+                        <Button :label="h_item.name"
+                                :icon="h_item.icon"
+                                class="p-button-sm p-button-outlined mr-2 mb-3 pi" label="Router" />
+                    </a>
                 </template>
             </template>
 
