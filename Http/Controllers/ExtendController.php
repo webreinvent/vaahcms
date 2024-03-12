@@ -436,7 +436,7 @@ class ExtendController extends Controller
                 'name' => trans("vaahcms-dashboard.getting_started"),
                 'icon' => 'pi pi-play',
                 'open_in_new_tab' => true,
-                'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
+                'link' => 'https://docs.vaah.dev/vaahcms-2x/getting-started/installation'
             ]
         ];
 
