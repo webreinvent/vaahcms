@@ -1,8 +1,9 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import {useRoleStore} from '../../../stores/store-roles'
+import { useRootStore } from "../../../stores/root";
 
-
+const root = useRootStore();
 const store = useRoleStore();
 const useVaah = vaah();
 
@@ -10,7 +11,7 @@ const useVaah = vaah();
 
 <template>
 
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
@@ -61,7 +62,7 @@ const useVaah = vaah();
              >
                  <template #body="props">
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
-                             v-tooltip.top="'View Permissions'"
+                             v-tooltip.top="store.assets.language_strings.view_permissions"
                              @click="store.toPermission(props.data)"
                              data-testid="role-list_permission_view"
                              v-if="store.hasPermission('can-read-roles')"
@@ -76,7 +77,7 @@ const useVaah = vaah();
             >
                  <template #body="props">
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
-                             v-tooltip.top="'View Users'"
+                             v-tooltip.top="store.assets.language_strings.view_users"
                              @click="store.toUser(props.data)"
                              v-if="store.hasPermission('can-read-roles')"
                              data-testid="role-list_user_view"
@@ -120,7 +121,7 @@ const useVaah = vaah();
                     <div class="p-inputgroup ">
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="role-item_view"
@@ -128,7 +129,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 v-if="store.hasPermission('can-update-roles')"
                                 icon="pi pi-pencil"
@@ -139,7 +140,7 @@ const useVaah = vaah();
                                 v-if="store.isViewLarge() && !prop.data.deleted_at
                                 && store.hasPermission('can-update-roles')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                                 data-testid="role-item_trash"
                         />
@@ -147,7 +148,7 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="role-item_restore"
                         />
@@ -155,7 +156,11 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-
+             <template #empty>
+                 <div class="text-center py-3">
+                     No records found.
+                 </div>
+             </template>
         </DataTable>
         <!--/table-->
 

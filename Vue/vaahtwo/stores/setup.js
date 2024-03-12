@@ -85,7 +85,7 @@ export const useSetupStore = defineStore({
                 test_email_to: null,
             },
             data_testid_app_env:{
-               'data-testid':"configuration-env"
+                'data-testid':"configuration-env"
             },
             data_testid_debug:{
                 'data-testid':"configuration-debug"
@@ -655,7 +655,7 @@ export const useSetupStore = defineStore({
             this.country_calling_code_object = null;
             this.country_calling_code = null;
 
-           setTimeout(() => {
+            setTimeout(() => {
                 if (!event.query.trim().length) {
                     this.filtered_country_codes = vaah().clone(this.assets.country_calling_codes);
                 }

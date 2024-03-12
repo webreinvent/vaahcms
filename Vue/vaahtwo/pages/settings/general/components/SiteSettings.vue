@@ -1,15 +1,16 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store.list" class="grid justify-content-evenly">
+    <div v-if="store.list && store.assets && root.assets" class="grid justify-content-evenly">
         <div class="col-12 md:col-6 pr-4">
             <div class="grid p-fluid">
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Site Title</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.site_title }}</h5>
 
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.site_title"
@@ -27,21 +28,21 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.default_site_language }}</h5>
 
                     <Dropdown v-model="store.list.language"
                               :options="store.languages"
                               optionLabel="name"
                               data-testid="general-site_language"
                               optionValue="locale_code_iso_639"
-                              placeholder="Select a Language"
+                              :placeholder="store.assets.language_strings.localization_placeholder_select_a_language"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
                 </div>
 
                 <div class="col-6">
-                    <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.redirect_after_frontend_login }}</h5>
 
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.redirect_after_frontend_login"
@@ -58,7 +59,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.meta_description }}</h5>
 
                     <div class="p-inputgroup">
                         <Textarea v-model="store.list.site_description"
@@ -74,7 +75,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Search Engine Visibility</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.search_engine_visibility }}</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.search_engine_visibility"
@@ -95,20 +96,20 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.assign_roles_on_registration }}</h5>
 
                     <AutoComplete :multiple="true"
                                   v-model="store.list.registration_roles"
                                   :suggestions="store.filtered_registration_roles"
                                   @complete="store.searchRegistrationRoles($event)"
                                   data-testid="general-registration_roles"
-                                  placeholder="Search"
+                                  :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                                   class="p-inputtext-sm"
                     />
                 </div>
 
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.allowed_file_types_for_upload }}</h5>
 
                     <AutoComplete :multiple="true"
                                   v-model="store.list.upload_allowed_files"
@@ -116,11 +117,11 @@ const store = useGeneralStore();
                                   @complete="store.searchAllowedFiles($event)"
                                   class="p-inputtext-sm"
                                   data-testid="general-allowed_files"
-                                  placeholder="Search"
+                                  :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                     />
                 </div>
                 <div class="col-12 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Allowed file size for upload( in MB)</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.allowed_file_size_for_upload }}</h5>
                     <div class="p-inputgroup col-6 p-0">
                         <InputNumber v-model="store.list.upload_allowed_file_size"
                                      class="p-inputtext-sm h-2rem"
@@ -134,7 +135,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Is Logo compressed with Sidebar</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.is_logo_compressed_with_sidebar }}</h5>
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.is_logo_compressed"
                                       optionLabel="name"
@@ -157,7 +158,7 @@ const store = useGeneralStore();
         <div class="col-12 md:col-6 pl-4">
             <div class="grid">
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.copyright_text }}</h5>
                     <div class="p-inputgroup">
 
                         <SelectButton v-model="store.list.copyright_text"
@@ -179,13 +180,13 @@ const store = useGeneralStore();
                     <InputText class="w-full p-inputtext-sm mt-2" v-if="store.list.copyright_text === 'custom'"
                                data-testid="general-copyright_custom_filed"
                                v-model="store.list.copyright_text_custom"
-                               placeholder="Enter Custom Text"
+                               :placeholder="store.assets.language_strings.enter_custom_text"
 
                     />
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.copyright_link }}</h5>
 
                     <div class="p-inputgroup">
 
@@ -209,12 +210,12 @@ const store = useGeneralStore();
                                data-testid="general-copyright_custom_link_field"
                                v-if="store.list.copyright_link === 'custom'"
                                v-model="store.list.copyright_link_custom"
-                               placeholder="Enter Custom Link"
+                               :placeholder="store.assets.language_strings.enter_custom_link"
                     />
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.copyright_year }}</h5>
 
                     <div class="p-inputgroup">
 
@@ -237,7 +238,7 @@ const store = useGeneralStore();
 
                     <InputNumber v-model="store.list.copyright_year_custom"
                                  name="config-db_port"
-                                 placeholder="Copyright Year"
+                                 :placeholder="store.assets.language_strings.copyright_year"
                                  class="w-full p-inputtext-sm mt-2"
                                  inputId="withoutgrouping" :useGrouping="false"
                                  :pt="{
@@ -250,7 +251,7 @@ const store = useGeneralStore();
 
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">
-                        Max number of forgot password attempts
+                        {{ store.assets.language_strings.max_number_of_forgot_password_attempts }}
                     </h5>
 
                     <div class="p-inputgroup">
@@ -271,7 +272,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.maximum_number_of_login_attempts }}</h5>
                     <div class="p-inputgroup">
                         <InputNumber inputId="withoutgrouping"
                                      data-testid="general-login_attempts"
@@ -288,7 +289,7 @@ const store = useGeneralStore();
                     </div>
                 </div>
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Password Protection</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.password_protection }}</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.password_protection"
                                   optionLabel="name"
@@ -307,7 +308,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.laravel_queues }}</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.laravel_queues"
                                   optionLabel="name"
@@ -326,7 +327,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.maintenance_mode }}</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.maintenance_mode"
                                   optionLabel="name"
@@ -345,7 +346,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
-                    <h5 class="p-1 text-xs mb-1">Signup Page</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.signup_page }}</h5>
                     <div class="p-inputgroup">
                     <SelectButton v-model="store.list.signup_page_visibility"
                                   optionLabel="name"
@@ -364,7 +365,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.redirect_after_backend_logout }}</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.redirect_after_backend_logout"
@@ -376,7 +377,7 @@ const store = useGeneralStore();
                                       class="p-button-sm"
                         />
 
-                        <InputText placeholder="Enter Redirection Link"
+                        <InputText :placeholder="store.assets.language_strings.enter_redirection_link"
                                    v-model="store.list.redirect_after_backend_logout_url"
                                    data-testid="general-redirect_logout_custom"
                                    :disabled="store.list.redirect_after_backend_logout !== 'custom'"
@@ -393,7 +394,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-12">
-                    <h5 class="p-1 text-xs mb-1">Backend Home Page Link</h5>
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.backend_home_page_link }}</h5>
 
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.backend_homepage_link"
@@ -405,7 +406,7 @@ const store = useGeneralStore();
                                       class="p-button-sm"
                         />
 
-                        <InputText placeholder="Enter Redirection Link"
+                        <InputText :placeholder="store.assets.language_strings.enter_redirection_link"
                                    v-model="store.list.backend_homepage_link_url"
                                    data-testid="general-backend_homepage_link_custom"
                                    :disabled="store.list.backend_homepage_link !== 'custom'"
@@ -426,14 +427,14 @@ const store = useGeneralStore();
             <Divider class="m-0"/>
         </div>
         <div class="col-12">
-            <Button label="Save Settings"
+            <Button :label="store.assets.language_strings.save_settings_button"
                     icon="pi pi-save"
                     data-testid="general-save_site"
                     @click="store.storeSiteSettings"
                     class="mr-2 p-button-sm"
             />
 
-            <Button label="Clear Cache"
+            <Button :label="store.assets.language_strings.clear_cache_button"
                     icon="pi pi-trash"
                     data-testid="general-clear_cache"
                     @click="store.clearCache"

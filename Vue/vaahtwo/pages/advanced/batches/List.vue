@@ -3,10 +3,11 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useBatchStore} from '../../../stores/advanced/store-batches'
+import {useRootStore} from "../../../stores/root";
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
-
+const root = useRootStore();
 const store = useBatchStore();
 const route = useRoute();
 
@@ -54,8 +55,8 @@ onMounted(async () => {
             <Panel class="is-small" >
                 <template class="p-1" #header>
                     <div class="flex flex-row align-items-center w-full">
-                        <div class="w-full">
-                            <b class="mr-1">Batches</b>
+                        <div class="w-full" v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.batches_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -72,7 +73,10 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions />
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
 
                 <Table/>
 

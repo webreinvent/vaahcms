@@ -46,6 +46,16 @@ class JobsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "jobs_title" => trans("vaahcms-advanced.jobs_title"),
+                "jobs_message" => trans("vaahcms-general.jobs_message"),
+                "filter_queue" => trans("vaahcms-general.filter_queue"),
+                "filter_high" => trans("vaahcms-general.filter_high"),
+                "filter_default" => trans("vaahcms-general.filter_default"),
+                "filter_medium" => trans("vaahcms-general.filter_medium"),
+                "filter_low" => trans("vaahcms-general.filter_low"),
+
+            ];
 
             $response['success'] = true;
             $response['data'] = $data;
@@ -55,9 +65,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -80,9 +90,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -100,9 +110,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -119,9 +129,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -138,9 +148,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -157,9 +167,9 @@ class JobsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

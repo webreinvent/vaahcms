@@ -34,6 +34,7 @@ class UsersController extends Controller
 
             $data['fillable']['except'] = [
                 'uuid',
+                'meta',
                 'created_by',
                 'updated_by',
                 'deleted_by',
@@ -95,7 +96,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -120,7 +121,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -144,7 +145,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -169,7 +170,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -188,7 +189,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -214,7 +215,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -239,7 +240,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -274,7 +275,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -308,7 +309,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -345,7 +346,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -401,7 +402,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -417,10 +418,8 @@ class UsersController extends Controller
             $rules = array(
                 'inputs' => 'required',
             );
-            $messages = array(
-                'inputs.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            );
-            $validator = \Validator::make( $request->all(), $rules, $messages);
+
+            $validator = \Validator::make( $request->all(), $rules);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -507,7 +506,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -528,10 +527,8 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-            $messages = array(
-                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            );
-            $validator = \Validator::make( $request->all(), $rules, $messages);
+
+            $validator = \Validator::make( $request->all(), $rules);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -547,7 +544,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -568,10 +565,8 @@ class UsersController extends Controller
             $rules = array(
                 'user_id' => 'required',
             );
-            $messages = array(
-                'user_id.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            );
-            $validator = \Validator::make( $request->all(), $rules, $messages);
+
+            $validator = \Validator::make( $request->all(), $rules);
             if ( $validator->fails() ) {
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
@@ -586,7 +581,7 @@ class UsersController extends Controller
 
             if(env('APP_DEBUG')){
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['messages'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -638,7 +633,7 @@ class UsersController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
@@ -667,7 +662,7 @@ class UsersController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }

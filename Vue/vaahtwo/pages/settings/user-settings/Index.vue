@@ -28,21 +28,21 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div>
+    <div v-if="store && store.assets">
         <Panel class="is-small">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div>
-                        <b class="mr-1">General Settings</b>
+                        <b class="mr-1">{{ store.assets.language_strings.user_settings_heading }}</b>
                     </div>
                 </div>
             </template>
 
             <template #icons>
                 <div class="buttons">
-                    <Button label="Expand all" icon="pi pi-angle-double-down" class="p-button-sm mr-2"
+                    <Button :label="store.assets.language_strings.user_setting_expand_all" icon="pi pi-angle-double-down" class="p-button-sm mr-2"
                             @click="store.expandAll"></Button>
-                    <Button label="Collapse all" icon="pi pi-angle-double-up" class="p-button-sm"
+                    <Button :label="store.assets.language_strings.user_setting_collapse_all" icon="pi pi-angle-double-up" class="p-button-sm"
                             @click="store.collapseAll"></Button>
                 </div>
             </template>
@@ -51,7 +51,7 @@ onMounted(async () => {
                     <template #header>
                         <div class="w-full">
                             <div>
-                                <h5 class="font-semibold text-sm">Fields</h5>
+                                <h5 class="font-semibold text-sm">{{ store.assets.language_strings.fields }}</h5>
                             </div>
                         </div>
                     </template>
@@ -61,13 +61,13 @@ onMounted(async () => {
                                stripedRows
                                responsiveLayout="scroll"
                     >
-                        <Column field="fieldName" header="Field Name">
+                        <Column field="fieldName" :header="store.assets.language_strings.custom_field_name">
                             <template #body="slotProps">
                                 {{ vaah().toLabel(slotProps.data.key) }}
                             </template>
                         </Column>
 
-                        <Column field="visibilityStatus" header="Is Hidden">
+                        <Column field="visibilityStatus" :header="store.assets.language_strings.is_hidden">
                             <template #body="slotProps">
                                 <InputSwitch v-model="slotProps.data.value.is_hidden"
                                              data-testid="setting-field_is_hidden"
@@ -77,7 +77,7 @@ onMounted(async () => {
                             </template>
                         </Column>
 
-                        <Column field="applyToRegistration" header="Apply To Registration">
+                        <Column field="applyToRegistration" :header="store.assets.language_strings.apply_to_registration">
                             <template #body="slotProps">
                                 <Checkbox v-model="slotProps.data.value.to_registration"
                                           @input="store.storeField(slotProps.data)"
@@ -94,13 +94,13 @@ onMounted(async () => {
                     <template #header>
                         <div class="w-full">
                             <div>
-                                <h5 class="font-semibold text-sm">Custom Fields</h5>
+                                <h5 class="font-semibold text-sm">{{ store.assets.language_strings.custom_fields }}</h5>
                             </div>
                         </div>
                     </template>
 
                     <Message severity="info" class="mt-0">
-                        The inputs of these fields will be stored in <strong>meta</strong> column.
+                        {{ store.assets.language_strings.custom_fields_message }}
                     </Message>
 
                     <div class="col-12 m-2">
@@ -131,7 +131,7 @@ onMounted(async () => {
                                                        v-model="element.name"
                                                        data-testid="setting-customfield_name"
                                                        @input="store.onInputFieldName(element)"
-                                                       placeholder="Field Name"
+                                                       :placeholder="store.assets.language_strings.field_name"
                                             />
 
                                             <Button icon="pi pi-cog p-button-sm"
@@ -152,7 +152,7 @@ onMounted(async () => {
                                                 <table class="p-datatable-table">
                                                     <tbody class="p-datatable-tbody">
                                                     <tr>
-                                                        <td>Is hidden</td>
+                                                        <td>{{ store.assets.language_strings.is_hidden }}</td>
 
                                                         <td class="text-right">
                                                             <InputSwitch v-model="element.is_hidden"
@@ -165,7 +165,7 @@ onMounted(async () => {
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Apply to Registration</td>
+                                                        <td>{{ store.assets.language_strings.apply_to_registration }}</td>
 
                                                         <td class="text-right">
                                                             <InputSwitch v-model="element.to_registration"
@@ -178,7 +178,7 @@ onMounted(async () => {
                                                     </tr>
 
                                                     <tr v-if="element.type === 'password'">
-                                                        <td>Is Password Reveal</td>
+                                                        <td>{{ store.assets.language_strings.custom_is_password_reveal }}</td>
 
                                                         <td>
                                                             <InputSwitch v-model="element.is_password_reveal"
@@ -191,7 +191,7 @@ onMounted(async () => {
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Min-Length</td>
+                                                        <td>{{ store.assets.language_strings.custom_min_length }}</td>
 
                                                         <td>
                                                             <InputNumber v-model="element.minlength"
@@ -202,7 +202,7 @@ onMounted(async () => {
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Max-Length</td>
+                                                        <td>{{ store.assets.language_strings.custom_max_length }}</td>
                                                         <td>
                                                             <InputNumber v-model="element.maxlength"
                                                                          data-testid="setting-customfield_maxlength"
@@ -212,7 +212,7 @@ onMounted(async () => {
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Excerpt</td>
+                                                        <td>{{ store.assets.language_strings.excerpt }}</td>
                                                         <td>
                                                                     <Textarea v-model="element.excerpt"
                                                                               data-testid="setting-customfield_excerpt"
@@ -232,7 +232,7 @@ onMounted(async () => {
                         <div v-else>
 
                             <p class="py-2 text-center">
-                                No Records
+                                {{ store.assets.language_strings.no_records }}
                             </p>
                         </div>
                     </div>
@@ -244,13 +244,13 @@ onMounted(async () => {
                                           data-testid="setting-customfield_fieldtypes"
                                           :options="store.field_types"
                                           optionLabel="name" optionValue="value"
-                                          placeholder="Select a type"
+                                          :placeholder="store.assets.language_strings.select_a_type"
                                           class="is-small"
                                           inputClass="p-inputtext-sm"
 
                                 />
 
-                                <Button label="Add"
+                                <Button :label="store.assets.language_strings.custom_fields_add_button"
                                         :disabled="!store.selected_field_type"
                                         data-testid="setting-customfield_field_add"
                                         @click="store.addCustomField"
@@ -263,7 +263,7 @@ onMounted(async () => {
                             <Divider class="mb-3 mt-0"/>
 
                             <div class="p-inputgroup justify-content-end">
-                                <Button icon="pi pi-save" label="Save"
+                                <Button icon="pi pi-save" :label="store.assets.language_strings.custom_fields_save_button"
                                         class="p-button-sm"
                                         data-testid="setting-customfield_field_save"
                                         @click="store.storeCustomField"

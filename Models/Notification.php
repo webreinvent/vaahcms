@@ -178,7 +178,7 @@ class Notification extends VaahModel {
             $item->save();
 
             $response['success'] = true;
-            $response['messages'][] = 'Saved';
+            $response['messages'][] = trans("vaahcms-general.saved");
             $response['data']['item'] = $item;
             return $response;
 
@@ -284,26 +284,28 @@ class Notification extends VaahModel {
         $notification = self::withTrashed()->find($id);
 
         if (!$notification) {
-            return response()->json(['message' => 'Notification not found'], 404);
+            $response['messages'][] = trans("vaahcms-general.notification_not_found");
+            return response()->json($response, 404);
         }
         $response = [];
         if ($type === 'trash') {
             $notification->delete();
-            $message = 'Record has been deleted';
+            $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
         } elseif ($type === 'restore') {
             if ($notification->withTrashed()) {
                 $notification->restore();
-                $message = 'Record has been restored';
+                $response['messages'][] = trans("vaahcms-general.record_has_been_restored");
             } else {
-                $message = 'Record is not soft-deleted and cannot be restored';
+                $response['messages'][] = trans("vaahcms-general.record_is_not_soft_deleted_and_cannot_be_restored");
             }
         } else {
-            return response()->json(['message' => 'Invalid action type'], 400);
+            $response['messages'][] = trans("vaahcms-general.invalid_action_type");
+            return response()->json($response, 404);
         }
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = $message;
+
 
         return $response;
     }
@@ -349,7 +351,7 @@ class Notification extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -439,7 +441,7 @@ class Notification extends VaahModel {
 
 
         $response['success'] = true;
-        $response['messages'][] = 'Saved';
+        $response['messages'][] = trans("vaahcms-general.saved");
         $response['data']['item'] = $item;
 
 

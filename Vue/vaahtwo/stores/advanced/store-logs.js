@@ -615,7 +615,6 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         toView(item)
         {
-            this.getItem(item.name);
             this.$router.push({name: 'logs.view', params:{name:item.name}})
         },
         isViewLarge()
@@ -741,9 +740,10 @@ export const useLogStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getMenuItems() {
+            const root = useRootStore();
             this.menu_items = [
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     command: async () => {
                         this.confirmDeleteAll();
                     }

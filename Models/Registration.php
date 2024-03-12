@@ -131,7 +131,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This email is already exist.";
+            $response['errors'][] = trans("vaahcms-registration.email_already_exist");
             return $response;
         }
         // check if username exist
@@ -139,7 +139,7 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = "This username is already exist.";
+            $response['errors'][] = trans("vaahcms-registration.username_already_exist");
             return $response;
         }
 
@@ -148,9 +148,10 @@ class Registration extends RegistrationBase
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['errors'][] = "The alternate email id should be different";
+             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
+
         if(!isset($inputs['username']))
         {
             $inputs['username'] = Str::slug($inputs['email']);
@@ -168,11 +169,20 @@ class Registration extends RegistrationBase
 
         $request_item = new Request([$item->id]);
 
-        static::sendVerificationEmail($request_item);
+
+        try{
+            static::sendVerificationEmail($request_item);
+        }catch (\TypeError $e){
+            $response['errors'][] = $e->getMessage();
+        }catch (\Exception $e){
+            $response['errors'][] = $e->getMessage();
+        }
+
+
 
         $response['success'] = true;
         $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -315,7 +325,7 @@ class Registration extends RegistrationBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -362,7 +372,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -378,7 +388,7 @@ class Registration extends RegistrationBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -396,7 +406,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -414,6 +424,7 @@ class Registration extends RegistrationBase
             $items = self::whereIn('id', $items_id)
                 ->withTrashed();
         }
+        $list = self::query();
 
         switch ($type) {
             case 'deactivate':
@@ -451,7 +462,8 @@ class Registration extends RegistrationBase
                 self::query()->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->onlyTrashed()->update(['deleted_by' => null]);
+                $list->restore();
                 break;
             case 'delete-all':
                 self::withTrashed()->forceDelete();
@@ -465,7 +477,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -481,7 +493,7 @@ class Registration extends RegistrationBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
+            $response['errors'][] = trans("vaahcms-general.record_not_found_with_id").$id;
             return $response;
         }
         $response['success'] = true;
@@ -507,7 +519,7 @@ class Registration extends RegistrationBase
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['errors'][] = "This alternate email should be different";
+             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
              return $response;
         }
 
@@ -521,7 +533,7 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
 
 
         return $response;
@@ -532,14 +544,14 @@ class Registration extends RegistrationBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }
@@ -560,12 +572,20 @@ class Registration extends RegistrationBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = auth()->user()->id;
+                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = null;
+                $item->save();
                 break;
         }
         $item=self::getItem($id);

@@ -191,6 +191,7 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Localization'],
             ["name" => 'Login'],
             ["name" => 'Sidebar Menu'],
+            ["name" => 'Taxonomy'],
             ["name" => 'Dashboard'],
             ["name" => 'Registration'],
             ["name" => 'Crud Action'],
@@ -205,6 +206,8 @@ class VaahCmsTableSeeder extends Seeder
             ["name" => 'Extend Module'],
             ["name" => 'Extend Theme'],
             ["name" => 'Validation'],
+            ["name" => 'Settings'],
+            ["name" => 'Advanced'],
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

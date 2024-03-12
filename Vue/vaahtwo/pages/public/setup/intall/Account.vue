@@ -176,6 +176,7 @@ onMounted(async () => {
                     name="account-create_account_btn"
                     data-testid="account-create_account_btn"
                     icon="pi pi-check"
+                    outlined severity="info"
                     label="Create Account"
                     class="p-button-sm w-auto is-small"
                     :loading="store.config.btn_is_account_creating"

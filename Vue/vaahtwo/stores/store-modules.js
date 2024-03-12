@@ -209,6 +209,9 @@ export const useModuleStore = defineStore({
                     }
                 }
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getFilterMenu();
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -443,7 +446,9 @@ export const useModuleStore = defineStore({
                 await root.reloadAssets();
                 await this.formActionAfter();
                 this.getItemMenu();
-                this.resetActivateBtnLoader(this.form.action,data.item);
+                if(data.item){
+                    await this.resetActivateBtnLoader(this.form.action,data.item);
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -835,33 +840,35 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         getFilterMenu()
         {
-            this.status_list = [
+            if (this.assets && this.assets.language_strings) {
+                this.status_list = [
 
-                {
-                    label: 'All',
-                    command: async () => {
-                        this.query.filter.status = 'all';
+                    {
+                        label: this.assets.language_strings.filter_all,
+                        command: async () => {
+                            this.query.filter.status = 'all';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_active,
+                        command: async () => {
+                            this.query.filter.status = 'active';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_inactive,
+                        command: async () => {
+                            this.query.filter.status = 'inactive';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_update_available,
+                        command: async () => {
+                            this.query.filter.status = 'update_available';
+                        }
                     }
-                },
-                {
-                    label: 'Active',
-                    command: async () => {
-                        this.query.filter.status = 'active';
-                    }
-                },
-                {
-                    label: 'Inactive',
-                    command: async () => {
-                        this.query.filter.status = 'inactive';
-                    }
-                },
-                {
-                    label: 'Update Available',
-                    command: async () => {
-                        this.query.filter.status = 'update_available';
-                    }
-                }
-            ];
+                ];
+            }
         },
         //---------------------------------------------------------------------
         getItemMenu()

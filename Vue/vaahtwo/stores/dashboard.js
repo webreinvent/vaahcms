@@ -16,6 +16,7 @@ export const useDashboardStore = defineStore({
         ajax_url: ajax_url,
         assets_is_fetching: true,
         dashboard_items: null,
+        theme_doc_url: null,
         json_url: json_url,
     }),
 
@@ -39,6 +40,7 @@ export const useDashboardStore = defineStore({
         afterGetItem(data, res) {
             if (data) {
                 this.dashboard_items = data.item;
+                this.theme_doc_url = data.theme_doc_url;
                 this.language_strings = data.language_strings;
             }
         },

@@ -5,7 +5,7 @@ const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store">
+    <div v-if="store && store.assets">
         <div class="grid">
             <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
                 <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
@@ -16,7 +16,7 @@ const store = useGeneralStore();
                               optionLabel="name"
                               optionValue="slug"
                               data-testid="general-metatags_attributes"
-                              placeholder="Select any"
+                              :placeholder="store.assets.language_strings.meta_tag_select_any"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
@@ -46,11 +46,11 @@ const store = useGeneralStore();
                     <Button icon="pi pi-plus"
                             data-testid="general-add_newtag"
                             @click="store.addMetaTags"
-                            label="Add Meta Tag"
+                            :label="store.assets.language_strings.add_meta_tags_button"
                             class="p-button-sm"
                     />
 
-                    <Button label="Save"
+                    <Button :label="store.assets.language_strings.meta_tag_save_button"
                             @click="store.storeTags"
                             data-testid="general-meta_tag-save"
                             class="p-button-sm"
@@ -74,12 +74,12 @@ const store = useGeneralStore();
                               data-testid="general-gegnerate_tag"
                               optionLabel="name"
                               optionValue="value"
-                              placeholder="Select a type"
+                              :placeholder="store.assets.language_strings.meta_tag_select_type"
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
 
-                    <Button label="Generate"
+                    <Button :label="store.assets.language_strings.meta_tag_generate_button"
                             @click="store.generateTags"
                             class="p-button-sm"
                     />

@@ -350,6 +350,9 @@ class VaahSetup{
         $i = 0;
         foreach ($list as $key => $value)
         {
+            $value = trim($value);
+            $value = trim($value,'"');
+
             if($key_lower)
             {
                 $key = strtolower($key);

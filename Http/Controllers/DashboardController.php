@@ -40,6 +40,7 @@ class DashboardController extends Controller
     {
         $response['success'] = true;
         $response['data'] = [];
+        $response['data']['theme_doc_url'] = 'https://docs.vaah.dev/vaahcms-2x/theme/introduction';
         $response['data']['item'] = vh_action('getDashboardItems');
         $response['data']['language_strings'] = [
             "greeting" => trans("vaahcms-dashboard.welcome_to_vaahcms"),

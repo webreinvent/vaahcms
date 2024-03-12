@@ -198,6 +198,10 @@ export const useRegistrationStore = defineStore({
                     this.item = vaah().clone(data.empty_item);
                 }
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getListBulkMenu();
+                this.getListSelectedMenu();
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -249,16 +253,16 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -426,8 +430,8 @@ export const useRegistrationStore = defineStore({
             {
 
                 this.item = data.item;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
             }
         },
@@ -441,9 +445,6 @@ export const useRegistrationStore = defineStore({
                 case 'create-and-new':
                     this.setActiveItemAsEmpty();
                     break;
-                case 'create-and-clone':
-                    this.item.id = null;
-                    break;
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
                     this.route.params.id = null;
@@ -455,7 +456,10 @@ export const useRegistrationStore = defineStore({
                     this.$router.push({name: 'registrations.index'});
                     break;
                 case 'save-and-clone':
+                case 'create-and-clone':
                     this.item.id = null;
+                    await this.$router.push({name: 'registrations.form',query:this.query,params: { id: null }});
+
                     break;
                 case 'trash':
                     // this.item = null;
@@ -536,9 +540,10 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         confirmDelete()
         {
+            const root = useRootStore();
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select a record']);
+                vaah().toastErrors([root.assets.language_strings.general.select_a_record]);
                 return false;
             }
             this.action.type = 'delete';
@@ -701,146 +706,153 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
-            this.list_selected_menu = [
-                {
-                    label: 'Email Verification Pending',
-                    icon: 'pi pi-calendar-times',
-                    command: async () => {
-                        await this.updateList('email-verification-pending')
-                    }
-                },
-                {
-                    label: 'Email Verified',
-                    icon: 'pi pi-envelope',
-                    command: async () => {
-                        await this.updateList('email-verified')
-                    }
-                },
-                {
-                    label: 'User Created',
-                    icon: 'pi pi-user-plus',
-                    command: async () => {
-                        await this.updateList('user-created')
-                    }
-                },
-                {
-                    separator: true
-                },
-              /*  {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
-                {
-                    separator: true
-                },*/
-                {
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.updateList('trash')
-                    }
-                },
-                {
-                    label: 'Restore',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.updateList('restore')
-                    }
-                },
-                {
-                    label: 'Delete',
-                    icon: 'pi pi-trash',
-                    command: () => {
-                        this.confirmDelete()
-                    }
-                },
-            ]
+            const root = useRootStore();
+            if (this.assets && this.assets.language_strings) {
+                this.list_selected_menu = [
+                    {
+                        label: this.assets.language_strings.filter_email_verification_pending,
+                        icon: 'pi pi-calendar-times',
+                        command: async () => {
+                            await this.updateList('email-verification-pending')
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_email_verified,
+                        icon: 'pi pi-envelope',
+                        command: async () => {
+                            await this.updateList('email-verified')
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_user_created,
+                        icon: 'pi pi-user-plus',
+                        command: async () => {
+                            await this.updateList('user-created')
+                        }
+                    },
+                    {
+                        separator: true
+                    },
+                    /*  {
+                          label: 'Activate',
+                          command: async () => {
+                              await this.updateList('activate')
+                          }
+                      },
+                      {
+                          label: 'Deactivate',
+                          command: async () => {
+                              await this.updateList('deactivate')
+                          }
+                      },
+                      {
+                          separator: true
+                      },*/
+                    {
+                        label: root.assets.language_strings.crud_actions.bulk_trash,
+                        icon: 'pi pi-times',
+                        command: async () => {
+                            await this.updateList('trash')
+                        }
+                    },
+                    {
+                        label: root.assets.language_strings.crud_actions.bulk_restore,
+                        icon: 'pi pi-replay',
+                        command: async () => {
+                            await this.updateList('restore')
+                        }
+                    },
+                    {
+                        label: root.assets.language_strings.crud_actions.bulk_delete,
+                        icon: 'pi pi-trash',
+                        command: () => {
+                            this.confirmDelete()
+                        }
+                    },
+                ]
+            }
 
         },
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
-            this.list_bulk_menu = [
-                {
-                    label: 'All Users Email Verification Pending',
-                    icon: 'pi pi-calendar-times',
-                    command: async () => {
-                        await this.listAction('email-verification-pending')
-                    }
-                },
-                {
-                    label: 'All Users Email Verified',
-                    icon: 'pi pi-envelope',
-                    command: async () => {
-                        await this.listAction('email-verified')
-                    }
-                },
-                {
-                    label: 'All User Created',
-                    icon: 'pi pi-user-plus',
-                    command: async () => {
-                        await this.listAction('user-created')
-                    }
-                },
-                {
-                    separator: true
-                },
-               /* {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },*/
-                {
-                    label: 'Trash All',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.listAction('trash-all')
-                    }
-                },
-                {
-                    label: 'Restore All',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.listAction('restore-all')
-                    }
-                },
-                {
-                    label: 'Delete All',
-                    icon: 'pi pi-trash',
-                    command: async () => {
-                        this.confirmDeleteAll();
-                    }
-                },
-            ];
+            const root = useRootStore();
+            if (this.assets && this.assets.language_strings) {
+                this.list_bulk_menu = [
+                    {
+                        label: this.assets.language_strings.filter_users_email_verification_pending,
+                        icon: 'pi pi-calendar-times',
+                        command: async () => {
+                            await this.listAction('email-verification-pending')
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_users_email_verified,
+                        icon: 'pi pi-envelope',
+                        command: async () => {
+                            await this.listAction('email-verified')
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.filter_user_created,
+                        icon: 'pi pi-user-plus',
+                        command: async () => {
+                            await this.listAction('user-created')
+                        }
+                    },
+                    {
+                        separator: true
+                    },
+                    /* {
+                         label: 'Mark all as active',
+                         command: async () => {
+                             await this.listAction('activate-all')
+                         }
+                     },
+                     {
+                         label: 'Mark all as inactive',
+                         command: async () => {
+                             await this.listAction('deactivate-all')
+                         }
+                     },
+                     {
+                         separator: true
+                     },*/
+                    {
+                        label: root.assets.language_strings.crud_actions.trash_all,
+                        icon: 'pi pi-times',
+                        command: async () => {
+                            await this.listAction('trash-all')
+                        }
+                    },
+                    {
+                        label: root.assets.language_strings.crud_actions.restore_all,
+                        icon: 'pi pi-replay',
+                        command: async () => {
+                            await this.listAction('restore-all')
+                        }
+                    },
+                    {
+                        label: root.assets.language_strings.crud_actions.delete_all,
+                        icon: 'pi pi-trash',
+                        command: async () => {
+                            this.confirmDeleteAll();
+                        }
+                    },
+                ];
+            }
         },
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -851,7 +863,7 @@ export const useRegistrationStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -860,7 +872,7 @@ export const useRegistrationStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -883,6 +895,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id )
@@ -890,14 +903,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_strings.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('save-and-close');
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_strings.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -906,7 +919,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & New',
+                        label: root.assets.language_strings.crud_actions.form_save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -915,14 +928,14 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_strings.crud_actions.form_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -934,14 +947,14 @@ export const useRegistrationStore = defineStore({
 
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_strings.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_strings.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -950,7 +963,7 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_strings.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -960,7 +973,7 @@ export const useRegistrationStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_strings.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();

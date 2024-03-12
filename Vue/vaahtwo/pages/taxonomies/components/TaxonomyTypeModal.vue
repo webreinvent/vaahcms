@@ -46,7 +46,7 @@ const cloneAction = () => {
 
             <TreeSelect v-model="selectedNode"
                         :options="store.assets.types"
-                        placeholder="Select a Parent"
+                        :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent"
                         @node-select="store.selectedNode"
                         name="parent-taxonomies-type-name"
                         data-testid="parent-taxonomies-type-name"
@@ -59,7 +59,7 @@ const cloneAction = () => {
             />
 
             <Button class="p-button-sm"
-                    label="Add"
+                    :label="store.assets.language_strings.taxonomy_type_add_button"
                     @click="store.createTaxonomyType"
             />
         </div>

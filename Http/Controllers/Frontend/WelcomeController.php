@@ -47,7 +47,7 @@ class WelcomeController extends Controller
             }
 
             $response['success'] = true;
-            $response['messages'][] = 'Cache was successfully deleted.';
+            $response['messages'][] = trans("vaahcms-general-setting.cache_delete_message");
 
         }catch(\Exception $e)
         {
@@ -55,9 +55,9 @@ class WelcomeController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

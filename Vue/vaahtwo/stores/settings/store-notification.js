@@ -3,6 +3,7 @@ import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import countriesData from "../../assets/data/country.json";
 import {vaah} from '../../vaahvue/pinia/vaah'
+import {useRootStore} from "../root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
@@ -734,14 +735,14 @@ export const useNotificationStore = defineStore({
         },
 
         isListActionValid() {
-
+            const root = useRootStore();
             if (!this.action.type) {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if (this.action.items.length < 1) {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -802,23 +803,24 @@ export const useNotificationStore = defineStore({
         },
 
         async getListSelectedMenu() {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.bulk_restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: 'Delete',
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -829,24 +831,25 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         getListBulkMenu() {
+            const root = useRootStore();
             this.list_bulk_menu = [
 
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();

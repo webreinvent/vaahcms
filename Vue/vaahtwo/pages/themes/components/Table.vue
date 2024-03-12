@@ -4,8 +4,10 @@ import { ref } from "vue";
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useThemeStore } from '../../../stores/store-themes'
 import { useConfirm } from "primevue/useconfirm";
+import { useRootStore } from "../../../stores/root";
 
 const store = useThemeStore();
+const root = useRootStore();
 const useVaah = vaah();
 const menu = ref();
 
@@ -46,21 +48,21 @@ const confirmRefresh = (item) => {
 function actionItems(item){
     let list =[
         {
-            label: 'Run Migrations',
+            label: store.assets.language_strings.actions_run_migrations,
             icon: 'pi pi-database',
             command: () => {
                 store.runMigrations(item);
             }
         },
         {
-            label: 'Run Seeds',
+            label: store.assets.language_strings.actions_run_seeds,
             icon: 'pi pi-server',
             command: () => {
                 store.runSeeds(item);
             }
         },
         {
-            label: 'Refresh Migrations',
+            label: store.assets.language_strings.actions_refresh_migrations,
             icon: 'pi pi-refresh',
             command: () => {
                 confirmRefresh(item);
@@ -74,7 +76,7 @@ function actionItems(item){
 
 <template>
 
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <Divider class="mt-2"/>
         <div class="grid" v-for="(item, index) in store.list">
             <div class="col-12 md:col-5">
@@ -85,15 +87,15 @@ function actionItems(item){
             <div class="col-12 md:col-7">
                 <div class="flex justify-content-end mb-3">
                     <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold"
-                         :value=" 'Name: ' + item.name "
+                         :value="store.assets.language_strings.themes_name + ' : ' + item.name"
                     />
 
                     <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold"
-                         :value=" 'Version: ' + item.version "
+                         :value="store.assets.language_strings.themes_version + ' : ' + item.name"
                     />
 
                     <Tag class="mr-2 bg-blue-50 text-blue-600 font-semibold"
-                         :value=" 'Developed by: ' + item.author_name "
+                         :value="store.assets.language_strings.themes_developed_by + ' : ' + item.name"
                     />
                 </div>
 
@@ -106,7 +108,7 @@ function actionItems(item){
                                     class="p-button-sm bg-yellow-400 text-color"
                                     label="Deactivate"
                                     :loading="store.active_action.includes('deactivate_'+item.id)"
-                                    v-tooltip.top="'Deactivate Theme'"
+                                    v-tooltip.top="store.assets.language_strings.toolkit_text_deactivate_theme"
                                     @click="store.toggleIsActive(item)"
                             />
                             <Button v-show="item.is_active && item.is_migratable
@@ -116,7 +118,7 @@ function actionItems(item){
                                     @click="$event => toggle($event,index)"
                                     icon="pi pi-arrow-down"
                                     aria-haspopup="true" :aria-controls="'overlay_tmenu_'+item.slug"
-                                    v-tooltip.top="'Actions'"
+                                    v-tooltip.top="store.assets.language_strings.themes_toolkit_text_actions"
                             />
                             <TieredMenu ref="menu" :id="'overlay_tmenu_'+item.slug"
                                         :model="actionItems(item)" popup />
@@ -127,8 +129,8 @@ function actionItems(item){
                             :loading="store.active_action.includes('activate_'+item.id)"
                             @click="store.toggleIsActive(item)"
                             :data-testid="'themes-activate-'+item.slug"
-                            v-tooltip.top="'Activate Theme'"
-                            label="Activate"
+                            v-tooltip.top="store.assets.language_strings.toolkit_text_activate_theme"
+                            :label="store.assets.language_strings.themes_activate_button"
                     />
 
                     <Button v-if="store.hasPermission('can-activate-theme') && item.is_active && item.is_default"
@@ -141,7 +143,7 @@ function actionItems(item){
                     <Button v-if="store.hasPermission('can-activate-theme') && item.is_active && !item.is_default"
                             class="mr-2 p-button-sm"
                             :loading="store.active_action.includes('make_default_'+item.id)"
-                            v-tooltip.top="'Mark this theme as Default'"
+                            v-tooltip.top="store.assets.language_strings.toolkit_text_this_theme_is_marked_as_default"
                             :data-testid="'themes-mark-default-'+item.slug"
                             @click="store.makeDefault(item)"
                             label="Make Default"
@@ -152,13 +154,13 @@ function actionItems(item){
                             :loading="store.active_action.includes('publish_assets_'+item.id)"
                             @click="store.publishAssets(item)"
                             icon="pi pi-arrow-up"
-                            v-tooltip.top="'Publish Assets'"
+                            v-tooltip.top="store.assets.language_strings.themes_toolkit_text_publish_assets"
                             v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                     />
 
                     <Button v-if="item.is_active && item.is_sample_data_available
                         && store.hasPermission('can-import-sample-data-in-theme')"
-                            v-tooltip.top="'Import Sample Data'"
+                            v-tooltip.top="store.assets.language_strings.themes_toolkit_text_import_sample_data"
                             class="mr-2 p-button-sm"
                             :loading="store.active_action.includes('import_sample_data_'+item.id)"
                             icon="pi pi-database"
@@ -167,18 +169,18 @@ function actionItems(item){
                     />
 
                     <Button class="p-button-info p-button-sm mr-2"
-                            label="Update"
+                            :label="store.assets.language_strings.update_button"
                             :data-testid="'module-update-'+item.slug"
                             data-testid="modules-table-action-install-update"
                             icon="pi pi-download"
                             @click="store.confirmUpdate(item)"
-                            v-tooltip.top="'Update Module'"
+                            v-tooltip.top="store.assets.language_strings.toolkit_text_update_module"
                             v-if="item.is_update_available && store.hasPermission('can-update-module')"
                     />
 
                     <Button class="p-button-sm mr-2"
                             icon="pi pi-eye"
-                            v-tooltip.top=" 'View' "
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             @click="store.toView(item)"
                             v-if="store.hasPermission('can-read-theme')"
                     />
@@ -187,13 +189,18 @@ function actionItems(item){
                             v-if="!item.deleted_at && store.hasPermission('can-update-theme')"
                             @click="store.confirmDeleteItem(item)"
                             data-testid="themes-table-action-delete"
-                            v-tooltip.top="'Trash'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                             icon="pi pi-trash" />
 
 
                 </div>
             </div>
             <Divider class="mt-2" />
+
+        </div>
+
+        <div v-if="!store.list || store.list.length === 0" class="text-center py-3">
+            No records found.
         </div>
 
         <!--paginator-->

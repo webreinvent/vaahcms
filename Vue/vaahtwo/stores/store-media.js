@@ -260,16 +260,17 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
+            const root = useRootStore();
 
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -430,8 +431,8 @@ export const useMediaStore = defineStore({
             if(data)
             {
                 this.item = data;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
                 await this.getFormMenu();
 
@@ -460,6 +461,7 @@ export const useMediaStore = defineStore({
                 case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
+                    await this.$router.push({name: 'media.form',query:this.query,params: { id: null }});
                     break;
                 case 'trash':
                     this.item = null;
@@ -708,23 +710,24 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
+            const root = useRootStore();
             this.list_selected_menu = [
                 {
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.bulk_trash,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.updateList('trash')
                     }
                 },
                 {
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.bulk_restore,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.updateList('restore')
                     }
                 },
                 {
-                    label: 'Delete',
+                    label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
                     command: () => {
                         this.confirmDelete()
@@ -736,23 +739,24 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -763,13 +767,14 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -780,7 +785,7 @@ export const useMediaStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -789,7 +794,7 @@ export const useMediaStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -812,13 +817,14 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id)
             {
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_strings.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
 
@@ -826,7 +832,7 @@ export const useMediaStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_strings.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -835,14 +841,14 @@ export const useMediaStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_strings.crud_actions.view_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -853,14 +859,14 @@ export const useMediaStore = defineStore({
             } else{
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_strings.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_strings.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -869,7 +875,7 @@ export const useMediaStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_strings.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();

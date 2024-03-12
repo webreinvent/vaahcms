@@ -19,12 +19,12 @@ VAAHCMS_VUE_APP={{$data->vaahcms_vue_app ?? '' }}
 
 LOG_CHANNEL=stack
 
-DB_CONNECTION={{$data->db_connection ?? '' }}
-DB_HOST={{$data->db_host ?? '' }}
-DB_PORT={{$data->db_port ?? '' }}
-DB_DATABASE={{$data->db_database ?? '' }}
-DB_USERNAME={{$data->db_username ?? '' }}
-DB_PASSWORD={{$data->db_password ?? '' }}
+DB_CONNECTION={{vh_env_string($data->db_connection)}}
+DB_HOST={{vh_env_string($data->db_host)}}
+DB_PORT={{vh_env_string($data->db_port)}}
+DB_DATABASE={{vh_env_string($data->db_database)}}
+DB_USERNAME={{vh_env_string($data->db_username)}}
+DB_PASSWORD={{vh_env_string($data->db_password)}}
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
@@ -38,15 +38,15 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_DRIVER={{$data->mail_driver ?? '' }}
-MAIL_HOST={{$data->mail_host ?? '' }}
-MAIL_PORT={{$data->mail_port ?? '' }}
-MAIL_USERNAME={{$data->mail_username ?? '' }}
-MAIL_PASSWORD={{$data->mail_password ?? '' }}
-MAIL_ENCRYPTION={{$data->mail_encryption ?? '' }}
+MAIL_DRIVER={{vh_env_string($data->mail_driver)}}
+MAIL_HOST={{vh_env_string($data->mail_host)}}
+MAIL_PORT={{vh_env_string($data->mail_port)}}
+MAIL_USERNAME={{vh_env_string($data->mail_username)}}
+MAIL_PASSWORD={{vh_env_string($data->mail_password)}}
+MAIL_ENCRYPTION={{vh_env_string($data->mail_encryption)}}
 
-MAIL_FROM_NAME={{$data->mail_from_name ?? '' }}
-MAIL_FROM_ADDRESS={{$data->mail_from_address ?? '' }}
+MAIL_FROM_NAME={{vh_env_string($data->mail_from_name)}}
+MAIL_FROM_ADDRESS={{vh_env_string($data->mail_from_address)}}
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=

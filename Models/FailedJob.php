@@ -95,7 +95,7 @@ class FailedJob extends FailedJobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -104,7 +104,7 @@ class FailedJob extends FailedJobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['messages'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -114,7 +114,7 @@ class FailedJob extends FailedJobBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -167,7 +167,7 @@ class FailedJob extends FailedJobBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -208,7 +208,7 @@ class FailedJob extends FailedJobBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -224,8 +224,8 @@ class FailedJob extends FailedJobBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
-            'items.required' => 'Select items',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
+            'items.required' => trans("vaahcms-general.select_items"),
         );
 
         $validator = \Validator::make($inputs, $rules, $messages);
@@ -242,7 +242,7 @@ class FailedJob extends FailedJobBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -306,7 +306,7 @@ class FailedJob extends FailedJobBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -328,7 +328,7 @@ class FailedJob extends FailedJobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -339,7 +339,7 @@ class FailedJob extends FailedJobBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['messages'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -349,7 +349,7 @@ class FailedJob extends FailedJobBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -359,14 +359,14 @@ class FailedJob extends FailedJobBase
         $item = self::where('id', $id)->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }

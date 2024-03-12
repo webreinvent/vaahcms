@@ -3,7 +3,9 @@ import {ref, reactive, watch, onMounted} from 'vue';
 import { useLogStore } from '../../../../stores/advanced/store-logs'
 
 import Filters from './Filters.vue'
+import {useRootStore} from "../../../../stores/root";
 
+const root = useRootStore();
 const store = useLogStore();
 
 onMounted(async () => {
@@ -39,11 +41,11 @@ const toggleBulkMenuState = (event) => {
                            @keyup.enter="store.delayedSearch()"
                            @keyup.enter.native="store.delayedSearch()"
                            @keyup.13="store.delayedSearch()"
-                           placeholder="Search"
+                           :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
                            data-testid="logs-action_search_input"
                 />
 
-                <Button label="Reset"
+                <Button  :label="root.assets.language_strings.crud_actions.reset_button"
                         class="p-button-sm"
                         data-testid="logs-action_search"
                         @click="store.resetSearch"
@@ -52,7 +54,7 @@ const toggleBulkMenuState = (event) => {
 
             <MultiSelect v-model="store.query.filter.file_type"
                          :options="store.logs_file_types"
-                         optionLabel="name" placeholder="Filter By Extension"
+                         optionLabel="name" :placeholder="store.assets.language_strings.filter_by_extension"
                          display="chip"
                          class="w-full my-2 p-inputtext-sm"
                          optionValue="value"

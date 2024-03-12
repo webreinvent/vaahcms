@@ -7,7 +7,7 @@ const useVaah = vaah();
 </script>
 
 <template>
-    <div v-if="store">
+    <div v-if="store && store.assets">
         <div class="grid">
             <div class="col-12 md:col-4" v-for="(item,index) in store.social_media_links">
                 <h5 class="p-1 text-xs mb-1">{{ useVaah.toLabel(item.label) }}</h5>
@@ -19,7 +19,7 @@ const useVaah = vaah();
                         <InputText type="text"
                                    :data-testid="'general-'+item.label+'field'"
                                    v-model="item.value"
-                                   :placeholder="'Enter ' + item.label + ' Link'"
+                                   :placeholder="store.assets.language_strings.social_media_links_placeholder_text_enter + ' ' + item.label + ' ' + store.assets.language_strings.social_media_links_placeholder_text_link"
                                    class="w-full p-inputtext-sm"
                         />
                     </span>
@@ -42,7 +42,7 @@ const useVaah = vaah();
 
         <div class="grid">
             <div class="col-12 md:col-4">
-                <h5 class="p-1 text-xs mb-1">Add Link</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.add_link }}</h5>
                 <div class="p-inputgroup">
                     <InputText v-model="store.add_link"
                                data-testid="general-add_link_field"
@@ -51,7 +51,7 @@ const useVaah = vaah();
                                class="p-inputtext-sm"
                     />
 
-                    <Button label="Add Link"
+                    <Button :label="store.assets.language_strings.add_link_button"
                             icon="pi pi-plus"
                             class="p-button-sm"
                             data-testid="general-add_link_btn"
@@ -64,7 +64,7 @@ const useVaah = vaah();
             <div class="col-12">
                 <Divider class="mt-0 mb-3"/>
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Save"
+                    <Button :label="store.assets.language_strings.social_media_and_links_save_button"
                             icon="pi pi-save"
                             data-testid="general-link_save"
                             @click="store.storeLinks()"

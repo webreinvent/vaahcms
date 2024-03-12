@@ -124,14 +124,14 @@ const openDetailsViewModal = () => {
 
             <div class="grid p-fluid mt-1 mb-2">
                 <div class="col-12">
-                    <div class="p-inputgroup">
+                    <div class="p-inputgroup" v-if="store.assets && store.assets.language_strings">
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
                             <InputText v-model="store.role_users_query.q"
                                        @keyup.enter="store.delayedRoleUsersSearch()"
                                        @keyup.enter.native="store.delayedRoleUsersSearch()"
                                        @keyup.13="store.delayedRoleUsersSearch()"
-                                       placeholder="Search"
+                                       :placeholder="store.assets.language_strings.view_users_placeholder_search"
                                        type="text"
                                        data-testid="role-user_search"
                                        class="w-full p-inputtext-sm"
@@ -140,7 +140,7 @@ const openDetailsViewModal = () => {
 
                         <Button class="p-button-sm"
                                 data-testid="role-user_search_reset"
-                                label="Reset"
+                                :label="store.assets.language_strings.view_users_reset_button"
                                 @click="store.resetRoleUserFilters()"
 
                         />
@@ -174,19 +174,20 @@ const openDetailsViewModal = () => {
 
                 <Column field="has-role"
                         header="Has Role"
+                        v-if="store.assets && store.assets.language_strings"
                 >
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-roles')||
                                     store.hasPermission('can-manage-roles')"
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_users_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeUserRole(prop.data)"
                                 data-testid="role-user_status_yes"
                         />
 
-                        <Button label="No"
+                        <Button :label="store.assets.language_strings.view_users_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 data-testid="role-user_status_no"
                                 v-else
@@ -197,13 +198,13 @@ const openDetailsViewModal = () => {
                     <template #body="prop"
                               v-else
                     >
-                        <Button label="Yes"
+                        <Button :label="store.assets.language_strings.view_users_yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 disabled
                         />
 
-                        <Button label="No"
+                        <Button :label="store.assets.language_strings.view_users_no"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 disabled
@@ -211,12 +212,12 @@ const openDetailsViewModal = () => {
                     </template>
                 </Column>
 
-                <Column>
+                <Column field="actions">
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
                                 icon="pi pi-eye"
-                                label="View"
+                                :label=store.assets.language_strings.view_users_text_view
                                 data-testid="role-user_view_details"
                         />
                     </template>

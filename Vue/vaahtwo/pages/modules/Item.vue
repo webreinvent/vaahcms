@@ -112,7 +112,7 @@ const toggleItemMenu = (event) => {
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
+                <table class="p-datatable-table w-full">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 

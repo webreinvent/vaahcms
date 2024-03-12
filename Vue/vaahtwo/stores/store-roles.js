@@ -238,6 +238,11 @@ export const useRoleStore = defineStore({
                 }
 
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getPermissionMenuItems();
+                this.getRoleUserMenuItems();
+
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -288,16 +293,16 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
+            const root = useRootStore();
             if(!this.action.type)
             {
-                vaah().toastErrors(['Select an action type']);
+                vaah().toastErrors([root.assets.language_strings.general.select_an_action_type]);
                 return false;
             }
 
             if(this.action.items.length < 1)
             {
-                vaah().toastErrors(['Select records']);
+                vaah().toastErrors([root.assets.language_strings.general.select_records]);
                 return false;
             }
 
@@ -465,8 +470,8 @@ export const useRoleStore = defineStore({
             if(data)
             {
                 this.item = data;
-                await this.getList();
                 await this.formActionAfter();
+                await this.getList();
                 this.getItemMenu();
 
                 if (this.route.params && this.route.params.id) {
@@ -491,12 +496,9 @@ export const useRoleStore = defineStore({
                     this.$router.push({name: 'roles.index'});
                     break;
                 case 'create-and-clone':
-                    this.item.id = null;
-                    break;
                 case 'save-and-clone':
                     this.item.id = null;
-                    this.route.params.id = null;
-                    this.$router.push({name: 'roles.form'});
+                    await this.$router.push({name: 'roles.form',query:this.query,params: { id: null }});
                     break;
                 case 'trash':
                     this.item = null;
@@ -1014,15 +1016,16 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         getListBulkMenu()
         {
+            const root = useRootStore();
             this.list_bulk_menu = [
                 {
-                    label: 'Mark all as active',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_active,
                     command: async () => {
                         await this.listAction('activate-all')
                     }
                 },
                 {
-                    label: 'Mark all as inactive',
+                    label: root.assets.language_strings.crud_actions.mark_all_as_inactive,
                     command: async () => {
                         await this.listAction('deactivate-all')
                     }
@@ -1031,21 +1034,21 @@ export const useRoleStore = defineStore({
                     separator: true
                 },
                 {
-                    label: 'Trash All',
+                    label: root.assets.language_strings.crud_actions.trash_all,
                     icon: 'pi pi-times',
                     command: async () => {
                         await this.listAction('trash-all')
                     }
                 },
                 {
-                    label: 'Restore All',
+                    label: root.assets.language_strings.crud_actions.restore_all,
                     icon: 'pi pi-replay',
                     command: async () => {
                         await this.listAction('restore-all')
                     }
                 },
                 {
-                    label: 'Delete All',
+                    label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
                     command: async () => {
                         this.confirmDeleteAll();
@@ -1056,13 +1059,14 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         getItemMenu()
         {
+            const root = useRootStore();
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
             {
 
                 item_menu.push({
-                    label: 'Restore',
+                    label: root.assets.language_strings.crud_actions.view_restore,
                     icon: 'pi pi-refresh',
                     command: () => {
                         this.itemAction('restore');
@@ -1073,7 +1077,7 @@ export const useRoleStore = defineStore({
             if(this.item && this.item.id && !this.item.deleted_at)
             {
                 item_menu.push({
-                    label: 'Trash',
+                    label: root.assets.language_strings.crud_actions.view_trash,
                     icon: 'pi pi-times',
                     command: () => {
                         this.itemAction('trash');
@@ -1082,7 +1086,7 @@ export const useRoleStore = defineStore({
             }
 
             item_menu.push({
-                label: 'Delete',
+                label: root.assets.language_strings.crud_actions.view_delete,
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -1105,13 +1109,14 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         async getFormMenu()
         {
+            const root = useRootStore();
             let form_menu = [];
 
             if(this.item && this.item.id)
             {
                 form_menu = [
                     {
-                        label: 'Save & Close',
+                        label: root.assets.language_strings.crud_actions.form_save_and_close,
                         icon: 'pi pi-check',
                         command: () => {
 
@@ -1119,7 +1124,7 @@ export const useRoleStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & Clone',
+                        label: root.assets.language_strings.crud_actions.form_save_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1128,7 +1133,7 @@ export const useRoleStore = defineStore({
                         }
                     },
                     {
-                        label: 'Save & New',
+                        label: root.assets.language_strings.crud_actions.form_save_and_new,
                         icon: 'pi pi-plus',
                         command: () => {
 
@@ -1137,14 +1142,14 @@ export const useRoleStore = defineStore({
                         }
                     },
                     {
-                        label: 'Trash',
+                        label: root.assets.language_strings.crud_actions.view_trash,
                         icon: 'pi pi-times',
                         command: () => {
                             this.itemAction('trash');
                         }
                     },
                     {
-                        label: 'Delete',
+                        label: root.assets.language_strings.crud_actions.form_delete,
                         icon: 'pi pi-trash',
                         command: () => {
                             this.confirmDeleteItem('delete');
@@ -1155,14 +1160,14 @@ export const useRoleStore = defineStore({
             } else{
                 form_menu = [
                     {
-                        label: 'Create & Close',
+                        label: root.assets.language_strings.crud_actions.form_create_and_close,
                         icon: 'pi pi-check',
                         command: () => {
                             this.itemAction('create-and-close');
                         }
                     },
                     {
-                        label: 'Create & Clone',
+                        label: root.assets.language_strings.crud_actions.form_create_and_clone,
                         icon: 'pi pi-copy',
                         command: () => {
 
@@ -1171,7 +1176,7 @@ export const useRoleStore = defineStore({
                         }
                     },
                     {
-                        label: 'Reset',
+                        label: root.assets.language_strings.crud_actions.form_reset,
                         icon: 'pi pi-refresh',
                         command: () => {
                             this.setActiveItemAsEmpty();
@@ -1181,7 +1186,7 @@ export const useRoleStore = defineStore({
             }
 
             form_menu.push({
-                label: 'Fill',
+                label: root.assets.language_strings.crud_actions.form_fill,
                 icon: 'pi pi-pencil',
                 command: () => {
                     this.getFaker();
@@ -1210,37 +1215,41 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getPermissionMenuItems() {
-            this.permission_menu_items = [
-                {
-                    label: 'Active All Permissions',
-                    command: () => {
-                        this.bulkActions(1, 'toggle-permission-active-status');
+            if (this.assets && this.assets.language_strings) {
+                this.permission_menu_items = [
+                    {
+                        label: this.assets.language_strings.view_permissions_active_all_permissions,
+                        command: () => {
+                            this.bulkActions(1, 'toggle-permission-active-status');
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.view_permissions_inactive_all_permissions,
+                        command: () => {
+                            this.bulkActions(0, 'toggle-permission-active-status');
+                        }
                     }
-                },
-                {
-                    label: 'Inactive All Permissions',
-                    command: () => {
-                        this.bulkActions(0, 'toggle-permission-active-status');
-                    }
-                }
-            ]
+                ]
+            }
         },
         //---------------------------------------------------------------------
         async getRoleUserMenuItems() {
-            this.role_user_menu_items = [
-                {
-                    label: 'Attach To All Users',
-                    command: () => {
-                        this.bulkActions(1, 'toggle-user-active-status',this.role_users_query);
+            if (this.assets && this.assets.language_strings) {
+                this.role_user_menu_items = [
+                    {
+                        label: this.assets.language_strings.view_users_attach_to_all_users,
+                        command: () => {
+                            this.bulkActions(1, 'toggle-user-active-status', this.role_users_query);
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.view_users_detach_to_all_users,
+                        command: () => {
+                            this.bulkActions(0, 'toggle-user-active-status', this.role_users_query);
+                        }
                     }
-                },
-                {
-                    label: 'Detach To All Users',
-                    command: () => {
-                        this.bulkActions(0, 'toggle-user-active-status',this.role_users_query);
-                    }
-                }
-            ]
+                ]
+            }
         },
         //---------------------------------------------------------------------
         hasPermission(slug) {

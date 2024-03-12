@@ -209,6 +209,9 @@ export const useThemeStore = defineStore({
                     }
                 }
             }
+            if (this.assets && this.assets.language_strings) {
+                this.getFilterMenu();
+            }
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -441,7 +444,10 @@ export const useThemeStore = defineStore({
                 this.item = data;
                 await root.reloadAssets();
                 await this.formActionAfter();
-                this.resetActivateBtnLoader(this.form.action,data.item)
+                if(data.item){
+                    await this.resetActivateBtnLoader(this.form.action,data.item)
+                }
+
             }
        },
         //---------------------------------------------------------------------
@@ -468,7 +474,6 @@ export const useThemeStore = defineStore({
                 case 'activate':
                 case 'deactivate':
                     this.item = null;
-                    this.toList();
                     break;
             }
         },
@@ -587,17 +592,10 @@ export const useThemeStore = defineStore({
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
+
                 await self.updateUrlQueryString(self.query);
+                await self.getList();
 
-                if (self.query.q !== null && self.query.q !== undefined) {
-                    await self.getThemes();
-                }
-
-                if ((self.query.filter.q !== null && self.query.filter.q !== undefined && self.query.filter.q !== '')
-                    || (self.query.filter.status !== null && self.query.filter.status !== undefined && self.query.filter.status !== ''))
-                {
-                    await self.getList();
-                }
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
@@ -839,33 +837,35 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         getFilterMenu()
         {
-            this.status_list = [
+            if (this.assets && this.assets.language_strings) {
+                this.status_list = [
 
-                {
-                    label: 'All',
-                    command: async () => {
-                        this.query.filter.status = 'all';
+                    {
+                        label: this.assets.language_strings.themes_filter_all,
+                        command: async () => {
+                            this.query.filter.status = 'all';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.themes_filter_active,
+                        command: async () => {
+                            this.query.filter.status = 'active';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.themes_filter_inactive,
+                        command: async () => {
+                            this.query.filter.status = 'inactive';
+                        }
+                    },
+                    {
+                        label: this.assets.language_strings.themes_filter_update_available,
+                        command: async () => {
+                            this.query.filter.status = 'update_available';
+                        }
                     }
-                },
-                {
-                    label: 'Active',
-                    command: async () => {
-                        this.query.filter.status = 'active';
-                    }
-                },
-                {
-                    label: 'Inactive',
-                    command: async () => {
-                        this.query.filter.status = 'inactive';
-                    }
-                },
-                {
-                    label: 'Update Available',
-                    command: async () => {
-                        this.query.filter.status = 'update_available';
-                    }
-                }
-            ];
+                ];
+            }
         },
         confirmDeleteItem(item)
         {

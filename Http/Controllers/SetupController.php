@@ -90,6 +90,7 @@ class SetupController extends Controller
         $data['env_file'] = env('ENV_FILE');
         $data['app_url'] = url("/");
 
+
         $response['success'] = true;
         $response['data'] = $data;
 
@@ -736,9 +737,9 @@ class SetupController extends Controller
             $response['success'] = false;
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
 
             return $response;

@@ -36,7 +36,13 @@ class EnvController extends Controller
             $data['mail_sample_settings'] = vh_mail_sample_settings();
             $data['country_calling_codes'] = vh_get_countries_calling_codes();
             $data['app_url'] = url("/");
-
+            $data['language_strings'] = [
+                "env_variable_heading" => trans("vaahcms-env-variable.env_variable_heading"),
+                "download" => trans("vaahcms-env-variable.download"),
+                "refresh" => trans("vaahcms-env-variable.refresh"),
+                "add_env_variable_button" => trans("vaahcms-env-variable.add_env_variable_button"),
+                "env_variable_save_button" => trans("vaahcms-env-variable.env_variable_save_button"),
+                ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
@@ -45,9 +51,9 @@ class EnvController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -76,9 +82,9 @@ class EnvController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -105,9 +111,9 @@ class EnvController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -135,9 +141,9 @@ class EnvController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

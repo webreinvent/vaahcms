@@ -248,7 +248,7 @@ class RoleBase extends VaahModel {
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -259,7 +259,7 @@ class RoleBase extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -531,7 +531,7 @@ class RoleBase extends VaahModel {
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -547,7 +547,7 @@ class RoleBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['messages'][] = trans("vaahcms-general.data_updated");
 
         return $response;
 
@@ -559,14 +559,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -605,7 +605,7 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
@@ -636,14 +636,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -674,7 +674,7 @@ class RoleBase extends VaahModel {
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -717,8 +717,8 @@ class RoleBase extends VaahModel {
         if($item->id == 1)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Super Admin permission can not be changed';
-            return response()->json($response);
+            $response['errors'][] = trans("vaahcms-general.super_admin_permission_can_not_be_changed");
+            return $response;
 
         }
 
@@ -768,6 +768,7 @@ class RoleBase extends VaahModel {
         }
 
         self::recountRelations();
+        Permission::recountRelations();
 
         $response['success'] = true;
         $response['data'] = [];
@@ -838,14 +839,14 @@ class RoleBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 

@@ -48,6 +48,16 @@ class LogsController extends Controller
             }
 
             $data['actions'] = [];
+            $data['language_strings'] = [
+                "logs" => trans("vaahcms-advanced.logs_title"),
+                "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
+                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
+                "toolkit_text_close" => trans("vaahcms-general.toolkit_text_close"),
+                "toolkit_text_clear_file" => trans("vaahcms-general.toolkit_text_clear_file"),
+                "toolkit_text_download_file" => trans("vaahcms-general.toolkit_text_download_file"),
+                "view_log_file" => trans("vaahcms-general.view_log_file"),
+
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
@@ -56,9 +66,9 @@ class LogsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -87,6 +97,7 @@ class LogsController extends Controller
 
                 if (count($files) > 0) {
                     foreach ($files as $file) {
+
                         if ($request['filter'] && isset($request['filter']['file_type'])
                             && count($request['filter']['file_type']) > 0)
                         {
@@ -102,6 +113,7 @@ class LogsController extends Controller
                                             'id' => $i,
                                             'name' => $file,
                                             'path' => $folder_path . '/' . $file,
+                                            'size' => $this->getFileSize($folder_path . '/' . $file)
                                         ];
                                     }
                                 } else {
@@ -109,6 +121,7 @@ class LogsController extends Controller
                                         'id' => $i,
                                         'name' => $file,
                                         'path' => $folder_path . '/' . $file,
+                                        'size' => $this->getFileSize($folder_path . '/' . $file)
                                     ];
                                 }
 
@@ -125,6 +138,7 @@ class LogsController extends Controller
                                 'id' => $i,
                                 'name' => $file,
                                 'path' => $folder_path . '/' . $file,
+                                'size' => $this->getFileSize($folder_path . '/' . $file)
                             ];
 
                             $i++;
@@ -134,6 +148,7 @@ class LogsController extends Controller
                                 'id' => $i,
                                 'name' => $file,
                                 'path' => $folder_path . '/' . $file,
+                                'size' => $this->getFileSize($folder_path . '/' . $file)
                             ];
 
                             $i++;
@@ -151,9 +166,9 @@ class LogsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -216,9 +231,9 @@ class LogsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -245,9 +260,9 @@ class LogsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
 
             return response()->json($response);
@@ -279,7 +294,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFolder($folder_path);
 
-                    $response['messages'][] = 'Successfully delete all logs';
+                    $response['messages'][] = trans("vaahcms-general.successfully_delete_all_logs");
 
                     break;
 
@@ -288,7 +303,7 @@ class LogsController extends Controller
 
                     VaahFiles::deleteFile($request->path);
 
-                    $response['messages'][] = 'Successfully delete';
+                    $response['messages'][] = trans("vaahcms-general.successfully_deleted");
 
                     break;
 
@@ -297,7 +312,7 @@ class LogsController extends Controller
 
                     VaahFiles::writeFile($request->path, '');
 
-                    $response['messages'][] = 'Successfully clear';
+                    $response['messages'][] = trans("vaahcms-general.successfully_clear");
 
                     break;
                 //------------------------------------
@@ -308,14 +323,24 @@ class LogsController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
         return response()->json($response);
 
+    }
+    //----------------------------------------------------------
+    public function getFileSize($file_path)
+    {
+        $size = File::size($file_path);
+
+        $base = log($size) / log(1024);
+        $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+        return round(pow(1024, $base - floor($base)),1) . $suffixes[floor($base)];
     }
     //----------------------------------------------------------
 }

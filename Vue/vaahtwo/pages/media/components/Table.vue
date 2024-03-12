@@ -1,7 +1,9 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useMediaStore } from '../../../stores/store-media'
+import {useRootStore} from "../../../stores/root";
 
+const root = useRootStore();
 const store = useMediaStore();
 const useVaah = vaah();
 
@@ -9,7 +11,7 @@ const useVaah = vaah();
 
 <template>
 
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
          <DataTable :value="store.list.data"
                     dataKey="id"
@@ -77,12 +79,15 @@ const useVaah = vaah();
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
+                    v-if="root.assets
+                          && root.assets.language_strings
+                          && root.assets.language_strings.crud_actions"
             >
                 <template #body="prop">
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-open-image"
-                                v-tooltip.top="'Open Image'"
+                                v-tooltip.top="store.assets.language_strings.toolkit_text_open_image"
                                 icon="pi pi-external-link"
                                 value="Open"
                                 url="prop.data.url"
@@ -92,7 +97,7 @@ const useVaah = vaah();
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-to-view"
-                                v-tooltip.top="'View'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                                 v-if="store.hasPermission('can-read-media')"
@@ -100,7 +105,7 @@ const useVaah = vaah();
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-to-edit"
-                                v-tooltip.top="'Update'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 v-if="store.hasPermission('can-update-media')"
@@ -110,7 +115,7 @@ const useVaah = vaah();
                                 data-testid="media-table-action-trash"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-media')"
                                 @click="store.itemAction('trash', prop.data)"
-                                v-tooltip.top="'Trash'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"
                         />
 
@@ -118,12 +123,18 @@ const useVaah = vaah();
                                 data-testid="media-table-action-restore"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
-                                v-tooltip.top="'Restore'"
+                                v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                         />
                     </div>
                 </template>
             </Column>
+
+             <template #empty>
+                 <div class="text-center py-3">
+                     No records found.
+                 </div>
+             </template>
         </DataTable>
         <!--/table-->
 

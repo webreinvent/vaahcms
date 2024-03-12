@@ -222,7 +222,7 @@ class User extends UserBase
             $response['errors'] = $errors;
             return $response;
         }
-
+        $response['errors'] = [];
         foreach($inputs['items'] as $item) {
 
             $is_restricted = self::restrictedActions('delete', $item['id']);
@@ -326,11 +326,8 @@ class User extends UserBase
         if(isset($inputs['phone']))
         {
             $rules['phone'] = 'integer';
-            $messages = array(
-                'phone.integer' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_an_integer'),
-            );
 
-            $validator = \Validator::make( $request->all(), $rules, $messages);
+            $validator = \Validator::make( $request->all(), $rules);
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
@@ -446,7 +443,9 @@ class User extends UserBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
                 break;
             case 'restore':
                 self::where('id', $id)
@@ -480,28 +479,13 @@ class User extends UserBase
 
         );
 
-        $messages = array(
-            'email.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            'username.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            'email.email' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_valid_email_address'),
-            'email.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
-                .' :max '.trans('vaahcms-validation.characters'),
-            'first_name.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            'first_name.max' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.may_not_be_greater_than')
-                .' :max '.trans('vaahcms-validation.characters'),
-            'status.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            'is_active.required' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.field_is_required'),
-            'foreign_user_id.numeric' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_a_number'),
-            'foreign_user_id.min' => trans('vaahcms-validation.the').' :attribute '.trans('vaahcms-validation.must_be_at_least').' :min.',
-        );
-
 
         if(isset($inputs['username']))
         {
             $rules['username'] = 'required';
         }
 
-        $validator = \Validator::make($inputs,$rules, $messages);
+        $validator = \Validator::make($inputs,$rules);
 
         if ( $validator->fails() ) {
 

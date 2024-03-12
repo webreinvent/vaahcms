@@ -154,6 +154,7 @@ class PermissionBase extends VaahModel {
 
         $users = User::whereHas('roles', function ($q) use ($roles_ids){
             $q->whereIn('vh_roles.id', $roles_ids);
+            $q->where('vh_user_roles.is_active', true);
         })->count();
 
         return $users;
@@ -347,7 +348,7 @@ class PermissionBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['messages'][] = trans("vaahcms-general.data_updated");
 
         return $response;
 
@@ -364,7 +365,7 @@ class PermissionBase extends VaahModel {
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -390,7 +391,7 @@ class PermissionBase extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -410,14 +411,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -463,14 +464,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 
@@ -511,7 +512,7 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
@@ -550,14 +551,14 @@ class PermissionBase extends VaahModel {
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['errors'][] = trans("vaahcms-general.select_ids");
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['errors'][] = trans("vaahcms-general.select_status");
             return $response;
         }
 

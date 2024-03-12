@@ -17,7 +17,11 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
 
-    store.getFormMenu();
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+        await store.getFormMenu();
+    }
 
     await root.getIsActiveStatusOptions();
 });
@@ -28,7 +32,16 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+watch(
+    () => root.assets,
+    async () => {
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
+            await store.getFormMenu();
+        }
 
+    }
+)
 </script>
 <template>
 
@@ -40,13 +53,20 @@ const toggleFormMenu = (event) => {
                         <span v-if="store.item && store.item.id">
                            {{ store.item.name }}
                         </span>
+                        <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                        >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
+                        </span>
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div  v-if="store.item && store.item.id"
-                      class="p-inputgroup"
+                <div class="p-inputgroup" v-if="store.item && store.item.id && root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions"
                 >
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
@@ -55,7 +75,7 @@ const toggleFormMenu = (event) => {
                     />
 
                     <Button class="p-button-sm"
-                            label="Save"
+                            :label="root.assets.language_strings.crud_actions.save_button"
                             icon="pi pi-save"
                             data-testid="permission-form_save"
                             @click="store.itemAction('save')"
@@ -80,7 +100,7 @@ const toggleFormMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-eye"
-                            v-tooltip.top="'View'"
+                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="permission-item_view"
                             @click="store.toView(store.item)"
                             v-if="store.hasPermission('can-read-permissions')"

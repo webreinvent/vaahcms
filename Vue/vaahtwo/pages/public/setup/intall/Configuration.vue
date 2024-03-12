@@ -216,7 +216,9 @@ onMounted(async () => {
                       @click="store.testDatabaseConnection()"
                       label="Test Database connection"
                       :loading="store.is_btn_loading_db_connection"
-                      icon="pi pi-database" class="p-button-sm mt-2 mb-3" outlined
+                      icon="pi pi-database" class="p-button-sm mt-2 mb-3"
+                      outlined
+                      severity="info"
                       data-testid="configuration-test_db_connection"
                       :pt="{
                                     label: {
@@ -349,7 +351,9 @@ onMounted(async () => {
                       @click="$event => $refs.op.toggle($event)"
                       label="Test Mail Configuration"
                       icon="pi pi-envelope"
-                      class="p-button-sm mt-2 mb-3" outlined
+                      class="p-button-sm mt-2 mb-3"
+                      outlined
+                      severity="info"
                       data-testid="configuration-test_mail"
                       :pt="{
                                     label: {

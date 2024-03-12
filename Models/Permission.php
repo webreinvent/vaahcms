@@ -155,7 +155,7 @@ class Permission extends PermissionBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -196,7 +196,7 @@ class Permission extends PermissionBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -205,10 +205,12 @@ class Permission extends PermissionBase
     {
         $inputs = $request->all();
 
-        $list = self::getSorted($inputs['query']['filter']);
-        $list->isActiveFilter($inputs['query']['filter']);
-        $list->trashedFilter($inputs['query']['filter']);
-        $list->searchFilter($inputs['query']['filter']);
+        $filter = $inputs['query']['filter'] ?? [];
+
+        $list = self::getSorted($filter);
+        $list->isActiveFilter($filter);
+        $list->trashedFilter($filter);
+        $list->searchFilter($filter);
 
         if (isset($request['from']) && isset($request['to'])) {
             $list->betweenDates($request['from'],$request['to']);
@@ -240,7 +242,7 @@ class Permission extends PermissionBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -281,7 +283,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['errors'][] = trans("vaahcms-general.name_already_exist");
             return $response;
         }
 
@@ -291,7 +293,7 @@ class Permission extends PermissionBase
 
         if ($user) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
             return $response;
         }
 
@@ -303,7 +305,7 @@ class Permission extends PermissionBase
         $response = self::getItem($id);
 
         $response['success'] = true;
-        $response['messages'][] = 'Updated successfully.';
+        $response['messages'][] = trans("vaahcms-general.updated_successfully");
         return $response;
     }
     //-------------------------------------------------
@@ -312,14 +314,14 @@ class Permission extends PermissionBase
         $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
+            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
+        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
 
         return $response;
     }
@@ -339,12 +341,20 @@ class Permission extends PermissionBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = auth()->user()->id;
+                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = null;
+                $item->save();
                 break;
         }
 

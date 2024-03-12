@@ -42,7 +42,35 @@ class LocalizationController extends Controller
                 ->get();
             $data['categories']['default']['id'] = null;
 
+            $data['language_strings'] = [
+                "localizations" => trans("vaahcms-localization-setting.localization_heading"),
+                "add_language_button" => trans("vaahcms-localization-setting.add_language_button"),
+                "add_category_button" => trans("vaahcms-localization-setting.add_category_button"),
+                "localization_message" => trans("vaahcms-localization-setting.localization_message"),
+                "localization_placeholder_search" => trans("vaahcms-localization-setting.localization_placeholder_search"),
+                "localization_placeholder_select_a_category" => trans("vaahcms-localization-setting.localization_placeholder_select_a_category"),
+                "localization_placeholder_select_a_filter" => trans("vaahcms-localization-setting.localization_placeholder_select_a_filter"),
+                "localization_reset_button" => trans("vaahcms-localization-setting.localization_reset_button"),
+                "add_new_languages" => trans("vaahcms-localization-setting.add_new_languages"),
+                "add_new_languages_placeholder_name" => trans("vaahcms-localization-setting.add_new_languages_placeholder_name"),
+                "add_new_languages_save_button" => trans("vaahcms-localization-setting.add_new_languages_save_button"),
+                "localization_empty_value" => trans("vaahcms-localization-setting.localization_empty_value"),
+                "localization_filled_value" => trans("vaahcms-localization-setting.localization_filled_value"),
+                "add_new_category" => trans("vaahcms-localization-setting.add_new_category"),
+                "add_new_category_placeholder_category_name" => trans("vaahcms-localization-setting.add_new_category_placeholder_category_name"),
+                "add_new_category_save_button" => trans("vaahcms-localization-setting.add_new_category_save_button"),
+                "localization_add_string_button" => trans("vaahcms-localization-setting.localization_add_string_button"),
+                "localization_generate_language_files" => trans("vaahcms-localization-setting.localization_generate_language_files"),
+                "localization_save_button" => trans("vaahcms-localization-setting.localization_save_button"),
+                "no_language_string_exist" => trans("vaahcms-localization-setting.no_language_string_exist"),
+                "localization_placeholder_select_a_language" => trans("vaahcms-localization-setting.localization_placeholder_select_a_language"),
+                "localization_toolkit_sync" => trans("vaahcms-localization-setting.localization_toolkit_sync"),
+                "add_new_languages_placeholder_locale_code" => trans("vaahcms-localization-setting.add_new_languages_placeholder_locale_code"),
+                "localization_item_menu" => trans("vaahcms-localization-setting.localization_item_menu"),
+                "localization_string_removed" => trans("vaahcms-localization-setting.localization_string_removed"),
 
+
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
@@ -51,9 +79,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -76,9 +104,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -97,16 +125,16 @@ class LocalizationController extends Controller
             LanguageString::syncAndGenerateStrings($request);
 
             $response = LanguageString::getList($request);
-            $response['messages'][] = "Language files successfully generated";
+            $response['messages'][] = trans("vaahcms-general.language_file_generated");
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -129,9 +157,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -155,9 +183,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -181,9 +209,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -214,9 +242,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 
@@ -242,7 +270,7 @@ class LocalizationController extends Controller
 
             LanguageString::syncAndGenerateStrings($request);
 
-            $response['messages'][] = "Action was successful";
+            $response['messages'][] = trans("vaahcms-general.action_successful");
 
         } catch (\Exception $e) {
             $response = [];
@@ -250,9 +278,9 @@ class LocalizationController extends Controller
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
+                $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = 'Something went wrong.';
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
 

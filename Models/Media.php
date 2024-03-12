@@ -160,7 +160,7 @@ class Media extends MediaBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
         );
 
 
@@ -201,7 +201,7 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -217,7 +217,7 @@ class Media extends MediaBase
         );
 
         $messages = array(
-            'type.required' => 'Action type is required',
+            'type.required' => trans("vaahcms-general.action_type_is_required"),
             'items.required' => 'Select items',
         );
 
@@ -235,7 +235,7 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -254,7 +254,7 @@ class Media extends MediaBase
                 ->withTrashed();
         }
 
-
+        $list=self::query();
         switch ($type) {
             case 'deactivate':
                 if($items->count() > 0) {
@@ -291,7 +291,8 @@ class Media extends MediaBase
                 self::query()->delete();
                 break;
             case 'restore-all':
-                self::withTrashed()->restore();
+                $list->onlyTrashed()->update(['deleted_by' => null]);
+                $list->restore();
                 break;
             case 'delete-all':
                 self::withTrashed()->forceDelete();
@@ -300,7 +301,7 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
+        $response['messages'][] = trans("vaahcms-general.action_successful");
 
         return $response;
     }
@@ -368,7 +369,7 @@ class Media extends MediaBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans("vaahcms-general.saved_successfully");
         return $response;
 
     }
@@ -395,12 +396,20 @@ class Media extends MediaBase
         switch($type)
         {
             case 'trash':
-                self::find($id)->delete();
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->delete();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = auth()->user()->id;
+                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = null;
+                $item->save();
                 break;
         }
 

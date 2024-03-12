@@ -1,13 +1,14 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store.list" class="grid">
+    <div v-if="store.list && store.assets && root.assets" class="grid">
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.date_format }}</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.date_format"
@@ -17,7 +18,7 @@ const store = useGeneralStore();
                           class="is-small"
                 />
 
-                <InputText placeholder="Enter Custom date format"
+                <InputText :placeholder="store.assets.language_strings.placeholder_date_format"
                            v-model="store.list.date_format_custom"
                            data-testid="general-date_format_custom"
                            v-if="store.list.date_format === 'custom'"
@@ -33,7 +34,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Time Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.time_format }}</h5>
 
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.time_format"
@@ -43,7 +44,7 @@ const store = useGeneralStore();
                           class="is-small"
                 />
 
-                <InputText placeholder="Enter Custom time format"
+                <InputText :placeholder="store.assets.language_strings.placeholder_time_format"
                            v-model="store.list.time_format_custom"
                            data-testid="general-time_format_custom"
                            v-if="store.list.time_format === 'custom'"
@@ -59,7 +60,7 @@ const store = useGeneralStore();
         </div>
 
         <div class="col-4">
-            <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
+            <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.date_time_format }}</h5>
             <div class="p-inputgroup">
                 <Dropdown v-model="store.list.datetime_format"
                           data-testid="general-datetime_format"
@@ -68,7 +69,7 @@ const store = useGeneralStore();
                           class="is-small"
                 />
 
-                <InputText placeholder="Enter Custom date-time format"
+                <InputText :placeholder="store.assets.language_strings.placeholder_time_date_format"
                            v-model="store.list.datetime_format_custom"
                            data-testid="general-datetime_format_custom"
                            v-if="store.list.datetime_format === 'custom'"
@@ -86,7 +87,7 @@ const store = useGeneralStore();
 
         <div class="col-12">
             <Divider class="mt-0 mb-3"/>
-            <Button label="Save"
+            <Button :label="store.assets.language_strings.date_and_time_save_button"
                     @click="store.storeSiteSettings()"
                     data-testid="general-date_format_save"
                     icon="pi pi-save"

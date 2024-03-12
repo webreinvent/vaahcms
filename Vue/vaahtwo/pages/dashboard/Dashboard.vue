@@ -26,23 +26,23 @@ const key = ref();
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-2 text-sm">{{store.language_strings.get_started}}</h6>
-                            <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
-                                    data-testid="dashboard-goto_theme"
-                                    class="p-button-sm is-light"
-                            >
+                            <a data-testid="dashboard-goto_theme" :href="root.base_url + '#/vaah/themes/'">
+                                <Button class="p-button-sm is-light">
                                 <span v-if="store.dashboard_items
                                             && store.dashboard_items.success
                                             && store.dashboard_items.success.vaahcms
                                             && store.dashboard_items.success.vaahcms.has_activated_theme">
                                      {{store.language_strings.go_to_theme}}
                                 </span>
-                                <span v-else>
+                                    <span v-else>
                                     {{store.language_strings.activate_theme}}
                                 </span>
-                            </Button>
+                                </Button>
+                            </a>
+
                             <p class="text-sm mt-1">
                                 {{store.language_strings.or}},
-                                <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html"
+                                <a :href="store.theme_doc_url"
                                    data-testid="dashboard-create_theme"
                                    target="_blank">
                                     {{store.language_strings.create_your_own_theme}}</a>
@@ -57,10 +57,9 @@ const key = ref();
                                 >
                                     <template v-for="next_step in module.next_steps">
                                         <li>
-                                            <a href="javascript:void(0)"
+                                            <a :href="next_step.link"
                                                data-testid="dashboard-goto_theme"
-                                               @click="store.goToLink(next_step.link, next_step.open_in_new_tab ?? null)"
-                                            >
+                                               :target="next_step.open_in_new_tab?'_blank':''">
                                                 <i class="pi" :class="next_step.icon"></i>
                                                 {{ next_step.name }}
                                             </a>
@@ -78,9 +77,9 @@ const key = ref();
                                 >
                                     <template v-for="action in module.actions">
                                         <li>
-                                            <a href="javascript:void(0)"
+                                            <a :href="action.link"
                                                :data-testid="'dashboard-'+action.name"
-                                               @click="store.goToLink(action.link, action.open_in_new_tab ?? null)">
+                                               :target="action.open_in_new_tab?'_blank':''">
                                                 <i class="pi" :class="action.icon"></i>
                                                 {{ action.name }}
                                             </a>
@@ -108,9 +107,9 @@ const key = ref();
 
                                             <p class="text-sm font-semibold mt-3">{{ item.label }}</p>
                                             <h6 class="text-xl font-semibold my-1">{{ item.count }}</h6>
-                                            <a href="javascript:void(0)"
+                                            <a :href="item.link"
+                                               :target="item.open_in_new_tab?'_blank':''"
                                                :data-testid="'dashboard-view_'+item.label"
-                                               @click="store.goToLink(item.link, item.open_in_new_tab ?? null)"
                                                class="text-sm">
                                                 {{ module.card.link_text }}
                                             </a>
@@ -134,12 +133,13 @@ const key = ref();
                 <template v-if="module.expanded_header_links"
                           v-for="h_item in module.expanded_header_links"
                 >
-                    <Button :label="h_item.name"
-                            :icon="h_item.icon"
-                            :data-testid="'dashboard-'+h_item.name"
-                            class="p-button-sm p-button-outlined mr-2 mb-3 pi"
-                            @click="store.goToLink(h_item.link,h_item.open_in_new_tab?h_item.open_in_new_tab:null)"
-                    />
+                    <a :data-testid="'dashboard-'+h_item.name"
+                       :href="h_item.link"
+                       :target="h_item.open_in_new_tab?'_blank':''">
+                        <Button :label="h_item.name"
+                                :icon="h_item.icon"
+                                class="p-button-sm p-button-outlined mr-2 mb-3 pi" label="Router" />
+                    </a>
                 </template>
             </template>
 
@@ -159,8 +159,7 @@ const key = ref();
                                              icon="null"
                                     >
                                         <p v-html="item.run_jobs"></p>
-                                        <a @click="store.goToLink(root.base_url+'#/vaah/settings/general')"
-                                           href="javascript:void(0)"
+                                        <a :href="root.base_url+'#/vaah/settings/general'"
                                            data-testid="dashboard-view_setting"
                                         >
                                             {{ item.view_settings }}
@@ -176,8 +175,7 @@ const key = ref();
 
                                 <div class="flex justify-content-evenly align-items-center align-items-center">
                                     <template v-for="f_item in item.footer">
-                                        <a href="javascript:void(0)" class="text-center"
-                                           @click="store.goToLink(f_item.link)"
+                                        <a :href="f_item.link" class="text-center"
                                            :data-testid="'dashboard-view_'+f_item.name"
                                         >
                                             <i class="mr-2 pi pi-" :class="f_item.icon" />
@@ -196,16 +194,14 @@ const key = ref();
                                           v-if="item.list.length && index < item.list_limit"
                                 >
                                     <div class="flex justify-content-between">
-                                        <a href="javascript:void(0)"
-                                           @click="store.goToLink(item.link+'view/'+log.name)"
+                                        <a :href="item.link+'view/'+log.name"
                                            class="text-sm text-red-500"
                                            :data-testid="'dashboard-view_'+log.name"
                                         >
                                             {{ log.name }}
                                         </a>
 
-                                        <a href="javascript:void(0)"
-                                           @click="store.goToLink(item.link+'view/'+log.name)"
+                                        <a :href="item.link+'view/'+log.name"
                                            class="text-sm"
                                            :data-testid="'dashboard-'+log.name+'_view'"
                                         >
@@ -224,8 +220,7 @@ const key = ref();
                                 </template>
 
                                 <template v-if="item.list.length > item.list_limit">
-                                    <a href="javascript:void(0)"
-                                       @click="store.goToLink(item.link)"
+                                    <a :href="item.link"
                                        class="flex justify-content-center"
                                        :data-testid="'dashboard-'+item.link_text"
                                     >

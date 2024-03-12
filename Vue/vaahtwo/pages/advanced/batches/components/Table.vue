@@ -1,14 +1,15 @@
 <script setup>
 import { vaah } from '../../../../vaahvue/pinia/vaah'
 import { useBatchStore } from '../../../../stores/advanced/store-batches'
-
+import {useRootStore} from "../../../../stores/root";
+const root = useRootStore();
 const store = useBatchStore();
 const useVaah = vaah();
 
 </script>
 
 <template>
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
 
          <DataTable :value="store.list.data"
@@ -82,7 +83,7 @@ const useVaah = vaah();
                              @click="store.displayBatchDetails(prop.data.options)"
                      >
                          <span class="pi pi-eye mr-1"></span>
-                         <span>View</span>
+                         <span>{{ root.assets.language_strings.crud_actions.toolkit_text_view }}</span>
                      </Button>
                  </template>
              </Column>

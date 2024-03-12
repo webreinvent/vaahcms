@@ -8,8 +8,230 @@
     {
         "locale_code_iso_639": "en",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Column"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "This Email Is Already Registered",
+        "content": "This email is already registered."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "Super Admin permission can not be changed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Created"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Notification Not Found",
+        "content": "Notification not found"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Run Migrations",
+        "content": "Migration run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "Seeds run is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "Migration refresh is successful"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "Record has been restored"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "Record is not soft-deleted and cannot be restored"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Sample Data Successfully Imported"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "Invalid action type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelled"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finished"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Range"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Successfully delete all logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Successfully clear"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Clear File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Download File"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Close"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Log"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Reload"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "Queue"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Default"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter High",
+        "content": "High"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medium"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Low"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "This list consist of only queued/pending jobs.Completed jobs gets deleted automatically ."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Already Exist",
+        "content": "This name is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "This slug is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "This name field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "Successfully Added."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "Successfully Deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Name is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Updated Successfully."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Data updated."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
         "name": "Title Limit",
         "content": "The title character is not greater than 200."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filter by extension"
     },
     {
         "locale_code_iso_639": "en",
@@ -52,6 +274,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "The category field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Language files successfully generated"
     },
     {
         "locale_code_iso_639": "en",
@@ -269,6 +497,60 @@
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "The is downloadable option is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Open Image"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter With Trashed",
+        "content": "with Trashed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Month",
+        "content": "Month"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "Year"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Date"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Media Title",
+        "content": "Media"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Total Medias"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Total File Size"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Trashed File Size"
     },
     {
         "locale_code_iso_639": "en",
@@ -512,7 +794,7 @@
         "locale_code_iso_639": "en",
         "category": "user",
         "name": "Impersonate permission denied",
-        "content": "Permission Denied. User must have\n can-login-in-backend \n permission in user\\'s specified role."
+        "content": "Permission Denied. User must have <strong>can-login-in-backend</strong> permission in user\\'s specified role."
     },
     {
         "locale_code_iso_639": "en",
@@ -605,6 +887,8 @@
         "name": "Users & Access",
         "content": "Users & Access"
     },
+
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -635,6 +919,7 @@
         "name": "Extend",
         "content": "Extend"
     },
+
     {
         "locale_code_iso_639": "en",
         "category": "sidebar-menu",
@@ -732,6 +1017,42 @@
         "category": "dashboard",
         "name": "Total User",
         "content": "Total User"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "View Less Navigation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "View Full Navigation"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Dashboard"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visit Site"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Profile"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Logout"
     },
     {
         "locale_code_iso_639": "en",
@@ -907,8 +1228,38 @@
     {
         "locale_code_iso_639": "en",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "This email is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "This username is already exist."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "This alternate email should be different."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Email Verification Pending"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "All Users Email Verified"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "All Users Email Verification Pending"
     },
     {
         "locale_code_iso_639": "en",
@@ -1269,6 +1620,31 @@
     {
         "locale_code_iso_639": "en",
         "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Changing Status"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "Are you sure you want to change the status? This action will impact all roles that assign to this permission."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Cancel"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "Change"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "role",
         "name": "Toolkit Text View Users",
         "content": "View Users"
     },
@@ -1409,6 +1785,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Details"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "View Role"
     },
@@ -1461,11 +1843,80 @@
         "content": "Inactive All Roles"
     },
 
+
+
+
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
         "name": "Heading",
         "content": "General Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "You haven\\'t configured SMTP. Please configured SMTP to enable <strong>Email OTP Verification</strong> method."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Backend Home Page Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Enter Custom date format"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "No has configurado SMTP. Configure SMTP para habilitar el método de <strong>verificación OTP de correo electrónico</strong>."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Enter Custom time format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Enter Custom date-time format"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Allowed file size for upload( in MB)"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Max number of forgot password attempts"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Copyright Link"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Settings successful saved"
     },
     {
         "locale_code_iso_639": "en",
@@ -1482,6 +1933,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "Authenticator App is temporarily unavailable."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Site Settings",
         "content": "Site Settings"
     },
@@ -1490,6 +1947,12 @@
         "category": "general-setting",
         "name": "Site Settings Message",
         "content": "After a successful password update, you will be redirected to the login page where you can log in with your new password."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
+        "name": "Site Title",
+        "content": "Site Title"
     },
     {
         "locale_code_iso_639": "en",
@@ -1867,6 +2330,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Cache was successfully deleted."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "After head tag start",
         "content": "After head tag start (<head>)"
     },
@@ -1952,19 +2421,19 @@
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "User Settings"
     },
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Expand All"
     },
     {
         "locale_code_iso_639": "en",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Collapse All"
     },
     {
@@ -2073,7 +2542,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Environment Variables"
     },
     {
@@ -2097,14 +2566,14 @@
     {
         "locale_code_iso_639": "en",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Save"
     },
 
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizations"
     },
     {
@@ -2122,8 +2591,14 @@
     {
         "locale_code_iso_639": "en",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Removed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "When you make any changes in strings. You need to click on Generate Language Files button to reflect your changes."
+        "content": "When you make any changes in strings. You need to click on <b>Generate Language Files</b> button to reflect your changes."
     },
     {
         "locale_code_iso_639": "en",
@@ -2160,6 +2635,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Name"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Locale ISO 639 Code"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sync"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Run & Generate Seeds"
     },
     {
         "locale_code_iso_639": "en",
@@ -2231,9 +2724,58 @@
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notifications"
     },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Enter Subject"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "Enter From"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Content with variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Enter action label"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Choose an action"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "It looks like you haven\\'t added any content to this section yet."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Add Content"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "Add From"
+    },
+
     {
         "locale_code_iso_639": "en",
         "category": "notification-setting",
@@ -2257,6 +2799,50 @@
         "category": "notification-setting",
         "name": "Error Message",
         "content": "These are notifications needs to be send manually."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Subject"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "From Email"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "From"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "Action"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "Message"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "Push"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "Mail"
     },
     {
         "locale_code_iso_639": "en",
@@ -2367,6 +2953,509 @@
         "content": "Error notifications"
     },
 
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Manage Taxonomy Type"
+    },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Select a Parent"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Select a Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Manage Taxonomy Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Manage"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "Add"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Type"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Select Types"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomías"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "\nAdministrar tipo de taxonomía"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Seleccione una madre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Seleccione un tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Administrar tipo de taxonomía"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Administrar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAgregar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Tipo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Seleccionar tipos"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Title",
+        "content": "Taxonomies"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Toolkit Text View Type",
+        "content": "Gérer le type de taxonomie"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Parent",
+        "content": "Sélectionnez un parent"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Placeholder Select Type",
+        "content": "Sélectionnez un type"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Manage Type Dialogue",
+        "content": "Gérer le type de taxonomie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Form Manage Button",
+        "content": "Gérer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Taxonomy Type Add Button",
+        "content": "\nAjouter"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type",
+        "content": "Taper"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "taxonomy",
+        "name": "Filter Type Placeholder",
+        "content": "Sélectionnez les types"
+    },
+
+
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Advanced"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Batches"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Logs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Failed Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Jobs"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Batches"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avanzada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lotes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Trabajos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Trabajos fallidos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Lotes"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Advanced",
+        "content": "Avancée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Logs",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Failed Jobs",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Jobs",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Aside Batches",
+        "content": "Lots"
+    },
+
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "User Settings"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Env Variables"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Update"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reset"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Jobs Title",
+        "content": "Emplois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Logs Title",
+        "content": "Journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Failed Jobs Title",
+        "content": "Travaux échoués"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "advanced",
+        "name": "Batches Title",
+        "content": "Lots"
+    },
+
+
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Ajustes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "General"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Ajustes de usuario"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables ambientales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Actualizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Reiniciar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localizaciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notificaciones"
+    },
+
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Settings",
+        "content": "Paramètres"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside General",
+        "content": "Générale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside User Settings",
+        "content": "Paramètres utilisateur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Env Variables",
+        "content": "Variables d\\'environnement"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Update",
+        "content": "Mise à jour"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Reset",
+        "content": "Réinitialiser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Localizations",
+        "content": "Localisations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "settings",
+        "name": "Aside Notifications",
+        "content": "Notifications"
+    },
+
+
+
     {
         "locale_code_iso_639": "en",
         "category": "update-setting",
@@ -2389,7 +3478,43 @@
         "locale_code_iso_639": "en",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "Current version of VaahCMS is"
+        "content": "Current Version of <strong>VaahCMS</strong> is"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Update VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publish Assets"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "Go to Root path"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Run <b>Composer Update</b>"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "Run Migrations and Seeds"
     },
     {
         "locale_code_iso_639": "en",
@@ -2449,7 +3574,7 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module Heading",
         "content": "Modules"
     },
     {
@@ -2464,12 +3589,7 @@
         "name": "Check Updates Button",
         "content": "Check Updates"
     },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
@@ -2554,6 +3674,37 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Deactivate Module"
     },
+
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "Module is activated"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Run Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "Run Seeds"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Refresh Migrations"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Update"
+    },
     {
         "locale_code_iso_639": "en",
         "category": "extend-module",
@@ -2625,97 +3776,92 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Themes"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Install"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Check Updates"
     },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Reload"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filter"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Search"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Reset"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "All"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Active"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactive"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Update Available"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Name"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Version"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Developed by"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activate"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Deactivate"
     },
     {
@@ -2730,34 +3876,23 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Deactivate Theme"
     },
+
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
-        "content": "View"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Toolkit Text Trash",
-        "content": "Trash"
-    },
-    {
-        "locale_code_iso_639": "en",
-        "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Actions"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publish Assets"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Import Sample Data"
     },
     {
@@ -2787,25 +3922,25 @@
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Search"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Installed"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Deleted"
     },
     {
         "locale_code_iso_639": "en",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restore"
     },
 
@@ -2813,56 +3948,331 @@
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "The",
-        "content": "The"
+        "name": "accepted",
+        "content": "The :attribute must be accepted."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "may not be greater than",
-        "content": "may not be greater than"
+        "name": "active_url",
+        "content": "The :attribute is not a valid URL."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "characters",
-        "content": "characters."
+        "name": "after",
+        "content": "The :attribute must be a date after :date."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "field is required",
-        "content": "field is required."
+        "name": "after_or_equal",
+        "content": "The :attribute must be a date after or equal to :date."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "must be a number",
-        "content": "must be a number."
+        "name": "alpha",
+        "content": "The :attribute may only contain letters."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "must be at least",
-        "content": "must be at least."
+        "name": "alpha_dash",
+        "content": "The :attribute may only contain letters, numbers, dashes and underscores."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "must be a valid email address",
-        "content": "must be a valid email address."
+        "name": "alpha_num",
+        "content": "The :attribute may only contain letters and numbers."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "must be an integer",
-        "content": "must be an integer"
+        "name": "array",
+        "content": "The :attribute must be an array."
     },
     {
         "locale_code_iso_639": "en",
         "category": "validation",
-        "name": "may only contain",
-        "content": "may only contain letters, numbers, dashes and underscores."
+        "name": "before",
+        "content": "The :attribute must be a date before :date."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "before_or_equal",
+        "content": "The :attribute must be a date before or equal to :date."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "boolean",
+        "content": "The :attribute field must be true or false."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "confirmed",
+        "content": "The :attribute confirmation does not match."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "date",
+        "content": "The :attribute is not a valid date."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "date_equals",
+        "content": "The :attribute must be a date equal to :date."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "date_format",
+        "content": "The :attribute does not match the format :format."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "different",
+        "content": "The :attribute and :other must be different."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "digits",
+        "content": "The :attribute must be :digits digits."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "digits_between",
+        "content": "The :attribute must be between :min and :max digits."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "dimensions",
+        "content": "The :attribute has invalid image dimensions."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "distinct",
+        "content": "The :attribute field has a duplicate value."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "email",
+        "content": "The :attribute must be a valid email address."
+    },{
+    "locale_code_iso_639": "en",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "The :attribute must end with one of the following: :values"
+},
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "exists",
+        "content": "The selected :attribute is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "file",
+        "content": "The :attribute must be a file."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "filled",
+        "content": "The :attribute field must have a value."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "image",
+        "content": "The :attribute must be an image."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "in",
+        "content": "The selected :attribute is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "in_array",
+        "content": "The :attribute field does not exist in :other."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "integer",
+        "content": "The :attribute must be an integer."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "ip",
+        "content": "The :attribute must be a valid IP address."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "ipv4",
+        "content": "The :attribute must be a valid IPv4 address."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "ipv6",
+        "content": "The :attribute must be a valid IPv6 address."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "json",
+        "content": "The :attribute must be a valid JSON string."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "mimes",
+        "content": "The :attribute must be a file of type: :values."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "mimetypes",
+        "content": "The :attribute must be a file of type: :values."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "not_in",
+        "content": "The selected :attribute is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "not_regex",
+        "content": "The :attribute format is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "numeric",
+        "content": "The :attribute must be a number."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "present",
+        "content": "The :attribute field must be present."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "regex",
+        "content": "The :attribute format is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required",
+        "content": "The :attribute field is required."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_if",
+        "content": "The :attribute field is required when :other is :value."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_unless",
+        "content": "The :attribute field is required unless :other is in :values."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_with",
+        "content": "The :attribute field is required when :values is present."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_with_all",
+        "content": "The :attribute field is required when :values are present."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_without",
+        "content": "The :attribute field is required when :values is not present."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "required_without_all",
+        "content": "The :attribute field is required when none of :values are present."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "same",
+        "content": "The :attribute and :other must match."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "starts_with",
+        "content": "The :attribute must start with one of the following: :values."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "string",
+        "content": "The :attribute must be a string."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "timezone",
+        "content": "The :attribute must be a valid zone."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "unique",
+        "content": "The :attribute has already been taken."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "uploaded",
+        "content": "The :attribute failed to upload."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "url",
+        "content": "The :attribute format is invalid."
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "validation",
+        "name": "uuid",
+        "content": "The :attribute must be a valid UUID."
     },
 
 
@@ -2878,8 +4288,182 @@
     {
         "locale_code_iso_639": "es",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Columna"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "This Email Is Already Registered",
+        "content": "Este correo electrónico ya está registrado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "El permiso de superadministrador no se puede cambiar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Creada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Notification Not Found",
+        "content": "\nNotificación no encontrada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Run Migrations",
+        "content": "La ejecución de la migración es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "La ejecución de semillas es exitosa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "La actualización de la migración se realizó correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "\nEl registro ha sido restaurado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "El registro no se elimina temporalmente y no se puede restaurar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Datos de muestra importados correctamente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "\nTipo de acción no válido"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "Cancelada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finalizada"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Rango"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Eliminar con éxito todos los registros"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Borrar con éxito"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Archivo vacio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Descargar archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Cerca"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Registro"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "Recargar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "Cola"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "Por defecto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Alta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Medio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "Baja"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Esta lista consta únicamente de trabajos en cola/pendientes. Los trabajos completados se eliminan automáticamente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
         "name": "Title Limit",
         "content": "El carácter del título no es mayor que 200."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrar por extensión"
     },
     {
         "locale_code_iso_639": "es",
@@ -2922,6 +4506,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "El campo de categoría es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Archivos de idioma generados exitosamente"
     },
     {
         "locale_code_iso_639": "es",
@@ -3080,6 +4670,54 @@
         "name": "Select status",
         "content": "Seleccionar estado"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Already Exist",
+        "content": "Este nombre ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "Esta babosa ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "Este campo de nombre es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "Añadida con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "Eliminada con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Se requiere el nombre."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Actualizado con éxito."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Datos actualizados."
+    },
 
 
 
@@ -3137,6 +4775,60 @@
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "Se requiere la opción descargable."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Abrir imagen"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter Month",
+        "content": "Mes"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter With Trashed",
+        "content": "con basura"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "\nAño"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Fecha"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Media Title",
+        "content": "Medios de comunicación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Medias totales"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Tamaño total del archivo"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Tamaño del archivo en la papelera"
     },
     {
         "locale_code_iso_639": "es",
@@ -3471,6 +5163,8 @@
         "name": "Users & Access",
         "content": "Usuarios y acceso"
     },
+
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -3501,6 +5195,7 @@
         "name": "Extend",
         "content": "Extender"
     },
+
     {
         "locale_code_iso_639": "es",
         "category": "sidebar-menu",
@@ -3597,6 +5292,42 @@
         "category": "dashboard",
         "name": "Total User",
         "content": "Usuario Total"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "Ver menos navegación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "Ver navegación completa"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Panel"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visitar sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Perfil"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Cerrar sesión"
     },
     {
         "locale_code_iso_639": "es",
@@ -3773,8 +5504,38 @@
     {
         "locale_code_iso_639": "es",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Este correo electrónico ya existe"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Este nombre de usuario ya existe."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Verificación de correo electrónico pendiente"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "Todas las usuarias correo electrónico verificado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "Verificación de correo electrónico de todas las usuarios pendiente"
     },
     {
         "locale_code_iso_639": "es",
@@ -4136,6 +5897,32 @@
     {
         "locale_code_iso_639": "es",
         "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Cambiar estado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "¿Está seguro de que desea cambiar el estado? Esta acción afectará a todos los roles asignados a este permiso."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Cancelar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "Cambiar"
+    },
+
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "role",
         "name": "Toolkit Text View Users",
         "content": "Ver usuarios"
     },
@@ -4275,6 +6062,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Detalles"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "Ver rol"
     },
@@ -4327,11 +6120,62 @@
         "content": "Inactivo todos los roles"
     },
 
+
+
+
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
         "name": "Heading",
         "content": "Configuración general"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Enlace a la página de inicio del backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "\nIngrese el formato de fecha personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Ingrese el formato de hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Ingrese el formato de fecha y hora personalizado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Tamaño de archivo permitido para cargar (en MB)"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Número máximo de intentos de olvido de contraseña"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Enlace de derechos de autor"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Configuración guardada correctamente"
     },
     {
         "locale_code_iso_639": "es",
@@ -4350,6 +6194,12 @@
         "category": "general-setting",
         "name": "Site Settings",
         "content": "Configuración del sitio"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "La aplicación Authenticator no está disponible temporalmente."
     },
     {
         "locale_code_iso_639": "es",
@@ -4721,13 +6571,19 @@
         "locale_code_iso_639": "es",
         "category": "general-setting",
         "name": "Scripts",
-        "content": "Scripts"
+        "content": "\nGuiones"
     },
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
         "name": "Scripts Message",
         "content": "Agregue scripts de Google Analytics y otros scripts de seguimiento."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "\nLa caché se eliminó correctamente."
     },
     {
         "locale_code_iso_639": "es",
@@ -4817,19 +6673,19 @@
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Ajustes de usuario"
     },
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Expandir todo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Desplegar todo"
     },
     {
@@ -4938,7 +6794,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Variables de entorno"
     },
     {
@@ -4962,14 +6818,14 @@
     {
         "locale_code_iso_639": "es",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Ahorrar"
     },
 
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localizaciones"
     },
     {
@@ -4987,8 +6843,14 @@
     {
         "locale_code_iso_639": "es",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Remota"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón Generar archivos de idioma para reflejar sus cambios."
+        "content": "Cuando realiza cambios en las cadenas. Debe hacer clic en el botón <b>Generar archivos de idioma</b> para reflejar sus cambios."
     },
     {
         "locale_code_iso_639": "es",
@@ -5025,6 +6887,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Nombre"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Código local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Sincronizar"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "Ejecutar y generar semillas"
     },
     {
         "locale_code_iso_639": "es",
@@ -5096,9 +6976,58 @@
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notificaciones"
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Ingresar Asunto"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "Ingresar desde"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Contenido con variables"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Introducir etiqueta de acción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Elige una acción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "Parece que aún no has agregado ningún contenido a esta sección."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Agregar contenido"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "\nAgregar desde"
+    },
+
     {
         "locale_code_iso_639": "es",
         "category": "notification-setting",
@@ -5128,6 +7057,50 @@
         "category": "notification-setting",
         "name": "Placeholder Enter New Notification Name",
         "content": "Ingrese el nuevo nombre de notificación"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Sujeta"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "Desde el e-mail"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "De"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "\nAcción"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "Mensaje"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "\nEmpujar"
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "correo"
     },
     {
         "locale_code_iso_639": "es",
@@ -5232,6 +7205,8 @@
         "content": "Notificaciones de errores"
     },
 
+
+
     {
         "locale_code_iso_639": "es",
         "category": "update-setting",
@@ -5260,7 +7235,43 @@
         "locale_code_iso_639": "es",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "La versión actual de VaahCMS es"
+        "content": "\nLa versión actual de <strong>VaahCMS</strong> es"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Actualizar VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "\nPublicar recursos"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "\nIr a la ruta raíz"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Verifique la <b>versión</b> de <b>webreinvent/vaahcms</b> en Composer.json"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Ejecute la <b>actualización de Composer</b>"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "Ejecutar migraciones y semillas"
     },
     {
         "locale_code_iso_639": "es",
@@ -5314,7 +7325,7 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Módulos"
     },
     {
@@ -5329,12 +7340,7 @@
         "name": "Check Updates Button",
         "content": "Revisa actualizaciones"
     },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
@@ -5419,6 +7425,37 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Desactivar módulo"
     },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "El módulo está activado"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Ejecutar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "Ejecutar semillas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Actualizar migraciones"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Actualizar"
+    },
     {
         "locale_code_iso_639": "es",
         "category": "extend-module",
@@ -5489,97 +7526,92 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Temas"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Instalar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Revisa actualizaciones"
     },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recargar"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filtrar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Buscar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Reiniciar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "Todo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Activo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactivo"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Actualización disponible"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Nombre"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Versión"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Desarrollado por"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Desactivar"
     },
     {
@@ -5606,34 +7638,23 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Desactivar Tema"
     },
+
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
-        "content": "Vista"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Toolkit Text Trash",
-        "content": "Basura"
-    },
-    {
-        "locale_code_iso_639": "es",
-        "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Comportamiento"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publicar recursos"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Importar datos de muestra"
     },
     {
@@ -5651,82 +7672,359 @@
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Buscar"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Instalado"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Eliminado"
     },
     {
         "locale_code_iso_639": "es",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restaurar"
     },
 
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "The",
-        "content": "El"
+        "name": "accepted",
+        "content": "El :attribute debe ser aceptado."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "may not be greater than",
-        "content": "no puede ser mayor que"
+        "name": "active_url",
+        "content": "El :attribute no es una URL válida."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "characters",
-        "content": "caracteres."
+        "name": "after",
+        "content": "El :attribute debe ser una fecha posterior a :date."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "field is required",
-        "content": "Se requiere campo."
+        "name": "after_or_equal",
+        "content": "El :attribute debe ser una fecha posterior o igual a :date."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be a number",
-        "content": "Tiene que ser un número."
+        "name": "alpha",
+        "content": "El :attribute sólo puede contener letras."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be at least",
-        "content": "al menos debe ser."
+        "name": "alpha_dash",
+        "content": "El :attribute sólo puede contener letras, números, guiones y guiones bajos."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be a valid email address",
-        "content": "Debe ser una dirección de correo electrónico válida."
+        "name": "alpha_num",
+        "content": "El :attribute sólo puede contener letras y números."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "must be an integer",
-        "content": "debe ser un entero."
+        "name": "array",
+        "content": "El :attribute debe ser una matriz."
     },
     {
         "locale_code_iso_639": "es",
         "category": "validation",
-        "name": "may only contain",
-        "content": "Solo puede contener letras, números, guiones y guiones bajos."
+        "name": "before",
+        "content": "El :attribute debe ser una fecha anterior a :date."
     },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "before_or_equal",
+        "content": "El :attribute debe ser una fecha anterior o igual a :date."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "boolean",
+        "content": "El campo :attribute debe ser verdadero o falso."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "confirmed",
+        "content": "La :attribute confirmación del no coincide."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date",
+        "content": "El :attribute no es una fecha válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date_equals",
+        "content": "El :attribute debe ser una fecha igual a :date."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "date_format",
+        "content": "El :attribute no coincide con el formato :format."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "different",
+        "content": "El :attribute y :other deben ser diferentes."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "digits",
+        "content": "El :attribute debe ser :digits dígitos."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "digits_between",
+        "content": "El attribute :debe estar entre los dígitos :min y :max."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "dimensions",
+        "content": "El  :attribute tiene dimensiones de imagen no válidas"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "distinct",
+        "content": "El campo :attribute tiene un valor duplicado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "email",
+        "content": "El :attribute debe ser una dirección de correo electrónico válida."
+    },{
+    "locale_code_iso_639": "es",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "El :attribute debe terminar con uno de los siguientes: :values"
+},
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "exists",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "file",
+        "content": "El :attribute debe ser un archivo."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "filled",
+        "content": "El campo :attribute debe tener un valor."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "image",
+        "content": "El :attribute debe ser una imagen."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "in",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "in_array",
+        "content": "El campo :attribute no existe en :other."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "integer",
+        "content": "El :attribute debe ser un número entero."
+    },
+
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ip",
+        "content": "El  :attribute debe ser una dirección IP válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ipv4",
+        "content": "El :attribute debe ser una dirección IPv4 válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "ipv6",
+        "content": "El :attribute debe ser una dirección IPv6 válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "json",
+        "content": "El :attribute debe ser una cadena JSON válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "mimes",
+        "content": "El :attribute debe ser un archivo de tipo: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "mimetypes",
+        "content": "El :attribute debe ser un archivo de tipo: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "not_in",
+        "content": "El :attribute seleccionado no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "not_regex",
+        "content": "El formato :attribute no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "numeric",
+        "content": "El :attribute debe ser un número."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "present",
+        "content": "El campo :attribute debe estar presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "regex",
+        "content": "El formato :attribute no es válido"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required",
+        "content": "El campo :attribute es obligatorio."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_if",
+        "content": "El campo :attribute es obligatorio cuando :other es :value."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_unless",
+        "content": "El campo :attribute es obligatorio a menos que :other esté en :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_with",
+        "content": "El campo :attribute es obligatorio cuando :values está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_with_all",
+        "content": "El campo :attribute es obligatorio cuando :values están presentes."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_without",
+        "content": "El campo :attribute es obligatorio cuando :values no está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "required_without_all",
+        "content": "El campo :attribute es obligatorio cuando ninguno de los :values está presente."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "same",
+        "content": "El :attribute y :other deben coincidir."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "starts_with",
+        "content": "El :attribute debe comenzar con uno de los siguientes: :values."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "string",
+        "content": "El :attribute debe ser una cadena."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "timezone",
+        "content": "El :attribute debe ser una zona válida."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "unique",
+        "content": "El :attribute ya ha sido tomado."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "uploaded",
+        "content": "El :attribute no se pudo cargar."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "url",
+        "content": "El formato :attribute no es válido."
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "validation",
+        "name": "uuid",
+        "content": "El :attribute debe ser un UUID válido."
+    },
+
 
 
 
@@ -5739,8 +8037,182 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general",
+        "name": "Filter Column",
+        "content": "Colonne"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "This Email Is Already Registered",
+        "content": "Cet e-mail est déjà enregistré."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Super Admin Permission Can Not Be Changed",
+        "content": "L\\'autorisation du super-administrateur ne peut pas être modifiée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Created",
+        "content": "Créé\n"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Notification Not Found",
+        "content": "\nNotification introuvable"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Run Migrations",
+        "content": "L\\'exécution de la migration a réussi"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Run Seeds",
+        "content": "La course aux graines est réussie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Refresh Migrations",
+        "content": "L\\'actualisation de la migration a réussi"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record Has Been Restored",
+        "content": "L\\'enregistrement a été restauré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Record Is Not Soft-Deleted And Cannot Be Restored",
+        "content": "L\\'enregistrement n\\'est pas supprimé de manière réversible et ne peut pas être restauré"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Sample Data Successfully Imported",
+        "content": "Exemples de données importées avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Invalid Action Type",
+        "content": "\nType d\\'action invalide"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Cancelled",
+        "content": "\nAnnulé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Finished",
+        "content": "Finie"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Range",
+        "content": "Gamme"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Delete All Logs",
+        "content": "Supprimer avec succès tous les journaux"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Clear",
+        "content": "Effacer avec succès"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Clear File",
+        "content": "Effacer le fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Download File",
+        "content": "Télécharger un fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "ToolKit Text Close",
+        "content": "Fermer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "View Log File",
+        "content": "Enregistrer"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Toolkit Text Reload",
+        "content": "\nRecharger"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Queue",
+        "content": "File d\\'attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Default",
+        "content": "\nDéfaut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter High",
+        "content": "Haut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Medium",
+        "content": "Moyen"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter Low",
+        "content": "\nFaible"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Jobs Message",
+        "content": "Cette liste comprend uniquement les tâches en file d\\'attente/en attente. Les tâches terminées sont automatiquement supprimées."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
         "name": "Title Limit",
         "content": "Le caractère du titre ne dépasse pas 200."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Filter By Extension",
+        "content": "Filtrer par extension"
     },
     {
         "locale_code_iso_639": "fr",
@@ -5783,6 +8255,12 @@
         "category": "general",
         "name": "Category Required",
         "content": "Le champ catégorie est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Language File Generated",
+        "content": "Fichiers de langue générés avec succès"
     },
     {
         "locale_code_iso_639": "fr",
@@ -5940,6 +8418,54 @@
         "name": "Select status",
         "content": "Sélectionnez le statut"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Already Exist",
+        "content": "Ce nom existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Slug Already Exist",
+        "content": "Cette limace existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Field Required",
+        "content": "Ce champ de nom est obligatoire."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Added",
+        "content": "\nAjouté avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Successfully Deleted",
+        "content": "\nSupprimé avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Name Is Required",
+        "content": "Le nom est requis."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Updated Successfully",
+        "content": "Mis à jour avec succés."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Data Updated",
+        "content": "Données mises à jour."
+    },
 
 
 
@@ -6000,6 +8526,60 @@
         "category": "media",
         "name": "Is Downloadable Required",
         "content": "L’option téléchargeable est requise."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Toolkit Text Open Image",
+        "content": "Ouvrir l\\'image"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Month",
+        "content": "\nMois"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter With Trashed",
+        "content": "avec Trashed"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Year",
+        "content": "\nAnnée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Filter Date",
+        "content": "Date"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Media Title",
+        "content": "Médias"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Total Medias Heading",
+        "content": "Total Médias"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Total File Size Heading",
+        "content": "Taille totale du fichier"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "media",
+        "name": "Trashed File Size Heading",
+        "content": "Taille du fichier mis à la corbeille"
     },
     {
         "locale_code_iso_639": "fr",
@@ -6337,6 +8917,7 @@
         "name": "Users & Access",
         "content": "Utilisateurs et accès"
     },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
@@ -6367,6 +8948,7 @@
         "name": "Extend",
         "content": "Étendre"
     },
+
     {
         "locale_code_iso_639": "fr",
         "category": "sidebar-menu",
@@ -6463,6 +9045,42 @@
         "category": "dashboard",
         "name": "Total User",
         "content": "Utilisateur Total"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Less Navigation",
+        "content": "Voir moins Navigation"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip View Full Navigation",
+        "content": "Afficher la navigation complète"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Dashboard",
+        "content": "Tableau de bord"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Tooltip Visit Site",
+        "content": "Visitez le site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Profile",
+        "content": "Profil"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "dashboard",
+        "name": "Topnav Logout",
+        "content": "Se déconnecter"
     },
     {
         "locale_code_iso_639": "fr",
@@ -6638,8 +9256,38 @@
     {
         "locale_code_iso_639": "fr",
         "category": "registration",
+        "name": "Email Already Exist",
+        "content": "Cet email existe déjà"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Username Already Exist",
+        "content": "Ce nom d\\'utilisateur existe déjà."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
         "name": "Filter Email Verification Pending",
         "content": "Vérification de l\\'e-mail en attente"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Alternate email should be different",
+        "content": "Cet autre e-mail devrait être différent"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Users Email Verified",
+        "content": "Adresse e-mail de tous les utilisateurs vérifiée"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "registration",
+        "name": "Filter Users Email Verification Pending",
+        "content": "Vérification de l\\'e-mail de tous les utilisateurs en attente"
     },
     {
         "locale_code_iso_639": "fr",
@@ -7001,6 +9649,32 @@
     {
         "locale_code_iso_639": "fr",
         "category": "role",
+        "name": "Changing Status Dialogue",
+        "content": "Changer de statut"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Changing Status Message",
+        "content": "Êtes-vous sûr de vouloir modifier le statut ? Cette action aura un impact sur tous les rôles attribués à cette autorisation."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Permission Status Cancel Button",
+        "content": "Annuler"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
+        "name": "Permission Status Change Button",
+        "content": "\nChangement"
+    },
+
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "role",
         "name": "Toolkit Text View Users",
         "content": "Afficher les utilisateurs"
     },
@@ -7140,6 +9814,12 @@
     {
         "locale_code_iso_639": "fr",
         "category": "permission",
+        "name": "Details Dialogue",
+        "content": "Détails"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "permission",
         "name": "Toolkit Text View Role",
         "content": "Afficher le rôle"
     },
@@ -7192,6 +9872,8 @@
         "content": "Inactif Tous les rôles"
     },
 
+
+
     {
         "locale_code_iso_639": "fr",
         "category": "general-setting",
@@ -7215,6 +9897,66 @@
         "category": "general-setting",
         "name": "Site Settings",
         "content": "Paramètres du site"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Authenticator App Message",
+        "content": "L\\'application Authenticator est temporairement indisponible."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Backend Home Page Link",
+        "content": "Lien vers la page d\\'accueil du back-end"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Date Format",
+        "content": "Entrez un format de date personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Securities SMTP Message",
+        "content": "Vous n\\'avez pas configuré SMTP. Veuillez configurer SMTP pour activer la méthode de <strong>vérification OTP par e-mail</strong>."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Format",
+        "content": "Entrez un format d\\'heure personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Placeholder Time Date Format",
+        "content": "Entrez un format date-heure personnalisé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Allowed file size for upload",
+        "content": "Taille de fichier autorisée pour le téléchargement (en Mo)"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Max number of forgot password attempts",
+        "content": "Nombre maximum de tentatives d\\'oubli de mot de passe"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Copyright Link",
+        "content": "Lien de droit d\\'auteur"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general",
+        "name": "Settings Successful Saved",
+        "content": "Paramètres enregistrés avec succès"
     },
     {
         "locale_code_iso_639": "fr",
@@ -7597,6 +10339,12 @@
     {
         "locale_code_iso_639": "fr",
         "category": "general-setting",
+        "name": "Cache Delete Message",
+        "content": "Le cache a été supprimé avec succès."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
         "name": "After head tag start",
         "content": "Après le début de la balise head (<head>)"
     },
@@ -7682,19 +10430,19 @@
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "heading",
+        "name": "User Settings heading",
         "content": "Paramètres utilisateur"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "Expand All",
+        "name": "User Setting Expand All",
         "content": "Développer tout"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "user-setting",
-        "name": "Collapse All",
+        "name": "User Setting Collapse All",
         "content": "Réduire tout"
     },
     {
@@ -7803,7 +10551,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "env-variable",
-        "name": "Heading",
+        "name": "Env Variable Heading",
         "content": "Variables d\\'environnement"
     },
     {
@@ -7827,14 +10575,14 @@
     {
         "locale_code_iso_639": "fr",
         "category": "env-variable",
-        "name": "Save Button",
+        "name": "Env Variable Save Button",
         "content": "Sauvegarder"
     },
 
     {
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
-        "name": "heading",
+        "name": "Localization Heading",
         "content": "Localisations"
     },
     {
@@ -7852,8 +10600,14 @@
     {
         "locale_code_iso_639": "fr",
         "category": "localization-setting",
+        "name": "Localization String Removed",
+        "content": "Supprimé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
         "name": "Localization Message",
-        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton Générer des fichiers de langue pour refléter vos modifications."
+        "content": "Lorsque vous apportez des modifications aux chaînes. Vous devez cliquer sur le bouton <b>Générer des fichiers de langue</b> pour refléter vos modifications."
     },
     {
         "locale_code_iso_639": "fr",
@@ -7890,6 +10644,24 @@
         "category": "localization-setting",
         "name": "Add New Languages Placeholder Name",
         "content": "Nom"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Add New Languages Placeholder Locale Code",
+        "content": "Code local ISO 639"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Toolkit Sync",
+        "content": "Synchroniser"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "localization-setting",
+        "name": "Localization Item Menu",
+        "content": "\nExécuter et générer des graines"
     },
     {
         "locale_code_iso_639": "fr",
@@ -7961,9 +10733,58 @@
     {
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
-        "name": "Heading",
+        "name": "Notification Heading",
         "content": "Notifications"
     },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Enter Subject",
+        "content": "Entrez le sujet"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Enter From",
+        "content": "\nEntrer depuis"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Content with variables",
+        "content": "Contenu avec des variables"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder action label",
+        "content": "Saisissez le libellé de l\\'action"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Placeholder Choose an action",
+        "content": "Choisissez une action"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Content Message",
+        "content": "Il semble que vous n\\'ayez pas encore ajouté de contenu à cette section."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add Content Button",
+        "content": "Ajouter du contenu"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Add From Button",
+        "content": "Ajouter à partir de"
+    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "notification-setting",
@@ -7993,6 +10814,50 @@
         "category": "notification-setting",
         "name": "Placeholder Enter New Notification Name",
         "content": "Entrez le nouveau nom de notification"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Subject",
+        "content": "Sujette"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field From Email",
+        "content": "De l\\'email"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field From",
+        "content": "Depuis"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Action",
+        "content": "\nAction"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Message",
+        "content": "\nMessage"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Push",
+        "content": "Pousser"
+    },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "notification-setting",
+        "name": "Notification Field Mail",
+        "content": "mail"
     },
     {
         "locale_code_iso_639": "fr",
@@ -8097,6 +10962,10 @@
         "content": "Notifications d\\'erreur"
     },
 
+
+
+
+
     {
         "locale_code_iso_639": "fr",
         "category": "update-setting",
@@ -8119,7 +10988,43 @@
         "locale_code_iso_639": "fr",
         "category": "update-setting",
         "name": "Current version of VaahCMS is",
-        "content": "La version actuelle de VaahCMS est"
+        "content": "\nLa version actuelle de <strong>VaahCMS</strong> est"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Heading Update VaahCMS",
+        "content": "Mettre à jour VaahCMS"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Update Publish Assets",
+        "content": "Publier des actifs"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Go to Root path",
+        "content": "\nAccédez au chemin racine"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Verify Version In Composer Json",
+        "content": "Vérifiez la <b>version</b> de <b>webreinvent/vaahcms</b> dans Composer.json"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Run Composer Update",
+        "content": "Exécuter la <b>mise à jour du compositeur</b></b>"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "update-setting",
+        "name": "Run Migrations and Seeds",
+        "content": "\nExécuter des migrations et des semences"
     },
     {
         "locale_code_iso_639": "fr",
@@ -8179,7 +11084,7 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
-        "name": "heading",
+        "name": "Module heading",
         "content": "Modules"
     },
     {
@@ -8194,12 +11099,7 @@
         "name": "Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-module",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
@@ -8284,6 +11184,37 @@
         "name": "Toolkit Text Deactivate Module",
         "content": "Désactiver le module"
     },
+
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Module Activated",
+        "content": "\nLe module est activé"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Run Migrations",
+        "content": "Exécuter des migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Run Seeds",
+        "content": "\nExécuter des graines"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Actions Refresh Migrations",
+        "content": "Actualiser les migrations"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "extend-module",
+        "name": "Update Button",
+        "content": "Mise à jour"
+    },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-module",
@@ -8354,97 +11285,92 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "heading",
+        "name": "Themes heading",
         "content": "Thèmes"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Install Button",
+        "name": "Themes Install Button",
         "content": "Installer"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Check Updates Button",
+        "name": "Themes Check Updates Button",
         "content": "Vérifier les mises à jour"
     },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Reload",
-        "content": "Recharger"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Filter Button",
+        "name": "Themes Filter Button",
         "content": "Filtre"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Placeholder Search",
+        "name": "Themes Placeholder Search",
         "content": "Recherche"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Reset Button",
+        "name": "Themes Reset Button",
         "content": "Réinitialiser"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter All",
+        "name": "Themes Filter All",
         "content": "Tout"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Active",
+        "name": "Themes Filter Active",
         "content": "Actif"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Inactive",
+        "name": "Themes Filter Inactive",
         "content": "Inactif"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Filter Update Available",
+        "name": "Themes Filter Update Available",
         "content": "Mise à jour disponible"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Name",
+        "name": "Themes Name",
         "content": "Nom"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Version",
+        "name": "Themes Version",
         "content": "Version"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Developed by",
+        "name": "Themes Developed by",
         "content": "Développé par"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Activate Button",
+        "name": "Themes Activate Button",
         "content": "Activer"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Deactivate Button",
+        "name": "Themes Deactivate Button",
         "content": "Désactiver"
     },
     {
@@ -8471,34 +11397,23 @@
         "name": "Toolkit Text Deactivate Theme",
         "content": "Désactiver le thème"
     },
+
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text View",
-        "content": "Voir"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Toolkit Text Trash",
-        "content": "Poubelle"
-    },
-    {
-        "locale_code_iso_639": "fr",
-        "category": "extend-theme",
-        "name": "Toolkit Text Actions",
+        "name": "Themes Toolkit Text Actions",
         "content": "Actions"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Publish Assets",
+        "name": "Themes Toolkit Text Publish Assets",
         "content": "Publier des actifs"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Toolkit Text Import Sample Data",
+        "name": "Themes Toolkit Text Import Sample Data",
         "content": "Importer des exemples de données"
     },
     {
@@ -8516,80 +11431,355 @@
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Install Placeholder Search",
+        "name": "Themes Install Placeholder Search",
         "content": "Recherche"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "Installed Button",
+        "name": "Themes Installed Button",
         "content": "Installé"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "View Deleted Text",
+        "name": "Themes View Deleted Text",
         "content": "Supprimé"
     },
     {
         "locale_code_iso_639": "fr",
         "category": "extend-theme",
-        "name": "View Restore Button",
+        "name": "Themes View Restore Button",
         "content": "Restaurer"
     },
+
 
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "The",
-        "content": "Le"
+        "name": "accepted",
+        "content": "Le :attribute doit être accepté."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "may not be greater than",
-        "content": "ne peut pas être supérieur à"
+        "name": "active_url",
+        "content": "Le :attribute n\\'est pas une URL valide."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "characters",
-        "content": "personnages."
+        "name": "after",
+        "content": "Le :attribute doit être une date après :date."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "field is required",
-        "content": "Champ requis."
+        "name": "after_or_equal",
+        "content": "Le :attribute doit être une date postérieure ou égale à :date."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "must be a number",
-        "content": "doit être un nombre."
+        "name": "alpha",
+        "content": "L\\'attribute :ne peut contenir que des lettres."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "must be at least",
-        "content": "doit être au moins."
+        "name": "alpha_dash",
+        "content": "Le champ :attribute ne peut contenir que des lettres, des chiffres, des tirets et des underscores."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "must be a valid email address",
-        "content": "Doit être une adresse e-mail valide."
+        "name": "alpha_num",
+        "content": "Le champ :attribute ne peut contenir que des lettres et des chiffres."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "must be an integer",
-        "content": "Doit être un entier."
+        "name": "array",
+        "content": "Le champ :attribute doit être un tableau."
     },
     {
         "locale_code_iso_639": "fr",
         "category": "validation",
-        "name": "may only contain",
-        "content": "ne peut contenir que des lettres, des chiffres, des tirets et des traits de soulignement."
+        "name": "before",
+        "content": "Le champ :attribute doit être une date antérieure à :date."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "before_or_equal",
+        "content": "Le champ :attribute doit être une date antérieure ou égale à :date."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "boolean",
+        "content": "Le champ :attribute doit être vrai ou faux."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "confirmed",
+        "content": "La confirmation du champ :attribute ne correspond pas."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "date",
+        "content": "Le champ :attribute n\\'est pas une date valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "date_equals",
+        "content":"Le champ :attribute doit être une date égale à :date."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "date_format",
+        "content": "L\\'attribut :attribute ne correspond pas au format :format."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "different",
+        "content": "Les éléments :attribute et :other doivent être différents."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "digits",
+        "content": "Le :attribute doit être :digits chiffres."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "digits_between",
+        "content": "Le :attribute doit être compris entre les chiffres :min et :max."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "dimensions",
+        "content": "L\\'attribut :attribute a des dimensions d\\'image non valides."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "distinct",
+        "content": "Le champ :attribute a une valeur en double."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "email",
+        "content": "Le champ :attribute doit être une adresse email valide."
+    },{
+    "locale_code_iso_639": "fr",
+    "category": "validation",
+    "name": "ends_with",
+    "content": "Le champ :attribute doit se terminer par l\\'une des valeurs suivantes : :values."
+},
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "exists",
+        "content": "La valeur sélectionnée pour :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "file",
+        "content": "Le champ :attribute doit être un fichier."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "filled",
+        "content": "Le champ :attribute doit avoir une valeur."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "image",
+        "content": "Le champ :attribute doit être une image."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "in",
+        "content": "La valeur sélectionnée pour :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "in_array",
+        "content": "Le champ :attribute n\\'existe pas dans :other."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "integer",
+        "content": "Le champ :attribute doit être un entier."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "ip",
+        "content": "L\\'adresse IP :attribute doit être valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "ipv4",
+        "content": "L\\'adresse IPv4 :attribute doit être valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "ipv6",
+        "content": "L\\'adresse IPv6 :attribute doit être valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "json",
+        "content": "La chaîne JSON :attribute doit être valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "mimes",
+        "content": "Le fichier :attribute doit être de type :values."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "mimetypes",
+        "content": "Le fichier :attribute doit être de type :values."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "not_in",
+        "content": "La valeur sélectionnée pour :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "not_regex",
+        "content": "Le format de :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "numeric",
+        "content": "Le champ :attribute doit être un nombre."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "present",
+        "content": "Le champ :attribute doit être présent."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "regex",
+        "content": "Le format du champ :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required",
+        "content": "Le champ :attribute est requis."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_if",
+        "content": "Le champ :attribute est requis lorsque :other est :value."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_unless",
+        "content": "Le champ :attribute est requis sauf si :other est dans :values."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_with",
+        "content": "Le champ :attribute est requis lorsque :values est présent."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_with_all",
+        "content": "Le champ :attribute est requis lorsque :values sont présents."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_without",
+        "content": "Le champ :attribute est requis lorsque :values n\\'est pas présent."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "required_without_all",
+        "content": "Le champ :attribute est requis lorsque aucun des :values n\\'est présent."    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "same",
+        "content": "Le champ :attribute et :other doivent correspondre."    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "starts_with",
+        "content": "Le champ :attribute doit commencer par l\\'une des valeurs suivantes : :values."    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "string",
+        "content": "Le champ :attribute doit être une chaîne de caractères."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "timezone",
+        "content": "Le champ :attribute doit être une zone valide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "unique",
+        "content": "L\\':attribute a déjà été pris."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "uploaded",
+        "content": "La :attribute n\\'a pas pu être téléchargée."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "url",
+        "content": "Le format de :attribute est invalide."
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "validation",
+        "name": "uuid",
+        "content": "L\\':attribute doit être un UUID valide."
     }
+
+
 ]

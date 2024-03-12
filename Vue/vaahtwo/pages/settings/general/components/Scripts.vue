@@ -5,10 +5,10 @@ const store = useGeneralStore();
 </script>
 
 <template>
-    <div v-if="store">
+    <div v-if="store && store.assets">
         <div class="grid">
             <div class="col-12 md:col-6 pr-3">
-                <h5 class="p-1 text-xs mb-1">After head tag start (&lt;head&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.after_head_tag_start }}</h5>
 
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_after_head_start"
@@ -25,7 +25,7 @@ const store = useGeneralStore();
             </div>
 
             <div class="col-12 md:col-6 pl-3">
-                <h5 class="p-1 text-xs mb-1">Before head tag close (&lt;/head&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.before_head_tag_close }}</h5>
 
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_before_head_close"
@@ -42,7 +42,7 @@ const store = useGeneralStore();
             </div>
 
             <div class="col-12 md:col-6 pr-3">
-                <h5 class="p-1 text-xs mb-1">After body tag start (&lt;body&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.after_body_tag_start }}</h5>
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_after_body_start"
                               :autoResize="true"
@@ -58,7 +58,7 @@ const store = useGeneralStore();
             </div>
 
             <div class="col-12 md:col-6 pl-3">
-                <h5 class="p-1 text-xs mb-1">Before body tag close (&lt;/body&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.before_body_tag_close }}</h5>
 
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_before_body_close"
@@ -79,7 +79,7 @@ const store = useGeneralStore();
             <div class="col-12">
                 <Divider class="my-3"/>
                 <div class="p-inputgroup justify-content-end">
-                    <Button label="Save"
+                    <Button :label="store.assets.language_strings.scripts_save_button"
                             icon="pi pi-save"
                             data-testid="general-script_save"
                             @click="store.storeScript()"

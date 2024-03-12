@@ -126,6 +126,12 @@ class JsonController extends Controller
                 'activate_theme' => trans("vaahcms-dashboard.activate_theme"),
                 'or' => trans("vaahcms-dashboard.or"),
                 'create_your_own_theme' => trans("vaahcms-dashboard.create_your_own_theme"),
+                'topnav_tooltip_view_less_navigation' => trans("vaahcms-dashboard.topnav_tooltip_view_less_navigation"),
+                'topnav_tooltip_view_full_navigation' => trans("vaahcms-dashboard.topnav_tooltip_view_full_navigation"),
+                'topnav_tooltip_visit_site' => trans("vaahcms-dashboard.topnav_tooltip_visit_site"),
+                'topnav_profile' => trans("vaahcms-dashboard.topnav_profile"),
+                'topnav_logout' => trans("vaahcms-dashboard.topnav_logout"),
+                'topnav_tooltip_dashboard' => trans("vaahcms-dashboard.topnav_tooltip_dashboard"),
             ];
 
         }
@@ -133,7 +139,13 @@ class JsonController extends Controller
         //---------------------------------------------------
         $data['language_strings']['general'] = $this->getGeneralStrings();
         //---------------------------------------------------
+        $data['language_strings']['advanced_layout'] = $this->getAdvancedLayoutStrings();
+        //---------------------------------------------------
+        $data['language_strings']['settings_layout'] = $this->getSettingsLayoutStrings();
+        //---------------------------------------------------
         $data['language_strings']['crud_actions'] = $this->getCrudActionStrings();
+        //---------------------------------------------------
+        $data['language_strings']['update'] = $this->getUpdateVaahCmsStrings();
         //---------------------------------------------------
 
         $data['urls']['public'] = config('settings.global.backend_homepage_link');
@@ -353,7 +365,52 @@ class JsonController extends Controller
             "select_a_record" => trans("vaahcms-general.select_a_record"),
         ];
     }
+    public function getUpdateVaahCmsStrings() :array {
+        return [
+            "check_for_update_button" => trans("vaahcms-update-setting.check_for_update_button"),
+            "check_for_update_message" => trans("vaahcms-update-setting.check_for_update_message"),
+            "new_updates" => trans("vaahcms-update-setting.new_updates"),
+            "a_newer_version" => trans("vaahcms-update-setting.a_newer_version"),
+            "of_vaahcms_is_available" => trans("vaahcms-update-setting.of_vaahcms_is_available"),
+            "new_updates_message" => trans("vaahcms-update-setting.new_updates_message"),
+            "downloading_latest_version" => trans("vaahcms-update-setting.downloading_latest_version"),
+            "reload_button" => trans("vaahcms-update-setting.reload_button"),
+            "major_release_message" => trans("vaahcms-update-setting.major_release_message"),
+            "steps_of_manually_upgrade" => trans("vaahcms-update-setting.steps_of_manually_upgrade"),
+            "go_to_root_path" => trans("vaahcms-update-setting.go_to_root_path"),
+            "current_version_of_vaahcms_is" => trans("vaahcms-update-setting.current_version_of_vaahcms_is"),
+            "verify_version_in_composer_json" => trans("vaahcms-update-setting.verify_version_in_composer_json"),
+            "run_composer_update" => trans("vaahcms-update-setting.run_composer_update"),
+            "run_migrations_and_seeds" => trans("vaahcms-update-setting.run_migrations_and_seeds"),
+            "update_publish_assets" => trans("vaahcms-update-setting.update_publish_assets"),
+            "clear_cache_button" => trans("vaahcms-general-setting.clear_cache_button"),
+            "heading_update_vaahcms" => trans("vaahcms-update-setting.heading_update_vaahcms"),
+        ];
+    }
     //----------------------------------------------------------
+
+    public function getAdvancedLayoutStrings() :array {
+        return [
+            "advanced" => trans("vaahcms-advanced.aside_advanced"),
+            "logs" => trans("vaahcms-advanced.aside_logs"),
+            "failed_jobs" => trans("vaahcms-advanced.aside_failed_jobs"),
+            "jobs" => trans("vaahcms-advanced.aside_jobs"),
+            "batches" => trans("vaahcms-advanced.aside_batches"),
+        ];
+    }
+    //----------------------------------------------------------
+    public function getSettingsLayoutStrings() :array {
+        return [
+            "settings" => trans("vaahcms-settings.aside_settings"),
+            "general" => trans("vaahcms-settings.aside_general"),
+            "user_settings" => trans("vaahcms-settings.aside_user_settings"),
+            "env_variables" => trans("vaahcms-settings.aside_env_variables"),
+            "localizations" => trans("vaahcms-settings.aside_localizations"),
+            "notifications" => trans("vaahcms-settings.aside_notifications"),
+            "update" => trans("vaahcms-settings.aside_update"),
+            "reset" => trans("vaahcms-settings.aside_reset"),
+        ];
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

@@ -2,11 +2,13 @@
 import {onMounted, ref} from "vue";
 import {useRoute} from 'vue-router';
 import {useLogStore} from '../../../stores/advanced/store-logs'
+import { useRootStore } from "../../../stores/root";
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
 const store = useLogStore();
 const route = useRoute();
+const root = useRootStore();
 
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
@@ -58,14 +60,13 @@ const toggleItemMenu = (event) => {
 
 <template>
     <div class="grid" v-if="store.assets">
-        <div class='col-4'>
+        <div class='col-5'>
             <Panel class="is-small">
                 <template class="p-1" #header>
                     <div class="flex flex-row">
-                        <div >
-                            <b class="mr-1">Logs</b>
-
-                            <Badge class="is-small" v-if="store.list && store.list.length > 0"
+                        <div v-if="store.assets && store.assets.language_strings">
+                            <b class="mr-1">{{store.assets.language_strings.logs}}</b>
+                            <Badge v-if="store.list && store.list.length > 0"
                                    :value="store.list.length"
                             />
                         </div>
@@ -94,7 +95,10 @@ const toggleItemMenu = (event) => {
                         />
                     </div>
                 </template>
-                <Actions/>
+                <Actions v-if="root.assets
+                               && root.assets.language_strings
+                               && root.assets.language_strings.crud_actions"
+                />
                 <Table/>
             </Panel>
         </div>

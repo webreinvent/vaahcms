@@ -1,11 +1,12 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import { useMediaStore } from '../../stores/store-media'
 import {useRoute} from 'vue-router';
 import { vaah } from "../../vaahvue/pinia/vaah";
+import { useRootStore } from '../../stores/root';
 import FileUploader from "./components/FileUploader.vue";
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-
+const root = useRootStore();
 const store = useMediaStore();
 const route = useRoute();
 const useVaah = vaah();
@@ -15,8 +16,11 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-    store.getFormMenu();
-});
+    if (root.assets && root.assets.language_strings
+        && root.assets.language_strings.crud_actions)
+    {
+        await store.getFormMenu();
+    }});
 
 //--------form_menu
 const form_menu = ref();
@@ -24,25 +28,62 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+watch(
+    () => root.assets,
+    async () => {
+        if ( root.assets.language_strings && root.assets.language_strings.crud_actions)
+        {
+            await store.getFormMenu();
+        }
 
+    }
+)
 </script>
 <template>
     <div class="col-6">
         <Panel class="is-small">
+            <Message severity="error"
+                     class="p-container-message"
+                     :closable="false"
+                     icon="pi pi-trash"
+                     v-if="store.item && store.item.deleted_at"
+            >
+                <div class="flex align-items-center justify-content-between"  v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
+                    <div>
+                        {{root.assets.language_strings.crud_actions.form_text_deleted}} {{store.item.deleted_at}}
+                    </div>
+
+                    <div>
+                        <Button :label="root.assets.language_strings.crud_actions.toolkit_text_restore"
+                                class="p-button-sm"
+                                @click="store.itemAction('restore')"
+                                data-testid="media-form_item_action_restore"
+                        >
+                        </Button>
+                    </div>
+                </div>
+            </Message>
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="font-semibold text-sm">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
-                        <span v-else>
-                            Create
+                        <span v-else-if="root.assets
+                                         && root.assets.language_strings
+                                         && root.assets.language_strings.crud_actions"
+                        >
+                            {{root.assets.language_strings.crud_actions.form_text_create}}
                         </span>
                     </div>
                 </div>
             </template>
             <template #icons>
-                <div class="p-inputgroup">
+                <div class="p-inputgroup" v-if="root.assets
+                           && root.assets.language_strings
+                           && root.assets.language_strings.crud_actions">
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
@@ -50,7 +91,7 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button label="Save"
+                    <Button :label="root.assets.language_strings.crud_actions.save_button"
                             v-if="store.item && store.item.id"
                             data-testid="media-save"
                             @click="store.itemAction('save')"
@@ -58,7 +99,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                     />
 
-                    <Button label="Create & New"
+                    <Button :label="root.assets.language_strings.crud_actions.form_create_and_new"
                             v-else
                             @click="store.itemAction('create-and-new')"
                             data-testid="media-create-and-new"
@@ -104,7 +145,7 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
 
-                    <div v-if="!store.item.id" class="field mb-4 relative">
+                    <div class="field mb-4 relative">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="false"
                                       data-testid="media-form_upload_file"
@@ -115,8 +156,7 @@ const toggleFormMenu = (event) => {
                         </FileUploader>
                     </div>
 
-                    <div v-if="!store.item.id &&
-                     (store.has_error_on_upload || store.item.url)" class="field mb-4">
+                    <div v-if="store.has_error_on_upload || store.item.url" class="field mb-4">
                         <div class="p-fileupload-content"><!----><!---->
                             <div v-if="store.has_error_on_upload"  class="p-message p-component p-message-error"
                                  role="alert" aria-live="assertive"
