@@ -196,6 +196,11 @@ function actionItems(item){
                 </div>
             </div>
             <Divider class="mt-2" />
+
+        </div>
+
+        <div v-if="!store.list || store.list.length === 0" class="text-center py-3">
+            No records found.
         </div>
 
         <!--paginator-->

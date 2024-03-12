@@ -178,6 +178,10 @@ function actionItems(item){
         </div>
         <!--/table-->
 
+        <div v-if="!store.list || store.list.length === 0" class="text-center py-3">
+            No records found.
+        </div>
+
         <!--paginator-->
         <Paginator v-model:first="store.first_element"
                     :rows="store.query.rows"

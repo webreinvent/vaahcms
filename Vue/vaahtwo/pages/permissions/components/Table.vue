@@ -161,6 +161,11 @@ const useVaah = vaah();
                 </template>
             </Column>
 
+             <template #empty>
+                 <div class="text-center py-3">
+                     No records found.
+                 </div>
+             </template>
         </DataTable>
         <!--/table-->
 

@@ -592,17 +592,10 @@ export const useThemeStore = defineStore({
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
+
                 await self.updateUrlQueryString(self.query);
+                await self.getList();
 
-                if (self.query.q !== null && self.query.q !== undefined) {
-                    await self.getThemes();
-                }
-
-                if ((self.query.filter.q !== null && self.query.filter.q !== undefined && self.query.filter.q !== '')
-                    || (self.query.filter.status !== null && self.query.filter.status !== undefined && self.query.filter.status !== ''))
-                {
-                    await self.getList();
-                }
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
