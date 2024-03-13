@@ -96,7 +96,10 @@ function uploadFile(e){
                 }
             }).then(res=>{
                 upload_refs.value.uploadedFiles[0] = file;
-                store.storeAvatar(res.data.data);
+                if(res && res.data && res.data.data){
+                    store.storeAvatar(res.data.data);
+                }
+
             });
         })
     }
