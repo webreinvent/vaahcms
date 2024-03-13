@@ -92,7 +92,7 @@ onMounted(async () => {
                         <div class="col-3">
                             <ol class="pl-3">
                                 <li class="mb-2">
-                                    {{root.assets.language_strings.update_vaah.downloading_latest_version}}
+                                    {{root.assets.language_strings.update.downloading_latest_version}}
                                     <i v-if="store.status.download_latest_version === 'success'"
                                        class="pi pi-check"></i>
                                     <i v-else-if="store.status.download_latest_version === 'pending'"
