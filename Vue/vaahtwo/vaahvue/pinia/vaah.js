@@ -24,6 +24,7 @@ export const vaah = defineStore({
                 query: null,
                 headers: null,
                 show_success: true,
+                callback_params: null,
             }
         ) {
 
@@ -33,7 +34,8 @@ export const vaah = defineStore({
                 method: 'get',
                 query: null,
                 headers: null,
-                show_toast: true,
+                show_success: true,
+                callback_params: null,
             }
 
             if(options)
@@ -48,7 +50,8 @@ export const vaah = defineStore({
             let method = default_option.method.toLowerCase();
             let query = default_option.query;
             let headers = default_option.headers;
-            let show_toast = default_option.show_toast;
+            let show_success = default_option.show_success;
+            let callback_params = default_option.callback_params;
 
 
 
@@ -99,16 +102,16 @@ export const vaah = defineStore({
             let ajax = await axios[method](url, params, q)
                 .then(function (response) {
                     self.show_progress_bar = false;
-                    if(show_toast){
+                    if(show_success){
                         self.processResponse(response);
                     }
                     if(callback)
                     {
                         if(response.data && response.data.data)
                         {
-                            callback(response.data.data, response);
+                            callback(response.data.data, response,callback_params);
                         } else{
-                            callback(false, response);
+                            callback(false, response,callback_params);
                         }
                     }
                     return response;

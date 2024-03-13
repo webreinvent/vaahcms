@@ -422,6 +422,7 @@ export const useThemeStore = defineStore({
                  */
                 default:
                     options.method = 'PATCH';
+                    options.callback_params = item.id;
                     ajax_url += '/'+item.id+'/action/'+type;
                     break;
             }
@@ -433,7 +434,7 @@ export const useThemeStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async itemActionAfter(data, res)
+        async itemActionAfter(data, res, item_id = null)
         {
             if (data)
             {
@@ -444,10 +445,10 @@ export const useThemeStore = defineStore({
                 this.item = data;
                 await root.reloadAssets();
                 await this.formActionAfter();
-                if(data.item){
-                    await this.resetActivateBtnLoader(this.form.action,data.item)
-                }
+            }
 
+            if(item_id){
+                await this.resetActivateBtnLoader(this.form.action,item_id);
             }
        },
         //---------------------------------------------------------------------
@@ -489,8 +490,8 @@ export const useThemeStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async resetActivateBtnLoader(action,item) {
-            let index = this.active_action.indexOf(action+'_'+item.id);
+        async resetActivateBtnLoader(action,item_id) {
+            let index = this.active_action.indexOf(action+'_'+item_id);
             this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
