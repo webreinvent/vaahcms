@@ -93,7 +93,7 @@ class UserBase extends Authenticatable
         if($this->avatar_url)
         {
             $url = asset($this->avatar_url);
-            if (filter_var($url, FILTER_VALIDATE_URL) && @getimagesize($url)) {
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
                 return $url;
             } else {
                 return vh_get_avatar_by_email($this->email);
