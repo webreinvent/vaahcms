@@ -6,6 +6,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use WebReinvent\VaahCms\Models\Media;
@@ -345,6 +347,7 @@ class MediaController extends Controller
             return response()->json($response);
         }
 
+
         try {
             //add year and month folder
             if ($request->folder_path == 'public/media') {
@@ -402,9 +405,13 @@ class MediaController extends Controller
 
             //create thumbnail if image
             if ($data['type'] == 'image') {
-                $image = \Image::make($data['full_path'])->fit(180, 101, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
+
+                $manager = new ImageManager(
+                    new Driver()
+                );
+
+                $image = $manager->read($data['full_path'])->scale(180, 101);
+
                 $name_details = pathinfo($data['full_path']);
                 $thumbnail_name = $name_details['filename'].'-thumbnail.'.$name_details['extension'];
                 $thumbnail_path = $request->folder_path.'/'.$thumbnail_name;

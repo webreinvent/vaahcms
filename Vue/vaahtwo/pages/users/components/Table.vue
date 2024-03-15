@@ -123,7 +123,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-users')"
+                                v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-users')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
                                 icon="pi pi-trash"

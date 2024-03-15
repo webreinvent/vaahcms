@@ -259,15 +259,6 @@ class UsersController extends Controller
 
         try {
 
-            $item = User::query()->where('id', $id)->first();
-
-            if (!$item) {
-                $response['success'] = false;
-                $response['errors'][] = trans('vaahcms-user.registration_not_found');
-                return response()->json($response);
-            }
-
-            $request['id'] = $item->id;
             $response = User::updateItem($request);
         } catch (\Exception $e) {
             $response = [];
