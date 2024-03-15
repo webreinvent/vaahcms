@@ -342,7 +342,7 @@ class User extends UserBase
 
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('email',$inputs['email'])->first();
+                ->where('email',$inputs['email'])->withTrashed()->first();
 
             if ($user) {
                 $response['success']  = false;
@@ -352,7 +352,7 @@ class User extends UserBase
 
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('username',$inputs['username'])->first();
+                ->where('username',$inputs['username'])->withTrashed()->first();
 
             if($user)
             {
@@ -361,7 +361,7 @@ class User extends UserBase
                 return $response;
             }
 
-            $item = User::find($request->id);
+            $item = User::withTrashed()->find($request->id);
         } else
         {
             $validation = self::userValidation($request);

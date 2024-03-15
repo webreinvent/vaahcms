@@ -43,7 +43,7 @@ onMounted(async () => {
                     <div class="field mb-4 flex justify-content-between align-items-center">
                         <Avatar :image="store.profile.avatar"
                                 v-if="store.profile"
-                                class="mr-3"
+                                class="mr-3 border-circle"
                                 shape="circle"
                                 size="xlarge">
                         </Avatar>
@@ -51,7 +51,7 @@ onMounted(async () => {
                         <div class="w-max">
                             <FileUploader v-if="root.assets.urls"
                                           placeholder="Upload Avatar"
-                                          :maxFileSize="200000"
+                                          :maxFileSize="10000000"
                                           :is_basic="true"
                                           :auto_upload="true"
                                           :uploadUrl="root.assets.urls.upload" >
