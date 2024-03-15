@@ -1727,7 +1727,7 @@ class UserBase extends Authenticatable
             return $response;
         }
 
-        $item = self::find($inputs['inputs']['id']);
+        $item = self::withTrashed()->find($inputs['inputs']['id']);
 
 
         $data = [
