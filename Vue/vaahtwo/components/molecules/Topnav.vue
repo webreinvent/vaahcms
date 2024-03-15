@@ -53,7 +53,7 @@ const toggleDropDownMenu= (event) => {
                   data-testid="Topnav-Avatar"
                   class="cursor-pointer flex align-items-center">
                    <Avatar :image="rootStore.assets.auth_user.avatar"
-                           class="mr-2" shape="circle" />
+                           class="mr-2 border-circle" shape="circle" />
                    <span>{{rootStore.assets.auth_user.name}}</span>
                    <i class="pi pi-chevron-down text-sm mt-1 ml-1"></i>
                </a>
