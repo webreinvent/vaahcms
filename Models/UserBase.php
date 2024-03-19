@@ -2048,7 +2048,7 @@ class UserBase extends Authenticatable
             $user_id = \Auth::user()->id;
         }
 
-        $user = self::find($user_id);
+        $user = self::withTrashed()->find($user_id);
         $user->avatar_url = null;
         $user->save();
 
