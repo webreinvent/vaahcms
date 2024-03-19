@@ -446,6 +446,9 @@ class User extends UserBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->delete();
+                $item = self::where('id',$id)->withTrashed()->first();
+                $item->deleted_by = auth()->user()->id;
+                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
