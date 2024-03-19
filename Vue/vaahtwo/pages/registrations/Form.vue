@@ -129,7 +129,7 @@ watch(
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
+                    <Button v-if="(store.item && store.item.id) && store.hasPermission('can-read-registrations')"
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
