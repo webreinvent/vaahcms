@@ -443,17 +443,13 @@ class User extends UserBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::where('id', $id)
-                    ->withTrashed()
+                self::find($id)
                     ->delete();
-                $item = self::where('id',$id)->withTrashed()->first();
-                $item->deleted_by = auth()->user()->id;
-                $item->save();
                 break;
             case 'restore':
                 self::where('id', $id)
-                    ->withTrashed()
-                    ->restore();
+                    ->onlyTrashed()
+                    ->first()->restore();
                 break;
             case 'generate-new-token':
 
