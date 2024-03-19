@@ -685,7 +685,6 @@ export const useUserStore = defineStore({
                 if(this.assets && this.assets.language_strings) {
                     await this.getItemMenu();
                 }
-
                 await this.getFormMenu();
             }
         },

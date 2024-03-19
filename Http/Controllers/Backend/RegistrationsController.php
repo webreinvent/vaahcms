@@ -80,7 +80,7 @@ class RegistrationsController extends Controller
 
             $data['actions'] = [];
 
-            $data['country_calling_code'] = vh_get_country_list();
+            $data['country_calling_code'] = vh_get_countries_calling_codes();
             $data['countries'] = vh_get_country_list();
             $data['timezones'] = vh_get_timezones();
             $data['country_code'] = vh_get_country_list();
@@ -238,7 +238,7 @@ class RegistrationsController extends Controller
                 $response['errors'][] = trans("vaahcms-general.something_went_wrong");
             }
         }
-        
+
         return response()->json($response);
     }
     //----------------------------------------------------------

@@ -466,7 +466,7 @@ class User extends UserBase
                 break;
         }
 
-        return self::getItem($id);
+        return self::getItem($id,[], $type);
     }
     //-------------------------------------------------
 
