@@ -98,7 +98,11 @@ class RegistrationBase extends VaahModel
     //-------------------------------------------------
     public function setBirthAttribute($value)
     {
-        $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
+        if (!empty($value)) {
+            $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
+        } else {
+            $this->attributes['birth'] = null;
+        }
     }
     //-------------------------------------------------
     public function setPasswordAttribute($value)

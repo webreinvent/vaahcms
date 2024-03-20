@@ -1400,7 +1400,7 @@ class UserBase extends Authenticatable
         return $response;
     }
     //-------------------------------------------------
-    public static function getItem($id,$excluded_columns = [])
+    public static function getItem($id,$excluded_columns = [], $type=null)
     {
 
         $item = self::where('id', $id)->with(['createdByUser',
@@ -1421,7 +1421,9 @@ class UserBase extends Authenticatable
         }
 
         $item = $item->first();
-
+        if ($type==="generate-new-token"){
+           $response['messages'][] = trans("vaahcms-general.action_successful") ;
+        }
         $response['success'] = true;
         $response['data'] = $item;
 
@@ -2022,7 +2024,7 @@ class UserBase extends Authenticatable
             $user_id = \Auth::user()->id;
         }
 
-        $user = self::find($user_id);
+        $user = self::withTrashed()->find($user_id);
 
         $user->avatar_url = $request->url;
         $user->save();
@@ -2046,7 +2048,7 @@ class UserBase extends Authenticatable
             $user_id = \Auth::user()->id;
         }
 
-        $user = self::find($user_id);
+        $user = self::withTrashed()->find($user_id);
         $user->avatar_url = null;
         $user->save();
 

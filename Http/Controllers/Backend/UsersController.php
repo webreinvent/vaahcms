@@ -86,7 +86,7 @@ class UsersController extends Controller
             $data['custom_fields'] = $custom_fields;
             $data['fields'] = User::getUserSettings();
             $data['totalRole'] = $roles_count;
-            $data['country_code'] = vh_get_country_list();
+            $data['country_calling_code'] = vh_get_countries_calling_codes();
             $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
             $response['success'] = true;
             $response['data'] = $data;

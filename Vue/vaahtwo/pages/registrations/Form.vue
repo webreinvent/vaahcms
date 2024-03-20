@@ -129,7 +129,7 @@ watch(
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
+                    <Button v-if="(store.item && store.item.id) && store.hasPermission('can-read-registrations')"
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
@@ -254,8 +254,8 @@ watch(
                 <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')">
                     <Dropdown v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
-                              optionLabel='calling_code'
-                              optionValue='calling_code'
+                              optionLabel='name'
+                              optionValue='slug'
                               placeholder="Enter your country code"
                               data-testid="register-country_calling_code"
                               class="w-full"
