@@ -313,10 +313,10 @@ watch(
                 <VhField label="Country Code" v-if="!store.isHidden('country_calling_code') && store.assets">
                     <Dropdown class="w-full"
                               v-model="store.item.country_calling_code"
-                              :options="store.assets.countries"
+                              :options="store.assets.country_calling_code"
                               :editable="true"
-                              optionLabel="calling_code"
-                              optionValue="calling_code"
+                              optionLabel="name"
+                              optionValue="slug"
                               id="calling_code"
                               name="account-country_calling_code"
                               data-testid="account-country_calling_code"

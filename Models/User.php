@@ -443,14 +443,13 @@ class User extends UserBase
                     ->update(['is_active' => null]);
                 break;
             case 'trash':
-                self::where('id', $id)
-                    ->withTrashed()
+                self::find($id)
                     ->delete();
                 break;
             case 'restore':
                 self::where('id', $id)
-                    ->withTrashed()
-                    ->restore();
+                    ->onlyTrashed()
+                    ->first()->restore();
                 break;
             case 'generate-new-token':
 
@@ -463,7 +462,7 @@ class User extends UserBase
                 break;
         }
 
-        return self::getItem($id);
+        return self::getItem($id,[], $type);
     }
     //-------------------------------------------------
 

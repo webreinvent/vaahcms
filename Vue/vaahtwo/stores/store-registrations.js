@@ -453,7 +453,7 @@ export const useRegistrationStore = defineStore({
                 case 'create-and-close':
                 case 'save-and-close':
                     this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'registrations.index'});
+                    await this.$router.push({name: 'registrations.index'});
                     break;
                 case 'save-and-clone':
                 case 'create-and-clone':
