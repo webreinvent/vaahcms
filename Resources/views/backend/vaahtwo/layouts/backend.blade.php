@@ -25,7 +25,7 @@
     {!! vh_config_css() !!}
 
 </head>
-<body class="{{config('settings.global.is_sidebar_collapsed')?'has-sidebar-small':''}}
+<body class="{{config('settings.global.is_sidebar_collapsed') == null?'has-sidebar-small':''}}
     @if(isset($data->body_class)){{$data->body_class}}@endif">
 
 <div>
