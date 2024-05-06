@@ -326,10 +326,15 @@ export const useRootStore = defineStore({
         //-----------------------------------------------------------------------
         setTopMenuItems(){
             if (this.assets && this.assets.language_string &&  this.assets.language_string.dashboard) {
+
+                let navigation_label = this.assets.is_sidebar_collapsed == 1 ?
+                    this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation :
+                    this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;
+
                 this.top_menu_items = [
                     {
                         label: '',
-                        tooltip: this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation,
+                        tooltip: navigation_label,
                         icon: 'pi pi-align-justify',
                         command: () => {
 

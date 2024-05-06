@@ -121,7 +121,7 @@ export const useGeneralStore = defineStore({
 
                 this.visibitlity_options = generateOptions('enable', 'disable');
                 this.maintenanceModeOptions = generateOptions('enable', 'disable');
-                this.compressedLogoOptions = generateOptions('true', 'false');
+                this.trueFalseOptions = generateOptions('true', 'false');
                 this.redirect_after_logout_options = [
                     { name: this.assets.language_strings.backend, value: 'backend' },
                     { name: this.assets.language_strings.frontend, value: 'frontend' },

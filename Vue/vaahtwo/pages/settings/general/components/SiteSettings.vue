@@ -135,12 +135,31 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="col-6 p-fluid">
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.is_sidebar_collapsed }}</h5>
+                    <div class="p-inputgroup">
+                        <SelectButton v-model="store.list.is_sidebar_collapsed"
+                                      optionLabel="name"
+                                      optionValue="value"
+                                      :options="store.trueFalseOptions"
+                                      data-testid="general-is_sidebar_collapsed"
+                                      class="p-button-sm"
+                                      aria-labelledby="single"
+                        />
+                        <Button class="p-button-sm"
+                                icon="pi pi-copy"
+                                data-testid="general-copyright_custom_year_filed_copy"
+                                @click="store.getCopy('is_sidebar_collapsed')"
+                        />
+                    </div>
+                </div>
+
+                <div class="col-6 p-fluid">
                     <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.is_logo_compressed_with_sidebar }}</h5>
                     <div class="p-inputgroup">
                         <SelectButton v-model="store.list.is_logo_compressed"
                                       optionLabel="name"
                                       optionValue="value"
-                                      :options="store.compressedLogoOptions"
+                                      :options="store.trueFalseOptions"
                                       data-testid="general-is_logo_compressed"
                                       class="p-button-sm"
                                       aria-labelledby="single"
