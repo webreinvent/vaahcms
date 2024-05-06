@@ -27,7 +27,9 @@
 
 </head>
 
-<body class="vaahtwo primevue @if(isset($data->body_class)){{$data->body_class}}@endif">
+<body class="vaahtwo primevue {{config('settings.global.is_sidebar_collapsed') == null ||
+    config('settings.global.is_sidebar_collapsed') ?'has-sidebar-small':''}}
+    @if(isset($data->body_class)){{$data->body_class}}@endif">
 
 @include("vaahcms::backend.vaahtwo.components.errors")
 @include("vaahcms::backend.vaahtwo.components.flash")

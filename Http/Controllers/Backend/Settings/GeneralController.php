@@ -90,6 +90,7 @@ class GeneralController extends Controller
             "assign_roles_on_registration" => trans("vaahcms-general-setting.assign_roles_on_registration"),
             "allowed_file_types_for_upload" => trans("vaahcms-general-setting.allowed_file_types_for_upload"),
             "is_logo_compressed_with_sidebar" => trans("vaahcms-general-setting.is_logo_compressed_with_sidebar"),
+            "is_sidebar_collapsed" => trans("vaahcms-general-setting.is_sidebar_collapsed"),
             "copyright_text" => trans("vaahcms-general-setting.copyright_text"),
             "copyright_year" => trans("vaahcms-general-setting.copyright_year"),
             "maximum_number_of_login_attempts" => trans("vaahcms-general-setting.maximum_number_of_login_attempts"),

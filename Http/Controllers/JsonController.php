@@ -156,7 +156,7 @@ class JsonController extends Controller
 
 
         $data['backend_logo_url'] = vh_backend_logo();
-
+        $data['is_sidebar_collapsed'] = config('settings.global.is_sidebar_collapsed');
 
         $response['success'] = true;
         $response['data'] = $data;

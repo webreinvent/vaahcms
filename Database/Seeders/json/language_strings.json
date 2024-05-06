@@ -2107,6 +2107,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Is Sidebar collapsed",
+        "content": "Is Sidebar collapsed"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Redirect after Backend Logout",
         "content": "Redirect after Backend Logout"
     },
@@ -6360,6 +6366,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Is Sidebar collapsed",
+        "content": "¿Está colapsada la barra lateral?"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Redirect after Backend Logout",
         "content": "Redirigir después del cierre de sesión del backend"
     },
@@ -10113,6 +10125,12 @@
         "category": "general-setting",
         "name": "Is Logo compressed with Sidebar",
         "content": "Le logo est-il compressé avec la barre latérale"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Is Sidebar collapsed",
+        "content": "La barre latérale est-elle réduite"
     },
     {
         "locale_code_iso_639": "fr",
