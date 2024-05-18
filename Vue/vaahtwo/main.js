@@ -4,6 +4,7 @@ import { createPinia, PiniaVuePlugin  } from 'pinia'
 
 
 //-------------PrimeVue Imports
+import 'primevue/resources/themes/aura-light-green/theme.css'
 
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
