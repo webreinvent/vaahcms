@@ -53,7 +53,7 @@ Route::group(
     [
         'prefix'     => 'media',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\backend'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend'
     ],
     function () {
         //------------------------------------------------
