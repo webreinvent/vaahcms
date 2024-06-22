@@ -7,7 +7,9 @@ namespace WebReinvent\VaahCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\Setting;
+use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Models\User;
 
 
@@ -57,6 +59,66 @@ class PublicController extends Controller
         $response['success'] = false;
         $response['errors'][] = 'User not found.';
         return $response;
+
+    }
+    //----------------------------------------------------------
+    public function publishAssets(Request $request,$slug)
+    {
+        try{
+
+            $module = Module::slug($slug)->first();
+
+            if (!$module) {
+
+                $theme = Theme::slug($slug)->first();
+
+                if(!$theme){
+                    $response['success'] = false;
+                    $response['errors'][] = "Module/Theme not found.";
+                    return response()->json($response);
+                }
+
+                $message = Theme::copyAssets($theme);
+
+                if (!$message) {
+                    $response['success'] = false;
+                    $response['errors'][] = "Something went wrong.";
+                    return response()->json($response);
+                }
+
+                $theme->is_assets_published = 1;
+                $theme->save();
+                $response['success'] = true;
+                $response['messages'][] = "Assets published.";
+                return response()->json($response);
+            }
+
+            $message = Module::copyAssets($module);
+
+            if (!$message) {
+                $response['success'] = false;
+                $response['errors'][] = "Something went wrong.";
+                return response()->json($response);
+            }
+
+            $module->is_assets_published = 1;
+            $module->save();
+            $response['success'] = true;
+            $response['messages'][] = "Assets published.";
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTraceAsString();
+            } else {
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+            }
+        }
+
+
+        return response()->json($response);
 
     }
     //----------------------------------------------------------
