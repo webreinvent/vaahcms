@@ -28,6 +28,10 @@ Route::group(
         //------------------------------------------------
         Route::any( '/disable/mfa/{api_token}', 'PublicController@disableMfa' )
             ->name( 'vh.backend.disable.mfa' );
+        //------------------------------------------------
+        Route::any( '/publish/assets/{slug}', 'PublicController@publishAssets' )
+            ->name( 'vh.backend.publish.assets' );
+
     });
 
 Route::group(
@@ -159,5 +163,3 @@ Route::group(
                 Route::any( '/{column}/{value}/delete', 'TaxonomyTypesController@delete' );
             });
     });
-
-

@@ -84,7 +84,7 @@ class VaahSetup{
                         "excerpt"=> "CMS is a framework for creating, managing, and deploying customized content types and fields.",
                         "author_name"=> "Vaah",
                         "author_website"=> "https://vaah.dev",
-                        "version"=> "v2.0.1",
+                        "version"=> "v2.0.4",
                         "is_sample_data_available"=> true,
                         "import_sample_data"=> false,
                     ],
@@ -100,7 +100,7 @@ class VaahSetup{
                         "github_url"=> "https://github.com/webreinvent/vaahcms-theme-bulma",
                         "author_name"=> "WebReinvent",
                         "author_website"=> "https://webreinvent.com",
-                        "version"=> "v0.0.2",
+                        "version"=> "v0.0.6",
                         "is_sample_data_available"=> true,
                         "import_sample_data"=> true,
                     ]
