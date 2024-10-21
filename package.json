@@ -70,7 +70,7 @@
         "v-jsoneditor": "^1.4.1",
         "vaah-vue-clicktocopy": "^1.1.5",
         "vaah-vue-pagination": "^1.1.5",
-        "vue": "^2.6.12",
+        "vue": "^3.0.0",
         "vue-avatar": "^2.2.0",
         "vue-axios": "^3.2.0",
         "vue-codemirror": "^4.0.6",
