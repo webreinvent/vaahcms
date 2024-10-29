@@ -86,9 +86,9 @@ app.use(router);
 //-------------PrimeVue Use
 app.use(PrimeVue, {
     ripple: true,
-    theme: {
+    /*theme: {
         preset: Aura
-    }
+    }*/
 });
 app.use(ConfirmationService);
 app.use(ToastService);
@@ -147,7 +147,6 @@ app.component('Textarea', Textarea);
 app.component('TieredMenu', TieredMenu);
 app.component('Toast', Toast);
 app.component('TreeSelect', TreeSelect);
-app.component('Drawer', Drawer);
 //-------------/PrimeVue Use
 
 

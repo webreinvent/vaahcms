@@ -21,6 +21,7 @@
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
     <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_backend_assets("primeicons/primeicons.css", 'common')}}" rel="stylesheet" media="screen">
 
     @if(env('VAAHCMS_ASSETS') == 'develop')
 
