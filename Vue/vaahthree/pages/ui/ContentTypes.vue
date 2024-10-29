@@ -18,7 +18,7 @@
                         <div class="w-full flex justify-content-between align-items-center mb-4">
                             <h4 class="font-semibold">{{item.title}}</h4>
                             <div class="w-max p-inputgroup align-items-center">
-                                <InputSwitch></InputSwitch>
+                                <ToggleSwitch></ToggleSwitch>
                                 <p class="ml-1 mr-3 text-xs font-semibold">Is Repeatable</p>
                                 <Button icon="pi pi-hashtag" class="p-button-sm"></Button>
                                 <Button icon="pi pi-trash" class="p-button-sm" @click="removeGroup(idx)"></Button>
@@ -49,8 +49,8 @@
                                            </Column>
                                            <Column>
                                                <template #body="slotProps">
-                                                   <InputSwitch v-if="slotProps.data.value === 'repeatable'"></InputSwitch>
-                                                   <InputSwitch v-if="slotProps.data.value === 'searchable'"></InputSwitch>
+                                                   <ToggleSwitch v-if="slotProps.data.value === 'repeatable'"></ToggleSwitch>
+                                                   <ToggleSwitch v-if="slotProps.data.value === 'searchable'"></ToggleSwitch>
                                                    <Textarea v-if="slotProps.data.value === 'excerpt'" class="w-full"></Textarea>
                                                    <InputText v-if="slotProps.data.value === 'opening-tag'" class="w-full"></InputText>
                                                    <InputText v-if="slotProps.data.value === 'closing-tag'" class="w-full"></InputText>

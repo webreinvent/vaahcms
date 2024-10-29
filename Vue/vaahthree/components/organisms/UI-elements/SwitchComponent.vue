@@ -1,9 +1,9 @@
 <template>
   <h5>Input Switch</h5>
-  <InputSwitch v-model="switchValue" />
+  <ToggleSwitch v-model="switchValue" />
 
   <h5>Switch Small</h5>
-  <InputSwitch v-model="switchValue" class="is-small"/>
+  <ToggleSwitch v-model="switchValue" class="is-small"/>
 </template>
 
 <script>

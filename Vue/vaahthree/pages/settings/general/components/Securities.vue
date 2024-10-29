@@ -76,7 +76,7 @@ const store = useGeneralStore();
                 </div>
 
                 <div class="field flex align-items-center">
-                    <InputSwitch inputId="switch1"
+                    <ToggleSwitch inputId="switch1"
                                  data-testid="general-securities_status_is_new_device"
                                  class="p-inputswitch-sm mr-2"
                                  v-model="store.list.is_new_device_verification_enabled"/>

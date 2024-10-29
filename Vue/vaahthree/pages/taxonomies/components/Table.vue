@@ -116,7 +116,7 @@ const openTaxonomyTypeModal = () => {
                     header="Is Active"
             >
                 <template #body="prop">
-                    <InputSwitch v-model.bool="prop.data.is_active"
+                    <ToggleSwitch v-model.bool="prop.data.is_active"
                                  data-testid="taxonomies-table-is-active"
                                  v-bind:false-value="0"
                                  v-bind:true-value="1"

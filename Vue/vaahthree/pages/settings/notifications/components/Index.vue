@@ -185,7 +185,7 @@ onMounted(async () => {
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_mail }}</h5>
 
-                                    <InputSwitch v-model="store.active_notification.via_mail"
+                                    <ToggleSwitch v-model="store.active_notification.via_mail"
                                                  data-testid="setting-notification_mail"
                                                  class="is-small"
                                     />
@@ -194,7 +194,7 @@ onMounted(async () => {
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">SMS</h5>
 
-                                    <InputSwitch v-model="store.active_notification.via_sms"
+                                    <ToggleSwitch v-model="store.active_notification.via_sms"
                                                  data-testid="setting-notification_sms"
                                                  class="is-small"
                                     />
@@ -203,7 +203,7 @@ onMounted(async () => {
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.notification_field_push }}</h5>
 
-                                    <InputSwitch v-model="store.active_notification.via_push"
+                                    <ToggleSwitch v-model="store.active_notification.via_push"
                                                  data-testid="setting-notification_push"
                                                  class="is-small"
                                     />
@@ -212,7 +212,7 @@ onMounted(async () => {
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.backend }}</h5>
 
-                                    <InputSwitch v-model="store.active_notification.via_backend"
+                                    <ToggleSwitch v-model="store.active_notification.via_backend"
                                                  data-testid="setting-notification_backend"
                                                  class="is-small"
                                     />
@@ -220,7 +220,7 @@ onMounted(async () => {
 
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">Frontend</h5>
-                                    <InputSwitch v-model="store.active_notification.via_frontend"
+                                    <ToggleSwitch v-model="store.active_notification.via_frontend"
                                                  data-testid="setting-notification_frontend"
                                                  class="is-small"
                                     />
@@ -230,7 +230,7 @@ onMounted(async () => {
                         <div class="col-6 justify-content-end flex">
                             <span class="text-right">
                                 <h5 class="font-semibold text-xs mb-1">{{ store.assets.language_strings.error_notifications }}</h5>
-                                <InputSwitch v-model="store.active_notification.is_error"
+                                <ToggleSwitch v-model="store.active_notification.is_error"
                                              data-testid="setting-notification_error"
                                              class="is-small"
                                 />

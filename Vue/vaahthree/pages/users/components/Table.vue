@@ -76,7 +76,7 @@ const useVaah = vaah();
                     style="width:100px;"
             >
                 <template #body="prop">
-                    <InputSwitch v-model.bool="prop.data.is_active"
+                    <ToggleSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
                                  data-testid="user-list_data_active"

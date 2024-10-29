@@ -51,30 +51,30 @@
                             <div class="flex justify-content-between">
                 <span>
               <h5 class="font-semibold text-xs mb-1">Mail</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
+              <ToggleSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
               <h5 class="font-semibold text-xs mb-1">SMS</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
+              <ToggleSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
               <h5 class="font-semibold text-xs mb-1">Push</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
+              <ToggleSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
               <h5 class="font-semibold text-xs mb-1">Frontend</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
+              <ToggleSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
               <h5 class="font-semibold text-xs mb-1">Backend</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
+              <ToggleSwitch v-model="checked"  class="is-small"/>
             </span>
                             </div>
                         </div>
                         <div class="col-6 justify-content-end flex">
            <span class="text-right">
               <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
-              <InputSwitch v-model="checked" class="is-small"/>
+              <ToggleSwitch v-model="checked" class="is-small"/>
            </span>
                         </div>
                         <div class="col-12">

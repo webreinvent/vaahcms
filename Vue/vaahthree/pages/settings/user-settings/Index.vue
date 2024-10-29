@@ -69,7 +69,7 @@ onMounted(async () => {
 
                         <Column field="visibilityStatus" :header="store.assets.language_strings.is_hidden">
                             <template #body="slotProps">
-                                <InputSwitch v-model="slotProps.data.value.is_hidden"
+                                <ToggleSwitch v-model="slotProps.data.value.is_hidden"
                                              data-testid="setting-field_is_hidden"
                                              class="is-small"
                                              @input="store.storeField(slotProps.data)"
@@ -155,7 +155,7 @@ onMounted(async () => {
                                                         <td>{{ store.assets.language_strings.is_hidden }}</td>
 
                                                         <td class="text-right">
-                                                            <InputSwitch v-model="element.is_hidden"
+                                                            <ToggleSwitch v-model="element.is_hidden"
                                                                          data-testid="setting-customfield_is_hidden"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"
@@ -168,7 +168,7 @@ onMounted(async () => {
                                                         <td>{{ store.assets.language_strings.apply_to_registration }}</td>
 
                                                         <td class="text-right">
-                                                            <InputSwitch v-model="element.to_registration"
+                                                            <ToggleSwitch v-model="element.to_registration"
                                                                          data-testid="setting-customfield_to_registration"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"
@@ -181,7 +181,7 @@ onMounted(async () => {
                                                         <td>{{ store.assets.language_strings.custom_is_password_reveal }}</td>
 
                                                         <td>
-                                                            <InputSwitch v-model="element.is_password_reveal"
+                                                            <ToggleSwitch v-model="element.is_password_reveal"
                                                                          data-testid="setting-customfield_is_password_reveal"
                                                                          v-bind:false-value="0"
                                                                          v-bind:true-value="1"

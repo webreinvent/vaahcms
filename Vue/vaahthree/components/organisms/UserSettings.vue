@@ -18,7 +18,7 @@
             <Column field="fieldName" header="Field Name"></Column>
             <Column field="visibilityStatus" header="Is Hidden">
               <template #body="slotProps">
-                <InputSwitch v-model="slotProps.data.visibilityStatus"  class="is-small"/>
+                <ToggleSwitch v-model="slotProps.data.visibilityStatus"  class="is-small"/>
               </template>
             </Column>
             <Column field="applyToRegistration" header="Apply To Registration">
