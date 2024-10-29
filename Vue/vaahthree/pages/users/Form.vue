@@ -237,7 +237,7 @@ watch(
 
                 <template v-if="!store.isHidden('title') && store.assets">
                     <VhField label="Title">
-                        <Dropdown class="w-full"
+                        <Select class="w-full"
                                   v-model="store.item.title"
                                   :options="store.assets.name_titles"
                                   optionLabel="name"
@@ -311,7 +311,7 @@ watch(
                 </VhField>
 
                 <VhField label="Country Code" v-if="!store.isHidden('country_calling_code') && store.assets">
-                    <Dropdown class="w-full"
+                    <Select class="w-full"
                               v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
                               :editable="true"
@@ -348,7 +348,7 @@ watch(
                 </VhField>
 
                 <VhField label="Timezone" v-if="!store.isHidden('timezone') && store.assets">
-                    <Dropdown v-model="store.item.timezone"
+                    <Select v-model="store.item.timezone"
                               :options="store.assets.timezones"
                               optionLabel="name"
                               optionValue="slug"
@@ -391,7 +391,7 @@ watch(
                 </VhField>
 
                 <VhField label="Status">
-                    <Dropdown class="w-full"
+                    <Select class="w-full"
                               v-model="store.item.status"
                               :options="store.status_options"
                               optionLabel="label"

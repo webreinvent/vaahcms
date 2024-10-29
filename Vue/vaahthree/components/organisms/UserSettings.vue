@@ -43,7 +43,7 @@
           <div class="grid justify-content-between">
             <div class="col-12 md:col-3">
               <div class="p-inputgroup">
-                <Dropdown v-model="selectedFieldType" :options="fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
+                <Select v-model="selectedFieldType" :options="fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
                 <Button label="Add"></Button>
               </div>
             </div>

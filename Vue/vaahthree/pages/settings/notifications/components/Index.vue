@@ -315,7 +315,7 @@ onMounted(async () => {
                                                                class="p-inputtext-sm"
                                                     />
 
-                                                    <Dropdown v-model="line.meta.action"
+                                                    <Select v-model="line.meta.action"
                                                               :options="store.notification_actions"
                                                               optionLabel="name"
                                                               optionValue="name"
@@ -430,7 +430,7 @@ onMounted(async () => {
                                                            inputClass="p-inputtext-sm"
                                                 />
 
-                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
+                                                <Select :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -482,7 +482,7 @@ onMounted(async () => {
                                                            data-testid="setting-notification_backend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
+                                                <Select :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"
@@ -536,7 +536,7 @@ onMounted(async () => {
                                                            data-testid="setting-notification_frontend_message"
                                                            inputClass="p-inputtext-sm"
                                                 />
-                                                <Dropdown :placeholder="store.assets.language_strings.placeholder_choose_an_action"
+                                                <Select :placeholder="store.assets.language_strings.placeholder_choose_an_action"
                                                           v-model="line.meta.action"
                                                           :options="store.notification_actions"
                                                           optionLabel="name"

@@ -14,21 +14,21 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">ENV</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Env" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Env" class="p-inputtext-sm"/>
                 </div>
             </div>
 
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Debug</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Debug" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Debug" class="p-inputtext-sm"/>
                 </div>
             </div>
 
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Timezone</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Timezone" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Timezone" class="p-inputtext-sm"/>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Database Type</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Database Type" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Database Type" class="p-inputtext-sm"/>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Database Name</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Database Name" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Database Name" class="p-inputtext-sm"/>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Mail Provider</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Provider" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Provider" class="p-inputtext-sm"/>
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Mail Port</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Mail Port" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Mail Port" class="p-inputtext-sm"/>
                 </div>
             </div>
 
@@ -141,7 +141,7 @@
             <div class="col-12 md:col-4">
                 <h5 class="p-1 text-xs mb-0">Mail Encryption</h5>
                 <div class="p-inputgroup">
-                    <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Encryption" class="p-inputtext-sm"/>
+                    <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Encryption" class="p-inputtext-sm"/>
                 </div>
             </div>
 

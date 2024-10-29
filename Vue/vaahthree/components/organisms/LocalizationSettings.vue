@@ -14,12 +14,12 @@
         <template #content>
             <div class="grid justify-content-between">
                 <div class="col-4 align-items-center flex">
-                    <Dropdown v-model="selectedLanguage" :options="languages" optionLabel="label" optionValue="value" placeholder="Select a Language" />
+                    <Select v-model="selectedLanguage" :options="languages" optionLabel="label" optionValue="value" placeholder="Select a Language" />
                 </div>
                 <div class="col-4">
                     <div class="p-inputgroup ">
-                        <Dropdown v-model="selectedCategory" :options="categories" optionLabel="label" optionValue="value" placeholder="Select a Category" />
-                        <Dropdown v-model="selectedFilter" :options="filterOptions" optionLabel="label" optionValue="value" placeholder="Select a Filter" />
+                        <Select v-model="selectedCategory" :options="categories" optionLabel="label" optionValue="value" placeholder="Select a Category" />
+                        <Select v-model="selectedFilter" :options="filterOptions" optionLabel="label" optionValue="value" placeholder="Select a Filter" />
                     </div>
                 </div>
             </div>

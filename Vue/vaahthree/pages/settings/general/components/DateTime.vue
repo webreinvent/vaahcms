@@ -11,7 +11,7 @@ const store = useGeneralStore();
             <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.date_format }}</h5>
 
             <div class="p-inputgroup">
-                <Dropdown v-model="store.list.date_format"
+                <Select v-model="store.list.date_format"
                           data-testid="general-date_format"
                           :options="store.date_format_options"
                           inputClass="p-inputtext-sm"
@@ -37,7 +37,7 @@ const store = useGeneralStore();
             <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.time_format }}</h5>
 
             <div class="p-inputgroup">
-                <Dropdown v-model="store.list.time_format"
+                <Select v-model="store.list.time_format"
                           data-testid="general-time_format"
                           :options="store.time_format_options"
                           inputClass="p-inputtext-sm"
@@ -62,7 +62,7 @@ const store = useGeneralStore();
         <div class="col-4">
             <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.date_time_format }}</h5>
             <div class="p-inputgroup">
-                <Dropdown v-model="store.list.datetime_format"
+                <Select v-model="store.list.datetime_format"
                           data-testid="general-datetime_format"
                           :options="store.date_time_format_options"
                           inputClass="p-inputtext-sm"

@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
-                                        <Dropdown
+                                        <Select
                                             class="is-small"
                                             v-model="selectedLanguage" :options="languages"
                                                   placeholder="Select a Language"/>
@@ -170,7 +170,7 @@
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Date Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="dateFormat" :options="dateFormatOptions"></Dropdown>
+                                    <Select v-model="dateFormat" :options="dateFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom date format" v-if="dateFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
                                 </div>
@@ -178,7 +178,7 @@
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Time Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="timeFormat" :options="timeFormatOptions"></Dropdown>
+                                    <Select v-model="timeFormat" :options="timeFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom time format" v-if="timeFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
                                 </div>
@@ -186,7 +186,7 @@
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="dateTimeFormat" :options="dateTimeFormatOptions"></Dropdown>
+                                    <Select v-model="dateTimeFormat" :options="dateTimeFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom date-time format" v-if="dateTimeFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
                                 </div>
@@ -304,7 +304,7 @@
                             <div class="col-12">
                                 <h5 class="p-1 text-xs mb-1">Meta Tag</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown input-class=""></Dropdown>
+                                    <Select input-class=""></Select>
                                     <InputText></InputText>
                                     <Button label="Content" disabled=""></Button>
                                     <InputText></InputText>
@@ -319,7 +319,7 @@
                             </div>
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Dropdown>
+                                    <Select v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Select>
                                     <Button label="Generate"></Button>
                                 </div>
                             </div>

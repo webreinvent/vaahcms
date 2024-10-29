@@ -240,7 +240,7 @@ onMounted(async () => {
                     <div class="grid">
                         <div class="col-12 md:col-4">
                             <div class="p-inputgroup">
-                                <Dropdown v-model="store.selected_field_type"
+                                <Select v-model="store.selected_field_type"
                                           data-testid="setting-customfield_fieldtypes"
                                           :options="store.field_types"
                                           optionLabel="name" optionValue="value"

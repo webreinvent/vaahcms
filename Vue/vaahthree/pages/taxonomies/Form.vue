@@ -172,7 +172,7 @@ const openTaxonomyTypeModal = () => {
                          v-if="store.item.type
                          && store.item.type.parent_id"
                 >
-                    <Dropdown v-model="store.item.parent_id"
+                    <Select v-model="store.item.parent_id"
                               :options="store.parent_options"
                               optionLabel="name"
                               optionValue="id"

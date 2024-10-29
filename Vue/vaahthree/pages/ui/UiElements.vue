@@ -60,7 +60,7 @@
                         </CodePreview>
 
                         <CodePreview name="components/DropdownComponent.vue" :code="raw.dropDown">
-                            <DropdownComponent/>
+                            <SelectComponent/>
                         </CodePreview>
 
                         <CodePreview name="components/MulitSelectComponent.vue" :code="raw.multiSelect">

@@ -30,7 +30,7 @@ const store = useGeneralStore();
                 <div class="col-6">
                     <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.default_site_language }}</h5>
 
-                    <Dropdown v-model="store.list.language"
+                    <Select v-model="store.list.language"
                               :options="store.languages"
                               optionLabel="name"
                               data-testid="general-site_language"

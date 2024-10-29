@@ -41,7 +41,7 @@ onMounted(async () => {
                       <h5 class="text-left p-1 title is-6">ENV</h5>
                       <div class="p-inputgroup">
 
-                          <Dropdown v-model="store.config.env.app_env" :options="store.assets.environments"
+                          <Select v-model="store.config.env.app_env" :options="store.assets.environments"
                                     @change="store.loadConfigurations()"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Select Env" class="is-small"
@@ -63,7 +63,7 @@ onMounted(async () => {
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6">Debug</h5>
                       <div class="p-inputgroup">
-                          <Dropdown v-model="store.config.env.app_debug"
+                          <Select v-model="store.config.env.app_debug"
                                     name="config-db_connection"
                                     :options="store.debug_option" optionLabel="name"
                                     optionValue="slug" placeholder="Select Debug"
@@ -77,7 +77,7 @@ onMounted(async () => {
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6">Timezone</h5>
                       <div class="p-inputgroup">
-                          <Dropdown v-model="store.config.env.app_timezone"
+                          <Select v-model="store.config.env.app_timezone"
                                     :options="store.assets.timezones"
                                     optionLabel="name" optionValue="slug" :filter="true"
                                     placeholder="Select Timezone" class="is-small"
@@ -110,7 +110,7 @@ onMounted(async () => {
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6">Database Type</h5>
                       <div class="p-inputgroup">
-                          <Dropdown v-model="store.config.env.db_connection"
+                          <Select v-model="store.config.env.db_connection"
                                     :options="store.assets.database_types"
                                     name="config-db_connection"
                                     optionLabel="name" optionValue="slug"
@@ -232,7 +232,7 @@ onMounted(async () => {
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6">Mail Provider</h5>
                       <div class="p-inputgroup">
-                          <Dropdown v-model="store.config.env.mail_provider"
+                          <Select v-model="store.config.env.mail_provider"
                                     :options="store.assets.mail_sample_settings"
                                     @change="store.setMailConfigurations()"
                                     optionLabel="name" optionValue="slug"
@@ -301,7 +301,7 @@ onMounted(async () => {
                   <div class="col-12 md:col-4">
                       <h5 class="text-left p-1 title is-6">Mail Encryption</h5>
                       <div class="p-inputgroup">
-                          <Dropdown v-model="store.config.env.mail_encryption"
+                          <Select v-model="store.config.env.mail_encryption"
                                     :options="store.assets.mail_encryption_types"
                                     optionLabel="name" optionValue="slug"
                                     placeholder="Select Mail Encryption" class="is-small"

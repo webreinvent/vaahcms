@@ -15,7 +15,7 @@
             <template #content>
                 <div class="grid">
                     <div class="col-4 mb-5">
-                        <Dropdown placeholder="Select a filter"></Dropdown>
+                        <Select placeholder="Select a filter"></Select>
                     </div>
                     <div class="col-5 col-offset-3 mb-5">
                         <div class="p-inputgroup">

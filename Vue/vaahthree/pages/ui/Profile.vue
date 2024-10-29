@@ -48,7 +48,7 @@
                     <label for="display-name">Display Name</label>
                 </div>
                 <div class="p-float-label">
-                    <Dropdown id="title"></Dropdown>
+                    <Select id="title"></Select>
                     <label for="title">Title</label>
                 </div>
                 <div class="p-float-label">
@@ -73,7 +73,7 @@
                             <label for="gender"></label>
                     </span>
                 <span class="p-float-label">
-                           <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                           <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
                            <label for="country-code">Country Code</label>
                     </span>
                 <span class="p-float-label">
@@ -107,7 +107,7 @@
                         <label for="country">Country</label>
                     </span>
                 <span class="p-float-label">
-                         <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                         <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
                          <label for="country-code">Status</label>
                     </span>
                 <span class="p-float-label">

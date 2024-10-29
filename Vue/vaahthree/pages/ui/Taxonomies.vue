@@ -18,7 +18,7 @@
                 <template #content>
                     <div class="p-inputgroup">
                     <span class="p-float-label">
-                         <Dropdown id="dropdown-type"></Dropdown>
+                         <Select id="dropdown-type"></Select>
                         <label for="dropdown-type">Type</label>
                     </span>
                         <Button label="Manage" style="margin-bottom: 25px" @click="onShow"></Button>

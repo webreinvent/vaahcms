@@ -149,7 +149,7 @@ const toggleItemMenuList = (event) => {
 
         <div class="grid justify-content-between">
             <div class="col-4 align-items-center flex">
-                <Dropdown v-model="store.query_string.lang_id"
+                <Select v-model="store.query_string.lang_id"
                           :options="store.languages"
                           :data-testid="'localization-language_filter'"
                           optionLabel="option_label"
@@ -178,7 +178,7 @@ const toggleItemMenuList = (event) => {
                             @click="store.delayedSearch()"
                     />
 
-                    <Dropdown v-model="store.query_string.cat_id"
+                    <Select v-model="store.query_string.cat_id"
                               :data-testid="'localization-category_filter'"
                               :options="store.categories"
                               optionLabel="name"
@@ -188,7 +188,7 @@ const toggleItemMenuList = (event) => {
                               inputClass="p-inputtext-sm"
                     />
 
-                    <Dropdown v-model="store.query_string.filter"
+                    <Select v-model="store.query_string.filter"
                               :options="[
                                        {name:store.assets.language_strings.localization_empty_value, value:'empty'},
                                        {name:store.assets.language_strings.localization_filled_value, value:'filled'}

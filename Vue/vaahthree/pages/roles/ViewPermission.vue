@@ -158,7 +158,7 @@ const confirmChangeStatus = (event, id) => {
             <div class="flex justify-content-between mt-3 mb-1">
 
                 <div v-if="store && store.assets && store.assets.language_strings">
-                    <Dropdown v-model="store.role_permissions_query.module"
+                    <Select v-model="store.role_permissions_query.module"
                               :options="store.assets.modules"
                               :placeholder="store.assets.language_strings.view_permissions_select_a_module"
                               data-testid="role-permission_module"
@@ -170,13 +170,13 @@ const confirmChangeStatus = (event, id) => {
                                 {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1) }}
                             </div>
                         </template>
-                    </Dropdown>
+                    </Select>
                 </div>
 
                 <div v-if="store.role_permissions_query.module && store.module_section_list"
                      class="mx-1"
                 >
-                    <Dropdown v-model="store.role_permissions_query.section"
+                    <Select v-model="store.role_permissions_query.section"
                               :options="store.module_section_list"
                               placeholder="Select a Section"
                               @click="store.getItemPermissions()"
@@ -188,7 +188,7 @@ const confirmChangeStatus = (event, id) => {
                                 {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1) }}
                             </div>
                         </template>
-                    </Dropdown>
+                    </Select>
                 </div>
 
                 <div class="grid p-fluid">

@@ -1,6 +1,6 @@
 <template>
   <h5>Dropdown</h5>
-  <Dropdown v-model="dropdownValue" :options="dropdownValues" optionLabel="name" placeholder="Select" />
+  <Select v-model="dropdownValue" :options="dropdownValues" optionLabel="name" placeholder="Select" />
 </template>
 
 <script>

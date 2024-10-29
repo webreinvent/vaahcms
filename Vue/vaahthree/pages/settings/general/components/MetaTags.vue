@@ -11,7 +11,7 @@ const store = useGeneralStore();
                 <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
 
                 <div class="p-inputgroup">
-                    <Dropdown v-model="item.value.attribute"
+                    <Select v-model="item.value.attribute"
                               :options="store.assets.vh_meta_attributes"
                               optionLabel="name"
                               optionValue="slug"
@@ -66,7 +66,7 @@ const store = useGeneralStore();
 
             <div class="col-12 md:col-4">
                 <div class="p-inputgroup">
-                    <Dropdown v-model="store.tag_type"
+                    <Select v-model="store.tag_type"
                               :options="[
                                           {name:'Google Webmaster',value:'google-webmaster'},
                                           {name:'Open Graph (Facebook)',value:'open-graph'},

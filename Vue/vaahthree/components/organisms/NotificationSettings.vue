@@ -102,7 +102,7 @@
                                         <h5 class="p-1 text-xs mb-1 mt-3">Action</h5>
                                         <div class="p-inputgroup">
                                             <InputText placeholder="Enter action label"></InputText>
-                                            <Dropdown placeholder="Choose an action"></Dropdown>
+                                            <Select placeholder="Choose an action"></Select>
                                         </div>
                                         <div class="flex mt-5">
                                             <Button icon="" label="Add Subject" class="w-auto mr-2 p-button-sm" disabled></Button>
@@ -125,7 +125,7 @@
                                         <h5 class="p-1 text-xs mb-1">Action</h5>
                                         <div class="p-inputgroup">
                                             <InputText placeholder="Enter action label"></InputText>
-                                            <Dropdown placeholder="Choose an action"></Dropdown>
+                                            <Select placeholder="Choose an action"></Select>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4">

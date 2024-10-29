@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="p-inputgroup">
-            <Dropdown placeholder="Select a Parent" v-model="selectedParent" :options="tvModel" option-label="label"></Dropdown>
+            <Select placeholder="Select a Parent" v-model="selectedParent" :options="tvModel" option-label="label"></Select>
             <InputText v-model="inputChild"></InputText>
             <Button label="Add" @click="addToTree(selectedParent)"></Button>
         </div>

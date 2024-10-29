@@ -94,7 +94,7 @@ onMounted(async () => {
                         <label for="display-name">Display Name</label>
                     </div>
                     <div class="p-float-label">
-                        <Dropdown id="title"
+                        <Select id="title"
                                   v-model="store.profile.title"
                                   :options="store.assets.name_titles"
                                   optionLabel="name"
@@ -178,7 +178,7 @@ onMounted(async () => {
                            <label for="website">Website</label>
                     </span>
                     <span class="p-float-label">
-                         <Dropdown v-model="store.profile.timezone"
+                         <Select v-model="store.profile.timezone"
                                    :options="store.assets.timezones"
                                    optionLabel="name"
                                    optionValue="slug"
