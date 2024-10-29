@@ -34,7 +34,7 @@ export default defineConfig({
         outDir: './../../Resources/assets/backend/vaahthree/build/',
         rollupOptions: {
             input: {
-                main: path.resolve(__dirname, './main.js'),
+                mainExtended: path.resolve(__dirname, './main-extended.js'),
             },
             output: {
                 entryFileNames: `[name].js`,

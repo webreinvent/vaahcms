@@ -4,6 +4,8 @@
     "scripts": {
         "dev": "vite --host --port 4000",
         "build": "vite build --emptyOutDir",
+        "dev-extended": "vite --config vite.config.extended.js --host --port 4000",
+        "build-extended": "vite build --config vite.config.extended.js --emptyOutDir",
         "preview": "vite preview --port 4000"
     },
     "dependencies": {
