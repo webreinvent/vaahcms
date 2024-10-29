@@ -1,0 +1,104 @@
+@import './common.css';
+
+/* Form */
+@import './autocomplete.css';
+@import './cascadeselect.css';
+@import './checkbox.css';
+@import './colorpicker.css';
+@import './datepicker.css';
+@import './iconfield.css';
+@import './iftalabel.css';
+@import './inputgroup.css';
+@import './inputnumber.css';
+@import './inputotp.css';
+@import './inputtext.css';
+@import './floatlabel.css';
+@import './knob.css';
+@import './listbox.css';
+@import './multiselect.css';
+@import './password.css';
+@import './radiobutton.css';
+@import './rating.css';
+@import './select.css';
+@import './selectbutton.css';
+@import './slider.css';
+@import './textarea.css';
+@import './togglebutton.css';
+@import './toggleswitch.css';
+@import './treeselect.css';
+
+/* Button */
+@import './button.css';
+@import './buttongroup.css';
+@import './speeddial.css';
+@import './splitbutton.css';
+
+/* Data */
+@import './datatable.css';
+@import './dataview.css';
+@import './paginator.css';
+@import './picklist.css';
+@import './orderlist.css';
+@import './organizationchart.css';
+@import './timeline.css';
+@import './tree.css';
+@import './treetable.css';
+
+/* Overlay */
+@import './confirmdialog.css';
+@import './confirmpopup.css';
+@import './dialog.css';
+@import './drawer.css';
+@import './popover.css';
+@import './tooltip.css';
+
+/* Menu */
+@import './breadcrumb.css';
+@import './contextmenu.css';
+@import './dock.css';
+@import './menu.css';
+@import './menubar.css';
+@import './megamenu.css';
+@import './panelmenu.css';
+@import './tieredmenu.css';
+
+/* Panel */
+@import './accordion.css';
+@import './card.css';
+@import './divider.css';
+@import './fieldset.css';
+@import './panel.css';
+@import './scrollpanel.css';
+@import './splitter.css';
+@import './stepper.css';
+@import './tabs.css';
+@import './toolbar.css';
+
+/* File */
+@import './fileupload.css';
+
+/* Message */
+@import './message.css';
+@import './toast.css';
+
+/* Media */
+@import './carousel.css';
+@import './galleria.css';
+@import './image.css';
+@import './imagecompare.css';
+
+/* Misc */
+@import './avatar.css';
+@import './badge.css';
+@import './blockui.css';
+@import './chip.css';
+@import './inplace.css';
+@import './metergroup.css';
+@import './overlaybadge.css';
+@import './progressbar.css';
+@import './progressspinner.css';
+@import './ripple.css';
+@import './scrolltop.css';
+@import './skeleton.css';
+@import './tag.css';
+@import './terminal.css';
