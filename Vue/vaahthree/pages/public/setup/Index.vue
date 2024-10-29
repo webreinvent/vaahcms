@@ -25,12 +25,12 @@ onMounted(async () => {
 
 
 
-        <div class="grid grid-cols-6 gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             <div class="col-span-4 col-start-2" v-if="store.assets.is_installed">
                 <Message severity="success">VaahCMS is successfully setup</Message>
             </div>
-            <div class="col-span-3 row-start-2">
+            <div >
                 <Card class="border-round-xl">
                     <template #title>
                         <div class="flex flex-row justify-between items-center">
@@ -97,7 +97,7 @@ onMounted(async () => {
                     </template>
                 </Card>
             </div>
-            <div class="col-span-3 col-start-4 row-start-2">
+            <div >
                 <Card class="border-round-xl">
                     <template #title>
                         <div class="flex flex-row justify-between items-center">

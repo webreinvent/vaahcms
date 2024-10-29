@@ -19,8 +19,8 @@ onMounted(async () => {
 
     <div class="public-pages">
 
-        <div class="grid grid-cols-5 gap-4">
-            <div class="col-span-3 col-start-2">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+            <div class="md:col-span-4 md:col-start-2">
 
                 <div class="flex justify-center items-center mt-6 mb-8">
 
