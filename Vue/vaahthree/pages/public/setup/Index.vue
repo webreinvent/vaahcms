@@ -20,46 +20,53 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="store && store.assets && root && root.assets" class="setup text-center">
-        <Logo class="w-6 mx-auto" />
-        <div class="grid justify-content-center">
-            <div v-if="store.assets.is_installed" class="col-12">
+    <div v-if="store && store.assets && root && root.assets" class="setup">
+
+
+
+
+        <div class="grid grid-cols-6 gap-4">
+
+            <div class="col-span-4 col-start-2" v-if="store.assets.is_installed">
                 <Message severity="success">VaahCMS is successfully setup</Message>
             </div>
-            <div class="col-6">
+            <div class="col-span-3 row-start-2">
                 <Card class="border-round-xl">
                     <template #title>
-                        <div class="flex justify-content-between align-items-center">
+                        <div class="flex flex-row justify-between items-center">
                             <h4 class="text-xl font-semi-bold">Install</h4>
-                            <div class="icons flex">
-                                <div v-if="root.assets.auth_user" class="m-1">
-                                    <a @click="$router.push({name:'dashboard'})">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-dashboard_button"
-                                                v-tooltip.top="'Dashboard'"
-                                                icon=" pi pi-server"/>
-                                    </a>
-                                </div>
-                                <div v-else-if="store.assets.is_installed" class="m-1">
-                                    <a @click="$router.push({name:'sign.in'})">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-signin_button"
-                                                v-tooltip.top="'Sign In'"
-                                                icon="pi pi-sign-in"/>
-                                    </a>
-                                </div>
-                                <div class="m-1">
-                                    <a href="https://docs.vaah.dev/vaahcms/installation.html" target="_blank">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-documentation_button"
-                                                v-tooltip.top="'Documentation'"
-                                                icon=" pi pi-book"/>
-                                    </a>
-                                </div>
+
+                            <div class="flex flex-row justify-end items-center">
+
+                                <a v-if="root.assets.auth_user"
+                                   @click="$router.push({name:'dashboard'})">
+                                    <Button icon="pi pi-server" rounded outlined
+                                            class="mr-2"
+                                            data-testid="setup-dashboard_button"
+                                            v-tooltip.top="'Dashboard'"
+                                    />
+                                </a>
+
+                                <a v-else-if="store.assets.is_installed"
+                                   @click="$router.push({name:'sign.in'})"
+                                >
+                                    <Button rounded outlined
+                                            class="mr-2"
+                                            data-testid="setup-signin_button"
+                                            v-tooltip.top="'Sign In'"
+                                            icon="pi pi-sign-in"
+                                    />
+                                </a>
+
+
+                                <a href="https://docs.vaah.dev/" target="_blank">
+                                    <Button icon="pi pi-book" rounded outlined
+                                            data-testid="setup-documentation_button"
+                                            v-tooltip.top="'Documentation'" />
+                                </a>
                             </div>
+
+
                         </div>
                     </template>
                     <template #content>
@@ -71,38 +78,33 @@ onMounted(async () => {
 
                     </template>
                     <template #footer>
-                        <div v-if="store.status" class="flex justify-content-between align-items-center">
+                        <div v-if="store.status" class="flex flex-row justify-start items-start">
                             <Button v-if="store.status.stage && store.status.stage === 'installed'"
-                                    disabled label="Install" icon="pi pi-server"
-                                    class="p-button p-button-sm bg-white border-gray-800 text-black-alpha-80"/>
+                                    class="mr-4"
+                                    disabled label="Install"
+                                    icon="pi pi-server"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
+                                    class="mr-4"
                                     @click="store.routeAction('setup.install.configuration')"
-                                    class="p-button bg-white border-gray-800 text-black-alpha-80"
                                     data-testid="setup-install_vaahcms"/>
 
                             <SplitButton label="Advanced Options"
-                                         :model="store.advanced_option_menu_list"
-                                         class="p-button-sm">
+                                         :model="store.advanced_option_menu_list">
 
                             </SplitButton>
                         </div>
                     </template>
                 </Card>
             </div>
-            <div class="col-6">
-                <Card class="h-full border-round-xl">
+            <div class="col-span-3 col-start-4 row-start-2">
+                <Card class="border-round-xl">
                     <template #title>
-                        <div class="flex justify-content-between align-items-center">
+                        <div class="flex flex-row justify-between items-center">
                             <h4 class="text-xl font-semi-bold">Reset</h4>
-                            <div class="icons flex">
-                                <div class="m-1">
-                                    <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"
-                                            icon="pi pi-refresh"
-                                            v-tooltip.top="'Refresh'"
-                                            @click="store.getStatus()" />
-                                </div>
-                            </div>
+                            <Button icon="pi pi-refresh" rounded outlined
+                                    v-tooltip.top="'Refresh'"
+                                    @click="store.getStatus()" />
                         </div>
                     </template>
                     <template #content>
@@ -130,7 +132,10 @@ onMounted(async () => {
             </div>
         </div>
 
-        <Footer class="mt-3" />
+
+
+
+
 
         <Dialog header="Reset"
                 v-model:visible="store.show_reset_modal"

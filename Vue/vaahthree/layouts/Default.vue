@@ -15,8 +15,6 @@ onMounted(async () => {
 
 <template>
 
-    <div class="grid">
-        <div class="col"><RouterView /></div>
-    </div>
+    <RouterView />
 
 </template>

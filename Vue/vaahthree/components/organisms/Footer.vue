@@ -3,7 +3,7 @@ import Copyright from "./../molecules/Copyright.vue"
 </script>
 
 <template>
-    <div class="copyright-text">
+    <div class="copyright-text ">
         <Copyright />
     </div>
 </template>
