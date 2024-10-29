@@ -4,16 +4,23 @@ import {fileURLToPath, URL} from 'url'
 
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+
 const pathSrc = path.resolve(__dirname, 'Vue')
-
-
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         vue(),
-
+        viteStaticCopy({
+            targets: [
+                {
+                    src: './../../Resources/assets/backend',
+                    dest: './../../../../../../../public/vaahcms/',
+                }
+            ]
+        }),
     ],
     resolve: {
         alias: {
@@ -28,7 +35,7 @@ export default defineConfig({
             name: 'MyApp',
 
         },*/
-        outDir: './../../Resources/assets/backend/vaahtwo/build/',
+        outDir: './../../Resources/assets/backend/vaahthree/build/',
         rollupOptions: {
             input: {
                 main: fileURLToPath(new URL('./index.html', import.meta.url)),

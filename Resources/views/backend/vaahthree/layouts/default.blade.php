@@ -19,7 +19,7 @@
                 echo $title." v".$version;
             }
            ?></title>
-    @include("vaahcms::backend.vaahtwo.components.head",['title' => $title])
+    @include("vaahcms::backend.vaahthree.components.head",['title' => $title])
 
     {!! vh_config_css() !!}
 
@@ -31,11 +31,11 @@
     config('settings.global.is_sidebar_collapsed') ?'has-sidebar-small':''}}
     @if(isset($data->body_class)){{$data->body_class}}@endif">
 
-@include("vaahcms::backend.vaahtwo.components.errors")
-@include("vaahcms::backend.vaahtwo.components.flash")
+@include("vaahcms::backend.vaahthree.components.errors")
+@include("vaahcms::backend.vaahthree.components.flash")
 
     <!--vaahtwo app-->
-    <div id="themeVaahTwo"></div>
+    <div id="themeVaahThree"></div>
     <!--/vaahtwo app-->
 
 @yield('content')
@@ -47,7 +47,7 @@
 @if(env('VAAHCMS_VUE_APP') == 'develop')
     <script type="module" src="http://localhost:4000/main.js" defer></script>
 @else
-    <script type="module" src="{{vh_get_backend_assets("build/main.js", "vaahtwo")}}" defer></script>
+    <script type="module" src="{{vh_get_backend_assets("build/main.js", "vaahthree")}}" defer></script>
 @endif
 
 </body>

@@ -20,7 +20,7 @@
                echo $title." v".$version;
            }
            ?></title>
-    @include("vaahcms::backend.vaahtwo.components.head")
+    @include("vaahcms::backend.vaahthree.components.head")
 
     {!! vh_config_css() !!}
 
@@ -31,25 +31,20 @@
 
 <div>
 
-    <div class="vaahtwo">
+    <div class="vaahthree">
 
         <div id="topmenu-sidebar" class="primevue"  >
 
-            @include("vaahcms::backend.vaahtwo.components.errors")
-            @include("vaahcms::backend.vaahtwo.components.flash")
+            @include("vaahcms::backend.vaahthree.components.errors")
+            @include("vaahcms::backend.vaahthree.components.flash")
 
-            <div id="themeVaahTwoExtend"></div>
+            <div id="themeVaahThreeExtend"></div>
 
         </div>
 
         <div class="main-container">
             @yield('content')
         </div>
-
-    </div>
-
-
-    <div id="vaahone" class="vaahone bulma">
 
     </div>
 
@@ -60,9 +55,9 @@
 @yield('vaahcms_extend_backend_js')
 
 @if(env('VAAHCMS_VUE_APP') == 'develop')
-    <script type="module" src="http://localhost:4000/main-extended.js" defer></script>
+    <script type="module" src="http://localhost:4000/mainExtended.js" defer></script>
 @else
-    <script type="module" src="{{vh_get_backend_assets("build/mainExtended.js", "vaahtwo")}}" defer></script>
+    <script type="module" src="{{vh_get_backend_assets("build/mainExtended.js", "vaahthree")}}" defer></script>
 @endif
 
 </body>

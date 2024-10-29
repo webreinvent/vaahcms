@@ -1,4 +1,4 @@
-@extends("vaahcms::backend.vaahtwo.layouts.default")
+@extends("vaahcms::backend.vaahthree.layouts.default")
 
 @section('content')
 
