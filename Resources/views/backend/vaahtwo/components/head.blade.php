@@ -23,19 +23,9 @@
     <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
 
     @if(env('VAAHCMS_ASSETS') == 'develop')
-        <!--CSS Support for Bulma & Buefy-->
-        <link href="http://localhost:4001/vaahone/build/vaahone.css" rel="stylesheet" media="screen">
 
-        <!--CSS Support for PrimeVue-->
-        <link href="http://localhost:4001/vaahtwo/build/vaahtwo.css" rel="stylesheet" media="screen">
     @else
-        <!--CSS Support for Bulma & Buefy-->
-        <link href="{{vh_get_backend_assets_url()}}/build/vaahone.css" rel="stylesheet" media="screen">
 
-        <!--CSS Support for PrimeVue-->
-        <link href="{{vh_get_backend_assets_url()}}/build/vaahtwo.css" rel="stylesheet" media="screen">
-
-        <link href="{{vh_get_backend_assets('build/index.css','vaahtwo')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

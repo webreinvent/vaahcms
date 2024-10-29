@@ -2,6 +2,9 @@
 import {createApp, markRaw} from 'vue';
 import { createPinia, PiniaVuePlugin  } from 'pinia'
 
+import Aura from '@primevue/themes/aura';
+
+import "./assets/style.css";
 
 //-------------PrimeVue Imports
 
@@ -79,7 +82,12 @@ app.use(router);
 
 
 //-------------PrimeVue Use
-app.use(PrimeVue, { ripple: true });
+app.use(PrimeVue, {
+    ripple: true,
+    theme: {
+        preset: Aura
+    }
+});
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
