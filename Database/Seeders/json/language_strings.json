@@ -1999,6 +1999,12 @@
     {
         "locale_code_iso_639": "en",
         "category": "general-setting",
+        "name": "Redirect after Backend Login",
+        "content": "Redirect after Backend Login"
+    },
+    {
+        "locale_code_iso_639": "en",
+        "category": "general-setting",
         "name": "Use App Url",
         "content": "Use App Url"
     },
@@ -6258,6 +6264,12 @@
     {
         "locale_code_iso_639": "es",
         "category": "general-setting",
+        "name": "Redirect after Backend Login",
+        "content": "Redirigir después de iniciar sesión en el backend"
+    },
+    {
+        "locale_code_iso_639": "es",
+        "category": "general-setting",
         "name": "Use App Url",
         "content": "Usar URL de la aplicación"
     },
@@ -10017,6 +10029,12 @@
         "category": "general-setting",
         "name": "Redirect after Frontend Login",
         "content": "Redirection après la connexion frontend"
+    },
+    {
+        "locale_code_iso_639": "fr",
+        "category": "general-setting",
+        "name": "Redirect after Backend Login",
+        "content": "Redirection après la connexion backend"
     },
     {
         "locale_code_iso_639": "fr",

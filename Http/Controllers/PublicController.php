@@ -154,13 +154,26 @@ class PublicController extends Controller
                 $is_accessed = isset($request->accessed_route['is_accessed'])
                     && $request->accessed_route['is_accessed'];
             }
-
             if ($request->session()->has('accessed_url')) {
                 $redirect_url = $request->session()->get('accessed_url').'#'.$path.'?'.$query;
                 $request->session()->forget('accessed_url');
             } else
             {
-                $redirect_url = \URL::route('vh.backend').'#'.($is_accessed || !$path?'/vaah':$path.'?'.$query);
+                if(!$is_accessed && $path){
+                    $redirect_url = \URL::route('vh.backend').'#'.$path.'?'.$query;
+                }else {
+                    $setting_redirect_url = config('settings.global.redirect_after_backend_login');
+
+                    $redirect_url = \URL::route('vh.backend') . '#/vaah';
+
+                    if ($setting_redirect_url) {
+                        if (filter_var($setting_redirect_url, FILTER_VALIDATE_URL) === FALSE) {
+                            $redirect_url = \URL::route('vh.backend') . $setting_redirect_url;
+                        } else {
+                            $redirect_url = $setting_redirect_url;
+                        }
+                    }
+                }
             }
 
             $verify_response = Auth::user()->verifySecurityAuthentication();

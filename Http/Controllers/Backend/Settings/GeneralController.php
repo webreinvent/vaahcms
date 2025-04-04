@@ -85,6 +85,7 @@ class GeneralController extends Controller
             "site_title" => trans("vaahcms-general-setting.site_title"),
             "default_site_language" => trans("vaahcms-general-setting.default_site_language"),
             "redirect_after_frontend_login" => trans("vaahcms-general-setting.redirect_after_frontend_login"),
+            "redirect_after_backend_login" => trans("vaahcms-general-setting.redirect_after_backend_login"),
             "meta_description" => trans("vaahcms-general-setting.meta_description"),
             "search_engine_visibility" => trans("vaahcms-general-setting.search_engine_visibility"),
             "assign_roles_on_registration" => trans("vaahcms-general-setting.assign_roles_on_registration"),
