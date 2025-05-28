@@ -42,6 +42,9 @@ class VaahModel extends Model
     //-------------------------------------------------
     public static function getUserTimezoneDate($value,$is_timestamp = false)
     {
+
+        return $value;
+
         if(!$value){
             return null;
         }
