@@ -39,8 +39,8 @@ const store = useGeneralStore();
                               inputClass="p-inputtext-sm"
                               class="is-small"
                     />
-                </div>
 
+                </div>
                 <div class="col-6">
                     <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.redirect_after_frontend_login }}</h5>
 
@@ -57,6 +57,7 @@ const store = useGeneralStore();
                         />
                     </div>
                 </div>
+
 
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.meta_description }}</h5>
@@ -409,6 +410,23 @@ const store = useGeneralStore();
                                 class="p-button-sm"
                         />
 
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="p-1 text-xs mb-1">{{ store.assets.language_strings.redirect_after_backend_login }}</h5>
+
+                    <div class="p-inputgroup">
+                        <InputText v-model="store.list.redirect_after_backend_login"
+                                   data-testid="general-backend_login_redirection"
+                                   class="p-inputtext-sm"
+                        />
+
+                        <Button icon="pi pi-copy"
+                                data-testid="general-login_redirection_copy"
+                                @click="store.getCopy('redirect_after_backend_login')"
+                                class="p-button-sm"
+                        />
                     </div>
                 </div>
 
