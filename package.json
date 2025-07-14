@@ -73,7 +73,7 @@
         "vue": "^2.6.12",
         "vue-avatar": "^2.2.0",
         "vue-axios": "^3.2.0",
-        "vue-codemirror": "^4.0.6",
+        "vue-codemirror": "^5.0.0",
         "vue-content-loader": "^0.2.3",
         "vue-filepond": "^6.0.3",
         "vue-fuse": "^3.0.0",
