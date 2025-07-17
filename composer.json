@@ -17,6 +17,15 @@
     "composer/composer": "^2.8"
 
   },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebReinvent\\VaahCms\\VaahCmsServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
   "autoload": {
       "classmap": [
           "/"
