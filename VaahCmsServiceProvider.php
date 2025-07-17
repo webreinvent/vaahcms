@@ -32,7 +32,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot(Router $router) {
 
-        $this->registerGlobalSettings();
         $this->registerMigrations();
         $this->registerSeeders();
 
