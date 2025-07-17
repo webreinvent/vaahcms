@@ -216,7 +216,9 @@ class VaahSetup{
     //----------------------------------------------------------
     public static function isInstalled()
     {
-        
+
+        return false;
+
         if(!static::isDBConnected())
         {
             return false;
