@@ -129,7 +129,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
 
-        $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class,);
         $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
 
     }
