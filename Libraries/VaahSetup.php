@@ -216,30 +216,21 @@ class VaahSetup{
     //----------------------------------------------------------
     public static function isInstalled()
     {
-
-        $data['stage'] = "";
-
-        if(static::isDBConnected())
+        
+        if(!static::isDBConnected())
         {
-            $data['stage'] = 'database';
+            return false;
         }
 
-        if(static::isDBMigrated())
+        if(!static::isDBMigrated())
         {
-            $data['stage'] = 'migrated';
+            return false;
         }
 
         if(static::isSuperAdminCreated())
         {
-            $data['stage'] = 'installed';
-        }
-
-        if($data['stage'] == 'installed')
-        {
             return true;
         }
-
-        return false;
 
     }
     //----------------------------------------------------------
