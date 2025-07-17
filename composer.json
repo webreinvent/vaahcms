@@ -14,6 +14,7 @@
   "require": {
     "php": "^8.2",
     "webreinvent/laravel-nestable": "^0.0.3",
+    "lab404/laravel-impersonate": "^1.7.7",
     "composer/composer": "^2.8"
 
   },
