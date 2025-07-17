@@ -36,7 +36,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->registerMiddleware($router);
         $this->registerConfigs();
-        $this->registerGlobalSettings();
+//        $this->registerGlobalSettings();
         $this->registerMigrations();
         $this->registerSeeders();
         $this->registerViews();
