@@ -46,7 +46,7 @@ Route::group(
             ->name( 'vh.backend.resend.security.otp' );
 
         Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
-            ->name( 'vh.faker' );
+            ->name( 'vh.backend.faker.get' );
 
         //------------------------------------------------
 

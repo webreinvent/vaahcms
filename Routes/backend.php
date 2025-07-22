@@ -20,10 +20,10 @@ Route::group(
     function () {
         //------------------------------------------------
         Route::any( '/clear/cache', 'WelcomeController@clearCache' )
-            ->name( 'vh.frontend.clear.cache' );
+            ->name( 'vh.backend.clear.cache' );
         //------------------------------------------------
         Route::any( '/faker', 'WelcomeController@getFaker' )
-            ->name( 'vh.faker' );
+            ->name( 'vh.backend.faker' );
         //------------------------------------------------
     });
 

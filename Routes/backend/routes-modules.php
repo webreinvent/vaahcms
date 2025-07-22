@@ -80,7 +80,7 @@ function () {
         ->name( 'vh.backend.modules.install.updates');
     //------------------------------------------------
     Route::any( '/publish/assets', 'ModulesController@publishAssets' )
-        ->name( 'vh.setup.publish.assets' );
+        ->name( 'vh.backend.modules.setup.publish.assets' );
     //------------------------------------------------
 
 });

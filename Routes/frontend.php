@@ -22,7 +22,7 @@ Route::group(
             ->name( 'vh.frontend.clear.cache' );
         //------------------------------------------------
         Route::any( '/faker', 'WelcomeController@getFaker' )
-            ->name( 'vh.faker' );
+            ->name( 'vh.frontend.faker' );
         //------------------------------------------------
     });
 

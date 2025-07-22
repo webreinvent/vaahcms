@@ -81,16 +81,16 @@ Route::group(
     function () {
         //------------------------------------------------
         Route::get( '/assets', 'UserSettingController@getAssets' )
-            ->name( 'vh.backend.settings.env.assets' );
+            ->name( 'vh.backend.user.settings.env.assets' );
         //------------------------------------------------
         Route::get( '/list', 'UserSettingController@getList' )
-            ->name( 'vh.backend.settings.env.list' );
+            ->name( 'vh.backend.user.settings.env.list' );
         //------------------------------------------------
         Route::post( '/field/store', 'UserSettingController@storeField' )
-            ->name( 'vh.backend.settings.env.store.field' );
+            ->name( 'vh.backend.user.settings.env.store.field' );
         //------------------------------------------------
         Route::post( '/custom-field/store', 'UserSettingController@storeCustomField' )
-            ->name( 'vh.backend.settings.env.store.custom-field' );
+            ->name( 'vh.backend.user.settings.env.store.custom-field' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -176,28 +176,28 @@ Route::group(
     function () {
         //------------------------------------------------
         Route::post( '/assets', 'BackupsController@getAssets' )
-            ->name( 'vh.backend.settings.localization.assets' );
+            ->name( 'vh.backend.settings.backups.localization.assets' );
         //------------------------------------------------
         Route::post( '/list', 'BackupsController@getList' )
-            ->name( 'vh.backend.settings.localization.list' );
+            ->name( 'vh.backend.settings.backups.localization.list' );
         //------------------------------------------------
         Route::post( '/store', 'BackupsController@store' )
-            ->name( 'vh.backend.settings.localization.store' );
+            ->name( 'vh.backend.settings.backups.localization.store' );
         //------------------------------------------------
         Route::post( '/store/language', 'BackupsController@storeLanguage' )
-            ->name( 'vh.backend.settings.localization.store.language' );
+            ->name( 'vh.backend.settings.backups.localization.store.language' );
         //------------------------------------------------
         Route::post( '/store/category', 'BackupsController@storeCategory' )
-            ->name( 'vh.backend.settings.localization.store.category' );
+            ->name( 'vh.backend.settings.backups.localization.store.category' );
         //------------------------------------------------
         Route::post( '/sync', 'BackupsController@sync' )
-            ->name( 'vh.backend.settings.localization.sync' );
+            ->name( 'vh.backend.settings.backups.localization.sync' );
         //------------------------------------------------
         Route::post( '/delete', 'BackupsController@delete' )
-            ->name( 'vh.backend.settings.localization.delete' );
+            ->name( 'vh.backend.settings.backups.localization.delete' );
         //------------------------------------------------
         Route::post( '/upload', 'BackupsController@upload' )
-            ->name( 'vh.backend.settings.localization.upload' );
+            ->name( 'vh.backend.settings.backups.localization.upload' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
