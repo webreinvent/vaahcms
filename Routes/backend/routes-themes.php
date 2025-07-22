@@ -33,7 +33,7 @@ function () {
      * Get Item
      */
     Route::get('/{id}', 'ThemesController@getItem')
-        ->name('vh.backend.vaah.modules.read');
+        ->name('vh.backend.vaah.themes.read');
     /**
      * Delete Item
      */
@@ -69,7 +69,7 @@ function () {
         ->name( 'vh.backend.themes.install.updates' );
     //------------------------------------------------
     Route::any( '/publish/assets', 'ThemesController@publishAssets' )
-        ->name( 'vh.setup.publish.assets' );
+        ->name( 'vh.backend.themes.setup.publish.assets' );
     //------------------------------------------------
 
 });
