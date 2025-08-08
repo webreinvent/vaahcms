@@ -322,21 +322,23 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function upload(Request $request): JsonResponse
     {
-        $allowed_file_upload_size = config('vaahcms.allowed_file_upload_size');
+        $allowed_file_upload_size = config('settings.global.upload_allowed_file_size',10)*1024;
+        $file_validation = 'max:'.$allowed_file_upload_size.'|mimes:jpg,bmp,png';
 
         $input_file_name = null;
+
         $rules = array(
             'folder_path' => 'required',
-            'file' => 'max:'.$allowed_file_upload_size,
         );
 
         if ($request->has('file_input_name')) {
-            $rules[$request->file_input_name] = 'required';
+            $rules[$request->file_input_name] = 'required|'.$file_validation;
             $input_file_name = $request->file_input_name;
         } else {
-            $rules['file'] = 'required';
+            $rules['file'] = 'required|'.$file_validation;
             $input_file_name = 'file';
         }
+
 
         $validator = \Validator::make( $request->all(), $rules);
 

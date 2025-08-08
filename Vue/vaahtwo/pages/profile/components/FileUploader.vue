@@ -79,10 +79,11 @@ const emit = defineEmits();
  * Methods
  */
 function uploadFile(e){
-    if(upload_refs.value.files[0]['size'] > props.maxFileSize){
-        vaah().toastErrors(['Invalid. File size should be smaller than 200kb']);
+    if(!upload_refs.value || !upload_refs.value.files || !upload_refs.value.files[0] || upload_refs.value.files[0]['size'] > props.maxFileSize){
+        vaah().toastErrors([`Invalid. File size should be smaller than 1000KB`]);
         return;
     }
+
     let uploaded_files = upload_refs.value.files;
 
     upload_refs.value.files = [];
@@ -97,8 +98,11 @@ function uploadFile(e){
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res=>{
-            upload_refs.value.uploadedFiles[0] = file;
-            store.storeAvatar(res.data.data);
+            if(res.data.data){
+                upload_refs.value.uploadedFiles[0] = file;
+                store.storeAvatar(res.data.data);
+            }
+            vaah().processResponse(res);
         });
     })
 
