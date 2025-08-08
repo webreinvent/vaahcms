@@ -356,6 +356,12 @@ class MediaController extends Controller
                 $request->folder_path = $request->folder_path."/".date('Y')."/".date('m');
             }
 
+            if (Str::contains($request->folder_path, ['..', '\\'])) {
+                $response['success'] = false;
+                $response['errors'][] = 'Invalid folder path "'.$request->folder_path.'"';
+                return response()->json($response);
+            }
+
             $data['extension'] = $request->file($input_file_name)->extension();
             $data['original_name'] = $request->file($input_file_name)->getClientOriginalName();
             $data['mime_type'] = $request->file($input_file_name)->getClientMimeType();
