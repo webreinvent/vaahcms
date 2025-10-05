@@ -39,10 +39,10 @@
   },
   "autoload": {
     "classmap": [
-      "/"
+      "./"
     ],
     "psr-4": {
-      "WebReinvent\\VaahCms\\": "/"
+      "WebReinvent\\VaahCms\\": "./"
     },
     "files": []
   },
