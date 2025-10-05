@@ -1,32 +1,36 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
-class LanguageString extends VaahModel {
-
-    use SoftDeletes;
+class LanguageString extends VaahModel
+{
     use CrudObservantTrait;
+    use SoftDeletes;
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_lang_strings';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'vh_lang_language_id',
         'vh_lang_category_id',
@@ -35,19 +39,18 @@ class LanguageString extends VaahModel {
         'content',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -55,96 +58,119 @@ class LanguageString extends VaahModel {
         return $date->format($date_time_format);
 
     }
-    //-------------------------------------------------
-    public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = Str::slug( $value, '_' );
+
+    // -------------------------------------------------
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value, '_');
     }
-    //-------------------------------------------------
-    public function getNameAttribute($value) {
+
+    // -------------------------------------------------
+    public function getNameAttribute($value)
+    {
         return ucwords($value);
     }
-    //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
-    }
-    //-------------------------------------------------
-    public function scopeCreatedBy( $query, $user_id ) {
-        return $query->where( 'created_by', $user_id );
+
+    // -------------------------------------------------
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
     }
 
-    //-------------------------------------------------
-    public function scopeUpdatedBy( $query, $user_id ) {
-        return $query->where( 'updated_by', $user_id );
+    // -------------------------------------------------
+    public function scopeCreatedBy($query, $user_id)
+    {
+        return $query->where('created_by', $user_id);
     }
 
-    //-------------------------------------------------
-    public function scopeDeletedBy( $query, $user_id ) {
-        return $query->where( 'deleted_by', $user_id );
+    // -------------------------------------------------
+    public function scopeUpdatedBy($query, $user_id)
+    {
+        return $query->where('updated_by', $user_id);
     }
 
-    //-------------------------------------------------
-    public function scopeCreatedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'created_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeDeletedBy($query, $user_id)
+    {
+        return $query->where('deleted_by', $user_id);
     }
 
-    //-------------------------------------------------
-    public function scopeUpdatedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'updated_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeCreatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('created_at', [$from, $to]);
     }
 
-    //-------------------------------------------------
-    public function scopeDeletedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'deleted_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeUpdatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('updated_at', [$from, $to]);
     }
-    //-------------------------------------------------
-    public function createdBy() {
-        return $this->belongsTo( User::class,
+
+    // -------------------------------------------------
+    public function scopeDeletedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('deleted_at', [$from, $to]);
+    }
+
+    // -------------------------------------------------
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class,
             'created_by', 'id'
         );
     }
-    //-------------------------------------------------
-    public function updatedBy() {
-        return $this->belongsTo( User::class,
+
+    // -------------------------------------------------
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class,
             'updated_by', 'id'
         );
     }
-    //-------------------------------------------------
-    public function deletedBy() {
-        return $this->belongsTo( User::class,
+
+    // -------------------------------------------------
+    public function deletedBy()
+    {
+        return $this->belongsTo(User::class,
             'deleted_by', 'id'
         );
     }
-    //-------------------------------------------------
-    public function language() {
-        return $this->belongsTo( Language::class,
+
+    // -------------------------------------------------
+    public function language()
+    {
+        return $this->belongsTo(Language::class,
             'vh_lang_language_id', 'id'
         );
     }
-    //-------------------------------------------------
-    public function languageCategory() {
-        return $this->belongsTo( LanguageCategory::class,
+
+    // -------------------------------------------------
+    public function languageCategory()
+    {
+        return $this->belongsTo(LanguageCategory::class,
             'vh_lang_category_id', 'id'
         );
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateRelationsCount()
     {
         Language::countRelations();
         LanguageCategory::countRelations();
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function syncStrings($request)
     {
-        //get default languages
-        if($request->has('vh_lang_language_id'))
-        {
+        // get default languages
+        if ($request->has('vh_lang_language_id')) {
             $lang = Language::where('id', $request->vh_lang_language_id)->first();
-        } else
-        {
+        } else {
             $lang = Language::where('default', 1)->first();
         }
 
-        //get all strings of default lang
+        // get all strings of default lang
         $strings = static::where('vh_lang_language_id', $lang->id)
             ->whereNotNull('slug')
             ->get();
@@ -152,15 +178,12 @@ class LanguageString extends VaahModel {
         $languages = Language::all();
         $categories = LanguageCategory::all();
 
-        if(!$strings)
-        {
+        if (! $strings) {
             return false;
         }
 
-        foreach ($strings as $string)
-        {
-            foreach ($languages as $language)
-            {
+        foreach ($strings as $string) {
+            foreach ($languages as $language) {
 
                 $insert = [];
                 $insert['vh_lang_language_id'] = $language->id;
@@ -168,8 +191,8 @@ class LanguageString extends VaahModel {
                 $insert['name'] = $string->name;
                 $insert['slug'] = $string->slug;
 
-                if(!$string->slug){
-                    $insert['slug'] = \Str::slug($string->name, "_");
+                if (! $string->slug) {
+                    $insert['slug'] = \Str::slug($string->name, '_');
                 }
 
                 $exist = static::where('vh_lang_language_id', $language->id)
@@ -177,10 +200,9 @@ class LanguageString extends VaahModel {
                     ->where('slug', $insert['slug'])
                     ->first();
 
-                if(!$exist)
-                {
-                    $new_string = new static();
-                    $insert['content']=null;
+                if (! $exist) {
+                    $new_string = new static;
+                    $insert['content'] = null;
                     $new_string->fill($insert);
                     $new_string->save();
                 }
@@ -191,10 +213,11 @@ class LanguageString extends VaahModel {
         return true;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getList($request)
     {
-        if($request->sync && $request->sync != 'false'){
+        if ($request->sync && $request->sync != 'false') {
             LanguageString::syncAndGenerateStrings($request);
         }
 
@@ -202,22 +225,21 @@ class LanguageString extends VaahModel {
 
         $list->where('vh_lang_language_id', $request->vh_lang_language_id);
 
-        if($request->filter && $request->filter == 'filled'){
+        if ($request->filter && $request->filter == 'filled') {
 
             $list->whereNotNull('content');
-        }elseif($request->filter && $request->filter == 'empty'){
+        } elseif ($request->filter && $request->filter == 'empty') {
             $list->whereNull('content');
         }
 
-        if($request->vh_lang_category_id){
+        if ($request->vh_lang_category_id) {
             $list->where('vh_lang_category_id', $request->vh_lang_category_id);
         }
 
-        if($request->q){
-            $list->where(function ($query) use ($request)
-            {
-                $query->where('content', 'like', '%' . $request->q . '%')
-                    ->orWhere('name', 'like', '%' . $request->q . '%');
+        if ($request->q) {
+            $list->where(function ($query) use ($request) {
+                $query->where('content', 'like', '%'.$request->q.'%')
+                    ->orWhere('name', 'like', '%'.$request->q.'%');
             });
         }
 
@@ -229,41 +251,36 @@ class LanguageString extends VaahModel {
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function storeList($request)
     {
 
-        if(!is_array($request->list) || count($request->list) < 1)
-        {
+        if (! is_array($request->list) || count($request->list) < 1) {
 
             $response['success'] = false;
             $response['messages'][] = trans('vaahcms-localization.one_string_required');
+
             return $response;
 
         }
 
-        foreach($request->list as $item)
-        {
+        foreach ($request->list as $item) {
             $string = null;
 
-            if(!$item['slug']){
+            if (! $item['slug']) {
                 continue;
             }
 
-
-            if(isset($item['id']))
-            {
+            if (isset($item['id'])) {
                 $string = static::find($item['id']);
 
-                if(!$string)
-                {
-                    $string = new static();
+                if (! $string) {
+                    $string = new static;
                 }
 
-            } else
-            {
-                if(!$item['vh_lang_category_id'])
-                {
+            } else {
+                if (! $item['vh_lang_category_id']) {
 
                     $cat = LanguageCategory::where('slug', 'general')->first();
 
@@ -271,23 +288,19 @@ class LanguageString extends VaahModel {
 
                 }
 
-                //find based on slug
+                // find based on slug
                 $string = static::where('slug', $item['slug'])
                     ->where('vh_lang_language_id', $item['vh_lang_language_id'])
                     ->where('vh_lang_category_id', $item['vh_lang_category_id'])
                     ->first();
 
-                if(!$string)
-                {
-                    $string = new static();
+                if (! $string) {
+                    $string = new static;
                 }
 
             }
 
-
-
-            if(!isset($item['name']))
-            {
+            if (! isset($item['name'])) {
                 $item['name'] = $item['slug'];
             }
 
@@ -298,31 +311,31 @@ class LanguageString extends VaahModel {
 
         static::syncStrings($request);
 
-
-        //Generate a language file
-
+        // Generate a language file
 
         $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
+
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteItem($request)
     {
 
-        $rules = array(
+        $rules = [
             'slug' => 'required|max:150',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -330,10 +343,12 @@ class LanguageString extends VaahModel {
 
         $response['success'] = true;
         $response['data'][] = '';
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function generateLangFiles()
     {
 
@@ -342,13 +357,10 @@ class LanguageString extends VaahModel {
 
         self::deleteVaahCmsLangFiles();
 
-        if(count($languages) > 0)
-        {
-            foreach ($languages as $language)
-            {
+        if (count($languages) > 0) {
+            foreach ($languages as $language) {
 
-                foreach ($categories as $category)
-                {
+                foreach ($categories as $category) {
                     $strings = static::where('vh_lang_language_id', $language->id)
                         ->where('vh_lang_category_id', $category->id)
                         ->whereNotNull('slug')
@@ -359,7 +371,7 @@ class LanguageString extends VaahModel {
 
                     $file_name = 'vaahcms-'.$category->slug.'.php';
 
-                    if($category->slug === 'validation'){
+                    if ($category->slug === 'validation') {
                         $file_name = $category->slug.'.php';
                     }
 
@@ -367,12 +379,11 @@ class LanguageString extends VaahModel {
 
                     File::delete($file_path);
 
-                    if($strings->count() > 0)
-                    {
+                    if ($strings->count() > 0) {
                         $inputs = [
-                            "language" => $language,
-                            "category" => $category,
-                            "strings" => $strings,
+                            'language' => $language,
+                            'category' => $category,
+                            'strings' => $strings,
                         ];
 
                         $html = view('vaahcms::templates.lang')
@@ -380,52 +391,45 @@ class LanguageString extends VaahModel {
                             ->render();
                         $html = html_entity_decode($html);
 
-                        $html = "<?php "."\n".$html;
+                        $html = '<?php '."\n".$html;
 
                         $folder_path_relative = base_path($folder_path);
 
-                        if(!File::exists($folder_path_relative)) {
+                        if (! File::exists($folder_path_relative)) {
                             File::makeDirectory($folder_path_relative, 0755, true, true);
                         }
 
                         File::put($file_path, $html);
                     }
 
-
                 }
 
             }
 
         }
 
-
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteVaahCmsLangFiles()
     {
 
-        //delete existing language files
+        // delete existing language files
         $file_path = base_path('resources/lang');
 
         $folders = vh_get_all_files($file_path);
 
-        if(count($folders) > 0)
-        {
-            foreach ($folders as $folder)
-            {
+        if (count($folders) > 0) {
+            foreach ($folders as $folder) {
 
-                $files = vh_get_all_files($file_path."/".$folder);
+                $files = vh_get_all_files($file_path.'/'.$folder);
 
-                if(count($files) > 0)
-                {
-                    foreach ($files as $file)
-                    {
-                        if(strpos($file, 'vaahcms') !== false && !File::isDirectory($file)) {
+                if (count($files) > 0) {
+                    foreach ($files as $file) {
+                        if (strpos($file, 'vaahcms') !== false && ! File::isDirectory($file)) {
                             unlink($file_path.'/'.$folder.'/'.$file);
                         }
                     }
-
 
                 }
 
@@ -434,9 +438,9 @@ class LanguageString extends VaahModel {
 
     }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
     public static function syncAndGenerateStrings($request)
     {
         LanguageString::syncStrings($request);
@@ -445,7 +449,6 @@ class LanguageString extends VaahModel {
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
     }
-    //-------------------------------------------------
-
+    // -------------------------------------------------
 
 }

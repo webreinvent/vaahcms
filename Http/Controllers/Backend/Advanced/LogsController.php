@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
+<?php
+
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,16 +13,15 @@ use WebReinvent\VaahExtend\Libraries\VaahFiles;
 
 class LogsController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -37,7 +38,7 @@ class LogsController extends Controller
                 'deleted_by',
             ];
 
-            $model = new Job();
+            $model = new Job;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -49,13 +50,13 @@ class LogsController extends Controller
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "logs" => trans("vaahcms-advanced.logs_title"),
-                "filter_by_extension" => trans("vaahcms-general.filter_by_extension"),
-                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
-                "toolkit_text_close" => trans("vaahcms-general.toolkit_text_close"),
-                "toolkit_text_clear_file" => trans("vaahcms-general.toolkit_text_clear_file"),
-                "toolkit_text_download_file" => trans("vaahcms-general.toolkit_text_download_file"),
-                "view_log_file" => trans("vaahcms-general.view_log_file"),
+                'logs' => trans('vaahcms-advanced.logs_title'),
+                'filter_by_extension' => trans('vaahcms-general.filter_by_extension'),
+                'toolkit_text_reload' => trans('vaahcms-general.toolkit_text_reload'),
+                'toolkit_text_close' => trans('vaahcms-general.toolkit_text_close'),
+                'toolkit_text_clear_file' => trans('vaahcms-general.toolkit_text_clear_file'),
+                'toolkit_text_download_file' => trans('vaahcms-general.toolkit_text_download_file'),
+                'view_log_file' => trans('vaahcms-general.view_log_file'),
 
             ];
             $response['success'] = true;
@@ -68,26 +69,26 @@ class LogsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-logs-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
             $folder_path = storage_path('logs');
 
-            $folder_path = str_replace("\\", "/", $folder_path);
+            $folder_path = str_replace('\\', '/', $folder_path);
 
             $list = [];
 
@@ -99,46 +100,44 @@ class LogsController extends Controller
                     foreach ($files as $file) {
 
                         if ($request['filter'] && isset($request['filter']['file_type'])
-                            && count($request['filter']['file_type']) > 0)
-                        {
+                            && count($request['filter']['file_type']) > 0) {
 
-                            $file_name_array = explode(".", $file);
+                            $file_name_array = explode('.', $file);
 
                             if (count($file_name_array) > 1
-                                && in_array('.'.$file_name_array[1], $request['filter']['file_type']) ) {
+                                && in_array('.'.$file_name_array[1], $request['filter']['file_type'])) {
 
                                 if ($request->has('q') && $request->q) {
-                                    if (stripos($file, $request->q) !== FALSE) {
+                                    if (stripos($file, $request->q) !== false) {
                                         $list[] = [
                                             'id' => $i,
                                             'name' => $file,
-                                            'path' => $folder_path . '/' . $file,
-                                            'size' => $this->getFileSize($folder_path . '/' . $file)
+                                            'path' => $folder_path.'/'.$file,
+                                            'size' => $this->getFileSize($folder_path.'/'.$file),
                                         ];
                                     }
                                 } else {
                                     $list[] = [
                                         'id' => $i,
                                         'name' => $file,
-                                        'path' => $folder_path . '/' . $file,
-                                        'size' => $this->getFileSize($folder_path . '/' . $file)
+                                        'path' => $folder_path.'/'.$file,
+                                        'size' => $this->getFileSize($folder_path.'/'.$file),
                                     ];
                                 }
 
                                 $i++;
 
-
                             }
                         } elseif ($request['filter'] && $request['filter']['q']) {
 
-                            if (stripos($file, $request['filter']['q']) === FALSE) {
+                            if (stripos($file, $request['filter']['q']) === false) {
                                 continue;
                             }
                             $list[] = [
                                 'id' => $i,
                                 'name' => $file,
-                                'path' => $folder_path . '/' . $file,
-                                'size' => $this->getFileSize($folder_path . '/' . $file)
+                                'path' => $folder_path.'/'.$file,
+                                'size' => $this->getFileSize($folder_path.'/'.$file),
                             ];
 
                             $i++;
@@ -147,8 +146,8 @@ class LogsController extends Controller
                             $list[] = [
                                 'id' => $i,
                                 'name' => $file,
-                                'path' => $folder_path . '/' . $file,
-                                'size' => $this->getFileSize($folder_path . '/' . $file)
+                                'path' => $folder_path.'/'.$file,
+                                'size' => $this->getFileSize($folder_path.'/'.$file),
                             ];
 
                             $i++;
@@ -168,18 +167,19 @@ class LogsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request, $name): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -189,18 +189,19 @@ class LogsController extends Controller
 
             $folder_path = storage_path('logs');
 
-            $folder_path = str_replace("\\", "/", $folder_path);
+            $folder_path = str_replace('\\', '/', $folder_path);
 
             $path = $folder_path.'/'.$name;
 
             $response['data']['name'] = $name;
             $response['data']['path'] = $path;
 
-            $file_name_array = explode(".",$name);
+            $file_name_array = explode('.', $name);
 
-            if (!File::exists($path)) {
+            if (! File::exists($path)) {
                 $response['success'] = false;
                 $response['errors'] = [];
+
                 return response()->json($response);
             }
 
@@ -218,7 +219,7 @@ class LogsController extends Controller
                         'ago' => \Carbon::parse($match['date'])->diffForHumans(),
                         'env' => $match['env'],
                         'type' => $match['type'],
-                        'message' => trim($match['message'])
+                        'message' => trim($match['message']),
                     ];
                 }
 
@@ -233,27 +234,28 @@ class LogsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function downloadFile(Request $request, $file_name): BinaryFileResponse | string | JsonResponse
+
+    // ----------------------------------------------------------
+    public function downloadFile(Request $request, $file_name): BinaryFileResponse|string|JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
+            if (! $file_name || ! File::exists(storage_path('logs/', $file_name))) {
                 return 'No File Found.';
             }
 
-            $file_path =  storage_path('logs/').$file_name;
+            $file_path = storage_path('logs/').$file_name;
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -262,7 +264,7 @@ class LogsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
 
             return response()->json($response);
@@ -270,12 +272,13 @@ class LogsController extends Controller
 
         return response()->download($file_path);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function postActions(Request $request, $action): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -287,35 +290,34 @@ class LogsController extends Controller
             $response['success'] = true;
             $response['data']['message'] = 'success';
 
-            switch ($action)
-            {
-                //------------------------------------
+            switch ($action) {
+                // ------------------------------------
                 case 'bulk-delete-all':
 
                     VaahFiles::deleteFolder($folder_path);
 
-                    $response['messages'][] = trans("vaahcms-general.successfully_delete_all_logs");
+                    $response['messages'][] = trans('vaahcms-general.successfully_delete_all_logs');
 
                     break;
 
-                //------------------------------------
+                    // ------------------------------------
                 case 'delete':
 
                     VaahFiles::deleteFile($request->path);
 
-                    $response['messages'][] = trans("vaahcms-general.successfully_deleted");
+                    $response['messages'][] = trans('vaahcms-general.successfully_deleted');
 
                     break;
 
-                //------------------------------------
+                    // ------------------------------------
                 case 'clear-file':
 
                     VaahFiles::writeFile($request->path, '');
 
-                    $response['messages'][] = trans("vaahcms-general.successfully_clear");
+                    $response['messages'][] = trans('vaahcms-general.successfully_clear');
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
             }
         } catch (\Exception $e) {
             $response = [];
@@ -325,22 +327,23 @@ class LogsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getFileSize($file_path)
     {
         $size = File::size($file_path);
 
         $base = log($size) / log(1024);
-        $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+        $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
 
-        return round(pow(1024, $base - floor($base)),1) . $suffixes[floor($base)];
+        return round(pow(1024, $base - floor($base)), 1).$suffixes[floor($base)];
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

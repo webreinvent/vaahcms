@@ -30,7 +30,6 @@ Route::group(
         Route::delete('/', 'UsersController@deleteList')
             ->name('vh.backend.users.users.list.delete');
 
-
         /**
          * Create Item
          */
@@ -64,26 +63,26 @@ Route::group(
         Route::any('/{id}/action/{action}', 'UsersController@itemAction')
             ->name('vh.backend.users.users.item.action');
 
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
 
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::get('/item/{id}/roles', 'UsersController@getItemRoles')
             ->name('backend.vaah.users.role');
 
         Route::post('/actions/{action_name}', 'UsersController@postActions')
             ->name('backend.vaah.users.actions');
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::post('/avatar/store', 'UsersController@storeAvatar')
             ->name('backend.vaah.users.avatar.store');
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::post('/avatar/remove', 'UsersController@removeAvatar')
             ->name('backend.vaah.users.avatar.remove');
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::post('/impersonate/logout', 'UsersController@impersonateLogout')
             ->name('backend.vaah.users.impersonate.logout');
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::post('/impersonate/{uuid}', 'UsersController@impersonate')
             ->name('backend.vaah.users.impersonate');
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
 
     });

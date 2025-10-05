@@ -4,8 +4,7 @@
  * Your package config would go here
  */
 
-
-$settings =  [
+$settings = [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
     'version' => '2.3.1',
@@ -28,18 +27,19 @@ $settings =  [
     'public_url' => env('APP_URL'),
     'backend_logo_url' => 'vaahcms/backend/vaahone/images/vaahcms-logo.svg', // vh_backend_logo()
     'per_page' => 20,
-    'build_directory_name' => 'vaahcms',    //config('vaahcms.build_directory_name')
+    'build_directory_name' => 'vaahcms',    // config('vaahcms.build_directory_name')
     'minified' => 0,
     'api_route' => 'https://api.vaah.dev/cms/v2/',
     'debug' => 1,
     'uploads' => [
-        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
+        'allowed_extensions' => ['jpg', 'jpeg', 'png', 'gif', 'csv', 'docs', 'pdf'],
     ],
     'css' => [
         // you can use relative or absolute url
     ],
     'js' => [
         // you can use relative or absolute url
-    ]
+    ],
 ];
+
 return $settings;

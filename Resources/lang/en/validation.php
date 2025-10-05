@@ -13,8 +13,7 @@ return [
     |
     */
 
-    //'permission_denied' => 'Permission denied.',
-    
+    // 'permission_denied' => 'Permission denied.',
 
     /*
     |--------------------------------------------------------------------------

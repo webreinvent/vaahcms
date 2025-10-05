@@ -1,37 +1,39 @@
 <?php
+
 namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
-class VaahHelper{
-
-    //----------------------------------------------------------
+class VaahHelper
+{
+    // ----------------------------------------------------------
     public static function testDBConnection($request)
     {
-        $rules = array(
+        $rules = [
             'db_connection' => 'required',
             'db_host' => 'required',
             'db_port' => 'required',
             'db_database' => 'required',
             'db_username' => 'required',
-        );
-
-        $messages = [
-            'db_connection.required' => "Select database type",
-            'db_host.required' => "Enter database host",
-            'db_port.required' => "Enter database port",
-            'db_database.required' => "Enter database name",
-            'db_username.required' => "Enter database username",
         ];
 
-        $validator = \Validator::make( $request->all(), $rules, $messages);
-        if ( $validator->fails() ) {
+        $messages = [
+            'db_connection.required' => 'Select database type',
+            'db_host.required' => 'Enter database host',
+            'db_port.required' => 'Enter database port',
+            'db_database.required' => 'Enter database name',
+            'db_username.required' => 'Enter database username',
+        ];
 
-            $errors             = errorsToArray($validator->errors());
+        $validator = \Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -41,33 +43,32 @@ class VaahHelper{
             'port' => $request->db_port,
             'database' => $request->db_database,
             'username' => $request->db_username,
-            'password' => $request->db_password
+            'password' => $request->db_password,
         ];
         config(['database.connections.db_connection_test' => $inputs]);
 
-        try{
+        try {
             $response['success'] = true;
             $response['data']['inputs'] = $inputs;
             $response['data']['result'] = \DB::connection('db_connection_test')->getPdo();
             $response['messages'][] = 'Successfully connect with Database';
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
-
-        if(env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             $response['hint'][] = '';
         }
 
         return $response;
 
     }
-    //----------------------------------------------------------
-    public static function sendTestEmail($request) {
-        $rules = array(
+
+    // ----------------------------------------------------------
+    public static function sendTestEmail($request)
+    {
+        $rules = [
             'mail_driver' => 'required',
             'mail_host' => 'required',
             'mail_port' => 'required',
@@ -76,14 +77,15 @@ class VaahHelper{
             'mail_from_address' => 'required',
             'mail_from_name' => 'required',
             'test_email_to' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -97,53 +99,48 @@ class VaahHelper{
                 'address' => $request->mail_from_address,
                 'name' => $request->mail_from_name,
             ],
-            "sendmail" => "/usr/sbin/sendmail -bs"
+            'sendmail' => '/usr/sbin/sendmail -bs',
         ];
 
-        if($request->mail_encryption != 'none')
-        {
+        if ($request->mail_encryption != 'none') {
             $inputs['encryption'] = $request->mail_encryption;
         }
 
         $response['data']['inputs'] = $inputs;
 
-        try{
+        try {
 
             config(['mail' => $inputs]);
 
             Notification::route('mail', $request->test_email_to)
-                ->notify(new TestSmtp());;
+                ->notify(new TestSmtp);
 
             $response['success'] = true;
             $response['data']['inputs'] = $inputs;
             $response['messages'][] = 'Test email successfully sent';
 
-
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
 
-        if(env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             $response['hint'][] = '';
         }
 
         return $response;
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public static function generateEnvKey()
     {
 
-        try{
+        try {
             \Artisan::call('key:generate');
             $response['success'] = true;
             $response['data'] = [];
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
@@ -151,10 +148,11 @@ class VaahHelper{
 
         return $response;
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public static function clearCache()
     {
-        try{
+        try {
             \Artisan::call('cache:clear');
             \Artisan::call('route:clear');
             \Artisan::call('config:clear');
@@ -163,8 +161,7 @@ class VaahHelper{
 
             $response['success'] = true;
             $response['data'] = [];
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
@@ -172,46 +169,45 @@ class VaahHelper{
 
         return $response;
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public static function getVaahCMSJsonFileParams()
     {
-        try{
-            if(File::exists(base_path('/vaahcms.json'))){
+        try {
+            if (File::exists(base_path('/vaahcms.json'))) {
                 $vaahcms_params = file_get_contents(base_path('/vaahcms.json'));
                 $vaahcms_params = json_decode($vaahcms_params, true);
                 $data = $vaahcms_params;
                 $response['success'] = true;
                 $response['data'] = $data;
+
                 return $response;
-            } else{
+            } else {
                 $response['success'] = false;
                 $response['messages'][] = 'vaahcms.json configuration file is missing';
             }
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public static function getVaahCMSJsonFileParam($key)
     {
         $params = static::getVaahCMSJsonFileParams();
 
-        if(isset($params['success']) && !$params['success'])
-        {
+        if (isset($params['success']) && ! $params['success']) {
             return null;
         }
 
-        if(!isset($params['data'][$key]))
-        {
+        if (! isset($params['data'][$key])) {
             return null;
         }
 
         return $params['data'][$key];
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
 }

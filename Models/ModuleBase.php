@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,20 +13,25 @@ use ZanySoft\Zip\Zip;
 class ModuleBase extends VaahModel
 {
     use SoftDeletes;
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_modules';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'update_checked_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'title',
         'name',
@@ -46,77 +53,90 @@ class ModuleBase extends VaahModel
         'update_checked_at',
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
+
         return $date->format($date_time_format);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function updateCheckedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
-    //-------------------------------------------------
-    public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = Str::slug( $value );
-    }
-    //-------------------------------------------------
-    public function scopeActive( $query ) {
-        return $query->where( 'is_active', 1 );
+
+    // -------------------------------------------------
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value);
     }
 
-    //-------------------------------------------------
-    public function scopeInactive( $query ) {
-        return $query->whereNull( 'is_active');
+    // -------------------------------------------------
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
     }
 
-    //-------------------------------------------------
-    public function scopeUpdateAvailable( $query ) {
-        return $query->where( 'is_update_available', 1 );
-    }
-    //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
-    }
-    //-------------------------------------------------
-
-
-    //-------------------------------------------------
-    public function scopeCreatedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'created_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeInactive($query)
+    {
+        return $query->whereNull('is_active');
     }
 
-    //-------------------------------------------------
-    public function scopeUpdatedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'updated_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeUpdateAvailable($query)
+    {
+        return $query->where('is_update_available', 1);
     }
 
-    //-------------------------------------------------
-    public function scopeDeletedBetween( $query, $from, $to ) {
-        return $query->whereBetween( 'deleted_at', array( $from, $to ) );
+    // -------------------------------------------------
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
+
+    // -------------------------------------------------
+    public function scopeCreatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('created_at', [$from, $to]);
+    }
+
+    // -------------------------------------------------
+    public function scopeUpdatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('updated_at', [$from, $to]);
+    }
+
+    // -------------------------------------------------
+    public function scopeDeletedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('deleted_at', [$from, $to]);
+    }
+
+    // -------------------------------------------------
     public function settings()
     {
         return $this->morphMany(Setting::class, 'settingable');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function migrations()
     {
         return $this->morphMany(Migration::class, 'migrationable');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getItem($id)
     {
 
@@ -130,47 +150,47 @@ class ModuleBase extends VaahModel
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function syncModule($module_path)
     {
 
         $settings = vh_get_module_settings_from_path($module_path);
-        if(is_null($settings) || !is_array($settings) || count($settings) < 1)
-        {
+        if (is_null($settings) || ! is_array($settings) || count($settings) < 1) {
             $response['success'] = false;
             $response['errors'][] = 'Fatal with '.$module_path.'\Config\config.php';
+
             return $response;
         }
 
-        $rules = array(
+        $rules = [
             'name' => 'required',
             'title' => 'required',
             'slug' => 'required',
             'thumbnail' => 'required',
             'excerpt' => 'required',
-            //'download_link' => 'required',
+            // 'download_link' => 'required',
             'author_name' => 'required',
             'author_website' => 'required',
             'version' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $settings, $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($settings, $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-
-        $settings['version_number'] =  str_replace('v','',$settings['version']);
-        $settings['version_number'] =  str_replace('.','',$settings['version_number']);
+        $settings['version_number'] = str_replace('v', '', $settings['version']);
+        $settings['version_number'] = str_replace('.', '', $settings['version_number']);
 
         $module = Module::firstOrCreate(['slug' => $settings['slug']]);
         $module->fill($settings);
         $module->save();
-
 
         $removeKeys = [
             'name',
@@ -186,30 +206,25 @@ class ModuleBase extends VaahModel
             'version',
         ];
 
-
         $other_settings = array_diff_key($settings, array_flip($removeKeys));
 
-        foreach ($other_settings as $key => $setting_input)
-        {
+        foreach ($other_settings as $key => $setting_input) {
 
             $setting_data = [];
 
             $setting_data['key'] = $key;
 
-            if(is_array($setting_input) || is_object($setting_input))
-            {
+            if (is_array($setting_input) || is_object($setting_input)) {
                 $setting_data['type'] = 'json';
                 $setting_data['value'] = json_encode($setting_input);
 
-            } else
-            {
+            } else {
                 $setting_data['value'] = $setting_input;
             }
 
             $setting = $module->settings()->where('key', $key)->first();
 
-            if(!$setting)
-            {
+            if (! $setting) {
                 $setting = new Setting($setting_data);
                 $module->settings()->save($setting);
             }
@@ -220,9 +235,9 @@ class ModuleBase extends VaahModel
 
         return $module;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function syncAllModules()
     {
 
@@ -231,40 +246,32 @@ class ModuleBase extends VaahModel
         $installed = static::orderBy('name', 'asc')->get()
             ->pluck('name')->toArray();
 
-        if($installed && count($list) < 1)
-        {
-            foreach ($installed as $item)
-            {
+        if ($installed && count($list) < 1) {
+            foreach ($installed as $item) {
                 $installed_module = static::where('name', $item)->first();
                 $installed_module->forceDelete();
             }
         }
 
-
-        if(count($list) < 1)
-        {
+        if (count($list) < 1) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.no_module_installed');
+
             return $response;
         }
 
         $installed_module_names = [];
 
-        if (count($list) > 0)
-        {
-            foreach ($list as $module_path)
-            {
+        if (count($list) > 0) {
+            foreach ($list as $module_path) {
                 $installed_module_names[] = basename($module_path);
             }
         }
 
-        //remove database records if module folder does not exist
-        if(count($installed_module_names) > 0)
-        {
-            foreach ($installed as $item)
-            {
-                if(!in_array($item, $installed_module_names))
-                {
+        // remove database records if module folder does not exist
+        if (count($installed_module_names) > 0) {
+            foreach ($installed as $item) {
+                if (! in_array($item, $installed_module_names)) {
                     $installed_module = static::where('name', $item)->first();
                     $installed_module->forceDelete();
                 }
@@ -272,50 +279,46 @@ class ModuleBase extends VaahModel
 
         }
 
-        foreach($list as $module_path)
-        {
+        foreach ($list as $module_path) {
             $res = Module::syncModule($module_path);
         }
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getInstalledModules()
     {
         $list = Model::all();
+
         return $list;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getActiveModules()
     {
         return static::where('is_active', 1)->get();
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function validateDependencies($dependencies)
     {
 
         $response['success'] = true;
 
-
-        foreach ($dependencies as $key => $dependency_list)
-        {
-            switch($key){
+        foreach ($dependencies as $key => $dependency_list) {
+            switch ($key) {
 
                 case 'modules':
 
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
-                        {
+                    if (is_array($dependency_list)) {
+                        foreach ($dependency_list as $dependency_slug) {
                             $module = Module::slug($dependency_slug)->first();
 
-                            if(!$module)
-                            {
+                            if (! $module) {
                                 $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
                             }
 
-                            if($module && $module->is_active != 1)
-                            {
+                            if ($module && $module->is_active != 1) {
                                 $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' module is not active';
                             }
@@ -324,23 +327,19 @@ class ModuleBase extends VaahModel
                     }
 
                     break;
-                //------------------------
+                    // ------------------------
                 case 'themes':
 
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
-                        {
+                    if (is_array($dependency_list)) {
+                        foreach ($dependency_list as $dependency_slug) {
                             $theme = Theme::slug($dependency_slug)->first();
 
-                            if(!$theme)
-                            {
+                            if (! $theme) {
                                 $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
                             }
 
-                            if($theme && $theme->is_active != 1)
-                            {
+                            if ($theme && $theme->is_active != 1) {
                                 $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' theme is not active';
                             }
@@ -349,21 +348,19 @@ class ModuleBase extends VaahModel
                     }
 
                     break;
-                //------------------------
-                //------------------------
-                //------------------------
-                //------------------------
+                    // ------------------------
+                    // ------------------------
+                    // ------------------------
+                    // ------------------------
             }
-
-
 
         }
 
         return $response;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function activateItem($slug)
     {
 
@@ -374,9 +371,7 @@ class ModuleBase extends VaahModel
          */
         $response = vh_module_action($module->name, 'SetupController@dependencies');
 
-
-        if(isset($response['success']) && !$response['success'])
-        {
+        if (isset($response['success']) && ! $response['success']) {
             return $response;
         }
 
@@ -385,16 +380,11 @@ class ModuleBase extends VaahModel
          */
         $response = Module::validateDependencies($response['data']);
 
-
-        if(isset($response['success']) && !$response['success'])
-        {
+        if (isset($response['success']) && ! $response['success']) {
             return $response;
         }
 
-
-
-        if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-        {
+        if (! isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true)) {
             $module_path = config('vaahcms.modules_path').$module->name;
             $path = vh_module_migrations_path($module->name);
 
@@ -406,14 +396,14 @@ class ModuleBase extends VaahModel
             $current_max_batch = \DB::table('migrations')
                 ->max('batch');
 
-            if($current_max_batch > $max_batch){
-                Migration::syncModuleMigrations($module->id,$current_max_batch);
+            if ($current_max_batch > $max_batch) {
+                Migration::syncModuleMigrations($module->id, $current_max_batch);
             }
 
             $seeds_namespace = vh_module_database_seeder($module->name);
             Migration::runSeeds($seeds_namespace);
 
-            //copy assets to public folder
+            // copy assets to public folder
             Module::copyAssets($module);
 
         }
@@ -424,23 +414,23 @@ class ModuleBase extends VaahModel
 
         $response['success'] = true;
         $response['data'][] = '';
-        $response['messages'][] = trans("vaahcms-extend-module.module_activated");
+        $response['messages'][] = trans('vaahcms-extend-module.module_activated');
 
-        if(env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             $response['hint'][] = '';
         }
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function runMigrations($slug)
     {
         try {
             $module = self::slug($slug)->first();
 
-            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-            {
+            if (! isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true)) {
 
                 $path = vh_module_migrations_path($module->name);
 
@@ -452,22 +442,20 @@ class ModuleBase extends VaahModel
                 $current_max_batch = \DB::table('migrations')
                     ->max('batch');
 
-                if($current_max_batch > $max_batch){
-                    Migration::syncModuleMigrations($module->id,$current_max_batch);
+                if ($current_max_batch > $max_batch) {
+                    Migration::syncModuleMigrations($module->id, $current_max_batch);
                 }
 
             }
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-general.run_migrations");
+            $response['messages'][] = trans('vaahcms-general.run_migrations');
 
-            if(env('APP_DEBUG'))
-            {
+            if (env('APP_DEBUG')) {
                 $response['hint'][] = '';
             }
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['errors'][] = $e->getMessage();
 
@@ -476,14 +464,14 @@ class ModuleBase extends VaahModel
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function runSeeds($slug)
     {
         try {
             $module = self::slug($slug)->first();
 
-            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-            {
+            if (! isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true)) {
 
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
@@ -492,14 +480,12 @@ class ModuleBase extends VaahModel
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-general.run_seeds");
+            $response['messages'][] = trans('vaahcms-general.run_seeds');
 
-            if(env('APP_DEBUG'))
-            {
+            if (env('APP_DEBUG')) {
                 $response['hint'][] = '';
             }
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['status'] = 'failed';
             $response['errors'][] = $e->getMessage();
 
@@ -508,25 +494,24 @@ class ModuleBase extends VaahModel
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function refreshMigrations($slug)
     {
 
-        try{
+        try {
             $module = static::where('slug', $slug)->first();
 
-            if(!isset($module->is_migratable) ||
-                (isset($module->is_migratable) && $module->is_migratable == true))
-            {
+            if (! isset($module->is_migratable) ||
+                (isset($module->is_migratable) && $module->is_migratable == true)) {
 
                 $path = vh_module_migrations_path($module->name);
                 Migration::refreshMigrations($path);
 
-                //delete all database migrations
+                // delete all database migrations
                 $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
 
-                if($module_migrations)
-                {
+                if ($module_migrations) {
                     \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
                     Migration::whereIn('migration_id', $module_migrations)->delete();
                 }
@@ -534,26 +519,25 @@ class ModuleBase extends VaahModel
                 $max_batch = \DB::table('migrations')
                     ->max('batch');
 
-                Migration::syncModuleMigrations($module->id,$max_batch);
+                Migration::syncModuleMigrations($module->id, $max_batch);
 
             }
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = trans("vaahcms-general.refresh_migrations");
+            $response['messages'][] = trans('vaahcms-general.refresh_migrations');
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
 
-
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deactivateItem($slug)
     {
         $item = static::slug($slug)->first();
@@ -562,52 +546,47 @@ class ModuleBase extends VaahModel
         $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
-        if(env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             $response['hint'][] = '';
         }
+
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteItem($slug)
     {
 
-        try{
+        try {
 
             $item = static::where('slug', $slug)->first();
 
+            $item_path = config('vaahcms.modules_path').'/'.$item->name;
 
-            $item_path = config('vaahcms.modules_path')."/".$item->name;
-
-            //Delete all migrations
-            $path =  $item_path . "/Database/Migrations/";
+            // Delete all migrations
+            $path = $item_path.'/Database/Migrations/';
 
             $migrations = vh_get_all_files($path);
 
-            if(count($migrations) > 0)
-            {
-                foreach($migrations as $migration)
-                {
+            if (count($migrations) > 0) {
+                foreach ($migrations as $migration) {
                     $migration_path = $path.$migration;
-                    include_once ($migration_path);
+                    include_once $migration_path;
                     $migration_class = vh_get_class_from_file($migration_path);
-                    if($migration_class)
-                    {
+                    if ($migration_class) {
                         $migration_obj = new $migration_class;
                         $migration_obj->down();
                     }
                 }
             }
 
-
-            //Delete module settings
+            // Delete module settings
             $item->settings()->delete();
 
-            //delete all database migrations
+            // delete all database migrations
             $module_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
 
-            if($module_migrations)
-            {
+            if ($module_migrations) {
                 \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
                 Migration::whereIn('migration_id', $module_migrations)->delete();
             }
@@ -615,45 +594,43 @@ class ModuleBase extends VaahModel
             $item->is_active = 0;
             $item->save();
 
-
-            //delete module folder
+            // delete module folder
             vh_delete_folder($item_path);
 
-            //Delete module entry
+            // Delete module entry
             static::where('slug', $item->slug)->forceDelete();
 
             $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = trans('vaahcms-general.action_successful');
-            if(env('APP_DEBUG'))
-            {
+            if (env('APP_DEBUG')) {
                 $response['hint'][] = '';
             }
+
             return $response;
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
 
-
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function copyAssets($module)
     {
         $module_path = config('vaahcms.modules_path').'/'.$module->name;
-        $source = $module_path."/Resources/assets";
-        $dec = public_path(config('vaahcms.build_directory_name','vaahcms').'/modules/'.$module->slug.'/assets');
+        $source = $module_path.'/Resources/assets';
+        $dec = public_path(config('vaahcms.build_directory_name', 'vaahcms').'/modules/'.$module->slug.'/assets');
 
-        if(!\File::exists($source)) {
+        if (! \File::exists($source)) {
             return false;
         }
 
-        if(!\File::exists($dec)) {
+        if (! \File::exists($dec)) {
             \File::makeDirectory($dec, 0755, true, true);
         }
 
@@ -661,84 +638,77 @@ class ModuleBase extends VaahModel
 
         return true;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getOfficialDetails($slug)
     {
 
-        try{
-            $api = config('vaahcms.api_route')."module/by/slug/".$slug;
+        try {
+            $api = config('vaahcms.api_route').'module/by/slug/'.$slug;
 
             $api_response = @file_get_contents($api);
 
-            if(!isset($api_response) || empty($api_response))
-            {
+            if (! isset($api_response) || empty($api_response)) {
                 $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['errors'][] = 'API Response Error.';
+
                 return $response;
             }
 
             $api_response = json_decode($api_response, true);
 
-
-            if(!isset($api_response) || !isset($api_response['success'])
-                || !$api_response['success'])
-            {
+            if (! isset($api_response) || ! isset($api_response['success'])
+                || ! $api_response['success']) {
                 $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'API Response Error.';
 
-
                 return $response;
 
-            } else if(isset($api_response['success']) && $api_response['success'])
-            {
+            } elseif (isset($api_response['success']) && $api_response['success']) {
                 return $api_response;
-            } else
-            {
+            } else {
                 $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'Unknown Error.';
             }
 
-
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
+
             return $response;
         }
 
-
-
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function download($name, $download_link)
     {
 
-        //check if module is already installed
+        // check if module is already installed
         $vaahcms_path = config('vaahcms.modules_path').'/';
-        //$vaahcms_path = base_path('Download/Modules').'/';
+        // $vaahcms_path = base_path('Download/Modules').'/';
 
         $package_path = $vaahcms_path.$name;
 
-        if(is_dir($package_path))
-        {
+        if (is_dir($package_path)) {
             $response['success'] = true;
             $response['data'] = [];
-            $response['messages'][] = $name." module already exist.";
+            $response['messages'][] = $name.' module already exist.';
+
             return $response;
         }
 
-        $zip_file = $package_path.".zip";
+        $zip_file = $package_path.'.zip';
 
         copy($download_link, $zip_file);
 
-        try{
-            $zip = new Zip();
+        try {
+            $zip = new Zip;
             $zip->check($zip_file);
             $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
@@ -754,19 +724,20 @@ class ModuleBase extends VaahModel
             self::syncAllModules();
             $response['success'] = true;
             $response['data'] = [];
-            $response['messages'][] = $name." module is installed.";
+            $response['messages'][] = $name.' module is installed.';
 
             return $response;
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
+
             return $response;
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function installUpdates($request)
     {
 
@@ -777,17 +748,16 @@ class ModuleBase extends VaahModel
 
         $module = static::where('name', $name)->first();
 
-
         $package_path = $vaahcms_path.$name;
 
-        $zip_file = $package_path.".zip";
+        $zip_file = $package_path.'.zip';
 
         copy($download_link, $zip_file);
 
-        try{
-            $zip = new Zip();
+        try {
+            $zip = new Zip;
             $zip->check($zip_file);
-            $zip =  $zip->open($zip_file);
+            $zip = $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -800,66 +770,62 @@ class ModuleBase extends VaahModel
             vh_delete_folder($vaahcms_path.$extracted_folder_name);
             vh_delete_folder($zip_file);
 
-            //if the modules is active then run migration & seeds
-            if($module->is_active)
-            {
+            // if the modules is active then run migration & seeds
+            if ($module->is_active) {
                 static::activateItem($module->slug);
             }
-
 
             $module->is_update_available = null;
             $module->save();
 
             $response['success'] = true;
             $response['data'] = [];
-            $response['messages'][] = $name." module is updated.";
+            $response['messages'][] = $name.' module is updated.';
+
             return $response;
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
+
             return $response;
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function importSampleData($slug)
     {
-        try{
+        try {
             $module = Module::slug($slug)->first();
 
             $command = 'db:seed';
             $params = [
-                '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+                '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder",
             ];
 
             \Artisan::call($command, $params);
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.sample_data_successfully_imported");
-        }catch(\Exception $e)
-        {
+            $response['messages'][] = trans('vaahcms-general.sample_data_successfully_imported');
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
-
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function storeUpdates($request)
     {
         $updates = 0;
-        if(count($request->modules) > 0 )
-        {
-            foreach ($request->modules as $module)
-            {
+        if (count($request->modules) > 0) {
+            foreach ($request->modules as $module) {
                 $store_modules = static::where('slug', $module['slug'])->first();
 
-                if($store_modules->version_number < $module['version_number'])
-                {
+                if ($store_modules->version_number < $module['version_number']) {
                     $store_modules->is_update_available = 1;
                     $store_modules->save();
                     $updates++;
@@ -870,18 +836,17 @@ class ModuleBase extends VaahModel
 
         $response['success'] = true;
         $response['data'][] = '';
-        if($updates > 0)
-        {
+        if ($updates > 0) {
             $response['messages'][] = 'New updates are available for '.$updates.' modules.';
-        } else{
+        } else {
             $response['messages'][] = 'No new update available.';
         }
-        if(env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             $response['hint'][] = '';
         }
+
         return $response;
 
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 }

@@ -13,17 +13,18 @@ class ModulesController extends Controller
 {
     public $theme;
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function __construct()
     {
         $this->theme = vh_get_backend_theme();
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-module-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -35,33 +36,33 @@ class ModulesController extends Controller
             $data['rows'] = config('vaahcms.per_page');
 
             $data['language_strings'] = [
-                "module_title" => trans("vaahcms-extend-module.module_heading"),
-                "toolkit_text_reload" => trans("vaahcms-general.toolkit_text_reload"),
-                "check_updates_button" => trans("vaahcms-extend-module.check_updates_button"),
-                "install_button" => trans("vaahcms-extend-module.install_button"),
-                "filter_button" => trans("vaahcms-extend-module.filter_button"),
-                "install_placeholder_search" => trans("vaahcms-extend-module.install_placeholder_search"),
-                "filter_all" => trans("vaahcms-extend-module.filter_all"),
-                "filter_active" => trans("vaahcms-extend-module.filter_active"),
-                "filter_inactive" => trans("vaahcms-extend-module.filter_inactive"),
-                "filter_update_available" => trans("vaahcms-extend-module.filter_update_available"),
-                "name" => trans("vaahcms-extend-module.name"),
-                "version" => trans("vaahcms-extend-module.version"),
-                "developed_by" => trans("vaahcms-extend-module.developed_by"),
-                "activate_button" => trans("vaahcms-extend-module.activate_button"),
-                "toolkit_text_activate_module" => trans("vaahcms-extend-module.toolkit_text_activate_module"),
-                "deactivate_button" => trans("vaahcms-extend-module.deactivate_button"),
-                "toolkit_text_deactivate_module" => trans("vaahcms-extend-module.toolkit_text_deactivate_module"),
-                "toolkit_text_update_module" => trans("vaahcms-extend-module.toolkit_text_update_module"),
-                "toolkit_text_import_sample_data" => trans("vaahcms-extend-module.toolkit_text_import_sample_data"),
-                "toolkit_text_publish_assets" => trans("vaahcms-extend-module.toolkit_text_publish_assets"),
-                "toolkit_text_actions" => trans("vaahcms-extend-module.toolkit_text_actions"),
-                "actions_run_migrations" => trans("vaahcms-extend-module.actions_run_migrations"),
-                "actions_run_seeds" => trans("vaahcms-extend-module.actions_run_seeds"),
-                "actions_refresh_migrations" => trans("vaahcms-extend-module.actions_refresh_migrations"),
-                "update_button" => trans("vaahcms-extend-module.update_button"),
-                "install_modules" => trans("vaahcms-extend-module.install_modules"),
-                "installed_button" => trans("vaahcms-extend-module.installed_button"),
+                'module_title' => trans('vaahcms-extend-module.module_heading'),
+                'toolkit_text_reload' => trans('vaahcms-general.toolkit_text_reload'),
+                'check_updates_button' => trans('vaahcms-extend-module.check_updates_button'),
+                'install_button' => trans('vaahcms-extend-module.install_button'),
+                'filter_button' => trans('vaahcms-extend-module.filter_button'),
+                'install_placeholder_search' => trans('vaahcms-extend-module.install_placeholder_search'),
+                'filter_all' => trans('vaahcms-extend-module.filter_all'),
+                'filter_active' => trans('vaahcms-extend-module.filter_active'),
+                'filter_inactive' => trans('vaahcms-extend-module.filter_inactive'),
+                'filter_update_available' => trans('vaahcms-extend-module.filter_update_available'),
+                'name' => trans('vaahcms-extend-module.name'),
+                'version' => trans('vaahcms-extend-module.version'),
+                'developed_by' => trans('vaahcms-extend-module.developed_by'),
+                'activate_button' => trans('vaahcms-extend-module.activate_button'),
+                'toolkit_text_activate_module' => trans('vaahcms-extend-module.toolkit_text_activate_module'),
+                'deactivate_button' => trans('vaahcms-extend-module.deactivate_button'),
+                'toolkit_text_deactivate_module' => trans('vaahcms-extend-module.toolkit_text_deactivate_module'),
+                'toolkit_text_update_module' => trans('vaahcms-extend-module.toolkit_text_update_module'),
+                'toolkit_text_import_sample_data' => trans('vaahcms-extend-module.toolkit_text_import_sample_data'),
+                'toolkit_text_publish_assets' => trans('vaahcms-extend-module.toolkit_text_publish_assets'),
+                'toolkit_text_actions' => trans('vaahcms-extend-module.toolkit_text_actions'),
+                'actions_run_migrations' => trans('vaahcms-extend-module.actions_run_migrations'),
+                'actions_run_seeds' => trans('vaahcms-extend-module.actions_run_seeds'),
+                'actions_refresh_migrations' => trans('vaahcms-extend-module.actions_refresh_migrations'),
+                'update_button' => trans('vaahcms-extend-module.update_button'),
+                'install_modules' => trans('vaahcms-extend-module.install_modules'),
+                'installed_button' => trans('vaahcms-extend-module.installed_button'),
 
             ];
 
@@ -75,18 +76,19 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-module-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -94,9 +96,8 @@ class ModulesController extends Controller
             Module::syncAllModules();
             $list = Module::orderBy('created_at', 'DESC');
 
-            if($request->has('filter'))
-            {
-                if(array_key_exists('q',$request->filter)) {
+            if ($request->has('filter')) {
+                if (array_key_exists('q', $request->filter)) {
                     $list->where(function ($s) use ($request) {
                         $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
                             ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
@@ -104,10 +105,8 @@ class ModulesController extends Controller
                     });
                 }
 
-                if(array_key_exists('status',$request->filter) && $request->filter['status'] != 'all')
-                {
-                    switch ($request->filter['status'])
-                    {
+                if (array_key_exists('status', $request->filter) && $request->filter['status'] != 'all') {
+                    switch ($request->filter['status']) {
                         case 'active':
                             $list->active();
                             break;
@@ -130,8 +129,7 @@ class ModulesController extends Controller
 
             $rows = config('vaahcms.per_page');
 
-            if ($request->rows)
-            {
+            if ($request->rows) {
                 $rows = $request->rows;
             }
 
@@ -146,18 +144,19 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-read-module';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -171,33 +170,35 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function download(Request $request): JsonResponse
     {
         $permission_slug = 'can-install-module';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $rules = array(
+            $rules = [
                 'name' => 'required',
                 'download_link' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->toArray(), $rules);
+            $validator = \Validator::make($request->toArray(), $rules);
             if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
@@ -210,33 +211,35 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function installUpdates(Request $request): JsonResponse
     {
         $permission_slug = 'can-update-module';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $rules = array(
+            $rules = [
                 'name' => 'required',
                 'download_link' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->toArray(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->toArray(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
@@ -249,33 +252,35 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function actions(Request $request, $id, $action): JsonResponse
     {
         try {
             $request->merge([
                 'inputs' => ['id' => $id],
-                'action' => $action
+                'action' => $action,
             ]);
 
-            $rules = array(
+            $rules = [
                 'action' => 'required',
                 'inputs' => 'required',
                 'inputs.id' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
@@ -286,88 +291,87 @@ class ModulesController extends Controller
             /*
              * Call method from module setup controller
              */
-            if(!in_array($request->action,['run_migrations','run_seeds','refresh_migrations'],TRUE)){
+            if (! in_array($request->action, ['run_migrations', 'run_seeds', 'refresh_migrations'], true)) {
 
-                $method_name = str_replace("_", " ", $request->action);
+                $method_name = str_replace('_', ' ', $request->action);
                 $method_name = ucwords($method_name);
-                $method_name = lcfirst(str_replace(" ", "", $method_name));
+                $method_name = lcfirst(str_replace(' ', '', $method_name));
 
                 $response = vh_module_action($module->name, 'SetupController@'.$method_name);
-                if (isset($response['success']) && !$response['success']) {
+                if (isset($response['success']) && ! $response['success']) {
                     return response()->json($response);
                 }
             }
 
-            switch($request->action)
-            {
-                //---------------------------------------
+            switch ($request->action) {
+                // ---------------------------------------
                 case 'activate':
                     $permission_slug = 'can-activate-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::activateItem($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'deactivate':
                     $permission_slug = 'can-deactivate-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::deactivateItem($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'refresh_migrations':
                     $permission_slug = 'can-activate-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::refreshMigrations($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'run_migrations':
                     $permission_slug = 'can-activate-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::runMigrations($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'run_seeds':
                     $permission_slug = 'can-activate-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
                     $response = Module::runSeeds($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'import_sample_data':
                     $permission_slug = 'can-import-sample-data-in-module';
 
-                    if(!\Auth::user()->hasPermission($permission_slug)) {
+                    if (! \Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::importSampleData($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
                 case 'delete':
 
                     $permission_slug = 'can-delete-module';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = Module::deleteItem($module->slug);
                     break;
-                //---------------------------------------
+                    // ---------------------------------------
             }
         } catch (\Exception $e) {
             $response = [];
@@ -377,24 +381,24 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function callModuleControllerMethod($module, $controller, $method): JsonResponse
     {
         $response = [];
         try {
             if (isset($method) && method_exists($controller, $method)
-                && is_callable(array($controller, $method)))
-            {
-                $response = call_user_func($controller."::".$method, $module);
+                && is_callable([$controller, $method])) {
+                $response = call_user_func($controller.'::'.$method, $module);
                 $response['data']['controller_method'] = $controller;
             }
-        }  catch (\Exception $e) {
+        } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
@@ -402,19 +406,20 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getModulesSlugs(Request $request): JsonResponse
     {
         try {
             $module_slugs = Module::all()->pluck('slug')->toArray();
 
-            $module_slugs = implode(",", $module_slugs);
+            $module_slugs = implode(',', $module_slugs);
 
             $response['success'] = true;
             $response['data'] = $module_slugs;
@@ -427,24 +432,26 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateModuleVersions(Request $request): JsonResponse
     {
         $permission_slug = 'can-update-module';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            if (!$request->has('modules')) {
+            if (! $request->has('modules')) {
                 $response['success'] = true;
+
                 return response()->json($response);
             }
 
@@ -467,33 +474,35 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function storeUpdates(Request $request): JsonResponse
     {
         $permission_slug = 'can-update-module';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $rules = array(
+            $rules = [
                 'modules' => 'required|array',
-            );
+            ];
 
-            $validator = \Validator::make( $request->all(), $rules);
+            $validator = \Validator::make($request->all(), $rules);
 
-            if ( $validator->fails() ) {
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'] = $errors;
+
                 return response()->json($response);
             }
 
@@ -506,13 +515,14 @@ class ModulesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function publishAssets(Request $request): JsonResponse
     {
         try {
@@ -524,18 +534,19 @@ class ModulesController extends Controller
                 $module->is_assets_published = 1;
                 $module->save();
                 $response['success'] = true;
-                $response['messages'][] = "Assets published.";
+                $response['messages'][] = 'Assets published.';
+
                 return response()->json($response);
             }
 
             $response['success'] = false;
-            $response['errors'][] = "Something went wrong.";
-        } catch(\Exception $e) {
+            $response['errors'][] = 'Something went wrong.';
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

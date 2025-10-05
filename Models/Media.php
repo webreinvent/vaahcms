@@ -1,21 +1,15 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
 
-use Carbon\Carbon;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+namespace WebReinvent\VaahCms\Models;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Models\MediaBase;
-use WebReinvent\VaahCms\Models\User;
 
 class Media extends MediaBase
 {
-
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+    // -------------------------------------------------
 
     public function createdByUser()
     {
@@ -24,7 +18,7 @@ class Media extends MediaBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
@@ -32,7 +26,7 @@ class Media extends MediaBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
@@ -40,20 +34,20 @@ class Media extends MediaBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function getTableColumns()
     {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
         return $query->select(array_diff($this->getTableColumns(), $columns));
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
@@ -72,22 +66,19 @@ class Media extends MediaBase
         $query->whereBetween('updated_at', [$from, $to]);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
-        if(!isset($filter['sort']))
-        {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
         $sort = $filter['sort'];
 
-
         $direction = Str::contains($sort, ':');
 
-        if(!$direction)
-        {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -95,57 +86,55 @@ class Media extends MediaBase
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
     {
 
-        if(!isset($filter['is_active'])
+        if (! isset($filter['is_active'])
             || is_null($filter['is_active'])
             || $filter['is_active'] === 'null'
-        )
-        {
+        ) {
             return $query;
         }
         $is_active = $filter['is_active'];
 
-        if($is_active === 'true' || $is_active === true)
-        {
+        if ($is_active === 'true' || $is_active === true) {
             return $query->whereNotNull('is_active');
-        } else{
+        } else {
             return $query->whereNull('is_active');
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
 
-        if(!isset($filter['trashed']))
-        {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
         $trashed = $filter['trashed'];
 
-        if($trashed === 'include')
-        {
+        if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
 
-        if(!isset($filter['q']))
-        {
+        if (! isset($filter['q'])) {
             return $query;
         }
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('extension', 'LIKE', '%' . $search . '%');
+            $q->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('extension', 'LIKE', '%'.$search.'%');
         });
 
     }
@@ -155,14 +144,13 @@ class Media extends MediaBase
 
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
-        );
-
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -170,16 +158,15 @@ class Media extends MediaBase
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
         }
-
 
         $items = self::whereIn('id', $items_id)
             ->withTrashed();
@@ -201,25 +188,25 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function deleteList($request): array
     {
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
             'items' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
             'items.required' => 'Select items',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -227,6 +214,7 @@ class Media extends MediaBase
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -235,17 +223,17 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function listAction($request, $type): array
     {
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
@@ -254,30 +242,30 @@ class Media extends MediaBase
                 ->withTrashed();
         }
 
-        $list=self::query();
+        $list = self::query();
         switch ($type) {
             case 'deactivate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => null]);
                 }
                 break;
             case 'activate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => 1]);
                 }
                 break;
             case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->delete();
                 }
                 break;
             case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->restore();
                 }
                 break;
             case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->forceDelete();
                 }
                 break;
@@ -301,16 +289,18 @@ class Media extends MediaBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getItem($id)
     {
-        if(!Auth::user()->hasPermission('has-access-of-media-section')) {
+        if (! Auth::user()->hasPermission('has-access-of-media-section')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms::messages.permission_denied');
+
             return $response;
         }
 
@@ -319,10 +309,10 @@ class Media extends MediaBase
             ->withTrashed()
             ->first();
 
-        if(!$item)
-        {
+        if (! $item) {
             $response['success'] = false;
             $response['errors'][] = 'Record not found with ID: '.$id;
+
             return $response;
         }
         $response['success'] = true;
@@ -331,13 +321,14 @@ class Media extends MediaBase
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateItem($request, $id)
     {
         $inputs = $request->all();
 
         $validation = self::validation($inputs);
-        if (!$validation['success']) {
+        if (! $validation['success']) {
             return $validation;
         }
 
@@ -348,7 +339,8 @@ class Media extends MediaBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = 'This name is already exist.';
+
             return $response;
         }
 
@@ -359,7 +351,8 @@ class Media extends MediaBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['messages'][] = 'This slug is already exist.';
+
             return $response;
         }
 
@@ -369,17 +362,20 @@ class Media extends MediaBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = trans("vaahcms-general.saved_successfully");
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteItem($request, $id): array
     {
         $item = self::where('id', $id)->withTrashed()->first();
-        if (!$item) {
+        if (! $item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';
+
             return $response;
         }
         $item->forceDelete();
@@ -390,16 +386,16 @@ class Media extends MediaBase
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
-        switch($type)
-        {
+        switch ($type) {
             case 'trash':
                 self::where('id', $id)
                     ->withTrashed()
                     ->delete();
-                $item = self::where('id',$id)->withTrashed()->first();
+                $item = self::where('id', $id)->withTrashed()->first();
                 $item->deleted_by = auth()->user()->id;
                 $item->save();
                 break;
@@ -407,7 +403,7 @@ class Media extends MediaBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
-                $item = self::where('id',$id)->withTrashed()->first();
+                $item = self::where('id', $id)->withTrashed()->first();
                 $item->deleted_by = null;
                 $item->save();
                 break;
@@ -415,31 +411,32 @@ class Media extends MediaBase
 
         return self::getItem($id);
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function validation($inputs)
     {
 
-        $rules = array(
+        $rules = [
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules);
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
             $response['messages'] = $messages->all();
+
             return $response;
         }
 
         $response['success'] = true;
+
         return $response;
 
     }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

@@ -1,15 +1,18 @@
-<?php namespace WebReinvent\VaahCms\Loaders;
+<?php
+
+namespace WebReinvent\VaahCms\Loaders;
 
 use Illuminate\Filesystem\Filesystem;
 
-class ThemesLoader {
-
+class ThemesLoader
+{
     /**
      * The filesystem instance.
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
     protected $files;
+
     /**
      * @var string
      */
@@ -31,17 +34,13 @@ class ThemesLoader {
     protected $list = [];
 
     /**
-     * @param Filesystem $files
-     * @param string $path
+     * @param  string  $path
      */
-
-    public function __construct(Filesystem $files, $path=null)
+    public function __construct(Filesystem $files, $path = null)
     {
         $this->path = $path;
         $this->files = $files;
     }
-
-
 
     /**
      * @return string
@@ -51,8 +50,6 @@ class ThemesLoader {
         return $this->path;
     }
 
-
-
     /**
      * @return array
      */
@@ -61,18 +58,15 @@ class ThemesLoader {
         return $this->activated;
     }
 
-
     /**
      * @return array
      */
     public function findList()
     {
 
-        foreach ($this->files->directories($this->getPath()) as $item)
-        {
+        foreach ($this->files->directories($this->getPath()) as $item) {
 
-            if (is_null($class = $this->initTheme($item)))
-            {
+            if (is_null($class = $this->initTheme($item))) {
                 continue;
             }
 
@@ -82,9 +76,8 @@ class ThemesLoader {
         return $this->list;
     }
 
-
     /**
-     * @param string $directory
+     * @param  string  $directory
      * @return BasePluginContainer|null
      */
     protected function initTheme($directory)
@@ -96,6 +89,4 @@ class ThemesLoader {
 
         return $config;
     }
-
-
 }

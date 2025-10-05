@@ -13,6 +13,7 @@ class SetLocale
         if (config('settings.global.language')) {
             App::setLocale(config('settings.global.language'));
         }
+
         return $next($request);
     }
 }

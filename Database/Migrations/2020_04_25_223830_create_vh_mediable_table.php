@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhMediableTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateVhMediableTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_mediable')) {
+        if (! Schema::hasTable('vh_mediable')) {
             Schema::create('vh_mediable', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
@@ -39,10 +39,10 @@ class CreateVhMediableTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_mediable');

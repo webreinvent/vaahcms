@@ -1,7 +1,8 @@
 <?php
-namespace WebReinvent\VaahCms;
-use Illuminate\Support\Facades\Facade;
 
+namespace WebReinvent\VaahCms;
+
+use Illuminate\Support\Facades\Facade;
 
 class VaahCmsFacade extends Facade
 {

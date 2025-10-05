@@ -1,8 +1,5 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php
 
+namespace WebReinvent\VaahCms\Entities;
 
-
-class TaxonomyType extends \WebReinvent\VaahCms\Models\TaxonomyType
-{
-
-}
+class TaxonomyType extends \WebReinvent\VaahCms\Models\TaxonomyType {}

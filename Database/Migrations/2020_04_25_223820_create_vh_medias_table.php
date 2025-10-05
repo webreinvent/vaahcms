@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhMediasTable extends Migration
 {
@@ -13,12 +13,12 @@ class CreateVhMediasTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_medias')) {
+        if (! Schema::hasTable('vh_medias')) {
             Schema::create('vh_medias', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
-                $table->string('name',150)->nullable()->index();
-                $table->string('slug',150)->nullable()->index();
+                $table->string('name', 150)->nullable()->index();
+                $table->string('slug', 150)->nullable()->index();
                 $table->uuid('uuid')->nullable()->index();
                 $table->string('original_name')->nullable()->index();
                 $table->string('mime_type')->nullable();
@@ -28,7 +28,7 @@ class CreateVhMediasTable extends Migration
                 $table->string('url_thumbnail')->nullable();
                 $table->integer('size')->nullable();
                 $table->integer('thumbnail_size')->nullable();
-                $table->string('title',200)->nullable()->index();
+                $table->string('title', 200)->nullable()->index();
                 $table->string('caption')->nullable()->index();
                 $table->string('alt_text')->nullable();
                 $table->boolean('is_hidden')->nullable();
@@ -53,10 +53,10 @@ class CreateVhMediasTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_medias');

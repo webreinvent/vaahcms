@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhNotificationContentsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateVhNotificationContentsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_notification_contents')) {
+        if (! Schema::hasTable('vh_notification_contents')) {
             Schema::create('vh_notification_contents', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
@@ -44,10 +44,10 @@ class CreateVhNotificationContentsTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_notification_contents');

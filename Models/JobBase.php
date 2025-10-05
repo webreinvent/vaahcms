@@ -1,37 +1,38 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
-
 
 class JobBase extends Model
 {
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected $table = 'jobs';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'reserved_at' => 'datetime',
         'available_at' => 'datetime',
         'created_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
-    //-------------------------------------------------
+
+    // -------------------------------------------------
+    // -------------------------------------------------
     protected $fillable = [
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -40,91 +41,91 @@ class JobBase extends Model
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function reservedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
-                return VaahModel::getUserTimezoneDate($value,true);
+            get: function (?string $value = null) {
+                return VaahModel::getUserTimezoneDate($value, true);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function availableAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
-                return VaahModel::getUserTimezoneDate($value,true);
+            get: function (?string $value = null) {
+                return VaahModel::getUserTimezoneDate($value, true);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getPayloadAttribute($value)
     {
         return json_decode($value);
     }
-    //-------------------------------------------------
-    public function getTableColumns() {
+
+    // -------------------------------------------------
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+        return $query->select(array_diff($this->getTableColumns(), $columns));
     }
 
-    //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
+    // -------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to, $by = 'created_at')
     {
 
-        if($from)
-        {
+        if ($from) {
             $from = Carbon::parse($from)->timestamp;
         }
-        if($to)
-        {
+        if ($to) {
             $to = Carbon::parse($to)->timestamp;
         }
-        $query->whereBetween($by,[$from,$to]);
+        $query->whereBetween($by, [$from, $to]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getList($request)
     {
 
         $list = self::orderBy('id', 'desc');
 
-        if(isset($request->from) && $request->from
-            && isset($request->to) && $request->to)
-        {
-            if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-            }else{
-                $list->betweenDates($request['from'],$request['to']);
+        if (isset($request->from) && $request->from
+            && isset($request->to) && $request->to) {
+            if (isset($request->date_filter_by) && $request->date_filter_by) {
+                $list->betweenDates($request['from'], $request['to'], $request->date_filter_by);
+            } else {
+                $list->betweenDates($request['from'], $request['to']);
             }
         }
 
-        if(isset($request->q) && $request->q)
-        {
-            $list->where(function ($q) use ($request){
+        if (isset($request->q) && $request->q) {
+            $list->where(function ($q) use ($request) {
                 $q->where('queue', 'LIKE', '%'.$request->q.'%');
                 $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
             });
         }
 
-        if(isset($request->status) && $request->status)
-        {
+        if (isset($request->status) && $request->status) {
             $list->where('queue', $request->status);
         }
 
@@ -135,29 +136,28 @@ class JobBase extends Model
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkDelete($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = 'Select IDs';
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
             $response['errors'][] = 'Select Status';
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $item = self::where('id', $id)->first();
-            if($item)
-            {
+            if ($item) {
                 $item->delete();
             }
         }
@@ -168,9 +168,9 @@ class JobBase extends Model
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkDeleteAll($request)
     {
 
@@ -182,11 +182,9 @@ class JobBase extends Model
 
         return $response;
 
-
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

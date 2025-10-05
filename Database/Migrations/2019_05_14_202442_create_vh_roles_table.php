@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhRolesTable extends Migration
 {
@@ -13,13 +13,13 @@ class CreateVhRolesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_roles')) {
+        if (! Schema::hasTable('vh_roles')) {
             Schema::create('vh_roles', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->uuid('uuid')->nullable();
-                $table->string('name',150)->nullable();
-                $table->string('slug',150)->nullable()->index();
-                $table->string('details',255)->nullable();
+                $table->string('name', 150)->nullable();
+                $table->string('slug', 150)->nullable()->index();
+                $table->string('details', 255)->nullable();
                 $table->integer('count_users')->nullable();
                 $table->integer('count_permissions')->nullable();
                 $table->boolean('is_active')->nullable();

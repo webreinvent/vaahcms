@@ -13,16 +13,15 @@ use WebReinvent\VaahCms\Models\User;
 
 class RegistrationsController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-registrations-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -39,8 +38,7 @@ class RegistrationsController extends Controller
                 'deleted_by',
             ];
 
-
-            $model = new Registration();
+            $model = new Registration;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -50,8 +48,8 @@ class RegistrationsController extends Controller
                 $data['empty_item'][$column] = null;
             }
 
-            $custom_fields = Setting::query()->where('category','user_setting')
-                ->where('label','custom_fields')->first();
+            $custom_fields = Setting::query()->where('category', 'user_setting')
+                ->where('label', 'custom_fields')->first();
 
             $data['empty_item']['meta']['custom_fields'] = [];
 
@@ -61,22 +59,22 @@ class RegistrationsController extends Controller
                 }
             }
 
-            //---------------------------------------------------
+            // ---------------------------------------------------
 
             $data['language_strings'] = [
-                "page_title" => trans("vaahcms-registration.registrations_title"),
-                "filter_email_verification_pending" => trans("vaahcms-registration.filter_email_verification_pending"),
-                "filter_users_email_verification_pending" => trans("vaahcms-registration.filter_users_email_verification_pending"),
-                "filter_users_email_verified" =>trans("vaahcms-registration.filter_users_email_verified"),
-                "filter_email_verified" => trans("vaahcms-registration.filter_email_verified"),
-                "filter_user_created" => trans("vaahcms-registration.filter_user_created"),
-                "table_gender_male" => trans("vaahcms-registration.table_gender_male"),
-                "table_gender_female" => trans("vaahcms-registration.table_gender_female"),
-                "table_gender_others" => trans("vaahcms-registration.table_gender_others"),
+                'page_title' => trans('vaahcms-registration.registrations_title'),
+                'filter_email_verification_pending' => trans('vaahcms-registration.filter_email_verification_pending'),
+                'filter_users_email_verification_pending' => trans('vaahcms-registration.filter_users_email_verification_pending'),
+                'filter_users_email_verified' => trans('vaahcms-registration.filter_users_email_verified'),
+                'filter_email_verified' => trans('vaahcms-registration.filter_email_verified'),
+                'filter_user_created' => trans('vaahcms-registration.filter_user_created'),
+                'table_gender_male' => trans('vaahcms-registration.table_gender_male'),
+                'table_gender_female' => trans('vaahcms-registration.table_gender_female'),
+                'table_gender_others' => trans('vaahcms-registration.table_gender_others'),
             ];
             $data['language_strings']['registration'] = $this->getGeneralStrings();
 
-            //---------------------------------------------------
+            // ---------------------------------------------------
 
             $data['actions'] = [];
 
@@ -100,29 +98,32 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function getGeneralStrings() :array {
+
+    // ----------------------------------------------------------
+    public function getGeneralStrings(): array
+    {
         return [
 
         ];
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-registrations-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $response= Registration::getList($request);
+            $response = Registration::getList($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -131,19 +132,20 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
 
         $permission_slug = 'can-update-registrations';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -157,24 +159,25 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        $permission_slugs = ['can-update-registrations','can-manage-registrations'];
+        $permission_slugs = ['can-update-registrations', 'can-manage-registrations'];
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
         try {
-            $response= Registration::listAction($request, $type);
+            $response = Registration::listAction($request, $type);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -183,20 +186,21 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        $permission_slugs = ['can-update-registrations','can-delete-registrations'];
+        $permission_slugs = ['can-update-registrations', 'can-delete-registrations'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -210,18 +214,19 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
         $permission_slug = 'can-create-registrations';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -235,23 +240,24 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-read-registrations';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $response =  Registration::getItem($id);
+            $response = Registration::getItem($id);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -260,18 +266,19 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function updateItem(Request $request ,$id): JsonResponse
+
+    // ----------------------------------------------------------
+    public function updateItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-update-registrations';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -285,20 +292,21 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        $permission_slugs = ['can-update-registrations','can-delete-registrations'];
+        $permission_slugs = ['can-update-registrations', 'can-delete-registrations'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -312,20 +320,21 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        $permission_slugs = ['can-update-registrations','can-manage-registrations'];
+        $permission_slugs = ['can-update-registrations', 'can-manage-registrations'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -339,14 +348,15 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function sendVerificationEmail(Request $request,$id): JsonResponse
+
+    // ----------------------------------------------------------
+    public function sendVerificationEmail(Request $request, $id): JsonResponse
     {
         try {
             $response = Registration::sendVerificationEmail($request);
@@ -358,24 +368,25 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function createUser(Request $request,$id): JsonResponse
+
+    // ----------------------------------------------------------
+    public function createUser(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-create-users-from-registrations';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $response = Registration::createUser($request,$id);
-        }  catch (\Exception $e) {
+            $response = Registration::createUser($request, $id);
+        } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
@@ -383,11 +394,11 @@ class RegistrationsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

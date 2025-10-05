@@ -3,25 +3,25 @@
 namespace WebReinvent\VaahCms\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use WebReinvent\VaahCms\Models\User;
-
-
 
 class ProcessMails implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     public $mail;
+
     public $to;
+
     public $from_email;
+
     public $from_name;
+
     public $cc;
+
     public $bcc;
 
     /**
@@ -29,7 +29,7 @@ class ProcessMails implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($mail, $to, $cc=null, $bcc=null)
+    public function __construct($mail, $to, $cc = null, $bcc = null)
     {
         $this->mail = $mail;
         $this->to = $to;
@@ -38,11 +38,9 @@ class ProcessMails implements ShouldQueue
 
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
-
-
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
     /**
      * Execute the job.

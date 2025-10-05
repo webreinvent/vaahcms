@@ -1,7 +1,5 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php
 
+namespace WebReinvent\VaahCms\Entities;
 
-class ThemeTemplate extends \WebReinvent\VaahCms\Models\ThemeTemplate
-{
-
-}
+class ThemeTemplate extends \WebReinvent\VaahCms\Models\ThemeTemplate {}

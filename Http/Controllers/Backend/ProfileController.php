@@ -13,11 +13,10 @@ use WebReinvent\VaahCms\Models\User;
 
 class ProfileController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
 
@@ -34,7 +33,7 @@ class ProfileController extends Controller
                 'deleted_by',
             ];
 
-            $model = new User();
+            $model = new User;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -44,8 +43,8 @@ class ProfileController extends Controller
                 $data['empty_item'][$column] = null;
             }
 
-            $custom_fields = Setting::query()->where('category','user_setting')
-                ->where('label','custom_fields')->first();
+            $custom_fields = Setting::query()->where('category', 'user_setting')
+                ->where('label', 'custom_fields')->first();
 
             $data['empty_item']['meta']['custom_fields'] = [];
 
@@ -72,17 +71,18 @@ class ProfileController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request): JsonResponse
     {
 
@@ -97,17 +97,18 @@ class ProfileController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function storeItem(Request $request): JsonResponse
     {
         try {
@@ -116,17 +117,18 @@ class ProfileController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function storePassword(Request $request): JsonResponse
     {
         try {
@@ -145,13 +147,14 @@ class ProfileController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function storeAvatar(Request $request): JsonResponse
     {
         try {
@@ -164,13 +167,14 @@ class ProfileController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function removeAvatar(Request $request): JsonResponse
     {
         try {
@@ -183,11 +187,11 @@ class ProfileController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

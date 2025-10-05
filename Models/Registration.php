@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -7,9 +9,10 @@ use WebReinvent\VaahCms\Notifications\Notice;
 
 class Registration extends RegistrationBase
 {
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
@@ -17,7 +20,7 @@ class Registration extends RegistrationBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
@@ -25,27 +28,28 @@ class Registration extends RegistrationBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getTableColumns()
     {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
         return $query->select(array_diff($this->getTableColumns(), $columns));
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
@@ -63,39 +67,40 @@ class Registration extends RegistrationBase
 
         $query->whereBetween('updated_at', [$from, $to]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getMetaAttribute($value)
     {
-        if($value && $value!='null'){
+        if ($value && $value != 'null') {
             $meta_data = json_decode($value);
-        }else{
+        } else {
             $meta_data = json_decode('{}');
         }
 
         return $this->setCustomFieldsInMeta($meta_data);
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function setCustomFieldsInMeta($meta_data)
     {
-        if(!is_array($meta_data)){
+        if (! is_array($meta_data)) {
             $meta_data = (array) $meta_data;
         }
 
-        if(!isset($meta_data['custom_fields'])){
+        if (! isset($meta_data['custom_fields'])) {
             $meta_data['custom_fields'] = [];
         }
 
         $meta_data['custom_fields'] = (array) $meta_data['custom_fields'];
 
-        $custom_fields = Setting::query()->where('category','user_setting')
-            ->where('label','custom_fields')->first();
-
+        $custom_fields = Setting::query()->where('category', 'user_setting')
+            ->where('label', 'custom_fields')->first();
 
         if ($custom_fields) {
             foreach ($custom_fields['value'] as $custom_field) {
 
-                if (!isset($meta_data['custom_fields'][$custom_field->slug])) {
+                if (! isset($meta_data['custom_fields'][$custom_field->slug])) {
                     $meta_data['custom_fields'][$custom_field->slug] = null;
                 }
 
@@ -104,34 +109,36 @@ class Registration extends RegistrationBase
 
         return $meta_data;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function createItem($request)
     {
 
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'email' => 'required|email|max:150',
             'first_name' => 'required|max:150',
             'password' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($inputs, $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
-            $response['success']  = false;
+            $errors = errorsToArray($validator->errors());
+            $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
-
 
         // check if email exist
         $item = self::where('email', $inputs['email'])->first();
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-registration.email_already_exist");
+            $response['errors'][] = trans('vaahcms-registration.email_already_exist');
+
             return $response;
         }
         // check if username exist
@@ -139,71 +146,63 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-registration.username_already_exist");
+            $response['errors'][] = trans('vaahcms-registration.username_already_exist');
+
             return $response;
         }
 
         // check if email and alternate email are same
-        if($inputs['email'] && isset($inputs['alternate_email'])
-            && $inputs['email']==$inputs['alternate_email'] )
-        {
-             $response['success'] = false;
-             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
-             return $response;
+        if ($inputs['email'] && isset($inputs['alternate_email'])
+            && $inputs['email'] == $inputs['alternate_email']) {
+            $response['success'] = false;
+            $response['errors'][] = trans('vaahcms-registration.alternate_email_should_be_different');
+
+            return $response;
         }
 
-        if(!isset($inputs['username']))
-        {
+        if (! isset($inputs['username'])) {
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if(!isset($inputs['status']))
-        {
+        if (! isset($inputs['status'])) {
             $inputs['status'] = 'email-verification-pending';
         }
 
-
-        $item = new self();
+        $item = new self;
         $item->fill($inputs);
         $item->save();
 
         $request_item = new Request([$item->id]);
 
-
-        try{
+        try {
             static::sendVerificationEmail($request_item);
-        }catch (\TypeError $e){
+        } catch (\TypeError $e) {
             $response['errors'][] = $e->getMessage();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $response['errors'][] = $e->getMessage();
         }
 
-
-
         $response['success'] = true;
         $response['data']['item'] = $item;
-        $response['messages'][] = trans("vaahcms-general.saved_successfully");
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
-
-        if(!isset($filter['sort']))
-        {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
         $sort = $filter['sort'];
 
-
         $direction = Str::contains($sort, ':');
 
-        if(!$direction)
-        {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -211,83 +210,82 @@ class Registration extends RegistrationBase
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
     {
 
-        if(!isset($filter['is_active'])
+        if (! isset($filter['is_active'])
             || is_null($filter['is_active'])
             || $filter['is_active'] === 'null'
-        )
-        {
+        ) {
             return $query;
         }
         $is_active = $filter['is_active'];
 
-        if($is_active === 'true' || $is_active === true)
-        {
+        if ($is_active === 'true' || $is_active === true) {
             return $query->whereNotNull('is_active');
-        } else{
+        } else {
             return $query->whereNull('is_active');
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
 
-        if(!isset($filter['trashed']))
-        {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
         $trashed = $filter['trashed'];
 
-        if($trashed === 'include')
-        {
+        if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
 
-        if(!isset($filter['q']))
-        {
+        if (! isset($filter['q'])) {
             return $query;
         }
         $search = $filter['q'];
 
         $query->where(function ($q) use ($search) {
             $q->where('first_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere('display_name', 'LIKE', '%'.$search.'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$search.'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$search.'%')
-                    ->orWhere('email', 'LIKE', '%'.$search.'%')
-                    ->orWhere('id', '=', $search);
+                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('middle_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('display_name', 'LIKE', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->orWhere('id', '=', $search);
         });
 
-
     }
-    //-------------------------------------------------
-    public function scopeStatusFilter($query,$filter){
-        if(!isset($filter['status']))
-        {
+
+    // -------------------------------------------------
+    public function scopeStatusFilter($query, $filter)
+    {
+        if (! isset($filter['status'])) {
             return $query;
         }
         $search = $filter['status'];
 
         $query->where(function ($q) use ($search) {
             $q->where('status', 'LIKE', '%'.$search.'%')
-                    ->orWhere('status', '=', $search);
+                ->orWhere('status', '=', $search);
         });
     }
-    //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+
+    // -------------------------------------------------
+    public static function getList($request, $excluded_columns = [])
     {
 
         $list = self::getSorted($request->filter);
@@ -298,11 +296,9 @@ class Registration extends RegistrationBase
 
         $rows = config('vaahcms.per_page');
 
-        if($request->has('rows'))
-        {
+        if ($request->has('rows')) {
             $rows = $request->rows;
         }
-
 
         $list = $list->paginate($rows);
 
@@ -311,23 +307,21 @@ class Registration extends RegistrationBase
 
         return $response;
 
-
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function updateList($request)
     {
 
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
-        );
-
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -335,16 +329,15 @@ class Registration extends RegistrationBase
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
         }
-
 
         $items = self::whereIn('id', $items_id)
             ->withTrashed();
@@ -372,25 +365,25 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function deleteList($request): array
     {
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
             'items' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
             'items.required' => 'Select items',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -398,6 +391,7 @@ class Registration extends RegistrationBase
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -406,17 +400,17 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function listAction($request, $type): array
     {
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
@@ -428,27 +422,27 @@ class Registration extends RegistrationBase
 
         switch ($type) {
             case 'deactivate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => null]);
                 }
                 break;
             case 'activate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => 1]);
                 }
                 break;
             case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->delete();
                 }
                 break;
             case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->restore();
                 }
                 break;
             case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->forceDelete();
                 }
                 break;
@@ -477,12 +471,13 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function getItem($id,$excluded_columns = [])
+
+    // -------------------------------------------------
+    public static function getItem($id, $excluded_columns = [])
     {
 
         $item = self::where('id', $id)
@@ -490,10 +485,10 @@ class Registration extends RegistrationBase
             ->withTrashed()
             ->first();
 
-        if(!$item)
-        {
+        if (! $item) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.record_not_found_with_id").$id;
+            $response['errors'][] = trans('vaahcms-general.record_not_found_with_id').$id;
+
             return $response;
         }
         $response['success'] = true;
@@ -502,28 +497,24 @@ class Registration extends RegistrationBase
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateItem($request, $id)
     {
         $inputs = $request->all();
 
-
-        $validation = self::validation($inputs,$id);
-        if (!$validation['success']) {
+        $validation = self::validation($inputs, $id);
+        if (! $validation['success']) {
             return $validation;
         }
 
+        if ($inputs['email'] && $inputs['alternate_email']
+            && $inputs['email'] == $inputs['alternate_email']) {
+            $response['success'] = false;
+            $response['errors'][] = trans('vaahcms-registration.alternate_email_should_be_different');
 
-
-        if($inputs['email'] && $inputs['alternate_email']
-            && $inputs['email']==$inputs['alternate_email'] )
-        {
-             $response['success'] = false;
-             $response['errors'][] = trans("vaahcms-registration.alternate_email_should_be_different");
-             return $response;
+            return $response;
         }
-
-
 
         $update = self::where('id', $id)->withTrashed()->first();
         $update->fill($inputs);
@@ -533,34 +524,35 @@ class Registration extends RegistrationBase
 
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
-        $response['messages'][] = trans("vaahcms-general.saved_successfully");
-
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteItem($request, $id): array
     {
         $item = self::where('id', $id)->withTrashed()->first();
-        if (!$item) {
+        if (! $item) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms-general.record_does_not_exist");
+            $response['messages'][] = trans('vaahcms-general.record_does_not_exist');
+
             return $response;
         }
         $item->forceDelete();
 
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
+        $response['messages'][] = trans('vaahcms-general.record_has_been_deleted');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
 
-        switch($type)
-        {
+        switch ($type) {
             case 'activate':
                 self::where('id', $id)
                     ->withTrashed()
@@ -575,7 +567,7 @@ class Registration extends RegistrationBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->delete();
-                $item = self::where('id',$id)->withTrashed()->first();
+                $item = self::where('id', $id)->withTrashed()->first();
                 $item->deleted_by = auth()->user()->id;
                 $item->save();
                 break;
@@ -583,89 +575,93 @@ class Registration extends RegistrationBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
-                $item = self::where('id',$id)->withTrashed()->first();
+                $item = self::where('id', $id)->withTrashed()->first();
                 $item->deleted_by = null;
                 $item->save();
                 break;
         }
-        $item=self::getItem($id);
+        $item = self::getItem($id);
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
 
         return $response;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    public static function validation($inputs, $id=null)
+    public static function validation($inputs, $id = null)
     {
 
-        $rules = array(
+        $rules = [
             'email' => "required|email|unique:vh_registrations,email,$id",
             'first_name' => 'required|string|max:150',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules);
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
             $response['errors'] = $messages->all();
+
             return $response;
         }
 
         $response['success'] = true;
+
         return $response;
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function getActiveItems()
     {
         $item = self::where('is_active', 1)
             ->first();
+
         return $item;
     }
+
     public function getCountryCallingCodeAttribute($value)
     {
-        $calling_code_int=$value;
-        $calling_code_string=(string) $calling_code_int;
+        $calling_code_int = $value;
+        $calling_code_string = (string) $calling_code_int;
+
         return $calling_code_string;
     }
 
     public static function sendVerificationEmail($request)
     {
-        $inputs=$request->all();
+        $inputs = $request->all();
 
-        if (!$inputs) {
-            $response['success']  = false;
+        if (! $inputs) {
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
+
             return $response;
         }
 
-        $notification = Notification::where('slug', "send-verification-email")->first();
+        $notification = Notification::where('slug', 'send-verification-email')->first();
 
-        foreach($inputs as $id)
-        {
+        foreach ($inputs as $id) {
             $reg = self::where('id', $id)->withTrashed()->first();
 
             $activation_code = Str::uuid();
 
             $inputs = [
-                "name" => $reg->name,
-                "notification_id" => $notification->id,
-                "route" => [
-                    "activation_code" => $activation_code
-                ]
+                'name' => $reg->name,
+                'notification_id' => $notification->id,
+                'route' => [
+                    'activation_code' => $activation_code,
+                ],
             ];
 
             $reg->notify(new Notice($notification, $inputs));
 
-            if($reg)
-            {
+            if ($reg) {
                 $reg->activation_code = $activation_code;
                 $reg->activation_code_sent_at = Carbon::now();
                 $reg->save();
             }
-            $item=self::getItem($id);
+            $item = self::getItem($id);
             $response['data']['item'] = $item['data'];
         }
 
@@ -676,11 +672,8 @@ class Registration extends RegistrationBase
 
     }
 
-
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

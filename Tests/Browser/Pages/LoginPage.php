@@ -6,12 +6,10 @@ use Laravel\Dusk\Browser;
 
 class LoginPage extends Page
 {
-
     public function url()
     {
         return '/admin';
     }
-
 
     public function assert(Browser $browser)
     {
@@ -32,6 +30,4 @@ class LoginPage extends Page
         $browser->press('@signin-signin');
         $browser->waitFor('.toast', 1);
     }
-
-
 }

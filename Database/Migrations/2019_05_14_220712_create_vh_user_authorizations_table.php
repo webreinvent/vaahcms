@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhUserAuthorizationsTable extends Migration
 {
@@ -13,15 +13,15 @@ class CreateVhUserAuthorizationsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_user_authorizations')) {
+        if (! Schema::hasTable('vh_user_authorizations')) {
             Schema::create('vh_user_authorizations', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
                 $table->bigInteger('vh_user_id')->unsigned()->nullable();
                 $table->foreign('vh_user_id')->references('id')->on('vh_users');
 
-                $table->string('name',150)->nullable();
-                $table->string('slug',150)->nullable();
+                $table->string('name', 150)->nullable();
+                $table->string('slug', 150)->nullable();
                 $table->string('authorization_id')->nullable();
                 $table->dateTime('last_authorization_at')->nullable();
                 $table->text('meta')->nullable();

@@ -17,8 +17,11 @@ class ProcessNotifications implements ShouldQueue
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $notification;
+
     public $user;
+
     public $inputs;
+
     public $priority;
 
     /**
@@ -26,7 +29,7 @@ class ProcessNotifications implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Notification $notification, User $user, $inputs=[], $priority='default')
+    public function __construct(Notification $notification, User $user, $inputs = [], $priority = 'default')
     {
         $this->notification = $notification;
         $this->user = $user;
@@ -44,14 +47,12 @@ class ProcessNotifications implements ShouldQueue
         $inputs = $this->inputs;
         $inputs['user_id'] = $this->user->id;
         $inputs['notification_id'] = $this->notification->id;
-        //$request = new Request($inputs);
+        // $request = new Request($inputs);
         Notification::send($this->notification, $this->user, $this->inputs);
     }
-
 
     public function failed(Throwable $exception)
     {
         // Send user notification of failure, etc...
     }
-
 }

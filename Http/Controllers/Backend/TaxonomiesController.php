@@ -1,26 +1,26 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend;
+<?php
+
+namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
 use WebReinvent\VaahCms\Models\Taxonomy;
 use WebReinvent\VaahCms\Models\TaxonomyType;
 
 class TaxonomiesController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-taxonomies-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -37,7 +37,7 @@ class TaxonomiesController extends Controller
                 'deleted_by',
             ];
 
-            $model = new Taxonomy();
+            $model = new Taxonomy;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -46,6 +46,7 @@ class TaxonomiesController extends Controller
             foreach ($fillable as $column) {
                 if ($column === 'is_active') {
                     $data['empty_item'][$column] = 0;
+
                     continue;
                 }
 
@@ -61,15 +62,15 @@ class TaxonomiesController extends Controller
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "taxonomy_title" => trans("vaahcms-taxonomy.taxonomy_title"),
-                "toolkit_text_view_type" => trans("vaahcms-taxonomy.toolkit_text_view_type"),
-                "taxonomy_type_placeholder_select_type" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_type"),
-                "form_manage_button" => trans("vaahcms-taxonomy.form_manage_button"),
-                "taxonomy_type_placeholder_select_parent" => trans("vaahcms-taxonomy.taxonomy_type_placeholder_select_parent"),
-                "taxonomy_type_manage_type_dialogue" => trans("vaahcms-taxonomy.taxonomy_type_manage_type_dialogue"),
-                "taxonomy_type_add_button" => trans("vaahcms-taxonomy.taxonomy_type_add_button"),
-                "filter_type" => trans("vaahcms-taxonomy.filter_type"),
-                "filter_type_placeholder" => trans("vaahcms-taxonomy.filter_type_placeholder"),
+                'taxonomy_title' => trans('vaahcms-taxonomy.taxonomy_title'),
+                'toolkit_text_view_type' => trans('vaahcms-taxonomy.toolkit_text_view_type'),
+                'taxonomy_type_placeholder_select_type' => trans('vaahcms-taxonomy.taxonomy_type_placeholder_select_type'),
+                'form_manage_button' => trans('vaahcms-taxonomy.form_manage_button'),
+                'taxonomy_type_placeholder_select_parent' => trans('vaahcms-taxonomy.taxonomy_type_placeholder_select_parent'),
+                'taxonomy_type_manage_type_dialogue' => trans('vaahcms-taxonomy.taxonomy_type_manage_type_dialogue'),
+                'taxonomy_type_add_button' => trans('vaahcms-taxonomy.taxonomy_type_add_button'),
+                'filter_type' => trans('vaahcms-taxonomy.filter_type'),
+                'filter_type_placeholder' => trans('vaahcms-taxonomy.filter_type_placeholder'),
 
             ];
             $data['types'] = $taxonomy_types->toArray();
@@ -84,18 +85,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-taxonomies-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -109,20 +111,21 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
-        $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
+        $permission_slugs = ['can-update-taxonomies', 'can-manage-taxonomies'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -136,20 +139,21 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
+        $permission_slugs = ['can-update-taxonomies', 'can-manage-taxonomies'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -163,18 +167,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
         $permission_slug = 'can-delete-taxonomies';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -188,18 +193,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
         $permission_slug = 'can-create-taxonomies';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -213,18 +219,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-read-taxonomies';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -238,20 +245,21 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getListByTypeId(Request $request, $id): JsonResponse
     {
         $response = [];
 
         try {
-            $list = Taxonomy::where('vh_taxonomy_type_id',$id)
-                ->select('id','name','slug','vh_taxonomy_type_id')->get();
+            $list = Taxonomy::where('vh_taxonomy_type_id', $id)
+                ->select('id', 'name', 'slug', 'vh_taxonomy_type_id')->get();
 
             $response['success'] = true;
             $response['data'] = $list;
@@ -262,18 +270,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-update-taxonomies';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -287,18 +296,19 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-delete-taxonomies';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -312,20 +322,21 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        $permission_slugs = ['can-update-taxonomies','can-manage-taxonomies'];
+        $permission_slugs = ['can-update-taxonomies', 'can-manage-taxonomies'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -339,46 +350,49 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function createTaxonomyType(Request $request): JsonResponse
     {
         $permission_slug = 'can-manage-taxonomy-type';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            if (!$request->has('name') || !$request->name) {
+            if (! $request->has('name') || ! $request->name) {
                 $response['success'] = false;
-                $response['errors'][] = trans("vaahcms-general.name_field_required");
+                $response['errors'][] = trans('vaahcms-general.name_field_required');
+
                 return response()->json($response);
             }
 
             $item = TaxonomyType::withTrashed()
-                ->where('name',$request->name)
+                ->where('name', $request->name)
                 ->first();
 
             if ($item) {
                 $response['success'] = false;
-                $response['errors'][] =  trans("vaahcms-general.name_already_exist");
+                $response['errors'][] = trans('vaahcms-general.name_already_exist');
+
                 return response()->json($response);
             }
 
-            $add = new TaxonomyType();
+            $add = new TaxonomyType;
             $add->fill($request->all());
             $add->slug = Str::slug($request->name);
             $add->is_active = true;
             $add->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.successfully_added");
+            $response['messages'][] = trans('vaahcms-general.successfully_added');
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -387,29 +401,30 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteTaxonomyType(Request $request): JsonResponse
     {
         $permission_slug = 'can-manage-taxonomy-type';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
             $item = TaxonomyType::query()
-                ->where('id',$request->id)
+                ->where('id', $request->id)
                 ->with(['childrens'])
                 ->withTrashed()
                 ->first();
 
-            if(count($item->childrens) > 0){
+            if (count($item->childrens) > 0) {
                 self::deletechildrens($item->childrens);
             }
 
@@ -418,7 +433,7 @@ class TaxonomiesController extends Controller
             $item->forceDelete();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.successfully_deleted");
+            $response['messages'][] = trans('vaahcms-general.successfully_deleted');
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -427,13 +442,14 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deletechildrens($types)
     {
         foreach ($types as $type) {
@@ -446,52 +462,55 @@ class TaxonomiesController extends Controller
             $type->forceDelete();
         }
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateTaxonomyType(Request $request): JsonResponse
     {
         $permission_slug = 'can-manage-taxonomy-type';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            if (!$request->newName) {
-                $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-general.name_is_required");
+            if (! $request->newName) {
+                $response['success'] = false;
+                $response['errors'][] = trans('vaahcms-general.name_is_required');
+
                 return response()->json($response);
             }
 
             $name_exist = TaxonomyType::query()
-                ->where('id','!=',$request->id)
-                ->where('name',$request->newName)->first();
+                ->where('id', '!=', $request->id)
+                ->where('name', $request->newName)->first();
 
             if ($name_exist) {
-                $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-general.name_already_exist");
+                $response['success'] = false;
+                $response['errors'][] = trans('vaahcms-general.name_already_exist');
+
                 return response()->json($response);
             }
-
 
             $slug_exist = TaxonomyType::query()
-                ->where('id','!=',$request->id)
-                ->where('slug',Str::slug($request->newName))
+                ->where('id', '!=', $request->id)
+                ->where('slug', Str::slug($request->newName))
                 ->first();
 
-            if ($slug_exist){
-                $response['success']  = false;
-                $response['errors'][] = trans("vaahcms-general.slug_already_exist");
+            if ($slug_exist) {
+                $response['success'] = false;
+                $response['errors'][] = trans('vaahcms-general.slug_already_exist');
+
                 return response()->json($response);
             }
 
-            $list = TaxonomyType::where('id',$request->id)->first();
+            $list = TaxonomyType::where('id', $request->id)->first();
 
             $list->name = $request->newName;
             $list->slug = Str::slug($request->newName);
             $list->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.updated_successfully");
+            $response['messages'][] = trans('vaahcms-general.updated_successfully');
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -500,7 +519,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -509,15 +528,15 @@ class TaxonomiesController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateTaxonomyTypePosition(Request $request): JsonResponse
     {
         $permission_slug = 'can-manage-taxonomy-type';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
-
 
         try {
             $parent_id = null;
@@ -528,14 +547,14 @@ class TaxonomiesController extends Controller
             }
 
             $item = TaxonomyType::query()
-                ->where('id',$request->id)
+                ->where('id', $request->id)
                 ->first();
 
             $item->parent_id = $parent_id;
             $item->save();
 
             $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.updated_successfully");
+            $response['messages'][] = trans('vaahcms-general.updated_successfully');
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -544,7 +563,7 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
@@ -553,23 +572,25 @@ class TaxonomiesController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function getParents(Request $request, $id, $name=null): array
+
+    // ----------------------------------------------------------
+    public function getParents(Request $request, $id, $name = null): array
     {
         $list = Taxonomy::query()
-            ->where(function($q) use ($name){
-            $q->where('name', 'LIKE', '%'.$name.'%')
-                ->orWhere('slug', 'LIKE', '%'.$name.'%');
-        })->where('vh_taxonomy_type_id', $id)
+            ->where(function ($q) use ($name) {
+                $q->where('name', 'LIKE', '%'.$name.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$name.'%');
+            })->where('vh_taxonomy_type_id', $id)
             ->whereNotNull('is_active')
             ->take(10)
             ->orderBy('created_at', 'desc')
-            ->select('id','name','slug')->get();
+            ->select('id', 'name', 'slug')->get();
 
         return $list;
 
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getCountryById(Request $request, $id): JsonResponse
     {
         try {
@@ -582,11 +603,11 @@ class TaxonomiesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

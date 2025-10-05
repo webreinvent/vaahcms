@@ -1,8 +1,7 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php
+
+namespace WebReinvent\VaahCms\Entities;
 
 use WebReinvent\VaahCms\Models\TaxonomyBase;
 
-class Taxonomy extends TaxonomyBase
-{
-
-}
+class Taxonomy extends TaxonomyBase {}

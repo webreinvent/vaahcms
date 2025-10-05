@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
+<?php
+
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -8,16 +10,15 @@ use WebReinvent\VaahCms\Models\Job;
 
 class JobsController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -34,26 +35,25 @@ class JobsController extends Controller
                 'deleted_by',
             ];
 
-            $model = new Job();
+            $model = new Job;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
             );
 
-            foreach ($fillable as $column)
-            {
+            foreach ($fillable as $column) {
                 $data['empty_item'][$column] = null;
             }
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "jobs_title" => trans("vaahcms-advanced.jobs_title"),
-                "jobs_message" => trans("vaahcms-general.jobs_message"),
-                "filter_queue" => trans("vaahcms-general.filter_queue"),
-                "filter_high" => trans("vaahcms-general.filter_high"),
-                "filter_default" => trans("vaahcms-general.filter_default"),
-                "filter_medium" => trans("vaahcms-general.filter_medium"),
-                "filter_low" => trans("vaahcms-general.filter_low"),
+                'jobs_title' => trans('vaahcms-advanced.jobs_title'),
+                'jobs_message' => trans('vaahcms-general.jobs_message'),
+                'filter_queue' => trans('vaahcms-general.filter_queue'),
+                'filter_high' => trans('vaahcms-general.filter_high'),
+                'filter_default' => trans('vaahcms-general.filter_default'),
+                'filter_medium' => trans('vaahcms-general.filter_medium'),
+                'filter_low' => trans('vaahcms-general.filter_low'),
 
             ];
 
@@ -67,18 +67,19 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-jobs-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -92,13 +93,13 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
     public function listAction(Request $request, $type): JsonResponse
     {
@@ -112,13 +113,14 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
         try {
@@ -131,17 +133,18 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
         try {
-            $response = Job::deleteItem($request,$id);
+            $response = Job::deleteItem($request, $id);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -150,13 +153,14 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
         try {
@@ -169,13 +173,12 @@ class JobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-
+    // ----------------------------------------------------------
 
 }

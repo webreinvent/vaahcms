@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhNotificationsTable extends Migration
 {
@@ -13,16 +13,16 @@ class CreateVhNotificationsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_notifications')) {
+        if (! Schema::hasTable('vh_notifications')) {
             Schema::create('vh_notifications', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
                 $table->uuid('uuid')->nullable();
 
-                $table->string('name',150)->nullable()->index();
-                $table->string('slug',150)->nullable()->index();
+                $table->string('name', 150)->nullable()->index();
+                $table->string('slug', 150)->nullable()->index();
 
-                $table->string('details',255)->nullable();
+                $table->string('details', 255)->nullable();
 
                 $table->boolean('via_mail')->nullable()->index();
                 $table->boolean('via_sms')->nullable()->index();
@@ -31,7 +31,6 @@ class CreateVhNotificationsTable extends Migration
                 $table->boolean('via_backend')->nullable()->index();
                 $table->boolean('is_error')->nullable();
                 $table->boolean('can_update_via')->nullable();
-
 
                 $table->bigInteger('created_by')->unsigned()->nullable()->index();
                 $table->foreign('created_by')->references('id')->on('vh_users');
@@ -49,10 +48,10 @@ class CreateVhNotificationsTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_notifications');

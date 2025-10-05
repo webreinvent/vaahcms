@@ -1,18 +1,14 @@
 <?php
-namespace WebReinvent\VaahCms;
 
+namespace WebReinvent\VaahCms;
 
 /**
  * Class VaahCms.
  */
-class VaahCms{
-
+class VaahCms
+{
     /**
      * Create new instance
      */
-    public function __construct()
-    {
-
-    }
-
+    public function __construct() {}
 }

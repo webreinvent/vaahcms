@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhSettingsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateVhSettingsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_settings')) {
+        if (! Schema::hasTable('vh_settings')) {
             Schema::create('vh_settings', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->uuid('uuid')->nullable()->index();

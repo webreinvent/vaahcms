@@ -6,13 +6,14 @@ use Illuminate\Support\Str;
 
 class CrudWithUuidObserver
 {
-	//-----------------------------------------------------------
+    // -----------------------------------------------------------
     protected $user_id;
 
-    //-----------------------------------------------------------
-    public function __construct( $user_id = null ) {
-        if ( $user_id == null ) {
-            if ( \Auth::check() ) {
+    // -----------------------------------------------------------
+    public function __construct($user_id = null)
+    {
+        if ($user_id == null) {
+            if (\Auth::check()) {
                 $this->user_id = \Auth::user()->id;
             }
         } else {
@@ -20,16 +21,18 @@ class CrudWithUuidObserver
         }
 
     }
-    //-----------------------------------------------------------
-    public function creating( $model ) {
-        if ( ! isset( $model->created_by ) ) {
+
+    // -----------------------------------------------------------
+    public function creating($model)
+    {
+        if (! isset($model->created_by)) {
             $model->created_by = $this->user_id;
         }
-        if ( ! isset( $model->uuid ) ) {
+        if (! isset($model->uuid)) {
             $model->uuid = Str::uuid()->toString();
         }
 
-        if ( ! isset( $model->created_at ) ) {
+        if (! isset($model->created_at)) {
             $model->created_at = \Carbon::now();
         }
 
@@ -39,48 +42,48 @@ class CrudWithUuidObserver
         return $model;
     }
 
-    //-----------------------------------------------------------
-    public function created( $model ) {
+    // -----------------------------------------------------------
+    public function created($model)
+    {
         //
     }
 
-    //-----------------------------------------------------------
-    public function saving( $model ) {
-
-        $model->updated_by = $this->user_id;
-        $model->updated_at = \Carbon::now();
-
-        return $model;
-    }
-
-    //-----------------------------------------------------------
-    public function saved( $model ) {
-        //
-    }
-
-    //-----------------------------------------------------------
-    public function updating( $model ) {
-        $model->updated_by = $this->user_id;
-        $model->updated_at = \Carbon::now();
-
-        return $model;
-    }
-
-    //-----------------------------------------------------------
-    public function updated( $model ) {
-
-    }
-
-    //-----------------------------------------------------------
-    public function deleting( $model ) {
-
-    }
-
-    //-----------------------------------------------------------
-    public function deleted( $model )
+    // -----------------------------------------------------------
+    public function saving($model)
     {
 
-        if($model->isForceDeleting()){
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
+
+        return $model;
+    }
+
+    // -----------------------------------------------------------
+    public function saved($model)
+    {
+        //
+    }
+
+    // -----------------------------------------------------------
+    public function updating($model)
+    {
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
+
+        return $model;
+    }
+
+    // -----------------------------------------------------------
+    public function updated($model) {}
+
+    // -----------------------------------------------------------
+    public function deleting($model) {}
+
+    // -----------------------------------------------------------
+    public function deleted($model)
+    {
+
+        if ($model->isForceDeleting()) {
             return false;
         }
 
@@ -88,40 +91,39 @@ class CrudWithUuidObserver
         $model->save();
     }
 
-    //-----------------------------------------------------------
-    public function restoring( $model ) {
+    // -----------------------------------------------------------
+    public function restoring($model) {}
 
-    }
-
-    //-----------------------------------------------------------
-    public function restored( $model ) {
+    // -----------------------------------------------------------
+    public function restored($model)
+    {
         $model->deleted_by = null;
         $model->save();
     }
-	//-----------------------------------------------------------
+    // -----------------------------------------------------------
 
+    // -----------------------------------------------------------
+    public function forceDeleting($model)
+    {
 
-    //-----------------------------------------------------------
-    public function forceDeleting( $model ) {
-
-        if($model->pivot_relations){
-            foreach ($model->pivot_relations as $relation_item){
+        if ($model->pivot_relations) {
+            foreach ($model->pivot_relations as $relation_item) {
                 $model->{$relation_item}()
                     ->detach();
             }
         }
 
-        if($model->has_morph_relations){
-            foreach ($model->has_morph_relations as $relation_item){
+        if ($model->has_morph_relations) {
+            foreach ($model->has_morph_relations as $relation_item) {
                 $model->{$relation_item}()
                     ->delete();
             }
         }
 
     }
-	//-----------------------------------------------------------
-	//-----------------------------------------------------------
-	//-----------------------------------------------------------
-	//-----------------------------------------------------------
-	//-----------------------------------------------------------
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
+    // -----------------------------------------------------------
 }

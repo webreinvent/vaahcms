@@ -2,22 +2,16 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Models\Registration;
 
 class SampleController extends Controller
 {
+    // ----------------------------------------------------------
+    public function __construct() {}
 
-    //----------------------------------------------------------
-    public function __construct()
-    {
-
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function getAssets(Request $request)
     {
 
@@ -28,7 +22,8 @@ class SampleController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function postCreate(Request $request)
     {
 
@@ -44,10 +39,10 @@ class SampleController extends Controller
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request)
     {
-
 
         $data = [];
 
@@ -62,7 +57,7 @@ class SampleController extends Controller
 
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
 
@@ -78,7 +73,8 @@ class SampleController extends Controller
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function postStore(Request $request)
     {
         $data = [];
@@ -92,61 +88,60 @@ class SampleController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
-        $rules = array(
+        $rules = [
             'inputs' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return response()->json($response);
         }
 
         $response = [];
 
-        switch ($request->action)
-        {
+        switch ($request->action) {
 
-            //------------------------------------
+            // ------------------------------------
             case 'bulk_change_status':
 
                 $response = Registration::bulkStatusChange($request);
 
                 break;
-            //------------------------------------
+                // ------------------------------------
             case 'bulk_delete':
 
                 $response = Registration::bulkDelete($request);
 
                 break;
-            //------------------------------------
+                // ------------------------------------
             case 'bulk_restore':
 
                 $response = Registration::bulkRestore($request);
 
                 break;
 
-            //------------------------------------
-            //------------------------------------
+                // ------------------------------------
+                // ------------------------------------
 
         }
 
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 
-    //----------------------------------------------------------
-    //----------------------------------------------------------
-    //----------------------------------------------------------
-
+    // ----------------------------------------------------------
+    // ----------------------------------------------------------
+    // ----------------------------------------------------------
 
 }

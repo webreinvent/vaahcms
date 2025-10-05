@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhLangLanguagesTable extends Migration
 {
@@ -13,11 +13,11 @@ class CreateVhLangLanguagesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_lang_languages')) {
+        if (! Schema::hasTable('vh_lang_languages')) {
             Schema::create('vh_lang_languages', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
-                $table->string('name',150)->nullable();
+                $table->string('name', 150)->nullable();
                 $table->string('locale_code_iso_639')->nullable()->index();
                 $table->boolean('right_to_left')->nullable()->default(0);
                 $table->boolean('default')->nullable()->default(0);
@@ -40,10 +40,10 @@ class CreateVhLangLanguagesTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_lang_languages');

@@ -1,15 +1,13 @@
 <?php
 
-
-
 Route::group(
     [
-        'prefix'     => 'backend/vaah/logs',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced'
+        'prefix' => 'backend/vaah/logs',
+        'middleware' => ['web', 'has.backend.access'],
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
     function () {
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         Route::get('/assets', 'LogsController@getAssets')
             ->name('vh.backend.vaah.logs.assets');
         /**
@@ -25,14 +23,12 @@ Route::group(
         /**
          * Download File
          */
-        Route::get( '/download-file/{file_name}', 'LogsController@downloadFile');
+        Route::get('/download-file/{file_name}', 'LogsController@downloadFile');
         /**
          * Actions
          */
-        Route::post( '/actions/{action_name}', 'LogsController@postActions');
+        Route::post('/actions/{action_name}', 'LogsController@postActions');
     });
-
-
 
 Route::group(
     [
@@ -41,7 +37,7 @@ Route::group(
         'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
     function () {
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
         /**
          * Get Assets
          */
@@ -77,13 +73,9 @@ Route::group(
         Route::any('/{id}/action/{action}', 'BatchesController@itemAction')
             ->name('vh.backend.vaah.batches.item.action');
 
-        //---------------------------------------------------------
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
+        // ---------------------------------------------------------
     });
-
-
-
-
 
 Route::group(
     [
@@ -127,11 +119,9 @@ Route::group(
         Route::any('/{id}/action/{action}', 'JobsController@itemAction')
             ->name('vh.backend.vaah.jobs.item.action');
 
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
 
     });
-
-
 
 Route::group(
     [
@@ -179,6 +169,5 @@ Route::group(
         Route::any('/{id}/action/{action}', 'FailedJobsController@itemAction')
             ->name('vh.backend.vaah.failedjobs.item.action');
 
-        //---------------------------------------------------------
+        // ---------------------------------------------------------
     });
-

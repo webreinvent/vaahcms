@@ -1,16 +1,18 @@
-<?php namespace WebReinvent\VaahCms\Loaders;
+<?php
 
+namespace WebReinvent\VaahCms\Loaders;
 
 use Illuminate\Filesystem\Filesystem;
 
-class ModulesLoader {
-
+class ModulesLoader
+{
     /**
      * The filesystem instance.
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
     protected $files;
+
     /**
      * @var string
      */
@@ -32,17 +34,13 @@ class ModulesLoader {
     protected $findModules = [];
 
     /**
-     * @param Filesystem $files
-     * @param string $path
+     * @param  string  $path
      */
-
-    public function __construct(Filesystem $files, $path=null)
+    public function __construct(Filesystem $files, $path = null)
     {
         $this->path = $path;
         $this->files = $files;
     }
-
-
 
     /**
      * @return string
@@ -52,8 +50,6 @@ class ModulesLoader {
         return $this->path;
     }
 
-
-
     /**
      * @return array
      */
@@ -61,7 +57,6 @@ class ModulesLoader {
     {
         return $this->activated;
     }
-
 
     /**
      * @return array
@@ -71,8 +66,7 @@ class ModulesLoader {
 
         $arr = $this->files->directories($this->getPath());
 
-        foreach ($arr as $key => $module)
-        {
+        foreach ($arr as $key => $module) {
 
             /*
              * This will handle windows and linux OS
@@ -88,11 +82,9 @@ class ModulesLoader {
 
         }
 
-        foreach ($arr as $module)
-        {
+        foreach ($arr as $module) {
 
-            if (is_null($class = $this->initModule($module)))
-            {
+            if (is_null($class = $this->initModule($module))) {
                 continue;
             }
 
@@ -103,15 +95,13 @@ class ModulesLoader {
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return bool
      */
     public function isActivated($name)
     {
-        foreach($this->getActivated() as $module)
-        {
-            if ($module->getName() == $name)
-            {
+        foreach ($this->getActivated() as $module) {
+            if ($module->getName() == $name) {
                 return true;
             }
         }
@@ -119,10 +109,8 @@ class ModulesLoader {
         return false;
     }
 
-
-
     /**
-     * @param string $directory
+     * @param  string  $directory
      * @return BasePluginContainer|null
      */
     protected function initModule($directory)
@@ -135,13 +123,12 @@ class ModulesLoader {
         return $config;
     }
 
-
     /**
-     * @param string $key
+     * @param  string  $key
      * @return bool
      */
     protected function moduleExists($key)
     {
-        return $this->files->isDirectory($this->path . DIRECTORY_SEPARATOR . $key);
+        return $this->files->isDirectory($this->path.DIRECTORY_SEPARATOR.$key);
     }
 }

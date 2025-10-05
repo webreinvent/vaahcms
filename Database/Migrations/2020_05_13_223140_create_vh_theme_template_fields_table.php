@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhThemeTemplateFieldsTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateVhThemeTemplateFieldsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_theme_template_fields')) {
+        if (! Schema::hasTable('vh_theme_template_fields')) {
             Schema::create('vh_theme_template_fields', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
@@ -38,7 +38,6 @@ class CreateVhThemeTemplateFieldsTable extends Migration
                 $table->timestamps();
                 $table->softDeletes();
 
-
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
 
             });
@@ -46,10 +45,10 @@ class CreateVhThemeTemplateFieldsTable extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::dropIfExists('vh_theme_template_fields');

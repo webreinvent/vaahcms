@@ -1,34 +1,37 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Models\Permission;
-use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class RoleBase extends VaahModel {
-
-    use SoftDeletes;
+class RoleBase extends VaahModel
+{
     use CrudWithUuidObservantTrait;
+    use SoftDeletes;
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_roles';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'updated_at' => 'datetime',
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'uuid',
         'name',
@@ -39,18 +42,16 @@ class RoleBase extends VaahModel {
         'is_active',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -58,21 +59,25 @@ class RoleBase extends VaahModel {
         return $date->format($date_time_format);
 
     }
-    //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
+
+    // -------------------------------------------------
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActive($query)
     {
         $query->where('vh_roles.is_active', 1);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function belongable()
     {
         return $this->morphTo();
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public function createdByUser()
     {
@@ -81,58 +86,61 @@ class RoleBase extends VaahModel {
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
-    public function getTableColumns() {
+
+    // -------------------------------------------------
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+        return $query->select(array_diff($this->getTableColumns(), $columns));
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
-        if($from)
-        {
+        if ($from) {
             $from = Carbon::parse($from)
                 ->startOfDay()
                 ->toDateTimeString();
         }
 
-        if($to)
-        {
+        if ($to) {
             $to = Carbon::parse($to)
                 ->endOfDay()
                 ->toDateTimeString();
         }
 
-        $query->whereBetween('updated_at',[$from,$to]);
+        $query->whereBetween('updated_at', [$from, $to]);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-    public function permissions() {
-        return $this->belongsToMany( Permission::class,
+    // -------------------------------------------------
+    // -------------------------------------------------
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class,
             'vh_role_permissions', 'vh_role_id', 'vh_permission_id'
         )->withPivot('is_active',
             'created_by',
@@ -140,9 +148,11 @@ class RoleBase extends VaahModel {
             'updated_by',
             'updated_at');
     }
-    //-------------------------------------------------
-    public function users() {
-        return $this->belongsToMany( User::class,
+
+    // -------------------------------------------------
+    public function users()
+    {
+        return $this->belongsToMany(User::class,
             'vh_user_roles', 'vh_role_id', 'vh_user_id'
         )->withPivot('is_active',
             'created_by',
@@ -150,41 +160,41 @@ class RoleBase extends VaahModel {
             'updated_by',
             'updated_at');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function countUsers($id)
     {
 
         $role = self::withTrashed()->where('id', $id)->first();
 
-        if(!$role)
-        {
+        if (! $role) {
             return 0;
         }
 
         return $role->users()->wherePivot('is_active', 1)->count();
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function countPermissions($id)
     {
         $role = self::withTrashed()->where('id', $id)->first();
-        if(!$role)
-        {
+        if (! $role) {
             return 0;
         }
+
         return $role->permissions()
             ->wherePivot('is_active', 1)
             ->count();
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
+
+    // -------------------------------------------------
+    // -------------------------------------------------
     public static function recountRelations()
     {
         $list = self::withTrashed()->select('id')->get();
 
-        if($list)
-        {
-            foreach ($list as $item)
-            {
+        if ($list) {
+            foreach ($list as $item) {
                 $item->count_users = static::countUsers($item->id);
                 $item->count_permissions = static::countPermissions($item->id);
                 $item->save();
@@ -192,45 +202,42 @@ class RoleBase extends VaahModel {
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function syncRolesWithUsers()
     {
         $all_users = User::select('id')->get()->pluck('id')->toArray();
         $all_roles = self::select('id')->get();
 
-        if(!$all_roles)
-        {
+        if (! $all_roles) {
             return false;
         }
 
-        foreach ($all_roles as $role)
-        {
+        foreach ($all_roles as $role) {
             $role->users()->syncWithoutDetaching($all_users);
         }
 
-
-        //enable all roles for super admin users
+        // enable all roles for super admin users
         $super_admin_role = self::slug('super-administrator')->first();
         $super_admin_users = $super_admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
             ->toArray();
         $pivotData = array_fill(0, count($super_admin_users), ['is_active' => 1]);
-        $syncData  = array_combine($super_admin_users, $pivotData);
+        $syncData = array_combine($super_admin_users, $pivotData);
         $super_admin_role->users()->syncWithoutDetaching($syncData);
-
 
         return true;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function createItem($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-roles'))
-        {
+        if (! \Auth::user()->hasPermission('can-create-roles')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms::messages.permission_denied');
 
             return $response;
         }
@@ -239,31 +246,31 @@ class RoleBase extends VaahModel {
 
         $validation = self::validation($inputs);
 
-        if (isset($validation['success']) && !$validation['success']) {
+        if (isset($validation['success']) && ! $validation['success']) {
             return $validation;
         }
 
         // check if name exist
-        $user = self::withTrashed()->where('name',$inputs['name'])->first();
+        $user = self::withTrashed()->where('name', $inputs['name'])->first();
 
         if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.name_already_exist");
+            $response['errors'][] = trans('vaahcms-general.name_already_exist');
+
             return $response;
         }
-
 
         // check if slug exist
-        $user = self::withTrashed()->where('slug',$inputs['slug'])->first();
+        $user = self::withTrashed()->where('slug', $inputs['slug'])->first();
 
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
+            $response['errors'][] = trans('vaahcms-general.slug_already_exist');
+
             return $response;
         }
 
-        $role = new self();
+        $role = new self;
         $role->fill($inputs);
         $role->slug = Str::slug($inputs['slug']);
         $role->save();
@@ -275,25 +282,24 @@ class RoleBase extends VaahModel {
         $response['success'] = true;
         $response['data'] = $role;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
-        if(!isset($filter['sort']))
-        {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
         $sort = $filter['sort'];
 
-
         $direction = Str::contains($sort, ':');
 
-        if(!$direction)
-        {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -301,61 +307,60 @@ class RoleBase extends VaahModel {
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
     {
 
-        if(!isset($filter['is_active'])
+        if (! isset($filter['is_active'])
             || is_null($filter['is_active'])
             || $filter['is_active'] === 'null'
-        )
-        {
+        ) {
             return $query;
         }
         $is_active = $filter['is_active'];
 
-        if($is_active === 'true' || $is_active === true)
-        {
+        if ($is_active === 'true' || $is_active === true) {
             return $query->whereNotNull('is_active');
-        } else{
+        } else {
             return $query->whereNull('is_active');
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
 
-        if(!isset($filter['trashed']))
-        {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
         $trashed = $filter['trashed'];
 
-        if($trashed === 'include')
-        {
+        if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
 
-        if(!isset($filter['q']))
-        {
+        if (! isset($filter['q'])) {
             return $query;
         }
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+            $q->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('slug', 'LIKE', '%'.$search.'%');
         });
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getList($request)
     {
 
@@ -372,7 +377,7 @@ class RoleBase extends VaahModel {
 
         $rows = config('vaahcms.per_page');
 
-        if($request->has('rows')) {
+        if ($request->has('rows')) {
             $rows = $request->rows;
         }
 
@@ -389,7 +394,7 @@ class RoleBase extends VaahModel {
         return $response;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function getItem($id)
     {
 
@@ -401,28 +406,28 @@ class RoleBase extends VaahModel {
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function getRolePermission($request,$id)
+
+    // -------------------------------------------------
+    public static function getRolePermission($request, $id)
     {
         $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if ($request->has('q'))
-        {
-            $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'. $request->q .'%')
-                    ->orWhere('slug', 'LIKE', '%'. $request->q .'%');
+        if ($request->has('q')) {
+            $list = $item->permissions()->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
             });
         } else {
             $list = $item->permissions();
         }
 
         if (isset($request['module'])) {
-            $list->where('module',$request['module']);
+            $list->where('module', $request['module']);
         }
 
         if (isset($request['section'])) {
-            $list->where('section',$request['section']);
+            $list->where('section', $request['section']);
         }
 
         $list->orderBy('pivot_is_active', 'desc');
@@ -435,7 +440,7 @@ class RoleBase extends VaahModel {
 
         $list = $list->paginate($rows);
 
-        foreach ($list as $permission){
+        foreach ($list as $permission) {
 
             $data = self::getPivotData($permission->pivot);
 
@@ -443,27 +448,27 @@ class RoleBase extends VaahModel {
             $permission['json_length'] = count($data);
         }
 
-
         $response['data']['list'] = $list;
         $response['success'] = true;
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function getRoleUser($request,$id)
+
+    // -------------------------------------------------
+    public static function getRoleUser($request, $id)
     {
         $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if ($request->has("q")) {
-            $list = $item->users()->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%' . $request->q . '%')
-                    ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
-                    ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
-                    ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $request->q . '%')
-                    ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%' . $request->q . '%')
-                    ->orWhere('display_name', 'like', '%' . $request->q . '%')
-                    ->orWhere('email', 'LIKE', '%' . $request->q .'%');
+        if ($request->has('q')) {
+            $list = $item->users()->where(function ($q) use ($request) {
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request->q.'%')
+                    ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request->q.'%')
+                    ->orWhere('display_name', 'like', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
             });
         } else {
             $list = $item->users();
@@ -491,51 +496,46 @@ class RoleBase extends VaahModel {
 
         return $response;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
-    public static function postStore($request,$id)
+    // -------------------------------------------------
+    public static function postStore($request, $id)
     {
-        if(!\Auth::user()->hasPermission('can-update-roles'))
-        {
+        if (! \Auth::user()->hasPermission('can-update-roles')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans('vaahcms::messages.permission_denied');
 
             return $response;
         }
-
 
         $input = $request->item;
 
         $validation = static::validation($input);
-        if(isset($validation['success']) && !$validation['success'])
-        {
+        if (isset($validation['success']) && ! $validation['success']) {
             return $validation;
         }
 
         // check if name exist
-        $user = static::where('id','!=',$input['id'])->where('name',$input['name'])->first();
+        $user = static::where('id', '!=', $input['id'])->where('name', $input['name'])->first();
 
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
+            $response['errors'][] = 'This name is already exist.';
+
             return $response;
         }
-
 
         // check if slug exist
-        $user = static::where('id','!=',$input['id'])->where('slug',$input['slug'])->first();
+        $user = static::where('id', '!=', $input['id'])->where('slug', $input['slug'])->first();
 
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.slug_already_exist");
+            $response['errors'][] = trans('vaahcms-general.slug_already_exist');
+
             return $response;
         }
 
-        $update = static::where('id',$id)->withTrashed()->first();
+        $update = static::where('id', $id)->withTrashed()->first();
 
         $update->name = $input['name'];
         $update->slug = Str::slug($input['slug']);
@@ -544,46 +544,45 @@ class RoleBase extends VaahModel {
 
         $update->save();
 
-
         $response['success'] = true;
         $response['data'] = [];
-        $response['messages'][] = trans("vaahcms-general.data_updated");
+        $response['messages'][] = trans('vaahcms-general.data_updated');
 
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkStatusChange($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_ids");
+            $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_status");
+            $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
-            $role = static::where('id',$id)->withTrashed()->first();
+        foreach ($request->inputs as $id) {
+            $role = static::where('id', $id)->withTrashed()->first();
 
-            if($role->deleted_at){
-                continue ;
+            if ($role->deleted_at) {
+                continue;
             }
 
-            if($request['data']){
+            if ($request['data']) {
                 $role->is_active = $request['data']['status'];
-            }else{
-                if($role->is_active == 1){
+            } else {
+                if ($role->is_active == 1) {
                     $role->is_active = 0;
-                }else{
+                } else {
                     $role->is_active = 1;
                 }
             }
@@ -596,25 +595,22 @@ class RoleBase extends VaahModel {
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkTrash($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_ids");
+            $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $permission = static::withTrashed()->where('id', $id)->first();
-            if($permission)
-            {
+            if ($permission) {
                 $permission->is_active = 0;
                 $permission->save();
                 $permission->delete();
@@ -627,31 +623,29 @@ class RoleBase extends VaahModel {
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkRestore($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_ids");
+            $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_status");
+            $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $item = self::withTrashed()->where('id', $id)->first();
-            if(isset($item) && isset($item->deleted_at))
-            {
+            if (isset($item) && isset($item->deleted_at)) {
                 $item->restore();
             }
         }
@@ -663,20 +657,21 @@ class RoleBase extends VaahModel {
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteList($request): array
     {
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
             'items' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
             'items.required' => 'Select items',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
 
@@ -690,7 +685,7 @@ class RoleBase extends VaahModel {
 
         $items_id = collect($inputs['items'])->pluck('id')->toArray();
 
-        foreach($items_id as $id) {
+        foreach ($items_id as $id) {
             $item = static::where('id', $id)->withTrashed()->first();
 
             if ($item) {
@@ -706,18 +701,19 @@ class RoleBase extends VaahModel {
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkChangePermissionStatus($request)
     {
 
         $inputs = $request->all();
 
-        $item = self::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        $item = self::where('id', $inputs['inputs']['id'])->withTrashed()->first();
 
-        if($item->id == 1)
-        {
+        if ($item->id == 1) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.super_admin_permission_can_not_be_changed");
+            $response['errors'][] = trans('vaahcms-general.super_admin_permission_can_not_be_changed');
+
             return $response;
 
         }
@@ -725,13 +721,13 @@ class RoleBase extends VaahModel {
         $data = [
             'is_active' => $inputs['data']['is_active'],
             'updated_by' => Auth::user()->id,
-            'updated_at' => \Illuminate\Support\Carbon::now()
+            'updated_at' => \Illuminate\Support\Carbon::now(),
         ];
 
         if ($inputs['inputs']['permission_id']) {
             $pivot = $item->permissions->find($inputs['inputs']['permission_id'])->pivot;
 
-            if ($pivot->is_active === null && !$pivot->created_by) {
+            if ($pivot->is_active === null && ! $pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
@@ -741,21 +737,21 @@ class RoleBase extends VaahModel {
 
             $permission_ids = [];
             $permission_list = Permission::query();
-            if(isset($inputs['inputs']['query'])){
+            if (isset($inputs['inputs']['query'])) {
 
                 if (isset($inputs['inputs']['query']['q'])) {
-                    $permission_list->where(function ($q) use($inputs){
+                    $permission_list->where(function ($q) use ($inputs) {
                         $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
                             ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
                     });
                 }
 
                 if (isset($inputs['inputs']['query']['module'])) {
-                    $permission_list->where('module',$inputs['inputs']['query']['module']);
+                    $permission_list->where('module', $inputs['inputs']['query']['module']);
                 }
 
                 if (isset($inputs['inputs']['query']['section'])) {
-                    $permission_list->where('section',$inputs['inputs']['query']['section']);
+                    $permission_list->where('section', $inputs['inputs']['query']['section']);
                 }
                 $permission_ids = $permission_list->pluck('id');
             }
@@ -763,7 +759,7 @@ class RoleBase extends VaahModel {
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
-                ->whereIn('vh_permission_id',$permission_ids)
+                ->whereIn('vh_permission_id', $permission_ids)
                 ->update($data);
         }
 
@@ -775,26 +771,26 @@ class RoleBase extends VaahModel {
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkChangeUserStatus($request)
     {
 
         $inputs = $request->all();
 
-        $item = self::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        $item = self::where('id', $inputs['inputs']['id'])->withTrashed()->first();
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
             'updated_by' => Auth::user()->id,
-            'updated_at' => \Illuminate\Support\Carbon::now()
+            'updated_at' => \Illuminate\Support\Carbon::now(),
         ];
-
 
         if ($inputs['inputs']['user_id']) {
 
             $pivot = $item->users->find($inputs['inputs']['user_id'])->pivot;
 
-            if ($pivot->is_active === null && !$pivot->created_by) {
+            if ($pivot->is_active === null && ! $pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
@@ -803,15 +799,15 @@ class RoleBase extends VaahModel {
         } else {
 
             $user_ids = [];
-            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
-                $user_ids = User::where(function ($q) use($inputs){
-                    $q->where('first_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere('middle_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere('last_name', 'LIKE', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere('display_name', 'like', '%' . $inputs['inputs']['query']['q'] . '%')
-                        ->orWhere('email', 'LIKE', '%' . $inputs['inputs']['query']['q'] .'%');
+            if (isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])) {
+                $user_ids = User::where(function ($q) use ($inputs) {
+                    $q->where('first_name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('middle_name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('last_name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('display_name', 'like', '%'.$inputs['inputs']['query']['q'].'%')
+                        ->orWhere('email', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
                 })->pluck('id');
             }
 
@@ -819,8 +815,8 @@ class RoleBase extends VaahModel {
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id);
 
-            if(count($user_ids) > 0){
-                $item_users->whereIn('vh_user_id',$user_ids);
+            if (count($user_ids) > 0) {
+                $item_users->whereIn('vh_user_id', $user_ids);
             }
 
             $item_users->update($data);
@@ -832,38 +828,38 @@ class RoleBase extends VaahModel {
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkPermissionStatusChange($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_ids");
+            $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms-general.select_status");
+            $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
-            $perm = Permission::where('id',$id)->withTrashed()->first();
+        foreach ($request->inputs as $id) {
+            $perm = Permission::where('id', $id)->withTrashed()->first();
 
-            if($perm->deleted_at){
-                continue ;
+            if ($perm->deleted_at) {
+                continue;
             }
 
-            if($request['data']){
+            if ($request['data']) {
                 $perm->is_active = $request['data']['status'];
-            }else{
-                if($perm->is_active == 1){
+            } else {
+                if ($perm->is_active == 1) {
                     $perm->is_active = 0;
-                }else{
+                } else {
                     $perm->is_active = 1;
                 }
             }
@@ -876,10 +872,9 @@ class RoleBase extends VaahModel {
         return $response;
 
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function getModuleSections($request)
     {
@@ -891,70 +886,70 @@ class RoleBase extends VaahModel {
         return $response;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function validation($inputs)
     {
 
-        $rules = array(
+        $rules = [
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
             'details' => 'required|max:255',
             'is_active' => 'required',
-        );
+        ];
 
         $messages = [
             'is_active.required' => 'The is active field is required.',
-            'details.required' => 'The detail field is required.'
+            'details.required' => 'The detail field is required.',
         ];
 
-        $validator = \Validator::make( $inputs, $rules, $messages);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($inputs, $rules, $messages);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getActiveRoles()
     {
         $list = static::where('is_active', 1)->get();
 
         return $list;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function getPivotData($pivot)
     {
 
-        $data = array();
+        $data = [];
 
-        if($pivot->created_by && User::find($pivot->created_by)){
+        if ($pivot->created_by && User::find($pivot->created_by)) {
             $data['created_by'] = User::find($pivot->created_by)->name;
         }
 
-        if($pivot->updated_by && User::find($pivot->updated_by)){
+        if ($pivot->updated_by && User::find($pivot->updated_by)) {
             $data['updated_by'] = User::find($pivot->updated_by)->name;
         }
 
-        if($pivot->created_at){
+        if ($pivot->created_at) {
             $data['created_at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
-        if($pivot->updated_at){
+        if ($pivot->updated_at) {
             $data['updated_at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;
 
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

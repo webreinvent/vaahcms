@@ -1,24 +1,24 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
+<?php
+
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
 use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Models\FailedJob;
 
 class FailedJobsController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -35,7 +35,7 @@ class FailedJobsController extends Controller
                 'deleted_by',
             ];
 
-            $model = new FailedJob();
+            $model = new FailedJob;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -47,8 +47,8 @@ class FailedJobsController extends Controller
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "failed_jobs_title" => trans("vaahcms-advanced.failed_jobs_title"),
-                "filter_range" => trans("vaahcms-general.filter_range"),
+                'failed_jobs_title' => trans('vaahcms-advanced.failed_jobs_title'),
+                'filter_range' => trans('vaahcms-general.filter_range'),
 
             ];
             $response['success'] = true;
@@ -61,19 +61,19 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-failed-jobs-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -87,13 +87,14 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
         try {
@@ -106,13 +107,14 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
         try {
@@ -125,13 +127,14 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
         try {
@@ -144,13 +147,14 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
         try {
@@ -163,11 +167,11 @@ class FailedJobsController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

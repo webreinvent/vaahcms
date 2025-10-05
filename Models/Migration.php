@@ -1,36 +1,38 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
-use WebReinvent\VaahCms\Models\Theme;
 
-class Migration extends VaahModel {
+class Migration extends VaahModel
+{
+    // -------------------------------------------------
+    protected $connection = 'mysql';
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected $table = 'vh_migrations';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'migrationable_id',
         'migrationable_type',
         'migration_id',
-        'batch'
+        'batch',
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -39,19 +41,19 @@ class Migration extends VaahModel {
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function migrationable()
     {
         return $this->morphTo();
     }
-    //-------------------------------------------------
-    public static function syncModuleMigrations($module_id,$batch_num)
+
+    // -------------------------------------------------
+    public static function syncModuleMigrations($module_id, $batch_num)
     {
 
         $migrations = \DB::table('migrations')->count();
 
-        if($migrations < 1)
-        {
+        if ($migrations < 1) {
             return false;
         }
 
@@ -64,8 +66,7 @@ class Migration extends VaahModel {
 
         $module = Module::find($module_id);
 
-        foreach ($migrations as $migration_input)
-        {
+        foreach ($migrations as $migration_input) {
 
             $migration_data = [];
             $migration_data['migration_id'] = $migration_input->id;
@@ -77,16 +78,15 @@ class Migration extends VaahModel {
 
         }
 
-
         return true;
     }
-    //-------------------------------------------------
-    public static function syncThemeMigrations($theme_id,$batch_num)
+
+    // -------------------------------------------------
+    public static function syncThemeMigrations($theme_id, $batch_num)
     {
         $migrations = \DB::table('migrations')->count();
 
-        if($migrations < 1)
-        {
+        if ($migrations < 1) {
             return false;
         }
 
@@ -99,8 +99,7 @@ class Migration extends VaahModel {
 
         $theme = Theme::find($theme_id);
 
-        foreach ($migrations as $migration_input)
-        {
+        foreach ($migrations as $migration_input) {
 
             $migration_data = [];
             $migration_data['migration_id'] = $migration_input->id;
@@ -112,29 +111,28 @@ class Migration extends VaahModel {
 
         }
 
-
         return true;
     }
-    //-------------------------------------------------
-    public static function runMigrations($path=null, $force=false)
+
+    // -------------------------------------------------
+    public static function runMigrations($path = null, $force = false)
     {
-        //run migration
+        // run migration
         $command = 'migrate';
 
         $params = [
             '--force' => true,
             '--quiet' => true,
         ];
-        if($path)
-        {
+        if ($path) {
             $params['--path'] = $path;
         }
 
-
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
-    public static function runSeeds($namespace=null)
+
+    // -------------------------------------------------
+    public static function runSeeds($namespace = null)
     {
         $command = 'db:seed';
 
@@ -143,91 +141,92 @@ class Migration extends VaahModel {
             '--quiet' => true,
         ];
 
-        if($namespace)
-        {
+        if ($namespace) {
             $params['--class'] = $namespace;
         }
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
-    public static function resetMigrations($path=null, $force=false)
+
+    // -------------------------------------------------
+    public static function resetMigrations($path = null, $force = false)
     {
         $command = 'migrate:reset';
         $params = [
             '--force' => true,
             '--quiet' => true,
         ];
-        if($path)
-        {
+        if ($path) {
             $params['--path'] = $path;
         }
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
-    public static function refreshMigrations($path=null, $force=false)
+
+    // -------------------------------------------------
+    public static function refreshMigrations($path = null, $force = false)
     {
         $command = 'migrate:refresh';
         $params = [
             '--force' => true,
             '--quiet' => true,
         ];
-        if($path)
-        {
+        if ($path) {
             $params['--path'] = $path;
         }
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function publishMigrations($provider)
     {
         $command = 'vendor:publish';
         $params = [
             '--provider' => $provider,
-            '--tag' => "migrations",
+            '--tag' => 'migrations',
             '--force' => true,
             '--quiet' => true,
         ];
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function publishSeeds($provider)
     {
         $command = 'vendor:publish';
         $params = [
             '--provider' => $provider,
-            '--tag' => "seeds",
+            '--tag' => 'seeds',
             '--force' => true,
             '--quiet' => true,
         ];
         \Artisan::call($command, $params);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function publishAssets($provider)
     {
 
-        try{
+        try {
 
             $command = 'vendor:publish';
             $params = [
                 '--provider' => $provider,
-                '--tag' => "assets",
-                '--force' => true
+                '--tag' => 'assets',
+                '--force' => true,
             ];
 
             \Artisan::call($command, $params);
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
+
             return $response;
         }
 
-
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

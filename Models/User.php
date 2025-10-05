@@ -1,4 +1,5 @@
 <?php
+
 namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
@@ -7,10 +8,10 @@ use Illuminate\Support\Str;
 
 class User extends UserBase
 {
+    // -------------------------------------------------
+    protected $connection = 'mysql';
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
@@ -18,7 +19,7 @@ class User extends UserBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
@@ -26,7 +27,7 @@ class User extends UserBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
@@ -34,87 +35,88 @@ class User extends UserBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function getTableColumns()
     {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function birth(): Attribute
     {
         return Attribute::make(
-            set: function (string $value = null) {
-                if(!$value){
+            set: function (?string $value = null) {
+                if (! $value) {
                     return null;
                 }
+
                 return Carbon::parse($value)
                     ->setTimezone(\Auth::user()->timezone)->format('Y-m-d');
             },
         );
     }
 
-    //-------------------------------------------------
-    public function getNameAttribute() {
+    // -------------------------------------------------
+    public function getNameAttribute()
+    {
 
-        if($this->display_name)
-        {
+        if ($this->display_name) {
             return $this->display_name;
         }
 
         $name = $this->first_name;
 
-        if($this->middle_name)
-        {
-            $name .= " ".$this->middle_name;
+        if ($this->middle_name) {
+            $name .= ' '.$this->middle_name;
         }
 
-        if($this->last_name)
-        {
-            $name .= " ".$this->last_name;
+        if ($this->last_name) {
+            $name .= ' '.$this->last_name;
         }
 
         return $name;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
         return $query->select(array_diff($this->getTableColumns(), $columns));
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getMetaAttribute($value)
     {
-        if($value && $value!='null'){
+        if ($value && $value != 'null') {
             $meta_data = json_decode($value);
-        }else{
+        } else {
             $meta_data = json_decode('{}');
         }
 
         return $this->setCustomFieldsInMeta($meta_data);
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function setCustomFieldsInMeta($meta_data)
     {
-        if(!is_array($meta_data)){
+        if (! is_array($meta_data)) {
             $meta_data = (array) $meta_data;
         }
 
-        if(!isset($meta_data['custom_fields'])){
+        if (! isset($meta_data['custom_fields'])) {
             $meta_data['custom_fields'] = [];
         }
 
         $meta_data['custom_fields'] = (array) $meta_data['custom_fields'];
 
-        $custom_fields = Setting::query()->where('category','user_setting')
-            ->where('label','custom_fields')->first();
-
+        $custom_fields = Setting::query()->where('category', 'user_setting')
+            ->where('label', 'custom_fields')->first();
 
         if ($custom_fields) {
             foreach ($custom_fields['value'] as $custom_field) {
 
-                if(!isset($meta_data['custom_fields'][$custom_field->slug])){
+                if (! isset($meta_data['custom_fields'][$custom_field->slug])) {
                     $meta_data['custom_fields'][$custom_field->slug] = null;
                 }
 
@@ -124,20 +126,20 @@ class User extends UserBase
         return $meta_data;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateList($request)
     {
 
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
-        );
+        ];
 
-        $messages = array(
+        $messages = [
             'type.required' => trans('vaahcms-general.action_type_is_required'),
-        );
-
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -145,28 +147,26 @@ class User extends UserBase
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
         }
 
-        foreach($items_id as $key => $id) {
+        foreach ($items_id as $key => $id) {
 
             $is_restricted = self::restrictedActions($inputs['type'], $id);
 
-            if(isset($is_restricted['success']) && !$is_restricted['success'])
-            {
+            if (isset($is_restricted['success']) && ! $is_restricted['success']) {
                 $response['errors'][] = '<b>'.$inputs['items'][$key]['email'].'</b>: '.$is_restricted['errors'][0];
                 unset($items_id[$key]);
             }
 
         }
-
 
         $items = self::whereIn('id', $items_id)
             ->withTrashed();
@@ -189,8 +189,8 @@ class User extends UserBase
         $response['success'] = true;
         $response['data'] = true;
 
-        if(!isset($response['errors']) ||
-            (count($inputs['items']) !== count($response['errors']))){
+        if (! isset($response['errors']) ||
+            (count($inputs['items']) !== count($response['errors']))) {
 
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -199,20 +199,20 @@ class User extends UserBase
         return $response;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function deleteList($request): array
     {
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
             'items' => 'required',
-        );
+        ];
 
-        $messages = array(
+        $messages = [
             'type.required' => trans('vaahcms-general.action_type_is_required'),
             'items.required' => trans('vaahcms-general.select_items'),
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -220,16 +220,17 @@ class User extends UserBase
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
         $response['errors'] = [];
-        foreach($inputs['items'] as $item) {
+        foreach ($inputs['items'] as $item) {
 
             $is_restricted = self::restrictedActions('delete', $item['id']);
 
-            if(isset($is_restricted['success']) && !$is_restricted['success'])
-            {
+            if (isset($is_restricted['success']) && ! $is_restricted['success']) {
                 $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
+
                 continue;
             }
 
@@ -244,7 +245,7 @@ class User extends UserBase
         $response['success'] = true;
         $response['data'] = true;
 
-        if(count($inputs['items']) !== count($response['errors'])){
+        if (count($inputs['items']) !== count($response['errors'])) {
 
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -252,7 +253,8 @@ class User extends UserBase
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function listAction($request, $type): array
     {
         $response = [];
@@ -264,18 +266,17 @@ class User extends UserBase
         $list->searchFilter($inputs['query']['filter']);
 
         if (isset($request['from']) && isset($request['to'])) {
-            $list->betweenDates($request['from'],$request['to']);
+            $list->betweenDates($request['from'], $request['to']);
         }
 
         $list_array = $list->get()->toArray();
 
-        foreach($list_array as $item){
+        foreach ($list_array as $item) {
             $is_restricted = self::restrictedActions($type, $item['id']);
 
-            if(isset($is_restricted['success']) && !$is_restricted['success'])
-            {
+            if (isset($is_restricted['success']) && ! $is_restricted['success']) {
                 $response['errors'][] = '<b>'.$item['email'].'</b>: '.$is_restricted['errors'][0];
-                $list->where('id','!=',$item['id']);
+                $list->where('id', '!=', $item['id']);
             }
         }
 
@@ -302,8 +303,8 @@ class User extends UserBase
         $response['success'] = true;
         $response['data'] = true;
 
-        if(!isset($response['errors']) ||
-            (count($list_array) !== count($response['errors']))){
+        if (! isset($response['errors']) ||
+            (count($list_array) !== count($response['errors']))) {
 
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -311,70 +312,66 @@ class User extends UserBase
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateItem($request)
     {
         $inputs = $request->all();
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['success']) && !$validate['success'])
-        {
+        if (isset($validate['success']) && ! $validate['success']) {
             return $validate;
         }
 
-        if(isset($inputs['phone']))
-        {
+        if (isset($inputs['phone'])) {
             $rules['phone'] = 'integer';
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
-                $response['success']  = false;
+                $errors = errorsToArray($validator->errors());
+                $response['success'] = false;
                 $response['errors'] = $errors;
+
                 return $response;
             }
         }
 
-        if($request->has('id'))
-        {
+        if ($request->has('id')) {
 
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('email',$inputs['email'])->withTrashed()->first();
+                ->where('email', $inputs['email'])->withTrashed()->first();
 
             if ($user) {
-                $response['success']  = false;
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.email_already_registered');
+
                 return $response;
             }
 
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('username',$inputs['username'])->withTrashed()->first();
+                ->where('username', $inputs['username'])->withTrashed()->first();
 
-            if($user)
-            {
-                $response['success']  = false;
+            if ($user) {
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_registered');
+
                 return $response;
             }
 
             $item = User::withTrashed()->find($request->id);
-        } else
-        {
+        } else {
             $validation = self::userValidation($request);
-            if(isset($validation['status']) && $validation['status'] == 'failed')
-            {
+            if (isset($validation['status']) && $validation['status'] == 'failed') {
                 return $validation;
-            } else if(isset($validation['status'])
-                && $validation['status'] == 'registration-exist')
-            {
+            } elseif (isset($validation['status'])
+                && $validation['status'] == 'registration-exist') {
                 $item = $validation['data'];
-            } else
-            {
-                $item = new User();
+            } else {
+                $item = new User;
                 $item->password = generate_password();
                 $item->is_active = 1;
                 $item->status = 'active';
@@ -382,25 +379,22 @@ class User extends UserBase
                 $item->uuid = Str::uuid();
             }
         }
-        if($inputs['is_active'] == '1'){
+        if ($inputs['is_active'] == '1') {
             $inputs['is_active'] = 1;
-        }else{
+        } else {
             $inputs['is_active'] = 0;
         }
 
         $item->fill($inputs);
-        if($request->has('password'))
-        {
+        if ($request->has('password')) {
             $item->password = $request->password;
         }
 
         $item->save();
 
-        if(!$request->has('id'))
-        {
+        if (! $request->has('id')) {
             Role::syncRolesWithUsers();
         }
-
 
         $response['success'] = true;
         $response['messages'][] = trans('vaahcms-general.saved');
@@ -408,13 +402,15 @@ class User extends UserBase
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function deleteItem($request, $id): array
     {
         $item = self::where('id', $id)->withTrashed()->first();
-        if (!$item) {
+        if (! $item) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.record_does_not_exist');
+
             return $response;
         }
 
@@ -427,11 +423,11 @@ class User extends UserBase
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
-        switch($type)
-        {
+        switch ($type) {
             case 'activate':
                 self::where('id', $id)
                     ->withTrashed()
@@ -455,20 +451,19 @@ class User extends UserBase
 
                 $token = Str::random(60);
 
-
                 self::where('id', $id)
                     ->withTrashed()
                     ->update(['api_token' => hash('sha256', $token)]);
                 break;
         }
 
-        return self::getItem($id,[], $type);
+        return self::getItem($id, [], $type);
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function validation($inputs)
     {
-        $rules = array(
+        $rules = [
 
             'email' => 'required|email|max:150',
             'first_name' => 'required|max:150',
@@ -476,82 +471,85 @@ class User extends UserBase
             'is_active' => 'required',
             'foreign_user_id' => 'nullable|numeric|min:1',
 
-        );
+        ];
 
-
-        if(isset($inputs['username']))
-        {
+        if (isset($inputs['username'])) {
             $rules['username'] = 'required';
         }
 
-        $validator = \Validator::make($inputs,$rules);
+        $validator = \Validator::make($inputs, $rules);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
-            $response['success']  = false;
+            $errors = errorsToArray($validator->errors());
+            $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function getActiveItems()
     {
         $item = self::where('is_active', 1)
             ->first();
+
         return $item;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function create($request)
     {
         $inputs = $request->all();
 
         $validate = self::validation($inputs);
 
-        if (isset($validate['success']) && !$validate['success']) {
+        if (isset($validate['success']) && ! $validate['success']) {
             return $validate;
         }
 
-        $rules = array(
+        $rules = [
             'password' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $inputs, $rules);
+        $validator = \Validator::make($inputs, $rules);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         // check if already exist
-        $user = self::withTrashed()->where('email',$inputs['email'])->first();
+        $user = self::withTrashed()->where('email', $inputs['email'])->first();
 
         if ($user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
+
             return $response;
         }
 
         // check if username already exist
-        $user = self::withTrashed()->where('username',$inputs['username'])->first();
+        $user = self::withTrashed()->where('username', $inputs['username'])->first();
 
         if ($user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
+
             return $response;
         }
 
-        if (!isset($inputs['username'])) {
+        if (! isset($inputs['username'])) {
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1 ) {
+        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1) {
             $inputs['is_active'] = 1;
         } else {
             $inputs['is_active'] = 0;
@@ -559,7 +557,7 @@ class User extends UserBase
 
         $inputs['created_ip'] = request()->ip();
 
-        $reg = new static();
+        $reg = new static;
         $reg->fill($inputs);
         $reg->save();
 
@@ -568,11 +566,11 @@ class User extends UserBase
         $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

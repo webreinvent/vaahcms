@@ -1,72 +1,72 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
 
-use Carbon\Carbon;
-use DateTimeInterface;
+namespace WebReinvent\VaahCms\Models;
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
+class FailedJobBase extends Model
+{
+    // -------------------------------------------------
+    protected $connection = 'mysql';
 
-class FailedJobBase extends Model {
-
-
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected $table = 'failed_jobs';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
-        'failed_at'  => 'datetime',
+        'failed_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
-    //-------------------------------------------------
+
+    // -------------------------------------------------
+    // -------------------------------------------------
     protected $fillable = [
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function failedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getPayloadAttribute($value)
     {
         return json_decode($value);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function getExceptionAttribute($value)
     {
         return json_decode($value);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getList($request)
     {
 
         $list = self::orderBy('id', 'desc');
 
-        if(isset($request->from) && $request->from
-            && isset($request->to) && $request->to){
+        if (isset($request->from) && $request->from
+            && isset($request->to) && $request->to) {
 
-            $list->betweenDates($request['from'],$request['to']);
+            $list->betweenDates($request['from'], $request['to']);
 
         }
 
-        if(isset($request->filter['q']) && $request->filter['q'])
-        {
-            $list->where(function ($q) use ($request){
+        if (isset($request->filter['q']) && $request->filter['q']) {
+            $list->where(function ($q) use ($request) {
                 $q->where('queue', 'LIKE', '%'.$request->filter['q'].'%')
                     ->orWhere('connection', 'LIKE', '%'.$request->filter['q'].'%')
                     ->orWhere('id', 'LIKE', '%'.$request->filter['q'].'%');
@@ -75,8 +75,7 @@ class FailedJobBase extends Model {
 
         $rows = config('vaahcms.per_page');
 
-        if($request->has('rows'))
-        {
+        if ($request->has('rows')) {
             $rows = $request->rows;
         }
 
@@ -87,40 +86,40 @@ class FailedJobBase extends Model {
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getItem($id)
     {
         $item = self::where('id', $id)
-        ->first();
+            ->first();
         $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkDelete($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = 'Select IDs';
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
             $response['errors'][] = 'Select Status';
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $item = self::where('id', $id)->first();
-            if($item)
-            {
+            if ($item) {
                 $item->delete();
             }
         }
@@ -131,11 +130,10 @@ class FailedJobBase extends Model {
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function bulkDeleteAll($request)
     {
 
@@ -147,10 +145,8 @@ class FailedJobBase extends Model {
 
         return $response;
 
-
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

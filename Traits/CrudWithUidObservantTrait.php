@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Traits;
+<?php
+
+namespace WebReinvent\VaahCms\Traits;
 
 use WebReinvent\VaahCms\Observers\CrudWithUidObserver;
 
@@ -6,6 +8,6 @@ trait CrudWithUidObservantTrait
 {
     public static function bootCrudWithUidObservantTrait()
     {
-        static::observe(new CrudWithUidObserver());
+        static::observe(new CrudWithUidObserver);
     }
 }

@@ -1,18 +1,15 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
 
-use Carbon\Carbon;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+namespace WebReinvent\VaahCms\Models;
+
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Models\User;
-use WebReinvent\VaahCms\Models\ModuleBase;
 
 class Module extends ModuleBase
 {
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
@@ -20,7 +17,7 @@ class Module extends ModuleBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
@@ -28,7 +25,7 @@ class Module extends ModuleBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
@@ -36,20 +33,20 @@ class Module extends ModuleBase
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function getTableColumns()
     {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
         return $query->select(array_diff($this->getTableColumns(), $columns));
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
@@ -68,22 +65,19 @@ class Module extends ModuleBase
         $query->whereBetween('updated_at', [$from, $to]);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
-        if(!isset($filter['sort']))
-        {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
         $sort = $filter['sort'];
 
-
         $direction = Str::contains($sort, ':');
 
-        if(!$direction)
-        {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -91,61 +85,60 @@ class Module extends ModuleBase
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
     {
 
-        if(!isset($filter['is_active'])
+        if (! isset($filter['is_active'])
             || is_null($filter['is_active'])
             || $filter['is_active'] === 'null'
-        )
-        {
+        ) {
             return $query;
         }
         $is_active = $filter['is_active'];
 
-        if($is_active === 'true' || $is_active === true)
-        {
+        if ($is_active === 'true' || $is_active === true) {
             return $query->whereNotNull('is_active');
-        } else{
+        } else {
             return $query->whereNull('is_active');
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
 
-        if(!isset($filter['trashed']))
-        {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
         $trashed = $filter['trashed'];
 
-        if($trashed === 'include')
-        {
+        if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
 
-        if(!isset($filter['q']))
-        {
+        if (! isset($filter['q'])) {
             return $query;
         }
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+            $q->where('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('slug', 'LIKE', '%'.$search.'%');
         });
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getList($request)
     {
         $list = self::getSorted($request->filter);
@@ -155,8 +148,7 @@ class Module extends ModuleBase
 
         $rows = config('vaahcms.per_page');
 
-        if($request->has('rows'))
-        {
+        if ($request->has('rows')) {
             $rows = $request->rows;
         }
 
@@ -167,24 +159,23 @@ class Module extends ModuleBase
 
         return $response;
 
-
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function deleteList($request): array
     {
         $inputs = $request->all();
 
-        $rules = array(
+        $rules = [
             'type' => 'required',
             'items' => 'required',
-        );
+        ];
 
-        $messages = array(
-            'type.required' => trans("vaahcms-general.action_type_is_required"),
+        $messages = [
+            'type.required' => trans('vaahcms-general.action_type_is_required'),
             'items.required' => 'Select items',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
@@ -192,6 +183,7 @@ class Module extends ModuleBase
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
             $response['errors'] = $errors;
+
             return $response;
         }
 
@@ -200,17 +192,17 @@ class Module extends ModuleBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function listAction($request, $type): array
     {
         $inputs = $request->all();
 
-        if(isset($inputs['items']))
-        {
+        if (isset($inputs['items'])) {
             $items_id = collect($inputs['items'])
                 ->pluck('id')
                 ->toArray();
@@ -219,30 +211,29 @@ class Module extends ModuleBase
                 ->withTrashed();
         }
 
-
         switch ($type) {
             case 'deactivate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => null]);
                 }
                 break;
             case 'activate':
-                if($items->count() > 0) {
+                if ($items->count() > 0) {
                     $items->update(['is_active' => 1]);
                 }
                 break;
             case 'trash':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->delete();
                 }
                 break;
             case 'restore':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->restore();
                 }
                 break;
             case 'delete':
-                if(isset($items_id) && count($items_id) > 0) {
+                if (isset($items_id) && count($items_id) > 0) {
                     self::whereIn('id', $items_id)->forceDelete();
                 }
                 break;
@@ -265,11 +256,12 @@ class Module extends ModuleBase
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getItem($id)
     {
 
@@ -278,10 +270,10 @@ class Module extends ModuleBase
             ->withTrashed()
             ->first();
 
-        if(!$item)
-        {
+        if (! $item) {
             $response['success'] = false;
             $response['errors'][] = 'Record not found with ID: '.$id;
+
             return $response;
         }
         $response['success'] = true;
@@ -290,13 +282,14 @@ class Module extends ModuleBase
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function updateItem($request, $id)
     {
         $inputs = $request->all();
 
         $validation = self::validation($inputs);
-        if (!$validation['success']) {
+        if (! $validation['success']) {
             return $validation;
         }
 
@@ -307,7 +300,8 @@ class Module extends ModuleBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = 'This name is already exist.';
+
             return $response;
         }
 
@@ -318,7 +312,8 @@ class Module extends ModuleBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['messages'][] = 'This slug is already exist.';
+
             return $response;
         }
 
@@ -328,16 +323,16 @@ class Module extends ModuleBase
         $item->save();
 
         $response = self::getItem($item->id);
-        $response['messages'][] = trans("vaahcms-general.saved_successfully");
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function itemAction($request, $id, $type): array
     {
-        switch($type)
-        {
+        switch ($type) {
             case 'activate':
                 self::where('id', $id)
                     ->withTrashed()
@@ -360,28 +355,30 @@ class Module extends ModuleBase
 
         return self::getItem($id);
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function validation($inputs)
     {
 
-        $rules = array(
+        $rules = [
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
-        );
+        ];
 
         $validator = \Validator::make($inputs, $rules);
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
             $response['messages'] = $messages->all();
+
             return $response;
         }
 
         $response['success'] = true;
+
         return $response;
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 }

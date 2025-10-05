@@ -12,68 +12,61 @@
 */
 Route::group(
     [
-        'prefix'     => '/',
+        'prefix' => '/',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Frontend',
     ],
     function () {
-        //------------------------------------------------
-        Route::any( '/clear/cache', 'WelcomeController@clearCache' )
-            ->name( 'vh.frontend.clear.cache' );
-        //------------------------------------------------
-        Route::any( '/faker', 'WelcomeController@getFaker' )
-            ->name( 'vh.frontend.faker' );
-        //------------------------------------------------
+        // ------------------------------------------------
+        Route::any('/clear/cache', 'WelcomeController@clearCache')
+            ->name('vh.frontend.clear.cache');
+        // ------------------------------------------------
+        Route::any('/faker', 'WelcomeController@getFaker')
+            ->name('vh.frontend.faker');
+        // ------------------------------------------------
     });
 
 Route::group(
     [
-        'prefix'     => '/',
+        'prefix' => '/',
         'middleware' => ['web', 'set.theme.details'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Frontend',
     ],
     function () {
-        //------------------------------------------------
-        //------------------------------------------------
-        Route::get( '/', 'WelcomeController@index' )
-            ->name( 'vh.home' );
-        //------------------------------------------------
-        Route::get( '/login', 'WelcomeController@index' )
-            ->name( 'vh.login' );
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
+        // ------------------------------------------------
+        // ------------------------------------------------
+        Route::get('/', 'WelcomeController@index')
+            ->name('vh.home');
+        // ------------------------------------------------
+        Route::get('/login', 'WelcomeController@index')
+            ->name('vh.login');
+        // ------------------------------------------------
+        // ------------------------------------------------
+        // ------------------------------------------------
+        // ------------------------------------------------
     });
-
-
-
 
 Route::group(
     [
-        'prefix'     => 'media',
+        'prefix' => 'media',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend'
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],
     function () {
-        //------------------------------------------------
-        Route::get( '/download/{slug?}', 'MediaController@itemDownload' )
-            ->name( 'vh.frontend.media.download' );
-        //------------------------------------------------
+        // ------------------------------------------------
+        Route::get('/download/{slug?}', 'MediaController@itemDownload')
+            ->name('vh.frontend.media.download');
+        // ------------------------------------------------
     });
-
 
 Route::group(
     [
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers',
     ],
     function () {
-        //------------------------------------------------
+        // ------------------------------------------------
         Route::get('/verify-email/{activation_code}', 'PublicController@verifyEmail')
             ->name('vh.verification');
-        //------------------------------------------------
+        // ------------------------------------------------
     });
-
-
-

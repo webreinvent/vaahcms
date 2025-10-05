@@ -1,35 +1,37 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Models\UserBase as User;
 use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Notification extends VaahModel {
-
-    use SoftDeletes;
+class Notification extends VaahModel
+{
     use CrudWithUuidObservantTrait;
+    use SoftDeletes;
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_notifications';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'uuid',
         'name',
@@ -44,18 +46,16 @@ class Notification extends VaahModel {
         'can_update_via',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -63,131 +63,153 @@ class Notification extends VaahModel {
         return $date->format($date_time_format);
 
     }
-    //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
+
+    // -------------------------------------------------
+    public function scopeSlug($query, $slug)
+    {
+        return $query->where('slug', $slug);
     }
 
-    //-------------------------------------------------
-    public function setNameAttribute($value) {
+    // -------------------------------------------------
+    public function setNameAttribute($value)
+    {
         $this->attributes['name'] = ucwords($value);
     }
-    //-------------------------------------------------
-    public function getViaMailAttribute($value) {
-        if($value)
-        {
+
+    // -------------------------------------------------
+    public function getViaMailAttribute($value)
+    {
+        if ($value) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
-    public function getViaSmsAttribute($value) {
-        if($value)
-        {
+
+    // -------------------------------------------------
+    public function getViaSmsAttribute($value)
+    {
+        if ($value) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
-    public function getViaPushAttribute($value) {
-        if($value)
-        {
+
+    // -------------------------------------------------
+    public function getViaPushAttribute($value)
+    {
+        if ($value) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
-    public function getViaBackendAttribute($value) {
-        if($value)
-        {
+
+    // -------------------------------------------------
+    public function getViaBackendAttribute($value)
+    {
+        if ($value) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
-    public function getViaFrontendAttribute($value) {
-        if($value)
-        {
+
+    // -------------------------------------------------
+    public function getViaFrontendAttribute($value)
+    {
+        if ($value) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
-    public function getTableColumns() {
+
+    // -------------------------------------------------
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+        return $query->select(array_diff($this->getTableColumns(), $columns));
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function contents()
     {
         return $this->hasMany(NotificationContent::class,
             'vh_notification_id', 'id'
         );
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function createItem($request)
     {
         $response = [];
 
+        $input = $request->item;
+        $rows = $request->rows;
 
-            $input = $request->item;
-            $rows = $request->rows;
+        $rules = [
+            'name' => 'required|unique:vh_notifications',
+        ];
 
-            $rules = [
-                'name' => 'required|unique:vh_notifications',
-            ];
+        $validator = \Validator::make($input, $rules);
 
-            $validator = \Validator::make($input, $rules);
+        if ($validator->fails()) {
+            $errors = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
 
-            if ($validator->fails()) {
-                $errors = errorsToArray($validator->errors());
-                $response['success'] = false;
-                $response['errors'] = $errors;
-                return $response;
-            }
-
-            $item = new self();
-            $item->fill($input);
-            $item->slug = Str::slug($input['name']);
-            $item->save();
-
-            $response['success'] = true;
-            $response['messages'][] = trans("vaahcms-general.saved");
-            $response['data']['item'] = $item;
             return $response;
+        }
+
+        $item = new self;
+        $item->fill($input);
+        $item->slug = Str::slug($input['name']);
+        $item->save();
+
+        $response['success'] = true;
+        $response['messages'][] = trans('vaahcms-general.saved');
+        $response['data']['item'] = $item;
+
+        return $response;
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
-        if( !isset($filter['sort'])) {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
@@ -195,7 +217,7 @@ class Notification extends VaahModel {
 
         $direction = Str::contains($sort, ':');
 
-        if (!$direction) {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -203,10 +225,11 @@ class Notification extends VaahModel {
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
-        if (!isset($filter['trashed'])) {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
 
@@ -214,25 +237,27 @@ class Notification extends VaahModel {
 
         if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
-        if (!isset($filter['q'])) {
+        if (! isset($filter['q'])) {
             return $query;
         }
 
         $search = $filter['q'];
 
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%'. $search . '%');
+            $q->where('name', 'LIKE', '%'.$search.'%');
         });
     }
-    //-------------------------------------------------
-    public static function getList($request) : array
+
+    // -------------------------------------------------
+    public static function getList($request): array
     {
         $rows = config('vaahcms.per_page');
 
@@ -246,10 +271,12 @@ class Notification extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = $list;
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getContent($id)
     {
         $vias = [
@@ -263,11 +290,11 @@ class Notification extends VaahModel {
         $list = [];
 
         $item = static::find($id);
-        if (!$item) {
+        if (! $item) {
             return $list;
         }
 
-        foreach ($vias as $via){
+        foreach ($vias as $via) {
             $list[$via] = $item->contents()->where('via', $via)
                 ->get();
         }
@@ -275,42 +302,43 @@ class Notification extends VaahModel {
         return $list;
 
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    public static function itemAction( $request)
+    public static function itemAction($request)
     {
         $type = $request->type;
         $id = $request->id;
         $notification = self::withTrashed()->find($id);
 
-        if (!$notification) {
-            $response['messages'][] = trans("vaahcms-general.notification_not_found");
+        if (! $notification) {
+            $response['messages'][] = trans('vaahcms-general.notification_not_found');
+
             return response()->json($response, 404);
         }
         $response = [];
         if ($type === 'trash') {
             $notification->delete();
-            $response['messages'][] = trans("vaahcms-general.record_has_been_deleted");
+            $response['messages'][] = trans('vaahcms-general.record_has_been_deleted');
         } elseif ($type === 'restore') {
             if ($notification->withTrashed()) {
                 $notification->restore();
-                $response['messages'][] = trans("vaahcms-general.record_has_been_restored");
+                $response['messages'][] = trans('vaahcms-general.record_has_been_restored');
             } else {
-                $response['messages'][] = trans("vaahcms-general.record_is_not_soft_deleted_and_cannot_be_restored");
+                $response['messages'][] = trans('vaahcms-general.record_is_not_soft_deleted_and_cannot_be_restored');
             }
         } else {
-            $response['messages'][] = trans("vaahcms-general.invalid_action_type");
+            $response['messages'][] = trans('vaahcms-general.invalid_action_type');
+
             return response()->json($response, 404);
         }
 
         $response['success'] = true;
         $response['data'] = [];
 
-
         return $response;
     }
 
-//-------------------------------------------------
+    // -------------------------------------------------
     public static function listAction($request)
     {
         $type = $request->type;
@@ -319,7 +347,7 @@ class Notification extends VaahModel {
 
         $item_ids = array_column($items, 'id');
         $list = self::query();
-        if($request->has('filter')){
+        if ($request->has('filter')) {
             $list->getSorted($request->filter);
             $list->trashedFilter($request->filter);
             $list->searchFilter($request->filter);
@@ -351,23 +379,25 @@ class Notification extends VaahModel {
 
         $response['success'] = true;
         $response['data'] = true;
-        $response['messages'][] = trans("vaahcms-general.action_successful");
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function postStore($request)
     {
-        $rules = array(
+        $rules = [
             'name' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return response()->json($response);
         }
 
@@ -376,45 +406,36 @@ class Notification extends VaahModel {
         $item = static::where('slug', Str::slug($request->name))
             ->first();
 
-        if(!$item)
-        {
-            $item = new static();
+        if (! $item) {
+            $item = new static;
         }
 
         $inputs = $request->except('content');
         $item->fill($inputs);
         $item->save();
 
-        if(count($request->contents) > 0)
-        {
-            foreach ($request->contents as $key => $vias)
-            {
-                if(count($vias) < 1)
-                {
+        if (count($request->contents) > 0) {
+            foreach ($request->contents as $key => $vias) {
+                if (count($vias) < 1) {
                     continue;
                 }
 
-
-                if($key == 'mail'){
+                if ($key == 'mail') {
                     $list = NotificationContent::where('vh_notification_id', $vias[0]['vh_notification_id'])
-                        ->where('via',  'mail')->pluck('id')->toArray();
+                        ->where('via', 'mail')->pluck('id')->toArray();
 
                     $input_groups = collect($vias)->pluck('id')->toArray();
 
-
                     $groups_to_delete = array_diff($list, $input_groups);
 
-                    if(count($groups_to_delete) > 0)
-                    {
-                        foreach ($groups_to_delete as $id)
-                        {
+                    if (count($groups_to_delete) > 0) {
+                        foreach ($groups_to_delete as $id) {
                             NotificationContent::deleteItem($id);
                         }
                     }
                 }
 
-                foreach ($vias as $via)
-                {
+                foreach ($vias as $via) {
 
                     $content = null;
 
@@ -423,13 +444,12 @@ class Notification extends VaahModel {
                         ->where('sort', $via['sort'])
                         ->where('via', $via['via'])->first();
 
-                    if(!$content)
-                    {
-                        $new_content = new NotificationContent();
+                    if (! $content) {
+                        $new_content = new NotificationContent;
                         $new_content->fill($via);
                         $new_content->save();
 
-                    }else{
+                    } else {
                         $content->fill($via);
                         $content->save();
                     }
@@ -439,31 +459,29 @@ class Notification extends VaahModel {
             }
         }
 
-
         $response['success'] = true;
-        $response['messages'][] = trans("vaahcms-general.saved");
+        $response['messages'][] = trans('vaahcms-general.saved');
         $response['data']['item'] = $item;
-
 
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function dispatch(Notification $notification, User $user, $inputs, $priority='default')
+
+    // -------------------------------------------------
+    public static function dispatch(Notification $notification, User $user, $inputs, $priority = 'default')
     {
 
-        if(config('settings.global.laravel_queues'))
-        {
+        if (config('settings.global.laravel_queues')) {
             $response = self::addInQueue($notification, $user, $inputs, $priority);
-        } else
-        {
+        } else {
             $response = self::send($notification, $user, $inputs);
         }
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function addInQueue(Notification $notification, User $user, $inputs, $priority='default')
+
+    // -------------------------------------------------
+    public static function addInQueue(Notification $notification, User $user, $inputs, $priority = 'default')
     {
 
         dispatch((new ProcessNotifications($notification, $user, $inputs))
@@ -476,38 +494,37 @@ class Notification extends VaahModel {
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function send(Notification $notification, User $user, $inputs){
 
-        $rules = array(
+    // -------------------------------------------------
+    public static function send(Notification $notification, User $user, $inputs)
+    {
+
+        $rules = [
             'user_id' => 'required',
             'notification_id' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($inputs, $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
+        try {
 
-        try{
-
-            if($notification->via_mail == true)
-            {
+            if ($notification->via_mail == true) {
                 static::sendViaMail($notification, $user, $inputs);
             }
 
-            if($notification->via_backend == true)
-            {
+            if ($notification->via_backend == true) {
                 static::sendViaBackend($notification, $user, $inputs);
             }
 
-            if($notification->via_frontend == true)
-            {
+            if ($notification->via_frontend == true) {
                 static::sendViaFrontend($notification, $user, $inputs);
             }
 
@@ -515,8 +532,7 @@ class Notification extends VaahModel {
             $response['data'] = [];
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
@@ -525,23 +541,23 @@ class Notification extends VaahModel {
 
     }
 
-    //-------------------------------------------------
-    public static function sendViaMail(Notification $notification, User $user, $params=[])
+    // -------------------------------------------------
+    public static function sendViaMail(Notification $notification, User $user, $params = [])
     {
         $user->notify(new Notice($notification, $params));
     }
-    //-------------------------------------------------
-    public static function sendViaBackend(Notification $notification, User $user, $params=[])
+
+    // -------------------------------------------------
+    public static function sendViaBackend(Notification $notification, User $user, $params = [])
     {
 
-        $translated = static::getTranslatedContent('backend', $notification,  $params);
+        $translated = static::getTranslatedContent('backend', $notification, $params);
 
-        if($notification->is_error)
-        {
+        if ($notification->is_error) {
             $translated['is_error'] = true;
         }
 
-        $notify = new Notified();
+        $notify = new Notified;
         $notify->vh_notification_id = $notification->id;
         $notify->vh_user_id = $user->id;
         $notify->via = 'backend';
@@ -550,13 +566,15 @@ class Notification extends VaahModel {
         $notify->save();
 
     }
-    //-------------------------------------------------
-    public static function sendViaFrontend(Notification $notification, User $user, $params=[])
+
+    // -------------------------------------------------
+    public static function sendViaFrontend(Notification $notification, User $user, $params = [])
     {
         $user->notify(new Notice($notification, $params));
     }
-    //-------------------------------------------------
-    public static function getTranslatedContent($via, Notification $notification, $params=[])
+
+    // -------------------------------------------------
+    public static function getTranslatedContent($via, Notification $notification, $params = [])
     {
 
         $contents = $notification->contents()
@@ -566,13 +584,10 @@ class Notification extends VaahModel {
 
         $translated = [];
 
-        if($contents)
-        {
-            foreach ($contents as $content)
-            {
+        if ($contents) {
+            foreach ($contents as $content) {
 
-                switch ($content->key)
-                {
+                switch ($content->key) {
 
                     case 'content':
                         $translate = vh_translate_dynamic_strings($content->value, $params);
@@ -591,34 +606,36 @@ class Notification extends VaahModel {
 
         return $translated;
     }
-    //-------------------------------------------------
-    public static function mailValidation($inputs){
 
-        $rules = array(
+    // -------------------------------------------------
+    public static function mailValidation($inputs)
+    {
+
+        $rules = [
             'value' => 'nullable|email|max:150',
-        );
+        ];
 
-        $messages = array(
+        $messages = [
             'value.email' => 'The email field must be a valid email address.',
             'value.max' => 'The email may not be greater than 150 characters.',
-        );
+        ];
 
-        $validator = \Validator::make($inputs,$rules,$messages);
+        $validator = \Validator::make($inputs, $rules, $messages);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
     }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

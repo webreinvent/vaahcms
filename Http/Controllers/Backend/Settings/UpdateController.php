@@ -17,35 +17,34 @@ class UpdateController extends Controller
 {
     public $process;
 
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function storeUpdate(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
             $settings = [
                 [
-                    "category"=>'global',
-                    "key"=> 'update_checked_at',
-                    "value"=> \Carbon::now()->format('Y-m-d H:i:s'),
+                    'category' => 'global',
+                    'key' => 'update_checked_at',
+                    'value' => \Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    "category"=>'global',
-                    "key"=> 'is_update_available',
-                    "value"=> $request->update_available,
+                    'category' => 'global',
+                    'key' => 'is_update_available',
+                    'value' => $request->update_available,
                 ],
                 [
-                    "category"=>'global',
-                    "key"=> 'latest_remote_version',
-                    "value"=> $request->remote_version,
+                    'category' => 'global',
+                    'key' => 'latest_remote_version',
+                    'value' => $request->remote_version,
                 ],
             ];
 
@@ -55,8 +54,8 @@ class UpdateController extends Controller
                     ->where('key', $setting['key'])
                     ->first();
 
-                if (!$stored_settings) {
-                    $stored_settings = new Setting();
+                if (! $stored_settings) {
+                    $stored_settings = new Setting;
                 }
 
                 $stored_settings->fill($setting);
@@ -77,63 +76,65 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function upgrade(): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-           return $this->runCommand("composer", "update");
-        } catch(\Exception $e) {
+            return $this->runCommand('composer', 'update');
+        } catch (\Exception $e) {
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function publish()
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            //publish assets
+            // publish assets
             VaahSetup::publishAssets();
 
-            //publish vaahcms configurations
+            // publish vaahcms configurations
             VaahSetup::publishConfig();
 
-            //publish all migrations of vaahcms package
+            // publish all migrations of vaahcms package
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
             $response = VaahArtisan::publishMigrations($provider);
 
-            if (isset($response['success']) && !$response['success']) {
+            if (isset($response['success']) && ! $response['success']) {
                 return $response;
             }
 
-            //publish vaahcms seeds
+            // publish vaahcms seeds
             $response = VaahArtisan::publishSeeds($provider);
-            if (isset($response['success']) && !$response['success']) {
+            if (isset($response['success']) && ! $response['success']) {
                 return $response;
             }
 
@@ -145,34 +146,35 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function runMigrations(): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
-        try{
+        try {
             self::setVaahCmsVersionInEnv();
 
-            //run migration
+            // run migration
             $response = VaahArtisan::migrate();
-            if (isset($response['success']) && !$response['success']) {
+            if (isset($response['success']) && ! $response['success']) {
                 return $response;
             }
 
-            //run vaahcms seeds
+            // run vaahcms seeds
             $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
             $response = VaahArtisan::seed('db:seed', $seed_class);
-            if (isset($response['success']) && !$response['success']) {
+            if (isset($response['success']) && ! $response['success']) {
                 return response()->json($response);
             }
 
@@ -183,27 +185,28 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function clearCache(): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
             VaahArtisan::clearCache();
 
-            $notification = Notification::where('slug','send-update-message')->first();
+            $notification = Notification::where('slug', 'send-update-message')->first();
 
-            Notified::query()->where('vh_notification_id',$notification->id)->forceDelete();
+            Notified::query()->where('vh_notification_id', $notification->id)->forceDelete();
 
             $response['success'] = true;
             $response['data'] = 'Cache cleared.';
@@ -215,20 +218,21 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function createBackendNotificationForUpdate($request)
     {
         try {
-            $notification = Notification::where('slug','send-update-message')->first();
+            $notification = Notification::where('slug', 'send-update-message')->first();
 
-            if(!$notification){
-                $notification = new Notification();
+            if (! $notification) {
+                $notification = new Notification;
                 $notification->slug = 'send-update-message';
                 $notification->name = 'Send Update Message';
                 $notification->via_backend = '1';
@@ -239,24 +243,24 @@ class UpdateController extends Controller
             $label = 'Go to Update';
             $link = route('vh.backend').'#/vaah/settings/update';
 
-            if($request->has('manual_update') && $request->manual_update){
-                $message = $message . ' This is a major release. You have to do manual upgrade to update VaahCms.';
+            if ($request->has('manual_update') && $request->manual_update) {
+                $message = $message.' This is a major release. You have to do manual upgrade to update VaahCms.';
             }
 
             $translated = [
-                "message" => $message,
-                "action" => [
-                    "label" => $label,
-                    "link" => $link
+                'message' => $message,
+                'action' => [
+                    'label' => $label,
+                    'link' => $link,
                 ],
             ];
 
-            $notified = Notified::where('vh_notification_id',$notification->id)
-                ->where('via','backend')
-                ->where('vh_user_id',Auth::user()->id)->first();
+            $notified = Notified::where('vh_notification_id', $notification->id)
+                ->where('via', 'backend')
+                ->where('vh_user_id', Auth::user()->id)->first();
 
-            if(!$notified){
-                $notified = new Notified();
+            if (! $notified) {
+                $notified = new Notified;
                 $notified->vh_notification_id = $notification->id;
                 $notified->vh_user_id = Auth::user()->id;
                 $notified->via = 'backend';
@@ -277,22 +281,23 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
 
             return response()->json($response);
         }
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public static function setVaahCmsVersionInEnv()
     {
 
         try {
             $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
 
-            $ref_path = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
+            $ref_path = str_replace('VaahCmsServiceProvider.php', '', $reflector->getFileName());
 
-            $path =$ref_path .'composer.json';
+            $path = $ref_path.'composer.json';
 
             $config_data = json_decode(file_get_contents($path), true);
 
@@ -300,17 +305,17 @@ class UpdateController extends Controller
 
             $env_config_exist = false;
 
-            foreach ($env_list as $key => $item){
-                if($item['key'] === 'VAAHCMS_VERSION'){
+            foreach ($env_list as $key => $item) {
+                if ($item['key'] === 'VAAHCMS_VERSION') {
                     $env_config_exist = true;
                     $env_list[$key]['value'] = $config_data['version'];
                 }
             }
 
-            if(!$env_config_exist){
+            if (! $env_config_exist) {
                 $env_list[] = [
                     'key' => 'VAAHCMS_VERSION',
-                    'value' => $config_data['version']
+                    'value' => $config_data['version'],
                 ];
             }
 
@@ -326,13 +331,14 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
 
             return response()->json($response);
         }
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     /*
      * $executor like "composer", "php", "npm" etc
      * $command lik "install", "upgrade", "update"
@@ -346,21 +352,19 @@ class UpdateController extends Controller
 
             $this->process = new Process([$executor, $command]);
 
-            if($executor == 'composer')
-            {
+            if ($executor == 'composer') {
                 $this->process->setEnv(['COMPOSER_HOME' => base_path('vendor/bin/composer')]);
                 $this->process->setWorkingDirectory(base_path('/'));
             }
             $this->process->run();
 
-            if (!$this->process->isSuccessful()) {
-                $response['success']  = false;
+            if (! $this->process->isSuccessful()) {
+                $response['success'] = false;
                 $output .= $this->process->getErrorOutput();
-            } else{
-                $response['success']  = true;
+            } else {
+                $response['success'] = true;
                 $output .= $this->process->getOutput();
             }
-
 
             $response['data']['buffer'] = $buffer;
             $response['data']['output'] = $output;
@@ -372,13 +376,12 @@ class UpdateController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-
+    // ----------------------------------------------------------
 
 }

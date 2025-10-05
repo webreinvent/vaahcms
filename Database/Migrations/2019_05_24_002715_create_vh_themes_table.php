@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateVhThemesTable extends Migration
 {
@@ -13,12 +13,12 @@ class CreateVhThemesTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_themes')) {
+        if (! Schema::hasTable('vh_themes')) {
             Schema::create('vh_themes', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->string('name',150)->nullable();
-                $table->string('title',200)->nullable();
-                $table->string('slug',150)->nullable()->index();
+                $table->string('name', 150)->nullable();
+                $table->string('title', 200)->nullable();
+                $table->string('slug', 150)->nullable()->index();
                 $table->string('thumbnail')->nullable();
                 $table->string('excerpt')->nullable();
                 $table->string('description')->nullable();

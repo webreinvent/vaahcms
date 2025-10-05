@@ -13,7 +13,7 @@ class VhTaxonomies extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('vh_taxonomies')) {
+        if (! Schema::hasTable('vh_taxonomies')) {
             Schema::create('vh_taxonomies', function (Blueprint $table) {
 
                 $table->increments('id');
@@ -30,7 +30,7 @@ class VhTaxonomies extends Migration
 
                 $table->boolean('is_active')->nullable()->index();
 
-                //----common fields
+                // ----common fields
                 $table->text('meta')->nullable();
                 $table->bigInteger('created_by')->unsigned()->nullable()->index();
                 $table->foreign('created_by')->references('id')->on('vh_users');
@@ -41,12 +41,12 @@ class VhTaxonomies extends Migration
                 $table->timestamps();
                 $table->softDeletes();
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
-                //----/common fields
+                // ----/common fields
 
             });
         }
 
-        Schema::table('vh_taxonomies',function (Blueprint $table){
+        Schema::table('vh_taxonomies', function (Blueprint $table) {
             $table->foreign('parent_id')->references('id')->on('vh_taxonomies');
         });
     }

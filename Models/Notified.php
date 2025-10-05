@@ -1,19 +1,22 @@
-<?php namespace WebReinvent\VaahCms\Models;
+<?php
+
+namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Notified extends VaahModel {
-
+class Notified extends VaahModel
+{
     use SoftDeletes;
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_notified';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dates = [
         'last_attempt_at' => 'datetime',
         'sent_at' => 'datetime',
@@ -21,11 +24,13 @@ class Notified extends VaahModel {
         'marked_delivered' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'deleted_at' => 'datetime'
+        'deleted_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
         'vh_notification_id',
         'vh_user_id',
@@ -36,18 +41,16 @@ class Notified extends VaahModel {
         'marked_delivered',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
+    // -------------------------------------------------
+    protected $appends = [
     ];
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -56,89 +59,99 @@ class Notified extends VaahModel {
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function lastAttemptAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function sentAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function readAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function markedDelivered(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
-    //-------------------------------------------------
-    public function setMetaAttribute($value) {
+
+    // -------------------------------------------------
+    public function setMetaAttribute($value)
+    {
         $this->attributes['meta'] = json_encode($value);
     }
-    //-------------------------------------------------
-    public function getMetaAttribute($value) {
+
+    // -------------------------------------------------
+    public function getMetaAttribute($value)
+    {
         return json_decode($value);
     }
-    //-------------------------------------------------
-    public function getTableColumns() {
+
+    // -------------------------------------------------
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+        return $query->select(array_diff($this->getTableColumns(), $columns));
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-    //-------------------------------------------------
-    public static function viaBackend($user=null)
+
+    // -------------------------------------------------
+    public static function viaBackend($user = null)
     {
-        if(!$user)
-        {
+        if (! $user) {
             $user = \Auth::user();
         }
 
@@ -152,8 +165,7 @@ class Notified extends VaahModel {
         return $list;
 
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-
+    // -------------------------------------------------
+    // -------------------------------------------------
 
 }

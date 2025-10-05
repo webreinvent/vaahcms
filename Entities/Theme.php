@@ -1,9 +1,7 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php
 
+namespace WebReinvent\VaahCms\Entities;
 
 use WebReinvent\VaahCms\Models\ThemeBase;
 
-class Theme extends ThemeBase
-{
-
-}
+class Theme extends ThemeBase {}

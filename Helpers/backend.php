@@ -1,38 +1,36 @@
 <?php
 
+// -----------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_theme()
 {
     return 'vaahcms::backend.'.config('vaahcms.backend_theme');
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_assets_base_url()
 {
-    return url("/");
+    return url('/');
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_assets_url()
 {
-    return url('/'.config('vaahcms.build_directory_name','vaahcms').'/backend/');
+    return url('/'.config('vaahcms.build_directory_name', 'vaahcms').'/backend/');
 }
-//-----------------------------------------------------------------------------------
-function vh_get_backend_theme_url($theme=null)
+// -----------------------------------------------------------------------------------
+function vh_get_backend_theme_url($theme = null)
 {
-    if(!$theme)
-    {
+    if (! $theme) {
         $theme = config('vaahcms.backend_theme');
     }
 
-    $path = ('/'.config('vaahcms.build_directory_name','vaahcms').'/backend/'.$theme);
+    $path = ('/'.config('vaahcms.build_directory_name', 'vaahcms').'/backend/'.$theme);
     $url = url($path);
 
     return $url;
 
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_theme_image_url()
 {
 
@@ -42,32 +40,31 @@ function vh_get_backend_theme_image_url()
     return $url;
 
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_assets_json_file()
 {
-    $path = vh_get_backend_theme_url()."/assets.json";
+    $path = vh_get_backend_theme_url().'/assets.json';
 
     return $path;
 
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_parse_backend_assets_json_file()
 {
     $assets_json_path = vh_get_backend_assets_json_file();
     $json = json_decode(file_get_contents($assets_json_path), true);
+
     return $json;
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_load_backend_css()
 {
 
-    $html = "";
+    $html = '';
     $assets_array = vh_parse_backend_assets_json_file();
 
-    if(isset($assets_array['css']) && count($assets_array['css']) > 0)
-    {
-        foreach($assets_array['css'] as $css)
-        {
+    if (isset($assets_array['css']) && count($assets_array['css']) > 0) {
+        foreach ($assets_array['css'] as $css) {
             $html .= '<link href="'.asset(vh_get_backend_asset_url($css)).'" rel="stylesheet" media="screen">'."\n";
         }
     }
@@ -75,17 +72,15 @@ function vh_load_backend_css()
     return $html;
 
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_load_backend_js()
 {
 
-    $html = "";
+    $html = '';
     $assets_array = vh_parse_backend_assets_json_file();
 
-    if(isset($assets_array['js']) && count($assets_array['js']) > 0)
-    {
-        foreach($assets_array['js'] as $js)
-        {
+    if (isset($assets_array['js']) && count($assets_array['js']) > 0) {
+        foreach ($assets_array['js'] as $js) {
             $html .= '<script src="'.asset(vh_get_backend_asset_url($js)).'"></script>'."\n";
         }
     }
@@ -93,38 +88,42 @@ function vh_load_backend_js()
     return $html;
 
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------------
-function vh_get_backend_assets($file_path, $theme=null)
+// -----------------------------------------------------------------------------------
+function vh_get_backend_assets($file_path, $theme = null)
 {
-    return vh_get_backend_theme_url($theme)."/".$file_path."?v=".config('vaahcms.version');
+    return vh_get_backend_theme_url($theme).'/'.$file_path.'?v='.config('vaahcms.version');
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_asset_url($asset_url)
 {
-    return $asset_url."?v=".config('vaahcms.version');
+    return $asset_url.'?v='.config('vaahcms.version');
 }
-//-----------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
 function vh_get_backend_file($file_path)
 {
-    return vh_get_backend_theme_url()."/".$file_path;
+    return vh_get_backend_theme_url().'/'.$file_path;
 }
-//-----------------------------------------------------------------------------------
-function vh_get_permission_denied_json_response($permission_slugs){
+// -----------------------------------------------------------------------------------
+function vh_get_permission_denied_json_response($permission_slugs)
+{
     $response = vh_get_permission_denied_response($permission_slugs);
+
     return response()->json($response);
 }
-//-----------------------------------------------------------------------------------
-function vh_get_permission_denied_response($permission_slugs){
+// -----------------------------------------------------------------------------------
+function vh_get_permission_denied_response($permission_slugs)
+{
     $response = [];
     $response['success'] = false;
 
-    $response['errors'][] = trans("vaahcms-general.permission_denied");
-    if(env('APP_DEBUG')){
+    $response['errors'][] = trans('vaahcms-general.permission_denied');
+    if (env('APP_DEBUG')) {
         $response['hint'][] = 'You don\'t have "'.$permission_slugs.'" permission.';
     }
+
     return $response;
 }
-//-----------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------

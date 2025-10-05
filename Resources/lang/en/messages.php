@@ -13,14 +13,13 @@ return [
     |
     */
 
-    //trans("vaahcms::messages.not_exist", ['key' => 'var1', 'value' => 'var2']);
+    // trans("vaahcms::messages.not_exist", ['key' => 'var1', 'value' => 'var2']);
     'permission_denied' => 'Permission denied',
     'setup_completed' => 'Setup already completed',
     'not_exist' => 'No record with :key :value',
     'inactive_account' => 'The account is not active',
     'invalid_credentials' => 'Invalid credentials',
     'login_required' => 'Login to access the page',
-
 
     /*
     |--------------------------------------------------------------------------

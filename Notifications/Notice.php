@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notification;
 class Notice extends Notification
 {
     use Queueable;
+
     public $notify;
+
     public $params;
 
     /**
@@ -17,7 +19,7 @@ class Notice extends Notification
      *
      * @return void
      */
-    public function __construct(\WebReinvent\VaahCms\Models\Notification $notification, $params )
+    public function __construct(\WebReinvent\VaahCms\Models\Notification $notification, $params)
     {
         $this->notify = $notification;
         $this->params = $params;
@@ -43,31 +45,22 @@ class Notice extends Notification
     public function toMail($notifiable)
     {
 
-
         $contents = $this->notify->contents()
             ->where('via', 'mail')
             ->orderBy('sort', 'asc')
             ->get();
 
-
         $mail = (new MailMessage);
 
-
-        if($this->notify->is_error)
-        {
+        if ($this->notify->is_error) {
             $mail->error();
         }
 
-        if($contents)
-        {
-            foreach ($contents as $content)
-            {
-
-
+        if ($contents) {
+            foreach ($contents as $content) {
 
                 $translated = vh_translate_dynamic_strings($content->value, $this->params);
-                switch ($content->key)
-                {
+                switch ($content->key) {
                     case 'subject':
                         $mail->subject($translated);
                         break;
@@ -77,8 +70,7 @@ class Notice extends Notification
                         break;
 
                     case 'from':
-                        if($content->meta && $content->meta->name)
-                        {
+                        if ($content->meta && $content->meta->name) {
                             $from_name = vh_translate_dynamic_strings($content->meta->name, $this->params);
                         }
 
@@ -87,17 +79,14 @@ class Notice extends Notification
                         $from_email = trim($from_email);
                         $from_name = trim($from_name);
 
-
-                        if(isset($from_name) && !empty($from_name)
-                            && isset($from_email) && !empty($from_email)
-                            && filter_var($from_email, FILTER_VALIDATE_EMAIL))
-                        {
-                            $mail->from($from_email,$from_name);
-                        } else if(isset($from_email) && !empty($from_email)
-                            && filter_var($from_email, FILTER_VALIDATE_EMAIL))
-                        {
+                        if (isset($from_name) && ! empty($from_name)
+                            && isset($from_email) && ! empty($from_email)
+                            && filter_var($from_email, FILTER_VALIDATE_EMAIL)) {
+                            $mail->from($from_email, $from_name);
+                        } elseif (isset($from_email) && ! empty($from_email)
+                            && filter_var($from_email, FILTER_VALIDATE_EMAIL)) {
                             $mail->from($from_email);
-                        } else{
+                        } else {
                             $mail->from(env('MAIL_FROM_ADDRESS'));
                         }
 

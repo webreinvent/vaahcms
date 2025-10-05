@@ -1,4 +1,6 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
+<?php
+
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -8,16 +10,15 @@ use WebReinvent\VaahCms\Models\Batch;
 
 class BatchesController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-advanced-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -34,25 +35,24 @@ class BatchesController extends Controller
                 'deleted_by',
             ];
 
-            $model = new Batch();
+            $model = new Batch;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
             );
 
-            foreach ($fillable as $column)
-            {
+            foreach ($fillable as $column) {
                 $data['empty_item'][$column] = null;
             }
 
             $data['actions'] = [];
             $data['language_strings'] = [
-                "batches_title" => trans("vaahcms-advanced.batches_title"),
-                "filter_column" => trans("vaahcms-general.filter_column"),
-                "filter_created" => trans("vaahcms-general.filter_created"),
-                "filter_cancelled" => trans("vaahcms-general.filter_cancelled"),
-                "filter_finished" => trans("vaahcms-general.filter_finished"),
-                "filter_range" => trans("vaahcms-general.filter_range"),
+                'batches_title' => trans('vaahcms-advanced.batches_title'),
+                'filter_column' => trans('vaahcms-general.filter_column'),
+                'filter_created' => trans('vaahcms-general.filter_created'),
+                'filter_cancelled' => trans('vaahcms-general.filter_cancelled'),
+                'filter_finished' => trans('vaahcms-general.filter_finished'),
+                'filter_range' => trans('vaahcms-general.filter_range'),
 
             ];
 
@@ -66,19 +66,19 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
 
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-batches-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -92,13 +92,14 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
         try {
@@ -111,13 +112,14 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
         try {
@@ -130,13 +132,14 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
         try {
@@ -150,13 +153,14 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
         try {
@@ -169,11 +173,11 @@ class BatchesController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

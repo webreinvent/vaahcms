@@ -31,7 +31,6 @@ Route::group(
         Route::delete('/', 'UsersController@deleteList')
             ->name('vh.backend.users.api.users.list.delete');
 
-
         /**
          * Create Item
          */
@@ -64,7 +63,5 @@ Route::group(
          */
         Route::any('/{id}/action/{action}', 'UsersController@itemAction')
             ->name('vh.backend.users.api.users.item.action');
-
-
 
     });

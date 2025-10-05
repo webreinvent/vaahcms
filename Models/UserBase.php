@@ -1,4 +1,5 @@
 <?php
+
 namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
@@ -13,26 +14,26 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
 use WebReinvent\VaahCms\Libraries\VaahMail;
-use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
 use WebReinvent\VaahCms\Mail\SecurityOtpMail;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class UserBase extends Authenticatable
 {
-
+    use CrudWithUuidObservantTrait;
     use Impersonate;
     use Notifiable;
     use SoftDeletes;
-    use CrudWithUuidObservantTrait;
 
-    //-------------------------------------------------
-    protected $connection= 'mysql';
-    //-------------------------------------------------
+    // -------------------------------------------------
+    protected $connection = 'mysql';
+
+    // -------------------------------------------------
     protected $table = 'vh_users';
+
     public bool $prevent_password_hashing = false;
-    //-------------------------------------------------
-    //-------------------------------------------------
+
+    // -------------------------------------------------
+    // -------------------------------------------------
     protected $casts = [
         'security_code_expired_at' => 'datetime',
         'last_login_at' => 'datetime',
@@ -40,27 +41,30 @@ class UserBase extends Authenticatable
         'affiliate_code_used_at' => 'datetime',
         'reset_password_code_sent_at' => 'datetime',
         'reset_password_code_used_at' => 'datetime',
-        'activated_at' => 'datetime'
+        'activated_at' => 'datetime',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $fillable = [
-        "uuid","email","username","display_name","title","designation",
-        "first_name","middle_name","last_name", "password",
-        "gender","country_calling_code","phone", "bio",
-        "website","timezone",
-        "alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip",
-        "remember_token", "login_otp", "api_token","api_token_used_at",
-        "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at","security_code_expired_at",
-        "reset_password_code",'mfa_methods',"security_code",
-        "reset_password_code_sent_at","reset_password_code_used_at",
-        'foreign_user_id',"meta","created_ip","created_by",
-        "updated_by","deleted_by"
+        'uuid', 'email', 'username', 'display_name', 'title', 'designation',
+        'first_name', 'middle_name', 'last_name', 'password',
+        'gender', 'country_calling_code', 'phone', 'bio',
+        'website', 'timezone',
+        'alternate_email', 'avatar_url', 'birth',
+        'country', 'country_code', 'last_login_at', 'last_login_ip',
+        'remember_token', 'login_otp', 'api_token', 'api_token_used_at',
+        'api_token_used_ip', 'is_active', 'activated_at', 'status',
+        'affiliate_code', 'affiliate_code_used_at', 'security_code_expired_at',
+        'reset_password_code', 'mfa_methods', 'security_code',
+        'reset_password_code_sent_at', 'reset_password_code_used_at',
+        'foreign_user_id', 'meta', 'created_ip', 'created_by',
+        'updated_by', 'deleted_by',
     ];
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected $hidden = [
         'password',
         'login_otp',
@@ -71,14 +75,13 @@ class UserBase extends Authenticatable
         'reset_password_code',
     ];
 
-    //-------------------------------------------------
-    protected $appends  = [
-        'avatar', 'name'
+    // -------------------------------------------------
+    protected $appends = [
+        'avatar', 'name',
     ];
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -87,11 +90,11 @@ class UserBase extends Authenticatable
 
     }
 
-    //-------------------------------------------------
-    public function getAvatarAttribute() {
+    // -------------------------------------------------
+    public function getAvatarAttribute()
+    {
 
-        if($this->avatar_url)
-        {
+        if ($this->avatar_url) {
             $url = asset($this->avatar_url);
             if (filter_var($url, FILTER_VALIDATE_URL)) {
                 return $url;
@@ -104,172 +107,184 @@ class UserBase extends Authenticatable
 
         return $grav_url;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function setMetaAttribute($value)
     {
         $this->attributes['meta'] = json_encode($value);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getMetaAttribute($value)
     {
-        if($value && $value!='null'){
+        if ($value && $value != 'null') {
             return json_decode($value);
-        }else{
+        } else {
             return json_decode('{}');
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function setMfaMethodsAttribute($value)
     {
         $this->attributes['mfa_methods'] = json_encode($value);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getMfaMethodsAttribute($value)
     {
-        if($value && $value!='null'){
+        if ($value && $value != 'null') {
             return json_decode($value);
-        }else{
+        } else {
             return [];
         }
 
     }
-    //-------------------------------------------------
-    public function getNameAttribute() {
 
-        if($this->display_name)
-        {
+    // -------------------------------------------------
+    public function getNameAttribute()
+    {
+
+        if ($this->display_name) {
             return $this->display_name;
         }
 
         $name = $this->first_name;
 
-        if($this->middle_name)
-        {
-            $name .= " ".$this->middle_name;
+        if ($this->middle_name) {
+            $name .= ' '.$this->middle_name;
         }
 
-        if($this->last_name)
-        {
-            $name .= " ".$this->last_name;
+        if ($this->last_name) {
+            $name .= ' '.$this->last_name;
         }
 
         return $name;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     protected function updatedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function deletedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function lastLoginAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function securityCodeExpiredAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function apiTokenUsedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function affiliateCodeUsedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function resetPasswordCodeSentAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function resetPasswordCodeUsedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     protected function activatedAt(): Attribute
     {
         return Attribute::make(
-            get: function (string $value = null) {
+            get: function (?string $value = null) {
                 return VaahModel::getUserTimezoneDate($value);
             },
         );
     }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    public function setFirstNameAttribute($value) {
+
+    // -------------------------------------------------
+    // -------------------------------------------------
+    public function setFirstNameAttribute($value)
+    {
         $this->attributes['first_name'] = ucfirst($value);
     }
-    //-------------------------------------------------
-    public function setMiddleNameAttribute($value) {
+
+    // -------------------------------------------------
+    public function setMiddleNameAttribute($value)
+    {
         $this->attributes['middle_name'] = ucfirst($value);
     }
-    //-------------------------------------------------
-    public function setLastNameAttribute($value) {
+
+    // -------------------------------------------------
+    public function setLastNameAttribute($value)
+    {
         $this->attributes['last_name'] = ucfirst($value);
     }
-    //-------------------------------------------------
-    public function setPasswordAttribute($value) {
+
+    // -------------------------------------------------
+    public function setPasswordAttribute($value)
+    {
         if ($this->prevent_password_hashing) {
             // Ignore Mutator
             $this->attributes['password'] = $value;
@@ -277,44 +292,43 @@ class UserBase extends Authenticatable
             $this->attributes['password'] = Hash::make($value);
         }
     }
-    //-------------------------------------------------
-    public function setLoginOtpAttribute($value) {
 
-        if(is_null($value) || empty($value))
-        {
+    // -------------------------------------------------
+    public function setLoginOtpAttribute($value)
+    {
+
+        if (is_null($value) || empty($value)) {
             $this->attributes['login_otp'] = null;
-        } else{
+        } else {
             $this->attributes['login_otp'] = Hash::make($value);
         }
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public function scopeIsActive($query)
     {
         $query->where('is_active', 1);
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
-        if($from)
-        {
+        if ($from) {
             $from = Carbon::parse($from)
                 ->startOfDay()
                 ->toDateTimeString();
         }
 
-        if($to)
-        {
+        if ($to) {
             $to = Carbon::parse($to)
                 ->endOfDay()
                 ->toDateTimeString();
         }
 
-        $query->whereBetween('created_at',[$from,$to]);
+        $query->whereBetween('created_at', [$from, $to]);
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public function createdByUser()
     {
@@ -323,7 +337,7 @@ class UserBase extends Authenticatable
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(User::class,
@@ -331,7 +345,7 @@ class UserBase extends Authenticatable
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo(User::class,
@@ -339,17 +353,20 @@ class UserBase extends Authenticatable
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
-    //-------------------------------------------------
-    public function getTableColumns() {
+    // -------------------------------------------------
+    public function getTableColumns()
+    {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeExclude($query, $columns)
     {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+        return $query->select(array_diff($this->getTableColumns(), $columns));
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getFormFillableColumns()
     {
         $list = [
@@ -359,15 +376,16 @@ class UserBase extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at','security_code_expired_at',
-            'security_code','created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at', 'security_code_expired_at',
+            'security_code', 'created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
-            'deleted_at'
+            'deleted_at',
         ];
 
         return $list;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function getFormColumns()
     {
         $columns = $this->getFormFillableColumns();
@@ -375,37 +393,36 @@ class UserBase extends Authenticatable
         $result = [];
         $i = 0;
 
-        foreach ($columns as $column)
-        {
+        foreach ($columns as $column) {
             $result[$i] = $this->getFormElement($column);
             $i++;
         }
 
         return $result;
     }
-    //-------------------------------------------------
-    public static function findByUsername($username, $columns = array('*'))
+
+    // -------------------------------------------------
+    public static function findByUsername($username, $columns = ['*'])
     {
-        if ( ! is_null($user = self::whereUsername($username)->first($columns))) {
+        if (! is_null($user = self::whereUsername($username)->first($columns))) {
             return $user;
-        } else
-        {
+        } else {
             return false;
         }
 
     }
-    //-------------------------------------------------
-    public static function findByEmail($email, $columns = array('*'))
+
+    // -------------------------------------------------
+    public static function findByEmail($email, $columns = ['*'])
     {
-        if ( ! is_null($user = self::whereEmail($email)->first($columns))) {
+        if (! is_null($user = self::whereEmail($email)->first($columns))) {
             return $user;
-        }else
-        {
+        } else {
             return false;
         }
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function roles()
     {
         return $this->belongsToMany(Role::class,
@@ -417,12 +434,13 @@ class UserBase extends Authenticatable
             'updated_at');
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function activeRoles()
     {
         return $this->roles()->wherePivot('is_active', 1);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function countSuperAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
@@ -433,23 +451,18 @@ class UserBase extends Authenticatable
         return $count;
     }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
     public static function getByRoles($array_role_slugs)
     {
 
-        $list = User::whereHas('roles', function ($query) use ($array_role_slugs)
-        {
-            if(count($array_role_slugs))
-            {
+        $list = User::whereHas('roles', function ($query) use ($array_role_slugs) {
+            if (count($array_role_slugs)) {
                 $i = 0;
-                foreach ($array_role_slugs as $slug)
-                {
-                    if($i == 0)
-                    {
+                foreach ($array_role_slugs as $slug) {
+                    if ($i == 0) {
                         $query->where('slug', $slug);
-                    } else
-                    {
+                    } else {
                         $query->orWhere('slug', $slug);
                     }
                     $i++;
@@ -461,32 +474,35 @@ class UserBase extends Authenticatable
 
         return $list;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getByRolesOnlyIds($array_role_slugs)
     {
         $list = User::getByRoles($array_role_slugs)
             ->pluck('id')->toArray();
+
         return $list;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getByRolesOnlyEmails($array_role_slugs)
     {
         $list = User::getByRoles($array_role_slugs)
             ->pluck('email')->toArray();
+
         return $list;
     }
-    //-------------------------------------------------
-    public function permissions($slugs_only=false)
+
+    // -------------------------------------------------
+    public function permissions($slugs_only = false)
     {
         $roles = $this->roles()->isActive()
             ->wherePivot('is_active', 1)->get();
 
-
-        $permissions_list = array();
+        $permissions_list = [];
         foreach ($roles as $role) {
 
-            if($role->slug !='super-administrator')
-            {
+            if ($role->slug != 'super-administrator') {
                 $permissions = $role->permissions()->isActive()
                     ->wherePivot('is_active', 1)->get();
             } else {
@@ -495,11 +511,11 @@ class UserBase extends Authenticatable
 
             foreach ($permissions as $permission) {
 
-                if ($role->slug =='super-administrator') {
+                if ($role->slug == 'super-administrator') {
                     $permissions_list[$permission->id] = $permission->toArray();
 
                 } else {
-                    if (!$permission->is_active) {
+                    if (! $permission->is_active) {
                         continue;
                     }
 
@@ -516,9 +532,9 @@ class UserBase extends Authenticatable
         return $permissions_list;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function rulesSuperAdminCreate()
     {
         $rules = [
@@ -528,89 +544,89 @@ class UserBase extends Authenticatable
             'username' => 'unique:core_users|max:20',
             'password' => 'required|max:255',
         ];
+
         return $rules;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function userValidation($request)
     {
 
-        //check if user already exist with the emails
+        // check if user already exist with the emails
         $user = self::where('email', $request->email)->first();
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
+
             return $response;
         }
 
-        //check if user already exist with the phone
-        if($request->has('country_calling_code') && $request->has('phone'))
-        {
+        // check if user already exist with the phone
+        if ($request->has('country_calling_code') && $request->has('phone')) {
             $user = self::where('country_calling_code', $request->country_calling_code)
                 ->where('phone', $request->phone)
                 ->first();
 
-            if($user)
-            {
+            if ($user) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.phone_already_registered');
+
                 return $response;
             }
         }
 
-        //if status is registered then user_id is required
-        if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
-        {
+        // if status is registered then user_id is required
+        if ($request->has('status') && $request->status == 'registered' && ! $request->has('user_id')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.registration_status_is_registered');
+
             return $response;
         }
 
-        //check if registration record exist
+        // check if registration record exist
         $reg_by_email = self::findByEmail($request->email);
-        if($reg_by_email)
-        {
+        if ($reg_by_email) {
             $response['status'] = 'registration-exist';
             $response['data'] = $reg_by_email;
+
             return $response;
         }
 
-        if($request->has('country_calling_code') && $request->has('phone')) {
+        if ($request->has('country_calling_code') && $request->has('phone')) {
             $reg_by_phone = self::where('country_calling_code', $request->country_calling_code)
                 ->where('phone', $request->phone)
                 ->first();
 
-            if($reg_by_phone)
-            {
+            if ($reg_by_phone) {
                 $response['status'] = 'registration-exist';
                 $response['data'] = $reg_by_phone;
+
                 return $response;
             }
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function isLastSuperAdmin()
     {
         $count = self::countSuperAdministrators();
-        if($count < 2)
-        {
+        if ($count < 2) {
             return true;
         }
+
         return false;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function restrictedActions($action_type, $user_id)
     {
 
-        //restricted actions on logged in users
-        if((int)$user_id === \Auth::user()->id)
-        {
-            switch ($action_type)
-            {
-                //------------------------
+        // restricted actions on logged in users
+        if ((int) $user_id === \Auth::user()->id) {
+            switch ($action_type) {
+                // ------------------------
                 case 'trash':
                 case 'trash-all':
                 case 'delete':
@@ -619,36 +635,32 @@ class UserBase extends Authenticatable
                 case 'deactivate-all':
 
                     $response['success'] = false;
-                    $response['errors'][] = "Actions cannot be performed on a user who is currently logged in.";
+                    $response['errors'][] = 'Actions cannot be performed on a user who is currently logged in.';
+
                     return $response;
-                //------------------------
+                    // ------------------------
                 default:
                     break;
-                //------------------------
+                    // ------------------------
             }
 
-
-
             $response['success'] = true;
-            $response['message'][] = "Not restricted.";
+            $response['message'][] = 'Not restricted.';
+
             return $response;
         }
 
-
-
-        //restricted action if this user is last super admin
+        // restricted action if this user is last super admin
         $user = self::withTrashed()->find($user_id);
 
-        if((!\Auth::user()->hasRole('super-administrator')  &&
+        if ((! \Auth::user()->hasRole('super-administrator') &&
             $user->hasRole('super-administrator')) ||
-            (!\Auth::user()->hasRole('super-administrator')
-                && !\Auth::user()->hasRole('administrator')) &&
+            (! \Auth::user()->hasRole('super-administrator')
+                && ! \Auth::user()->hasRole('administrator')) &&
             ($user->hasRole('super-administrator')
-                || $user->hasRole('administrator')))
-        {
-            switch ($action_type)
-            {
-                //------------------------
+                || $user->hasRole('administrator'))) {
+            switch ($action_type) {
+                // ------------------------
                 case 'trash':
                 case 'trash-all':
                 case 'delete':
@@ -656,146 +668,145 @@ class UserBase extends Authenticatable
                 case 'deactivate':
                 case 'deactivate-all':
                     $response['success'] = false;
-                    $response['errors'][] = "Actions cannot be performed on users with a
-                    role higher than that of the currently logged-in user.";
+                    $response['errors'][] = 'Actions cannot be performed on users with a
+                    role higher than that of the currently logged-in user.';
+
                     return $response;
-                //------------------------
+                    // ------------------------
                 default:
                     break;
-                //------------------------
+                    // ------------------------
             }
 
         }
 
-
         $response['success'] = true;
-        $response['message'][] = "Not restricted.";
+        $response['message'][] = 'Not restricted.';
+
         return $response;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function beforeUserActionValidation($request)
     {
-        //check if already logged in
-        if (\Auth::check())
-        {
+        // check if already logged in
+        if (\Auth::check()) {
             \Auth::logout();
         }
 
-        $rules = array(
+        $rules = [
             'email' => 'required|email|max:150',
-        );
+        ];
         $validator = \Validator::make($request->all(), $rules);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $response['success'] = false;
             $response['errors'] = errorsToArray($validator->errors());
+
             return $response;
         }
 
         $inputs = $request->all();
         $inputs['email'] = trim($inputs['email']);
 
-        $rules = array(
+        $rules = [
             'email' => 'required|email',
-        );
+        ];
         $validator = \Validator::make($inputs, $rules);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         $user = self::where('email', $inputs['email'])->first();
 
-        //check user is active
-        if(!$user)
-        {
+        // check user is active
+        if (! $user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.no_user_exist');
+
             return $response;
         }
 
-        //check user is active
-        if($user->is_active != 1)
-        {
+        // check user is active
+        if ($user->is_active != 1) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.inactive_account');
+
             return $response;
         }
 
         return $user;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function beforeUserLoginValidation($request)
     {
-        //check if already logged in
-        if (\Auth::check())
-        {
+        // check if already logged in
+        if (\Auth::check()) {
             \Auth::logout();
         }
 
         $inputs = $request->all();
         $inputs['email'] = trim($inputs['email']);
 
-        $rules = array(
+        $rules = [
             'email' => 'required|max:150',
-        );
-        $messages = array(
+        ];
+        $messages = [
             'email.required' => trans('vaahcms-login.email_or_username_required'),
             'email.max' => trans('vaahcms-login.email_or_username_limit'),
-        );
+        ];
         $validator = \Validator::make($inputs, $rules, $messages);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         $user = self::where('email', $inputs['email'])->first();
 
-        //check user is active
-        if(!$user){
+        // check user is active
+        if (! $user) {
             $user = self::where('username', $inputs['email'])->first();
         }
 
-        if(!$user)
-        {
+        if (! $user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.no_user_exist');
+
             return $response;
         }
 
-        //check user is active
-        if($user->is_active != 1)
-        {
+        // check user is active
+        if ($user->is_active != 1) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-login.inactive_account');
+
             return $response;
         }
 
         return $user;
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function login($request, $permission_slug = null)
     {
 
         $user = self::beforeUserLoginValidation($request);
 
-        if(isset($user['success']) && !$user['success'])
-        {
+        if (isset($user['success']) && ! $user['success']) {
             return $user;
         }
 
-        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
-        {
+        if (isset($permission_slug) && ! $user->hasPermission($permission_slug)) {
 
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
@@ -806,14 +817,13 @@ class UserBase extends Authenticatable
         $inputs = $request->all();
 
         $remember = false;
-        if ($request->has("remember") || $request->get("remember") == "on") {
+        if ($request->has('remember') || $request->get('remember') == 'on') {
             $remember = true;
         }
 
         if (Auth::attempt(['email' => $inputs['email'],
-            'password' => trim($request->get('password'))
-        ], $remember))
-        {
+            'password' => trim($request->get('password')),
+        ], $remember)) {
 
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
@@ -821,9 +831,9 @@ class UserBase extends Authenticatable
             $user->save();
 
             $response['success'] = true;
-        }elseif(Auth::attempt(['username' => $inputs['email'],
-            'password' => trim($request->get('password'))
-        ], $remember)){
+        } elseif (Auth::attempt(['username' => $inputs['email'],
+            'password' => trim($request->get('password')),
+        ], $remember)) {
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
             $user->save();
@@ -836,19 +846,19 @@ class UserBase extends Authenticatable
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function sendLoginOtp($request, $permission_slug=null): array
+
+    // -------------------------------------------------
+    public static function sendLoginOtp($request, $permission_slug = null): array
     {
         $user = self::beforeUserActionValidation($request);
-        if(isset($user['success']) && !$user['success'])
-        {
+        if (isset($user['success']) && ! $user['success']) {
             return $user;
         }
 
-        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
-        {
+        if (isset($permission_slug) && ! $user->hasPermission($permission_slug)) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
+
             return $response;
         }
 
@@ -867,34 +877,31 @@ class UserBase extends Authenticatable
             'user_id' => $user->id,
         ];
 
-
         $response = Notification::dispatch($notification, $user, $inputs);
 
-        if(isset($response['success']) && !$response['success'])
-        {
+        if (isset($response['success']) && ! $response['success']) {
             return $response;
         }
 
         $response['success'] = true;
         $response['messages'] = [
-            trans('vaahcms-login.otp_sent')
+            trans('vaahcms-login.otp_sent'),
         ];
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function loginViaOtp($request, $permission_slug=null): array
+
+    // -------------------------------------------------
+    public static function loginViaOtp($request, $permission_slug = null): array
     {
 
         $user = self::beforeUserActionValidation($request);
 
-        if(isset($user['success']) && !$user['success'])
-        {
+        if (isset($user['success']) && ! $user['success']) {
             return $user;
         }
 
-        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
-        {
+        if (isset($permission_slug) && ! $user->hasPermission($permission_slug)) {
 
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
@@ -902,27 +909,27 @@ class UserBase extends Authenticatable
             return $response;
         }
 
-        $rules = array(
+        $rules = [
             'login_otp' => 'required|digits:6',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         $login_otp = $request->login_otp;
         $login_otp = trim($login_otp);
 
-        if (Hash::check($login_otp, $user->login_otp))
-        {
-            if ($request->has("remember") || $request->get("remember") == "on") {
+        if (Hash::check($login_otp, $user->login_otp)) {
+            if ($request->has('remember') || $request->get('remember') == 'on') {
                 Auth::login($user, true);
-            } else{
+            } else {
                 Auth::login($user);
             }
 
@@ -938,21 +945,21 @@ class UserBase extends Authenticatable
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-login.invalid_credentials');
         }
+
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function sendResetPasswordEmail($request, $permission_slug=null): array
+
+    // -------------------------------------------------
+    public static function sendResetPasswordEmail($request, $permission_slug = null): array
     {
 
         $user = self::beforeUserActionValidation($request);
-        if(isset($user['success']) && !$user['success'])
-        {
+        if (isset($user['success']) && ! $user['success']) {
             return $user;
         }
 
-        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
-        {
+        if (isset($permission_slug) && ! $user->hasPermission($permission_slug)) {
 
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
@@ -977,45 +984,45 @@ class UserBase extends Authenticatable
 
         $request = new Request($inputs);
 
+        $response = Notification::send($notification, $user, $request->all());
 
-        $response = Notification::send($notification,$user,$request->all());
-
-        if(isset($response['success']) && !$response['success'])
-        {
+        if (isset($response['success']) && ! $response['success']) {
             return $response;
         }
 
         $response['messages'] = [
-            trans('vaahcms-login.reset_code_sent')
+            trans('vaahcms-login.reset_code_sent'),
         ];
 
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function resetPassword($request): array
     {
 
-        $rules = array(
+        $rules = [
             'reset_password_code' => 'required',
             'password' => 'required|confirmed|min:6',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        $user = self::where('reset_password_code',$request->reset_password_code)->first();
+        $user = self::where('reset_password_code', $request->reset_password_code)->first();
 
-        if(!$user)
-        {
+        if (! $user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-login.incorrect_reset_password_code');
+
             return $response;
         }
 
@@ -1030,58 +1037,56 @@ class UserBase extends Authenticatable
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function hasRole($role_slug)
     {
         foreach ($this->roles()->wherePivot('is_active', 1)->get() as $role) {
-            if ($role->slug == $role_slug)
-            {
+            if ($role->slug == $role_slug) {
                 return true;
             }
         }
+
         return false;
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function isSuperAdmin()
     {
         return $this->hasRole('super-administrator');
     }
 
-    //-------------------------------------------------
-    public function hasPermission($permission_slug, $details=false)
+    // -------------------------------------------------
+    public function hasPermission($permission_slug, $details = false)
     {
 
         if ($this->isSuperAdmin()) {
 
-            if($details)
-            {
+            if ($details) {
                 $response['success'] = true;
-                if(env('APP_DEBUG'))
-                {
+                if (env('APP_DEBUG')) {
                     $response['data']['permission'] = trans('vaahcms-general.permission_slug').': '.$permission_slug;
                     $response['hint'][] = trans('vaahcms-general.super_admin_hint_message');
                 }
+
                 return $response;
 
-            } else{
+            } else {
                 return true;
             }
 
         }
 
-        //check if permission exist or not
+        // check if permission exist or not
         $permission = Permission::where('slug', $permission_slug)
             ->first();
 
-        if (!$permission)
-        {
-            if($details)
-            {
+        if (! $permission) {
+            if ($details) {
                 $response['success'] = false;
-                $response['errors'][] = trans('vaahcms-general.no_permission_exist_with_slug').': ' . $permission_slug;
+                $response['errors'][] = trans('vaahcms-general.no_permission_exist_with_slug').': '.$permission_slug;
 
                 if (env('APP_DEBUG')) {
                     $response['hint'][] = trans('vaahcms-general.no_permission_exist_hint_message');
@@ -1095,108 +1100,102 @@ class UserBase extends Authenticatable
         }
 
         if ($permission->is_active != 1) {
-            if($details)
-            {
+            if ($details) {
                 $response['success'] = false;
                 $response['errors'][] = $permission_slug.' is inactive';
-                if(env('APP_DEBUG'))
-                {
+                if (env('APP_DEBUG')) {
                     $response['hint'][] = trans('vaahcms-general.no_permission_active_hint_message');
                 }
+
                 return $response;
 
-            } else{
+            } else {
                 return false;
             }
 
         }
 
-        foreach ($this->permissions() as $permission)
-        {
-
+        foreach ($this->permissions() as $permission) {
 
             if ($permission['slug'] == $permission_slug
                 && $permission['is_active'] == 1
                 && $permission['pivot']['is_active'] == 1
-            )
-            {
-                if($details)
-                {
+            ) {
+                if ($details) {
                     $response['success'] = true;
                     $response['data'] = [];
-                    if(env('APP_DEBUG'))
-                    {
+                    if (env('APP_DEBUG')) {
                         $response['hint'][] = trans('vaahcms-general.no_permission_slug').': '.$permission_slug.
                             ' '.trans('vaahcms-general.is_active_for').' '.\Auth::user()->email;
                     }
+
                     return $response;
 
-                } else{
+                } else {
                     return true;
                 }
                 break;
             }
         }
 
-        if($details)
-        {
+        if ($details) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
-            if(env('APP_DEBUG'))
-            {
+            if (env('APP_DEBUG')) {
                 $response['hint'][] = trans('vaahcms-general.no_permission_slug').': '.$permission_slug.
                     ' '.trans('vaahcms-general.is_not_active_for').' '.\Auth::user()->email;
             }
+
             return $response;
 
-        } else{
+        } else {
             return false;
         }
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public function hasPermissions($permission_slugs)
     {
-        $permission_slugs_string = implode(', ',$permission_slugs);
+        $permission_slugs_string = implode(', ', $permission_slugs);
 
-        foreach($permission_slugs as $permission_slug){
-            if(!Auth::user()->hasPermission($permission_slug)){
+        foreach ($permission_slugs as $permission_slug) {
+            if (! Auth::user()->hasPermission($permission_slug)) {
                 return vh_get_permission_denied_response($permission_slugs_string);
             }
         }
 
         $response = [];
         $response['success'] = true;
+
         return $response;
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
+    // -------------------------------------------------
 
-    //-------------------------------------------------
-
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function getAvatarById($id)
     {
         $user = self::find($id);
+
         return $user->thumbnail;
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function notifySuperAdmins($subject, $message)
     {
         $users = self::getByRoles(['super-administrator']);
 
-        if(count($users) < 0)
-        {
+        if (count($users) < 0) {
             return false;
         }
 
         $to = [];
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $item = ['email' => $user->email, 'name' => $user->name];
             $to[] = $item;
         }
@@ -1204,7 +1203,8 @@ class UserBase extends Authenticatable
         VaahMail::dispatchGenericMail($subject, $message, $to);
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getUsersForAssets()
     {
 
@@ -1215,10 +1215,11 @@ class UserBase extends Authenticatable
         return $list;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function createItem($request)
     {
-        if (!\Auth::user()->hasPermission('can-create-users')) {
+        if (! \Auth::user()->hasPermission('can-create-users')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.permission_denied');
 
@@ -1229,47 +1230,50 @@ class UserBase extends Authenticatable
 
         $validate = self::validation($inputs);
 
-        if (isset($validate['success']) && !$validate['success']) {
+        if (isset($validate['success']) && ! $validate['success']) {
             return $validate;
         }
 
-        $rules = array(
+        $rules = [
             'password' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $inputs, $rules);
+        $validator = \Validator::make($inputs, $rules);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         // check if already exist
-        $user = self::withTrashed()->where('email',$inputs['email'])->first();
+        $user = self::withTrashed()->where('email', $inputs['email'])->first();
 
         if ($user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
+
             return $response;
         }
 
         // check if username already exist
-        $user = self::withTrashed()->where('username',$inputs['username'])->first();
+        $user = self::withTrashed()->where('username', $inputs['username'])->first();
 
         if ($user) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
+
             return $response;
         }
 
-        if (!isset($inputs['username'])) {
+        if (! isset($inputs['username'])) {
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1 ) {
+        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1) {
             $inputs['is_active'] = 1;
         } else {
             $inputs['is_active'] = 0;
@@ -1277,7 +1281,7 @@ class UserBase extends Authenticatable
 
         $inputs['created_ip'] = request()->ip();
 
-        $reg = new static();
+        $reg = new static;
         $reg->fill($inputs);
         $reg->save();
 
@@ -1286,13 +1290,15 @@ class UserBase extends Authenticatable
         $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
-        if( !isset($filter['sort'])) {
+        if (! isset($filter['sort'])) {
             return $query->orderBy('id', 'desc');
         }
 
@@ -1300,7 +1306,7 @@ class UserBase extends Authenticatable
 
         $direction = Str::contains($sort, ':');
 
-        if (!$direction) {
+        if (! $direction) {
             return $query->orderBy($sort, 'asc');
         }
 
@@ -1308,33 +1314,34 @@ class UserBase extends Authenticatable
 
         return $query->orderBy($sort[0], $sort[1]);
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeIsActiveFilter($query, $filter)
     {
 
-        if (!isset($filter['is_active'])
+        if (! isset($filter['is_active'])
             || is_null($filter['is_active'])
             || $filter['is_active'] === 'null'
-        )
-        {
+        ) {
             return $query;
         }
 
         $is_active = $filter['is_active'];
 
         if ($is_active === 'true' || $is_active === true) {
-            return $query->where('is_active',1);
+            return $query->where('is_active', 1);
         } else {
-            return $query->where(function ($f){
-                $f->where('is_active',0);
+            return $query->where(function ($f) {
+                $f->where('is_active', 0);
                 $f->orWhereNull('is_active');
             });
         }
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeTrashedFilter($query, $filter)
     {
-        if (!isset($filter['trashed'])) {
+        if (! isset($filter['trashed'])) {
             return $query;
         }
 
@@ -1342,32 +1349,34 @@ class UserBase extends Authenticatable
 
         if ($trashed === 'include') {
             return $query->withTrashed();
-        } else if($trashed === 'only'){
+        } elseif ($trashed === 'only') {
             return $query->onlyTrashed();
         }
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
-        if (!isset($filter['q'])) {
+        if (! isset($filter['q'])) {
             return $query;
         }
 
         $search = $filter['q'];
 
         $query->where(function ($q) use ($search) {
-            $q->where('first_name', 'LIKE', '%'. $search . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('middle_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('display_name', 'LIKE', '%' . $search . '%')
-                ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $search .'%')
-                ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'. $search .'%')
-                ->orWhere('email', 'LIKE', '%' . $search .'%')
+            $q->where('first_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('middle_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('display_name', 'LIKE', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
                 ->orWhere('id', '=', $search);
         });
     }
-    //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+
+    // -------------------------------------------------
+    public static function getList($request, $excluded_columns = [])
     {
         if (isset($request['recount']) && $request['recount'] == true) {
             Role::syncRolesWithUsers();
@@ -1379,7 +1388,7 @@ class UserBase extends Authenticatable
         $list->searchFilter($request->filter);
 
         if (isset($request['from']) && isset($request['to'])) {
-            $list->betweenDates($request['from'],$request['to']);
+            $list->betweenDates($request['from'], $request['to']);
         }
 
         $rows = config('vaahcms.per_page');
@@ -1399,30 +1408,31 @@ class UserBase extends Authenticatable
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function getItem($id,$excluded_columns = [], $type=null)
+
+    // -------------------------------------------------
+    public static function getItem($id, $excluded_columns = [], $type = null)
     {
 
         $item = self::where('id', $id)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
             ->withTrashed();
 
-        if(!$item)
-        {
+        if (! $item) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.record_not_found_with_id').': '.$id;
+
             return $response;
         }
 
-        if (!\Auth::user()->hasPermission('can-see-users-contact-details')) {
-            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        if (! \Auth::user()->hasPermission('can-see-users-contact-details')) {
+            $item->exclude(array_merge(['email', 'alternate_email', 'phone'], $excluded_columns));
         } else {
             $item->exclude($excluded_columns);
         }
 
         $item = $item->first();
-        if ($type==="generate-new-token"){
-           $response['messages'][] = trans("vaahcms-general.action_successful") ;
+        if ($type === 'generate-new-token') {
+            $response['messages'][] = trans('vaahcms-general.action_successful');
         }
         $response['success'] = true;
         $response['data'] = $item;
@@ -1430,22 +1440,20 @@ class UserBase extends Authenticatable
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function getItemRoles($request,$id)
+
+    // -------------------------------------------------
+    public static function getItemRoles($request, $id)
     {
         $item = self::withTrashed()->where('id', $id)->first();
 
         $response['data']['item'] = $item;
 
-
-        if($request->has("q"))
-        {
-            $list = $item->roles()->where(function ($q) use ($request){
+        if ($request->has('q')) {
+            $list = $item->roles()->where(function ($q) use ($request) {
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
             });
-        } else
-        {
+        } else {
             $list = $item->roles();
         }
 
@@ -1453,8 +1461,7 @@ class UserBase extends Authenticatable
 
         $list = $list->paginate(config('vaahcms.per_page'));
 
-
-        foreach ($list as $role){
+        foreach ($list as $role) {
 
             $data = self::getPivotData($role->pivot);
 
@@ -1469,7 +1476,7 @@ class UserBase extends Authenticatable
 
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
     public static function postStore($request)
     {
 
@@ -1477,71 +1484,61 @@ class UserBase extends Authenticatable
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['success']) && !$validate['success'])
-        {
+        if (isset($validate['success']) && ! $validate['success']) {
             return $validate;
         }
 
-        if(isset($inputs['phone']))
-        {
+        if (isset($inputs['phone'])) {
             $rules['phone'] = 'integer';
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'] = $errors;
+
                 return $response;
             }
         }
 
-
-
-
-        if($request->has('birth'))
-        {
+        if ($request->has('birth')) {
             $inputs['birth'] = Carbon::parse($request->birth)->format('Y-m-d');
         }
 
-        if($request->has('id'))
-        {
+        if ($request->has('id')) {
 
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('email',$inputs['email'])->first();
+                ->where('email', $inputs['email'])->first();
 
-            if($user)
-            {
+            if ($user) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.email_already_registered');
+
                 return $response;
             }
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
-                ->where('username',$inputs['username'])->first();
+                ->where('username', $inputs['username'])->first();
 
-            if($user)
-            {
+            if ($user) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_registered');
+
                 return $response;
             }
 
             $item = self::find($request->id);
-        } else
-        {
+        } else {
             $validation = self::userValidation($request);
-            if(isset($validation['success']) && !$validation['success'])
-            {
+            if (isset($validation['success']) && ! $validation['success']) {
                 return $validation;
-            } else if(isset($validation['status'])
-                && $validation['status'] == 'registration-exist')
-            {
+            } elseif (isset($validation['status'])
+                && $validation['status'] == 'registration-exist') {
                 $item = $validation['data'];
-            } else
-            {
-                $item = new User();
+            } else {
+                $item = new User;
                 $item->password = generate_password();
                 $item->is_active = 1;
                 $item->status = 'active';
@@ -1551,18 +1548,15 @@ class UserBase extends Authenticatable
         }
 
         $item->fill($inputs);
-        if($request->has('password'))
-        {
+        if ($request->has('password')) {
             $item->password = $request->password;
         }
 
         $item->save();
 
-        if(!$request->has('id'))
-        {
+        if (! $request->has('id')) {
             Role::syncRolesWithUsers();
         }
-
 
         $response['success'] = true;
         $response['messages'][] = trans('vaahcms-general.saved');
@@ -1570,53 +1564,51 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkStatusChange($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
-            $reg = self::where('id',$id)->withTrashed()->first();
+        foreach ($request->inputs as $id) {
+            $reg = self::where('id', $id)->withTrashed()->first();
 
-            if($reg->deleted_at){
-                continue ;
+            if ($reg->deleted_at) {
+                continue;
             }
 
             $is_restricted = self::restrictedActions($request->action, $reg->id);
 
-            if($is_restricted && $reg->is_active == 1)
-            {
+            if ($is_restricted && $reg->is_active == 1) {
                 continue;
             }
 
-            if($request['data']){
+            if ($request['data']) {
                 $reg->is_active = $request['data']['status'];
-                if( $request['data']['status'] == 1){
+                if ($request['data']['status'] == 1) {
                     $reg->status = 'active';
-                }else{
+                } else {
                     $reg->status = 'inactive';
                 }
-            }else{
-                if($reg->is_active == 1){
+            } else {
+                if ($reg->is_active == 1) {
                     $reg->is_active = 0;
                     $reg->status = 'inactive';
-                }else{
+                } else {
                     $reg->is_active = 1;
                     $reg->status = 'active';
                 }
@@ -1631,30 +1623,26 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkTrash($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $item = self::find($id);
-            if($item)
-            {
-
+            if ($item) {
 
                 $is_restricted = self::restrictedActions($request->action, $item->id);
 
-                if($is_restricted)
-                {
+                if ($is_restricted) {
                     continue;
                 }
 
@@ -1672,34 +1660,31 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function bulkRestore($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
 
             $item = self::withTrashed()->where('id', $id)->first();
 
-            if(isset($item) && isset($item->deleted_at))
-            {
+            if (isset($item) && isset($item->deleted_at)) {
                 $item->restore();
             }
         }
@@ -1710,9 +1695,8 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function bulkChangeRoleStatus($request)
     {
@@ -1721,28 +1705,26 @@ class UserBase extends Authenticatable
 
         $role = Role::find($inputs['inputs']['role_id']);
 
-        if($role && $inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
-            && $inputs['data']['is_active'] == 0)
-        {
+        if ($role && $inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
+            && $inputs['data']['is_active'] == 0) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.first_user_super_administrator');
+
             return $response;
         }
 
         $item = self::withTrashed()->find($inputs['inputs']['id']);
 
-
         $data = [
             'is_active' => $inputs['data']['is_active'],
-            'updated_at' => Carbon::now()
+            'updated_at' => Carbon::now(),
         ];
 
-
-        if($inputs['inputs']['role_id']){
+        if ($inputs['inputs']['role_id']) {
             $pivot = $item->roles->find($inputs['inputs']['role_id'])->pivot;
 
-            if($pivot->is_active === null && !$pivot->created_by){
-                //$data['created_by'] = Auth::user()->id;
+            if ($pivot->is_active === null && ! $pivot->created_by) {
+                // $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = Carbon::now();
             }
 
@@ -1751,10 +1733,10 @@ class UserBase extends Authenticatable
                 $data
             );
 
-        }else{
+        } else {
             $role_ids = [];
-            if(isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])){
-                $role_ids = Role::where(function ($q) use($inputs){
+            if (isset($inputs['inputs']['query']) && isset($inputs['inputs']['query']['q'])) {
+                $role_ids = Role::where(function ($q) use ($inputs) {
                     $q->where('name', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%')
                         ->orWhere('slug', 'LIKE', '%'.$inputs['inputs']['query']['q'].'%');
                 })->pluck('id');
@@ -1764,8 +1746,8 @@ class UserBase extends Authenticatable
                 ->newPivotStatement()
                 ->where('vh_user_id', '=', $item->id);
 
-            if(count($role_ids) > 0){
-                $item_roles->whereIn('vh_role_id',$role_ids);
+            if (count($role_ids) > 0) {
+                $item_roles->whereIn('vh_role_id', $role_ids);
             }
 
             $item_roles->update($data);
@@ -1778,38 +1760,34 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
 
-    //-------------------------------------------------
+    // -------------------------------------------------
 
     public static function bulkDelete($request)
     {
 
-        if(!$request->has('inputs'))
-        {
+        if (! $request->has('inputs')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_ids');
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
+        if (! $request->has('data')) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.select_status');
+
             return $response;
         }
 
-        foreach($request->inputs as $id)
-        {
+        foreach ($request->inputs as $id) {
             $item = self::where('id', $id)->withTrashed()->first();
-            if($item)
-            {
+            if ($item) {
 
                 $is_restricted = self::restrictedActions($request->action, $item->id);
 
-                if($is_restricted)
-                {
+                if ($is_restricted) {
                     continue;
                 }
 
@@ -1826,14 +1804,14 @@ class UserBase extends Authenticatable
 
         return $response;
 
-
     }
-    //-------------------------------------------------
+    // -------------------------------------------------
 
-    //-------------------------------------------------
-    public static function validation($inputs){
+    // -------------------------------------------------
+    public static function validation($inputs)
+    {
 
-        $rules = array(
+        $rules = [
 
             'email' => 'required|email|max:150',
             'first_name' => 'required|max:150',
@@ -1841,143 +1819,137 @@ class UserBase extends Authenticatable
             'is_active' => 'required',
             'foreign_user_id' => 'nullable|numeric|min:1',
 
-        );
+        ];
 
-        if(isset($inputs['username']))
-        {
+        if (isset($inputs['username'])) {
             $rules['username'] = 'required';
         }
 
-        $validator = \Validator::make($inputs,$rules);
+        $validator = \Validator::make($inputs, $rules);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function storeProfile($request)
     {
-        $rules = array(
+        $rules = [
             'first_name' => 'required|max:150',
             'last_name' => 'required|max:150',
             'email' => 'required|email|max:150',
-        );
+        ];
 
-
-        if($request->has('username'))
-        {
+        if ($request->has('username')) {
             $rules['username'] = 'alpha_dash|max:15';
         }
 
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        if(!\Auth::check())
-        {
+        if (! \Auth::check()) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.logged_in_to_update_profile');
+
             return $response;
         }
-
 
         $inputs = $request->all();
 
         $user = self::find(\Auth::user()->id);
 
-
-        if(
-            $request->has('username') && !empty($request->username)
+        if (
+            $request->has('username') && ! empty($request->username)
             && $request->username != $user->username
-        )
-        {
+        ) {
             $user_exist = self::where('username', $request->username)
                 ->first();
-            if($user_exist)
-            {
+            if ($user_exist) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_taken');
+
                 return $response;
             }
         }
 
-        if($user->email != $inputs['email'] && !empty($inputs['email']))
-        {
+        if ($user->email != $inputs['email'] && ! empty($inputs['email'])) {
 
             $email_exist = self::where('email', $inputs['email'])
                 ->first();
 
-            if($email_exist)
-            {
+            if ($email_exist) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.email_associate_with_other_user');
+
                 return $response;
             }
 
         }
 
-        if(isset($inputs['password']))
-        {
+        if (isset($inputs['password'])) {
             unset($inputs['password']);
         }
 
         $user->fill($inputs);
         $user->save();
 
-
         $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
+
         return $response;
 
-
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function storePassword($request)
     {
-        $rules = array(
+        $rules = [
             'current_password' => 'required|max:25',
             'new_password' => 'required|max:25',
             'confirm_password' => 'required|max:25',
-        );
+        ];
 
-        $validator = \Validator::make($request->all(),$rules);
+        $validator = \Validator::make($request->all(), $rules);
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
-        if($request->new_password != $request->confirm_password)
-        {
+        if ($request->new_password != $request->confirm_password) {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.confirm_password_not_match');
+
             return $response;
         }
 
-
-        try{
+        try {
 
             $check = \Hash::check($request->current_password, auth()->user()->password);
 
-            if(!$check)
-            {
+            if (! $check) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.current_password_incorrect');
+
                 return $response;
             }
 
@@ -1991,9 +1963,7 @@ class UserBase extends Authenticatable
 
             return $response;
 
-
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
@@ -2001,26 +1971,27 @@ class UserBase extends Authenticatable
 
         return $response;
     }
-    //-------------------------------------------------
-    public static function storeAvatar($request,$user_id=null)
+
+    // -------------------------------------------------
+    public static function storeAvatar($request, $user_id = null)
     {
-        $rules = array(
+        $rules = [
             'url' => 'required',
-        );
+        ];
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        $validator = \Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
 
-            $errors             = errorsToArray($validator->errors());
+            $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
+
             return $response;
         }
 
         $data = [];
 
-        if(!$user_id)
-        {
+        if (! $user_id) {
             $user_id = \Auth::user()->id;
         }
 
@@ -2037,14 +2008,14 @@ class UserBase extends Authenticatable
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function removeAvatar($user_id=null)
+
+    // -------------------------------------------------
+    public static function removeAvatar($user_id = null)
     {
 
         $data = [];
 
-        if(!$user_id)
-        {
+        if (! $user_id) {
             $user_id = \Auth::user()->id;
         }
 
@@ -2060,52 +2031,54 @@ class UserBase extends Authenticatable
         return $response;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getPivotData($pivot)
     {
 
-        $data = array();
+        $data = [];
 
-        if($pivot->created_by && self::find($pivot->created_by)){
+        if ($pivot->created_by && self::find($pivot->created_by)) {
             $data['Created by'] = self::find($pivot->created_by)->name;
         }
 
-        if($pivot->updated_by && self::find($pivot->updated_by)){
+        if ($pivot->updated_by && self::find($pivot->updated_by)) {
             $data['Updated by'] = self::find($pivot->updated_by)->name;
         }
 
-        if($pivot->created_at){
+        if ($pivot->created_at) {
             $data['Created at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
-        if($pivot->updated_at){
+        if ($pivot->updated_at) {
             $data['Updated at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public static function getUserSettings($return_hidden_column_name = false,
-                                           $return_registration_columns = false)
+        $return_registration_columns = false)
     {
 
-        $settings = Setting::where('category','user_setting')
-            ->where('label','field');
+        $settings = Setting::where('category', 'user_setting')
+            ->where('label', 'field');
 
-        $settings = $settings->select('id','key','type','value','meta')->get();
+        $settings = $settings->select('id', 'key', 'type', 'value', 'meta')->get();
 
-        $list = array();
+        $list = [];
 
-        foreach ($settings as $key => $setting){
-            if(!$return_hidden_column_name){
+        foreach ($settings as $key => $setting) {
+            if (! $return_hidden_column_name) {
                 $list[$setting->key] = $setting->value;
-            }elseif(isset($setting->value->is_hidden)
-                && $setting->value->is_hidden){
-                if(!$return_registration_columns){
+            } elseif (isset($setting->value->is_hidden)
+                && $setting->value->is_hidden) {
+                if (! $return_registration_columns) {
                     $list[$key] = $setting->key;
-                }elseif(isset($setting->value->to_registration)
-                    && $setting->value->to_registration){
+                } elseif (isset($setting->value->to_registration)
+                    && $setting->value->to_registration) {
                     $list[$key] = $setting->key;
                 }
             }
@@ -2115,11 +2088,12 @@ class UserBase extends Authenticatable
         return $list;
 
     }
-    //-------------------------------------------------
+
+    // -------------------------------------------------
     public function verifySecurityAuthentication()
     {
 
-        try{
+        try {
 
             $this->security_code = null;
             $this->security_code_expired_at = null;
@@ -2130,22 +2104,22 @@ class UserBase extends Authenticatable
             $response['success'] = false;
             $response['data'] = null;
 
-            if(!config('settings.global.mfa_status')
+            if (! config('settings.global.mfa_status')
                 || config('settings.global.mfa_status') === 'disable'
-                || !is_array(config('settings.global.mfa_methods'))
+                || ! is_array(config('settings.global.mfa_methods'))
                 || (is_array(config('settings.global.mfa_methods'))
-                    && count(config('settings.global.mfa_methods')) == 0)){
+                    && count(config('settings.global.mfa_methods')) == 0)) {
                 $has_security = false;
             }
 
-            if(config('settings.global.mfa_status') == 'user-will-have-option'
-                && (!is_array($this->mfa_methods)
-                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+            if (config('settings.global.mfa_status') == 'user-will-have-option'
+                && (! is_array($this->mfa_methods)
+                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))) {
 
                 $has_security = false;
             }
 
-            if(!$has_security){
+            if (! $has_security) {
                 return $response;
             }
 
@@ -2153,10 +2127,9 @@ class UserBase extends Authenticatable
             $this->security_code_expired_at = now()->addMinutes(10);
             $this->save();
 
-            $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+            $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()), [$this->email]);
 
-
-            if(isset($vaah_mail_response['success']) && !$vaah_mail_response['success']){
+            if (isset($vaah_mail_response['success']) && ! $vaah_mail_response['success']) {
                 return $vaah_mail_response;
             }
 
@@ -2166,7 +2139,7 @@ class UserBase extends Authenticatable
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -2178,8 +2151,8 @@ class UserBase extends Authenticatable
 
     }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
+    // -------------------------------------------------
 }

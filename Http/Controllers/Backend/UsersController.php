@@ -13,16 +13,15 @@ use WebReinvent\VaahCms\Models\User;
 
 class UsersController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-users-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -40,7 +39,7 @@ class UsersController extends Controller
                 'deleted_by',
             ];
 
-            $model = new User();
+            $model = new User;
             $fillable = $model->getFillable();
             $data['fillable']['columns'] = array_diff(
                 $fillable, $data['fillable']['except']
@@ -50,8 +49,8 @@ class UsersController extends Controller
                 $data['empty_item'][$column] = null;
             }
 
-            $custom_fields = Setting::query()->where('category','user_setting')
-                ->where('label','custom_fields')->first();
+            $custom_fields = Setting::query()->where('category', 'user_setting')
+                ->where('label', 'custom_fields')->first();
 
             $data['empty_item']['meta']['custom_fields'] = [];
 
@@ -63,22 +62,22 @@ class UsersController extends Controller
 
             $roles_count = Role::all()->count();
 
-          //---------------------------------------------------
+            // ---------------------------------------------------
 
             $data['language_strings'] = [
-                "page_title" => trans("vaahcms-user.users_title"),
-                "view_role_active_all_roles" => trans("vaahcms-user.view_role_active_all_roles"),
-                "view_role_inactive_all_roles" => trans("vaahcms-user.view_role_inactive_all_roles"),
-                "view_generate_new_api_token" => trans("vaahcms-user.view_generate_new_api_token"),
-                "view_role_yes" => trans("vaahcms-user.view_role_yes"),
-                "view_role_no" => trans("vaahcms-user.view_role_no"),
-                "view_role_text_view" => trans("vaahcms-user.view_role_text_view"),
-                "view_role_placeholder_search" => trans("vaahcms-user.view_role_placeholder_search"),
-                "view_role_reset_button" => trans("vaahcms-user.view_role_reset_button"),
-                "toolkit_text_impersonate" => trans("vaahcms-user.toolkit_text_impersonate"),
+                'page_title' => trans('vaahcms-user.users_title'),
+                'view_role_active_all_roles' => trans('vaahcms-user.view_role_active_all_roles'),
+                'view_role_inactive_all_roles' => trans('vaahcms-user.view_role_inactive_all_roles'),
+                'view_generate_new_api_token' => trans('vaahcms-user.view_generate_new_api_token'),
+                'view_role_yes' => trans('vaahcms-user.view_role_yes'),
+                'view_role_no' => trans('vaahcms-user.view_role_no'),
+                'view_role_text_view' => trans('vaahcms-user.view_role_text_view'),
+                'view_role_placeholder_search' => trans('vaahcms-user.view_role_placeholder_search'),
+                'view_role_reset_button' => trans('vaahcms-user.view_role_reset_button'),
+                'toolkit_text_impersonate' => trans('vaahcms-user.toolkit_text_impersonate'),
             ];
 
-            //---------------------------------------------------
+            // ---------------------------------------------------
             $data['actions'] = [];
             $data['name_titles'] = vh_name_titles();
             $data['countries'] = vh_get_country_list();
@@ -94,7 +93,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -104,12 +103,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-users-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -119,21 +119,23 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
                 $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
+
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
         $permission_slug = 'can-update-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -143,7 +145,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -153,12 +155,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
         $permission_slug = 'can-update-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -168,7 +171,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -178,7 +181,8 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
         try {
@@ -187,7 +191,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -197,13 +201,14 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
 
         $permission_slug = 'can-create-user';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -213,7 +218,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -223,12 +228,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-read-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -238,7 +244,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -248,12 +254,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function updateItem(Request $request,$id): JsonResponse
+
+    // ----------------------------------------------------------
+    public function updateItem(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-update-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -264,7 +271,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -274,23 +281,24 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function deleteItem(Request $request,$id): JsonResponse
+
+    // ----------------------------------------------------------
+    public function deleteItem(Request $request, $id): JsonResponse
     {
-        $permission_slugs = ['can-update-users','can-delete-users'];
+        $permission_slugs = ['can-update-users', 'can-delete-users'];
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
         try {
             $is_restricted = User::restrictedActions('delete', $id);
 
-            if(isset($is_restricted['success']) && !$is_restricted['success'])
-            {
+            if (isset($is_restricted['success']) && ! $is_restricted['success']) {
                 $response['success'] = false;
                 $response['errors'] = $is_restricted['errors'];
+
                 return response()->json($response);
             }
             $response = User::deleteItem($request, $id);
@@ -298,7 +306,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -308,14 +316,15 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function itemAction(Request $request,$id,$action): JsonResponse
+
+    // ----------------------------------------------------------
+    public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        $permission_slugs = ['can-manage-users','can-update-users'];
+        $permission_slugs = ['can-manage-users', 'can-update-users'];
 
         $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+        if (isset($permission_response['success']) && $permission_response['success'] == false) {
             return response()->json($permission_response);
         }
 
@@ -323,19 +332,19 @@ class UsersController extends Controller
 
             $is_restricted = User::restrictedActions($action, $id);
 
-            if(isset($is_restricted['success']) && !$is_restricted['success'])
-            {
-                $response =  User::getItem($id);
+            if (isset($is_restricted['success']) && ! $is_restricted['success']) {
+                $response = User::getItem($id);
                 $response['errors'] = $is_restricted['errors'];
+
                 return response()->json($response);
             }
 
-            $response = User::itemAction($request,$id,$action);
+            $response = User::itemAction($request, $id, $action);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -345,12 +354,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getItemRoles(Request $request, $id): JsonResponse
     {
         $permission_slug = 'can-read-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -359,8 +369,8 @@ class UsersController extends Controller
 
             $response['data']['item'] = $item;
 
-            if ($request->has("q")) {
-                $list = $item->roles()->where(function ($q) use ($request){
+            if ($request->has('q')) {
+                $list = $item->roles()->where(function ($q) use ($request) {
                     $q->where('name', 'LIKE', '%'.$request->q.'%')
                         ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
                 });
@@ -391,7 +401,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -402,100 +412,101 @@ class UsersController extends Controller
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
-    public function postActions(Request $request, $action) : JsonResponse
+
+    // ----------------------------------------------------------
+    public function postActions(Request $request, $action): JsonResponse
     {
         try {
-            $rules = array(
+            $rules = [
                 'inputs' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
             $response = [];
 
-            $request->merge(['action'=>$action]);
+            $request->merge(['action' => $action]);
 
-            switch ($action)
-            {
-                //------------------------------------
+            switch ($action) {
+                // ------------------------------------
                 case 'bulk-change-status':
 
-                    $permission_slugs = ['can-manage-users','can-update-users'];
+                    $permission_slugs = ['can-manage-users', 'can-update-users'];
 
                     $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                    if (isset($permission_response['success']) && $permission_response['success'] == false) {
                         return response()->json($permission_response);
                     }
 
                     $response = User::bulkStatusChange($request);
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
                 case 'bulk-trash':
 
                     $permission_slug = 'can-update-users';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = User::bulkTrash($request);
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
                 case 'bulk-restore':
 
                     $permission_slug = 'can-update-users';
 
-                    if(!Auth::user()->hasPermission($permission_slug)) {
+                    if (! Auth::user()->hasPermission($permission_slug)) {
                         return vh_get_permission_denied_json_response($permission_slug);
                     }
 
                     $response = User::bulkRestore($request);
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
                 case 'bulk-delete':
 
-                    $permission_slugs = ['can-update-users','can-delete-users'];
+                    $permission_slugs = ['can-update-users', 'can-delete-users'];
                     $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                    if (isset($permission_response['success']) && $permission_response['success'] == false) {
                         return response()->json($permission_response);
                     }
 
                     $response = User::bulkDelete($request);
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
                 case 'toggle-role-active-status':
 
-                    $permission_slugs = ['can-manage-users','can-update-users'];
+                    $permission_slugs = ['can-manage-users', 'can-update-users'];
                     $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-                    if(isset($permission_response['success']) && $permission_response['success'] == false) {
+                    if (isset($permission_response['success']) && $permission_response['success'] == false) {
                         return response()->json($permission_response);
                     }
 
                     $response = User::bulkChangeRoleStatus($request);
 
                     break;
-                //------------------------------------
+                    // ------------------------------------
             }
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -505,26 +516,28 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function storeAvatar(Request $request): JsonResponse
     {
         $permission_slug = 'can-update-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $rules = array(
+            $rules = [
                 'user_id' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
 
-                $errors             = errorsToArray($validator->errors());
+                $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
@@ -533,7 +546,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -543,25 +556,27 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function removeAvatar(Request $request)
     {
         $permission_slug = 'can-update-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            $rules = array(
+            $rules = [
                 'user_id' => 'required',
-            );
+            ];
 
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'][] = $errors;
+
                 return response()->json($response);
             }
 
@@ -570,7 +585,7 @@ class UsersController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
@@ -580,12 +595,13 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function impersonate(Request $request, $uuid): JsonResponse
     {
         $permission_slug = 'can-impersonate-users';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -593,22 +609,24 @@ class UsersController extends Controller
             $response = [];
             $user = User::where('uuid', $uuid)->first();
 
-
-            if(!$user){
+            if (! $user) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.user_does_not_exist');
+
                 return response()->json($response);
             }
 
-            if($user->is_active != 1){
+            if ($user->is_active != 1) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.user_is_not_active');
+
                 return response()->json($response);
             }
 
-            if(!$user->hasPermission('can-login-in-backend')){
+            if (! $user->hasPermission('can-login-in-backend')) {
                 $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.impersonate_permission_denied');
+
                 return response()->json($response);
             }
 
@@ -616,7 +634,6 @@ class UsersController extends Controller
 
             $response['success'] = true;
             $response['redirect_url'] = route('vh.backend').'#/vaah';
-
 
         } catch (\Exception $e) {
             $response = [];
@@ -632,7 +649,8 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function impersonateLogout(Request $request): JsonResponse
     {
 
@@ -644,9 +662,7 @@ class UsersController extends Controller
             $response['success'] = true;
             $response['data'] = '';
 
-
         } catch (\Exception $e) {
-
 
             $response = [];
             $response['success'] = false;
@@ -661,5 +677,5 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }

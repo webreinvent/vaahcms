@@ -8,22 +8,20 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 
 class EnvController extends Controller
 {
-    //----------------------------------------------------------
-    public function __construct()
-    {
-    }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
+    public function __construct() {}
+
+    // ----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -35,14 +33,14 @@ class EnvController extends Controller
             $data['mail_encryption_types'] = vh_mail_encryption_types();
             $data['mail_sample_settings'] = vh_mail_sample_settings();
             $data['country_calling_codes'] = vh_get_countries_calling_codes();
-            $data['app_url'] = url("/");
+            $data['app_url'] = url('/');
             $data['language_strings'] = [
-                "env_variable_heading" => trans("vaahcms-env-variable.env_variable_heading"),
-                "download" => trans("vaahcms-env-variable.download"),
-                "refresh" => trans("vaahcms-env-variable.refresh"),
-                "add_env_variable_button" => trans("vaahcms-env-variable.add_env_variable_button"),
-                "env_variable_save_button" => trans("vaahcms-env-variable.env_variable_save_button"),
-                ];
+                'env_variable_heading' => trans('vaahcms-env-variable.env_variable_heading'),
+                'download' => trans('vaahcms-env-variable.download'),
+                'refresh' => trans('vaahcms-env-variable.refresh'),
+                'add_env_variable_button' => trans('vaahcms-env-variable.add_env_variable_button'),
+                'env_variable_save_button' => trans('vaahcms-env-variable.env_variable_save_button'),
+            ];
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {
@@ -53,18 +51,19 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -84,27 +83,28 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function downloadFile(Request $request, $file_name): BinaryFileResponse | string
+
+    // ----------------------------------------------------------
+    public function downloadFile(Request $request, $file_name): BinaryFileResponse|string
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
         try {
-            if(!$file_name || !File::exists(base_path('/'.$file_name))){
+            if (! $file_name || ! File::exists(base_path('/'.$file_name))) {
                 return 'No File Found.';
             }
 
-            $file_path =  base_path('/'.$file_name);
+            $file_path = base_path('/'.$file_name);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -113,18 +113,19 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->download($file_path);
     }
-    //----------------------------------------------------------
+
+    // ----------------------------------------------------------
     public function store(Request $request): JsonResponse
     {
         $permission_slug = 'has-access-of-setting-section';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
+        if (! Auth::user()->hasPermission($permission_slug)) {
             return vh_get_permission_denied_json_response($permission_slug);
         }
 
@@ -143,11 +144,11 @@ class EnvController extends Controller
                 $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTraceAsString();
             } else {
-                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+                $response['errors'][] = trans('vaahcms-general.something_went_wrong');
             }
         }
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
+    // ----------------------------------------------------------
 }
