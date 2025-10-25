@@ -31,6 +31,9 @@ Route::group(
         //------------------------------------------------
         Route::any( '/publish/assets/{slug}', 'PublicController@publishAssets' )
             ->name( 'vh.backend.publish.assets' );
+        //------------------------------------------------
+        Route::any( '/health', 'PublicController@healthCheck' )
+            ->name( 'vh.backend.health.check' );
 
     });
 
