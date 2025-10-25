@@ -8,7 +8,7 @@
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '2.3.1',
+    'version' => '2.3.2',
     'php_version_required' => '8.1',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
@@ -30,7 +30,7 @@ $settings =  [
     'per_page' => 20,
     'build_directory_name' => 'vaahcms',    //config('vaahcms.build_directory_name')
     'minified' => 0,
-    'api_route' => 'https://api.vaah.dev/cms/v2/',
+    'api_route' => 'https://api.vaah.dev/api/',
     'debug' => 1,
     'uploads' => [
         'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]

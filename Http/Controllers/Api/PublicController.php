@@ -123,4 +123,25 @@ class PublicController extends Controller
     }
     //----------------------------------------------------------
 
+    //----------------------------------------------------------
+    public function healthCheck(Request $request)
+    {
+        try{
+            return 'OK';
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTraceAsString();
+            } else {
+                $response['errors'][] = trans("vaahcms-general.something_went_wrong");
+            }
+        }
+
+
+        return response()->json($response);
+
+    }
 }
