@@ -704,6 +704,7 @@ function vh_get_countries_calling_codes()
         ['slug'=>'670', 'name'=>'Northern Marianas (+670)'],
         ['slug'=>'47', 'name'=>'Norway (+47)'],
         ['slug'=>'968', 'name'=>'Oman (+968)'],
+        ['slug'=>'92', 'name'=>'Pakistan (+92)'],
         ['slug'=>'680', 'name'=>'Palau (+680)'],
         ['slug'=>'507', 'name'=>'Panama (+507)'],
         ['slug'=>'675', 'name'=>'Papua New Guinea (+675)'],
