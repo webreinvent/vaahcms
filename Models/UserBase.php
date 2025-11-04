@@ -83,7 +83,7 @@ class UserBase extends Authenticatable
     {
         $date_time_format = config('settings.global.datetime_format');
 
-        return $date->format($date_time_format);
+        return $date->format($date_time_format ?? 'Y-m-d H:i:s');
 
     }
 

@@ -39,7 +39,7 @@ class BatchBase extends Model
     {
         $date_time_format = config('settings.global.datetime_format');
 
-        return $date->format($date_time_format);
+        return $date->format($date_time_format ?? 'Y-m-d H:i:s');
     }
     //-------------------------------------------------
     protected function finishedAt(): Attribute
