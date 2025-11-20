@@ -9,7 +9,7 @@
 
 <br/>
 
-**VaahCMS** is built  with `Laravel 10`, `Vue 3`, `Pinia`, and `PrimeVue` which follows **Hierarchical Model View Controller (HMVC)** architectural pattern which supports multiple **Modules** and **Themes**. Each module and theme can be setup with just `blade` files support or can have its own frontend JavaScript library e.g. `Vue` or `React`.
+**VaahCMS** is built  with `Laravel`, `Vue`, `Pinia`, and `PrimeVue` which follows **Hierarchical Model View Controller (HMVC)** architectural pattern which supports multiple **Modules** and **Themes**. Each module and theme can be setup with just `blade` files support or can have its own frontend JavaScript library e.g. `Vue` or `React`.
 
 - [Introduction](https://vaah.dev/cms)
 - [Features](https://vaah.dev/cms/features)
