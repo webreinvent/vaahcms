@@ -121,17 +121,10 @@ class FailedJobsController extends Controller
     public function listAction(Request $request, $type): JsonResponse
     {
 
-        $permissions = [
-            'can-update-failed-jobs',
-            'can-delete-failed-jobs'
-        ];
+        $permission_slug = 'can-update-failed-jobs';
 
-        $hasPermission = collect($permissions)->contains(function ($perm) {
-            return Auth::user()->hasPermission($perm);
-        });
-
-        if (!$hasPermission) {
-            return vh_get_permission_denied_json_response(implode(' or ', $permissions));
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
         }
         try {
             $response = FailedJob::listAction($request, $type);
