@@ -96,6 +96,11 @@ class FailedJobsController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
+        $permission_slug = 'can-update-failed-jobs';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
         try {
             $response = FailedJob::updateList($request);
         } catch (\Exception $e) {
