@@ -181,6 +181,11 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+        $permission_slug = 'can-delete-users';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
         try {
             $response = User::deleteList($request);
         } catch (\Exception $e) {
