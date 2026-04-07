@@ -101,10 +101,11 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        $permission_slug = 'can-update-batch';
+        $permission_slugs = ['can-delete-batch','can-update-batch'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
-            return vh_get_permission_denied_json_response($permission_slug);
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
 
         try {
