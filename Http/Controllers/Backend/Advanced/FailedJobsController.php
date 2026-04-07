@@ -120,6 +120,11 @@ class FailedJobsController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
+
+        $permission_slug_update = 'can-update-failed-jobs';
+        $permission_slug_delete = 'can-delete-failed-jobs';
+
+
         try {
             $response = FailedJob::listAction($request, $type);
         } catch (\Exception $e) {
@@ -139,6 +144,12 @@ class FailedJobsController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+        $permission_slug = 'can-delete-failed-jobs';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
+
         try {
             $response = FailedJob::deleteList($request);
         } catch (\Exception $e) {
