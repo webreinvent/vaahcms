@@ -132,6 +132,11 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+        $permission_slug = 'can-delete-batch';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
         try {
             $response = Batch::deleteList($request);
         } catch (\Exception $e) {
