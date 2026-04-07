@@ -102,6 +102,13 @@ class JobsController extends Controller
 
     public function listAction(Request $request, $type): JsonResponse
     {
+
+        $permission_slugs = ['can-delete-jobs','can-update-jobs'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
+        }
         try {
             $response = Job::listAction($request, $type);
         } catch (\Exception $e) {
@@ -121,6 +128,13 @@ class JobsController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+
+        $permission_slugs = ['can-delete-jobs','can-update-jobs'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
+        }
         try {
             $response = Job::deleteList($request);
         } catch (\Exception $e) {
@@ -140,6 +154,12 @@ class JobsController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
+        $permission_slugs = ['can-delete-jobs','can-update-jobs'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
+        }
         try {
             $response = Job::deleteItem($request,$id);
         } catch (\Exception $e) {
@@ -159,6 +179,11 @@ class JobsController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
+        $permission_slug = 'can-update-jobs';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
         try {
             $response = Job::itemAction($request, $id, $action);
         } catch (\Exception $e) {

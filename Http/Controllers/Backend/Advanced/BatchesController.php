@@ -126,10 +126,11 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        $permission_slug = 'can-delete-batch';
+        $permission_slugs = ['can-delete-batch','can-update-batch'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
-            return vh_get_permission_denied_json_response($permission_slug);
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
         try {
             $response = Batch::deleteList($request);
@@ -150,10 +151,12 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        $permission_slug = 'can-delete-batch';
 
-        if(!Auth::user()->hasPermission($permission_slug)) {
-            return vh_get_permission_denied_json_response($permission_slug);
+        $permission_slugs = ['can-delete-batch','can-update-batch'];
+        $permission_response = Auth::user()->hasPermissions($permission_slugs);
+
+        if(isset($permission_response['success']) && $permission_response['success'] == false) {
+            return response()->json($permission_response);
         }
         try {
             $request->merge(['inputs' => [$id]]);
