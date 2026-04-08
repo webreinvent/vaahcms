@@ -59,7 +59,7 @@ const toggleItemMenu = (event) => {
 </script>
 
 <template>
-    <div class="grid" v-if="store.assets">
+    <div class="grid" v-if="store.assets && store.hasPermission('has-access-of-logs-section')">
         <div class='col-5'>
             <Panel class="is-small">
                 <template class="p-1" #header>
