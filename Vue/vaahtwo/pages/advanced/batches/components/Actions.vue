@@ -37,7 +37,8 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'&& root.assets.language_strings.general">
 
                 <!--selected_menu-->
-                <Button class="p-button-sm"
+                <Button v-if="store.hasPermission('can-update-batch') || store.hasPermission('can-delete-batch')"
+                        class="p-button-sm"
                         @click="toggleSelectedMenuState"
                         data-testid="batches-actions-menu"
                         aria-haspopup="true"
@@ -56,7 +57,8 @@ const toggleBulkMenuState = (event) => {
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button class="p-button-sm ml-1"
+                <Button v-if="store.hasPermission('can-update-batch') || store.hasPermission('can-delete-batch')"
+                        class="p-button-sm ml-1"
                         icon="pi pi-ellipsis-h"
                         @click="toggleBulkMenuState"
                         data-testid="batches-actions-bulk-menu"
