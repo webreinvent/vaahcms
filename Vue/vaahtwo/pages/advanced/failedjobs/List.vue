@@ -50,7 +50,7 @@ onMounted(async () => {
 </script>
 <template>
 
-    <div class="grid" v-if="store.assets">
+    <div class="grid" v-if="store.assets && store.hasPermission('has-access-of-failed-jobs-section')">
 
         <div :class="'col-'+store.list_view_width">
             <Panel class="is-small" >
