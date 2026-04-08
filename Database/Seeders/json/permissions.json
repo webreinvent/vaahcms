@@ -469,9 +469,21 @@
         "details": "This will allow user to manage anything in the taxonomy type modal."
     },
     {
-        "name": "Can Update Failed Jobs",
+    "name": "Can Update Failed Jobs",
+    "module": "vaahcms",
+    "section": "failedjobs",
+    "details": "This will allow user to update failed jobs."
+        },
+    {
+        "name": "Can Update Batch",
         "module": "vaahcms",
-        "section": "failedjobs",
-        "details": "This will allow user to update failed jobs."
+        "section": "batch",
+        "details": "This will allow user to update batch."
+    },
+    {
+        "name": "Can Update Jobs",
+        "module": "vaahcms",
+        "section": "jobs",
+        "details": "This will allow user to update jobs."
     }
 ]
