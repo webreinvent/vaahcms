@@ -301,6 +301,12 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function itemDownload(Request $request, $slug): BinaryFileResponse | JsonResponse
     {
+        $permission_slug = 'can-manage-media';
+
+        if(!Auth::user()->hasPermission($permission_slug)) {
+            return vh_get_permission_denied_json_response($permission_slug);
+        }
+
         try {
             $media_data = Media::where('download_url', $slug)->first();
         } catch (\Exception $e) {
