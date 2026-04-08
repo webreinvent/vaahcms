@@ -379,6 +379,12 @@
         "details": "This will allow user to delete batches."
     },
     {
+        "name": "Can Update Batch",
+        "module": "vaahcms",
+        "section": "batches",
+        "details": "This will allow user to update batch."
+    },
+    {
         "name": "Can Read Batch Details",
         "module": "vaahcms",
         "section": "batches",
@@ -409,6 +415,12 @@
         "details": "This will allow user to view failed jobs exception."
     },
     {
+        "name": "Can Update Failed Jobs",
+        "module": "vaahcms",
+        "section": "failedjobs",
+        "details": "This will allow user to update failed jobs."
+    },
+    {
         "name": "Has Access Of Jobs Section",
         "module": "vaahcms",
         "section": "jobs",
@@ -425,6 +437,12 @@
         "module": "vaahcms",
         "section": "jobs",
         "details": "This will allow user to delete jobs."
+    },
+    {
+        "name": "Can Update Jobs",
+        "module": "vaahcms",
+        "section": "jobs",
+        "details": "This will allow user to update jobs."
     },
     {
         "name": "Has Access Of Taxonomies Section",
@@ -467,23 +485,5 @@
         "module": "vaahcms",
         "section": "taxonomy",
         "details": "This will allow user to manage anything in the taxonomy type modal."
-    },
-    {
-    "name": "Can Update Failed Jobs",
-    "module": "vaahcms",
-    "section": "failedjobs",
-    "details": "This will allow user to update failed jobs."
-        },
-    {
-        "name": "Can Update Batch",
-        "module": "vaahcms",
-        "section": "batch",
-        "details": "This will allow user to update batch."
-    },
-    {
-        "name": "Can Update Jobs",
-        "module": "vaahcms",
-        "section": "jobs",
-        "details": "This will allow user to update jobs."
     }
 ]
