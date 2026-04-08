@@ -528,7 +528,16 @@ class Notification extends VaahModel {
     //-------------------------------------------------
     public static function sendViaMail(Notification $notification, User $user, $params=[])
     {
-        $user->notify(new Notice($notification, $params));
+        // Email
+        if (!empty($user->email)) {
+            $user->notify(new Notice($notification, $params));
+        }
+
+        // Alternate Email
+        if (!empty($user->alternate_email) && $user->alternate_email !== $user->email) {
+            \Notification::route('mail', $user->alternate_email)
+                ->notify(new Notice($notification, $params));
+        }
     }
     //-------------------------------------------------
     public static function sendViaBackend(Notification $notification, User $user, $params=[])
