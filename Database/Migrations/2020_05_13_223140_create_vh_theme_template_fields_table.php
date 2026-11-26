@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVhThemeTemplateFieldsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -54,4 +54,4 @@ class CreateVhThemeTemplateFieldsTable extends Migration
     {
         Schema::dropIfExists('vh_theme_template_fields');
     }
-}
+};
