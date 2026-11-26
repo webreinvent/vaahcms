@@ -1,48 +1,21 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
-import { useDialog } from "primevue/usedialog";
-import TaxonomyTypeModal from "../components/TaxonomyTypeModal.vue"
 import {useRootStore} from "../../../stores/root";
 const root = useRootStore();
 const store = useTaxonomyStore();
 const useVaah = vaah();
 
-
-//--------toggle dynamic modal--------//
-const dialog = useDialog();
-
-const openTaxonomyTypeModal = () => {
-    const dialogRef = dialog.open(TaxonomyTypeModal, {
-        props: {
-            header: store.assets.language_strings.taxonomy_type_manage_type_dialogue,
-            style: {
-                width: '50vw',
-            },
-            breakpoints:{
-                '960px': '75vw',
-                '640px': '90vw'
-            },
-            modal: true
-        }
-    });
-}
-
-//--------toggle dynamic modal--------//
-
+// UT-90 (M6-T4a Batch 17) — the "Manage taxonomy type" action moved from
+// every row's Type cell to the panel header (List.vue), so the dialog
+// host and the opener live on the same component now.
 
 </script>
 
 <template>
     <div v-if="store.list && store.assets">
         <!--table-->
-         <DataTable :value="store.list.data"
-                    dataKey="id"
-                    class="p-datatable-sm p-datatable-hoverable-rows"
-                    v-model:selection="store.action.items"
-                    stripedRows
-                    responsiveLayout="scroll"
-         >
+         <DataTable size="small" rowHover :value="store.list.data" dataKey="id" class="" v-model:selection="store.action.items" stripedRows scrollable>
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
@@ -72,8 +45,12 @@ const openTaxonomyTypeModal = () => {
             >
                 <template #body="prop">
                     <div class="flex align-items-center">
-                        <Button class="p-button-tiny p-button-text p-0 mr-2"
-                                data-testid="taxonomies-table-to-edit"
+                        <!-- UT-90 (M6-T4a Batch 17) — this button shared the
+                             `taxonomies-table-to-edit` testid with the row's
+                             own Edit button, so a `data-testid` locator
+                             matched two elements in every row. -->
+                        <Button aria-label="Copy slug" class="p-button-tiny p-button-text p-0 mr-2 vaah-icon-action"
+                                data-testid="taxonomies-table-copy-slug"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
@@ -84,19 +61,17 @@ const openTaxonomyTypeModal = () => {
             </Column>
              <Column field="type" header="Type"
                      :sortable="false"
-                     class="flex align-items-center justify-content-between"
              >
                  <template #body="prop">
+                     <!-- UT-90 (M6-T4a Batch 17) — the "Manage taxonomy
+                          type" pencil used to sit in *every* row's Type
+                          cell, right next to the row's own Edit pencil:
+                          two identical pencils in one row, and the first
+                          one did not even act on the row (it opens the
+                          global type manager). It now lives once, in the
+                          panel header. -->
                      <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>
-
-                     <template v-if="store.hasPermission('can-manage-taxonomy-types')">
-                         <Button class="p-button-tiny p-button-text"
-                                 data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
-                                 v-tooltip.top="store.assets.language_strings.toolkit_text_view_type"
-                                 icon="pi pi-pencil"
-                                 @click="openTaxonomyTypeModal"
-                         />
-                     </template>
+                     <span v-else class="vaah-empty-value">—</span>
                  </template>
              </Column>
 
@@ -106,7 +81,12 @@ const openTaxonomyTypeModal = () => {
                     :sortable="true"
             >
                 <template #body="prop">
-                    {{ useVaah.ago(prop.data.updated_at) }}
+                    <!-- UT-88 (M6-T4a Batch 17) — every seeded taxonomy
+                         carries `updated_at = NULL`, so the cell rendered
+                         *empty* and the column looked broken rather than
+                         empty. -->
+                    <span v-if="prop.data.updated_at">{{ useVaah.ago(prop.data.updated_at) }}</span>
+                    <span v-else class="vaah-empty-value">—</span>
                 </template>
             </Column>
 
@@ -116,11 +96,12 @@ const openTaxonomyTypeModal = () => {
                     header="Is Active"
             >
                 <template #body="prop">
-                    <InputSwitch v-model.bool="prop.data.is_active"
+                    <ToggleSwitch v-model.bool="prop.data.is_active"
                                  data-testid="taxonomies-table-is-active"
+                                 :aria-label="'Toggle active status for ' + (prop.data.slug || '')"
                                  v-bind:false-value="0"
                                  v-bind:true-value="1"
-                                 class="p-inputswitch-sm"
+                                
                                  @input="store.toggleIsActive(prop.data)"
                     />
                 </template>
@@ -134,9 +115,9 @@ const openTaxonomyTypeModal = () => {
                           && root.assets.language_strings.crud_actions"
             >
                 <template #body="prop">
-                    <div class="p-inputgroup">
+                    <InputGroup>
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button aria-label="View taxonomy" class="p-button-tiny p-button-text"
                                 data-testid="taxonomies-table-to-view"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
@@ -144,7 +125,7 @@ const openTaxonomyTypeModal = () => {
                                 icon="pi pi-eye"
                         />
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button aria-label="Edit taxonomy" class="p-button-tiny p-button-text"
                                 data-testid="taxonomies-table-to-edit"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
@@ -152,7 +133,7 @@ const openTaxonomyTypeModal = () => {
                                 v-if="store.hasPermission('can-update-taxonomies')"
                         />
 
-                        <Button class="p-button-tiny p-button-danger p-button-text"
+                        <Button aria-label="Delete taxonomy" class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="taxonomies-table-action-trash"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-taxonomies')"
                                 @click="store.itemAction('trash', prop.data)"
@@ -160,19 +141,24 @@ const openTaxonomyTypeModal = () => {
                                 icon="pi pi-trash"
                         />
 
-                        <Button class="p-button-tiny p-button-success p-button-text"
+                        <Button aria-label="Restore taxonomy" class="p-button-tiny p-button-success p-button-text"
                                 data-testid="taxonomies-table-action-restore"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                         />
-                    </div>
+                    </InputGroup>
                 </template>
             </Column>
+             <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                  #empty slot is absent, so the slot says what to do next
+                  (DESIGN-SYSTEM §8): a muted line + one primary action. -->
              <template #empty>
-                 <div class="text-center py-3">
-                     No records found.
+                 <div class="vaah-empty" data-testid="taxonomies-list_empty">
+                     <i class="vaah-empty-icon pi pi-tags" aria-hidden="true"></i>
+                     <p class="vaah-empty-copy">No taxonomies match your search — reset the filters, or create a new taxonomy.</p>
+                     <Button class="vaah-btn-primary" :label="root.assets.language_strings.crud_actions.create_button" icon="pi pi-plus" @click="store.toForm()" data-testid="taxonomies-list_empty_create" v-if="store.hasPermission('can-create-taxonomies')" />
                  </div>
              </template>
         </DataTable>
@@ -188,25 +174,24 @@ const openTaxonomyTypeModal = () => {
                    class="bg-white-alpha-0 pt-2"
         />
         <!--/paginator-->
-
-        <DynamicDialog  />
     </div>
 </template>
 
-<style lang="scss">
-.p-inputswitch {
-    &.p-inputswitch-checked {
-        .p-inputswitch-slider {
-            background: #22c55e !important;
-            border: #22c55e !important;
-        }
-    }
-}
+<!--
+    M5-T4 (F19) — the v3 toggle-switch CSS override block that used to sit
+    here is REMOVED, not re-tokenized:
 
-.p-inputswitch-checked {
-    .p-inputswitch-slider:hover {
-        background: #2d8631 !important;
-        border: #2d8631 !important;
-    }
-}
-</style>
+    * It was DEAD. OpenVue v4 renders the toggle with the `p-toggleswitch*`
+      DOM classes (the v3 switch component is only an alias of the v4
+      `ToggleSwitch`), so no element in this table ever carried the v3 switch
+      classes — the four hex literals were styling nothing.
+    * It was UNSCOPED, so it leaked a hard-coded palette into the global
+      stylesheet.
+    * The checked state it wanted (a green slider) is already produced by the
+      theme: the OpenVue preset emits the checked slider background from the
+      semantic success token, and `scss/style/style.scss` (UT-9, M6-T4a)
+      repeats it unlayered, so the slider is scheme-aware green in light AND
+      dark with no raw hex anywhere. Peer surfaces (users / roles /
+      permissions tables) carry no such override — deleting this block
+      restores that parity.
+-->

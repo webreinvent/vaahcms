@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" @if(vh_dark_mode_preference() === 'dark')class="app-dark"@endif>
 <head>
     <title><?php
 
@@ -33,7 +33,7 @@
 
     <div class="vaahtwo">
 
-        <div id="topmenu-sidebar" class="primevue"  >
+        <div id="topmenu-sidebar">
 
             @include("vaahcms::backend.vaahtwo.components.errors")
             @include("vaahcms::backend.vaahtwo.components.flash")

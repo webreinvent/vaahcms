@@ -125,7 +125,7 @@ export const useLogStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if(this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
@@ -663,6 +663,7 @@ export const useLogStore = defineStore({
                 {
                     label: 'Delete',
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
@@ -744,6 +745,7 @@ export const useLogStore = defineStore({
             this.menu_items = [
                 {
                     label: root.assets.language_strings.crud_actions.delete_all,
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }

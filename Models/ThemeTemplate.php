@@ -3,16 +3,11 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Models\Content;
-use VaahCms\Modules\Cms\Models\ContentType;
-use VaahCms\Modules\Cms\Models\FormField;
-use VaahCms\Modules\Cms\Models\FormGroup;
 
 
 class ThemeTemplate extends VaahModel {
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_theme_templates';
     //-------------------------------------------------
@@ -44,7 +39,7 @@ class ThemeTemplate extends VaahModel {
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 
@@ -83,9 +78,14 @@ class ThemeTemplate extends VaahModel {
         return $this->belongsTo(Theme::class, 'vh_theme_id', 'id');
     }
     //-------------------------------------------------
+    /**
+     * F06 / ADR-008 — the relation's target (the Cms FormGroup model) is
+     * resolved by the bound CmsContract; with no binding (core-only install)
+     * this returns null so "no relation" stays distinguishable from "no rows".
+     */
     public function groups()
     {
-        return $this->morphMany(FormGroup::class, 'groupable');
+        return vh_cms_contract()?->templateGroups($this);
     }
     //-------------------------------------------------
 
@@ -97,45 +97,18 @@ class ThemeTemplate extends VaahModel {
             return false;
         }
 
-        $stored_groups = $template->groups()->get()->pluck('slug','id')->toArray();
-
-        $input_groups = collect($groups_array)->pluck('slug')->toArray();
-        $groups_to_delete = array_diff($stored_groups, $input_groups);
-
-        if(count($groups_to_delete) > 0)
+        /*
+         * F06 / ADR-008 — the group/field models live in the Cms module;
+         * without a bound contract there is nothing to sync against, so
+         * degrade to the same `false` the empty-array branch already returns.
+         */
+        $contract = vh_cms_contract();
+        if($contract === null)
         {
-            $groups_to_delete = array_flip($groups_to_delete);
-            FormGroup::deleteItems($groups_to_delete);
+            return false;
         }
 
-        foreach($groups_array as $g_index => $group)
-        {
-
-            $group['sort'] = $g_index;
-            $group['slug'] = Str::slug($group['name']);
-
-            $stored_group = $template->groups()
-                ->where('vh_cms_form_groups.slug', $group['slug'])
-                ->first();
-
-            $group_fillable = $group;
-
-            unset($group_fillable['fields']);
-
-            if($stored_group)
-            {
-                $stored_group->fill($group_fillable);
-                $stored_group =$template->groups()->save($stored_group);
-            } else{
-                $stored_group = $template->groups()->create($group_fillable);
-            }
-
-
-            FormGroup::syncWithFormFields($stored_group, $group['fields']);
-
-        }
-
-
+        return $contract->syncTemplateGroups($template, $groups_array);
     }
 
     //-------------------------------------------------

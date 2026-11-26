@@ -72,6 +72,15 @@ class VaahSetup{
 
             $vaahcms_params = [];
             $data = [
+                // M9-T3 (F31 / R6.6) — the release version rides the file
+                // itself, so a regenerated manifest always names the release
+                // it was written by. It is read from the running config
+                // (the provider overrides it from the package
+                // composer.json), never hardcoded, so it cannot drift.
+                // The existing file's top-level keys are merged back over
+                // this seed below, so an installed app keeps its own
+                // version when it is regenerated.
+                "version" => config('vaahcms.version') ?: '3.0.0',
                 "dependencies" => [
                     [
                         "name"=> "Cms",

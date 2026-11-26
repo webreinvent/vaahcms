@@ -1,5 +1,7 @@
 @use 'sass:math';
-@import "./../primevue-tailwind-light/variables.scss";
+// M3-T2 (F10): the vendored primevue-tailwind-light/variables.scss re-export
+// shim is gone with the vendored tree — global/all is the single variable +
+// mixin source (scaledPadding/scaledFontSize now in global/_mixins.scss).
 @import "./../global/all.scss";
 
 
@@ -30,37 +32,39 @@ body{
 }
 
 //Resets
-p,h1,h2,h3,h4,h5,h6,a,div{
-    margin:0;
-}
-:focus {
-    box-shadow: none !important;
-    outline: none;
+// M3-T2 (F10): the reset is layered (R3.10 / verification 8). The OpenVue
+// engine emits its CSS inside `@layer openvue` (theme options cssLayer —
+// see vaahvue/theme/openvue.js); declaring `@layer reset, openvue` puts the
+// reset below the library so the library's spacing and focus rings are not
+// overridden by this reset, while any app CSS outside a layer still wins
+// over both. The :focus suppression is reset-adjacent and moves into the
+// same layer with it.
+@layer reset, openvue;
+@layer reset {
+    p,h1,h2,h3,h4,h5,h6,a,div{
+        margin:0;
+    }
+    :focus {
+        box-shadow: none !important;
+        outline: none;
+    }
 }
 a{
     text-decoration: none;
-    color:$primaryColor;
+    // UT-29: the global anchor colour was the Tailwind preset's
+    // `$primaryColor` (#4f46e5) in BOTH schemes. In dark mode that is
+    // 2.85:1 on the #171717 chrome (AA needs 4.5:1) — every link in the
+    // admin failed: the topnav user name, the dashboard "View Details"
+    // links, the job counters. `--vaah-link` is the scheme-aware token
+    // (light #1d4ed8 = 6.1:1, dark #60a5fa = 7.4:1) that the control layer
+    // already uses for `text-blue-400`.
+    color: var(--vaah-link, #1d4ed8);
     &:hover{
         color: $textColor;
     }
 }
 .p-toast {
     z-index: 10000000000 !important;
-
-    .p-toast-message {
-        .p-toast-icon-close {
-            height: 1.65rem !important;
-            width: 1.65rem !important;
-
-            .p-toast-icon-close-icon {
-                width: 40% !important;
-            }
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.6) !important;
-            }
-        }
-    }
 }
 
 .has-shadowless{
@@ -75,6 +79,23 @@ a{
             background-color: white;
             line-height: normal;
         }
+        /* Light-mode selected-page highlight (the mirror of the UT-5 dark rule
+           below). The Nide preset's "selected" state is nearly invisible in
+           light: its selected background is --p-content-background (white)
+           with the SAME text colour as unselected pages — the only signal is
+           a 1px hairline ring. Combined with the white wash above, clicking a
+           page changed the list but the current page looked identical to the
+           others (reported on settings/localization; every list section's
+           paginator sits in this wrapper, so the defect was app-wide). Raise
+           the selected page onto the surface scale — the same neutral "raised"
+           treatment the dark rule gives it with --p-surface-700 — so the
+           current page reads at a glance. This rule is unlayered and comes
+           after the wash, so it wins for the selected button; the .app-dark
+           rule keeps higher specificity, so dark mode is unchanged. */
+        .p-paginator-page.p-paginator-page-selected {
+            background-color: var(--p-surface-200);
+            color: var(--p-text-color);
+        }
         .p-dropdown{
             border-radius: 0;
             .p-dropdown-trigger{
@@ -86,66 +107,32 @@ a{
         }
     }
 }
-/*Panel*/
-.p-panel{
-    &.is-small{
-        .p-panel-header, .p-panel-content{
-            padding: .4rem .75rem;
-        }
-        .p-panel-header {
-            .p-badge {
-                background: rgba($primaryColor, 0.1);
-                color: $primaryColor;
-                font-size: .6rem;
-                font-weight: 600;
-                height: 1.2rem;
-                line-height: 1.2rem;
-                min-width: 1.2rem;
-            }
-        }
+/* UT-5 (M6-T4a) — dark-mode paginator. The light rule above pins the page
+   buttons to a hard white background; under .app-dark the page text is the
+   scheme token (--p-text-color, #fafafa), so white-on-white hides the digits.
+   Give the page/nav buttons a transparent surface + light text; the selected
+   page is raised so the current page stays identifiable. Light untouched. */
+.app-dark .bg-white-alpha-0 .p-paginator {
+    button, .p-paginator-pages .p-paginator-page {
+        background-color: transparent;
+        color: var(--p-text-color);
+    }
+    .p-paginator-page.p-paginator-page-selected {
+        background-color: var(--p-surface-700);
+        color: var(--p-text-color);
     }
 }
+/*Panel*/
+// M3-T2 (F10): the `.p-panel.is-small` density block is retired — density is
+// the `.vc-dense` semantic class defined once in the token layer (F09
+// preset CSS, emitted through vaahvue/theme/openvue.js), not a 1:1
+// v3-DOM selector rewrite (R4.3).
 
 /*Accordion*/
 .p-accordion{
-    &.is-small{
-        .p-accordion-header {
-            .p-accordion-header-link {
-                border-radius: 2px;
-                .p-accordion-toggle-icon {
-                    margin-right: 0.3rem;
-                }
-            }
-        }
-
-        .p-accordion-tab:not(:first-child) {
-            .p-accordion-header {
-                .p-accordion-header-link {
-                    border: 1px solid $shade300;
-                    border-radius: 2px;
-                }
-            }
-            .p-accordion-header:not(.p-highlight):not(.p-disabled),
-            .p-accordion-header:not(.p-disabled).p-highlight {
-                &:hover {
-                    .p-accordion-header-link {
-                        border: 1px solid $shade300;
-                        border-radius: 2px;
-                    }
-                }
-            }
-        }
-        .p-accordion-header-action {
-            padding: .4rem .75rem;
-        }
-        .p-accordion-content {
-            padding: .75rem;
-        }
-        .p-icon {
-            height: 0.7rem;
-            width: 0.7rem;
-        }
-    }
+    /* M3-T2 (F10): the `.p-accordion.is-small` block (12 of 12 density
+       blocks) is retired for the same reason — `.vc-dense` in the token
+       layer. */
     .p-accordion-header {
         .p-accordion-header-link {
             font-weight: normal !important;
@@ -154,22 +141,10 @@ a{
 }
 
 /*Dropdown*/
-.p-dropdown {
-    &.is-small, .p-inputtext-sm{
-        .p-dropdown-label {
-            @include scaledFontSize($inputTextFontSize, $scaleSM);
-            @include scaledPadding($inputPadding, $scaleSM);
-
-        }
-        line-height: initial;
-    }
-    &.p-inputtext-sm {
-        .p-inputtext{
-            line-height: inherit;
-        }
-    }
-
-}
+// M3-T2 (F10): the v3 density label-scaling block and the small-size
+// dropdown-input rule are retired — in v4 the `size="small"` prop is
+// styled by the Nide component tokens (the v3 small-size input modifier no
+// longer needs a hand port).
 .p-dropdown-panel{
     .p-dropdown-items-wrapper{
         .p-dropdown-items{
@@ -183,15 +158,8 @@ a{
 }
 /*Tabview*/
 .p-tabview{
-    &.is-small{
-        .p-tabview-nav{
-            li{
-                .p-tabview-nav-link{
-                    padding: 0.75rem 1rem;
-                }
-            }
-        }
-    }
+    /* M3-T2 (F10): the `.p-tabview.is-small` padding block is retired —
+       `.vc-dense` in the token layer. */
     &.tab-panel-has-no-padding{
         .p-tabview-panels{
             padding: .75rem 0;
@@ -209,6 +177,19 @@ a{
                 svg {
                     &.p-icon {
                         width: 10px;
+
+                        /* UT-116 — the sortable column's sort glyph is not a
+                           "small icon in a header": it is the sort affordance
+                           for the column title beside it, and at 10px it read
+                           as a stray mark. It is sized with the title's own
+                           14px (the app-wide rule lives in
+                           controls-layer.scss). This rule out-specifies that
+                           one — `.p-datatable tr th span svg.p-icon` is
+                           (0,2,4) against (0,2,0) — so the exception has to
+                           be made here. */
+                        &.p-datatable-sort-icon {
+                            width: 14px;
+                        }
                     }
 
                 }
@@ -228,15 +209,18 @@ a{
         width: auto;
         font-size: .75rem;
 
+        // UT-11 (M6-T4a) — the old .6rem rendered the Roles/Permissions count
+        // badges ("1 / 7") at ~8px: effectively invisible. Raise to a readable
+        // ~12px (root font-size is 14px, so .875rem ≈ 12.25px); the tiny icon
+        // buttons (view/edit/trash, p-button-tiny) are excluded and untouched.
         &:not(.p-button-tiny) {
-            font-size: .6rem;
+            font-size: .875rem;
         }
 
-        &.p-button-text {
-            &:hover, &:active {
-                background-color: transparent;
-            }
-        }
+        // UT-17 (M6-T4a Batch 5) — the ghost hover reset that used to live
+        // here is gone: it killed the engine's ghost hover tint. The control
+        // layer (scss/controls-layer.scss) now owns the ghost variants, and
+        // it re-asserts the tint at a higher specificity.
     }
 
     .p-icon {
@@ -244,11 +228,19 @@ a{
         height: 0.75rem;
     }
 
+    /* UT-14 (M6-T4a) — the row separator was hard-coded to $shade200
+       (#f4f4f5, gray-100), a *light-mode-only* Sass token with no .app-dark
+       variant. In dark mode that painted a near-white line across every row
+       (measured: rgb(244,244,245) on a rgb(23,23,23) row). Rebase it on the
+       theme's own semantic token — --p-datatable-body-cell-border-color
+       (rgba(255,255,255,0.1) dark / rgba(0,0,0,0.1) light) — so the
+       separator is scheme-aware by construction and matches the table's
+       header/footer borders. */
     .p-datatable-tbody {
         > tr {
             > td,
             > th {
-                border-bottom: 1px solid $shade200;
+                border-bottom: 1px solid var(--p-datatable-body-cell-border-color);
             }
             &:focus {
                 outline: none;
@@ -256,38 +248,38 @@ a{
             }
         }
     }
+
+    /* UT-12 (M6-T4a) — the `size="small"` DataTable renders header cells at
+       ~9.8px (weight 400) — smaller even than the 14px body cells, so the
+       column labels read as "too small". Rebase the header row to match the
+       body (1rem = 14px given the 14px root font-size) at weight 600, text
+       colour on var(--p-text-color) so it reads in both light and dark. The
+       higher-specificity thead selector beats the app's own `.p-datatable tr
+       th { font-size:.7rem }`. Applies to every DataTable page. */
+    .p-datatable-thead th {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--p-text-color);
+        letter-spacing: 0.02em;
+
+        .p-datatable-column-header,
+        .p-sortable-column-header {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: inherit;
+        }
+    }
 }
 
 /*Divider*/
-.p-divider{
-    &.is-small{
-        margin: .75rem 0px;
-    }
-}
+/* M3-T2 (F10): the `.p-divider.is-small` margin block is retired —
+   `.vc-dense` in the token layer. */
+
 /*input switch*/
-.p-inputswitch{
-    &.p-inputswitch-sm{
+/* M3-T2 (F10): the v3 small-size inputswitch hand port is retired —
+   in v4 the `size="small"` prop is styled by the Nide component tokens. */
 
-        width: $input-switch-small-width;
-        height: $input-switch-small-height;
-        .p-inputswitch-slider{
-            &:before{
-                width:  $input-switch-small-handle-width;
-                height: $input-switch-small-handle-height;
-                left: $input-switch-small-slider-padding;
-                margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
-            }
-        }
-
-        &.p-inputswitch-checked {
-            .p-inputswitch-slider:before {
-                transform: translateX($input-switch-small-handle-width + .1rem);
-            }
-        }
-
-
-    }
-}
 /*Table*/
 
 /*Input*/
@@ -332,40 +324,107 @@ a{
         display: block !important;
     }
 
+    /* UT-61 (M6-T4a Batch 11) — the required-field marker was a v3 corner
+       wedge: a 25px triangle painted in `$shade200` (#f4f4f5 — a *light-mode
+       only* Sass token with no `.app-dark` variant) with the red `*` on top of
+       it. Three defects, all measured live on
+       `#/setup/install/configuration` and `#/`:
+         1. In dark mode the wedge rendered as a near-white triangle
+            (rgb(244,244,245)) on the dark field (rgb(23,23,23)) — the same
+            class of bug as the UT-14 row separator.
+         2. The wedge's diagonal cut straight through the `*`, so the glyph
+            read as a half-cut blob rather than an asterisk.
+         3. The marker sits on top of the field's right-hand controls: on the
+            sign-in screen `elementFromPoint` on the password toggle returned
+            `DIV.required-field hidden`, i.e. the marker swallowed the click.
+
+       The wedge is retired (it is a v3 flourish that reads as a rendering
+       glitch next to v4's 8px-radius inputs) and the marker becomes a plain,
+       scheme-aware asterisk in the field's top-right corner — the same corner
+       the old one occupied, so the layout does not move.
+
+       `pointer-events: none` on the marker: it is decorative, and it must
+       never intercept a click meant for the password toggle next to it.
+
+       The glyph is painted with `--vaah-danger-text` (#b91c1c light /
+       #f87171 dark) instead of `$danger` (hsl(10 100% 62%) = rgb(255,94,61)):
+       the latter is only 2.9:1 on a white field, so the asterisk failed
+       WCAG 2.2 SC 1.4.3; the token is 6.0:1 light / 6.4:1 dark. */
     .required-field {
         position: absolute;
         right: 0.5px;
         top: 0.5px;
         z-index: 2;
-        &:before {
-            content: "";
-            position: absolute;
-            top: 0.5px;
-            right: 0.5px;
-            border-left: 0px solid transparent;
-            border-right: 25px solid $shade200;
-            border-bottom: 25px solid transparent;
-        }
+        pointer-events: none;
         &:after {
             content: '*';
-            font-size: 1rem;
+            /* UT-151 — the glyph was held to the *body copy* floor (0.875rem =
+               12.25px, UT-19), but an asterisk is a symbol, not body copy: at
+               12.25px bold the glyph is mostly whitespace and its thin strokes
+               read as a ~6x3px red speck in the field's corner rather than as
+               an asterisk. A probe render (40px, on a yellow background) showed
+               the glyph was never clipped — it was simply too small to read.
+               16px is on the app's own type scale (12 · 13 · 14 · 16 · 20 · 24)
+               and the strokes read as an asterisk. */
+            font-size: 16px;
             font-weight: 700;
-            color: $danger;
+            line-height: 1;
+            color: var(--vaah-danger-text);
             position: absolute;
+            /* 5px from the field's edge clears the v4 4px input radius, so no
+               corner of the glyph is cut by the group's own overflow. */
             top: 0;
-            right: 2px;
+            right: 4px;
         }
     }
 }
 
-.p-fluid{
-    .p-inputgroup{
-        .p-input-icon-right, .p-input-icon-left{
-            width: auto;
-        }
+/* UT-154 — the required marker is not an input-specific decoration: the app
+   places it as a sibling of the field, wherever the field lives. The rule
+   above is nested inside `.p-input, .p-inputgroup`, so a marker that sits
+   outside those scopes (the OTP row's field is a plain `div.relative`, not an
+   InputGroup) fell through to the engine's own `.required-field` rules — the
+   near-black `--p-primary-color` at the engine's 12.25px — and rendered as a
+   dark speck instead of the app's scheme-aware red asterisk.
+
+   This unscoped copy carries the same declarations. The doubled class is
+   deliberate: it lifts the rule to (0,2,x), which is what it takes to beat
+   the engine's `.p-inputgroup .required-field` (0,2,x) on source order — the
+   app's stylesheet is served after the engine's. The scoped rule above keeps
+   its (0,2,x) too, so both scopes resolve identically. */
+.required-field.required-field {
+    /* The app's `display: block !important` for the marker is scoped to
+       `.p-input` / `.p-inputgroup` (where the `:required ~` selectors outrank
+       the `hidden` utility the markup carries). Outside those scopes the
+       `hidden` utility won and the marker never rendered at all — the OTP
+       row's fields showed no asterisk in either scheme. The doubled class
+       puts this rule at (0,2,0) with `!important`, which outranks
+       `.hidden` (0,1,0, !important). Every marker the app places sits on a
+       required field, so this matches the input-group behaviour. */
+    display: block !important;
+    position: absolute;
+    right: 0.5px;
+    top: 0.5px;
+    z-index: 2;
+    pointer-events: none;
+    &:after {
+        content: '*';
+        /* 16px, not the 12.25px body-copy floor (UT-19): an asterisk is a
+           symbol, and at 12.25px bold its strokes read as a ~6x3px speck. */
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--vaah-danger-text);
+        position: absolute;
+        /* 4px from the field's edge clears the v4 4px input radius. */
+        top: 0;
+        right: 4px;
     }
 }
 
+/* M3-T2 (F10): the v3 fluid inputgroup icon-width rule is retired —
+   in v4 the `Fluid` component / `fluid` prop styling comes from the Nide
+   component tokens. */
 
 .p-input-icon-left > i,
 .p-input-icon-left > svg,
@@ -374,14 +433,52 @@ a{
     margin-top: -.35rem;
 }
 
-.main-container{
-    width: calc(100% - 245px);
-    margin: 55px 10px 0 auto;
+/* M6-T4a (F23) — the shell is a fixed topnav + off-canvas Drawer (no
+   persistent 245px sidebar), so the content column is full-width and only
+   needs to clear the fixed `.top-nav-fixed` (65px tall). The legacy
+   `calc(100% - 245px)` width and `55px` top offset were tuned for the old
+   sidebar layout; on the current shell they left the first row (panel header
+   + Create button) rendered under the fixed bar. The compound
+   `.grid.main-container` selector (0,2,0) wins the cascade over primeflex's
+   unlayered `.grid` (0,1,0), whose negative-gutter margin was beating the
+   single-class rule. */
+.grid.main-container,
+/* UT-6 (M6-T4a) — the shell is a fixed topnav + off-canvas Drawer (no
+   persistent sidebar), so the content column is always full width and centred.
+   Two legacy offsets broke symmetry: the base .grid's -0.25rem negative side
+   margins (zero them here), and the `.has-sidebar-small .main-container
+   { width: calc(100% - 60px) }` rule (still applied on <body> by the blade
+   from settings.global.is_sidebar_collapsed) — the higher specificity of
+   `.has-sidebar-small .grid.main-container` overrides that width hack. */
+.has-sidebar-small .grid.main-container {
+    width: 100%;
+    margin: 72px 0 0 0;
+    padding: 0 1rem;
+    box-sizing: border-box;
     transition: $sideBarAnimation;
+}
+/* UT-33 — a narrow viewport must scroll the *table*, not the whole document.
+   Flex/grid items default to `min-width:auto`, so the column that carries the
+   DataTable refused to shrink below the table's intrinsic width (606–683px):
+   on a 375px viewport the document grew to 690–766px and the entire admin
+   scrolled sideways. The engine's `.p-datatable-table-container` is already
+   `overflow-x:auto`, so letting the column shrink is enough — the table keeps
+   its own horizontal scroll. */
+.col,
+.col-12,
+.p-panel-content-wrapper,
+.p-panel-content {
+    min-width: 0;
 }
 .top-nav-fixed.p-menubar .p-menubar-end {
     margin-left: auto;
     align-self: center;
+    /* F23 — the #end slot carries the ThemeToggle + the user menu; force them
+       onto one vertically-centred row (they otherwise block-stack, leaving
+       the toggle floating above the user menu). */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .top-nav-fixed{
     width: 100%;
@@ -450,53 +547,201 @@ a{
         background-color: darkgrey;
         outline: 1px solid slategrey;
     }
-    .p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header .p-panelmenu-header-content{
-        border-top-right-radius: 0;
-        border-top-left-radius: 0;
+    /* UT-15 (M6-T4a) — the OpenVue v4 PanelMenu puts the expand chevron
+       inside the header content; rotate it when the section is open so the
+       open state is legible. The rule keeps its original specificity (it
+       works because the chevron is an inline-block flex item). */
+    .p-panelmenu .p-panelmenu-header.p-panelmenu-header-active
+    .p-panelmenu-header-content .p-submenu-icon.pi.pi-chevron-right{
+        transform: rotate(90deg);
+    }
+}
+/* UT-10 + UT-15 (M6-T4a) — the navigation PanelMenu, rebuilt.
+
+   UT-10: the Nide preset paints every menuitem flat indigo (#4f46e5) in both
+   schemes with no hover or active/expanded affordance, so the nav read as a
+   poor, low-hierarchy list of one colour. It is rebased on scheme-aware text
+   tokens (neutral text, muted icons) with the brand $primary reserved for the
+   hovered / expanded / current states.
+
+   UT-15 (deep UI analysis, 2026-11-12): five further defects, all measured
+   live in the browser —
+     a) the OpenVue *openuxkit* style layer paints every root item as a
+        bordered "card" (1px border, 8px radius, 3.5px padding);
+     b) the nav row `<a>` computed `display: inline`, so `width`, `gap` and
+        `align-items` were all inert: every row shrink-wrapped its label
+        (measured 96–164px inside a 179px column) and the hover tint hugged
+        the text instead of spanning the column;
+     c) the chevron was not right-aligned;
+     d) nothing marked the current page (0 active elements across 21 items);
+     e) child rows were 29px tall at 12.6px with 13x13 icons at both levels.
+
+   The nav is rebuilt as a flat, full-width, scheme-aware list:
+     · flat         — no cards (0,3,0 beats the runtime openuxkit rule's 0,1,0)
+     · full-width   — real flex rows, so the hover is a single full-width band
+     · hierarchical — 14px/600 root rows, 13.3px muted child rows on a rail
+     · current page — brand tint + 2px brand left accent bar on exactly one row
+
+   Targets `.sidebar` (persistent) and, via the same class, the Drawer's
+   `.p-drawer-content .sidebar`, so it applies on every page. */
+.sidebar .p-panelmenu {
+
+    // UT-15a — flatten the "cards" the openuxkit style layer paints on every
+    // root item (background / 1px border / 8px radius / 3.5px padding).
+    .p-panelmenu-panel {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
     }
 
-    .p-panelmenu{
-        .p-panelmenu-header-action{
-            position: relative;
-            justify-content: stretch;
-            white-space: nowrap;
-            width: $sideBarWidth;
-            padding:1rem !important;
+    .p-panelmenu {
+        gap: 2px;
+    }
 
-            .p-menuitem-text{
-                width: 100%;
-                padding-left: 5px;
-            }
-            .p-submenu-icon{
-                margin-right: 0 !important;
-                font-size: .75rem;
-            }
+    // The openuxkit layer paints the hover on the header-content wrapper; we
+    // paint it on the row itself, so exactly ONE band lights up (UT-15b).
+    .p-panelmenu-header .p-panelmenu-header-content:hover {
+        background: transparent;
+        color: inherit;
+    }
+
+    // keyboard focus must stay visible (ui-ux-pro-max focus-states).
+    .p-panelmenu-header:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: -2px;
+    }
+
+    // UT-15b — a real flex row: full width, so `width`, `gap` and
+    // `align-items` finally apply and the hover tint becomes a band that
+    // spans the whole column instead of hugging the label.
+    .p-panelmenu-header-action {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.55rem 0.75rem !important;
+        border-radius: 8px;
+        color: var(--p-text-color);
+        font-size: 1rem;
+        line-height: 1.4;
+        text-decoration: none;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        .p-menuitem-icon {
+            flex: 0 0 auto;
+            width: 1.1rem;
+            text-align: center;
+            font-size: 1rem;
+            color: var(--p-text-muted-color);
         }
-        .p-panelmenu-header{
-            .p-panelmenu-header-content{
-                border: none !important;
-            }
-            &.p-highlight{
-                .p-panelmenu-header-content{
-                    .p-submenu-icon.pi.pi-chevron-right{
-                        transform: rotate(90deg);
-                    }
-                }
-            }
+
+        .p-menuitem-text {
+            flex: 1 1 auto;
+            min-width: 0;
+            width: auto;
+            padding-left: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .p-panelmenu-content{
-            border: none;
-            border-radius: 0 !important;
-            .p-menuitem-link{
-                position: relative;
-                .p-submenu-icon{
-                    order: 3;
-                    font-size: 0.75rem;
-                    margin-left: 5px;
-                    position: absolute;
-                    right: 10px;
-                }
-            }
+
+        // UT-15c — the chevron is pushed to the right edge of the row.
+        .p-submenu-icon {
+            flex: 0 0 auto;
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--p-text-muted-color);
+            transition: transform 0.15s ease;
+        }
+    }
+
+    // section headers (items that own a submenu) read a touch stronger
+    .p-panelmenu-header .p-panelmenu-header-action:has(.p-submenu-icon) .p-menuitem-text {
+        font-weight: 600;
+    }
+
+    // UT-15e — child rows: a clear step down in size and weight, set behind
+    // a guide rail so the hierarchy reads at a glance.
+    .p-panelmenu-content {
+        margin: 0.1rem 0 0.4rem 0.45rem;
+        padding: 0 0 0 0.55rem;
+        border: none;
+        border-left: 1px solid var(--p-content-border-color);
+        border-radius: 0 !important;
+    }
+
+    .p-panelmenu-submenu {
+        margin: 0;
+        padding: 0 !important;
+        list-style: none;
+    }
+
+    .p-panelmenu-content .p-panelmenu-header-action {
+        padding: 0.4rem 0.6rem 0.4rem 1rem !important;
+        font-size: 0.95rem;
+        color: var(--p-text-muted-color);
+
+        .p-menuitem-icon {
+            width: 1rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    // hover: brand-accent tint + primary text/icon, across the full row
+    .p-panelmenu-header-action:hover {
+        background-color: color-mix(in srgb, $primary 10%, transparent);
+        color: $primary;
+
+        .p-menuitem-icon,
+        .p-submenu-icon {
+            color: $primary;
+        }
+    }
+
+    // expanded section: signalled by the rotated chevron and the visible child
+    // list only — NOT a background tint. A tint here stuck on every section
+    // the user had ever opened, so after navigating to a new section two or
+    // more headers all read as "active" (UT-15d follow-up). The single "you
+    // are here" section tint is .p-sidebar-section-active (below), driven from
+    // Sidebar.vue off the live route.
+    .p-panelmenu-header-active .p-panelmenu-header-action {
+        background-color: transparent;
+        color: var(--p-text-color);
+
+        .p-menuitem-icon,
+        .p-submenu-icon {
+            color: var(--p-text-muted-color);
+        }
+    }
+
+    // UT-15d — the current page: the one row that carries the brand accent.
+    // Set from Sidebar.vue from the live route.
+    .p-panelmenu-header-action.p-sidebar-item-active {
+        background-color: color-mix(in srgb, $primary 14%, transparent);
+        color: $primary;
+        font-weight: 600;
+        box-shadow: inset 2px 0 0 0 $primary;
+
+        .p-menuitem-icon,
+        .p-submenu-icon {
+            color: $primary;
+        }
+    }
+
+    // The *section* containing the current page (set from Sidebar.vue): the
+    // single "you are here" band on a section header, independent of whether
+    // that section is expanded. Softer than the leaf's accent bar.
+    .p-panelmenu-header-action.p-sidebar-section-active {
+        background-color: color-mix(in srgb, $primary 12%, transparent);
+        color: $primary;
+        font-weight: 600;
+
+        .p-menuitem-icon,
+        .p-submenu-icon {
+            color: $primary;
         }
     }
 }
@@ -514,6 +759,115 @@ a{
         width: 37px;
         overflow-x: hidden;
     }
+}
+/* UT-7 (M6-T4a) — the Sidebar is now the content of the off-canvas Drawer
+   (opened by the burger). This OpenVue Drawer has no `size` prop, so set the
+   panel width (≈ the legacy $sideBarWidth) here. */
+.p-drawer {
+    width: 225px;
+    max-width: 80vw;
+}
+/* Neutralise the .sidebar's persistent-layout sizing (position:fixed / top /
+   left / width / height) so it flows inside .p-drawer-content. */
+.p-drawer-content .sidebar {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-right: none;
+
+    /* UT-15b — this rule was the root cause of the ragged, content-width nav
+       rows: `width: auto` on the row `<a>` (which was `display: inline`)
+       made every row shrink-wrap its label. The row is a real flex box now,
+       so it fills the column instead. */
+    .p-panelmenu .p-panelmenu-header-action {
+        width: 100%;
+    }
+}
+
+/* UT-15b — the body still carries the retired persistent-layout class
+   `has-sidebar-small`, whose `.sidebar:hover { width: 225px }` rule
+   (0,3,0) outranks the drawer's `width: 100%` (0,2,0): on hover the nav
+   column jumped to 225px and overflowed the drawer's 179px content box.
+   Re-assert the drawer width for the drawer sidebar, hovered or not.
+   (Kept at the top level: `has-sidebar-small` sits on the <body>, so the
+   selector must not be nested under `.p-drawer-content .sidebar`.) */
+.has-sidebar-small .p-drawer-content .sidebar,
+.has-sidebar-small .p-drawer-content .sidebar:hover {
+    width: 100%;
+}
+
+/* ============================================================================
+   Persistent navigation shell (replaces the retired off-canvas Drawer)
+   ============================================================================
+   The nav Sidebar is now rendered inline and always present in the layout —
+   not a modal off-canvas Drawer that closed on every route change. `#nav-shell`
+   is Backend.vue's root; `.nav-collapsed` on it minimizes the rail to icons and
+   re-offsets the content column. Every rule below is id-scoped so it outranks
+   the legacy `body.has-sidebar-small` rules the blade still emits from the
+   `is_sidebar_collapsed` site setting — the runtime toggle (not the body class)
+   drives the nav now. */
+$sideBarRailWidth: 39px;
+
+#nav-shell .sidebar {
+    width: $sideBarWidth;
+    /* the fixed topnav is ≈50px tall: start the rail flush under it (no top
+       gap, no clip) and subtract the same 50px so it reaches the viewport
+       bottom (top and max-height agree). */
+    top: 50px;
+    max-height: calc(100vh - 50px);
+}
+
+/* Expanded: the content column clears the fixed topnav (top) and the
+   persistent 225px rail (left). */
+#nav-shell .grid.main-container {
+    width: calc(100% - #{$sideBarWidth});
+    margin: 72px 0 0 $sideBarWidth;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    transition: $sideBarAnimation;
+}
+
+/* The topnav logo column aligns with the rail below it. */
+#nav-shell .top-nav-fixed .navbar-logo {
+    width: $sideBarWidth;
+    overflow: visible;
+}
+
+/* Minimized: the rail shrinks to icons and the content re-offsets. */
+#nav-shell.nav-collapsed .sidebar {
+    width: $sideBarRailWidth;
+}
+/* Rail: on hover it re-expands to full width so the labels/children are
+   readable (the legacy hover-peek), then snaps back when the pointer leaves. */
+#nav-shell.nav-collapsed .sidebar:hover {
+    width: $sideBarWidth;
+}
+/* Icon-only: hide the label, the chevron and the (submenu) children; centre
+   the remaining icon. */
+#nav-shell.nav-collapsed .sidebar:not(:hover) {
+    .p-panelmenu-content {
+        display: none;
+    }
+    .p-panelmenu-header-action .p-menuitem-text,
+    .p-panelmenu-header-action .p-submenu-icon {
+        display: none;
+    }
+    .p-panelmenu-header-action {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+#nav-shell.nav-collapsed .grid.main-container {
+    width: calc(100% - #{$sideBarRailWidth});
+    margin-left: $sideBarRailWidth;
+}
+#nav-shell.nav-collapsed .top-nav-fixed .navbar-logo {
+    width: $sideBarRailWidth;
+    overflow: hidden;
 }
 
 //tooltip
@@ -744,20 +1098,113 @@ $media-level-2-spacing: 0.5rem !default;
 
 /*Buttons*/
 .p-button{
-    color: $primaryCustomColor;
-    background-color: $bgPrimaryCustomColor;
-    border-color: $bdrPrimaryCustomColor;
-    &.p-button-sm{
-        .p-button-icon {
-            font-size: 0.65rem;
-        }
-    }
+    /* UT-17 (M6-T4a Batch 5) — the v3 colour pair that used to live here
+       ($regentGray on $catskillWhite = rgb(131,147,165) on rgb(228,232,241),
+       2.56:1 — a WCAG AA failure) was also *unlayered*, so it defeated the
+       engine's entire `@layer openvue` button variant system: the ghost
+       (`.p-button-text`) buttons kept their solid fill, the danger ghost
+       rendered as a filled red block, and no primary CTA existed anywhere.
+       The scheme-aware control layer now owns the button chrome — see
+       scss/controls-layer.scss (UT-17a–d) and UT-18 for the size metrics. */
     &.p-button-outlined{
         border-color: $bdrPrimaryCustomColor;
         color: $primaryCustomColor;
     }
-    &.p-button-icon-only {
-        padding: 0.35rem 0.5rem;
+}
+/* UT-8 (M6-T4a) — dark-mode default button.
+   SUPERSEDED by the Batch 5 control layer (scss/controls-layer.scss): the
+   default button is now scheme-aware by construction (the `--vaah-btn-*`
+   tokens flip with `.app-dark`), so the hand-written `.app-dark .p-button`
+   override is no longer needed — and it would have overridden the new
+   `.vaah-btn-primary` CTA (0,3,0) with a neutral surface in dark mode.
+   The dark default keeps the same look it had here:
+   `--p-surface-800` fill, `--p-text-color` text, `--p-surface-700` border. */
+/* UT-9 (M6-T4a) — semantic ON state for ToggleSwitch (the "Is Active" column
+   and other toggles). Nide's default ON track is a neutral grey; bind the
+   checked track to the success token (scheme-aware) so "active" reads as
+   positive. Both schemes — light green in light, brighter green in dark. */
+.p-toggleswitch-checked {
+    .p-toggleswitch-slider {
+        background-color: var(--p-button-success-background);
+        border-color: var(--p-button-success-background);
+    }
+}
+
+/* M3-T5-02 (F10) — severity button fills. The unlayered `.p-button` base
+   above sets `background-color: $bgPrimaryCustomColor` on EVERY button, and
+   unlayered author CSS beats the engine's `@layer openvue` severity rules
+   (`.p-button-danger { background: var(--p-button-danger-background) }`), so
+   severity="danger"/success/info/warn/help/secondary buttons rendered the
+   neutral base instead of their severity colour. Re-declare the severity
+   fills here — unlayered, at higher specificity (two classes), bound to the
+   engine's severity tokens so they stay scheme-aware (dark mode resolves the
+   dark severity colour). Default (non-severity / primary) buttons keep the
+   neutral base. (M3-T4's note that class-string danger callers "render danger
+   via the canonical p-button-danger rule" is superseded — false as built.) */
+.p-button.p-button-secondary {
+    background-color: var(--p-button-secondary-background);
+    color: var(--p-button-secondary-color);
+    border-color: var(--p-button-secondary-border-color);
+
+    &:hover {
+        background-color: var(--p-button-secondary-hover-background);
+        color: var(--p-button-secondary-hover-color);
+        border-color: var(--p-button-secondary-hover-border-color);
+    }
+}
+.p-button.p-button-danger {
+    background-color: var(--p-button-danger-background);
+    color: var(--p-button-danger-color);
+    border-color: var(--p-button-danger-border-color);
+
+    &:hover {
+        background-color: var(--p-button-danger-hover-background);
+        color: var(--p-button-danger-hover-color);
+        border-color: var(--p-button-danger-hover-border-color);
+    }
+}
+.p-button.p-button-success {
+    background-color: var(--p-button-success-background);
+    color: var(--p-button-success-color);
+    border-color: var(--p-button-success-border-color);
+
+    &:hover {
+        background-color: var(--p-button-success-hover-background);
+        color: var(--p-button-success-hover-color);
+        border-color: var(--p-button-success-hover-border-color);
+    }
+}
+.p-button.p-button-info {
+    background-color: var(--p-button-info-background);
+    color: var(--p-button-info-color);
+    border-color: var(--p-button-info-border-color);
+
+    &:hover {
+        background-color: var(--p-button-info-hover-background);
+        color: var(--p-button-info-hover-color);
+        border-color: var(--p-button-info-hover-border-color);
+    }
+}
+.p-button.p-button-warn {
+    background-color: var(--p-button-warn-background);
+    color: var(--p-button-warn-color);
+    border-color: var(--p-button-warn-border-color);
+
+    &:hover {
+        background-color: var(--p-button-warn-hover-background);
+        color: var(--p-button-warn-hover-color);
+        border-color: var(--p-button-warn-hover-border-color);
+    }
+}
+.p-button.p-button-help {
+    background-color: var(--p-button-help-background);
+    color: var(--p-button-help-color);
+    border-color: var(--p-button-help-border-color);
+
+    &:hover {
+        background-color: var(--p-button-help-hover-background);
+        color: var(--p-button-help-hover-color);
+        border-color: var(--p-button-help-hover-border-color);
     }
 }
 .p-inputgroup{
@@ -871,227 +1318,188 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+/* F23 — default (non-`.is-light`) Message/Toast semantic colours. The single
+   canonical stylesheet does not carry the OpenVue preset's semantic message
+   backgrounds, so a bare <Message severity="success"> / a `success` toast
+   rendered with no semantic tint (only the `.is-light` variants above were
+   coloured). Apply the app's semantic palette: light = soft tint background
+   + a darker semantic text for contrast; `.app-dark` = a semantic alpha tint
+   over the surface + a lighter semantic text. Unlayered author CSS, so it
+   wins over the engine's `@layer openvue` message rules. */
+.p-message {
+    &.p-message-info    { background: $infoLighterColor;    color: $infoDarkColor; }
+    &.p-message-success { background: $successLighterColor; color: $successDarkColor; }
+    &.p-message-warn    { background: $warningLighterColor; color: $warningDarkColor; }
+    &.p-message-error   { background: $dangerLighterColor;  color: $dangerDarkColor; }
+}
+.p-toast-message {
+    &.p-toast-message-info    { background: $infoLighterColor;    color: $infoDarkColor; }
+    &.p-toast-message-success { background: $successLighterColor; color: $successDarkColor; }
+    &.p-toast-message-warn    { background: $warningLighterColor; color: $warningDarkColor; }
+    &.p-toast-message-error   { background: $dangerLighterColor;  color: $dangerDarkColor; }
+}
+.app-dark .p-message {
+    &.p-message-info    { background: rgba($infoColor, 0.16);    color: $infoLightColor; }
+    &.p-message-success { background: rgba($successColor, 0.16); color: $successLightColor; }
+    &.p-message-warn    { background: rgba($warningColor, 0.16); color: $warningLightColor; }
+    &.p-message-error   { background: rgba($dangerColor, 0.16);  color: $dangerLightColor; }
+}
+.app-dark .p-toast-message {
+    &.p-toast-message-info    { background: rgba($infoColor, 0.16);    color: $infoLightColor; }
+    &.p-toast-message-success { background: rgba($successColor, 0.16); color: $successLightColor; }
+    &.p-toast-message-warn    { background: rgba($warningColor, 0.16); color: $warningLightColor; }
+    &.p-toast-message-error   { background: rgba($dangerColor, 0.16);  color: $dangerLightColor; }
+}
+
 .p-inputswitch-slider{
     box-shadow: none !important;
 }
 
 
+/* M7-T4 — the Colors gallery demo hooks were the v3 Bulma shade modifiers
+   (`is-light` / `is-lighter` / `is-dark` / `is-darker`), which collide with
+   the Message/Toast `.is-light` family above (and are flagged by the UI
+   conformance gate as v3 classes). The demo-only family is renamed to
+   `vc-shade-*` here and in `components/organisms/UI-elements/Colors.vue` —
+   the Message/Toast `.is-light` rules are untouched. */
 .color-sample-box{
     min-width: 100px;
     min-height: 100px;
     &.primary{
         background:$primaryColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$primaryLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$primaryLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$primaryDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$primaryDarkerColor
         }
     }
     &.danger{
         background:$dangerColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$dangerLightColor;
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$dangerLighterColor;
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$dangerDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$dangerDarkerColor
         }
     }
     &.info{
         background:$infoColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$infoLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$infoLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$infoDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$infoDarkerColor
         }
     }
     &.warning{
         background:$warningColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$warningLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$warningLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$warningDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$warningDarkerColor
         }
     }
     &.success{
         background:$successColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$successLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$successLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$successDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$successDarkerColor
         }
     }
     &.help{
         background:$helpColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$helpLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$helpLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$helpDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$helpDarkerColor
         }
     }
     &.secondary{
         background:$secondaryColor;
-        &.is-light{
+        &.vc-shade-light{
             background:$secondaryLightColor
         }
-        &.is-lighter{
+        &.vc-shade-lighter{
             background:$secondaryLighterColor
         }
-        &.is-dark{
+        &.vc-shade-dark{
             background:$secondaryDarkColor
         }
-        &.is-darker{
+        &.vc-shade-darker{
             background:$secondaryDarkerColor
         }
     }
 }
 
 //Switch small
-.p-inputswitch{
-    &.is-small{
-        width:$input-switch-small-width;
-        height:$input-switch-small-height;
-        .p-inputswitch-slider{
-            &:before{
-                width:$input-switch-small-handle-width;
-                height:$input-switch-small-handle-height;
-                left: $input-switch-small-slider-padding;
-                margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
-            }
-        }
-        &.p-inputswitch-checked{
-            .p-inputswitch-slider{
-                &:before{
-                    transform: translateX(0.8rem);
-                }
-            }
-        }
-    }
-}
-
+/* M3-T2 (F10): the `.p-inputswitch.is-small` hand port is retired — the
+   `.vc-dense` class (token layer) + the Nide small-size tokens carry the
+   density. */
 
 //radio button small
-.p-radiobutton{
-    &.is-small{
-        width:$radiobutton-small-width;
-        height:$radiobutton-small-height;
-        .p-radiobutton-box{
-            width:$radiobutton-small-width;
-            height:$radiobutton-small-height;
-        }
-    }
-}
+/* M3-T2 (F10): the `.p-radiobutton.is-small` hand port is retired — same
+   reason. */
 
 // log badge small
-.p-badge{
-    &.is-size-small{
-        font-size: .6rem;
-        font-weight: 100;
-        height: 1rem;
-        line-height: 1rem;
-        min-width: 2rem;
-    }
-}
+/* M6-T1 (D2): the v3 hand port is retired. `.is-size-small` is a v3 class
+   the v4 engine never emits (the engine emits `.p-badge-sm` / `.p-badge-lg`
+   from the `size` prop), so this rule sized no badge. The badge family is
+   now stated once,
+   for the v4 class names, in `scss/controls-layer.scss` (UT-19 / D2). */
 
 //checkbox small
-.p-checkbox{
-    &.is-small{
-        width: $checkbox-small-width;
-        height: $checkbox-small-height;
-        .p-checkbox-box{
-            width:$checkbox-small-width;
-            height:$checkbox-small-height;
-        }
-
-    }
-}
+/* M3-T2 (F10): the `.p-checkbox.is-small` hand port is retired — the
+   `.vc-dense` class (token layer) + the Nide small-size tokens carry the
+   density. */
 
 //chips small
-.p-chips{
-    &.is-small{
-        ul{
-            gap: 0.3rem;
-            max-height: 96px;
-            overflow: auto;
-
-            .p-chips-token,.pi{
-                @include scaledFontSize($inputTextFontSize, $scaleSM);
-                padding: 0.35rem 0.65rem;
-                margin-right: 0;
-                gap: 0.3rem;
-
-                .p-chips-token-label {
-                    line-height: normal;
-                }
-
-                svg {
-                    &.p-chips-token-icon {
-                        margin-left: 0;
-                    }
-                }
-            }
-
-            .p-chips-input-token {
-                padding: 0;
-
-                input {
-                    @include scaledFontSize($inputTextFontSize, $scaleSM);
-                }
-            }
-        }
-    }
-}
+/* M3-T2 (F10): the `.p-chips.is-small` hand port is retired — same reason. */
 
 //card
 .p-card{
-    &.is-small {
-        .p-card-header, .p-card-body{
-            padding: .4rem .75rem;
-        }
-        .p-card-content {
-            padding: 0;
-        }
-    }
+    /* M3-T2 (F10): the `.p-card.is-small` padding block is retired — same
+       reason. */
     border-radius: 0.25rem;
     box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
     .p-card-header{
@@ -1115,20 +1523,70 @@ $media-level-2-spacing: 0.5rem !default;
     }
 }
 
+/* ── UT-157 / UT-158 — the corners of a field inside an InputGroup ────────
+   The v3 port above pinned a field inside an `InputGroup` to the v3
+   `$borderRadius` (2px) and squared the two corners that meet an attached
+   action. Two defects came out of it:
+
+     1. The engine gives that action its own outer corners from
+        `--p-inputgroup-addon-border-radius` (8px), and 8px is also the
+        radius every standalone field in the app gets
+        (`--p-form-field-border-radius`). A merged control therefore read
+        as 2px roundness on the left and 8px on the right.
+     2. The squaring was unconditional — it applied to every field in every
+        group, including the ~48 groups that hold a SINGLE field. The
+        sign-in screen's username and password fields rendered with two
+        cut-off corners on the right, as if the field had been truncated.
+
+   The engine's token is the single source of truth (R4.1/R4.2: tokens, not
+   hand-ported style classes), so the field's outer corners now come from
+   `--p-form-field-border-radius`, and only the two corners that meet a
+   REAL attached control are squared — which is what makes a field and its
+   action read as one control. */
 .p-inputgroup{
     .p-inputtextarea,.p-inputtext{
-        border-radius: $borderRadius;
+        border-radius: var(--p-form-field-border-radius);
+    }
+}
+
+/* The attached controls the app pairs with a field inside a group: a
+   button (the list toolbars' search cluster, the sign-in screen's
+   "Generate OTP"), an icon addon, a select, a tree select, a toggle. */
+.p-inputgroup:has(> .p-button),
+.p-inputgroup:has(> .p-inputgroupaddon),
+.p-inputgroup:has(> .p-select),
+.p-inputgroup:has(> .p-treeselect),
+.p-inputgroup:has(> .p-toggleswitch) {
+    .p-inputtextarea,.p-inputtext{
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
 }
 
+/* A SelectButton paired with an action (a copy button) inside a group: OpenVue
+   only auto-squares/flushes *text* fields, so the SelectButton's last option
+   keeps rounded right corners and its own right border — a seam against the
+   button that made the toggle group and the action read as two separate
+   controls. Square the last option's meeting corners and drop its right border
+   so it shares the action's left border: [option | option | copy] reads as one
+   connected group. */
+.p-inputgroup:has(> .p-selectbutton):has(> .p-button) {
+    .p-selectbutton > .p-togglebutton:last-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right-width: 0;
+    }
+}
+
 //Select button disable color
-.p-selectbutton .p-button.p-highlight{
+/* M3-T2 (F10): v3 rendered each SelectButton entry as a `.p-button` that
+   took the generic selected-state class when checked; v4 (OpenVue) renders
+   ToggleButtons (`p-togglebutton` + `p-togglebutton-checked`). */
+.p-selectbutton .p-togglebutton.p-togglebutton-checked{
     &[aria-label='Disable'],&[aria-label='False'],&[aria-label='No'],&[aria-label='Inactive']{
         background: $secondaryButtonBg;
         border-color: $secondaryButtonBg;
-        &.p-button{
+        &.p-togglebutton{
             &:focus{
                 box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $secondaryButtonBg, 0 1px 2px 0 rgb(0 0 0 / 0%);
             }
@@ -1212,7 +1670,12 @@ $media-level-2-spacing: 0.5rem !default;
 
                 }
 
-                &.p-highlight {
+                /* M3-T2 (F10): v3 marked the active step with the generic
+                   selected-state class; v4 (OpenVue Steps) marks it with
+                   `p-steps-item-active` — the v3 `p-steps-current` alias is
+                   gone in v4 (same class
+                   map slot). */
+                &.p-steps-item-active {
                     a {
                         color: $primary;
                         border: 1.25px solid $primary;
@@ -1224,15 +1687,13 @@ $media-level-2-spacing: 0.5rem !default;
                         }
                     }
                 }
-
-                &.p-steps-current {
-
-                }
             }
 
         }
 
-        .p-steps-item.p-steps-current ~ {
+        /* M3-T2 (F10): v3 `p-steps-current` → v4 `p-steps-item-active` for
+           the trailing-steps sibling selectors. */
+        .p-steps-item-active ~ li {
             a {
                 color: $primary;
 
@@ -1243,55 +1704,36 @@ $media-level-2-spacing: 0.5rem !default;
             }
         }
 
-        .p-steps-current ~ li a {
+        .p-steps-item-active ~ li a {
             color: $secondary;
         }
     }
 
     .p-tag.vh-env-tag {
         white-space: nowrap;
-        font-size: 10px;
+        /* UT-47 — 10px was below the app's readable floor (UT-19). */
+        font-size: 0.875rem;
         padding: 2px 12px;
         border-radius: 12px;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        /* UT-51 — the pill was `position:absolute` with a -50% Y offset, so it
+           floated over whatever sat below it (the footer's copyright line on
+           the short pages, the card's top edge on the configuration step). It
+           is a status chip, not an overlay: it now sits in the flow, centred
+           on its own line between the stepper and the step content. */
+        position: static;
+        transform: none;
+        left: auto;
     }
 
-    .p-confirm-dialog {
-        &.is-small {
-            .p-dialog-header {
-                padding: 8px 12px;
-
-                .p-dialog-title {
-                    font-size: 15px;
-                }
-            }
-
-            .p-dialog-content {
-                .p-confirm-dialog-icon {
-                    font-size: 20px;
-                }
-
-                .p-confirm-dialog-message {
-                    font-size: 13px;
-                    margin-left: 10px;
-                }
-            }
-
-            .p-dialog-footer {
-                padding: 10px;
-            }
-        }
-    }
+    /* M3-T2 (F10): the `.p-confirm-dialog.is-small` block (header/content/
+       footer font-size + padding) is retired — density now flows from the
+       `.vc-dense` token layer, and v4 ConfirmDialog sizing is token-driven. */
 }
 
 //Message small
+/* M3-T2 (F10): the `.p-message.is-small` wrapper-padding block is retired —
+   density is carried by the `.vc-dense` token layer. */
 .p-message {
-    &.is-small {
-        .p-message-wrapper {
-            padding: 10px 15px;
-        }
-    }
     .p-message-wrapper {
         .p-message-text {
             flex-grow: 1;
@@ -1405,6 +1847,9 @@ $media-level-2-spacing: 0.5rem !default;
     ul{
         padding-left: 0;
         &.links-list{
+            // UT-28: the list links inherited the card's 0.8rem
+            // (11.2px) type size — below the 12px readability floor.
+            font-size: 0.875rem;
             list-style-type: none;
             li{
                 &:not(:last-child){
@@ -1463,7 +1908,9 @@ $media-level-2-spacing: 0.5rem !default;
 }
 
 .form {
-    .p-float-label {
+    /* M3-T2 (F10): v3 float-label wrapper class → v4 (OpenVue FloatLabel)
+       `p-floatlabel`. */
+    .p-floatlabel {
         &:not(:last-child) {
             margin-bottom: 25px;
         }
@@ -1727,4 +2174,27 @@ textarea.p-inputtextarea {
 
 .overflow-wrap-anywhere{
     overflow-wrap: anywhere;
+}
+
+/* M3-T5-01 (F10) — dark mode. The app's structural canvas surfaces are
+   pinned to fixed light SCSS values above (the `body` canvas at `$shade200`,
+   the `.sidebar` at `$shade100`) and carry no `.app-dark` variant, so under
+   `.app-dark` the page canvas + sidebar stayed light while the OpenVue
+   components (whose tokens DO flip) went dark — mixed light/dark surfaces
+   with transparent components (e.g. the dashboard accordion) rendering on
+   the light canvas and their light text becoming low-contrast/invisible.
+   Bind those app-owned surfaces to the engine's dark surface scale under
+   `.app-dark`. The OpenVue surface tokens are already scheme-aware; the
+   surface scale is a fixed neutral ramp shared by both schemes, so
+   `surface.950` (darkest) reads as the canvas and `surface.900` as the
+   sidebar — mirroring the light hierarchy where the sidebar ($shade100) is
+   one step lighter than the canvas ($shade200). Light mode is untouched. */
+.app-dark body {
+    background: var(--p-surface-950);
+    color: var(--p-text-color);
+}
+
+.app-dark .sidebar {
+    background-color: var(--p-surface-900);
+    border-right-color: var(--p-surface-800);
 }

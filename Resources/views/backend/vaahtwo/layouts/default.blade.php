@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" @if(vh_dark_mode_preference() === 'dark')class="app-dark"@endif>
 <head>
     <title><?php
             $title = config('vaahcms.app_name');
@@ -27,7 +27,7 @@
 
 </head>
 
-<body class="vaahtwo primevue {{config('settings.global.is_sidebar_collapsed') == null ||
+<body class="vaahtwo {{config('settings.global.is_sidebar_collapsed') == null ||
     config('settings.global.is_sidebar_collapsed') ?'has-sidebar-small':''}}
     @if(isset($data->body_class)){{$data->body_class}}@endif">
 

@@ -34,15 +34,42 @@ class SetupController extends Controller
     }
 
     //----------------------------------------------------------
-    public function index()
+    /**
+     * F15 / R1.2 — the PHP runtime floor gate.
+     *
+     * Compared with version_compare(), never with the string < operator:
+     * "8.10.0" < "8.3" is true as strings, so a future PHP 8.10 host would
+     * be refused by a plain string comparison while 8.10 is a higher
+     * runtime than the 8.3 floor. The failure message names the required
+     * version (read from config, never hard-coded) and the detected one.
+     *
+     * Evaluated before any installation step runs, on every route that can
+     * change the environment (index, testConfigurations, runMigrations,
+     * installDependencies, storeAdmin) — not only on GET vaahcms/setup/.
+     *
+     * Returns the failure envelope, or null when the runtime is accepted.
+     */
+    private function phpVersionCheck()
     {
         $vaahcms_config = config('vaahcms');
 
-        if(phpversion() < $vaahcms_config['php_version_required'])
+        if(version_compare(phpversion(), $vaahcms_config['php_version_required'], '<'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'PHP 8.1 version is required. Current PHP version is '.phpversion();
+            $response['errors'][] = 'PHP '.$vaahcms_config['php_version_required'].' version is required. Current PHP version is '.phpversion();
             return $response;
+        }
+
+        return null;
+    }
+    //----------------------------------------------------------
+    public function index()
+    {
+        $gate = $this->phpVersionCheck();
+
+        if($gate)
+        {
+            return $gate;
         }
 
 
@@ -297,6 +324,12 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function testConfigurations(Request $request)
     {
+        $gate = $this->phpVersionCheck();
+
+        if($gate)
+        {
+            return response()->json($gate);
+        }
 
         $rules = array(
             'app_env' => 'required',
@@ -402,6 +435,12 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function runMigrations(Request $request)
     {
+        $gate = $this->phpVersionCheck();
+
+        if($gate)
+        {
+            return response()->json($gate);
+        }
 
         $data = [];
 
@@ -480,7 +519,12 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function installDependencies(Request $request)
     {
+        $gate = $this->phpVersionCheck();
 
+        if($gate)
+        {
+            return response()->json($gate);
+        }
 
         $rules = array(
             'name' => 'required',
@@ -513,7 +557,29 @@ class SetupController extends Controller
             if(isset($response['success']) && $response['success'])
             {
                 Module::syncAllModules();
-                Module::activateItem($request->slug);
+
+                //F15 / R2.7 — activation is part of the install step: a
+                //downloaded module that cannot be activated (missing
+                //dependency, asset-contract gate, hook failure) must not be
+                //reported as installed. The failure is recorded in the
+                //hook-failure collector and surfaced in the envelope.
+                $activate_response = Module::activateItem($request->slug);
+
+                if(isset($activate_response['success']) && !$activate_response['success'])
+                {
+                    vh_record_hook_failure($request->slug, 'dependencies', $activate_response, 'module');
+
+                    $response['success'] = false;
+                    $response['errors'][] = 'Module "'.$request->slug.'" was downloaded but could not be activated.';
+                    if(isset($activate_response['errors']))
+                    {
+                        foreach($activate_response['errors'] as $activation_error)
+                        {
+                            $response['errors'][] = $activation_error;
+                        }
+                    }
+                    return response()->json($response);
+                }
             }
 
             if(isset($response['success']) && $response['success'] && $request->import_sample_data)
@@ -535,8 +601,27 @@ class SetupController extends Controller
             if(isset($response['success']) && $response['success'])
             {
                 Theme::syncAll();
-                Theme::activateItem($request->slug, true);
 
+                //F15 / R2.7 — same contract as the module branch: a theme
+                //that downloads but cannot activate is a failed install,
+                //not a success.
+                $activate_response = Theme::activateItem($request->slug, true);
+
+                if(isset($activate_response['success']) && !$activate_response['success'])
+                {
+                    vh_record_hook_failure($request->slug, 'dependencies', $activate_response, 'theme');
+
+                    $response['success'] = false;
+                    $response['errors'][] = 'Theme "'.$request->slug.'" was downloaded but could not be activated.';
+                    if(isset($activate_response['errors']))
+                    {
+                        foreach($activate_response['errors'] as $activation_error)
+                        {
+                            $response['errors'][] = $activation_error;
+                        }
+                    }
+                    return response()->json($response);
+                }
             }
 
             if(isset($response['success']) && $response['success'] && $request->import_sample_data)
@@ -621,6 +706,13 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {
+        $gate = $this->phpVersionCheck();
+
+        if($gate)
+        {
+            return response()->json($gate);
+        }
+
         $rules = array(
             'first_name' => 'required',
             'last_name' => 'required',
@@ -685,12 +777,43 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
+    /**
+     * F15 / R2.4 — deletion is scoped to the migrations the VaahCms
+     * provider publishes itself. The wizard re-publishes them right after
+     * (VaahArtisan::publishMigrations inside runMigrations), so only the
+     * provider's own files are reset. Migrations added by host packages or
+     * the application are never touched — a fresh install must not delete
+     * the host's migration baseline.
+     */
     public function deleteExistingMigration()
     {
 
         $path = base_path("database/migrations");
 
         $migrations = vh_get_all_files($path);
+
+        if(count($migrations) < 1)
+        {
+            return false;
+        }
+
+        $provider_migrations = $this->providerMigrations();
+
+        //The provider's source migrations are the scope of the reset. If the
+        //list is empty the package is in an abnormal state (its migrations
+        //are missing) — refuse the delete and log it rather than falling
+        //back to an unscoped delete of the host's database/migrations.
+        if(count($provider_migrations) < 1)
+        {
+            \Log::error('vaahcms setup: provider migrations missing, skipped resetting database/migrations');
+
+            return false;
+        }
+
+        $migrations = array_values(array_filter($migrations, function($migration) use ($provider_migrations)
+        {
+            return in_array($migration, $provider_migrations);
+        }));
 
         if(count($migrations) < 1)
         {
@@ -704,6 +827,29 @@ class SetupController extends Controller
         }
 
         return true;
+    }
+    //----------------------------------------------------------
+    /**
+     * Basename list of the migrations shipped in the package (resolved from
+     * the provider's own file location, the same mechanism testConfigurations
+     * uses to find composer.json). An empty list — provider files absent —
+     * makes the caller refuse the delete entirely (see
+     * deleteExistingMigration).
+     */
+    private function providerMigrations()
+    {
+        $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
+
+        $provider_root = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
+
+        $provider_migrations_path = $provider_root."Database/Migrations";
+
+        if(!is_dir($provider_migrations_path))
+        {
+            return [];
+        }
+
+        return vh_get_all_files($provider_migrations_path);
     }
     //----------------------------------------------------------
     public function clearCache()

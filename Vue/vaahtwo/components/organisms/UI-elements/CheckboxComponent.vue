@@ -22,7 +22,7 @@
     <div class="col-12">
       <h5>Checkbox Small</h5>
       <div class="field-checkbox">
-        <Checkbox inputId="checkOption4" v-model="checkboxValue" value="Option 4" class="is-small" />
+        <Checkbox inputId="checkOption4" v-model="checkboxValue" value="Option 4" class="vc-dense" />
         <label for="checkOption4">Option 4</label>
       </div>
     </div>

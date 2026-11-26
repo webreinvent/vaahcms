@@ -5,7 +5,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Entities\ContentFormField;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class TaxonomyBase extends VaahModel {
@@ -14,7 +13,6 @@ class TaxonomyBase extends VaahModel {
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_taxonomies';
     //-------------------------------------------------
@@ -43,7 +41,7 @@ class TaxonomyBase extends VaahModel {
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 
@@ -106,12 +104,14 @@ class TaxonomyBase extends VaahModel {
     //-------------------------------------------------
 
     //-------------------------------------------------
+    /**
+     * F06 / ADR-008 — the relation's target (the Cms ContentFormField model)
+     * is resolved by the bound CmsContract; unbound (core-only install) the
+     * method has zero callers in core and simply returns null.
+     */
     public function contentFormRelations()
     {
-        return $this->morphToMany(ContentFormField::class,
-            'relatable',
-            'vh_cms_content_form_relations',
-            null,'vh_cms_content_form_field_id');
+        return vh_cms_contract()?->taxonomyContentFormFields($this);
     }
 
     //-------------------------------------------------

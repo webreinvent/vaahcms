@@ -11,7 +11,6 @@ use WebReinvent\VaahCms\Models\User;
 class Permission extends PermissionBase
 {
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     public function createdByUser()
     {

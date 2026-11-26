@@ -3,12 +3,12 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold text-sm">Create</h5>
-                    <div class="p-inputgroup justify-content-end">
-                        <Button label="Save & New" icon="pi pi-pencil" class="p-button-sm"/>
-                        <Button @click="toggle" class="p-button-sm" icon="pi pi-caret-down"/>
-                        <Button icon="pi pi-times" class="p-button-sm"/>
-                    </div>
+                    <h5 class="font-semibold vc-text-16">Create</h5>
+                    <InputGroup class="justify-content-end">
+                        <Button size="small" label="Save & New" icon="pi pi-pencil" class=""/>
+                        <Button size="small" @click="toggle" class="" icon="pi pi-caret-down"/>
+                        <Button size="small" icon="pi pi-times" class=""/>
+                    </InputGroup>
                     <TieredMenu :model="menu_options" ref="menu" :popup="true">
                     </TieredMenu>
                 </div>
@@ -20,43 +20,43 @@
                             <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload"/>
                         </div>
                     </div>
-                   <span class="p-float-label">
+                   <FloatLabel>
                        <InputText id="email" class="w-full"></InputText>
                        <label for="email">Email</label>
-                   </span>
-                    <span class="p-float-label">
+                   </FloatLabel>
+                    <FloatLabel>
                         <InputText id="username" class="w-full"></InputText>
                         <label for="username">Username</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                         <Password v-model="value1" :feedback="false" id="password" class="w-full" inputClass="w-full"/>
                         <label for="password">Password</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                         <InputText id="display-name" class="w-full"></InputText>
                         <label for="display-name">Display Name</label>
-                    </span>
-                    <span class="p-float-label">
-                         <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                         <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
                          <label for="country-code">Designation</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                           <InputText id="designation" class="w-full"></InputText>
                           <label for="designation">Designation</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                            <InputText id="first-name" class="w-full"></InputText>
                            <label for="first-name">First Name</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                             <InputText id="middle-name" class="w-full"></InputText>
                             <label for="middle-name">Middle Name</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                             <InputText id="last-name" class="w-full"></InputText>
                             <label for="last-name">Last Name</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                              <SelectButton v-model="gender" :options="gender_options" optionLabel="label" dataKey="value"
                                            aria-labelledby="custom">
                                 <template #option="slotProps">
@@ -64,64 +64,66 @@
                                 </template>
                             </SelectButton>
                             <label for="gender"></label>
-                    </span>
-                    <span class="p-float-label">
-                           <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                           <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
                            <label for="country-code">Country Code</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                             <InputText id="phone" class="w-full"></InputText>
                             <label for="phone">Phone</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                          <Editor :v-model="bio" editorStyle="height: 320px"/>
                            <label for="bio">Bio</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                            <InputText id="website" class="w-full"></InputText>
                            <label for="website">Website</label>
-                    </span>
-                    <span class="p-float-label">
-                            <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="timezone"
-                                          @complete="searchCountry($event)" optionLabel="name"
-                                          class="w-full"
-                                          input-class="p-inputtext-sm w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                            <AutoComplete size="small" v-model="selectedCountry1" :suggestions="filteredCountries" id="timezone" @complete="searchCountry($event)" optionLabel="name" class="w-full" input-class=" w-full"/>
                             <label for="timezone">Timezone</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                            <InputText id="alternate-email" class="w-full"></InputText>
                            <label for="alternate-email">Alternate Email</label>
-                    </span>
-                    <span class="p-float-label">
-                        <Calendar id="dob" inputId="basic" v-model="date1" autocomplete="off" class="w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                        <DatePicker id="dob" inputId="basic" v-model="date1" autocomplete="off" class="w-full"/>
                         <label for="dob">Date of birth</label>
-                    </span>
-                    <span class="p-float-label">
-                        <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="country"
-                                  @complete="searchCountry($event)" optionLabel="name"
-                                  class="w-full"
-                                  input-class="p-inputtext-sm w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                        <AutoComplete size="small" v-model="selectedCountry1" :suggestions="filteredCountries" id="country" @complete="searchCountry($event)" optionLabel="name" class="w-full" input-class=" w-full"/>
                         <label for="country">Country</label>
-                    </span>
-                    <span class="p-float-label">
-                         <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                    </FloatLabel>
+                    <FloatLabel>
+                         <Select v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
                          <label for="country-code">Status</label>
-                    </span>
-                    <span class="p-float-label">
+                    </FloatLabel>
+                    <FloatLabel>
                         <SelectButton v-model="is_active" :options="is_active_options" optionLabel="brand">
                             <template #option="slotProps">
-                                <span class="text-sm">{{slotProps.option.label}}</span>
+                                <span class="vc-text-12">{{slotProps.option.label}}</span>
                             </template>
                         </SelectButton>
-                    </span>
+                    </FloatLabel>
             </template>
         </Card>
     </div>
 </template>
 
 <script>
+import {labelEditorToolbarWhenReady} from '../../vaahvue/utils/editorToolbarLabels';
+
 export default {
     name: "UsersForm",
+    mounted() {
+        // UT-94 (M6-T4a Batch 19) — this showcase renders the same rich-text
+        // editor as the app's own forms, so its toolbar (and its dropdown
+        // pickers) need the same accessible names.
+        labelEditorToolbarWhenReady();
+    },
     data() {
         return {
             bio:"",
@@ -177,7 +179,9 @@ export default {
 
 <style lang="scss">
 .form {
-    .p-float-label {
+    /* M3-T2 (F10): v3 float-label wrapper class → v4 (OpenVue FloatLabel)
+       `p-floatlabel`. */
+    .p-floatlabel {
         &:not(:last-child) {
             margin-bottom: 25px;
         }

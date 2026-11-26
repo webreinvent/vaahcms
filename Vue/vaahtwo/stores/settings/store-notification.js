@@ -126,7 +126,7 @@ export const useNotificationStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal, oldVal) => {
 
-                    if (this.watch_stopper && !newVal.name.includes(this.route_prefix)) {
+                    if (this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)) {
                         this.watch_stopper();
 
                         return false;
@@ -697,6 +697,28 @@ export const useNotificationStore = defineStore({
         isViewLarge() {
             return this.view === 'large';
         },
+        //---------------------------------------------------------------------
+        // UT-93 (M6-T4a Batch 18) — the notifications table labelled its
+        // action column "Edit" (column_edit) while every other list page
+        // labels it "Actions". These two helpers mirror the ones the other
+        // list stores expose so the column can follow the same contract.
+        getActionWidth() {
+            let width = 100;
+            if(!this.isViewLarge())
+            {
+                width = 80;
+            }
+            return width+'px';
+        },
+        getActionLabel() {
+            let text = null;
+            if(this.isViewLarge())
+            {
+                text = 'Actions';
+            }
+
+            return text;
+        },
 //---------------------------------------------------------------------------
 
         async listAction(type = null) {
@@ -822,6 +844,7 @@ export const useNotificationStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
@@ -851,6 +874,7 @@ export const useNotificationStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }

@@ -10,7 +10,7 @@ const store = useFailedJobStore();
 
 <template>
     <div>
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1102"
         >
@@ -54,7 +54,7 @@ const store = useFailedJobStore();
 
             <VhFieldVertical>
                 <label for="range">{{store.assets.language_strings.filter_range}}:</label>
-                <Calendar inputId="range"
+                <DatePicker inputId="range"
                           data-testid="failedjobs-filters-range"
                           v-model="store.dates2"
                           @date-select="store.setDateRange"
@@ -63,6 +63,6 @@ const store = useFailedJobStore();
                           :manualInput="false"
                 />
             </VhFieldVertical>
-        </Sidebar>
+        </Drawer>
     </div>
 </template>

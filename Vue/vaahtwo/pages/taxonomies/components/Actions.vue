@@ -31,25 +31,20 @@ const toggleBulkMenuState = (event) => {
     <div >
 
         <!--actions-->
-        <div :class="{'flex justify-content-between': store.isViewLarge()}" class="mt-2 mb-2">
+        <!-- UT-89 (M6-T4a Batch 17) — the taxonomies bar uses the
+             two-island toolbar (`justify-content: space-between`): the
+             bulk menu anchors to the left edge and the search cluster is
+             pinned to the right edge, matching the other list pages. The
+             search field + search/filters/reset buttons sit in one
+             InputGroup so the cluster reads as a single unit. -->
+        <div class="flex flex-wrap align-items-center justify-between gap-2 mt-2 mb-2">
 
             <!--left-->
-            <div v-if="store.view === 'large' && root.assets.language_strings.general">
+            <div class="taxonomies-toolbar-menu flex align-items-center gap-1"
+                 v-if="store.view === 'large' && root.assets.language_strings.general">
 
                 <!--selected_menu-->
-                <Button v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')"
-                        class="p-button-sm"
-                        type="button"
-                        @click="toggleSelectedMenuState"
-                        data-testid="taxonomies-actions-menu"
-                        aria-haspopup="true"
-                        aria-controls="overlay_menu"
-                >
-                    <i class="pi pi-angle-down"></i>
-                    <Badge v-if="store.action.items.length > 0"
-                           :value="store.action.items.length"
-                    />
-                </Button>
+                <Button aria-label="Selected items actions" size="small" v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')" class="" type="button" @click="toggleSelectedMenuState" data-testid="taxonomies-actions-menu" aria-haspopup="true" aria-controls="overlay_menu" icon="pi pi-angle-down" :badge="store.action.items.length > 0 ? String(store.action.items.length) : null" badgeSeverity="primary" />
 
                 <Menu ref="selected_menu_state"
                       :model="store.list_selected_menu"
@@ -57,14 +52,7 @@ const toggleBulkMenuState = (event) => {
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button class="p-button-sm ml-1"
-                        icon="pi pi-ellipsis-h"
-                        @click="toggleBulkMenuState"
-                        data-testid="taxonomies-actions-bulk-menu"
-                        aria-haspopup="true"
-                        aria-controls="bulk_menu_state"
-                        v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')"
-                />
+                <Button size="small" icon="pi pi-ellipsis-h" aria-label="Bulk actions" @click="toggleBulkMenuState" data-testid="taxonomies-actions-bulk-menu" aria-haspopup="true" aria-controls="bulk_menu_state" v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')" />
 
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
@@ -75,50 +63,65 @@ const toggleBulkMenuState = (event) => {
             <!--/left-->
 
             <!--right-->
-            <div>
-                <div class="grid p-fluid">
-                    <div class="col-12">
-                        <div class="p-inputgroup">
+            <!-- AUD-005 — both right-anchors are load-bearing: on a single row
+                 `justify-between` (on the parent) spreads the two islands apart,
+                 but once `flex-wrap` breaks the row on a narrow viewport the
+                 island sits alone on its own line and `justify-between` can no
+                 longer push it — `margin-left:auto` is what keeps it
+                 right-anchored then. Don't drop either. -->
+            <div class="flex flex-wrap items-center gap-2 vaah-list-search"
+                 style="margin-left: auto; flex: 0 1 420px; min-width: 260px; max-width: 520px;">
+                <InputGroup class="w-full taxonomies-toolbar-field">
+                    <InputText aria-label="Search taxonomies" size="small" class="w-full" v-model="store.query.filter.q" @keyup.enter="store.delayedSearch()" @keyup.13="store.delayedSearch()" data-testid="taxonomies-actions-search" :placeholder="root.assets.language_strings.crud_actions.placeholder_search" />
 
-                            <InputText class="p-inputtext-sm"
-                                       v-model="store.query.filter.q"
-                                       @keyup.enter="store.delayedSearch()"
-                                       @keyup.enter.native="store.delayedSearch()"
-                                       @keyup.13="store.delayedSearch()"
-                                       data-testid="taxonomies-actions-search"
-                                       :placeholder="root.assets.language_strings.crud_actions.placeholder_search"
-                            />
+                    <Button size="small" @click="store.delayedSearch()" class="" data-testid="taxonomies-actions-search-button" icon="pi pi-search" aria-label="Search" />
+                    <Button size="small" class=" taxonomies-toolbar-action" :label="root.assets.language_strings.crud_actions.filters_button" type="button" data-testid="taxonomies-actions-show-filters" @click="store.show_filters = true">
+                        <Badge v-if="store.count_filters > 0" :value="store.count_filters"/>
+                    </Button>
 
-                            <Button @click="store.delayedSearch()"
-                                    class="p-button-sm"
-                                    data-testid="taxonomies-actions-search-button"
-                                    icon="pi pi-search"
-                            />
-
-                            <Button class="p-button-sm"
-                                    :label="root.assets.language_strings.crud_actions.filters_button"
-                                    type="button"
-                                    data-testid="taxonomies-actions-show-filters"
-                                    @click="store.show_filters = true"
-                            >
-                                <Badge v-if="store.count_filters > 0" :value="store.count_filters"/>
-                            </Button>
-
-                            <Button class="p-button-sm"
-                                    type="button"
-                                    icon="pi pi-filter-slash"
-                                    data-testid="taxonomies-actions-reset-filters"
-                                    :label="root.assets.language_strings.crud_actions.reset_button"
-                                    @click="store.resetQuery()"
-                            />
-                        </div>
-                    </div>
-
-                    <Filters/>
-                </div>
+                    <Button size="small" class=" taxonomies-toolbar-action" type="button" icon="pi pi-filter-slash" data-testid="taxonomies-actions-reset-filters" :label="root.assets.language_strings.crud_actions.reset_button" @click="store.resetQuery()" />
+                </InputGroup>
             </div>
             <!--/right-->
         </div>
         <!--/actions-->
+
+        <Fluid class="grid">
+            <Filters/>
+        </Fluid>
     </div>
 </template>
+
+<style scoped>
+
+/* UT-108 (M6-T1's cross-screen probe) — one control height in the toolbar.
+   The density contract says a control is 36px tall (2.5714rem at the 14px
+   root — `scss/openvue-density.scss`). The engine states that height for
+   the whole `.vc-dense` subtree, but the app's UT-18 rule sets
+   `height:auto` on *every* icon-only button (so a 32px table row can hold
+   a 20px action) — and that rule is unlayered, so it outranks the engine's
+   layered density rule. The two menu buttons therefore rendered 29.3px tall
+   beside the 36px field.
+
+   Here they are what the design system asks for (§8: "icon-only buttons
+   are square"): a 36 x 36 square with the `pi` icon centred. */
+.taxonomies-toolbar-menu :deep(.p-button) {
+    height: 2.5714rem;
+}
+
+.taxonomies-toolbar-menu :deep(.p-button.p-button-icon-only) {
+    width: 2.5714rem;
+}
+
+/* The field takes the room the search cluster has; the two list actions
+   beside it keep their own width and never shrink (below 640px the cluster
+   wraps, so the actions drop onto their own row). */
+.taxonomies-toolbar-field {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.taxonomies-toolbar-action {
+    flex: 0 0 auto;
+}
+</style>

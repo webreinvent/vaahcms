@@ -12,14 +12,7 @@ const useVaah = vaah();
     <div v-if="store.list && store.assets">
         <!--table-->
 
-         <DataTable :value="store.list.data"
-                    dataKey="id"
-                    class="p-datatable-sm p-datatable-hoverable-rows"
-                    v-model:selection="store.action.items"
-                    data-testid="batches-table-checkbox"
-                    stripedRows
-                    responsiveLayout="scroll"
-         >
+         <DataTable size="small" rowHover :value="store.list.data" dataKey="id" class="" v-model:selection="store.action.items" data-testid="batches-table-checkbox" stripedRows scrollable>
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
@@ -77,11 +70,7 @@ const useVaah = vaah();
                      header="Detail"
              >
                  <template #body="prop">
-                     <Button v-if="store.hasPermission('can-read-batch-details')"
-                             class="p-button-rounded p-button-sm p-button-outlined"
-                             data-testid="batches-table-options"
-                             @click="store.displayBatchDetails(prop.data.options)"
-                     >
+                     <Button size="small" v-if="store.hasPermission('can-read-batch-details')" class="p-button-rounded p-button-outlined" data-testid="batches-table-options" @click="store.displayBatchDetails(prop.data.options)">
                          <span class="pi pi-eye mr-1"></span>
                          <span>{{ root.assets.language_strings.crud_actions.toolkit_text_view }}</span>
                      </Button>
@@ -93,11 +82,7 @@ const useVaah = vaah();
                      style="width:150px;"
              >
                  <template #body="prop">
-                     <Button v-if="store.hasPermission('can-read-batch-failed-ids')"
-                             class="p-button-sm p-button-outlined p-button-rounded"
-                             data-testid="batches-table-failed-ids"
-                             @click="store.displayFailedIdDetails(prop.data.failed_job_ids)"
-                     >
+                     <Button size="small" v-if="store.hasPermission('can-read-batch-failed-ids')" class=" p-button-outlined p-button-rounded" data-testid="batches-table-failed-ids" @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
                          <span class="pi pi-eye mr-1"></span>
                          <span v-if="prop.data.failed_job_ids &&
                           (typeof prop.data.failed_job_ids === 'array' ||
@@ -117,7 +102,12 @@ const useVaah = vaah();
                      style="width:150px;"
              >
                  <template #body="prop">
-                     {{ useVaah.ago(prop.data.cancelled_at) }}
+                     <!-- UT-88 (M6-T4a Batch 17) — a batch that was never
+                          cancelled carries `cancelled_at = NULL`; the cell
+                          rendered *empty* and the column looked broken
+                          rather than empty. -->
+                     <span v-if="prop.data.cancelled_at">{{ useVaah.ago(prop.data.cancelled_at) }}</span>
+                     <span v-else class="vaah-empty-value">—</span>
                  </template>
              </Column>
 
@@ -138,23 +128,50 @@ const useVaah = vaah();
                      :sortable="true"
              >
                  <template #body="prop">
-                     {{ useVaah.ago(prop.data.finished_at) }}
+                     <!-- UT-88 (M6-T4a Batch 17) — a batch that has not
+                          finished yet carries `finished_at = NULL`; the
+                          cell rendered *empty* and the column looked
+                          broken rather than empty. -->
+                     <span v-if="prop.data.finished_at">{{ useVaah.ago(prop.data.finished_at) }}</span>
+                     <span v-else class="vaah-empty-value">—</span>
                  </template>
              </Column>
 
+             <!-- UT-93 (M6-T4a Batch 18) — the trailing delete column had no
+                  header at all and its icon-only button carried no accessible
+                  name, so a screen reader announced "button" with nothing
+                  else. It now follows the same action-column contract as the
+                  other list pages: a named header and a labelled danger
+                  button. -->
              <Column v-if="store.isViewLarge()"
+                     field="actions"
                      style="width:150px;"
+                     :style="{width: store.getActionWidth() }"
+                     :header="store.getActionLabel()"
              >
                  <template #body="prop">
                      <Button v-if="store.hasPermission('can-delete-batch')"
-                             class="p-button-rounded p-button-text"
+                             class="p-button-tiny p-button-danger p-button-text"
+                             aria-label="Delete batch"
+                             v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
+                             icon="pi pi-trash"
                              @click="store.deleteItem(prop.data)"
                              data-testid="batches-table-to-trash"
-                     >
-                         <span class="pi pi-trash"></span>
-                     </Button>
+                     />
                  </template>
              </Column>
+            <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                 #empty slot is absent, so the slot says what to do next
+                 (DESIGN-SYSTEM §8): a muted line + one primary action.
+                 Batches are created by the application, not by the admin —
+                 the CTA clears the active search. -->
+            <template #empty>
+                <div class="vaah-empty" data-testid="batches-list_empty">
+                    <i class="vaah-empty-icon pi pi-box" aria-hidden="true"></i>
+                    <p class="vaah-empty-copy">No batches match your search.</p>
+                    <Button :label="root.assets.language_strings.crud_actions.reset_button" icon="pi pi-filter-slash" @click="store.resetQuery()" data-testid="batches-list_empty_reset" />
+                </div>
+            </template>
         </DataTable>
         <!--/table-->
 

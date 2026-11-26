@@ -1,0 +1,50 @@
+// M3-T1 (F09) — OpenVue density layer.
+//
+// The root rem scale is the single density lever (upstream: "OpenVue UI
+// components use rem units … use the root font-size to adjust the size of
+// the components globally"): at a 14px root, the preset's density tokens
+// (declared in Vue/vaahtwo/vaahvue/theme/openvue.js under
+// extend.vaah.density) resolve to the absolute targets —
+//
+//   base text      14px = 1rem
+//   control height 36px = 2.5714rem
+//   table row      32px = 2.2857rem
+//   grid step       8px = 0.5714rem
+//
+// The component-level consumption lives in the preset's token-aware CSS
+// (emitted by the OpenVue engine at plugin install, bound through dt()).
+// This file carries the root scale plus the PrimeFlex grid step; the
+// 2,834-line v3 custom-CSS re-expression and the vendored imports in
+// build.scss stay as-is until M3-T2/F10 converges the CSS pipeline.
+
+html {
+    font-size: 14px;
+}
+
+// 8px grid step between adjacent PrimeFlex grid cells. This mirrors the
+// VENDORED primeflex-3.3.0 mechanism (not modern upstream PrimeFlex):
+// src/_grid.scss compiles `.#{$prefix}grid { margin-right/left/top: -1 *
+// $gutter }` and `.#{$prefix}col { padding: $gutter }` with $gutter: .5rem
+// and $prefix: ''. The density layer keeps that exact structure and only
+// shrinks the magnitude — a -14px gutter becomes the 8px step — so the
+// layout shape (three-axis negative margins, four-sided column padding)
+// is unchanged and no existing grid re-flows differently than the vendored
+// baseline:
+// S = var(--p-vaah-density-grid-step) = 0.5714rem = 8px at the 14px root.
+// Consumed through the token variable, so a token change re-flows the grid
+// without a CSS edit. (F10 extends the token to the remaining surfaces.)
+$vaah-grid-step: var(--p-vaah-density-grid-step, 0.5714rem);
+
+.grid {
+    margin-right: calc($vaah-grid-step / -2);
+    margin-left: calc($vaah-grid-step / -2);
+    margin-top: calc($vaah-grid-step / -2);
+}
+
+// The vendored primeflex is compiled with an empty $prefix — the column
+// classes are bare `col-*`, so the selector mirrors the vendored one
+// (`.grid > [class*="col"]`) and the later import order wins on ties.
+// Four-sided padding, mirroring the vendored `padding: $gutter`.
+.grid > [class*="col"] {
+    padding: calc($vaah-grid-step / 2);
+}

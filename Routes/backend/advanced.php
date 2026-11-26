@@ -11,17 +11,17 @@ Route::group(
     function () {
         //---------------------------------------------------------
         Route::get('/assets', 'LogsController@getAssets')
-            ->name('vh.backend.vaah.logs.assets');
+            ->name('vh.backend.vaah.jobs.assets');
         /**
          * Get List
          */
         Route::get('/', 'LogsController@getList')
-            ->name('vh.backend.vaah.logs.list');
+            ->name('vh.backend.vaah.jobs.list');
         /**
          * Get Item
          */
         Route::get('/{name}', 'LogsController@getItem')
-            ->name('vh.backend.vaah.logs.read');
+            ->name('vh.backend.vaah.jobs.read');
         /**
          * Download File
          */

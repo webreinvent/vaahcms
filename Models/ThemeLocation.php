@@ -3,17 +3,11 @@
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Models\Block;
-use VaahCms\Modules\Cms\Models\FormField;
-use VaahCms\Modules\Cms\Models\FormGroup;
-use VaahCms\Modules\Cms\Models\Menu;
-use VaahCms\Modules\Cms\Models\MenuItem;
 
 
 class ThemeLocation extends VaahModel {
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_theme_locations';
     //-------------------------------------------------
@@ -44,7 +38,7 @@ class ThemeLocation extends VaahModel {
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 
@@ -83,10 +77,13 @@ class ThemeLocation extends VaahModel {
     }
 
     //-------------------------------------------------
+    /**
+     * F06 / ADR-008 — the relation's target (the Cms Menu model) is resolved
+     * by the bound CmsContract; unbound (core-only install) returns null.
+     */
     public function menus()
     {
-        return $this->hasMany(Menu::class,
-            'vh_theme_location_id', 'id');
+        return vh_cms_contract()?->locationMenus($this);
     }
 
     //-------------------------------------------------
@@ -129,9 +126,21 @@ class ThemeLocation extends VaahModel {
             return false;
         }
 
+        /*
+         * F06 / ADR-008 — the menu and block data lives in the Cms module;
+         * with no bound contract both cases degrade to the same `false`
+         * returned above when the location itself is not found.
+         */
+        $cms_contract = vh_cms_contract();
+
         switch ($location->type)
         {
             case 'menu':
+
+                if($cms_contract === null)
+                {
+                    return false;
+                }
 
                 $data = ThemeLocation::getMenuLocation($location, $html, $type);
 
@@ -145,7 +154,12 @@ class ThemeLocation extends VaahModel {
             //---------------------------------------
             case 'block':
 
-                $data = Block::getBlocksByLocation($location);
+                if($cms_contract === null)
+                {
+                    return false;
+                }
+
+                $data = $cms_contract->locationBlocks($location);
 
                 break;
             //---------------------------------------
@@ -162,8 +176,19 @@ class ThemeLocation extends VaahModel {
     public static function getMenuLocation($location, $html, $type)
     {
 
-        $menus_count = Menu::where('vh_theme_location_id', $location->id)
-            ->count();
+        /*
+         * F06 / ADR-008 — the Menu model is resolved by the bound
+         * CmsContract; the relation is already constrained to the
+         * location, so the two Menu::where() sites collapse into it.
+         */
+        $menus = vh_cms_contract()?->locationMenus($location);
+
+        if($menus === null)
+        {
+            return false;
+        }
+
+        $menus_count = $menus->count();
 
         if($menus_count == 0)
         {
@@ -174,7 +199,7 @@ class ThemeLocation extends VaahModel {
         $menu_html = "";
         $i = 0;
 
-        $find_menus = Menu::where('vh_theme_location_id', $location->id)
+        $find_menus = $menus
             ->with(['items' => function($q){
                 $q->with(['content']);
                 $q->orderBy('sort','asc');

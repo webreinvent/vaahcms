@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A layout declares
+// none of them, so Vue's attribute inheritance drops the param on the
+// layout's root element - as id="1", id="5", ... - and the same param
+// reaches the family layout and the page, so one screen carried the same
+// id three or four times. A layout takes nothing from the router, so it
+// opts out of the inheritance; the page keeps its own (unique) id.
+defineOptions({ inheritAttrs: false });
 import {onMounted, reactive, ref} from "vue";
 
 import Aside from '../components/molecules/Aside.vue';
@@ -31,12 +40,18 @@ onMounted(async () => {
 
 
 <template>
-    <div>
+    <div id="nav-shell"
+         :class="['nav-shell', { 'nav-collapsed': rootStore.sidebar_collapsed }]">
 
         <div v-if="rootStore.is_logged_in" class="grid" >
 
             <Topnav />
 
+            <!-- M6 (F31): the nav is a persistent inline rail (always in the
+                 layout) instead of the retired modal off-canvas Drawer that
+                 closed on every route change. The topnav burger and the
+                 `.nav-collapsed` class (rootStore.sidebar_collapsed)
+                 maximize/minimize it. -->
             <Sidebar/>
 
             <div class="grid main-container">

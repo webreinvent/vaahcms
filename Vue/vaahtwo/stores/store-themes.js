@@ -144,7 +144,7 @@ export const useThemeStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if(this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
@@ -786,6 +786,7 @@ export const useThemeStore = defineStore({
                 {
                     label: 'Delete',
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
@@ -829,6 +830,7 @@ export const useThemeStore = defineStore({
                 {
                     label: 'Delete All',
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }

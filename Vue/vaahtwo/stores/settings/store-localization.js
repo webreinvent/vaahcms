@@ -329,7 +329,7 @@ export const useLocalizationStore = defineStore({
                     message: 'Are you sure you want to <b>Add</b> the Language String?, ' +
                         'This new string will added to general category.',
                     header: 'Add new Language String',
-                    acceptClass:"yellow",
+                    acceptProps: { class: 'yellow' },
                     rejectLabel: 'Cancel',
                     icon: 'pi pi-exclamation-triangle',
                     accept: () => {

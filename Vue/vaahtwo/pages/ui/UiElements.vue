@@ -1,15 +1,15 @@
 <template>
     <div class="grid components-list">
-            <Sidebar></Sidebar>
+            <Drawer></Drawer>
         <div class="col-12">
             <div class="grid">
-                <div class="col-12 p-fluid">
+                <Fluid class="col-12">
                     <div class="card">
                         <CodePreview name="components/Colors.vue" :code="raw.colors">
                             <Colors/>
                         </CodePreview>
                     </div>
-                </div>
+                </Fluid>
                 <div class="col-12">
                     <div class="card">
                         <CodePreview name="components/ButtonsComponent.vue" :code="raw.buttons">
@@ -54,7 +54,7 @@
                         </CodePreview>
                     </div>
 
-                    <div class="card p-fluid">
+                    <Fluid class="card">
                         <CodePreview name="components/ListboxComponent.vue" :code="raw.listBox">
                             <ListboxComponent/>
                         </CodePreview>
@@ -66,9 +66,9 @@
                         <CodePreview name="components/MulitSelectComponent.vue" :code="raw.multiSelect">
                             <MulitSelectComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
 
-                    <div class="card p-fluid">
+                    <Fluid class="card">
 
                         <CodePreview name="components/ToggleButtonComponent.vue" :code="raw.toggleButton">
                             <ToggleButtonComponent/>
@@ -81,17 +81,17 @@
                         <CodePreview name="components/MultilipleSelectButtonComponent.vue" :code="raw.multipleSelect">
                             <MultilipleSelectButtonComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
                 </div>
 
 
-                <div class="col-12 p-fluid">
+                <Fluid class="col-12">
                     <div class="card">
                         <CodePreview name="components/Level.vue" :code="raw.level">
                             <Level/>
                         </CodePreview>
                     </div>
-                </div>
+                </Fluid>
                 <div class="col-12">
                     <div class="card">
                         <CodePreview name="components/DataTableComponent.vue" :code="raw.dataTable">
@@ -125,32 +125,32 @@
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
-                    <div class="card p-fluid">
+                    <Fluid class="card">
                         <CodePreview name="components/OverlayPanelComponent.vue" :code="raw.overlay">
                             <OverlayPanelComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
                 </div>
                 <div class="col-12 md:col-6">
-                    <div class="card p-fluid">
+                    <Fluid class="card">
                         <CodePreview name="components/DialogComponent.vue" :code="raw.dialog">
                             <DialogComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
                 </div>
                 <div class="col-12 md:col-6">
-                    <div class="card p-fluid">
+                    <Fluid class="card">
                         <CodePreview name="components/ConfirmPopupComponent.vue" :code="raw.confirmPopup">
                             <ConfirmPopupComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
                 </div>
                 <div class="col-12 md:col-6">
-                    <div class="card p-fluid">
+                    <Fluid class="card">
                         <CodePreview name="components/ConfirmDialogComponent.vue" :code="raw.confirmDialog">
                             <ConfirmDialogComponent/>
                         </CodePreview>
-                    </div>
+                    </Fluid>
                 </div>
                 <div class="col-12">
                     <div class="card card-w-title">

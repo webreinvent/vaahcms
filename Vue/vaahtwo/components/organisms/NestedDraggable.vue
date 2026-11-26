@@ -8,26 +8,26 @@
     >
         <template #item="{ element,index }">
             <li>
-                <div class="p-inputgroup mb-3">
+                <InputGroup class="mb-3">
                     <InputText class="w-2" :model-value="element.name" disabled></InputText>
                     <InputText class="w-6" placeholder="Field Name"></InputText>
-                    <Button icon="pi pi-home p-button-sm"></Button>
-                    <Button icon="pi pi-cog p-button-sm" @click="element.menu_options = !element.menu_options"></Button>
-                    <Button icon="pi pi-trash p-button-sm" @click="removeAt(index)"></Button>
-                </div>
+                    <Button size="small" icon="pi pi-home"></Button>
+                    <Button size="small" icon="pi pi-cog" @click="element.menu_options = !element.menu_options"></Button>
+                    <Button size="small" icon="pi pi-trash" @click="removeAt(index)"></Button>
+                </InputGroup>
                 <div class="menu-options m-3" v-if="element.menu_options">
                     <div class="mb-5">
                         <Checkbox value="Test" id="check"></Checkbox>
-                        <label for="check" class="text-xs font-semibold ml-1">Open in new Page</label>
+                        <label for="check" class="vc-text-12 font-semibold ml-1">Open in new Page</label>
                     </div>
-                    <div class="p-float-label mb-5">
-                        <InputText class="w-full p-inputtext-sm" id="item-id"></InputText>
+                    <FloatLabel class="mb-5">
+                        <InputText size="small" class="w-full" id="item-id"></InputText>
                         <label for="item-id">Menu Item Id</label>
-                    </div>
-                    <div class="p-float-label mb-5">
-                        <InputText class="w-full p-inputtext-sm" id="item-class"></InputText>
+                    </FloatLabel>
+                    <FloatLabel class="mb-5">
+                        <InputText size="small" class="w-full" id="item-class"></InputText>
                         <label for="item-class">Menu Item Class</label>
-                    </div>
+                    </FloatLabel>
                 </div>
                 <NestedDraggable :tasks="element.tasks" />
             </li>

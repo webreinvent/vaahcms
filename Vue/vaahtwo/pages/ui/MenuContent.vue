@@ -5,12 +5,12 @@
         <Card class="draggable-menu">
             <template #header>
                 <div class="flex justify-content-between align-items-center w-full">
-                    <h2 class="font-semibold text-lg">Top Menu</h2>
-                    <div class="p-inputgroup w-max">
-                        <Button label="Save" icon="pi pi-save" class="p-button-sm"></Button>
-                        <Button icon="pi pi-cog" class="p-button-sm"></Button>
-                        <Button icon="pi pi-trash" class="p-button-sm"></Button>
-                    </div>
+                    <h2 class="font-semibold vc-text-16">Top Menu</h2>
+                    <InputGroup class="w-max">
+                        <Button size="small" label="Save" icon="pi pi-save" class=""></Button>
+                        <Button size="small" icon="pi pi-cog" class=""></Button>
+                        <Button size="small" icon="pi pi-trash" class=""></Button>
+                    </InputGroup>
                 </div>
             </template>
             <template #content>
@@ -21,7 +21,7 @@
     <div class="col-12 md:col-3">
         <Card>
             <template #header>
-                <h2 class="font-semibold text-lg">Content</h2>
+                <h2 class="font-semibold vc-text-16">Content</h2>
             </template>
             <template #content>
                 <Panel header="Contents" :toggleable="true" class="mb-4">
@@ -34,22 +34,22 @@
                         @end="drag=false"
                         item-key="id">
                         <template #item="{element}">
-                            <div class="p-inputgroup mb-3">
-                                <Button icon="pi pi-bars" class="p-button-secondary p-button-sm"></Button>
-                                <Button :label="element.name" class="p-button-secondary p-button-sm"></Button>
-                            </div>
+                            <InputGroup class="mb-3">
+                                <Button size="small" icon="pi pi-bars" class="p-button-secondary"></Button>
+                                <Button size="small" :label="element.name" class="p-button-secondary"></Button>
+                            </InputGroup>
                         </template>
                     </draggable>
                 </Panel>
                 <Panel header="Custom" :toggleable="true">
-                    <div class="p-inputgroup mb-3">
-                        <Button icon="pi pi-bars" class="p-button-secondary p-button-sm"></Button>
-                        <Button label="Internal Link" class="p-button-secondary p-button-sm"></Button>
-                    </div>
-                    <div class="p-inputgroup mb-3">
-                        <Button icon="pi pi-bars" class="p-button-secondary p-button-sm"></Button>
-                        <Button label="External Link" class="p-button-secondary p-button-sm"></Button>
-                    </div>
+                    <InputGroup class="mb-3">
+                        <Button size="small" icon="pi pi-bars" class="p-button-secondary"></Button>
+                        <Button size="small" label="Internal Link" class="p-button-secondary"></Button>
+                    </InputGroup>
+                    <InputGroup class="mb-3">
+                        <Button size="small" icon="pi pi-bars" class="p-button-secondary"></Button>
+                        <Button size="small" label="External Link" class="p-button-secondary"></Button>
+                    </InputGroup>
                 </Panel>
             </template>
         </Card>

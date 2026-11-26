@@ -8,7 +8,6 @@ use WebReinvent\VaahCms\Notifications\Notice;
 class Registration extends RegistrationBase
 {
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     public function createdByUser()
     {

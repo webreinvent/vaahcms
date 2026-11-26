@@ -42,27 +42,25 @@ const cloneAction = () => {
 
 <template>
     <div>
-        <div class="p-inputgroup mt-2" v-if="store && store.assets">
+        <InputGroup class="mt-2">
 
+            <!-- UT-100 (M6-T4a Batch 21) — the parent tree select's trigger is
+                 an unnamed `role="button"` (WCAG 2.2 SC 4.1.2); the name is set
+                 through the engine's pass-through property, on the inner section
+                 the component calls "dropdown". -->
             <TreeSelect v-model="selectedNode"
                         :options="store.assets.types"
                         :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent"
                         @node-select="store.selectedNode"
                         name="parent-taxonomies-type-name"
                         data-testid="parent-taxonomies-type-name"
+                        :pt="{ dropdown: { 'aria-label': store.assets.language_strings.taxonomy_type_placeholder_select_parent } }"
             />
 
-            <InputText class="p-inputtext-sm border-noround"
-                       name="child-taxonomies-type-slug"
-                       data-testid="child-taxonomies-type-slug"
-                       v-model="store.taxonomy_type_items.name"
-            />
+            <InputText size="small" class=" border-noround" name="child-taxonomies-type-slug" data-testid="child-taxonomies-type-slug" v-model="store.taxonomy_type_items.name" />
 
-            <Button class="p-button-sm"
-                    :label="store.assets.language_strings.taxonomy_type_add_button"
-                    @click="store.createTaxonomyType"
-            />
-        </div>
+            <Button size="small" class="" :label="store.assets.language_strings.taxonomy_type_add_button" @click="store.createTaxonomyType" />
+        </InputGroup>
 
         <Divider />
 

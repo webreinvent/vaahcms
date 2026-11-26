@@ -1,7 +1,7 @@
 <script setup>
 import {reactive, ref} from 'vue';
 
-import Menu from 'primevue/menu';
+import Menu from 'openvue/menu';
 
 const inputs = {
 }

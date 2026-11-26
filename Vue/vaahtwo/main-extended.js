@@ -1,29 +1,33 @@
 
 import {createApp, markRaw} from 'vue';
-import { createPinia, PiniaVuePlugin  } from 'pinia'
+import { createPinia } from 'pinia'
+
+// M3-T2 (F10) — the single canonical admin stylesheet (R4.9): build.scss is
+// part of the Vite graph (same as main.js) so the extended SPA serves the
+// converged build (PrimeFlex v4 + OpenIcons compat + the token-driven app
+// layer) from build/index.css.
+import '../../Resources/assets/backend/vaahtwo/scss/build.scss';
 
 
-//-------------PrimeVue Imports
+// M3-T3 (F11) — OpenVue is now the sole component substrate (PrimeVue 3
+// registry retired). The OpenVue config plugin registers config + theme
+// services only (no global components/directives); component + directive
+// resolution happens at build time via @openvue/auto-import-resolver in
+// vite.config.js (ADR-004).
+import OpenVue from 'openvue/config';
+import VaahPreset, { THEME_OPTIONS } from './vaahvue/theme/openvue'
 
-import PrimeVue from "primevue/config";
-import Avatar from 'primevue/avatar';
-import BadgeDirective from "primevue/badgedirective";
-import Button from 'primevue/button';
-import ConfirmDialog from 'primevue/confirmdialog';
-import ConfirmationService from 'primevue/confirmationservice';
-import DialogService from 'primevue/dialogservice'
-import InputText from 'primevue/inputtext';
-import Menu from 'primevue/menu';
-import Menubar from 'primevue/menubar';
-import PanelMenu from 'primevue/panelmenu';
-import ProgressBar from 'primevue/progressbar';
-import Ripple from 'primevue/ripple';
-import StyleClass from 'primevue/styleclass';
-import TieredMenu from 'primevue/tieredmenu';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
-import Tooltip from 'primevue/tooltip';
-//-------------/PrimeVue Imports
+
+//-------------OpenVue services + directives
+
+import ConfirmationService from 'openvue/confirmationservice';
+import DialogService from 'openvue/dialogservice';
+import ToastService from 'openvue/toastservice';
+import Tooltip from 'openvue/tooltip';
+import Ripple from 'openvue/ripple';
+import StyleClass from 'openvue/styleclass';
+import BadgeDirective from 'openvue/badgedirective';
+//-------------/OpenVue services + directives
 
 
 //-------------APP
@@ -33,13 +37,13 @@ const app = createApp(App);
 
 const pinia = createPinia();
 app.use(pinia);
-app.use(PiniaVuePlugin);
 
 //-------------/APP
 
 
-//-------------PrimeVue Use
-app.use(PrimeVue, { ripple: true });
+//-------------OpenVue Use
+// M3-T1 (F09) — OpenVue styled-mode theme (Nide preset, .app-dark dark mode).
+app.use(OpenVue, { ripple: true, theme: { preset: VaahPreset, options: THEME_OPTIONS } });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
@@ -49,18 +53,11 @@ app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
-
-app.component('ConfirmDialog', ConfirmDialog);
-app.component('Menu', Menu);
-app.component('ProgressBar', ProgressBar);
-app.component('Toast', Toast);
-app.component('Menubar', Menubar);
-app.component('Avatar', Avatar);
-app.component('Button', Button);
-app.component('InputText', InputText);
-app.component('TieredMenu', TieredMenu);
-app.component('PanelMenu', PanelMenu);
-//-------------/PrimeVue Use
+// M3-T3 (F11): the 10 manual `app.component()` registrations of the
+// PrimeVue 3 era are retired (ADR-004); every component used in this
+// entry's templates is resolved at build time by
+// @openvue/auto-import-resolver (PrimeVueResolver) in vite.config.js.
+//-------------/OpenVue Use
 
 
 app.mount('#themeVaahTwoExtend')

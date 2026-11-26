@@ -15,12 +15,7 @@ const route = useRoute();
 
     <div v-if="store.list && store.assets">
         <!--table-->
-        <DataTable :value="store.list"
-                   dataKey="id"
-                   class="p-datatable-sm p-datatable-hoverable-rows"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll">
+        <DataTable size="small" rowHover :value="store.list" dataKey="id" class="" v-model:selection="store.action.items" stripedRows scrollable>
 
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
@@ -28,7 +23,7 @@ const route = useRoute();
             <Column field="name" header="Name">
                 <template #body="prop">
                     {{ prop.data.name }}
-                    <Badge class="is-size-small" v-if="prop.data.size"
+                    <Badge size="small" v-if="prop.data.size"
                            :value="prop.data.size"
                     />
                 </template>
@@ -39,9 +34,9 @@ const route = useRoute();
                     :header="store.getActionLabel()">
 
                 <template #body="prop">
-                    <div class="p-inputgroup ">
+                    <InputGroup>
 
-                        <Button v-if="store.hasPermission('can-read-log')"
+                        <Button aria-label="View log" v-if="store.hasPermission('can-read-log')"
                                 class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 :disabled="route.params.name === prop.data.name ||
@@ -51,28 +46,34 @@ const route = useRoute();
                                 icon="pi pi-eye"
                         ></Button>
 
-                        <Button  v-if="store.hasPermission('can-read-log')"
-                                 icon="pi pi-download"
-                                 @click="store.downloadFile(prop.data)"
-                                 data-testid="logs-list_download_file"
-                                 class="p-button-sm p-button-rounded p-button-text"
-                                 v-tooltip.top=" 'Download File' "
-                        />
+                        <Button size="small" v-if="store.hasPermission('can-read-log')" icon="pi pi-download" aria-label="Download file" @click="store.downloadFile(prop.data)" data-testid="logs-list_download_file" class=" p-button-rounded p-button-text" v-tooltip.top=" 'Download File' " />
 
-                        <Button v-if="store.hasPermission('can-delete-log')"
+                        <Button aria-label="Delete log" v-if="store.hasPermission('can-delete-log')"
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.confirmDelete(prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.view_delete"
                                 data-testid="logs-item_trash"
                                 icon="pi pi-trash" >
                         </Button>
-                    </div>
+                    </InputGroup>
 
                 </template>
 
 
             </Column>
 
+            <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                 #empty slot is absent, so the slot says what to do next
+                 (DESIGN-SYSTEM §8): a muted line + one primary action.
+                 Logs are written by the application, not by the admin — the
+                 CTA clears the active search. -->
+            <template #empty>
+                <div class="vaah-empty" data-testid="logs-list_empty">
+                    <i class="vaah-empty-icon pi pi-book" aria-hidden="true"></i>
+                    <p class="vaah-empty-copy">No log entries match your search.</p>
+                    <Button :label="root.assets.language_strings.crud_actions.reset_button" icon="pi pi-filter-slash" @click="store.resetQuery()" data-testid="logs-list_empty_reset" />
+                </div>
+            </template>
 
         </DataTable>
         <!--/table-->

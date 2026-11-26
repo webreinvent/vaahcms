@@ -27,7 +27,6 @@ class UserBase extends Authenticatable
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_users';
     public bool $prevent_password_hashing = false;
@@ -81,7 +80,7 @@ class UserBase extends Authenticatable
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 

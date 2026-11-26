@@ -2,6 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 
 import { useRootStore } from '../../stores/root'
+import ThemeToggle from './ThemeToggle.vue'
 
 const rootStore = useRootStore();
 const menu = ref();
@@ -28,34 +29,43 @@ const toggleDropDownMenu= (event) => {
 
         </template>
 
-        <template #item="{item}">
-
+        <template #item="{item, props}">
+            <!-- UT-7 (M6-T4a): the Menubar #item slot replaces the default
+                 rendering, so it must spread props.action (the internal
+                 @click/@keydown handlers) or the item's command never fires —
+                 without this the burger (command-only item) was dead. url
+                 items keep native href navigation. -->
             <a :href="item.url"
                :target="item.target"
+               v-bind="props.action"
                v-tooltip.bottom="item.tooltip"
+               :aria-label="item.tooltip"
                :data-testid="'Topnav-'+item.icon.split('-')[1]"
                class="px-2">
                 <i class="pi" :class="item.icon"></i></a>
         </template>
         <template #end>
+            <ThemeToggle testId="Topnav-DarkModeToggle"
+                         @toggle="(m) => rootStore.setDarkMode(m)" />
             <div v-if="rootStore.assets.is_impersonating">
-                <div class="p-inputgroup flex-1">
+                <InputGroup class="flex-1">
                     <Button size="small" label="Impersonating" outlined  />
-                    <InputText class="p-inputtext-sm" disabled :placeholder="rootStore.assets.auth_user.name"
-                               :value="rootStore.assets.auth_user.name" />
+                    <InputText size="small" class="" disabled :placeholder="rootStore.assets.auth_user.name" :value="rootStore.assets.auth_user.name" />
                     <Button size="small" @click="rootStore.impersonateLogout()"
                             severity="danger" label="Leave" />
-                </div>
-<!--                <p class="text-red-500"><strong>Impersonating</strong> {{rootStore.assets.auth_user.name}}</p>-->
+                </InputGroup>
             </div>
            <div v-if="rootStore.assets.auth_user && !rootStore.assets.is_impersonating" class="flex align-items-center">
                <a @click="toggleDropDownMenu"
                   data-testid="Topnav-Avatar"
-                  class="cursor-pointer flex align-items-center">
+                  class="cursor-pointer flex align-items-center topnav-account">
                    <Avatar :image="rootStore.assets.auth_user.avatar"
                            class="mr-2 border-circle" shape="circle" />
-                   <span>{{rootStore.assets.auth_user.name}}</span>
-                   <i class="pi pi-chevron-down text-sm mt-1 ml-1"></i>
+                   <!-- M6-T5 — the account name inherited the menubar's
+                        12.25px; it is supporting copy, so it takes the
+                        13px secondary size. -->
+                   <span class="vc-text-13">{{rootStore.assets.auth_user.name}}</span>
+                   <i class="pi pi-chevron-down vc-text-13 mt-1 ml-1"></i>
                </a>
            </div>
             <TieredMenu  v-if="rootStore && rootStore.top_right_user_menu"
@@ -69,5 +79,13 @@ const toggleDropDownMenu= (event) => {
 </template>
 
 <style scoped>
+
+/* UT-99 (M6-T4a Batch 21) — the account chip is a plain link whose target
+   was the text line box (21px, the height of the 1.5rem avatar beside it),
+   under the WCAG 2.2 SC 2.5.8 floor of 24 × 24px. The avatar keeps its
+   compact size; only the link's own box grows, so the chip stays a chip. */
+.topnav-account {
+    min-height: 24px;
+}
 
 </style>

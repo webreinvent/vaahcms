@@ -1,6 +1,6 @@
 <template>
     <Topnav></Topnav>
-    <Sidebar></Sidebar>
+    <Drawer></Drawer>
     <div class="grid main-container">
         <div class="col-12">
             <RouterView></RouterView>

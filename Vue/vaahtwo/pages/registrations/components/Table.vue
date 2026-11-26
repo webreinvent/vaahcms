@@ -13,13 +13,7 @@ const useVaah = vaah();
 
     <div v-if="store.list">
         <!--table-->
-         <DataTable :value="store.list.data"
-                    dataKey="id"
-                    class="p-datatable-sm p-datatable-hoverable-rows"
-                    v-model:selection="store.action.items"
-                    stripedRows
-                    responsiveLayout="scroll"
-         >
+         <DataTable size="small" rowHover :value="store.list.data" dataKey="id" class="" v-model:selection="store.action.items" stripedRows scrollable>
              <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
@@ -83,7 +77,12 @@ const useVaah = vaah();
                      :sortable="true"
              >
                  <template #body="prop">
-                     {{ useVaah.ago(prop.data.updated_at) }}
+                     <!-- UT-88 (M6-T4a Batch 17) — a registration that has
+                          never been edited carries `updated_at = NULL`, so
+                          the cell rendered *empty* and the column looked
+                          broken rather than empty. -->
+                     <span v-if="prop.data.updated_at">{{ useVaah.ago(prop.data.updated_at) }}</span>
+                     <span v-else class="vaah-empty-value">—</span>
                  </template>
              </Column>
 
@@ -94,18 +93,18 @@ const useVaah = vaah();
                     :sortable="true"
              >
                 <template #body="prop">
-                    <Tag severity="primary"
+                    <Tag severity="info"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='m'"
                          :value="store.assets.language_strings.table_gender_male"
                     />
 
-                    <Tag severity="primary"
+                    <Tag severity="info"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='f'"
                          :value="store.assets.language_strings.table_gender_female"
                     />
-                    <Tag severity="primary"
+                    <Tag severity="info"
                          class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='o'"
                          :value="store.assets.language_strings.table_gender_others"
@@ -121,8 +120,11 @@ const useVaah = vaah();
                           && root.assets.language_strings.crud_actions"
             >
                 <template #body="prop">
-                    <div class="p-inputgroup">
+                    <InputGroup>
+                        <!-- UT-20 (M6-T4a Batch 5) — icon-only action buttons need
+                             an accessible name; the tooltip is not one. -->
                         <Button class="p-button-tiny p-button-text"
+                                aria-label="View registration"
                                 v-if="store.hasPermission('can-read-registrations')"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
@@ -131,6 +133,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
+                                aria-label="Edit registration"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
@@ -139,6 +142,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
+                                aria-label="Move registration to trash"
                                 v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-registrations')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
@@ -147,19 +151,25 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
+                                aria-label="Restore registration"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="register-table_item_action_delete"
                         />
-                    </div>
+                    </InputGroup>
                 </template>
             </Column>
 
+             <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                  #empty slot is absent, so the slot says what to do next
+                  (DESIGN-SYSTEM §8): a muted line + one primary action. -->
              <template #empty>
-                 <div class="text-center py-3">
-                     No records found.
+                 <div class="vaah-empty" data-testid="register-list_empty">
+                     <i class="vaah-empty-icon pi pi-id-card" aria-hidden="true"></i>
+                     <p class="vaah-empty-copy">No registrations match your search — reset the filters, or create a new registration.</p>
+                     <Button class="vaah-btn-primary" :label="root.assets.language_strings.crud_actions.create_button" icon="pi pi-plus" @click="store.toForm()" data-testid="register-list_empty_create" v-if="store.hasPermission('can-create-registrations')" />
                  </div>
              </template>
         </DataTable>

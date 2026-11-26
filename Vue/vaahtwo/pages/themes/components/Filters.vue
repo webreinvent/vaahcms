@@ -10,7 +10,7 @@ const store = useThemeStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters" position="right" style="z-index:1000;">
+        <Drawer v-model:visible="store.show_filters" position="right" style="z-index:1000;">
             <VhFieldVertical >
                 <template #label>
                     <b>{{root.assets.language_strings.crud_actions.filter_is_active}}:</b>
@@ -26,7 +26,7 @@ const store = useThemeStore();
                 <div class="field-radiobutton">
                     <RadioButton name="active-all"
                                  value="active"
-                                 data-testid="themes-filters-active-all"
+                                 data-testid="themes-filters-active-active"
                                  v-model="store.query.status" />
                     <label for="active-all">{{store.assets.language_strings.themes_filter_active}}</label>
                 </div>
@@ -47,7 +47,7 @@ const store = useThemeStore();
 
             </VhFieldVertical>
 
-        </Sidebar>
+        </Drawer>
 
     </div>
 </template>

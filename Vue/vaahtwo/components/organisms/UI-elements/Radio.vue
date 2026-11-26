@@ -22,7 +22,7 @@
     <div class="col-12">
       <h5>Radio Button Small</h5>
       <div class="field-radiobutton">
-        <RadioButton inputId="option4" name="option" value="Option 4" v-model="radioValue"  class="is-small"/>
+        <RadioButton inputId="option4" name="option" value="Option 4" v-model="radioValue"  class="vc-dense"/>
         <label for="city1">Option 4</label>
       </div>
     </div>

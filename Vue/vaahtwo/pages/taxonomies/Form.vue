@@ -1,10 +1,19 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {computed, onMounted, ref} from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-import { useDialog } from "primevue/usedialog";
+import { useDialog } from "openvue/usedialog";
 import TaxonomyTypeModal from "./components/TaxonomyTypeModal.vue";
 import {vaah} from "../../vaahvue/pinia/vaah";
 
@@ -71,7 +80,7 @@ const openTaxonomyTypeModal = () => {
 </script>
 <template>
     <div class="col-6" >
-        <Panel class="is-small">
+        <Panel class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                         <div class="p-panel-title">
@@ -90,49 +99,22 @@ const openTaxonomyTypeModal = () => {
             </template>
 
             <template #icons>
-                <div class="p-inputgroup" v-if="root.assets
-                           && root.assets.language_strings
-                           && root.assets.language_strings.crud_actions"
-                >
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            @click="useVaah.copy(store.item.id)"
-
-                    />
+                <InputGroup v-if="root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions">
+                    <Button size="small" v-if="store.item && store.item.id" class="" :label=" '#' + store.item.id " @click="useVaah.copy(store.item.id)" />
 
                     <template v-if="store.hasPermission('can-create-taxonomies') ||
                     store.hasPermission('can-update-taxonomies')">
-                        <Button v-if="store.item && store.item.id"
-                                class="p-button-sm"
-                                :label="root.assets.language_strings.crud_actions.save_button"                                icon="pi pi-save"
-                                @click="store.itemAction('save')"
-                        />
+                        <Button size="small" v-if="store.item && store.item.id" class="" :label="root.assets.language_strings.crud_actions.save_button" icon="pi pi-save" @click="store.itemAction('save')" />
 
-                        <Button v-else
-                                class="p-button-sm"
-                                :label="root.assets.language_strings.crud_actions.form_create_and_new"                                icon="pi pi-save"
-                                @click="store.itemAction('create-and-new')"
-                        />
+                        <Button size="small" v-else class="" :label="root.assets.language_strings.crud_actions.form_create_and_new" icon="pi pi-save" @click="store.itemAction('create-and-new')" />
                     </template>
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
-                            @click="store.toView(store.item)"
-                    />
+                    <Button size="small" v-if="store.item && store.item.id" class="" icon="pi pi-eye" aria-label="View" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view" @click="store.toView(store.item)" />
 
                     <!--form_menu-->
                     <template v-if="store.hasPermission('can-manage-taxonomies') ||
                     store.hasPermission('can-update-taxonomies')">
-                        <Button type="button"
-                                @click="toggleFormMenu"
-                                data-testid="taxonomies-form-menu"
-                                icon="pi pi-angle-down"
-                                aria-haspopup="true"
-                                class="p-button-sm"
-                        />
+                        <Button size="small" type="button" @click="toggleFormMenu" data-testid="taxonomies-form-menu" icon="pi pi-angle-down" aria-label="Show actions menu" aria-haspopup="true" class="" />
 
                         <Menu ref="form_menu"
                               :model="store.form_menu_list"
@@ -141,70 +123,48 @@ const openTaxonomyTypeModal = () => {
                     </template>
                     <!--/form_menu-->
 
-                    <Button class="p-button-primary p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="taxonomies-to-list"
-                            @click="store.toList()">
+                    <Button size="small" class="p-button-primary" icon="pi pi-times" aria-label="Back to list" data-testid="taxonomies-to-list" @click="store.toList()">
                     </Button>
-                </div>
+                </InputGroup>
             </template>
 
             <div v-if="store.item" class="pt-2">
                 <VhField label="Type">
-                    <div class="p-inputgroup">
+                    <InputGroup>
+                        <!-- UT-100 (M6-T4a Batch 21) — the tree select's trigger is
+                             its own `role="button"` element and it had no
+                             accessible name (WCAG 2.2 SC 4.1.2). The name is set
+                             through the engine's pass-through property, on the
+                             inner section the component calls "dropdown". -->
                         <TreeSelect class="w-full"
                                     v-model="tree_select_value"
                                     :options="store.assets.types"
                                     :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_type"
                                     @node-select="store.selectType($event)"
+                                    :pt="{ dropdown: { 'aria-label': store.assets.language_strings.taxonomy_type_placeholder_select_type } }"
                         />
 
-                        <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
-                                class="p-button-sm"
-                                :label="store.assets.language_strings.form_manage_button"
-                                data-testid="taxonomies-form-to-manage-taxonomy-type-modal"
-                                @click="openTaxonomyTypeModal"
-                        />
-                    </div>
+                        <Button size="small" v-if="store.hasPermission('can-manage-taxonomy-types')" class="" :label="store.assets.language_strings.form_manage_button" data-testid="taxonomies-form-to-manage-taxonomy-type-modal" @click="openTaxonomyTypeModal" />
+                    </InputGroup>
                 </VhField>
 
                 <VhField label="Parent"
                          v-if="store.item.type
                          && store.item.type.parent_id"
                 >
-                    <Dropdown v-model="store.item.parent_id"
-                              :options="store.parent_options"
-                              optionLabel="name"
-                              optionValue="id"
-                              :filter="true"
-                              :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent"
-                              class="p-inputtext-sm w-full"
-                    />
+                    <Select size="small" v-model="store.item.parent_id" :options="store.parent_options" optionLabel="name" optionValue="id" :filter="true" :placeholder="store.assets.language_strings.taxonomy_type_placeholder_select_parent" class=" w-full" />
                 </VhField>
 
                 <VhField label="Name">
-                    <InputText class="w-full p-inputtext-sm"
-                               name="taxonomies-name"
-                               data-testid="taxonomies-name"
-                               @update:modelValue="store.watchItem"
-                               v-model="store.item.name"
-                    />
+                    <InputText size="small" class="w-full" name="taxonomies-name" data-testid="taxonomies-name" @update:modelValue="store.watchItem" v-model="store.item.name" />
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full p-inputtext-sm"
-                               name="taxonomies-slug"
-                               data-testid="taxonomies-slug"
-                               v-model="store.item.slug"
-                    />
+                    <InputText size="small" class="w-full" name="taxonomies-slug" data-testid="taxonomies-slug" v-model="store.item.slug" />
                 </VhField>
 
                 <VhField label="Notes">
-                    <Textarea class="w-full p-inputtext-sm"
-                              data-testid="taxonomies-notes"
-                              name="taxonomies-notes"
-                              v-model="store.item.notes"
-                    />
+                    <Textarea size="small" class="w-full" data-testid="taxonomies-notes" name="taxonomies-notes" v-model="store.item.notes" />
                 </VhField>
 
                 <VhField label="Is Active">

@@ -46,7 +46,7 @@ Route::group(
             ->name( 'vh.backend.resend.security.otp' );
 
         Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
-            ->name( 'vh.backend.faker.get' );
+            ->name( 'vh.faker' );
 
         //------------------------------------------------
 
@@ -116,7 +116,8 @@ Route::group(
                 Route::get( '/users/{name?}', 'JsonController@getUsers' )
                     ->name( 'vh.backend.json.users' );
                 //------------------------------------------------
-
+                Route::post( '/dark-mode', 'JsonController@postDarkMode' )
+                    ->name( 'vh.backend.json.dark_mode' );
                 //------------------------------------------------
             });
 

@@ -7,10 +7,13 @@
     <nav class="level">
       <div class="level-left">
         <div class="level-item">
-          <div class="p-inputgroup">
+          <InputGroup>
             <InputText placeholder="Enter Search Terms"/>
-            <Button icon="pi pi-search" label="Search" class="p-button-primary"/>
-          </div>
+            <!-- M7-T4 — `p-button-primary` has zero rules in the v4 CSS and the default
+             Button is already primary (css-class-migration-table.md), so the
+             dead class is dropped with no prop — the tint is unchanged. -->
+          <Button icon="pi pi-search" label="Search"/>
+          </InputGroup>
         </div>
       </div>
 
@@ -19,7 +22,7 @@
         <p class="level-item"><a>Published</a></p>
         <p class="level-item"><a>Drafts</a></p>
         <p class="level-item"><a>Deleted</a></p>
-        <p class="level-item"><Button label="New" class="p-button-sm p-button-success"></Button></p>
+        <p class="level-item"><Button size="small" label="New" class=" p-button-success"></Button></p>
       </div>
     </nav>
   </div>
@@ -32,25 +35,25 @@
       <div class="level-item text-center">
         <div>
           <h4>Tweets</h4>
-          <p class="text-lg">3,456</p>
+          <p class="vc-text-16">3,456</p>
         </div>
       </div>
       <div class="level-item text-center">
         <div>
           <h4>Following</h4>
-          <p class="text-lg">123</p>
+          <p class="vc-text-16">123</p>
         </div>
       </div>
       <div class="level-item text-center">
         <div>
           <h4>Followers</h4>
-          <p class="text-lg">456K</p>
+          <p class="vc-text-16">456K</p>
         </div>
       </div>
       <div class="level-item text-center">
         <div>
           <h4>Likes</h4>
-          <p class="text-lg">789</p>
+          <p class="vc-text-16">789</p>
         </div>
       </div>
     </nav>
@@ -63,21 +66,21 @@
     <nav class="level">
       <div class="level-left">
         <p class="level-item text-center">
-          <a class="text-blue-500">Home</a>
+          <a class="vc-link">Home</a>
         </p>
         <p class="level-item text-center">
-          <a class="text-blue-500">Menu</a>
+          <a class="vc-link">Menu</a>
         </p>
       </div>
-      <p class="level-item text-center text-3xl font-bold text-blue-700">
+      <p class="level-item text-center vc-text-24 font-semibold vc-accent">
         WebReinvent
       </p>
       <div class="level-right">
         <p class="level-item text-center">
-          <a class="text-blue-500">Reservations</a>
+          <a class="vc-link">Reservations</a>
         </p>
         <p class="level-item text-center">
-          <a class="text-blue-500">Contact</a>
+          <a class="vc-link">Contact</a>
         </p>
       </div>
     </nav>

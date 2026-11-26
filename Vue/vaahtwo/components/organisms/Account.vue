@@ -1,77 +1,76 @@
 <template>
-    <Message severity="info" :closable="true" class="is-small">Create first account,this account will have super administrator role and will have all the permissions.</Message>
-    <div class="grid p-fluid">
+    <Message severity="info" :closable="true" class="vc-dense">Create first account,this account will have super administrator role and will have all the permissions.</Message>
+    <Fluid class="grid">
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">First name</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter first name" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">First name</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter first name" class=""/>
+            </InputGroup>
         </div>
 
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Middle name</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter middle name" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Middle name</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter middle name" class=""/>
+            </InputGroup>
         </div>
 
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Last name</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter last name" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Last name</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter last name" class=""/>
+            </InputGroup>
         </div>
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Email</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter email" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Email</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter email" class=""/>
+            </InputGroup>
         </div>
-    </div>
-    <div class="grid p-fluid">
+    </Fluid>
+    <Fluid class="grid">
 
 
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Username</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter Username" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Username</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter Username" class=""/>
+            </InputGroup>
         </div>
 
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Password</h5>
-            <div class="p-inputgroup">
-                <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" placeholder="Enter password"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Password</h5>
+            <InputGroup>
+                <Password size="small" :feedback="false" toggleMask input-class="w-full" placeholder="Enter password"/>
+            </InputGroup>
         </div>
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Search Country</h5>
-            <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" @complete="searchCountry($event)" placeholder="Enter Your Country" optionLabel="name" input-class="p-inputtext-sm"/>
+            <h5 class="p-1 vc-text-12 mb-0">Search Country</h5>
+            <AutoComplete size="small" v-model="selectedCountry1" :suggestions="filteredCountries" @complete="searchCountry($event)" placeholder="Enter Your Country" optionLabel="name" input-class=""/>
         </div>
 
         <div class="col-12 md:col-3">
-            <h5 class="p-1 text-xs mb-0">Phone</h5>
-            <div class="p-inputgroup">
-                <InputText placeholder="Enter phone" class="p-inputtext-sm"/>
-            </div>
+            <h5 class="p-1 vc-text-12 mb-0">Phone</h5>
+            <InputGroup>
+                <InputText size="small" placeholder="Enter phone" class=""/>
+            </InputGroup>
         </div>
-    </div>
-    <div class="grid p-fluid">
+    </Fluid>
+    <Fluid class="grid">
         <div class="col-12 mt-3">
-            <Button icon="pi pi-user-plus" label="Create Account" class="p-button-sm w-auto is-small"/>
+            <Button size="small" icon="pi pi-user-plus" label="Create Account" class=" w-auto vc-dense"/>
         </div>
         <div class="col-12">
             <div class="flex justify-content-between mt-3">
-                <Button label="Back" class="p-button-sm w-auto" @click="goBack"></Button>
-                <Button icon="pi pi-external-link" label="Go to Backend Sign in" class="p-button-sm w-auto"></Button>
+                <Button size="small" label="Back" class=" w-auto" @click="goBack"></Button>
+                <Button size="small" icon="pi pi-external-link" label="Go to Backend Sign in" class=" w-auto"></Button>
             </div>
         </div>
-    </div>
+    </Fluid>
 </template>
 
 <script>
 import countriesData from "../../assets/data/country.json";
-import {FilterService,FilterMatchMode} from 'primevue/api';
 export default {
   name: "Account",
   data(){

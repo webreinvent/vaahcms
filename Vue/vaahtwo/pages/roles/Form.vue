@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import { useRoleStore } from '../../stores/store-roles';
 import { useRootStore } from "../../stores/root";
@@ -49,10 +58,10 @@ watch(
 </script>
 <template>
     <div class="col-6" >
-        <Panel class="is-small">
+        <Panel class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="font-semibold vc-text-16">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
@@ -67,42 +76,15 @@ watch(
             </template>
 
             <template #icons>
-                <div class="p-inputgroup" v-if="root.assets
-                           && root.assets.language_strings
-                           && root.assets.language_strings.crud_actions">
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            @click="useVaah.copy(store.item.id)"
-                            data-testid="role-form_id"
-                    />
+                <InputGroup v-if="root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions">
+                    <Button size="small" v-if="store.item && store.item.id" class="" :label=" '#' + store.item.id " @click="useVaah.copy(store.item.id)" data-testid="role-form_id" />
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            :label="root.assets.language_strings.crud_actions.save_button"
-                            icon="pi pi-save"
-                            data-testid="role-edit_save"
-                            @click="store.itemAction('save')"
-                    />
+                    <Button size="small" v-if="store.item && store.item.id" class="" :label="root.assets.language_strings.crud_actions.save_button" icon="pi pi-save" data-testid="role-edit_save" @click="store.itemAction('save')" />
 
-                    <Button v-else
-                            class="p-button-sm"
-                            :label="root.assets.language_strings.crud_actions.form_create_and_new"
-                            icon="pi pi-save"
-                            data-testid="role-new_save"
-                            @click="store.itemAction('create-and-new')"
-                    />
+                    <Button size="small" v-else class="" :label="root.assets.language_strings.crud_actions.form_create_and_new" icon="pi pi-save" data-testid="role-new_save" @click="store.itemAction('create-and-new')" />
 
                     <!--form_menu-->
-                    <Button class="p-button-sm"
-                            icon="pi pi-angle-down"
-                            type="button"
-                            aria-haspopup="true"
-                            @click="toggleFormMenu"
-                            data-testid="role-form_menu"
-                            v-if="store.hasPermission('can-update-roles')
-                                    || store.hasPermission('can-manage-roles')"
-                    />
+                    <Button size="small" class="" icon="pi pi-angle-down" aria-label="Show actions menu" type="button" aria-haspopup="true" @click="toggleFormMenu" data-testid="role-form_menu" v-if="store.hasPermission('can-update-roles') || store.hasPermission('can-manage-roles')" />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
@@ -110,20 +92,10 @@ watch(
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="(store.item && store.item.id) && store.hasPermission('can-read-roles')"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
-                            data-testid="role-item_view"
-                            @click="store.toView(store.item)"
-                    />
+                    <Button size="small" v-if="(store.item && store.item.id) && store.hasPermission('can-read-roles')" class="" icon="pi pi-eye" aria-label="View" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view" data-testid="role-item_view" @click="store.toView(store.item)" />
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="role-list_view"
-                            @click="store.toList()"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" data-testid="role-list_view" @click="store.toList()" />
+                </InputGroup>
             </template>
 
             <div v-if="store.item" class="mt-2">

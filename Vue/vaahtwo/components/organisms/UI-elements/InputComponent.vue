@@ -1,5 +1,5 @@
 <template>
-  <div class="p-fluid">
+  <Fluid>
     <!----- Input Text States Start ----->
     <h5 id="inputText">Input Text</h5>
     <div class="grid fprmgrid flex-column">
@@ -20,7 +20,7 @@
     <h5 id="inputTextSize">Input Text Sizes</h5>
     <div class="grid fprmgrid flex-column">
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-        <InputText type="text" placeholder="Small" class="p-inputtext-sm"></InputText>
+        <InputText size="small" type="text" placeholder="Small" class=""></InputText>
       </div>
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
         <InputText type="text" placeholder="Default"></InputText>
@@ -36,23 +36,36 @@
     <h5>Icons</h5>
     <div class="grid fprmgrid flex-column">
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-			  <span class="p-input-icon-left">
-				  <i class="pi pi-user"/>
+        <!-- UT-117 — v3's `p-input-icon-left` / `p-input-icon-right` spans
+             have no rule in the v4 engine (the icons are no longer overlays
+             on the field). The engine's `InputGroupAddon` is the v4
+             equivalent, so this showcase shows the markup that actually
+             renders. -->
+			  <InputGroup>
+				  <InputGroupAddon>
+					  <i class="pi pi-user"/>
+				  </InputGroupAddon>
           <InputText type="text" placeholder="Username" />
-        </span>
+        </InputGroup>
       </div>
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-        <span class="p-input-icon-right">
+        <InputGroup>
 				  <InputText type="text" placeholder="Search" />
-					<i class="pi pi-search"/>
-        </span>
+					<InputGroupAddon>
+					  <i class="pi pi-search"/>
+					</InputGroupAddon>
+        </InputGroup>
       </div>
       <div class="col-12 mb-2 lg:col-4 lg:mb-0">
-        <span class="p-input-icon-left p-input-icon-right">
-          <i class="pi pi-user" />
+        <InputGroup>
+          <InputGroupAddon>
+            <i class="pi pi-user" />
+          </InputGroupAddon>
 					<InputText type="text" placeholder="Search" />
-					<i class="pi pi-search" />
-        </span>
+					<InputGroupAddon>
+					  <i class="pi pi-search" />
+					</InputGroupAddon>
+        </InputGroup>
       </div>
     </div>
     <!----- Input Text with Icons End ----->
@@ -60,10 +73,10 @@
 
     <!----- Input Text with Floating label Start ----->
     <h5>Float Label</h5>
-    <span class="p-float-label">
+    <FloatLabel>
 				<InputText id="username" type="text" v-model="floatValue"/>
 				<label for="username">Username</label>
-    </span>
+    </FloatLabel>
     <!----- Input Text with Floating label End ----->
 
 
@@ -81,7 +94,7 @@
 
     <!----- Calendar Start ----->
     <h5>Calendar</h5>
-    <Calendar :showIcon="true" :showButtonBar="true" v-model="calendarValue"></Calendar>
+    <DatePicker :showIcon="true" :showButtonBar="true" v-model="calendarValue"></DatePicker>
     <!----- Calendar End ----->
 
 
@@ -93,11 +106,11 @@
 
     <!----- Chips Start ----->
     <h5>Chips</h5>
-    <Chips v-model="chipsValue" class="w-full" inputClass="w-full"/>
+    <AutoComplete v-model="chipsValue" class="w-full" inputClass="w-full" :multiple="true" :typeahead="false"/>
 
 
     <h5>Chips Small</h5>
-    <Chips v-model="chipsValue" class="is-small w-full" inputClass="w-full"/>
+    <AutoComplete v-model="chipsValue" class="vc-dense w-full" inputClass="w-full" :multiple="true" :typeahead="false"/>
     <!----- Chips End ----->
 
 
@@ -114,7 +127,7 @@
     <!----- Rating End ----->
 
 
-  </div>
+  </Fluid>
 
 
 

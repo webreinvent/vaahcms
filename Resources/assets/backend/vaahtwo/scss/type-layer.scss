@@ -1,0 +1,64 @@
+// M6-T4 (F23) — the design system's type scale, as utilities.
+//
+// DESIGN-SYSTEM.md §6 fixes the scale at 12 · 13 · 14 · 16 · 20 · 24 (the
+// admin root is 14px). PrimeFlex's `text-*` utilities are NOT on it: at the
+// 14px root `text-xs` = 10.5px, `text-sm` = 12.25px, `text-lg` = 15.75px,
+// `text-xl` = 17.5px and `text-2xl` = 21px. The settings suite used them for
+// every heading and every caption, so its screens had no page title, no
+// section head and no body size — the conformance finding this layer
+// removes (81 violations across 13 files under `pages/settings/`).
+//
+// One class per ROLE, an explicit px value from the scale, and — where the
+// role is supporting copy — the colour bound to a *semantic* token
+// (`--p-text-muted-color`), so it flips with the scheme. Imported last in
+// build.scss: these are unlayered author rules, so they win over the
+// PrimeFlex utilities and over the engine's `@layer openvue` rules.
+//
+// The roles (DESIGN-SYSTEM.md §6):
+//   title      20px / 600  one per screen — the page heading
+//   section    16px / 600  a named region of the screen
+//   subhead    14px / 600  a group inside a section
+//   body       14px        all reading copy
+//   secondary  13px        supporting copy, muted
+//   caption    12px        labels, timestamps, micro-copy
+//
+// This is the **role** form of the scale and the one new markup should use:
+// a role survives a change of the scale, a bare number does not. The same
+// six steps are also spelled as bare numbers in `scss/ui-utilities.scss`
+// (`.vc-text-20` = the `title` step, and so on) for markup that states a
+// size and nothing else. The two are one scale, not two — DESIGN-SYSTEM.md
+// §6 is the single source of truth for it.
+
+.vaah-type-title {
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 600;
+}
+
+.vaah-type-section {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.vaah-type-subhead {
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.vaah-type-body {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.vaah-type-secondary {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--p-text-muted-color);
+}
+
+.vaah-type-caption {
+    font-size: 12px;
+    line-height: 1.45;
+}

@@ -15,7 +15,7 @@
                <a @click="toggle" class="cursor-pointer flex align-items-center">
                    <Avatar image="https://www.gravatar.com/avatar/98431994177b4bb856d3f03dbee7ba03.jpg?s=80&d=mp&r=g" class="mr-2" shape="circle" />
                    <span>Jhon Doe </span>
-                   <i class="pi pi-chevron-down text-sm mt-1 ml-1"></i>
+                   <i class="pi pi-chevron-down vc-text-13 mt-1 ml-1"></i>
                </a>
            </div>
             <TieredMenu :model="menu_options" ref="menu" :popup="true">

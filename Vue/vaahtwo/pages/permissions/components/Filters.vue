@@ -11,7 +11,7 @@ const store = usePermissionStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  style="z-index: 1001"
                  position="right">
 
@@ -102,7 +102,7 @@ const store = usePermissionStore();
             </VhFieldVertical>
 
 
-        </Sidebar>
+        </Drawer>
 
     </div>
 </template>

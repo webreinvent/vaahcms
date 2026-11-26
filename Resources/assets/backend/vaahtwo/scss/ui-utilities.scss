@@ -1,0 +1,254 @@
+// M6-T5 (F23) — the DESIGN-SYSTEM.md §6 type scale as *numeric steps*, and
+// the semantic colour utilities.
+//
+// Why this file exists
+// --------------------
+// The admin carried three spellings of one number:
+//
+//   1. PrimeFlex's `text-xs|sm|lg|xl|2xl` — off-scale at the 14px root
+//      (10.5 / 12.25 / 15.75 / 17.5 / 21px against the 12 · 13 · 14 · 16 ·
+//      20 · 24 scale of DESIGN-SYSTEM.md §6);
+//   2. a hand-written px rule per screen (the dashboard's `.dash-*`);
+//   3. a token remap in controls-layer.scss (`.bg-blue-50` → `--vaah-chip-bg`).
+//
+// The remap in (3) fixed the *colour* of an off-scale utility but left the
+// *size* off-scale, so the same screen carried two different scales at once.
+// Three spellings of one scale is how the debt came back.
+//
+// The scale, and how it is spelled
+// --------------------------------
+// DESIGN-SYSTEM.md §6 is the single source of truth for the scale. It is
+// spelled two ways in the app, and they are the *same* scale — not two
+// scales:
+//
+//   - `.vaah-type-*` (`scss/type-layer.scss`, M6-T4) — the **role** form:
+//     `title` 20 · `section` 16 · `subhead` 14 · `body` 14 · `secondary` 13
+//     · `caption` 12, each with its weight and line-height. This is the form
+//     **new markup should use**: a role survives a change of scale, a number
+//     does not.
+//   - `.vc-text-N` (this file, M6-T5) — the **step** form: the bare size of
+//     one step of the scale, for markup that states a size and nothing else.
+//     The screens M6-T5 migrated use it; it is kept so that work is not
+//     thrown away.
+//
+// Both forms are absolute pixels on purpose — a type scale is not a rem
+// scale and must not drift with the root — and both are on the same six
+// steps. `.vc-text-*` carries `!important` to match PrimeFlex's own text
+// utilities, so a class always wins over a leftover `text-sm` on the same
+// element.
+//
+// The colour helpers bind a *role* to a semantic token that flips with the
+// scheme. A Tailwind palette utility (`bg-blue-50`, `text-gray-600`) binds a
+// *primitive* that does not flip: `--p-red-500` is `#ef4444` in `:root` AND
+// under `.app-dark`, while `--p-text-color` is `#0a0a0a` → `#fafafa`. That is
+// why the light-mode and the dark-mode screenshot of the same screen used to
+// disagree (reference-ui-conformance.md §3).
+//
+// Presentation only — no markup semantics, routes, stores or data model (D3).
+
+// ── the type scale (DESIGN-SYSTEM.md §6) ────────────────────────────────────
+//   .vc-text-12   caption / meta / micro-label
+//   .vc-text-13   secondary copy, muted text, table meta
+//   .vc-text-14   body copy
+//   .vc-text-16   section head (panel title, card title)
+//   .vc-text-20   page title
+//   .vc-text-24   display
+.vc-text-12 {
+    font-size: 12px !important;
+}
+
+.vc-text-13 {
+    font-size: 13px !important;
+}
+
+.vc-text-14 {
+    font-size: 14px !important;
+}
+
+.vc-text-16 {
+    font-size: 16px !important;
+}
+
+.vc-text-20 {
+    font-size: 20px !important;
+}
+
+.vc-text-24 {
+    font-size: 24px !important;
+}
+
+// ── semantic colour roles (reference-ui-conformance.md §3) ──────────────────
+
+// Secondary text — the role of `text-gray-500` / `text-gray-600`.
+.vc-muted {
+    color: var(--p-text-muted-color);
+}
+
+// The link role — the role of `text-blue-400` / `text-blue-500` / `text-blue-700`
+// on links. `--vaah-link` is the app's scheme-aware link token (light #1d4ed8,
+// dark #60a5fa, controls-layer.scss, AA on the canvas in both schemes); a
+// primitive blue does not flip and failed AA in light mode (UT-21).
+.vc-link {
+    color: var(--vaah-link);
+}
+
+// The accent role — the role of `text-blue-700` on a single emphasis number
+// (a level, a total). Bound to the primary colour token, which flips with the
+// scheme (`{primary.color}`: dark neutral in light mode, light neutral in dark
+// mode under the Nide preset), so the emphasis stays the scheme's own accent.
+.vc-accent {
+    color: var(--p-primary-color);
+}
+
+// The metadata chip — the role of `bg-blue-50` + `text-blue-600`. The two
+// app-level tokens are scheme-aware (light #eef2ff/#3730a3, dark
+// #1e293b/#93c5fd), so the chip reads as a chip in both schemes.
+.vc-chip {
+    background: var(--vaah-chip-bg);
+    color: var(--vaah-chip-fg);
+}
+
+// The success badge — the role of `bg-green-500`. Bound to the success
+// button pair, which is a semantic token pair (light green.700/#ffffff,
+// dark green.400/green.950) rather than a fixed primitive.
+.vc-icon-success {
+    background: var(--p-button-success-background);
+    color: var(--p-button-success-color);
+}
+
+// The neutral badge — the role of `bg-gray-200`. Bound to the secondary
+// button pair (light surface.100/surface.900, dark surface.800/surface.50);
+// the fixed gray ramp is what made the old chip a bright hole in dark mode.
+.vc-icon-neutral {
+    background: var(--p-button-secondary-background);
+    color: var(--p-button-secondary-color);
+}
+
+// Danger text — the role of `text-red-500` / `text-red-600`. The token flips
+// (light #b91c1c, dark #f87171) and is AA on the canvas in both schemes.
+.vc-danger-text {
+    color: var(--vaah-danger-text);
+}
+
+// Caution text — the role of `text-yellow-500` / `text-amber-500`. A status
+// that has not been switched on yet is a caution, not a failure
+// (reference-ui-conformance.md §2), so it must not wear the danger tone.
+//
+// The colour is `--vaah-msg-warn-fg` (light #7a4b00, dark #ffcc66), the
+// app's own caution-text token: it is AA on the canvas in both schemes
+// (7.5:1 light, 11.1:1 dark), where the *button* warn token
+// (`--p-button-warn-background`, #fbbf24) is a fill, not a text colour —
+// at 1.75:1 on the light canvas it would have been unreadable.
+.vc-warn-text {
+    color: var(--vaah-msg-warn-fg);
+}
+
+// The notice bands — the roles of `bg-blue-700 text-gray-100` (informational)
+// and `bg-red-700 text-gray-100` (a hook failure). The text carries a
+// scheme-aware semantic token (`--vaah-msg-info-fg` / `--vaah-danger-text`),
+// the fill is that same token at 8% over the content background, and the
+// hairline is the content border. The icon in each band (info circle /
+// exclamation triangle) is the non-colour signal, so the meaning survives a
+// greyscale render (reference-ui-conformance.md §3).
+//
+// NOTE: the engine exposes no `--p-message-*-color` token — the Nide preset
+// writes the Message severities as literal rules
+// (`.p-message-info{background:hsl(213,100%,95%);color:#0073ff}`), so a
+// `var(--p-message-info-color)` reference is an invalid custom property and
+// the declaration is dropped at computed-value time. That is why the two
+// bands must bind the app-level `--vaah-msg-*` tokens: they are defined in
+// both schemes, and they are what the app's own Message surfaces use.
+.vc-notice-info {
+    background: color-mix(in srgb, var(--vaah-msg-info-fg) 8%, var(--p-content-background));
+    color: var(--vaah-msg-info-fg);
+    border: 1px solid var(--p-content-border-color);
+}
+
+.vc-notice-error {
+    background: color-mix(in srgb, var(--vaah-danger-text) 8%, var(--p-content-background));
+    color: var(--vaah-danger-text);
+    border: 1px solid var(--p-content-border-color);
+}
+
+// UT-112 — the CAUTION band, the third member of the notice family.
+//
+// The engine's `Message severity="warn"` fills the whole box with its own
+// literal fill — `hsl(40,100%,80%)` in light (a solid yellow slab) and
+// `rgba(255,170,0,.16)` in dark (a brown slab). On the dashboard's status
+// rail that slab is the loudest thing in a narrow column, and it swallowed
+// the notice's action (the "View Settings" link sat inside the fill, on its
+// own line, with no separation from the sentence).
+//
+// This band is the same shape as the info and error bands: the caution
+// token (`--vaah-msg-warn-fg`, light #7a4b00 / dark #ffcc66) at 8% over the
+// content background, the same token as the text colour, and the content
+// hairline. The tint is the *colour* signal; the caller pairs it with the
+// exclamation-triangle glyph, so the meaning survives a greyscale render
+// (reference-ui-conformance.md §3). The action belongs inside the band, on
+// its own line under the sentence — not welded to the copy.
+.vc-notice-warn {
+    background: color-mix(in srgb, var(--vaah-msg-warn-fg) 8%, var(--p-content-background));
+    color: var(--vaah-msg-warn-fg);
+    border: 1px solid var(--p-content-border-color);
+}
+
+// The notice band's *shape* — the glyph, the copy and (where the notice has
+// one) the action. The tone comes from the `.vc-notice-{info,warn,error}`
+// classes above; the shape is shared, so every notice in the admin is
+// built the same way:
+//
+//   <div class="vc-notice vc-notice-warn">
+//       <i class="pi pi-exclamation-triangle vc-notice-icon" aria-hidden="true"></i>
+//       <p class="vc-notice-text">…</p>
+//   </div>
+//
+// The glyph is the non-colour signal (reference-ui-conformance.md §3) — it
+// says what the notice is in greyscale too, so the colour never carries the
+// meaning alone. The copy is the card's own body size (13px), and the
+// band is padded off the panel's edge so it reads as a note *in* the panel
+// rather than a slab glued to it.
+.vc-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+}
+
+.vc-notice-icon {
+    flex: 0 0 auto;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.vc-notice-text {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+// ── the screen-reader-only utility ──────────────────────────────────────────
+// UT-129 (UAT sweep) — a screen needs exactly one top-level heading, but not
+// every screen has a *visible* title element: the profile screen opens with
+// a card, not with a title. `.vaah-sr-only` gives such a screen a real,
+// nameable <h1> without moving a single pixel — the heading is taken out of
+// the layout but stays in the accessibility tree (and in the document's
+// outline), so a screen-reader user lands on the same screen the sighted
+// user sees.
+//
+// The technique is the classic one: a 1×1 box, clipped, with the overflow
+// hidden and the white-space collapsed. It is not `display:none` (that would
+// remove it from the accessibility tree too) and not `visibility:hidden`
+// (same).
+.vaah-sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}

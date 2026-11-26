@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
@@ -64,11 +73,11 @@ const toggleItemMenu = (event) => {
 
             <template #header>
                 <div class="flex justify-content-between align-items-center w-full">
-                    <h5 class="white-space-nowrap font-semibold text-lg pt-2">{{ store.item.name}}</h5>
-                    <div class="p-inputgroup justify-content-end w-6 flex">
-                        <h5 class="white-space-nowrap font-semibold text-lg pt-2 pr-3">#{{ store.item.id }}</h5>
-                        <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
-                    </div>
+                    <h2 class="white-space-nowrap font-semibold vc-text-16 pt-2">{{ store.item.name}}</h2>
+                    <InputGroup class="justify-content-end w-6 flex">
+                        <div class="white-space-nowrap font-semibold vc-text-13 vc-muted pt-2 pr-3">#{{ store.item.id }}</div>
+                        <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times" aria-label="Close"></Button>
+                    </InputGroup>
                 </div>
             </template>
 
@@ -78,8 +87,15 @@ const toggleItemMenu = (event) => {
 
 
             <div v-if="store.item">
+                <!--
+                    M6-T3 (F22) — the removed v3 message-container class is
+                    dropped: v4 `Message` renders its own `p-message`
+                    container (the engine emits the root class — no app
+                    container class exists for it in the v4 pipeline).
+                    `severity="error"` is a valid v4 severity and stays; no
+                    `life` is added (the area's no-op invariant).
+                -->
                 <Message severity="error"
-                         class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at">
@@ -89,10 +105,7 @@ const toggleItemMenu = (event) => {
                         </div>
 
                         <div class="">
-                            <Button label="Restore"
-                                    class="p-button-sm"
-                                    data-testid="themes-item-restore"
-                                    @click="store.itemAction('restore')">
+                            <Button size="small" label="Restore" class="" data-testid="themes-item-restore" @click="store.itemAction('restore')">
                             </Button>
                         </div>
 
@@ -100,7 +113,7 @@ const toggleItemMenu = (event) => {
 
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
+                <div class="p-datatable p-component themes-item-stripes">
                 <table class="p-datatable-table w-full">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
@@ -110,10 +123,7 @@ const toggleItemMenu = (event) => {
                                 <td><b>{{ vaah().toLabel(column) }}</b></td>
                                 <td style="word-break: break-all;">{{ value }}</td>
                                 <td>
-                                    <Button icon="pi pi-external-link"
-                                        @click="store.openWebsite(value)"
-                                        class="p-button-text p-button-sm"
-                                    />
+                                    <Button size="small" icon="pi pi-external-link" aria-label="Open in a new tab" @click="store.openWebsite(value)" class="p-button-text" />
                                 </td>
                             </tr>
                         </template>
@@ -156,3 +166,21 @@ const toggleItemMenu = (event) => {
     </div>
 
 </template>
+
+<style scoped>
+/* M6-T5 (F23) — F11 R3.6 explicit local replacement for the v3 striped-row
+   style class on this hand-rolled view table. The table is plain DOM (no
+   <DataTable> component), so the `stripedRows` prop has no host to attach to
+   and the v4 engine's striped rule — which targets a row class the DataTable
+   emits on its own rows — cannot match hand-rolled rows. The v3
+   `tr:nth-child(odd)` selector is therefore kept as a local style, and the
+   background is bound to the v4 `datatable.row.striped.background` token —
+   emitted as `--p-datatable-row-striped-background` (scheme-aware via the
+   `.app-dark` darkModeSelector) — the same value the engine styles
+   `stripedRows` DataTable rows with, so the stripe is identical to a
+   `stripedRows` DataTable in both light and dark (D3 visual parity).
+   This is the pattern M6-T2 (F21) applied to pages/modules/Item.vue. */
+.themes-item-stripes :deep(tr:nth-child(odd)) {
+    background: var(--p-datatable-row-striped-background);
+}
+</style>

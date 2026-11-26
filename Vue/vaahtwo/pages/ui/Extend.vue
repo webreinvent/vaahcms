@@ -4,44 +4,58 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold text-lg">Themes</h5>
-                    <div class="p-inputgroup justify-content-end">
-                        <Button label="Install" icon="pi pi-plus" class="p-button-sm" @click="showThemes"/>
-                        <Button class="p-button-sm" icon="pi pi-download" label="Check Updates"/>
-                        <Button icon="pi pi-refresh" class="p-button-sm"/>
-                    </div>
+                    <h5 class="font-semibold vc-text-16">Themes</h5>
+                    <InputGroup class="justify-content-end">
+                        <Button size="small" label="Install" icon="pi pi-plus" class="" @click="showThemes"/>
+                        <Button size="small" class="" icon="pi pi-download" label="Check Updates"/>
+                        <Button size="small" icon="pi pi-refresh" class=""/>
+                    </InputGroup>
                 </div>
             </template>
             <template #content>
                 <div class="grid">
                     <div class="col-4 mb-5">
-                        <Dropdown placeholder="Select a filter"></Dropdown>
+                        <Select placeholder="Select a filter"></Select>
                     </div>
                     <div class="col-5 col-offset-3 mb-5">
-                        <div class="p-inputgroup">
-                            <InputText placeholder="Search"></InputText>
-                            <Button label="Filter"></Button>
-                            <Button label="Reset"></Button>
+                        <!-- UT-108 (D3) — the search field and the "Filter" /
+                             "Reset" buttons were welded into one
+                             `InputGroup`, so the row read as a single
+                             oversized input with two buttons stuck to its
+                             right edge — the defect the UT-108 cross-screen
+                             probe found on the list toolbars. The field and
+                             its magnifier are one control and stay
+                             together; "Filter" and "Reset" act on the
+                             *list*, not on the field, so they are controls
+                             of their own beside it (the peer contract). -->
+                        <div class="extend-toolbar flex flex-wrap items-center gap-2">
+                            <InputGroup class="extend-toolbar-field">
+                                <InputText aria-label="Search" size="small" placeholder="Search" class="w-full"></InputText>
+                                <Button size="small" icon="pi pi-search" aria-label="Search" class=""></Button>
+                            </InputGroup>
+
+                            <Button size="small" class="extend-toolbar-action" label="Filter"></Button>
+                            <Button size="small" class="extend-toolbar-action" label="Reset"></Button>
                         </div>
                     </div>
                     <div class="col-12">
                        <div class="grid">
                            <div class="col-12 md:col-5">
-                               <h5 class="font-semibold text-xl inline">Theme for Jalapeno</h5>
+                               <h5 class="font-semibold vc-text-20 inline">Theme for Jalapeno</h5>
                                <Tag value="Default" severity="success" class="ml-2" rounded></Tag>
-                               <p class="text-sm text-gray-600 mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, sit.</p>
+                               <p class="vc-muted vc-text-13 mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, sit.</p>
                            </div>
                            <div class="col-12 md:col-7">
                                <div class="flex justify-content-end mb-3">
-                                   <Tag value="Name: Jalapeno" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
-                                   <Tag value="Version: 1.1.10" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
-                                   <Tag value="Developed by: WebReinvent" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
+                                   <Tag value="Name: Jalapeno" class="mr-2 vc-chip font-semibold"></Tag>
+                                   <Tag value="Version: 1.1.10" class="mr-2 vc-chip font-semibold"></Tag>
+                                   <Tag value="Developed by: WebReinvent" class="mr-2 vc-chip font-semibold"></Tag>
                                </div>
                                <div class="flex justify-content-end">
-                                   <Button label="Deactivate" class="mr-2 p-button-sm"></Button>
-                                   <Button label="Import Data" class="mr-2 p-button-sm"></Button>
-                                   <Button icon="pi pi-check" class="mr-2 p-button-sm p-button-warning"></Button>
-                                   <Button icon="pi pi-trash" class="mr-2 p-button-sm p-button-danger"></Button>
+                                   <Button size="small" label="Deactivate" class="mr-2"></Button>
+                                   <Button size="small" label="Import Data" class="mr-2"></Button>
+                                   <Button size="small" icon="pi pi-check" severity="warn" class="mr-2"></Button>
+                                   <Button size="small" icon="pi pi-trash" severity="danger" class="mr-2"></Button>
                                </div>
                            </div>
                        </div>
@@ -50,18 +64,18 @@
                     <div class="col-12">
                         <div class="grid">
                             <div class="col-12 md:col-9">
-                                <h5 class="font-semibold text-xl inline">Theme for Jalapeno</h5>
+                                <h5 class="font-semibold vc-text-20 inline">Theme for Jalapeno</h5>
                                 <Tag value="Default" severity="success" class="ml-2" rounded></Tag>
-                                <p class="text-sm text-gray-600 mt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, sit.</p>
+                                <p class="vc-muted vc-text-13 mt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, sit.</p>
                                 <div class="flex mt-3">
-                                    <Tag value="Name: Jalapeno" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
-                                    <Tag value="Version: 1.1.10" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
-                                    <Tag value="Developed by: WebReinvent" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
+                                    <Tag value="Name: Jalapeno" class="mr-2 vc-chip font-semibold"></Tag>
+                                    <Tag value="Version: 1.1.10" class="mr-2 vc-chip font-semibold"></Tag>
+                                    <Tag value="Developed by: WebReinvent" class="mr-2 vc-chip font-semibold"></Tag>
                                 </div>
                             </div>
                             <div class="col-12 md:col-3">
                                 <div class="flex justify-content-end">
-                                    <Button label="Deactivate" class="mr-2 p-button-sm"></Button>
+                                    <Button size="small" label="Deactivate" class="mr-2"></Button>
                                     <Button icon="pi pi-ellipsis-v" class="p-button-link" @click="toggle"></Button>
                                 </div>
                                 <TieredMenu :model="menu_options" ref="menu" :popup="true">
@@ -77,14 +91,18 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
-                    <div class="p-inputgroup justify-content-end w-6">
-                        <span class="p-input-icon-left">
+                    <h5 class="white-space-nowrap font-semibold vc-text-16">Install Themes</h5>
+                    <InputGroup class="justify-content-end w-6">
+                        <!-- UT-117 — v3's `p-input-icon-left` span has no rule
+                             in the v4 engine, so the magnifier was no longer
+                             an overlay on the field. The engine's
+                             `InputGroupAddon` is the v4 equivalent. -->
+                        <InputGroupAddon>
                             <i class="pi pi-search" />
-                            <InputText placeholder="Search" class="w-full"></InputText>
-                        </span>
-                        <Button icon="pi pi-times" class="p-button-sm" @click="hideThemes"/>
-                    </div>
+                        </InputGroupAddon>
+                        <InputText aria-label="Search" placeholder="Search" class="w-full"></InputText>
+                        <Button size="small" icon="pi pi-times" aria-label="Close" class="" @click="hideThemes"/>
+                    </InputGroup>
                 </div>
             </template>
             <template #content>
@@ -95,14 +113,14 @@
                                 <img src="https://www.primefaces.org/wp-content/uploads/2020/02/primefacesorg-primevue-2020.png" style="height: 15rem" />
                             </template>
                             <template #content>
-                                <h5 class="text-xl font-semibold mb-1">Bulma Blog Theme</h5>
-                                <p class="mb-3 text-sm">Bulma is a multipurpose responsive VaahCms theme.</p>
+                                <h5 class="vc-text-20 font-semibold mb-1">Bulma Blog Theme</h5>
+                                <p class="mb-3 vc-text-13">Bulma is a multipurpose responsive VaahCms theme.</p>
                                 <Tag value="Name: Bulma blog theme" class="mr-2 mb-2"></Tag>
                                 <Tag value="Version: 0.0.4" class="mr-2 mb-2"></Tag>
                                 <Tag value="Developed by: WebReinvent" class="mr-2 mb-2"></Tag>
                             </template>
                             <template #footer>
-                                <Button label="Install" icon="pi pi-download" class="p-button-outlined p-button-sm"></Button>
+                                <Button size="small" label="Install" icon="pi pi-download" class="p-button-outlined"></Button>
                             </template>
                         </Card>
                     </div>
@@ -112,14 +130,14 @@
                                 <img src="https://www.primefaces.org/wp-content/uploads/2020/02/primefacesorg-primevue-2020.png" style="height: 15rem" />
                             </template>
                             <template #content>
-                                <h5 class="text-xl font-semibold mb-1">Bulma Blog Theme</h5>
-                                <p class="mb-3 text-sm">Bulma is a multipurpose responsive VaahCms theme.</p>
+                                <h5 class="vc-text-20 font-semibold mb-1">Bulma Blog Theme</h5>
+                                <p class="mb-3 vc-text-13">Bulma is a multipurpose responsive VaahCms theme.</p>
                                 <Tag value="Name: Bulma blog theme" class="mr-2 mb-2"></Tag>
                                 <Tag value="Version: 0.0.4" class="mr-2 mb-2"></Tag>
                                 <Tag value="Developed by: WebReinvent" class="mr-2 mb-2"></Tag>
                             </template>
                             <template #footer>
-                                <Button label="Install" icon="pi pi-download" class="p-button-outlined p-button-sm"></Button>
+                                <Button size="small" label="Install" icon="pi pi-download" class="p-button-outlined"></Button>
                             </template>
                         </Card>
                     </div>
@@ -169,5 +187,18 @@ export default {
 </script>
 
 <style scoped>
+
+/* UT-108 — the peer toolbar's sizing: the field takes the room the search
+   cluster has, and the two list actions beside it keep their own width and
+   never shrink (below 640px the cluster wraps, so they drop onto their own
+   row). */
+.extend-toolbar-field {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.extend-toolbar-action {
+    flex: 0 0 auto;
+}
 
 </style>

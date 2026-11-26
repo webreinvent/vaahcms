@@ -1,0 +1,1398 @@
+// M6-T4a (F23) — Batch 5 **control layer**: buttons, chips and small text.
+//
+// Why this file exists
+// --------------------
+// OpenVue v4 emits its component CSS inside `@layer openvue{ … }`. Every rule
+// the app ships is **unlayered** author CSS, and unlayered CSS beats layered
+// CSS *regardless of specificity*. style/style.scss therefore carried a single
+// legacy base rule
+//
+//     .p-button { color:#8393a5; background-color:#e4e8f1; border-color:#cdd4e5; }
+//
+// (a v3 colour pair: `$regentGray` on `$catskillWhite`) that silently defeated
+// the whole v4 button variant system:
+//
+//   * light-mode default buttons failed WCAG AA — rgb(131,147,165) on
+//     rgb(228,232,241) is **2.56:1** (AA needs 4.5:1);
+//   * `.p-button-text` (the ghost variant) never got its transparent fill, so
+//     every row action rendered as a solid slate square — and the *danger*
+//     ghost rendered as a **filled red block** in every table row;
+//   * there was no primary CTA anywhere: the preset's brand-filled primary
+//     button was overridden too.
+//
+// This file re-implements the control layer explicitly and scheme-awarely, and
+// it is imported LAST in build.scss so its rules win over both style.scss and
+// the engine's `@layer openvue` block.
+//
+// Presentation only — no markup, routes, stores or data-model (D3).
+
+// The brand colour is `$primary` (global/_vars.scss: hsl(224, 98%, 55%) =
+// #1c58fd). It is written as a literal here because `global/all.scss` is an
+// `@import` bundle and exposes no module API to `@use`.
+
+/* ── Scheme-aware control tokens ──────────────────────────────────────────
+   Fixed light values + an `.app-dark` override, the same pattern
+   design-layer.scss follows for the shell surfaces. Every value below was
+   contrast-audited in the live browser (light *and* dark). */
+:root {
+    /* UT-17a — the default (neutral) button. Foreground #3d3d3d on #f5f5f5
+       = 9.4:1 (was 2.56:1). */
+    --vaah-btn-bg: #f5f5f5;
+    --vaah-btn-bg-hover: #ebebeb;
+    --vaah-btn-bd: #e5e5e5;
+    --vaah-btn-bd-hover: #d4d4d4;
+    --vaah-btn-fg: #3d3d3d;
+
+    /* UT-21 — the chip (metadata tag) palette that replaces the light-mode
+       -only `bg-blue-50 text-blue-600` pair. #3730a3 on #eef2ff = 8.1:1. */
+    --vaah-chip-bg: #eef2ff;
+    --vaah-chip-fg: #3730a3;
+
+    /* UT-21 — link colour that replaces `text-blue-400`
+       (rgb(96,165,250) = 2.31:1 on the #f4f4f5 canvas).
+       #1d4ed8 on #f4f4f5 = 6.1:1. */
+    --vaah-link: #1d4ed8;
+
+    /* UT-31 — danger *text* colour that replaces `text-red-500`
+       (rgb(239,68,68) = 3.42:1 on the #f4f4f5 canvas — an AA failure).
+       #b91c1c on #f4f4f5 = 6.0:1. */
+    --vaah-danger-text: #b91c1c;
+
+    /* UT-42 — the raised (active) float label rendered at 0.75rem
+       (10.5px) — below the 12.25px readable floor of UT-19 — while the
+       in-field label was 0.875rem. The two states of the same label
+       therefore disagreed in size. */
+    --p-floatlabel-active-font-size: 0.875rem;
+
+    /* UT-50 — the muted-text token failed AA in **light** mode too.
+       The engine ships `--p-text-muted-color: #737373` for both schemes;
+       on the #f5f5f5 control surface that is 4.35:1 (AA needs 4.5:1).
+       #6b6b6b is 4.89:1 on #f5f5f5 and 5.19:1 on the #f4f4f5 canvas, and
+       it reaches every consumer of the token (secondary text, table meta,
+       the toggle button label, the paginator meta). */
+    --p-text-muted-color: #6b6b6b;
+
+    /* UT-50 — the toggle button's own colour token (the "Yes"/"No"
+       segmented control) carried the same #737373 and therefore the same
+       4.35:1 failure on the #f5f5f5 segment background. */
+    --p-togglebutton-color: #6b6b6b;
+
+    /* UT-50 — the engine's semantic Message/Toast colours are shipped
+       **unlayered**, so they land after the app stylesheet in the cascade
+       and silently defeated style.scss's own F23 palette. The engine's
+       text colours failed WCAG AA on the engine's own tinted surfaces:
+
+         info     #0073ff on #e6f1ff = 3.76:1
+         success  #40861d on #d7f3c9 = 3.78:1
+         warn     #996600 on #ffdd99 = 3.77:1
+         primary  #8393a5 on the indigo tint = 2.60:1
+
+       These replacements keep the same tint surfaces and pass AA:
+         info    #0b4fa3 on #e6f1ff = 6.9:1
+         success #1f6b12 on #d7f3c9 = 5.5:1
+         warn    #7a4b00 on #ffdd99 = 5.7:1
+         primary #4f46e5 on the indigo tint = 5.7:1 */
+    --vaah-msg-info-fg: #0b4fa3;
+    --vaah-msg-success-fg: #1f6b12;
+    --vaah-msg-warn-fg: #7a4b00;
+    --vaah-msg-primary-fg: #4f46e5;
+
+    /* UT-54 — an **outlined** severity button must carry the severity's
+       *text* colour, not the filled button's foreground. The engine's
+       `--p-button-*-color` is the filled button's white label, so the
+       outlined variant inherited white text on a transparent fill —
+       1.1:1 on the page canvas (the setup wizard's "Test Database
+       connection" / "Test Mail Configuration" buttons were unreadable).
+       These are the same severity hues, darkened for the light canvas:
+         info    #1d4ed8 on #f4f4f5 = 6.1:1
+         danger  #b91c1c on #f4f4f5 = 6.0:1
+         success #166534 on #f4f4f5 = 6.5:1 */
+    --vaah-btn-outlined-info-fg: #1d4ed8;
+    --vaah-btn-outlined-danger-fg: #b91c1c;
+    --vaah-btn-outlined-success-fg: #166534;
+
+    /* UT-90 — the foreground of a *disabled* control. The engine paints a
+       disabled select's label with its disabled-colour token
+       (`--p-select-disabled-color`, #a3a3a3), which is 2.42:1 on the #fafafa
+       select surface. #5f5f5f is 6.06:1 there. */
+    --vaah-disabled-fg: #5f5f5f;
+}
+
+.app-dark {
+    --vaah-btn-bg: #262626;   /* --p-surface-800 */
+    --vaah-btn-bg-hover: #333333;
+    --vaah-btn-bd: #404040;   /* --p-surface-700 */
+    --vaah-btn-bd-hover: #525252;
+    --vaah-btn-fg: #e5e5e5;   /* 12.0:1 on #262626 */
+
+    --vaah-chip-bg: #1e293b;
+    --vaah-chip-fg: #93c5fd;  /* 8.4:1 on #1e293b */
+
+    --vaah-link: #60a5fa;     /* 7.4:1 on the #121212 canvas */
+
+    --vaah-danger-text: #f87171;  /* 6.5:1 on the #171717 chrome */
+
+    /* UT-90 — the dark counterpart of the disabled-control foreground.
+       #a1a1a1 is 5.85:1 on the #262626 dark control surface. */
+    --vaah-disabled-fg: #a1a1a1;
+
+    /* UT-50 — the dark counterpart of the light-mode toggle button token
+       (the engine's dark value is the same #737373, which is 3.78:1 on
+       the dark segment background). #a1a1a1 is 6.5:1 there. */
+    --p-togglebutton-color: #a1a1a1;
+
+    /* UT-50 — the engine's dark semantic message text already passes AA
+       (light blue / green / amber on an alpha tint over #171717), so it
+       is re-asserted here only to keep the pairing with the light rules
+       below, which are `!important` and would otherwise win in both
+       schemes. */
+    --vaah-msg-info-fg: #b3d5ff;
+    --vaah-msg-success-fg: #b8ea9f;
+    --vaah-msg-warn-fg: #ffcc66;
+    --vaah-msg-primary-fg: #a5b4fc;
+
+    /* UT-54 — the dark counterpart of the outlined severity labels
+       (the light shades on the #171717 panel: 7.4:1 / 6.7:1 / 8.6:1). */
+    --vaah-btn-outlined-info-fg: #93c5fd;
+    --vaah-btn-outlined-danger-fg: #fca5a5;
+    --vaah-btn-outlined-success-fg: #86efac;
+}
+
+/* ── UT-49 — the muted-text token failed AA in dark mode ───────────────────
+   The engine's dark palette sets `--p-text-muted-color: #737373`, which on
+   the #171717 panel surface is **3.78:1** — under the 4.5:1 AA floor for
+   12.3px text. It showed up on the paginator's rows-per-page select
+   (advanced pages, media, registrations) but was invisible on the pages
+   that happened to have no muted label on a panel surface.
+
+   #a1a1a1 is 7.1:1 on the panel and 7.7:1 on the #0a0a0a canvas, so the
+   token now passes everywhere it is used (secondary text, table meta,
+   placeholder-ish labels). */
+.app-dark {
+    --p-text-muted-color: #a1a1a1;
+}
+
+/* The engine colours the Select's own label with `--p-select-color`
+   (the same #737373), not with `--p-text-muted-color`, so the token
+   override alone does not reach it. The label is text and has to pass
+   AA, so it borrows the (now AA-compliant) muted colour. */
+.app-dark .p-select-label {
+    color: var(--p-text-muted-color);
+}
+
+/* ── UT-50 — the semantic Message / Toast text colours ──────────────────────
+   The engine ships its semantic message colours **unlayered** (unlike the
+   component CSS, which is inside `@layer openvue`), so they are injected
+   after the app stylesheet and won the cascade against style.scss's own
+   F23 palette. The engine's text colours failed WCAG AA on the engine's
+   own tinted surfaces (3.76:1 / 3.78:1 / 3.77:1). The rules below are
+   `!important` because the app stylesheet is earlier in the cascade than
+   the injected engine sheet — an unlayered app rule alone would lose on
+   equal specificity. The colour itself comes from a scheme-aware token,
+   so one rule serves both schemes. */
+.p-message.p-message-info,
+.p-message.p-message-info.is-light,
+.p-toast-message.p-toast-message-info,
+.p-toast-message-info {
+    color: var(--vaah-msg-info-fg) !important;
+}
+
+.p-message.p-message-success,
+.p-message.p-message-success.is-light,
+.p-toast-message.p-toast-message-success,
+.p-toast-message-success {
+    color: var(--vaah-msg-success-fg) !important;
+}
+
+.p-message.p-message-warn,
+.p-message.p-message-warn.is-light,
+.p-toast-message.p-toast-message-warn,
+.p-toast-message-warn {
+    color: var(--vaah-msg-warn-fg) !important;
+}
+
+/* ── UT-113 — the caution band's *fill* ────────────────────────────────────
+   The rule above fixed the caution's text colour, but the **fill** was
+   still the Nide preset's literal: `hsl(40,100%,80%)` in light (a solid
+   yellow slab) and `rgba(255,170,0,.16)` in dark (a brown slab). The text
+   was fixed; the box was not, so a caution still read as a slab of colour
+   rather than as a note.
+
+   The fill is now the app's own band: the caution token at 8% over the
+   content background, with the content hairline — the same shape as
+   `.vc-notice-warn` in the token layer (ui-utilities.scss). The two are
+   the same band; this rule is what the engine's own `Message` component
+   wears when it has to keep its own markup (a dismissible notice, say).
+
+   `!important` for the same reason as the colour rules above: the engine's
+   semantic message rules are **unlayered** and injected after the app
+   stylesheet, so an equal-specificity app rule would lose. */
+.p-message.p-message-warn,
+.p-message.p-message-warn.is-light {
+    background: color-mix(in srgb, var(--vaah-msg-warn-fg) 8%, var(--p-content-background)) !important;
+    border: 1px solid var(--p-content-border-color) !important;
+}
+
+.p-message.p-message-primary {
+    color: var(--vaah-msg-primary-fg) !important;
+}
+
+/* ── UT-50 — the dark-mode env tag was invisible ────────────────────────────
+   The setup wizard's "ACTIVE ENV FILE" pill is a `.p-tag` on a hard-coded
+   `bg-black-alpha-70` fill. In light mode the tag's own text colour
+   (#fafafa) reads fine, but the engine's dark `.p-tag` colour (#171717)
+   was applied in dark mode — dark text on a black pill. The tag sits on
+   the wizard's own artboard, so the pill keeps its black fill and only
+   the text colour is pinned. */
+.app-dark .vh-env-tag {
+    color: #fafafa !important;
+}
+
+/* ── UT-17a — the default button ──────────────────────────────────────────
+   Neutral, scheme-aware, AA-compliant. The hover state is declared here
+   too: the engine's own `.p-button:hover` lives in `@layer openvue`, so
+   without this the unlayered base fill would swallow the hover entirely. */
+.p-button {
+    color: var(--vaah-btn-fg);
+    background-color: var(--vaah-btn-bg);
+    border-color: var(--vaah-btn-bd);
+
+    &:not(:disabled):hover {
+        background-color: var(--vaah-btn-bg-hover);
+        border-color: var(--vaah-btn-bd-hover);
+        color: var(--vaah-btn-fg);
+    }
+
+    &:not(:disabled):active {
+        background-color: var(--vaah-btn-bd-hover);
+        border-color: var(--vaah-btn-bd-hover);
+        color: var(--vaah-btn-fg);
+    }
+}
+
+/* ── UT-17b — the ghost ("text") variant is genuinely transparent ─────────
+   `.p-button-text` is what v4 emits for the `text` prop *and* for the v3
+   `p-button-text` class the templates still use. The engine's rule is
+   layered, so it lost to the unlayered base fill above; re-assert it at
+   (0,2,0) so it wins on specificity *and* on layer. */
+.p-button.p-button-text {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--p-button-text-primary-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-button-text-primary-hover-background);
+        border-color: transparent;
+        color: var(--p-button-text-primary-color);
+    }
+
+    &:not(:disabled):active {
+        background-color: var(--p-button-text-primary-active-background);
+        border-color: transparent;
+        color: var(--p-button-text-primary-color);
+    }
+}
+
+/* ── UT-17c — ghost + severity keeps the severity *colour* but stays ghost ─
+   Without this, `.p-button.p-button-danger` (unlayered, style.scss) painted a
+   solid red block behind the trash icon in every table row. */
+.p-button.p-button-text.p-button-danger {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--p-button-text-danger-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-button-text-danger-hover-background);
+        border-color: transparent;
+        color: var(--p-button-text-danger-color);
+    }
+}
+
+.p-button.p-button-text.p-button-success {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--p-button-text-success-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-button-text-success-hover-background);
+        border-color: transparent;
+        color: var(--p-button-text-success-color);
+    }
+}
+
+.p-button.p-button-text.p-button-info {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--p-button-text-info-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-button-text-info-hover-background);
+        border-color: transparent;
+        color: var(--p-button-text-info-color);
+    }
+}
+
+.p-button.p-button-text.p-button-warn {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--p-button-text-warn-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-button-text-warn-hover-background);
+        border-color: transparent;
+        color: var(--p-button-text-warn-color);
+    }
+}
+
+/* ── UT-17d — the screen's ONE primary CTA ───────────────────────────────
+   `primary-action`: one screen, one primary action. The brand colour is
+   reserved for it — every other control is neutral or ghost. White on the
+   brand #1c58fd is 5.5:1 in both schemes. */
+.p-button.vaah-btn-primary {
+    background-color: #1c58fd;
+    border-color: #1c58fd;
+    color: #ffffff;
+
+    &:not(:disabled):hover {
+        /* UT-91 — the old hover fill (#2f6bff) put white text at 4.4995:1 —
+           a hairline WCAG 1.4.3 failure (AA needs 4.5:1). #2b62f5 is
+           *lighter* than the base fill (relative luminance 0.158 vs 0.143)
+           and clears AA at 5.04:1, so the hover still reads as "brighter". */
+        background-color: #2b62f5;
+        border-color: #2b62f5;
+        color: #ffffff;
+    }
+
+    &:not(:disabled):active {
+        background-color: #1449d6;
+        border-color: #1449d6;
+        color: #ffffff;
+    }
+
+    /* UT-87 — a *disabled* CTA must not keep the brand fill: the wizard's
+       "Save & Next" is disabled until its step validates, and a solid
+       brand-blue disabled button reads as "press me". The disabled state
+       falls back to the neutral surface tokens. */
+    &:disabled {
+        background-color: var(--vaah-btn-bg);
+        border-color: var(--vaah-btn-bd);
+        color: var(--vaah-btn-fg);
+        opacity: 0.65;
+    }
+}
+
+/* ── UT-17e — the outlined variant is a *quiet* control ─────────────────────
+   The legacy rule painted outlined buttons with the same v3 slate pair
+   (rgb(131,147,165) on the card surface = 2.56:1 — an AA failure), and it
+   was light-mode only. An outlined button is transparent with a visible
+   border and body text; the severity-coloured variants keep their severity
+   border + text but never get a fill. */
+.p-button.p-button-outlined {
+    background-color: transparent;
+    border-color: var(--p-content-border-color);
+    color: var(--p-text-color);
+
+    &:not(:disabled):hover {
+        background-color: var(--p-content-hover-background);
+        border-color: var(--p-text-muted-color);
+        color: var(--p-text-color);
+    }
+}
+
+.p-button.p-button-outlined.p-button-danger {
+    background-color: transparent;
+    border-color: var(--p-button-danger-border-color);
+    color: var(--vaah-btn-outlined-danger-fg);
+}
+
+.p-button.p-button-outlined.p-button-success {
+    background-color: transparent;
+    border-color: var(--p-button-success-border-color);
+    color: var(--vaah-btn-outlined-success-fg);
+}
+
+.p-button.p-button-outlined.p-button-info {
+    background-color: transparent;
+    border-color: var(--p-button-info-border-color);
+    color: var(--vaah-btn-outlined-info-fg);
+}
+
+.p-button.p-button-outlined.p-button-warn {
+    background-color: transparent;
+    border-color: var(--p-button-warn-border-color);
+    color: var(--p-button-warn-color);
+}
+
+/* ── UT-55 — a button label must not wrap ───────────────────────────────────
+   PrimeVue lets the label wrap, so a squeezed button broke its label over
+   two or three lines ("Test Database / connection", "Save / & / Next"). The
+   label now stays on one line and the surrounding row is allowed to wrap
+   instead (the wizard's action row). */
+.p-button .p-button-label {
+    white-space: nowrap;
+}
+
+/* ── UT-18 — button sizes: the v3 `p-button-tiny` class is unknown to v4 ──
+   v4 sizes are `small` / `large` / default, so `p-button-tiny` fell through
+   to the default size — and the engine's density rule
+   (`.p-button:not(.p-button-sm):not(.p-button-lg){height:…}`) pinned it to
+   36px, exactly like the toolbar buttons. Every table row was therefore
+   47px tall for a single 14px line of text. The app's own
+   `.p-button.p-button-icon-only{padding:.35rem .5rem}` also overrode the v4
+   per-size metrics for every size. */
+.p-button.p-button-tiny {
+    height: auto;
+    padding: 0.15rem 0.35rem;
+    font-size: 0.875rem;
+
+    .p-button-icon {
+        font-size: 0.875rem;
+    }
+}
+
+.p-button.p-button-icon-only {
+    height: auto;
+    padding: 0.4rem;
+}
+
+.p-button.p-button-icon-only.p-button-sm {
+    padding: 0.35rem;
+}
+
+.p-button.p-button-icon-only.p-button-tiny {
+    padding: 0.2rem;
+}
+
+/* Inside a table every cell action is small; the engine's density `height`
+   rule (which skips only `sm`/`lg`) pinned all of them to 36px, so a single
+   14px line of text occupied a 47px row. */
+.p-datatable .p-button {
+    height: auto;
+}
+
+/* M7-T3 (F26) — the empty-state CTA lives inside the `#empty` slot (so
+   inside `.p-datatable`) but is a PRIMARY action, not a cell control: the
+   app's one control height applies. Without this the rule above squashed
+   it to 26.5px (measured live) — a density-contract breach on the exact
+   surface the empty state exists on. */
+.p-datatable .vaah-empty .p-button {
+    height: 2.5714rem;
+    font-size: 1rem;
+}
+
+/* ── UT-19 — nothing smaller than 12px ────────────────────────────────────
+   Badges, tags and the tiny button labels rendered at 10.5px (0.75rem) with
+   a 14px root — double-dipping below the readable floor. */
+.p-tag {
+    font-size: 0.875rem;
+}
+
+/* ── UT-116 (D4) — the sortable column's indicator, app-wide ──────────────
+   The engine sizes the sort glyph from its `datatable.sort.icon.size` token
+   (0.75rem = 10.5px at the 14px root): a 10 × 10.5px mark floating next to
+   the 14px column title, which read as a stray glyph rather than as a sort
+   affordance. The media table fixed this with a screen-scoped rule; every
+   other list in the admin still carried the engine's mark — the advanced
+   jobs / batches / failed-jobs tables, and every sortable column in the
+   users, roles and content lists.
+
+   This is the same fix as the media table's, lifted into the control layer
+   so it applies to every table in the admin at once. The glyph is set to the
+   column title's own 14px, which keeps the header on one baseline.
+
+   The rule is unlayered author CSS, so it out-specifies the engine's own
+   `.p-datatable-sort-icon` rule (which lives in the `@layer openvue` block). */
+.p-datatable .p-datatable-sort-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    /* The glyph is a flex item in the header's flex row. In a narrow column
+       (the ID column is width-constrained) it was the only thing that could
+       give, so it shrank to 10px while the height held — a squeezed mark
+       beside the title. It never shrinks. */
+    flex: 0 0 auto;
+}
+
+/* ── M6-T1 (D2) — the badge's own type and box ────────────────────────────
+   The badge was the one control with **no app-level size at all**: the two
+   rules that claimed to size it targeted v3's `.p-badge.is-size-small`, a
+   class the v4 engine never emits (it emits `.p-badge-sm` / `.p-badge-lg`
+   from the `size` prop), so they never matched a badge. The only badge
+   they ever matched was the one screen that still *writes* `is-size-small`
+   by hand (the logs table's size badge — see the compat rule below).
+
+   What was left was the engine's own badge: a 19.25px circle (the Nide
+   theme's badge height) with no line-height of its own, so the badge
+   inherited the 20px body line box. At the readable floor the digit
+   overflowed its circle — measured on the media list panel: the badge was
+   19.25 × 19.25px with `scrollHeight` 20 > `clientHeight` 19, and the
+   digit was clipped.
+
+   The badge now states its own type — 12px, exactly on the DESIGN-SYSTEM
+   §6 scale (0.875rem would be 12.25px at the 14px root) — and a line box
+   that fits inside it (`line-height: 1`).
+
+   The size variants are stated for the *v4* class names, with one class
+   more than the engine's own rule: the engine's rules live in the library
+   layer and the app's CSS is unlayered, and at equal specificity the
+   later sheet wins — so the app has to out-specify the engine to be
+   heard. */
+.p-badge {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.p-badge.p-badge-sm {
+    font-size: 12px;
+    height: 1.25rem;
+    min-width: 1.25rem;
+}
+
+.p-badge.p-badge-lg {
+    font-size: 12px;
+    height: 1.75rem;
+    min-width: 1.75rem;
+}
+
+/* UT-109 paid off: the last hand-written consumer (the logs table's size
+   badge) now uses the v4 `size="small"` prop, so the engine emits
+   `.p-badge.p-badge-sm` and the v3 compat rule is retired with it. */
+
+/* ── UT-27 — identifiers read as data, not prose ─────────────────────────
+   Slugs and other machine identifiers are set in a monospace face so they
+   are scannable in a column and read as data rather than as a label. */
+.vaah-mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.875rem;
+}
+
+/* ── UT-21 — the Tailwind colour literals are not scheme-aware ───────────
+   `.bg-blue-50 text-blue-600` rendered a near-white chip on the dark canvas
+   (the brightest thing on the Modules/Themes page), `text-gray-600` was
+   nearly invisible in dark mode and `text-blue-400` failed AA in light mode.
+   The engine ships these utilities with `!important` inside `@layer openvue`;
+   unlayered `!important` author declarations outrank every layered one, so
+   the mapping below takes effect in both schemes. */
+.bg-blue-50 {
+    background-color: var(--vaah-chip-bg) !important;
+}
+
+.text-blue-600 {
+    color: var(--vaah-chip-fg) !important;
+}
+
+.text-blue-400 {
+    color: var(--vaah-link) !important;
+}
+
+.text-gray-600 {
+    color: var(--p-text-muted-color) !important;
+}
+
+/* ── UT-31 — `text-red-500` is a light-mode literal ───────────────────────
+   rgb(239,68,68) on the #f4f4f5 canvas = 3.42:1 (AA needs 4.5:1) — the
+   dashboard's log names and the "0 Failed" marker failed. */
+.text-red-500 {
+    color: var(--vaah-danger-text) !important;
+}
+
+/* ── UT-34 — the list toolbar breaks on a narrow viewport ─────────────────
+   Every list page carries the same search cluster: a text field plus
+   2–3 buttons (search / filters / reset). The field is `w-full` (width:100%)
+   and the engine's `.p-inputgroup` is a nowrap flex row, so on a 375px
+   screen the field claimed the whole row and the buttons were *shrunk* to
+   fit — the magnifier button collapsed to 21px and clipped its own icon,
+   while "Reset" ran flush against the panel edge.
+
+   Below 640px the cluster becomes two rows: the field and the search
+   button keep row one (the field grows), the remaining actions drop to a
+   second row. Buttons stop shrinking (`flex: 0 0 auto`) and the group is
+   allowed to wrap. The `nth-of-type` rules re-join the corners, because
+   the engine's `:first-child` / `:last-child` radii no longer describe
+   the visual order once the row breaks. */
+@media screen and (max-width: 640px) {
+    .vaah-list-search {
+        .p-inputgroup {
+            flex-wrap: wrap;
+        }
+
+        .p-inputgroup > .p-inputtext {
+            /* The field carries PrimeFlex's `w-full` (width:100%!important),
+               which would claim the whole row; a zero basis lets it take
+               only what the buttons leave behind. */
+            flex: 1 1 0;
+            width: auto !important;
+            min-width: 0;
+        }
+
+        .p-inputgroup > .p-button {
+            flex: 0 0 auto;
+        }
+
+        /* Three buttons or more means the cluster carries a search button:
+           reserve the field's row for the field + search, and let the
+           filter/reset pair wrap onto the second row. */
+        .p-inputgroup:has(> .p-button:nth-of-type(3)) > .p-inputtext {
+            flex-basis: calc(100% - 32px);
+        }
+
+        /* Re-join the corners of the two broken rows.
+           UT-159: `--p-border-radius` is not a token the engine emits — the
+           theme publishes `--p-border-radius-{xs,sm,md,lg,xl}`, so the
+           declaration was invalid and the whole rule was dropped: the
+           wrapped search cluster lost its corners. The field's own radius
+           (`--p-form-field-border-radius`) is what the corners have to
+           match. */
+        .p-inputgroup > .p-button:nth-of-type(2) {
+            border-start-end-radius: var(--p-form-field-border-radius);
+            border-end-end-radius: var(--p-form-field-border-radius);
+        }
+
+        .p-inputgroup > .p-button:nth-of-type(3) {
+            border-start-start-radius: var(--p-form-field-border-radius);
+            border-end-start-radius: var(--p-form-field-border-radius);
+        }
+    }
+}
+
+/* ── UT-60 — the auth screens' controls were below the target floor ───────
+   WCAG 2.2 SC 2.5.8 asks for 24×24 CSS px. On the sign-in / sign-up screens
+   the "show password" toggle was a 14×14 button and the "Login Via Password
+   / OTP" radio was a 16×16 dot — both far under the floor on a touch screen.
+
+   The visuals stay as they are (the engine sizes them from its `icon.size`
+   / `radiobutton.width` tokens); only the *hit area* grows. The radio's
+   transparent input is centred over the dot, and the toggle gets an
+   invisible 24×24 overlay — a pseudo-element forwards its pointer events
+   to the button it belongs to. */
+.p-password-toggle-mask-icon,
+.p-password-clear-icon {
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        inset-inline-start: 50%;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* The radio / checkbox inputs are the real hit targets; the visible dot and
+   box are painted by a sibling. Both inputs are `opacity: 0`, so scaling
+   them enlarges the hit area without changing anything that is drawn —
+   and it stays proportional to the control's own size. Scoped to the
+   pre-auth surfaces; the admin's own controls are covered by UT-36. */
+.public-pages {
+    .p-radiobutton-input,
+    .p-checkbox-input {
+        transform: scale(1.5);
+        transform-origin: center;
+    }
+}
+
+/* UT-152 — the engine's form-control primary is near-black
+   (`--p-primary-color: #171717`), so the selected radio on the sign-in card
+   drew a black dot: the one hard-edged, unbranded element on an otherwise
+   brand-coloured screen, and it read as "unselected" next to the grey ring of
+   its peer. The engine paints the indicator as a radial-gradient mask over
+   the icon's background-colour, so the accent is the icon's background.
+
+   The app's brand interactive token is used (`--vaah-link`, #1d4ed8 — 6.7:1 on
+   white). The button brand (#1c58fd) is left alone so the two blues keep
+   their separate jobs: `--vaah-link` is the interactive/brand-ink token,
+   `.vaah-btn-primary` is the button fill.
+
+   Scoped to the pre-auth surfaces, like the touch-target rule above — the
+   admin's own controls are UT-36's surface and were signed off in M9-T2. */
+.public-pages {
+    .p-radiobutton.p-radiobutton-checked .p-radiobutton-icon {
+        background-color: var(--vaah-link);
+    }
+}
+
+/* ── UT-35 — the panel header actions were squeezed, not wrapped ─────────
+   The engine's `.p-panel-header` is a nowrap flex row: the title and the
+   action cluster share one line, and the cluster gets whatever the title
+   leaves behind. At 375px that was 69px for a 74px "Install" button — the
+   label was clipped by 5px — and "Check Updates" wrapped onto two lines.
+
+   Below 640px the title takes its own row and the actions get the full
+   width, so nothing is clipped and the labels stay on one line. */
+@media screen and (max-width: 640px) {
+    .p-panel-header {
+        flex-wrap: wrap;
+    }
+
+    .p-panel-title {
+        flex: 1 1 100%;
+    }
+
+    .p-panel-header-actions {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* ── UT-36 — the touch targets were below the WCAG 2.2 minimum ───────────
+   WCAG 2.2 SC 2.5.8 (Target Size, Minimum) asks for 24×24 CSS px. The
+   dense row actions were 20×25px, the copy-slug button 14×20px, the
+   checkbox 16×16px and the toggle switch 28×16px — every one of them
+   under the floor on a touch screen. Below 640px the controls grow: 28px
+   for the icon buttons, 24px for the checkbox and the switch's target. */
+@media screen and (max-width: 640px) {
+    .p-datatable .p-button.p-button-icon-only,
+    .p-datatable .p-button.p-button-tiny {
+        min-width: 28px;
+        min-height: 28px;
+    }
+
+    .p-datatable .p-checkbox,
+    .p-datatable .p-checkbox .p-checkbox-box {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* The switch keeps its 28×16 visual, but the label (and the input it
+       covers) becomes a 24px-tall target. */
+    .p-datatable .p-toggleswitch {
+        min-height: 24px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+/* ── UT-42 — the profile page's headings were 9.3px ───────────────────────
+   The engine's base typography sets `h5 { font-size: 0.83em }`; inside
+   the profile page's 11.2px context that is **9.3px** — the four section
+   headings (Public Avatar, Profile Details, Multi-Factor Authentication,
+   Password) were unreadably small, and the app's own readable floor
+   (UT-19) is 12.25px. */
+.profile h5 {
+    font-size: 1rem;
+}
+
+/* The gravatar link is the only body text left under the floor. */
+.profile a {
+    font-size: 0.875rem;
+}
+
+/* ── UT-41 — the list and the form shared one row on a phone ─────────────
+   Every CRUD page is a PrimeFlex grid: the list panel takes `col-7`
+   (or `col-6`) and the form / item panel the rest, so the two always add
+   up to 12 columns. Those classes are **not** responsive — at 375px the
+   form panel was still 5/12 of the row, i.e. a 91px-wide column holding
+   a full form (its fields measured 83px). The list's table then
+   overflowed the page and the route scrolled horizontally again — the
+   UT-33 regression on every form route.
+
+   Below 768px the two panels stack instead: each takes the full width,
+   the list keeps its internal horizontal scroll (the DataTable's own
+   `overflow:auto` container) and the form gets the whole screen.
+
+   The same split is used by the settings pages — the notification form
+   (`col-3` variables panel + `col-9` options panel) and the update page
+   (`col-3` + `col-9`) — and by the profile page, where a `col-4` heading
+   column sits next to a `col-5` card. Those widths are desktop widths
+   too, so `col-3`, `col-4` and `col-8` stack with the rest: at 375px
+   the notification form's action field measured 74px and its action
+   select 53px, and the profile headings were squeezed into a 105px
+   column (UT-75, UT-78). */
+@media screen and (max-width: 768px) {
+    .grid:not(.field) > .col-3,
+    .grid:not(.field) > .col-4,
+    .grid:not(.field) > .col-5,
+    .grid:not(.field) > .col-6,
+    .grid:not(.field) > .col-7,
+    .grid:not(.field) > .col-8,
+    .grid:not(.field) > .col-9 {
+        width: 100%;
+    }
+}
+
+/* ── UT-37 — the focus ring was killed app-wide ──────────────────────────
+   The app's reset layer declares
+
+       :focus { box-shadow: none !important; outline: none; }
+
+   which removed the engine's focus ring (a box-shadow) from every
+   component; what survived of the engine's `:focus-visible` outline was
+   `3px solid transparent`. Tabbing through the admin therefore produced
+   **no focus indication at all** — a WCAG 2.4.7 (Focus Visible) failure
+   and the first anti-pattern of the accessibility checklist.
+
+   Unlayered author CSS outranks every layer, so the ring below replaces
+   the engine's for all components. The two controls whose *visible* part
+   is a sibling of the focused input (checkbox, toggle switch) get the
+   ring on that visible part, mirroring the engine's own `:has()` hooks. */
+:focus-visible {
+    outline: 2px solid var(--vaah-link);
+    outline-offset: 2px;
+}
+
+.p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus-visible) .p-checkbox-box,
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:focus-visible) .p-toggleswitch-slider {
+    outline: 2px solid var(--vaah-link);
+    outline-offset: 2px;
+}
+
+/* ── UT-39 — the DatePicker did not fill its column ───────────────────────
+   The engine pins the DatePicker root to its own content:
+
+       .p-datepicker.p-component { width: max-content !important;
+                                    min-width: max-content !important; }
+
+   Both are `!important` and more specific than PrimeFlex's `w-full`, so
+   the "Date of Birth" field rendered 161px wide inside a 506px column —
+   a third of the width of every other field in the form. The extra
+   class in the selector is what wins the tie: the engine's rule is
+   injected at runtime (after the stylesheet), so equal specificity would
+   still lose. */
+.p-datepicker.p-component.w-full {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+/* ── UT-40 — the rich-text editor's label floated mid-field ───────────────
+   `VhField` lays the label out in a stretched flex item, so the label
+   text is vertically centred against whatever it sits beside. For a
+   36px input that reads as a label on the field; for the 160px rich-text
+   editor it left the label floating in the middle of the box, visually
+   detached from the control it names. Top-align the label whenever the
+   field holds an editor. */
+.field.grid:has(> .col-12 > .p-editor) > label {
+    align-self: flex-start;
+    padding-top: 0.4rem;
+}
+
+/* ── UT-30 — the error Message/Toast pair failed AA in light mode ────────
+   The app's semantic palette put `$dangerDarkColor` (rgb(214,36,0)) on
+   `$dangerLighterColor` (rgb(255,221,214)) = 4.03:1. Darken the *text*
+   only; the soft tint background stays. #a3160a on rgb(255,221,214)
+   = 5.74:1. The `.app-dark` rules in style.scss are more specific and
+   keep the dark scheme's (already passing) pair. */
+.p-message.p-message-error {
+    color: #a3160a;
+}
+
+.p-toast-message.p-toast-message-error {
+    color: #a3160a;
+}
+
+/* ── UT-43 — the settings / advanced side menu crushed the content ────────
+   Both section layouts (settings and advanced) are a two-column PrimeFlex
+   grid: a `col-fixed` menu column and a `col` content column. `col-fixed`
+   is `flex: 0 0 auto; width: auto`, so the menu keeps its natural 183px and
+   the content column — `flex: 1 1 0%` — takes what is left. At 375px that
+   was **141px of content**: the settings forms rendered one word per line
+   and the notifications / jobs / batches toolbars overflowed the page by
+   92px.
+
+   Below 768px the two columns stack — the menu becomes a horizontal,
+   scrollable strip above the content, the content takes the full width. */
+@media screen and (max-width: 768px) {
+    .vc-split-layout {
+        justify-content: flex-start;
+
+        > .col-fixed,
+        > .col {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+    }
+
+    /* The menu turns into a strip of chips. The group label is redundant
+       once the items are side by side, so it is dropped. */
+    .vc-split-layout .p-menu {
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+
+    .vc-split-layout .p-menu-list {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 0.25rem;
+        scrollbar-width: thin;
+    }
+
+    .vc-split-layout .p-menu-item {
+        flex: 0 0 auto;
+    }
+
+    .vc-split-layout .p-menu-submenu-label {
+        display: none;
+    }
+
+    .vc-split-layout .p-menu-item-link {
+        padding: 0.35rem 0.6rem;
+        /* UT-159 — `--p-border-radius` is not a token the engine emits (the
+           theme publishes `--p-border-radius-{xs,sm,md,lg,xl}`), so this
+           declaration was invalid and the item kept the engine's own
+           radius. The navigation item's token is the one that matches it. */
+        border-radius: var(--p-navigation-item-border-radius);
+        white-space: nowrap;
+    }
+}
+
+/* ── UT-44 — `text-xs` was 10.5px, under the readable floor ───────────────
+   The Tailwind utility is emitted by the engine inside `@layer openvue`
+   with `!important`, so the app's own copy of it loses. UT-19 already
+   raised the badge/tag pair to 0.875rem for exactly this reason; the
+   helper text, the field captions and the settings headings were left at
+   0.75rem = 10.5px, which is where every remaining sub-11.5px reading on
+   the settings pages came from. The same rule brings the public pages'
+   captions (sign-in description, forgot-password hint) up to the floor. */
+.text-xs {
+    font-size: 0.875rem !important;
+}
+
+/* ── UT-45 — the log file-size badge was 8.4px ─────────────────────────────
+   RETIRED (M6-T1, D2). The rule lived here and in style.scss and read
+   `.p-badge.is-size-small` — a v3 class the v4 engine never emits. The
+   belief written in the old comment ("it outranks the control layer's
+   `.p-badge` floor from UT-19 by specificity") was wrong twice over: the
+   engine emits `.p-badge-sm` / `.p-badge-lg` (from the `size` prop), so
+   the rule matched *no* badge except the one screen that writes the v3
+   class by hand — and the badge sizing it "protected" never existed.
+
+   The badge family is now stated once, for the v4 class names, in the
+   control layer's UT-19 block above (`.p-badge`, `.p-badge.p-badge-sm`,
+   `.p-badge.p-badge-lg`). The one hand-written consumer (the logs table)
+   was migrated to the v4 `size="small"` prop (UT-109). */
+
+/* ── UT-53 / UT-57 — the install wizard's stepper ───────────────────────────
+   The v4 stepper ships `.p-steplist` as a `justify-content: space-between`
+   flex row whose items are `flex: 1 1 auto`. In the wizard that produced
+   two problems:
+
+   * **desktop** — the first item absorbed the free space (541px wide for a
+     185px label), so step 1 sat alone at the far left of a 1029px row
+     while steps 2–4 bunched at the right, ~350px away from it. The group
+     is now sized by its content and centred.
+   * **mobile** — the four steps do not fit in 375px, and the row scrolled
+     horizontally with no indication of where the active step was. The row
+     keeps its scroll, but it is now a snap-scroller and the wizard scrolls
+     the active step into view (see the install wizard's Index.vue). */
+.vh-step {
+    .p-steplist {
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .p-stepitem {
+        flex: 0 0 auto;
+    }
+
+    .p-step {
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .vh-step {
+        .p-steplist {
+            /* `justify-content: center` would put the overflowing left edge
+               out of reach of the scroller, so the mobile row starts at the
+               left instead. */
+            justify-content: flex-start;
+            overflow-x: auto;
+            scroll-snap-type: x proximity;
+            scrollbar-width: thin;
+        }
+
+        .p-stepitem {
+            flex: 0 0 auto;
+            scroll-snap-align: center;
+        }
+    }
+}
+
+/* ── UT-72 — the media / taxonomies list bar crushed its search field ────
+   The list pages that follow the "left buttons + right search cluster"
+   layout share one wrapper, but only the CRUD pages carried the
+   `vaah-list-search` hook that the UT-34 rule keys on. The media and
+   taxonomies bars were therefore never unwrapped: at 375px the outer
+   flex row gave the search cluster ~200px, the InputGroup is a *nowrap*
+   row, and the text field collapsed to 65px — a field you cannot read or
+   type into.
+
+   UT-89 (M6-T4a Batch 17) resolved this in the markup instead of in CSS:
+   the media and taxonomies bars now use the canonical dense row that the
+   six CRUD list pages already use, so the search cluster wraps onto a
+   full-width row of its own at 375px, and the `vaah-list-actions` wrapper
+   — the only thing this rule keyed on — is gone from the app. The rule is
+   kept, because the hook is the thing that made the bar stack, and a
+   future list page that adopts the old two-island layout would need it
+   again. */
+@media screen and (max-width: 768px) {
+    .vaah-list-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+}
+
+/* ── UT-73 — the localization filter row was crushed at 375px ────────────
+   The filter bar is a two-column grid: a `col-4` language select next to
+   a `col` holding a five-control InputGroup (search field, search button,
+   category select, value select, reset button). PrimeFlex's `col-4` is a
+   *desktop* width, so at 375px the language select still took a third of
+   the row and the InputGroup got the rest — the search field measured
+   41px and the two filter selects 20px each.
+
+   Below 768px the language select takes its own row and the cluster is
+   allowed to wrap: the field and the search button keep row one, the two
+   filter selects share row two, and the reset button drops to row three. */
+@media screen and (max-width: 768px) {
+    .vaah-filter-bar {
+        > .col-4 {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .p-inputgroup {
+            flex-wrap: wrap;
+        }
+
+        .p-inputgroup > .p-inputtext {
+            flex: 1 1 calc(100% - 40px);
+            width: auto !important;
+            min-width: 0;
+        }
+
+        .p-inputgroup > .p-select {
+            flex: 1 1 calc(50% - 4px);
+            min-width: 0;
+        }
+
+        .p-inputgroup > .p-button {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+/* ── UT-74 — a standalone checkbox was a 16×16 target ───────────────────
+   WCAG 2.2 SC 2.5.8 asks for a 24×24 minimum target. The engine's
+   checkbox draws a 15.75px box and lays the (transparent) `<input>` over
+   it, so the clickable target was 15.75px — the datatable rows were
+   rescued by the UT-36 rule, but the standalone checkboxes (the profile
+   page's MFA card, for one) kept the raw size.
+
+   The visible box is left exactly as it is; only the invisible input is
+   grown to 24×24 and centred on the box, so the target reaches the
+   minimum without changing a single pixel of the rendered control. */
+.p-checkbox:not(.p-disabled) > .p-checkbox-input {
+    width: 24px;
+    height: 24px;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ── UT-76 — the copy-slug button was a 14 × 19 target ───────────────────
+   The slug copy action is an icon-only button with the padding stripped
+   (`p-0`), which left it at 14.25 × 19.5px around a 12.25px icon — under
+   the WCAG 2.2 SC 2.5.8 minimum of 24 × 24, and visually cramped.
+
+   The button keeps its tight look (no padding, the same small icon) but
+   is given a 24 × 24 box to click: the icon stays centred and the
+   target reaches the minimum. */
+.vaah-icon-action {
+    min-width: 24px;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── UT-79 — the notification action row kept three controls on one line ─
+   The action row of a notification is an InputGroup of three children:
+   the action label, the action select and a remove button. On a phone
+   the select is left 90px — its "Choose an action" placeholder is
+   truncated to "Choose an a…".
+
+   Below 640px the group wraps: the label and the select each take a
+   row, the remove button keeps the second row beside the select. */
+@media screen and (max-width: 640px) {
+    .vaah-action-row {
+        flex-wrap: wrap;
+
+        > .p-inputtext {
+            flex: 1 1 100%;
+        }
+
+        > .p-select {
+            flex: 1 1 calc(100% - 44px);
+            min-width: 0;
+        }
+
+        > .p-button {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+/* ── UT-80 — the tablet widths left row actions under the target floor ───
+   The UT-36 growth of the datatable row actions stopped at 640px, so on a
+   768px tablet the icon-only row actions were still 20 × 25px and the
+   list toolbar's search button 23 × 36px — both under the WCAG 2.2
+   SC 2.5.8 minimum of 24 × 24.
+
+   From 768px down the icon-only buttons reach 24 × 24, and below 640px
+   the existing UT-36 rule still grows them to a comfortable 28 × 28 (it
+   is repeated after this block so it keeps the last word). */
+@media screen and (max-width: 768px) {
+    .p-datatable .p-button.p-button-icon-only,
+    .p-datatable .p-button.p-button-tiny,
+    .p-button.p-button-icon-only {
+        min-width: 24px;
+        min-height: 24px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .p-datatable .p-button.p-button-icon-only,
+    .p-datatable .p-button.p-button-tiny {
+        min-width: 28px;
+        min-height: 28px;
+    }
+}
+
+/* The toast's dismiss button was 21 × 21px. */
+.p-toast-close-button {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+/* ── UT-101 — the toast's dismiss icon floated above the message ──────────
+   The engine places the toast's dismiss button with a *size-relative* nudge
+   — `margin: -25% 0 0 0` and `right: -25%` — so the nudge scales with the
+   button itself. UT-80 lifted the button from 21px to the 24 × 24px SC 2.5.8
+   floor, and the nudge grew with it: the X ended up 4px above the message's
+   centre line, and shifted sideways out of the toast's corner. Every toast
+   in the app (info / success / warn / error) draws the same button, so the
+   whole family was misaligned.
+
+   The app also renders the toast through its own `#message` template, which
+   replaced the engine's `.p-toast-message-text` wrapper — the element the
+   engine gives `flex: 1 1 auto`. Without it the message does not grow, so
+   the button landed right next to the text instead of in the toast's corner.
+
+   The fix has two halves: the app's message wrapper grows like the engine's
+   own (`.vaah-toast-text`), and the size-relative nudge is cancelled so the
+   X is centred on the message. The 24 × 24px target from UT-80 stays. */
+.vaah-toast-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.p-toast-message-content {
+    align-items: center !important;
+}
+
+.p-toast-close-button {
+    margin: 0 !important;
+    right: auto !important;
+}
+
+/* ── UT-84 — the setup stepper's step target was an 18px-tall link ───────
+   The wizard's four steps are real controls (each one jumps to its install
+   route), but the engine renders the title as a plain 18px-tall span, so
+   the clickable target was 94 × 18 — under the WCAG 2.2 SC 2.5.8 minimum
+   of 24 × 24.
+
+   UT-83 made the engine's step header the single interactive element (it
+   already drives the navigation), so the header is what has to meet the
+   floor: it gets a 24px minimum height, which the number circle already
+   needed. */
+.vh-step .p-step-header {
+    min-height: 24px;
+}
+
+/* ── UT-85 — the inline message's dismiss button was 21 × 21px ───────────
+   The `closable` Message of the setup steps (the migrate / dependencies
+   / account notices) draws a 21px close button — the same shape as the
+   toast's dismiss button, which the UT-80 block already lifted to 24px.
+   Both now share the floor. */
+.p-message-close-button {
+    min-width: 24px;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── UT-86 — the sign-in radio's hit area stopped at 23.6px ──────────────
+   UT-60 grows the radio's transparent input with `transform: scale(1.5)`,
+   which is proportional to the control's own 15.75px dot — the target
+   came to 23.625px, a fraction under the 24px floor. The checkbox got an
+   exact 24 × 24 box in UT-74; the radio gets the same treatment, so both
+   pre-auth controls meet the minimum exactly and identically. */
+.public-pages {
+    .p-radiobutton:not(.p-disabled) > .p-radiobutton-input {
+        width: 24px;
+        height: 24px;
+        inset: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* ── UT-88 — the DESKTOP row actions were under the target floor ─────────
+   UT-36 grew the datatable row actions to 28 × 28 *below 640px* and UT-80
+   lifted them to 24 × 24 *below 768px* — both on the assumption that the
+   target-size rule only bites on a touch screen. WCAG 2.2 SC 2.5.8 has no
+   viewport qualifier: at 1280px the icon-only row actions were still
+   **19.84 × 25.09px** (the width is under the 24px floor) and the list
+   toolbars' icon-only search button **23.43 × 35.99px**.
+
+   The 24 × 24 floor is therefore asserted at *every* width. The 28 × 28
+   phone growth is untouched (UT-36's datatable rules are more specific and
+   still win below 640px), and the icons keep their size — only the target
+   grows, by the ~4px the padding was already giving the eye. */
+.p-button.p-button-icon-only,
+.p-datatable .p-button.p-button-icon-only,
+.p-datatable .p-button.p-button-tiny {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+/* ── UT-89 — the topnav's icon links were a 21px-tall target ────────────
+   The topnav renders its menu items as icon-only links ("Dashboard",
+   "Visit Site"). The engine's `.p-menubar-item-link` is a 20px line box, so
+   the clickable target was 28 × 21px — under the WCAG 2.2 SC 2.5.8 floor
+   of 24 × 24. The link gets a 24px minimum height and keeps the icon
+   centred in it; the topnav's own vertical rhythm is unchanged. */
+.top-nav-fixed .p-menubar-item-link {
+    min-height: 24px;
+    align-items: center;
+}
+
+/* ── UT-90 — the disabled "rows per page" select showed its value in the
+   disabled grey ──────────────────────────────────────────────────────────
+   The DataTable paginator's rows-per-page Select is disabled on a short or
+   empty table, and the engine paints a disabled select's label with its
+   disabled-colour token: #a3a3a3 on the #fafafa select surface = **2.42:1**.
+   WCAG 1.4.3 exempts inactive components, so this is not a conformance
+   failure — but the pill still shows the user's own "20", and a number
+   nobody can read is a number nobody can correct.
+
+   The engine's own disabled-label colour comes from the OpenVue v4 Select
+   design token `select.disabled.color` → `--p-select-disabled-color` (its
+   default, #a3a3a3, is the measured value). Overriding that token — rather
+   than restyling `.p-select-label` from the app — keeps the engine's
+   selector doing the painting, so the rule stays correct if the engine
+   changes which element consumes the token. The scheme-aware
+   disabled-foreground token is used instead (6.06:1 in light, 5.85:1 in
+   dark). */
+.p-select.p-disabled {
+    --p-select-disabled-color: var(--vaah-disabled-fg);
+}
+
+/* ── UT-88 — a table cell with no value rendered as nothing at all ────────
+   The "Updated" column of the roles / permissions / taxonomies / media lists
+   is populated from `updated_at`, and every seeded row carries
+   `created_at = updated_at = NULL` (the seeders insert the rows without
+   timestamps). `useVaah.ago(null)` returns `null`, so the cell rendered
+   *empty* — not a dash, not "Never", nothing: the column looked broken
+   rather than empty, and a 150px-wide blank column carried no information.
+
+   The value is a presentation decision, so it is made in the presentation
+   layer: a muted em dash. `--p-text-muted-color` is the engine's own
+   muted-foreground token and is scheme-aware in this app (UT-49: #6b6b6b on
+   the light canvas = 5.19:1, #a1a1a1 in dark = 5.85:1), so the dash reads
+   as *absent* without dropping below the AA floor. */
+.vaah-empty-value {
+    color: var(--p-text-muted-color);
+}
+
+/* ── UT-95 — the colour palette's swatches were a 16 × 16px target ──────
+   The rich-text editor's "Text colour" / "Background colour" pickers open
+   a palette of 35 swatches. Quill draws each swatch as a 16 × 16px box
+   with a 2px margin, so the clickable target was 16 × 16px — under the
+   WCAG 2.2 SC 2.5.8 floor of 24 × 24.
+
+   The spacing exception does not rescue them either: the swatches sit
+   20px apart, so a 24px circle centred on one swatch would overlap its
+   neighbour.
+
+   The swatch keeps its 16px size — the palette stays as compact as the
+   engine drew it — but the *target* grows to 24 × 24 and the colour is
+   painted at its old size in the middle of it. The items are 28px apart
+   after the change, and five of them fit the palette's own 152px panel,
+   so the panel does not need to grow. */
+.ql-snow .ql-color-picker .ql-picker-item {
+    width: 24px;
+    height: 24px;
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ── M7-T3 (F26) — the trash & bulk-action surface ─────────────────────────
+   Two screen patterns the bulk UI needs (DESIGN-SYSTEM.md §8: "Empty states —
+   centered, muted, an icon + one line + a single primary action").
+
+   (1) `.vaah-empty` — the `#empty` slot vocabulary for the list tables. The v4
+       engine renders an EMPTY `<td>` when a `#empty` slot is absent (verified
+       in the installed `openvue/datatable/BodyRow.vue` — v4 ships no default
+       empty message), so every bulk-surface table carries the slot, built
+       from this one shared rule set: a 20px muted icon, a 14px muted line
+       (body size on the 12 · 13 · 14 · 16 · 20 · 24 scale) and the CTA button
+       (36px, the app's one control height). `--p-text-muted-color` flips
+       light/dark (#6b6b6b → #a1a1a1), so the state reads muted in both
+       schemes instead of a fixed gray.
+
+   (2) `.vaah-bulk-danger` — the tone for the *destructive* items of the
+       bulk menus (`bulk_delete`, `delete_all` — the force-delete pair; the
+       soft `trash` / `trash-all` items stay neutral, they are reversible).
+       The v4 `Menuitem` applies a per-item `class` to its `<li>`
+       (verified in the installed `openvue/menu/Menuitem.vue`), and this rule
+       paints label + icon with the app's own **semantic** danger text token
+       `--vaah-danger-text` (defined above in this file: #b91c1c light →
+       #f87171 dark — it flips, unlike the primitive `--p-red-*` palette).
+       NOT `var(--p-message-error-color)`: the Nide preset does not emit that
+       custom property (verified against the built `index.css` — a claim
+       repeated by the M6-T5 review), so binding it would drop the
+       declaration at computed-value time and the danger tone would silently
+       never apply. */
+.vaah-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 16px;
+    text-align: center;
+}
+
+.vaah-empty-icon {
+    font-size: 20px;
+    line-height: 1;
+    color: var(--p-text-muted-color);
+}
+
+.vaah-empty-copy {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--p-text-muted-color);
+}
+
+/* The engine's Menu styleClassMap emits hyphenated `p-menu-item` /
+   `p-menu-item-link` (installed `openvue/menu/style/index.mjs` + live DOM);
+   the legacy v3 `p-menuitem*` names are not v4 classes — a `.p-menuitem`
+   selector here would silently match nothing. */
+.p-menu-item.vaah-bulk-danger,
+.p-menu-item.vaah-bulk-danger .p-menu-item-link,
+.p-menu-item.vaah-bulk-danger .p-menu-item-icon {
+    color: var(--vaah-danger-text);
+}

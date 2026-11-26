@@ -3,19 +3,19 @@
     <Card>
         <template #header>
             <div class="flex justify-content-between align-items-center">
-                <h5 class="font-semibold text-sm">UserName</h5>
-                <div class="p-inputgroup justify-content-end">
+                <h2 class="font-semibold vc-text-16">UserName</h2>
+                <InputGroup class="justify-content-end">
                     <Button label="#1986"></Button>
-                    <Button label="Edit" icon="pi pi-pencil" class="p-button-sm"/>
-                    <Button class="p-button-sm" icon="pi pi-caret-down" @click="toggle"/>
-                    <Button icon="pi pi-times" class="p-button-sm"/>
-                </div>
+                    <Button size="small" label="Edit" icon="pi pi-pencil" class=""/>
+                    <Button size="small" class="" icon="pi pi-caret-down" @click="toggle"/>
+                    <Button size="small" icon="pi pi-times" class=""/>
+                </InputGroup>
                 <TieredMenu :model="menu_options" ref="menu" :popup="true">
                 </TieredMenu>
             </div>
         </template>
         <template #content>
-            <DataTable :value="user_details" stripedRows class="p-datatable-sm">
+            <DataTable size="small" :value="user_details" stripedRows class="">
                 <Column>
                     <template #body="slotProps">
                         {{slotProps.data.label}}

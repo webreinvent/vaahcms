@@ -93,6 +93,16 @@ function vh_module_assets_url($name, $file_path)
     return $url;
 }
 //-----------------------------------------------------------------------------------
+/**
+ * F06 / R5.10 — the core-provided CSS namespace for a module's third-party
+ * rules: a module bundle must emit its `p-*` rules only under this prefix
+ * (declared in the module's `Config/assets.php` `css_prefix`).
+ */
+function vh_module_css_prefix($slug)
+{
+    return 'p-vc-module-'.\Str::slug($slug);
+}
+//-----------------------------------------------------------------------------------
 function vh_module_migrations_path($module_name)
 {
     $path =config('vaahcms.modules_path')."/".$module_name."/Database/Migrations/";

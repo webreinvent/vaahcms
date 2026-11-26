@@ -1,7 +1,7 @@
 <template>
     <div class="grid">
         <div class="col-6 col-offset-3 mt-6">
-            <DataTable :value="pages" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
+            <DataTable size="small" :value="pages" stripedRows scrollable class="" showGridlines>
                 <Column header="Pages">
                     <template #body="slotProps">
                         <p>{{slotProps.data.label}}</p>
@@ -10,7 +10,7 @@
                 <Column header="Link">
                     <template #body="slotProps">
                         <router-link :to="slotProps.data.to" class="mr-2" target="_blank">
-                            <Button icon="pi pi-link" class="p-button-rounded p-button-sm"></Button>
+                            <Button size="small" icon="pi pi-link" class="p-button-rounded"></Button>
                         </router-link>
                     </template>
                 </Column>

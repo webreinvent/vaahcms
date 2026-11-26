@@ -1,0 +1,13 @@
+// M3-T2 (F10) — extracted verbatim from the deleted vendored
+// primevue-tailwind-light/designer/_mixins.scss. Only the two utilities the
+// app's own stylesheet (style/style.scss) still consumes are kept — the
+// vendored component-tree mixins died with the vendored theme.
+@import "./functions";
+
+@mixin scaledPadding($val, $scale) {
+    padding: nth($val, 1) * $scale nth($val, 2) * $scale;
+}
+
+@mixin scaledFontSize($val, $scale) {
+    font-size: $val * $scale;
+}

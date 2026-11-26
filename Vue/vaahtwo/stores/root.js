@@ -1,9 +1,30 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
+// M3-T1 (F09) — dark-mode module (documentElement-only .app-dark, system
+// watcher, pre-paint cache); the source of truth is the per-user
+// vh_settings row surfaced in the assets bootstrap payload.
+import {
+    initDarkMode,
+    applyPreference,
+    watchSystemPreference,
+    setCurrentPreference,
+} from '../vaahvue/theme/dark-mode'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url;
 let json_url = ajax_url + "/json";
+
+/* M6 (F31) — the persistent nav rail's collapsed state seeds from localStorage
+   at store creation (before first render, so there is no expand/collapse flash
+   on load). */
+function readSavedSidebarCollapsed() {
+    try {
+        return (typeof localStorage !== 'undefined'
+            && localStorage.getItem('vaahtwo_sidebar_collapsed') === '1');
+    } catch (e) {
+        return false;
+    }
+}
 
 export const useRootStore = defineStore({
     id: 'root',
@@ -35,7 +56,8 @@ export const useRootStore = defineStore({
             }
         ],
         top_right_user_menu: null,
-        is_active_status_options: null
+        is_active_status_options: null,
+        sidebar_collapsed: readSavedSidebarCollapsed()
     }),
     getters: {},
     actions: {
@@ -56,11 +78,54 @@ export const useRootStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        // M3-T1 (F09) — persist a dark-mode preference ('light'|'dark'|
+        // 'system') to the per-user vh_settings row (one row per user),
+        // then apply it locally. Returns a promise resolving with
+        // { success, data }. The toggle UI (M6-T4/F23) calls this.
+        setDarkMode(preference)
+        {
+            return new Promise((resolve) => {
+                vaah().ajax(
+                    this.json_url+'/dark-mode',
+                    (data, res) => {
+                        // vaah().ajax hands the callback (response.data.data, response):
+                        // `success` lives on the envelope (res.data.success), not on
+                        // the inner payload (`data`).
+                        const body = (res && res.data) || {};
+                        resolve({
+                            success: body.success === true,
+                            data: body.data || (data || null)
+                        });
+                    },
+                    {
+                        params: { dark_mode: preference },
+                        method: 'post',
+                        show_success: false
+                    }
+                ).then((res) => {
+                    // apply regardless of persistence outcome (the request
+                    // may fail when signed out — the DOM state stays
+                    // consistent for this session)
+                    const normalized = applyPreference(preference).preference;
+                    setCurrentPreference(normalized);
+                    watchSystemPreference(normalized);
+                    this.assets = this.assets || {};
+                    this.assets.theme = this.assets.theme || {};
+                    this.assets.theme.dark_mode = normalized;
+                });
+            });
+        },
+
+        //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
             if(data)
             {
                 this.assets = data;
+                // M3-T1 (F09) — apply the server-stored dark-mode preference
+                // (payload key: assets.theme.dark_mode) to <html> and arm
+                // the system watcher when the preference is 'system'.
+                setCurrentPreference(initDarkMode(this.assets));
                 if(this.assets){
 
                     if(this.assets.extended_views
@@ -71,6 +136,7 @@ export const useRootStore = defineStore({
                         }
                     }
 
+                    this.initSidebarCollapsed();
                     if(this.assets.urls){
                         this.setTopMenuItems();
                     }
@@ -327,7 +393,7 @@ export const useRootStore = defineStore({
         setTopMenuItems(){
             if (this.assets && this.assets.language_string &&  this.assets.language_string.dashboard) {
 
-                let navigation_label = this.assets.is_sidebar_collapsed == 1 ?
+                let navigation_label = this.sidebar_collapsed ?
                     this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation :
                     this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;
 
@@ -337,15 +403,14 @@ export const useRootStore = defineStore({
                         tooltip: navigation_label,
                         icon: 'pi pi-align-justify',
                         command: () => {
-
-                            if (document.body.classList.contains("has-sidebar-small")) {
-                                document.body.classList.remove("has-sidebar-small");
-                                this.top_menu_items[0].tooltip = this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;
-                            } else {
-                                document.body.classList.add("has-sidebar-small");
-                                this.top_menu_items[0].tooltip = this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation;
-                            }
-
+                            // M6 (F31): the burger now toggles the persistent
+                            // nav rail (maximize/minimize) instead of opening
+                            // the retired off-canvas Drawer, so navigating
+                            // between pages no longer forces a re-open.
+                            this.toggleSidebarCollapsed();
+                            this.top_menu_items[0].tooltip = this.sidebar_collapsed
+                                ? this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation
+                                : this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;
                         }
                     },
                     {
@@ -363,6 +428,38 @@ export const useRootStore = defineStore({
                     }
 
                 ]
+            }
+        },
+
+        //-----------------------------------------------------------------------
+        // M6 (F31) — persistent nav rail (maximize / minimize). Replaces the
+        // retired off-canvas Drawer: the Sidebar stays in the layout and this
+        // runtime toggle collapses it to an icon rail. The choice persists per
+        // browser (localStorage); if the user has never toggled, initSidebar
+        // falls back to the admin's `is_sidebar_collapsed` site default.
+        setSidebarCollapsed(collapsed) {
+            this.sidebar_collapsed = !!collapsed;
+            try {
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('vaahtwo_sidebar_collapsed',
+                        this.sidebar_collapsed ? '1' : '0');
+                }
+            } catch (e) { /* private mode: ignore */ }
+        },
+        toggleSidebarCollapsed() {
+            this.setSidebarCollapsed(!this.sidebar_collapsed);
+        },
+        initSidebarCollapsed() {
+            let saved = null;
+            try {
+                saved = (typeof localStorage !== 'undefined')
+                    ? localStorage.getItem('vaahtwo_sidebar_collapsed')
+                    : null;
+            } catch (e) { saved = null; }
+            if (saved === '1' || saved === '0') {
+                this.sidebar_collapsed = saved === '1';
+            } else if (this.assets && this.assets.is_sidebar_collapsed != null) {
+                this.sidebar_collapsed = this.assets.is_sidebar_collapsed == 1;
             }
         }
     }

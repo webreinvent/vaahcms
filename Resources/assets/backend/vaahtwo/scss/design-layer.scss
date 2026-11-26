@@ -1,0 +1,60 @@
+// M6-T4 (F23) — the VaahCMS design system: structural surface layer.
+//
+// Implements the *surface hierarchy* of DESIGN-SYSTEM.md (canvas → surface →
+// elevated) on the app-owned shell elements — the ones that are NOT governed
+// by an OpenVue component token (the fixed topnav bar, and the card identity).
+// It follows the M3-T5-01 pattern established in style/style.scss: a **fixed
+// light value + an `.app-dark` override bound to the engine's surface scale**
+// (`--p-surface-*`), so both schemes stay in parity without a second ramp.
+//
+// Cascade: this file is imported AFTER style/style.scss in build.scss, and it
+// is *unlayered* author CSS — so on a shared selector it wins over the
+// engine's `@layer openvue` rules (which is exactly the lever M3-T2/F10 relies
+// on). Only presentation is touched: no markup, no routes, no data-model
+// (D3-compliant). See DESIGN-SYSTEM.md §4 (color), §5 (layout/density), §7
+// (radius/elevation), §9 (dark mode) for the rationale behind each rule.
+
+/* ── Topnav — a real surface, not a transparent bar (design system §4.1).
+   The `.top-nav-fixed` menubar previously had no background and no bottom
+   divider, so it floated over the canvas and every page read as unfinished.
+   Light: surface.0 white + a `shade300` hairline. Dark: `surface.900` + a
+   `surface.800` hairline (the same M3-T5-01 sidebar hairline). */
+.top-nav-fixed {
+    background-color: #ffffff;        /* light surface.0 */
+    border-bottom: 1px solid #e5e7eb; /* light hairline — shade300 */
+    box-shadow: 0 1px 2px rgb(10 10 10 / 4%);
+}
+
+/* ── Card — 6px radius + hairline border over a faint shadow (§7).
+   The card *background* is the engine's `--p-card-background` token (flips
+   correctly: #ffffff light / #171717 dark — verified M3-T5-01); we only pin
+   the identity that OpenVue leaves flat: the radius, the hairline, and a
+   near-invisible shadow. */
+.p-card {
+    border-radius: 6px;
+    border: 1px solid #e5e7eb; /* light hairline — shade300 */
+    box-shadow: 0 1px 2px rgb(10 10 10 / 4%);
+}
+
+/* ── Pre-auth theme toggle (DESIGN-SYSTEM.md §9) — the Public layout (setup
+   wizard + sign-in / signup / reset) has no topnav, so the light/dark switch
+   is a floating corner affordance instead of a menubar item. Fixed top-right;
+   it sits clear of the centered `.col-8` content block in both schemes. */
+.public-theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 100;
+}
+
+/* ── Dark scheme — layered surfaces, not inverted light (§9). */
+.app-dark .top-nav-fixed {
+    background-color: var(--p-surface-900);
+    border-bottom-color: var(--p-surface-800);
+    box-shadow: none;
+}
+
+.app-dark .p-card {
+    border-color: var(--p-surface-800);
+    box-shadow: none;
+}

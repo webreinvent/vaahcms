@@ -18,7 +18,10 @@ onMounted(async () => {
 
     <div class="public-pages">
         <div class="grid">
-            <div class="col-8 mt-6 mx-auto">
+            <!-- UT-56 — see layouts/Public.vue: `col-8` squeezed the
+                 sign-in / signup forms into a 223px column on a 375px
+                 viewport. Full width below `md`, 8/12 from `md` up. -->
+            <div class="col-12 md:col-8 mt-6 mx-auto">
                 <div class="col"><RouterView /></div>
             </div>
         </div>

@@ -12,7 +12,7 @@ const store = useNotificationStore();
     <div>
 
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101"
         >
@@ -79,7 +79,7 @@ const store = useNotificationStore();
             </VhFieldVertical>
 
 
-        </Sidebar>
+        </Drawer>
 
     </div>
 </template>

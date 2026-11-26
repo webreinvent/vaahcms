@@ -3,39 +3,39 @@
         <template #header>
             <div class="flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="font-semibold text-lg inline mr-2">Environment Variables</h5>
+                    <h5 class="font-semibold vc-text-16 inline mr-2">Environment Variables</h5>
                     <Tag class="mr-2">
                         <p class="font-semibold">.env.rishu</p>
                     </Tag>
                 </div>
                 <div>
-                    <Button icon="pi pi-download" class="mr-2 p-button-sm"/>
-                    <Button icon="pi pi-refresh" class="p-button-sm"/>
+                    <Button size="small" icon="pi pi-download" class="mr-2"/>
+                    <Button size="small" icon="pi pi-refresh" class=""/>
                 </div>
             </div>
         </template>
         <template #content>
             <div class="grid justify-content-start">
                 <div class="col-12 md:col-6" v-for="(item,index) in envVariables">
-                    <h5 class="p-1 text-xs mb-1">{{item.name}}</h5>
-                    <div class="p-inputgroup">
+                    <h5 class="p-1 vc-text-12 mb-1">{{item.name}}</h5>
+                    <InputGroup>
                         <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"/>
                         <Button icon="pi pi-copy" class=" has-max-height"/>
                         <Button icon="pi pi-trash" class="p-button-danger has-max-height"/>
-                    </div>
+                    </InputGroup>
                 </div>
             </div>
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
-                    <div class="p-inputgroup">
+                    <InputGroup>
                         <InputText v-model="addEnvVariable" v-if="showEnvInput"></InputText>
                         <Button label="Add Env Variable" icon="pi pi-plus" @click="addLinkHandler"></Button>
-                    </div>
+                    </InputGroup>
                 </div>
                 <div class="col-12 md:col-6">
-                    <div class="p-inputgroup justify-content-end">
+                    <InputGroup class="justify-content-end">
                         <Button label="Save" icon="pi pi-save"></Button>
-                    </div>
+                    </InputGroup>
                 </div>
             </div>
         </template>

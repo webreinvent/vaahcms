@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import { onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import { useGeneralStore } from "../../../stores/settings/store-general_setting";
@@ -14,7 +23,7 @@ const root = useRootStore();
 const store = useGeneralStore();
 const route = useRoute();
 
-import { useConfirm } from "primevue/useconfirm";
+import { useConfirm } from "openvue/useconfirm";
 
 const confirm = useConfirm();
 onMounted(async () => {
@@ -35,92 +44,114 @@ onMounted(async () => {
 
 <template>
     <div>
-         <Panel class="is-small" v-if="store.assets">
+         <Panel class="vc-dense" v-if="store.assets">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div v-if="store.assets && store.assets.language_strings">
-                        <b class="mr-1">{{store.assets.language_strings.general_settings_title}}</b>
+                        <h1 class="mr-1 vaah-type-title">{{store.assets.language_strings.general_settings_title}}</h1>
                      </div>
                 </div>
             </template>
 
             <template #icons>
                 <div class="buttons">
-                    <Button :label="store.assets.language_strings.expand_all" icon="pi pi-angle-double-down" class="p-button-sm mr-2"
-                            @click="store.expandAll"></Button>
-                    <Button :label="store.assets.language_strings.collapse_all" icon="pi pi-angle-double-up" class="p-button-sm"
-                            @click="store.collapseAll"></Button>
+                    <Button size="small" :label="store.assets.language_strings.expand_all" icon="pi pi-angle-double-down" class=" mr-2" @click="store.expandAll"></Button>
+                    <Button size="small" :label="store.assets.language_strings.collapse_all" icon="pi pi-angle-double-up" class="" @click="store.collapseAll"></Button>
                 </div>
             </template>
 
-            <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer" class="my-2">
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
+            <Accordion :multiple="true" :value="store.active_index" id="accordionTabContainer" class="my-2">
+                <AccordionPanel :value="0">
+                    <AccordionHeader>                        <div class="w-full">
                             <div>
-                                <h5 class="font-semibold text-sm">{{ store.assets.language_strings.site_settings }}</h5>
-                                <p class="text-color-secondary text-xs">{{ store.assets.language_strings.site_settings_message }}</p>
+                                <h2 class="vaah-type-section">{{ store.assets.language_strings.site_settings }}</h2>
+                                <p class="vaah-type-secondary">{{ store.assets.language_strings.site_settings_message }}</p>
                             </div>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <SiteSettings />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
 
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
-                            <h5 class="font-semibold text-sm">{{ store.assets.language_strings.securities }}</h5>
-                            <p class="text-color-secondary text-xs">{{ store.assets.language_strings.securities_message }}</p>
+                <AccordionPanel :value="1">
+                    <AccordionHeader>                        <div class="w-full">
+                            <h2 class="vaah-type-section">{{ store.assets.language_strings.securities }}</h2>
+                            <p class="vaah-type-secondary">{{ store.assets.language_strings.securities_message }}</p>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <Securities />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
 
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
-                            <h5 class="font-semibold text-sm">{{ store.assets.language_strings.date_and_time }}</h5>
-                            <p class="text-color-secondary text-xs">{{ store.assets.language_strings.global_date_and_time_settings }}</p>
+                <AccordionPanel :value="2">
+                    <AccordionHeader>                        <div class="w-full">
+                            <h2 class="vaah-type-section">{{ store.assets.language_strings.date_and_time }}</h2>
+                            <p class="vaah-type-secondary">{{ store.assets.language_strings.global_date_and_time_settings }}</p>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <DateTime />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
 
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
-                            <h5 class="font-semibold text-sm">{{ store.assets.language_strings.social_media_and_links }}</h5>
-                            <p class="text-color-secondary text-xs">{{ store.assets.language_strings.static_links_management }}</p>
+                <AccordionPanel :value="3">
+                    <AccordionHeader>                        <div class="w-full">
+                            <h2 class="vaah-type-section">{{ store.assets.language_strings.social_media_and_links }}</h2>
+                            <p class="vaah-type-secondary">{{ store.assets.language_strings.static_links_management }}</p>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <SocialMediaLink />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
 
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
-                            <h5 class="font-semibold text-sm">{{ store.assets.language_strings.scripts }}</h5>
-                            <p class="text-color-secondary text-xs">{{ store.assets.language_strings.scripts_message }}</p>
+                <AccordionPanel :value="4">
+                    <AccordionHeader>                        <div class="w-full">
+                            <h2 class="vaah-type-section">{{ store.assets.language_strings.scripts }}</h2>
+                            <p class="vaah-type-secondary">{{ store.assets.language_strings.scripts_message }}</p>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <Script />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
 
-                <AccordionTab>
-                    <template #header>
-                        <div class="w-full">
-                            <h5 class="font-semibold text-sm">{{ store.assets.language_strings.meta_tags }}</h5>
-                            <p class="text-color-secondary text-xs">{{ store.assets.language_strings.global_meta_tags }}</p>
+                <AccordionPanel :value="5">
+                    <AccordionHeader>                        <div class="w-full">
+                            <h2 class="vaah-type-section">{{ store.assets.language_strings.meta_tags }}</h2>
+                            <p class="vaah-type-secondary">{{ store.assets.language_strings.global_meta_tags }}</p>
                         </div>
-                    </template>
+                    </AccordionHeader>
+                    <AccordionContent>
+
+                    
 
                     <MetaTags />
-                </AccordionTab>
+                
+                    </AccordionContent>
+                </AccordionPanel>
             </Accordion>
 
         </Panel>

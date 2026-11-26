@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import { vaah } from '../../../vaahvue/pinia/vaah'
@@ -6,7 +15,7 @@ import {useUpdateStore} from "../../../stores/settings/store-update";
 const store = useUpdateStore();
 const route = useRoute();
 const root = useRootStore();
-import { useConfirm } from "primevue/useconfirm";
+import { useConfirm } from "openvue/useconfirm";
 import {useRootStore} from "../../../stores/root";
 
 const confirm = useConfirm();
@@ -22,52 +31,47 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <Panel class="is-small" v-if="root && root.assets">
+    <Panel class="vc-dense" v-if="root && root.assets">
         <template class="p-1" #header>
             <div class="flex flex-row">
                 <div>
-                    <b class="mr-1">{{ root.assets.language_strings.update.heading_update_vaahcms }}</b>
+                    <!-- UT-130 — the page title was a <b>, so the screen had no
+                         heading at all. The class list and the surrounding
+                         markup are the general settings page's, verbatim. -->
+                    <h1 class="mr-1 vaah-type-title">{{ root.assets.language_strings.update.heading_update_vaahcms }}</h1>
                 </div>
             </div>
         </template>
 
         <template #icons>
             <div class="buttons">
-                <Button icon="pi pi-refresh"
-                        :label="root.assets.language_strings.update.check_for_update_button"
-                        data-testid="setting-update_check"
-                        @click="store.checkForUpdate"
-                        class="p-button-sm"></Button>
+                <Button size="small" icon="pi pi-refresh" :label="root.assets.language_strings.update.check_for_update_button" data-testid="setting-update_check" @click="store.checkForUpdate" class=""></Button>
             </div>
         </template>
         <Message
-            severity="primary" :closable="false" class="text-center pt-1">
+            severity="info" :closable="false" class="text-center pt-1">
             <p class="text-center"><i class="pi pi-bell" style="font-size: 1.2rem"></i></p>
             <div class="text-center" v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">
                 <p v-html="root.assets.language_strings.update.current_version_of_vaahcms_is"></p>
-                <Button :label="root.assets.vaahcms.version"
-                        data-testid="setting-notification_add_sms"
-
-                        class="w-auto my-2 p-button-sm"
-                />
+                <Button size="small" :label="root.assets.vaahcms.version" data-testid="setting-notification_add_sms" class="w-auto my-2" />
                 <p v-if="store.is_up_to_data"><span class="subtitle">{{root.assets.language_strings.update.check_for_update_message}}</span></p>
             </div>
         </Message>
 
         <div v-if="store.backend_update">
-            <div v-if="store.release" class="text-sm">
+            <div v-if="store.release" class="vaah-type-body">
                 <Message class="py-2" icon="pi-sync pi"
                     severity="success" :closable="false">
                     <p>{{root.assets.language_strings.update.a_newer_version}}<b>{{ store.remote_version }}</b> {{root.assets.language_strings.update.of_vaahcms_is_available}}</p>
                 </Message>
 
-                <Panel class="is-small">
+                <Panel class="vc-dense">
                     <template class="p-1" #header>
                         <div class="flex flex-row">
                             <div>
-                                <b class="mr-1">{{root.assets.language_strings.update.new_updates}}:</b>
+                                <b class="mr-1 vaah-type-section">{{root.assets.language_strings.update.new_updates}}:</b>
                             </div>
                         </div>
                     </template>
@@ -80,14 +84,10 @@ onMounted(async () => {
                                   data-testid="setting-update_confirmation"
                                   @input="store.is_button_active = true"
                                   :binary="true"
-                                  class="is-small"/>
+                                  class="vc-dense"/>
                         <label for="binary">{{root.assets.language_strings.update.new_updates_message}}</label>
                     </div>
-                    <Button label="Update Now"
-                            :disabled="!store.is_button_active"
-                            data-testid="setting-update_button"
-                            @click="store.onUpdate"
-                            class="p-button-sm mt-0 mb-3"></Button>
+                    <Button size="small" label="Update Now" :disabled="!store.is_button_active" data-testid="setting-update_button" @click="store.onUpdate" class=" mt-0 mb-3"></Button>
                     <div class="grid m-0" v-if="store.is_update_step_visible">
                         <div class="col-3">
                             <ol class="pl-3">
@@ -128,11 +128,7 @@ onMounted(async () => {
                                        class="pi pi-times"></i>
                                 </li>
                             </ol>
-                            <Button :label="root.assets.language_strings.update.reload_button"
-                                    icon="pi pi-refresh"
-                                    @click="store.reloadPage()"
-                                    data-testid="setting-update_refresh"
-                                    class="p-button-sm p-button-success mt-3"></Button>
+                            <Button size="small" :label="root.assets.language_strings.update.reload_button" icon="pi pi-refresh" @click="store.reloadPage()" data-testid="setting-update_refresh" class=" p-button-success mt-3"></Button>
                         </div>
                         <div class="col-9">
                             <div id="terminal"></div>
@@ -172,29 +168,41 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+/* M6-T4 (F23) — the terminal demo styles carried six literal hexes.
+   A terminal is a CODE surface, not a page surface: it stays dark in both
+   schemes, so its roles bind to the fixed neutral ramp (surface.900 for
+   the fill, surface.100 for the body text) and to the palette's own light
+   steps — never to a scheme-flipping semantic role, and never to a
+   literal colour. */
 ::v-deep(.dark-demo-terminal) {
-    background-color: #212121;
-    color: #ffffff;
+    background-color: var(--p-surface-900);
+    color: var(--p-surface-100);
 
     .p-terminal-command {
-        color: #80CBC4;
+        color: var(--p-blue-300);
     }
 
     .p-terminal-prompt {
-        color: #FFD54F;
+        color: var(--p-amber-300);
     }
 
     .p-terminal-response {
-        color: #9FA8DA;
+        color: var(--p-indigo-300);
     }
 }
 </style>
 <style>
+/* M6-T4 (F23) — "Current version of this VaahCMS is the latest version"
+   is a SUCCESS statement, so it wears the success tone — a semantic token
+   that flips with the scheme (#15803d light / #4ade80 dark) instead of the
+   literal #48c774 it carried. Its size was 1.25rem = 17.5px at the 14px
+   root, which is off the DESIGN-SYSTEM.md §6 scale; the message body copy
+   is 13px (secondary), one step down from the 14px body. */
 .subtitle{
-    color: #48c774!important;
-    font-size: 1.25rem;
+    color: var(--p-button-success-background)!important;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 1.25;
+    line-height: 1.5;
     word-break: break-word;
     font-style: inherit;
 }

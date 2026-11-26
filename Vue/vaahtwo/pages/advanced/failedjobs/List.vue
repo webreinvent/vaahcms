@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
@@ -11,7 +20,7 @@ const root = useRootStore();
 const store = useFailedJobStore();
 const route = useRoute();
 
-import { useConfirm } from "primevue/useconfirm";
+import { useConfirm } from "openvue/useconfirm";
 const confirm = useConfirm();
 
 
@@ -53,29 +62,25 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
 
         <div :class="'col-'+store.list_view_width">
-            <Panel class="is-small" >
+            <Panel class="vc-dense" >
 
                 <template class="p-1" #header>
 
                     <div class="flex flex-row">
-                        <div v-if="store.assets && store.assets.language_strings">
-                            <b class="mr-1">{{store.assets.language_strings.failed_jobs_title}}</b>
+                        <h1 class="failedjobs-list-heading"
+                             v-if="store.assets && store.assets.language_strings">
+                            <b>{{store.assets.language_strings.failed_jobs_title}}</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total"
                             />
-                        </div>
+                        </h1>
                     </div>
                 </template>
 
                 <template #icons>
-                    <div class="p-inputgroup">
-                        <Button class="p-button-sm"
-                                data-testid="failedjobs-content-refresh"
-                                icon="pi pi-refresh"
-                                :loading="store.is_btn_loading"
-                                @click="store.sync"
-                        />
-                    </div>
+                    <InputGroup>
+                        <Button size="small" class="" data-testid="failedjobs-content-refresh" icon="pi pi-refresh" aria-label="Sync failed jobs" :loading="store.is_btn_loading" @click="store.sync" />
+                    </InputGroup>
                 </template>
 
                 <Actions v-if="root.assets
@@ -90,3 +95,20 @@ onMounted(async () => {
         <RouterView/>
     </div>
 </template>
+
+<style scoped>
+
+/* UT-108 — the panel title and its count badge are one centred row. The
+   badge is 19.3px tall against a 17px line of 14px text, so on the text
+   baseline it hung 2.6px below the title instead of sitting level with it. */
+.failedjobs-list-heading {
+    /* UT-129 — the panel title is the screen's single top-level
+       heading, so it is an <h1>; the UA's h1 size and weight are pinned
+       back to what the <div> inherited, so the rendering is unchanged. */
+    font-size: inherit;
+    font-weight: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+</style>

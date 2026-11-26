@@ -11,13 +11,7 @@ const useVaah = vaah();
 <template>
     <div v-if="store.list && store.assets">
         <!--table-->
-        <DataTable :value="store.list.data"
-                   dataKey="id"
-                   class="p-datatable-sm p-datatable-hoverable-rows"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll"
-        >
+        <DataTable size="small" rowHover :value="store.list.data" dataKey="id" class="" v-model:selection="store.action.items" stripedRows scrollable>
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
@@ -43,7 +37,7 @@ const useVaah = vaah();
 
             <Column field="payload" header="Payload">
                 <template #body="prop">
-                    <Button v-if="store.hasPermission('can-read-jobs-payload')"
+                    <Button aria-label="View payload" v-if="store.hasPermission('can-read-jobs-payload')"
                             class="p-button-tiny p-button-text"
                             v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                             data-testid="jobs-view_payload"
@@ -73,7 +67,12 @@ const useVaah = vaah();
                     style="width:150px;"
             >
                 <template #body="prop">
-                    {{useVaah.ago(prop.data.available_at)}}
+                    <!-- UT-88 (M6-T4a Batch 17) — a job with no scheduled
+                         run time carries `available_at = NULL`; the cell
+                         rendered *empty* and the column looked broken
+                         rather than empty. -->
+                    <span v-if="prop.data.available_at">{{useVaah.ago(prop.data.available_at)}}</span>
+                    <span v-else class="vaah-empty-value">—</span>
                 </template>
             </Column>
 
@@ -92,17 +91,29 @@ const useVaah = vaah();
                     :header="store.getActionLabel()"
             >
                 <template #body="prop">
-                    <div class="p-inputgroup">
-                        <Button v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-jobs')"
+                    <InputGroup>
+                        <Button aria-label="Delete job" v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-jobs')"
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.itemAction('delete', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.view_delete"
                                 data-testid="jobs-trash"
                                 icon="pi pi-trash"
                         />
-                    </div>
+                    </InputGroup>
                 </template>
             </Column>
+            <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                 #empty slot is absent, so the slot says what to do next
+                 (DESIGN-SYSTEM §8): a muted line + one primary action.
+                 Jobs are created by the application, not by the admin — the
+                 CTA clears the active search. -->
+            <template #empty>
+                <div class="vaah-empty" data-testid="jobs-list_empty">
+                    <i class="vaah-empty-icon pi pi-history" aria-hidden="true"></i>
+                    <p class="vaah-empty-copy">No jobs match your search.</p>
+                    <Button :label="root.assets.language_strings.crud_actions.reset_button" icon="pi pi-filter-slash" @click="store.resetQuery()" data-testid="jobs-list_empty_reset" />
+                </div>
+            </template>
         </DataTable>
         <!--/table-->
 

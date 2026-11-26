@@ -22,10 +22,11 @@
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
                                     <p  class="control">
-                                        <b-button type="is-light"
-                                                  icon-left="plus">
-                                            Add
-                                        </b-button>
+                                        <Button size="small"
+                                                severity="secondary"
+                                                outlined
+                                                icon="pi pi-plus"
+                                                label="Add" />
                                     </p>
                                 </div>
                             </div>

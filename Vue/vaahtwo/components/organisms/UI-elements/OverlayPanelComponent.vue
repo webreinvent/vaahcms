@@ -1,7 +1,7 @@
 <template>
   <h5>Overlay Panel</h5>
   <Button type="button" label="Choose" @click="toggle" icon="pi pi-search" />
-  <OverlayPanel ref="op" appendTo="body" :showCloseIcon="true" style="width: 450px">
+  <Popover ref="op" appendTo="body" style="width: 450px">
     <DataTable :value="products" v-model:selection="selectedProduct" selectionMode="single" :paginator="true" :rows="5" @row-select="onProductSelect">
       <Column field="name" header="Name" sortable></Column>
       <Column header="Image">
@@ -15,7 +15,7 @@
         </template>
       </Column>
     </DataTable>
-  </OverlayPanel>
+  </Popover>
 </template>
 
 <script>

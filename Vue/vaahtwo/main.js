@@ -1,65 +1,33 @@
 
 import {createApp, markRaw} from 'vue';
-import { createPinia, PiniaVuePlugin  } from 'pinia'
+import { createPinia } from 'pinia'
+
+// M3-T2 (F10) — the single canonical admin stylesheet (R4.9): build.scss is
+// now part of the Vite graph, so build/index.css carries the converged
+// build (PrimeFlex v4 + OpenIcons compat + the token-driven app layer).
+// Laravel Mix is retired for this package.
+import '../../Resources/assets/backend/vaahtwo/scss/build.scss';
+
+// M3-T3 (F11) — OpenVue is now the sole component substrate (PrimeVue 3
+// registry retired). The OpenVue config plugin registers config + theme
+// services only (no global components/directives); component + directive
+// resolution happens at build time via @openvue/auto-import-resolver in
+// vite.config.js (ADR-004). theme.options is exactly three keys (R4.5):
+// prefix / darkModeSelector / cssLayer — see vaahvue/theme/openvue.js.
+import OpenVue from 'openvue/config';
+import VaahPreset, { THEME_OPTIONS } from './vaahvue/theme/openvue'
 
 
-//-------------PrimeVue Imports
+//-------------OpenVue services + directives
 
-import PrimeVue from "primevue/config";
-import AutoComplete from 'primevue/autocomplete';
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
-import Avatar from 'primevue/avatar';
-import Badge from 'primevue/badge';
-import BadgeDirective from "primevue/badgedirective";
-import Button from 'primevue/button';
-import Calendar from 'primevue/calendar';
-import Card from 'primevue/card';
-import Checkbox from 'primevue/checkbox';
-import Column from 'primevue/column';
-import ConfirmDialog from 'primevue/confirmdialog';
-import ConfirmPopup from 'primevue/confirmpopup';
-import ConfirmationService from 'primevue/confirmationservice';
-import DataTable from 'primevue/datatable';
-import Dialog from 'primevue/dialog';
-import DialogService from 'primevue/dialogservice'
-import Divider from 'primevue/divider';
-import Dropdown from 'primevue/dropdown';
-import DynamicDialog from 'primevue/dynamicdialog';
-import Editor from 'primevue/editor';
-import FileUpload from 'primevue/fileupload';
-import Image from 'primevue/image';
-import InputSwitch from 'primevue/inputswitch';
-import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
-import Menu from 'primevue/menu';
-import Menubar from 'primevue/menubar';
-import Message from 'primevue/message';
-import MultiSelect from 'primevue/multiselect';
-import OverlayPanel from 'primevue/overlaypanel';
-import Paginator from 'primevue/paginator';
-import Panel from 'primevue/panel';
-import PanelMenu from 'primevue/panelmenu';
-import Password from 'primevue/password';
-import ProgressBar from 'primevue/progressbar';
-import RadioButton from 'primevue/radiobutton';
-import Ripple from 'primevue/ripple';
-import SelectButton from 'primevue/selectbutton';
-import Sidebar from 'primevue/sidebar';
-import Skeleton from 'primevue/skeleton';
-import SplitButton from 'primevue/splitbutton';
-import Steps from 'primevue/steps';
-import StyleClass from 'primevue/styleclass';
-import TabPanel from 'primevue/tabpanel';
-import TabView from 'primevue/tabview';
-import TieredMenu from 'primevue/tieredmenu';
-import Textarea from 'primevue/textarea';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
-import Tag from 'primevue/tag';
-import Tooltip from 'primevue/tooltip';
-import TreeSelect from 'primevue/treeselect';
-//-------------/PrimeVue Imports
+import ConfirmationService from 'openvue/confirmationservice';
+import DialogService from 'openvue/dialogservice';
+import ToastService from 'openvue/toastservice';
+import Tooltip from 'openvue/tooltip';
+import Ripple from 'openvue/ripple';
+import StyleClass from 'openvue/styleclass';
+import BadgeDirective from 'openvue/badgedirective';
+//-------------/OpenVue services + directives
 
 
 //-------------APP
@@ -73,13 +41,13 @@ pinia.use(({ store }) => {
     store.$router = markRaw(router)
 });
 app.use(pinia);
-app.use(PiniaVuePlugin);
 app.use(router);
 //-------------/APP
 
 
-//-------------PrimeVue Use
-app.use(PrimeVue, { ripple: true });
+//-------------OpenVue Use
+// M3-T1 (F09) — OpenVue styled-mode theme (Nide preset, .app-dark dark mode).
+app.use(OpenVue, { ripple: true, theme: { preset: VaahPreset, options: THEME_OPTIONS } });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
@@ -88,54 +56,14 @@ app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
-
-app.component('Accordion', Accordion);
-app.component('AccordionTab', AccordionTab);
-app.component('AutoComplete', AutoComplete);
-app.component('Avatar', Avatar);
-app.component('Badge', Badge);
-app.component('Button', Button);
-app.component('Calendar', Calendar);
-app.component('Card', Card);
-app.component('Checkbox', Checkbox);
-app.component('Column', Column);
-app.component('ConfirmDialog', ConfirmDialog);
-app.component('ConfirmPopup', ConfirmPopup);
-app.component('DataTable', DataTable);
-app.component('Dialog', Dialog);
-app.component('Divider', Divider);
-app.component('Dropdown', Dropdown);
-app.component('DynamicDialog', DynamicDialog);
-app.component('Editor', Editor);
-app.component('FileUpload', FileUpload);
-app.component('Image', Image);
-app.component('InputNumber', InputNumber);
-app.component('InputSwitch', InputSwitch);
-app.component('InputText', InputText);
-app.component('Menu', Menu);
-app.component('Menubar', Menubar);
-app.component('Message', Message);
-app.component('MultiSelect', MultiSelect);
-app.component('OverlayPanel', OverlayPanel);
-app.component('Paginator', Paginator);
-app.component('Panel', Panel);
-app.component('PanelMenu', PanelMenu);
-app.component('Password', Password);
-app.component('ProgressBar', ProgressBar);
-app.component('RadioButton', RadioButton);
-app.component('SelectButton', SelectButton);
-app.component('Sidebar', Sidebar);
-app.component('Skeleton', Skeleton);
-app.component('SplitButton', SplitButton);
-app.component('Steps', Steps);
-app.component('TabPanel', TabPanel);
-app.component('TabView', TabView);
-app.component('Tag', Tag);
-app.component('Textarea', Textarea);
-app.component('TieredMenu', TieredMenu);
-app.component('Toast', Toast);
-app.component('TreeSelect', TreeSelect);
-//-------------/PrimeVue Use
+// M3-T3 (F11): the 46 manual `app.component()` registrations of the PrimeVue 3
+// era are retired (ADR-004). Every component used in templates — including
+// the v4-only sub-components (TabList, Tab, TabPanels, AccordionPanel,
+// AccordionHeader, AccordionContent, StepList, Step, StepPanels, StepPanel,
+// StepItem, OverlayBadge) — is resolved at build time by
+// @openvue/auto-import-resolver (PrimeVueResolver) in vite.config.js. No
+// manual registration remains as a fallback.
+//-------------/OpenVue Use
 
 
 app.mount('#themeVaahTwo')

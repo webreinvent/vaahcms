@@ -2,8 +2,8 @@
     import {vaah} from '../vaahvue/pinia/vaah.js'
     import {useRootStore} from '../stores/root.js'
 
-    import { useToast } from "primevue/usetoast";
-    import { useConfirm } from "primevue/useconfirm";
+    import { useToast } from "openvue/usetoast";
+    import { useConfirm } from "openvue/useconfirm";
 
     const toast = useToast();
     const confirm = useConfirm();
@@ -12,6 +12,20 @@
 
     useVaah.setToast(toast);
     useVaah.setConfirm(confirm);
+
+    // M3-T4 (F12) — v4 ConfirmDialog `#message` slot tint: the removed v3
+    // accept-button class string is gone; the only surviving per-dialog
+    // icon/message tint is a bare colour word carried in the v4 accept-button
+    // props object (e.g. { class: 'yellow' }), mapped to the token-backed
+    // PrimeFlex text-<colour>-500 utility. Class strings and severity-only
+    // objects carry no tint (their v3 interpolations were inert classes).
+    function confirmTintClass(message)
+    {
+        const cls = message && message.acceptProps ? message.acceptProps.class : null;
+        return (typeof cls === 'string' && /^[a-z]+$/i.test(cls))
+            ? 'text-' + cls.toLowerCase() + '-500'
+            : null;
+    }
 </script>
 
 
@@ -22,26 +36,32 @@
                      v-if="useVaah.show_progress_bar"
                      mode="indeterminate"/>
 
-        <Toast class="p-container-toasts" position="top-center" >
+        <Toast position="top-center" >
             <template #message="slotProps">
-                <div class="p-toast-message-text">
-                    <span class="p-toast-summary" v-if="slotProps.message.summary"
+                <!-- UT-101 (M6-T4a Batch 22) — the custom message template
+                     replaced the engine's own `.p-toast-message-text`
+                     wrapper, which is the element the engine gives
+                     `flex: 1 1 auto`. Without it the message did not grow,
+                     so the dismiss button sat right next to the text
+                     instead of in the toast's corner, and the engine's
+                     size-relative nudge pushed the X off the text's
+                     centre line. The wrapper restores the growth. -->
+                <div class="vaah-toast-text">
+                    <span v-if="slotProps.message.summary"
                           v-html="slotProps.message.summary"></span>
-                    <div class="p-toast-detail" v-if="slotProps.message.detail"
+                    <div v-if="slotProps.message.detail"
                          v-html="slotProps.message.detail">
                     </div>
                 </div>
             </template>
         </Toast>
 
-        <ConfirmDialog :style="{width: '40vw'}"
-                       class="p-container-confirm-dialog text-red-200">
+        <ConfirmDialog :style="{width: '40vw'}">
             <template #message="slotProps">
 
-                <i :class="slotProps.message.icon+' text-'+slotProps.message.acceptClass+'-500'"
-                   class="p-confirm-dialog-icon "></i>
-                <span :class="'text-'+slotProps.message.acceptClass+'-500'"
-                      class="p-confirm-dialog-message"
+                <i v-if="slotProps.message.icon"
+                   :class="[slotProps.message.icon, confirmTintClass(slotProps.message)]"></i>
+                <span :class="confirmTintClass(slotProps.message)"
                       v-html="slotProps.message.message">
                 </span>
             </template>

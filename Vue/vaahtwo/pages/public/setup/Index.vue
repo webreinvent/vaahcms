@@ -1,5 +1,14 @@
 <script setup>
 
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
+
 import {onMounted, reactive} from "vue";
 
 import { useSetupStore } from '../../../stores/setup'
@@ -17,6 +26,16 @@ onMounted(async () => {
     await store.getStatus();
     await store.getAdvancedOptionMenu();
 });
+
+// UT-81 — the card's icon actions were `<a>` elements *wrapping* a
+// `<button>`, which nests one interactive control inside another: the
+// markup is invalid HTML, the link has no accessible name of its own and
+// the tab order walks a nameless link before the button. The anchor is
+// gone — the button is the single interactive element and carries the
+// behaviour (the docs link keeps opening in a new tab).
+const open_documentation = () => {
+    window.open('https://docs.vaah.dev/vaahcms/installation.html', '_blank', 'noopener,noreferrer');
+};
 </script>
 
 <template>
@@ -24,46 +43,55 @@ onMounted(async () => {
         <Logo class="w-6 mx-auto" />
         <div class="grid justify-content-center">
             <div v-if="store.assets.is_installed" class="col-12">
-                <Message severity="success">VaahCMS is successfully setup</Message>
+                <Message severity="success" :closable="false">VaahCMS is successfully setup</Message>
             </div>
-            <div class="col-6">
+            <!-- UT-59 — `col-6` gave each card half of the row at every
+                 width: on a 375px viewport the Install and the Reset card
+                 were 170px wide. Below `md` they stack, each full width. -->
+            <div class="col-12 md:col-6">
                 <Card class="border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">Install</h4>
+                            <!-- UT-129 (UAT sweep) — the screen's single
+                                 top-level heading is the Install card; the
+                                 Reset card is a sibling section under it.
+                                 `vc-text-20` pins the size and weight, so
+                                 the rendering is unchanged. -->
+                            <h1 class="vc-text-20 font-semibold">Install</h1>
                             <div class="icons flex">
                                 <div v-if="root.assets.auth_user" class="m-1">
-                                    <a @click="$router.push({name:'dashboard'})">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-dashboard_button"
-                                                v-tooltip.top="'Dashboard'"
-                                                icon=" pi pi-server"/>
-                                    </a>
+                                    <Button aria-label="Dashboard" size="small" rounded outlined severity="secondary"
+                                            data-testid="setup-dashboard_button"
+                                            v-tooltip.top="'Dashboard'"
+                                            @click="$router.push({name:'dashboard'})"
+                                            icon=" pi pi-server"/>
                                 </div>
                                 <div v-else-if="store.assets.is_installed" class="m-1">
-                                    <a @click="$router.push({name:'sign.in'})">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-signin_button"
-                                                v-tooltip.top="'Sign In'"
-                                                icon="pi pi-sign-in"/>
-                                    </a>
+                                    <Button aria-label="Sign in" size="small" rounded outlined severity="secondary"
+                                            data-testid="setup-signin_button"
+                                            v-tooltip.top="'Sign In'"
+                                            @click="$router.push({name:'sign.in'})"
+                                            icon="pi pi-sign-in"/>
                                 </div>
                                 <div class="m-1">
-                                    <a href="https://docs.vaah.dev/vaahcms/installation.html" target="_blank">
-                                        <Button class="bg-gray-200 active:text-black
-                                        p-2 p-button-rounded p-button-outlined"
-                                                data-testid="setup-documentation_button"
-                                                v-tooltip.top="'Documentation'"
-                                                icon=" pi pi-book"/>
-                                    </a>
+                                    <Button aria-label="Documentation" size="small" rounded outlined severity="secondary"
+                                            data-testid="setup-documentation_button"
+                                            v-tooltip.top="'Documentation'"
+                                            @click="open_documentation"
+                                            icon=" pi pi-book"/>
                                 </div>
                             </div>
                         </div>
                     </template>
                     <template #content>
-                        <p class="text-left">
+                        <!-- M6-T5 — the Card content body is 12.25px
+                             (PrimeFlex `text-sm` at the 14px root): off
+                             the DESIGN-SYSTEM.md §6 scale and below the
+                             reading floor. This is body copy: 14px. -->
+                        <!-- M6-T5 — same Card body size as the card
+                             above: this is body copy, so it takes the
+                             14px body size of the §6 scale. -->
+                        <p class="text-left vc-text-14">
                             <a href="https://vaah.dev/cms" target="_blank">VaahCMS
                             </a> is a web application development platform shipped with headless
                             content management system
@@ -72,32 +100,33 @@ onMounted(async () => {
                     </template>
                     <template #footer>
                         <div v-if="store.status" class="flex justify-content-between align-items-center">
-                            <Button v-if="store.status.stage && store.status.stage === 'installed'"
-                                    disabled label="Install" icon="pi pi-server"
-                                    class="p-button p-button-sm bg-white border-gray-800 text-black-alpha-80"/>
+                            <Button size="small" v-if="store.status.stage && store.status.stage === 'installed'" disabled label="Install" icon="pi pi-server" severity="primary" class="vaah-btn-primary"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
                                     @click="store.routeAction('setup.install.configuration')"
-                                    class="p-button bg-white border-gray-800 text-black-alpha-80"
+                                    severity="primary" class="vaah-btn-primary"
                                     data-testid="setup-install_vaahcms"/>
 
-                            <SplitButton label="Advanced Options"
-                                         :model="store.advanced_option_menu_list"
-                                         class="p-button-sm">
+                            <!-- UT-132 — the SplitButton's dropdown toggle is an
+                                 icon-only button: it carried no accessible
+                                 name, so a screen reader announced it as an
+                                 unlabelled button. -->
+                            <SplitButton size="small" label="Advanced Options" :model="store.advanced_option_menu_list" class=""
+                                         :menuButtonProps="{'aria-label': 'Advanced Options menu'}">
 
                             </SplitButton>
                         </div>
                     </template>
                 </Card>
             </div>
-            <div class="col-6">
+            <div class="col-12 md:col-6">
                 <Card class="h-full border-round-xl">
                     <template #title>
                         <div class="flex justify-content-between align-items-center">
-                            <h4 class="text-xl font-semi-bold">Reset</h4>
+                            <h2 class="vc-text-20 font-semibold">Reset</h2>
                             <div class="icons flex">
                                 <div class="m-1">
-                                    <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"
+                                    <Button aria-label="Refresh" size="small" rounded outlined severity="secondary"
                                             icon="pi pi-refresh"
                                             v-tooltip.top="'Refresh'"
                                             @click="store.getStatus()" />
@@ -106,7 +135,7 @@ onMounted(async () => {
                         </div>
                     </template>
                     <template #content>
-                        <p class="text-left">
+                        <p class="text-left vc-text-14">
                             You can reset/re-install the application if you're logged in from "Administrator" account.
                         </p>
 
@@ -117,12 +146,12 @@ onMounted(async () => {
                                     @click="store.show_reset_modal = true"
                                     label="Reset"
                                     icon="pi pi-refresh"
-                                    class="p-button-danger" />
+                                    severity="danger" />
 
                             <Button v-else
                                     label="Reset"
                                     icon="pi pi-refresh"
-                                    class="p-button-danger"
+                                    severity="danger"
                                     disabled />
                         </div>
                     </template>
@@ -138,7 +167,11 @@ onMounted(async () => {
                 :style="{width: '50vw'}">
 
 
-            <Message severity="error" icon="null" :closable="false">
+            <!-- UT-103 follow-on — `icon="null"` passed the STRING "null" as
+                 the icon class, which is truthy: the engine rendered an empty
+                 `<span class="p-message-icon null">` and it indented the text.
+                 Omit the attribute to get no icon at all. -->
+            <Message severity="error" :closable="false">
                 <p>You are going to <b>RESET</b> the application.
                     This will remove all the data of the application.</p>
                 <p>After reset you <b>CANNOT</b> be restored data!
@@ -186,9 +219,9 @@ onMounted(async () => {
                 <Button label="No"
                         icon="pi pi-times"
                         @click="store.show_reset_modal = false"
-                        class="p-button-text"/>
+                        text/>
 
-                <Button class="p-button-danger"
+                <Button severity="danger"
                         label="Confirm"
                         icon="pi pi-check"
                         :loading="store.reset_confirm"

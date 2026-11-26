@@ -100,7 +100,7 @@
 
   <h5>Sizes</h5>
   <div class="sizes">
-    <Button label="Small" icon="pi pi-check" class="p-button-sm mr-2 mb-2"  />
+    <Button size="small" label="Small" icon="pi pi-check" class=" mr-2 mb-2" />
     <Button label="Normal" icon="pi pi-check" class="p-button mr-2 mb-2"  />
     <Button label="Large" icon="pi pi-check" class="p-button-lg mr-2 mb-2" />
   </div>

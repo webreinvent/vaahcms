@@ -11,7 +11,7 @@ const store = useLogStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right">
 
             <VhFieldVertical >
@@ -54,7 +54,7 @@ const store = useLogStore();
             </VhFieldVertical>
 
 
-        </Sidebar>
+        </Drawer>
 
     </div>
 </template>

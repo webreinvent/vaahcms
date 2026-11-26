@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cms\Entities\MenuItem;
 use WebReinvent\VaahCms\Libraries\VaahSeeder;
 use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\Theme;
@@ -113,7 +112,13 @@ class WelcomeController extends Controller
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
-        $menu_item = MenuItem::getHomePage();
+        /*
+         * F06 / ADR-008 — the home-page item lives in the Cms module; with
+         * no bound contract `homePageMenuItem()` is null and the flow below
+         * is exactly the existing "no home page set" branch (theme welcome
+         * view, with the backend-theme fallback when the view is missing).
+         */
+        $menu_item = vh_cms_contract()?->homePageMenuItem();
 
         if(!$menu_item)
         {

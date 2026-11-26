@@ -2,10 +2,16 @@
   <h5>Menubar</h5>
   <Menubar :model="tieredMenuItems">
     <template #end>
-						<span class="p-input-icon-left">
-							<i class="pi pi-search" />
+						<!-- UT-117 — v3's `p-input-icon-left` span has no rule
+							 in the v4 engine (the magnifier is no longer an
+							 overlay on the field); the engine's
+							 `InputGroupAddon` is the v4 equivalent. -->
+						<InputGroup>
+							<InputGroupAddon>
+								<i class="pi pi-search" />
+							</InputGroupAddon>
 							<InputText type="text" placeholder="Search" />
-						</span>
+						</InputGroup>
     </template>
   </Menubar>
 </template>

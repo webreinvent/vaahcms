@@ -15,7 +15,6 @@ class PermissionBase extends VaahModel {
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_permissions';
     //-------------------------------------------------
@@ -57,7 +56,7 @@ class PermissionBase extends VaahModel {
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 

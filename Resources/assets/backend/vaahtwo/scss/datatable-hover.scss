@@ -1,0 +1,35 @@
+// M3-T2 (F10) — R4.8: the explicit local replacement for the deleted
+// vendored hoverable-rows rule
+// (primevue-tailwind-light designer components/data/_datatable.scss,
+// the v3 hoverable-rows hover rule).
+//
+// The affordance is preserved, not dropped: hover background + text color,
+// with selected rows excluded (v3 excluded the highlighted row; v4's
+// selected-row class is `p-datatable-row-selected`). Both selectors carry
+// the rule: the legacy class (any module still shipping it) and the v4
+// `p-datatable-hoverable` root class that the `rowHover` prop now produces
+// (the values are identical to the OpenVue engine's `datatable.row.hover.*`
+// token style, which Nide resolves to these same content-scheme tokens —
+// the local rule is unlayered app CSS, so it wins ties).
+//
+// Values come from the F09 Nide content-scheme tokens (scheme-aware via
+// the `.app-dark` darkModeSelector scope, no duplicated dark rule):
+//   --p-content-hover-background  light: surface-100 (#f5f5f5)
+//                                dark:  surface-800 (#262626)
+//   --p-content-hover-color       light: surface-950 (#0a0a0a)
+//                                dark:  surface-50  (#fafafa)
+//
+// WCAG 1.4.11 (non-text contrast, 3:1) audit — hover-state text on its
+// hover background:
+//   light  #0a0a0a on #f5f5f5 = 18.16:1   (pass)
+//   dark   #fafafa on #262626 = 14.50:1   (pass)
+// The hover background vs the static row background distinguishes the
+// transient state at 1.09:1 (light) / 1.18:1 (dark) — a state
+// enhancement, not the identifying element of the row; final contrast
+// adjudication of emitted CSS is F28 / R5.7's (see
+// css-class-migration-table.md, row `p-datatable-hoverable-rows`).
+.p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:not(.p-datatable-row-selected):hover,
+.p-datatable.p-datatable-hoverable .p-datatable-tbody > tr:not(.p-datatable-row-selected):hover {
+    background: var(--p-content-hover-background);
+    color: var(--p-content-hover-color);
+}

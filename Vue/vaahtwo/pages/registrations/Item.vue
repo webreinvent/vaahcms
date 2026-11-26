@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 import { useRegistrationStore } from '../../stores/store-registrations'
@@ -71,7 +80,7 @@ const toggleUserStatusMenu = (event) => {
 
 <template>
     <div class="col-5">
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item" class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
                     <div class="p-panel-title">
@@ -81,31 +90,13 @@ const toggleUserStatusMenu = (event) => {
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            @click="useVaah.copy(store.item.id)"
-                            data-testid="registration-item_id"
-                    />
+                <InputGroup>
+                    <Button size="small" class="" :label=" '#' + store.item.id " @click="useVaah.copy(store.item.id)" data-testid="registration-item_id" />
 
-                    <Button :label="root.assets.language_strings.crud_actions.view_edit"
-                            class="p-button-sm"
-                            @click="store.toEdit(store.item)"
-                            icon="pi pi-pencil"
-                            data-testid="register-view_to_edit"
-                            v-if="store.hasPermission('can-update-registrations') && root.assets
-                                  && root.assets.language_strings
-                                  && root.assets.language_strings.crud_actions"
-                    />
+                    <Button size="small" :label="root.assets.language_strings.crud_actions.view_edit" class="" @click="store.toEdit(store.item)" icon="pi pi-pencil" data-testid="register-view_to_edit" v-if="store.hasPermission('can-update-registrations') && root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions" />
 
                     <!--item_menu-->
-                    <Button class="p-button-sm"
-                            @click="toggleItemMenu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
-                            data-testid="register-view_toggle_item_menu_list"
-                            v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
-                    />
+                    <Button size="small" class="" @click="toggleItemMenu" icon="pi pi-angle-down" aria-label="Show actions menu" aria-haspopup="true" data-testid="register-view_toggle_item_menu_list" v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')" />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
@@ -113,12 +104,8 @@ const toggleUserStatusMenu = (event) => {
 
                     <!--/item_menu-->
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            @click="store.toList()"
-                            data-testid="register-view_to_list"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" @click="store.toList()" data-testid="register-view_to_list" />
+                </InputGroup>
             </template>
 
             <div v-if="store.item" class="mt-2">
@@ -136,16 +123,12 @@ const toggleUserStatusMenu = (event) => {
                         </div>
 
                         <div class="">
-                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
-                                    class="p-button-sm"
-                                    @click="store.itemAction('restore')"
-                                    data-testid="register-view_item_action_to_restore"
-                            />
+                            <Button size="small" :label="root.assets.language_strings.crud_actions.view_restore" class="" @click="store.itemAction('restore')" data-testid="register-view_item_action_to_restore" />
                         </div>
                     </div>
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
+                <div class="p-datatable p-component register-item-stripes">
                 <table class="p-datatable-table">
                     <tbody class="p-datatable-tbody">
                         <template v-for="(value, column) in store.item ">
@@ -163,7 +146,7 @@ const toggleUserStatusMenu = (event) => {
                                 <VhViewRow :label="column"
                                            :value="value"
                                            :can_copy="true"
-                                           data-testid="register-view_copy"
+                                           data-testid="register-view_copy_identity"
                                            v-if="!store.isHidden(column)"
                                 />
                             </template>
@@ -176,7 +159,7 @@ const toggleUserStatusMenu = (event) => {
                                 <VhViewRow :label="column"
                                            :value="value"
                                            :can_copy="false"
-                                           data-testid="register-view_copy"
+                                           data-testid="register-view_copy_profile"
                                            v-if="!store.isHidden(column)"
                                 />
                             </template>
@@ -187,7 +170,7 @@ const toggleUserStatusMenu = (event) => {
                                 <VhViewRow :label="column"
                                            :value="value"
                                            :can_copy="false"
-                                           data-testid="register-view_copy"
+                                           data-testid="register-view_copy_details"
                                            v-if="!store.isHidden(column)"
                                 />
                             </template>
@@ -205,12 +188,7 @@ const toggleUserStatusMenu = (event) => {
                                 <tr v-if="!store.isHidden(column)">
                                     <td style="font-weight:bold">{{ vaah().toLabel(column) }}</td>
                                     <td>
-                                        <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
-                                                label="View"
-                                                icon="pi pi-eye"
-                                                @click="store.displayBioModal(value)"
-                                                v-if="value"
-                                        />
+                                        <Button size="small" class="p-button-secondary p-button-outlined p-button-rounded" label="View" icon="pi pi-eye" @click="store.displayBioModal(value)" v-if="value" />
                                     </td>
                                 </tr>
                             </template>
@@ -219,12 +197,7 @@ const toggleUserStatusMenu = (event) => {
                                 <tr>
                                     <td><b>Meta</b></td>
                                     <td v-if="value">
-                                        <Button icon="pi pi-eye"
-                                                label="view"
-                                                class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
-                                                @click="store.openModal(value)"
-                                                data-testid="register-open_meta_modal"
-                                        />
+                                        <Button size="small" icon="pi pi-eye" label="view" class="p-button-outlined p-button-secondary p-button-rounded" @click="store.openModal(value)" data-testid="register-open_meta_modal" />
                                     </td>
                                 </tr>
 
@@ -241,14 +214,14 @@ const toggleUserStatusMenu = (event) => {
                                 <tr>
                                     <td><b>Status</b></td>
                                     <td v-if="value" colspan="2">
-                                        <div class="p-inputgroup">
+                                        <InputGroup>
                                             <Button :label="value"
                                                     v-if="value"
                                                     class="p-button-outlined p-button-secondary p-button-xs"
                                                     disabled="disabled"
                                             />
 
-                                            <Button v-if="store.assets && store.assets.registration_statuses"
+                                            <Button aria-label="Show status menu" v-if="store.assets && store.assets.registration_statuses"
                                                     class="p-button-outlined wd-2rem
                                                      p-button-secondary p-button-xs"
                                                     @click="toggleStatusMenu"
@@ -284,7 +257,7 @@ const toggleUserStatusMenu = (event) => {
                                             />
 
 
-                                            <Button v-if="value == 'email-verified'"
+                                            <Button aria-label="Show status menu" v-if="value == 'email-verified'"
                                                     type="button"
                                                     @click="toggleUserStatusMenu"
                                                     icon="pi pi-angle-down"
@@ -294,7 +267,7 @@ const toggleUserStatusMenu = (event) => {
                                             />
 
 
-                                        </div>
+                                        </InputGroup>
                                     </td>
                                 </tr>
                             </template>
@@ -303,9 +276,9 @@ const toggleUserStatusMenu = (event) => {
                                 <tr v-if="!store.isHidden(column)">
                                     <td><b>Gender</b></td>
                                     <td v-if="value">
-                                        <Tag severity="primary" value="Male" class="mr-2" v-if="value==='m'" />
-                                        <Tag severity="primary" value="Female" class="mr-2" v-else-if="value==='f'" />
-                                        <Tag severity="primary" value="Others" class="mr-2" v-else-if="value==='o'" />
+                                        <Tag severity="info" value="Male" class="mr-2" v-if="value==='m'" />
+                                        <Tag severity="info" value="Female" class="mr-2" v-else-if="value==='f'" />
+                                        <Tag severity="info" value="Others" class="mr-2" v-else-if="value==='o'" />
                                     </td>
                                 </tr>
                             </template>
@@ -337,3 +310,23 @@ const toggleUserStatusMenu = (event) => {
     </div>
 
 </template>
+
+<style scoped>
+/* M4-T1 (F13) — local replacement for the removed v3 `p-datatable-striped`
+   class (zero rules for it in the emitted v4 CSS — dead) on this
+   hand-rolled field view table. The table is plain DOM (no <DataTable>
+   component), so the `stripedRows` prop has no host to attach to, and the
+   v4 engine's striped rule — which targets the `p-row-odd` row class the
+   DataTable component emits on its own rows — cannot match hand-rolled
+   rows. The v3 `tr:nth-child(odd)` selector is therefore kept as a local
+   style, and the background is bound to the v4 `datatable.row.striped.
+   background` token — the OpenVue theme emits it as
+   `--p-datatable-row-striped-background` (Nide: surface.50 light / a
+   surface.800 mix dark), scheme-aware via the `.app-dark` darkModeSelector
+   — the same value the engine styles `stripedRows` DataTable rows with,
+   so the stripe is identical to a `stripedRows` DataTable in both light
+   and dark (D3 visual parity). Same pattern as `pages/modules/Item.vue`. */
+.register-item-stripes :deep(tr:nth-child(odd)) {
+    background: var(--p-datatable-row-striped-background);
+}
+</style>

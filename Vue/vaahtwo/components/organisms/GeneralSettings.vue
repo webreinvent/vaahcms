@@ -3,87 +3,88 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center w-full">
-                    <h5 class="font-semibold text-lg">General Settings</h5>
+                    <h5 class="font-semibold vc-text-16">General Settings</h5>
                     <div>
-                        <Button label="Expand all" class="p-button-sm mr-2" @click="expandAll"></Button>
-                        <Button label="Collapse all" class="p-button-sm" @click="collapseAll"></Button>
+                        <Button size="small" label="Expand all" class=" mr-2" @click="expandAll"></Button>
+                        <Button size="small" label="Collapse all" class="" @click="collapseAll"></Button>
                     </div>
                 </div>
             </template>
             <template #content>
-                <Accordion :multiple="true" :activeIndex="activeIndex" id="accordionTabContainer">
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
+                <Accordion :multiple="true" :value="activeIndex" id="accordionTabContainer">
+                    <AccordionPanel :value="0">
+                        <AccordionHeader>                            <div class="w-full">
                                 <div>
-                                    <h5 class="font-semibold text-sm">Site Settings</h5>
-                                    <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
+                                    <h5 class="font-semibold vc-text-14">Site Settings</h5>
+                                    <p class="text-color-secondary vc-text-13">After a successful password update, you will be redirected to
                                         the login page where you can log in with your new password.</p>
                                 </div>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid justify-content-evenly">
                             <div class="col-12 md:col-6 pr-4">
-                                <div class="grid p-fluid">
+                                <Fluid class="grid">
                                     <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Site Title</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Site Title</h5>
+                                        <InputGroup>
                                             <InputText class="" id="site-title"/>
                                             <Button icon="pi pi-copy" class=""/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
                                     <div class="col-6">
-                                        <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
-                                        <Dropdown
-                                            class="is-small"
+                                        <h5 class="p-1 vc-text-12 mb-1">Default Site Language</h5>
+                                        <Select
+                                            class="vc-dense"
                                             v-model="selectedLanguage" :options="languages"
                                                   placeholder="Select a Language"/>
                                     </div>
                                     <div class="col-6">
-                                        <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Redirect after Frontend Login</h5>
+                                        <InputGroup>
                                             <InputText/>
                                             <Button icon="pi pi-copy" class=""/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
                                     <div class="col-7">
-                                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Meta Description</h5>
+                                        <InputGroup>
                                             <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                             <Button icon="pi pi-copy" class="has-max-height"/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
                                     <div class="col-5">
-                                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Meta Description</h5>
+                                        <InputGroup>
                                             <SelectButton v-model="visibility" :options="visibitlityOptions" aria-labelledby="single"/>
                                             <Button icon="pi pi-copy" class=""/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
-                                    <div class="col-12 p-fluid">
-                                        <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
-                                        <Chips v-model="registrationRoles" id="registration-roles" placeholder="Search"/>
-                                    </div>
-                                    <div class="col-12 p-fluid">
-                                        <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
-                                        <Chips v-model="allowedFiles" id="allowed-files" inputClass="w-full" class="w-full"></Chips>
-                                    </div>
+                                    <Fluid class="col-12">
+                                        <h5 class="p-1 vc-text-12 mb-1">Assign Role(s) on Registration</h5>
+                                        <AutoComplete v-model="registrationRoles" id="registration-roles" placeholder="Search" :multiple="true" :typeahead="false"/>
+                                    </Fluid>
+                                    <Fluid class="col-12">
+                                        <h5 class="p-1 vc-text-12 mb-1">Allowed file types for upload</h5>
+                                        <AutoComplete v-model="allowedFiles" id="allowed-files" inputClass="w-full" class="w-full" :multiple="true" :typeahead="false"/>
+                                    </Fluid>
                                     <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
-                                        <div class="p-inputgroup">
-                                            <SelectButton v-model="redirectAfterLogout" :options="redirectAfterLogoutOptions"
-                                                          aria-labelledby="single" class="p-button-sm"/>
+                                        <h5 class="p-1 vc-text-12 mb-1">Redirect after Backend Logout</h5>
+                                        <InputGroup>
+                                            <SelectButton size="small" v-model="redirectAfterLogout" :options="redirectAfterLogoutOptions" aria-labelledby="single" class=""/>
                                             <InputText placeholder="Enter Redirection Link"
                                                        :disabled="redirectAfterLogout !== 'Custom'"></InputText>
-                                        </div>
+                                        </InputGroup>
                                     </div>
-                                </div>
+                                </Fluid>
                             </div>
                             <div class="col-12 md:col-6 pl-4">
                                 <div class="grid">
                                     <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Copyright Text</h5>
+                                        <InputGroup>
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-app-name" name="city" value="app-name" v-model="copyrightText" />
                                                 <label for="copyright-app-name">Use App Name</label>
@@ -92,12 +93,12 @@
                                                 <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightText" />
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
-                                        </div>
+                                        </InputGroup>
                                         <InputText class="w-full" v-if="copyrightText === 'custom'" placeholder="Enter Custom Text"></InputText>
                                     </div>
                                     <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Copyright Link</h5>
+                                        <InputGroup>
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-link" name="city" value="app-name" v-model="copyrightLink" />
                                                 <label for="copyright-link">Use App Url</label>
@@ -106,12 +107,12 @@
                                                 <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightLink" />
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
-                                        </div>
+                                        </InputGroup>
                                         <InputText class="w-full" v-if="copyrightLink === 'custom'" placeholder="Enter Custom Link"></InputText>
                                     </div>
                                     <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Copyright Year</h5>
+                                        <InputGroup>
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-year" name="city" value="app-name" v-model="copyrightYear" />
                                                 <label for="copyright-year">Use Current year</label>
@@ -120,222 +121,248 @@
                                                 <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightYear" />
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
-                                        </div>
-                                        <Calendar inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"  v-if="copyrightYear === 'custom'" input-class="w-full" class="w-full"
+                                        </InputGroup>
+                                        <DatePicker inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"  v-if="copyrightYear === 'custom'" input-class="w-full" class="w-full"
                                                   placeholder="Choose Copyright Year" />
                                     </div>
                                     <div class="col-6">
-                                        <h5 class="p-1 text-xs mb-1">Max number of forgot password attempts</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Max number of forgot password attempts</h5>
+                                        <InputGroup>
                                             <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
                                             <Button icon="pi pi-copy" class=""/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
                                     <div class="col-6">
-                                        <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
-                                        <div class="p-inputgroup">
+                                        <h5 class="p-1 vc-text-12 mb-1">Maximum number of login attempts</h5>
+                                        <InputGroup>
                                             <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
                                             <Button icon="pi pi-copy" class=""/>
-                                        </div>
+                                        </InputGroup>
                                     </div>
-                                    <div class="col-4 p-fluid">
-                                        <h5 class="p-1 text-xs mb-1">Password Protection</h5>
-                                        <SelectButton v-model="passwordProtection" :options="passwordProtectionOptions" class="p-button-sm"
-                                                      aria-labelledby="single"/>
-                                    </div>
-                                    <div class="col-4 p-fluid">
-                                        <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
-                                        <SelectButton v-model="laravelQueues" :options="laravelQueuesOptions" class="p-button-sm" aria-labelledby="single"/>
-                                    </div>
-                                    <div class="col-4 p-fluid">
-                                        <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
-                                        <SelectButton v-model="maintenanceMode" :options="maintenanceModeOptions" class="p-button-sm" aria-labelledby="single"/>
-                                    </div>
+                                    <Fluid class="col-4">
+                                        <h5 class="p-1 vc-text-12 mb-1">Password Protection</h5>
+                                        <SelectButton size="small" v-model="passwordProtection" :options="passwordProtectionOptions" class="" aria-labelledby="single"/>
+                                    </Fluid>
+                                    <Fluid class="col-4">
+                                        <h5 class="p-1 vc-text-12 mb-1">Laravel Queues</h5>
+                                        <SelectButton size="small" v-model="laravelQueues" :options="laravelQueuesOptions" class="" aria-labelledby="single"/>
+                                    </Fluid>
+                                    <Fluid class="col-4">
+                                        <h5 class="p-1 vc-text-12 mb-1">Maintenance Mode</h5>
+                                        <SelectButton size="small" v-model="maintenanceMode" :options="maintenanceModeOptions" class="" aria-labelledby="single"/>
+                                    </Fluid>
                                 </div>
                             </div>
                             <div class="col-12 mt-5">
-                                <Button label="Save Settings" icon="pi pi-save" class="mr-2 p-button-sm"></Button>
-                                <Button label="Clear Cache" icon="pi pi-trash" class="p-button-danger p-button-sm"></Button>
+                                <Button size="small" label="Save Settings" icon="pi pi-save" class="mr-2"></Button>
+                                <Button size="small" label="Clear Cache" icon="pi pi-trash" class="p-button-danger"></Button>
                             </div>
                         </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Date & Time</h5>
-                                <p class="text-color-secondary text-xs">Global date and time settings.</p>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
+                    <AccordionPanel :value="1">
+                        <AccordionHeader>                            <div class="w-full">
+                                <h5 class="font-semibold vc-text-14">Date & Time</h5>
+                                <p class="text-color-secondary vc-text-13">Global date and time settings.</p>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid">
                             <div class="col-4">
-                                <h5 class="p-1 text-xs mb-1">Date Format</h5>
-                                <div class="p-inputgroup">
-                                    <Dropdown v-model="dateFormat" :options="dateFormatOptions"></Dropdown>
+                                <h5 class="p-1 vc-text-12 mb-1">Date Format</h5>
+                                <InputGroup>
+                                    <Select v-model="dateFormat" :options="dateFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom date format" v-if="dateFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-4">
-                                <h5 class="p-1 text-xs mb-1">Time Format</h5>
-                                <div class="p-inputgroup">
-                                    <Dropdown v-model="timeFormat" :options="timeFormatOptions"></Dropdown>
+                                <h5 class="p-1 vc-text-12 mb-1">Time Format</h5>
+                                <InputGroup>
+                                    <Select v-model="timeFormat" :options="timeFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom time format" v-if="timeFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-4">
-                                <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
-                                <div class="p-inputgroup">
-                                    <Dropdown v-model="dateTimeFormat" :options="dateTimeFormatOptions"></Dropdown>
+                                <h5 class="p-1 vc-text-12 mb-1">Date Time Format</h5>
+                                <InputGroup>
+                                    <Select v-model="dateTimeFormat" :options="dateTimeFormatOptions"></Select>
                                     <InputText placeholder="Enter Custom date-time format" v-if="dateTimeFormat === 'Custom'"></InputText>
                                     <Button icon="pi pi-copy" class=""/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <!--<div class="col-6">
                               <h5 class="text-left p-1">Date Format</h5>
-                              <div class="p-inputgroup">
+                              <InputGroup>
                                 <SelectButton v-model="dateFormat" :options="dateFormatOptions" aria-labelledby="single"/>
                                 <InputText v-if="dateFormat === 'Custom'"></InputText>
                                 <Button icon="pi pi-copy" class=""/>
-                              </div>
+                              </InputGroup>
                             </div>
                             <div class="col-6">
                               <h5 class="text-left p-1">Time Format</h5>
-                              <div class="p-inputgroup">
+                              <InputGroup>
                                 <SelectButton v-model="timeFormat" :options="timeFormatOptions" aria-labelledby="single"/>
                                 <InputText v-if="timeFormat === 'Custom'"></InputText>
                                 <Button icon="pi pi-copy" class=""/>
-                              </div>
+                              </InputGroup>
                             </div>
                             <div class="col-6">
                               <h5 class="text-left p-1">Date Time Format</h5>
-                              <div class="p-inputgroup">
+                              <InputGroup>
                                 <SelectButton v-model="dateTimeFormat" :options="dateTimeFormatOptions" aria-labelledby="single"/>
                                 <InputText v-if="dateTimeFormat === 'Custom'"></InputText>
                                 <Button icon="pi pi-copy" class=""/>
-                              </div>
+                              </InputGroup>
                             </div>-->
                             <div class="col-12 mt-5">
-                                <Button label="Save Settings" icon="pi pi-save" class="mr-2 p-button-sm"></Button>
+                                <Button size="small" label="Save Settings" icon="pi pi-save" class="mr-2"></Button>
                             </div>
                         </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Social Media & Links</h5>
-                                <p class="text-color-secondary text-xs">Static links management.</p>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
+                    <AccordionPanel :value="2">
+                        <AccordionHeader>                            <div class="w-full">
+                                <h5 class="font-semibold vc-text-14">Social Media & Links</h5>
+                                <p class="text-color-secondary vc-text-13">Static links management.</p>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid">
 
                             <div class="col-12 md:col-4" v-for="(item,index) in socialMediaLinks">
-                                <h5 class="p-1 text-xs mb-1">{{ item.title }}</h5>
-                                <div class="p-inputgroup p-fluid">
-                  <span class="p-input-icon-left">
+                                <h5 class="p-1 vc-text-12 mb-1">{{ item.title }}</h5>
+                                <Fluid><InputGroup>
+                  <!-- UT-117 — v3's `p-input-icon-left` span has no rule in
+                       the v4 engine (the icon is no longer an overlay on the
+                       field); the engine's `InputGroupAddon` is the v4
+                       equivalent. `:fluid="false"` keeps the two actions
+                       out of the v4 `<Fluid>` component's fluid context
+                       (which renders every descendant Button
+                       `p-button-fluid`, i.e. width: 100%). -->
+                  <InputGroupAddon>
                     <i :class="'pi z-5 ' + item.icon"/>
-                    <InputText type="text" :placeholder="'Enter ' + item.title + ' Link'" class="w-full p-inputtext-sm"/>
-                  </span>
-                                    <Button icon="pi pi-copy" class=" p-button-sm"/>
-                                    <Button icon="pi pi-trash" class="p-button-danger p-button-sm"/>
-                                </div>
+                  </InputGroupAddon>
+                    <InputText size="small" type="text" :placeholder="'Enter ' + item.title + ' Link'" class="w-full"/>
+                                    <Button size="small" :fluid="false" icon="pi pi-copy" aria-label="Copy to clipboard" class=""/>
+                                    <Button size="small" :fluid="false" icon="pi pi-trash" aria-label="Remove link" class="p-button-danger"/>
+                                </InputGroup></Fluid>
                             </div>
                         </div>
                         <div class="grid mt-5">
                             <div class="col-12 md:col-4">
-                                <div class="p-inputgroup">
-                                    <InputText v-model="addLink" v-if="showLinkInput" class="p-inputtext-sm"></InputText>
-                                    <Button label="Add Link" icon="pi pi-plus" class="p-button-sm" @click="addLinkHandler"></Button>
-                                </div>
+                                <InputGroup>
+                                    <InputText size="small" v-model="addLink" v-if="showLinkInput" class=""></InputText>
+                                    <Button size="small" label="Add Link" icon="pi pi-plus" class="" @click="addLinkHandler"></Button>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-8">
-                                <div class="p-inputgroup justify-content-end">
-                                    <Button label="Save" icon="pi pi-save" class="p-button-sm"></Button>
-                                </div>
+                                <InputGroup class="justify-content-end">
+                                    <Button size="small" label="Save" icon="pi pi-save" class=""></Button>
+                                </InputGroup>
                             </div>
                         </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Scripts</h5>
-                                <p class="text-color-secondary text-xs">Add scripts of Google Analytics and other tracking scripts.</p>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
+                    <AccordionPanel :value="3">
+                        <AccordionHeader>                            <div class="w-full">
+                                <h5 class="font-semibold vc-text-14">Scripts</h5>
+                                <p class="text-color-secondary vc-text-13">Add scripts of Google Analytics and other tracking scripts.</p>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid">
                             <div class="col-12 md:col-6 pr-3">
-                                <h5 class="p-1 text-xs mb-1">After head tag start (&lt;head&gt;)</h5>
-                                <div class="p-inputgroup">
+                                <h5 class="p-1 vc-text-12 mb-1">After head tag start (&lt;head&gt;)</h5>
+                                <InputGroup>
                                     <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                     <Button icon="pi pi-copy" class="has-max-height"/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-6 pl-3">
-                                <h5 class="p-1 text-xs mb-1">After head tag close (&lt;/head&gt;)</h5>
-                                <div class="p-inputgroup">
+                                <h5 class="p-1 vc-text-12 mb-1">After head tag close (&lt;/head&gt;)</h5>
+                                <InputGroup>
                                     <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                     <Button icon="pi pi-copy" class="has-max-height"/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-6 pr-3">
-                                <h5 class="p-1 text-xs mb-1">After body tag start (&lt;body&gt;)</h5>
-                                <div class="p-inputgroup">
+                                <h5 class="p-1 vc-text-12 mb-1">After body tag start (&lt;body&gt;)</h5>
+                                <InputGroup>
                                     <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                     <Button icon="pi pi-copy" class="has-max-height"/>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-6 pl-3">
-                                <h5 class="p-1 text-xs mb-1">After body tag close (&lt;/body&gt;)</h5>
-                                <div class="p-inputgroup">
+                                <h5 class="p-1 vc-text-12 mb-1">After body tag close (&lt;/body&gt;)</h5>
+                                <InputGroup>
                                     <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                     <Button icon="pi pi-copy" class="has-max-height"/>
-                                </div>
+                                </InputGroup>
                             </div>
                         </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Meta Tags</h5>
-                                <p class="text-color-secondary text-xs">Global meta tags.</p>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
+                    <AccordionPanel :value="4">
+                        <AccordionHeader>                            <div class="w-full">
+                                <h5 class="font-semibold vc-text-14">Meta Tags</h5>
+                                <p class="text-color-secondary vc-text-13">Global meta tags.</p>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid">
                             <div class="col-12">
-                                <h5 class="p-1 text-xs mb-1">Meta Tag</h5>
-                                <div class="p-inputgroup">
-                                    <Dropdown input-class=""></Dropdown>
+                                <h5 class="p-1 vc-text-12 mb-1">Meta Tag</h5>
+                                <InputGroup>
+                                    <Select input-class=""></Select>
                                     <InputText></InputText>
                                     <Button label="Content" disabled=""></Button>
                                     <InputText></InputText>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-4">
-                                <div class="p-inputgroup">
+                                <InputGroup>
                                     <Button icon="pi pi-plus" label="Add Meta Tag" ></Button>
                                     <Button label="Save"></Button>
                                     <Button icon="pi pi-copy"></Button>
-                                </div>
+                                </InputGroup>
                             </div>
                             <div class="col-12 md:col-4">
-                                <div class="p-inputgroup">
-                                    <Dropdown v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Dropdown>
+                                <InputGroup>
+                                    <Select v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Select>
                                     <Button label="Generate"></Button>
-                                </div>
+                                </InputGroup>
                             </div>
                         </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Securities</h5>
-                                <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
+                    <AccordionPanel :value="5">
+                        <AccordionHeader>                            <div class="w-full">
+                                <h5 class="font-semibold vc-text-14">Securities</h5>
+                                <p class="text-color-secondary vc-text-13">Enable and choose multiple methods of authentication</p>
                             </div>
-                        </template>
+                        </AccordionHeader>
+                        <AccordionContent>
+
+                        
                         <div class="grid">
                             <div class="col-12">
-                                <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
-                                <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
+                                <h4 class="font-semibold vc-text-14">Multi-Factor Authentication</h4>
+                                <p class="text-color-secondary vc-text-13 font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
                             </div>
                             <div class="col-12">
                                 <div class="field">
@@ -353,23 +380,25 @@
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <h5 class="mb-3 font-semibold text-sm">MFA Methods</h5>
+                                    <h5 class="mb-3 font-semibold vc-text-14">MFA Methods</h5>
                                     <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
+                                        <Checkbox inputId="binary" class="vc-dense" v-model="checked" :binary="true" />
                                         <label for="binary">Email OTP Verification</label>
                                     </div>
                                     <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
+                                        <Checkbox inputId="binary" class="vc-dense" v-model="checked" :binary="true" />
                                         <label for="binary">SMS OTP Verification</label>
                                     </div>
                                     <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
+                                        <Checkbox inputId="binary" class="vc-dense" v-model="checked" :binary="true" />
                                         <label for="binary">Authenticator App (only user can enable this)</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </AccordionTab>
+                    
+                        </AccordionContent>
+                    </AccordionPanel>
                 </Accordion>
             </template>
         </Card>

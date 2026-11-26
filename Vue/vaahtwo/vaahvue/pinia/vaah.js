@@ -97,6 +97,36 @@ export const vaah = defineStore({
                 };
             }
 
+            //Laravel 13: PreventRequestForgery verifies the request origin
+            //(Sec-Fetch-Site) and falls back to CSRF token verification when
+            //the header is absent (HTTP deployments, older browsers). Every
+            //mutating request carries X-CSRF-TOKEN, read from the existing
+            //`<meta name="csrf-token" id="_token">` in the admin head, in the
+            //per-request config (never a global default, so GET requests
+            //carry no CSRF header).
+            const csrf_meta = document.querySelector('meta[name="csrf-token"]');
+            const csrf_token = (csrf_meta && csrf_meta.content) ? csrf_meta.content : null;
+
+            if(csrf_token && !['get', 'head', 'options'].includes(method))
+            {
+                if(method === 'delete')
+                {
+                    // axios.delete(url, config) — the config object here
+                    // carries the header (the separate q config is not
+                    // part of the existing delete call signature)
+                    params.headers = {
+                        'X-CSRF-TOKEN': csrf_token,
+                    };
+                }
+                else
+                {
+                    q.headers = {
+                        ...(q.headers || {}),
+                        'X-CSRF-TOKEN': csrf_token,
+                    };
+                }
+            }
+
             this.show_progress_bar = true;
 
             let ajax = await axios[method](url, params, q)
@@ -152,6 +182,22 @@ export const vaah = defineStore({
         //----------------------------------------------------------
         processError: function(error)
         {
+            //Laravel 13: PreventRequestForgery raises OriginMismatchException
+            //-> HTTP 403 for a Sec-Fetch-Site origin mismatch, and
+            //TokenMismatchException -> HTTP 419 for a missing or stale CSRF
+            //token. F15: the two stay distinct — a 403 is an origin /
+            //APP_URL mismatch (the operator's remedy is to fix APP_URL or
+            //the proxy, not to retry), a 419 is the session-expired case.
+            //Unrelated statuses (e.g. 500) fall through to the generic
+            //error toast below.
+            if(error.response
+                && error.response.status
+                && error.response.status === 403)
+            {
+                this.toastErrors(['Origin mismatch. The request origin does not match the application URL (APP_URL). Check APP_URL and your proxy configuration.']);
+                return;
+            }
+
             if(error.response
                 && error.response.status
                 && error.response.status === 419)
@@ -239,13 +285,19 @@ export const vaah = defineStore({
             }
         },
         //----------------------------------------------------------
-        confirmDialog(heading, message, callbackOnAccept, callbackOnReject=null, acceptClass='p-button-danger', icon='pi pi-info-circle')
+        confirmDialog(heading, message, callbackOnAccept, callbackOnReject=null, acceptButtonClass='p-button-danger', icon='pi pi-info-circle')
         {
+            // M3-T4 (F12): the single v3 -> v4 accept-button conversion point.
+            // The removed v3 class-string prop is normalized here to the v4
+            // accept button props object: p-button-danger maps to the v4
+            // danger severity, density class strings to size. Callers keep
+            // passing the legacy string — this method is the only place the
+            // conversion happens.
             this.confirm.require({
                 header: heading,
                 message: message,
                 icon: icon,
-                acceptClass: acceptClass,
+                acceptProps: this.toAcceptButtonProps(acceptButtonClass),
                 accept: () => {
                     callbackOnAccept();
                 },
@@ -256,6 +308,25 @@ export const vaah = defineStore({
                     }
                 }
             });
+        },
+        //----------------------------------------------------------
+        // M3-T4 (F12) — legacy accept-button class string -> v4 button props.
+        toAcceptButtonProps(classString)
+        {
+            let cls = (classString && typeof classString === 'string')
+                ? classString
+                : 'p-button-danger';
+
+            let props = {};
+            if(cls.indexOf('p-button-danger') > -1)
+            {
+                props.severity = 'danger';
+            }
+            if(cls.indexOf('is-small') > -1 || cls.indexOf('p-button-sm') > -1)
+            {
+                props.size = 'small';
+            }
+            return props;
         },
         //----------------------------------------------------------
         confirmDialogDelete(callbackOnAccept)
@@ -415,6 +486,12 @@ export const vaah = defineStore({
         },
         //----------------------------------------------------------
         strToSlug(string) {
+            // null/undefined guard: menu items (extended_views.sidebar_menu) can
+            // carry a null label in some installs; an unguarded toString() aborts
+            // the whole afterGetAssets() menu build and suppresses the top nav.
+            if (string === null || string === undefined) {
+                return '';
+            }
             return string.toString().toLowerCase()
                 .replace(/\s+/g, '-') // Replace spaces with -
                 .replace(/&/g, '-and-') // Replace & with 'and'

@@ -2,10 +2,10 @@
     <Card>
         <template #header>
             <div class="flex justify-content-between align-items-center">
-                <h5 class="font-semibold text-lg white-space-nowrap">Update VaahCMS</h5>
-                <div class="p-inputgroup justify-content-end">
-                    <Button icon="pi pi-refresh" label="Check for Update" @click="update = !update" class="p-button-sm"></Button>
-                </div>
+                <h5 class="font-semibold vc-text-16 white-space-nowrap">Update VaahCMS</h5>
+                <InputGroup class="justify-content-end">
+                    <Button size="small" icon="pi pi-refresh" label="Check for Update" @click="update = !update" class=""></Button>
+                </InputGroup>
             </div>
         </template>
         <template #content>
@@ -13,10 +13,10 @@
                 <h4 class="mb-3">Current Version of</h4>
                 <p><Tag>VaahCMS</Tag> is <Tag>v1.6.10</Tag></p>
             </div>
-            <div v-else class="text-sm">
+            <div v-else class="vc-text-14">
                 <p class="mb-3">A newer version <b>1.7.18</b> of VaahCMS is available.</p>
 
-                <h5 class="font-semibold text-sm">NEW Updates:</h5>
+                <h5 class="font-semibold vc-text-14">NEW Updates:</h5>
                 <ol class="mb-3 pl-3">
                     <li class="mb-2">
                         ['f1su214'](https:/github.com/vaahcms/commit/skdjlfkj35ldj83ndkjng) Added: auth-api - ['nbh53']
@@ -26,10 +26,10 @@
                     </li>
                 </ol>
                 <div class="field-checkbox mt-5">
-                    <Checkbox inputId="binary" v-model="checked" :binary="true" class="is-small"/>
+                    <Checkbox inputId="binary" v-model="checked" :binary="true" class="vc-dense"/>
                     <label for="binary">Have you taken the backup of your files & database?</label>
                 </div>
-                <Button label="Update Now" class="p-button-sm mt-2 mb-3"></Button>
+                <Button size="small" label="Update Now" class=" mt-2 mb-3"></Button>
                 <div class="grid m-0">
                     <div class="col-3">
                         <ol class="pl-3">
@@ -46,7 +46,7 @@
                                 Clear cache
                             </li>
                         </ol>
-                        <Button label="Reload" icon="pi pi-refresh" class="p-button-sm p-button-success mt-3"></Button>
+                        <Button size="small" label="Reload" icon="pi pi-refresh" class=" p-button-success mt-3"></Button>
                     </div>
                     <div class="col-9">
                         <Terminal welcomeMessage="Step 1/4 : Updating dependencies" prompt="primevue $" class="dark-demo-terminal" />
@@ -79,20 +79,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/* The terminal is a fixed-dark demo widget: the Nide surface scale is a
+   neutral ramp in both colour schemes, so these neutral primitives stay
+   dark/white in light AND dark mode — exactly the widget's intent (a mock
+   terminal never flips with the app scheme). The coloured lines bind the
+   hue-correct primitive palette tokens (teal / yellow / indigo, 300–400
+   shades) instead of literal hex. */
 ::v-deep(.dark-demo-terminal) {
-    background-color: #212121;
-    color: #ffffff;
+    background-color: var(--p-surface-900);
+    color: var(--p-surface-0);
 
     .p-terminal-command {
-        color: #80CBC4;
+        color: var(--p-teal-300);
     }
 
     .p-terminal-prompt {
-        color: #FFD54F;
+        color: var(--p-yellow-400);
     }
 
     .p-terminal-response {
-        color: #9FA8DA;
+        color: var(--p-indigo-300);
     }
 }
 </style>

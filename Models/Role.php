@@ -13,7 +13,6 @@ class Role extends RoleBase
 {
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     public $pivot_relations  = [
         'permissions','users'

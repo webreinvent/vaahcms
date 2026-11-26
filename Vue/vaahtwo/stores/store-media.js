@@ -43,7 +43,6 @@ export const useMediaStore = defineStore({
         assets_is_fetching: true,
         has_error_on_upload: false,
         app: null,
-        file_image_url: 'https://findicons.com/files/icons/1579/devine/256/file.png',
         assets: null,
         total_file_size: 0,
         trashed_file_size: 0,
@@ -77,6 +76,7 @@ export const useMediaStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
+        menu_watch_stopper: null,
         download_options:[
             {
                 label:'Yes',
@@ -153,7 +153,7 @@ export const useMediaStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if(this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
@@ -708,9 +708,81 @@ export const useMediaStore = defineStore({
             return text;
         },
         //---------------------------------------------------------------------
+        /**
+         * M6-T1 — the menus (list selection, bulk, item, form) are labelled
+         * from the root store's language strings. The root assets and the
+         * media payloads are fetched in parallel when a media screen opens,
+         * so the media response can land *before* the assets: reading
+         * `root.assets.language_strings` then threw a TypeError, which
+         * aborted `getItemAfter()` and left the item view without its
+         * trash / restore / delete actions (and the list without its bulk
+         * actions).
+         *
+         * The builders now wait for the language strings and rebuild
+         * themselves as soon as they arrive. When the assets are already
+         * there — the normal case — the menus are built exactly as before.
+         */
+        menuAssetsReady()
+        {
+            const root = useRootStore();
+            return !!(root.assets && root.assets.language_strings
+                && root.assets.language_strings.crud_actions);
+        },
+        //---------------------------------------------------------------------
+        watchForAssets()
+        {
+            const root = useRootStore();
+
+            if(this.menu_watch_stopper){
+                return;
+            }
+
+            /**
+             * `detached: true` keeps the watcher out of the effect scope of
+             * the component that happened to call the builder (the list
+             * page's `onMounted`): a component-scoped watcher is disposed
+             * with the component, and the stale handle in the store would
+             * then stop the menus from ever being built.
+             */
+            this.menu_watch_stopper = watch(
+                () => (root.assets ? root.assets.language_strings : null),
+                (language_strings) => {
+                    if(!language_strings){
+                        return;
+                    }
+                    const stopper = this.menu_watch_stopper;
+                    this.menu_watch_stopper = null;
+                    if(stopper){
+                        stopper();
+                    }
+                    this.buildMenus();
+                },
+                { detached: true }
+            );
+        },
+        //---------------------------------------------------------------------
+        buildMenus()
+        {
+            if(!this.menuAssetsReady()){
+                this.watchForAssets();
+                return;
+            }
+
+            this.getListSelectedMenu();
+            this.getListBulkMenu();
+            this.getItemMenu();
+            this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
             const root = useRootStore();
+
+            if(!this.menuAssetsReady()){
+                this.watchForAssets();
+                return;
+            }
+
             this.list_selected_menu = [
                 {
                     label: root.assets.language_strings.crud_actions.bulk_trash,
@@ -729,6 +801,7 @@ export const useMediaStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
@@ -740,6 +813,12 @@ export const useMediaStore = defineStore({
         getListBulkMenu()
         {
             const root = useRootStore();
+
+            if(!this.menuAssetsReady()){
+                this.watchForAssets();
+                return;
+            }
+
             this.list_bulk_menu = [
                 {
                     label: root.assets.language_strings.crud_actions.trash_all,
@@ -758,6 +837,7 @@ export const useMediaStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }
@@ -768,6 +848,12 @@ export const useMediaStore = defineStore({
         getItemMenu()
         {
             const root = useRootStore();
+
+            if(!this.menuAssetsReady()){
+                this.watchForAssets();
+                return;
+            }
+
             let item_menu = [];
 
             if(this.item && this.item.deleted_at)
@@ -818,6 +904,12 @@ export const useMediaStore = defineStore({
         async getFormMenu()
         {
             const root = useRootStore();
+
+            if(!this.menuAssetsReady()){
+                this.watchForAssets();
+                return;
+            }
+
             let form_menu = [];
 
             if(this.item && this.item.id)
@@ -905,7 +997,11 @@ export const useMediaStore = defineStore({
         },
         //---------------------------------------------------------------------
         openImage(url) {
-            window.open(url,'_target');
+            // M6-T1 — `_target` is not a reserved window name: the browser
+            // opened a *named* window (every click reused the same tab) and
+            // the opened document kept a live `window.opener`. `_blank` with
+            // `noopener` is a fresh tab without the opener.
+            window.open(url,'_blank','noopener');
         },
         //---------------------------------------------------------------------
         toKb(value) {
@@ -944,7 +1040,13 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         setDateRange()
         {
-            if (this.dates2.length > 0) {
+            /**
+             * M6-T1 — a range picker reports `[start, null]` until the
+             * second date is picked. Applying that half-open range wrote
+             * `to = 1970-1-1` and the media list came back empty until
+             * the second date was chosen.
+             */
+            if (this.dates2 && this.dates2.length > 1 && this.dates2[0] && this.dates2[1]) {
                 let current_datetime = new Date(this.dates2[0]);
                 this.query.filter.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 

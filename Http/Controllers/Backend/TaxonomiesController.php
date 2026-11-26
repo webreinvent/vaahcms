@@ -74,6 +74,20 @@ class TaxonomiesController extends Controller
             ];
             $data['types'] = $taxonomy_types->toArray();
 
+            /**
+             * F19 / R2.9 — the explicit availability marker for the optional
+             * Cms module. The taxonomy screens carry no content-form-field
+             * binding UI, so this marker is the only machine-readable signal
+             * that the binding is hidden and disabled rather than merely
+             * empty. The matching operator-facing facts are the dismissible
+             * warning message rendered by `pages/taxonomies/List.vue` and the
+             * warning-level log line written by `vh_cms_content_form_binding()`.
+             *
+             * Additive only: no taxonomy data, relation, route or domain rule
+             * changes (D3).
+             */
+            $data['content_form_binding'] = vh_cms_content_form_binding();
+
             $response['success'] = true;
             $response['data'] = $data;
         } catch (\Exception $e) {

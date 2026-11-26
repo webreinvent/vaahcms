@@ -5,7 +5,6 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Models\Notified;
 use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
@@ -40,7 +39,11 @@ class JsonController extends Controller
         $data['versions'] = [
             'laravel_version' => Application::VERSION,
             'php_version' => PHP_VERSION,
-            'vaahcms_version' => $v_version
+            'vaahcms_version' => $v_version,
+            // F06 / R5.9 — the vh_action payload contract version: 2.x
+            // exposed no such field, 3 populates data.failed, so module
+            // authors can detect the change (value fixed at 2 -> 3).
+            'vh_action_version' => 3
         ];
 
         $data['vaahcms'] = [
@@ -114,6 +117,22 @@ class JsonController extends Controller
             $data['vue_notices'] = Notified::viaBackend();
             //-----/Vue Backend Notices----------------------
 
+            //-----Hook Failures (F06 / R5.9)----------------------
+            /*
+             * The session-scoped collector accumulates vh_action hook
+             * failures as they happen (three of the seven hooks run on
+             * other requests — dashboard, notifications — that never
+             * touch this payload). Admin-only: the map carries internal
+             * exception messages, so it rides the authenticated bootstrap
+             * like vue_notices, never the guest payload. Unlike
+             * vue_errors the map is NOT forgotten on read: a failure the
+             * admin has not yet seen must still be reported on the next
+             * load; the notification's own dismiss control is what
+             * removes it (client-side, per session).
+             */
+            $data['failed'] = vh_get_hook_failures();
+            //-----/Hook Failures----------------------
+
             $data['extended_views'] = $this->getExtendedViews();
 
             $data['language_string']['dashboard'] = [
@@ -157,6 +176,14 @@ class JsonController extends Controller
 
         $data['backend_logo_url'] = vh_backend_logo();
         $data['is_sidebar_collapsed'] = config('settings.global.is_sidebar_collapsed');
+
+        // M3-T1 (F09) — dark mode preference for the OpenVue theme foundation.
+        // 'light' | 'dark' | 'system' for the authenticated user, null for
+        // guests — the SPA's pre-bootstrap dark-mode module applies it
+        // (VaahCMS/Vue/vaahtwo/vaahvue/theme/dark-mode.js).
+        $data['theme'] = [
+            'dark_mode' => \Auth::check() ? vh_dark_mode_preference() : null,
+        ];
 
         $response['success'] = true;
         $response['data'] = $data;
@@ -296,6 +323,59 @@ class JsonController extends Controller
 
         return $list;
 
+    }
+    //----------------------------------------------------------
+    // M3-T1 (F09) — persist the signed-in user's dark-mode preference.
+    // One row per user in vh_settings (category='user_setting',
+    // key='dark_mode', vh_user_id) — upserted, value in light|dark|system.
+    public function postDarkMode(Request $request)
+    {
+        if(!\Auth::check())
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized.',
+            ], 401);
+        }
+
+        $preference = $request->input('dark_mode');
+        if(!in_array($preference, ['light', 'dark', 'system'], true))
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid dark_mode preference — use light, dark or system.',
+            ], 422);
+        }
+
+        $setting = Setting::where('category', 'user_setting')
+            ->where('key', 'dark_mode')
+            ->where('vh_user_id', \Auth::id())
+            ->first();
+
+        if($setting)
+        {
+            $setting->value = $preference;
+            $setting->updated_by = \Auth::id();
+            $setting->save();
+        }
+        else
+        {
+            Setting::create([
+                'category' => 'user_setting',
+                'key' => 'dark_mode',
+                'value' => $preference,
+                'vh_user_id' => \Auth::id(),
+                'created_by' => \Auth::id(),
+                'updated_by' => \Auth::id(),
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'dark_mode' => $preference,
+            ],
+        ]);
     }
     //----------------------------------------------------------
     public function getCrudActionStrings() : array {

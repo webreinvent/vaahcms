@@ -11,7 +11,7 @@ const store = useTaxonomyStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101"
         >
@@ -132,6 +132,6 @@ const store = useTaxonomyStore();
                     <label for="trashed-only">{{root.assets.language_strings.crud_actions.filter_only_trashed}}</label>
                 </div>
             </VhFieldVertical>
-        </Sidebar>
+        </Drawer>
     </div>
 </template>

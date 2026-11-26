@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
@@ -59,43 +68,23 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
     <div class="col-6">
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item" class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="font-semibold vc-text-16">
                        {{ store.item.name }}
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            @click="useVaah.copy(store.item.id)"
-                            data-testid="role-item_id"
-                    />
+                <InputGroup>
+                    <Button size="small" class="" :label=" '#' + store.item.id " @click="useVaah.copy(store.item.id)" data-testid="role-item_id" />
 
-                    <Button class="p-button-sm"
-                            :label="root.assets.language_strings.crud_actions.view_edit"
-                            icon="pi pi-pencil"
-                            @click="store.toEdit(store.item)"
-                            data-testid="role-item_edit"
-                            v-if="store.hasPermission('can-update-roles') && root.assets
-                                  && root.assets.language_strings
-                                  && root.assets.language_strings.crud_actions"
-                    />
+                    <Button size="small" class="" :label="root.assets.language_strings.crud_actions.view_edit" icon="pi pi-pencil" @click="store.toEdit(store.item)" data-testid="role-item_edit" v-if="store.hasPermission('can-update-roles') && root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions" />
 
                     <!--item_menu-->
-                    <Button class="p-button-sm"
-                            icon="pi pi-angle-down"
-                            type="button"
-                            aria-haspopup="true"
-                            data-testid="role-item_menu"
-                            @click="toggleItemMenu"
-                            v-if="store.hasPermission('can-update-roles')
-                                    || store.hasPermission('can-manage-roles')"
-                    />
+                    <Button size="small" class="" icon="pi pi-angle-down" aria-label="Show actions menu" type="button" aria-haspopup="true" data-testid="role-item_menu" @click="toggleItemMenu" v-if="store.hasPermission('can-update-roles') || store.hasPermission('can-manage-roles')" />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
@@ -103,17 +92,12 @@ const toggleItemMenu = (event) => {
                     />
                     <!--/item_menu-->
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            @click="store.toList()"
-                            data-testid="role-item_list"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" @click="store.toList()" data-testid="role-item_list" />
+                </InputGroup>
             </template>
 
             <div v-if="store.item" class="mt-1">
                 <Message severity="error"
-                         class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at"
@@ -127,16 +111,12 @@ const toggleItemMenu = (event) => {
                         </div>
 
                         <div class="ml-3">
-                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
-                                    class="p-button-sm"
-                                    @click="store.itemAction('restore')"
-                                    data-testid="role-item_restore"
-                            />
+                            <Button size="small" :label="root.assets.language_strings.crud_actions.view_restore" class="" @click="store.itemAction('restore')" data-testid="role-item_restore" />
                         </div>
                     </div>
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
+                <div class="p-datatable p-component">
                 <table class="p-datatable-table">
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">

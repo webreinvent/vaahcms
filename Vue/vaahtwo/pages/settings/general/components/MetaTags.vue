@@ -8,82 +8,37 @@ const store = useGeneralStore();
     <div v-if="store && store.assets">
         <div class="grid">
             <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
-                <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
+                <div class="p-1 vaah-type-caption mb-1" :id="'gm-meta-tag-'+index">{{item.label}}</div>
 
-                <div class="p-inputgroup">
-                    <Dropdown v-model="item.value.attribute"
-                              :options="store.assets.vh_meta_attributes"
-                              optionLabel="name"
-                              optionValue="slug"
-                              data-testid="general-metatags_attributes"
-                              :placeholder="store.assets.language_strings.meta_tag_select_any"
-                              inputClass="p-inputtext-sm"
-                              class="is-small"
-                    />
+                <InputGroup>
+                    <Select :aria-labelledby="'gm-meta-tag-'+index" size="small" v-model="item.value.attribute" :options="store.assets.vh_meta_attributes" optionLabel="name" optionValue="slug" data-testid="general-metatags_attributes" :placeholder="store.assets.language_strings.meta_tag_select_any" inputClass="" class="vc-dense" />
 
-                    <InputText v-model="item.value.attribute_value"
-                               data-testid="general-metatags_attributes_value"
-                               class="p-inputtext-sm"
-                    />
+                    <InputText :aria-labelledby="'gm-meta-tag-'+index" size="small" v-model="item.value.attribute_value" data-testid="general-metatags_attributes_value" class="" />
 
                     <Button label="Content" disabled="" />
 
-                    <InputText v-model="item.value.content"
-                               data-testid="general-metatags_attributes_content"
-                               class="p-inputtext-sm"
-                    />
+                    <InputText :aria-labelledby="'gm-meta-tag-'+index" size="small" v-model="item.value.content" data-testid="general-metatags_attributes_content" class="" />
 
-                    <Button icon="pi pi-trash"
-                            data-testid="general-remove_tag"
-                            @click="store.removeMetaTags(item)"
-                            class="p-button-sm"
-                    />
-                </div>
+                    <Button size="small" icon="pi pi-trash" aria-label="Remove meta tag" data-testid="general-remove_tag" @click="store.removeMetaTags(item)" class="" />
+                </InputGroup>
             </div>
 
             <div class="col-12 md:col-8">
-                <div class="p-inputgroup">
-                    <Button icon="pi pi-plus"
-                            data-testid="general-add_newtag"
-                            @click="store.addMetaTags"
-                            :label="store.assets.language_strings.add_meta_tags_button"
-                            class="p-button-sm"
-                    />
+                <InputGroup>
+                    <Button size="small" icon="pi pi-plus" data-testid="general-add_newtag" @click="store.addMetaTags" :label="store.assets.language_strings.add_meta_tags_button" class="" />
 
-                    <Button :label="store.assets.language_strings.meta_tag_save_button"
-                            @click="store.storeTags"
-                            data-testid="general-meta_tag-save"
-                            class="p-button-sm"
-                    />
+                    <Button size="small" :label="store.assets.language_strings.meta_tag_save_button" @click="store.storeTags" data-testid="general-meta_tag-save" class="" />
 
-                    <Button icon="pi pi-copy"
-                            data-testid="general-meta_tag_copy"
-                            @click="store.getCopy('meta_tags')"
-                            class="p-button-sm"
-                    />
-                </div>
+                    <Button size="small" icon="pi pi-copy" aria-label="Copy to clipboard" data-testid="general-meta_tag_copy" @click="store.getCopy('meta_tags')" class="" />
+                </InputGroup>
             </div>
 
             <div class="col-12 md:col-4">
-                <div class="p-inputgroup">
-                    <Dropdown v-model="store.tag_type"
-                              :options="[
-                                          {name:'Google Webmaster',value:'google-webmaster'},
-                                          {name:'Open Graph (Facebook)',value:'open-graph'},
-                                        ]"
-                              data-testid="general-gegnerate_tag"
-                              optionLabel="name"
-                              optionValue="value"
-                              :placeholder="store.assets.language_strings.meta_tag_select_type"
-                              inputClass="p-inputtext-sm"
-                              class="is-small"
-                    />
+                <InputGroup>
+                    <Select size="small" v-model="store.tag_type" :options="[ {name:'Google Webmaster',value:'google-webmaster'}, {name:'Open Graph (Facebook)',value:'open-graph'}, ]" data-testid="general-gegnerate_tag" optionLabel="name" optionValue="value" :placeholder="store.assets.language_strings.meta_tag_select_type" inputClass="" class="vc-dense" />
 
-                    <Button :label="store.assets.language_strings.meta_tag_generate_button"
-                            @click="store.generateTags"
-                            class="p-button-sm"
-                    />
-                </div>
+                    <Button size="small" :label="store.assets.language_strings.meta_tag_generate_button" @click="store.generateTags" class="" />
+                </InputGroup>
             </div>
         </div>
     </div>

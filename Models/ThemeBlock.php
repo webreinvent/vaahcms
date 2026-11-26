@@ -9,7 +9,6 @@ class ThemeBlock extends VaahModel {
 
     use SoftDeletes;
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_theme_blocks';
     //-------------------------------------------------
@@ -34,7 +33,7 @@ class ThemeBlock extends VaahModel {
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
 

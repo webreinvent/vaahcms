@@ -11,7 +11,6 @@ use WebReinvent\VaahCms\Models\ThemeBase;
 class Theme extends ThemeBase
 {
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     public function createdByUser()
     {

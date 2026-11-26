@@ -190,7 +190,7 @@ export const useUserStore = defineStore({
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
 
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if(this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
@@ -1022,12 +1022,15 @@ export const useUserStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
+                    /* M7-T3 (F26) — the force-delete item wears the bulk
+                       surface's semantic danger tone (`--vaah-danger-text`
+                       via `.vaah-bulk-danger` in the control layer). */
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
                 },
             ]
-
         },
         //---------------------------------------------------------------------
         getListBulkMenu()
@@ -1066,6 +1069,7 @@ export const useUserStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }

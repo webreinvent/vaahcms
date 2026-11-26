@@ -14,7 +14,6 @@ class Batch extends BatchBase
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
 
     public function createdByUser()

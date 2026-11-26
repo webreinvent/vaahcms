@@ -79,11 +79,10 @@ const emit = defineEmits();
  * Methods
  */
 function uploadFile(e){
-    if(!upload_refs.value || !upload_refs.value.files || !upload_refs.value.files[0] || upload_refs.value.files[0]['size'] > props.maxFileSize){
-        vaah().toastErrors([`Invalid. File size should be smaller than 1000KB`]);
+    if(upload_refs.value.files[0]['size'] > props.maxFileSize){
+        vaah().toastErrors(['Invalid. File size should be smaller than 200kb']);
         return;
     }
-
     let uploaded_files = upload_refs.value.files;
 
     upload_refs.value.files = [];
@@ -98,11 +97,8 @@ function uploadFile(e){
                 'Content-Type': 'multipart/form-data'
             }
         }).then(res=>{
-            if(res.data.data){
-                upload_refs.value.uploadedFiles[0] = file;
-                store.storeAvatar(res.data.data);
-            }
-            vaah().processResponse(res);
+            upload_refs.value.uploadedFiles[0] = file;
+            store.storeAvatar(res.data.data);
         });
     })
 
@@ -128,6 +124,7 @@ function selectFile (data){
 
 <template>
     <FileUpload name="file"
+                :pt="{ input: { 'data-testid': 'profile-avatar-upload' } }"
                 :auto="auto_upload"
                 :accept="file_type_accept"
                 ref="upload_refs"

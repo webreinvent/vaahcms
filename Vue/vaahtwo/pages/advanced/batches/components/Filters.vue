@@ -15,7 +15,7 @@ const dateColumns = [
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1102"
         >
@@ -54,7 +54,7 @@ const dateColumns = [
                     <b>{{store.assets.language_strings.filter_range}}:</b>
                 </template>
 
-                <Calendar inputId="range"
+                <DatePicker inputId="range"
                           data-testid="batch"
                           v-model="store.dates2"
                           @date-select="store.setDateRange"
@@ -62,6 +62,6 @@ const dateColumns = [
                           :manualInput="false"
                 />
             </VhFieldVertical>
-        </Sidebar>
+        </Drawer>
     </div>
 </template>

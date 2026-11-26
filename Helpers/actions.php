@@ -9,11 +9,127 @@ function vh_action_response($class_namespace, $method, $params=null) {
         $c = new $class_namespace($params);
         $response = $c->$method($params);
         return $response;
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
+        /*
+         * F06 / R5.9 — widened from \Exception to \Throwable: an undefined
+         * class (the realistic failure of a module still on PrimeVue 3)
+         * raises \Error, which \Exception does not catch and which would
+         * otherwise escape the hook and 500 the request. The returned shape
+         * is unchanged.
+         */
         $response['success'] = false;
         $response['errors'][] = $e->getMessage();
         return $response;
     }
+}
+//-------------------------------------------------------------
+/**
+ * F06 / R5.9 — the session key of the hook-failure collector.
+ */
+function vh_hook_failure_key()
+{
+    return 'vh_hook_failures';
+}
+//-------------------------------------------------------------
+/**
+ * F06 / R5.9 — read the collected hook failures as a map keyed by slug.
+ *
+ * Read-only: the collector is NOT forgotten on read — a failure the admin
+ * has not yet seen must still be reported on the next load, and the
+ * notification's own dismiss control (client-side, per session) is what
+ * removes it.
+ */
+function vh_get_hook_failures()
+{
+    $key = vh_hook_failure_key();
+
+    if(!session()->has($key))
+    {
+        return [];
+    }
+
+    $failures = (array) session()->get($key);
+
+    $failed = [];
+    foreach ($failures as $failure)
+    {
+        $slug = $failure['slug'];
+
+        if(!isset($failed[$slug]))
+        {
+            $failed[$slug] = [
+                'slug' => $slug,
+                'source' => $failure['source'],
+                'method' => $failure['method'],
+                'methods' => [$failure['method']],
+                'message' => $failure['message'],
+                'time' => $failure['time'],
+            ];
+        } elseif(!in_array($failure['method'], $failed[$slug]['methods']))
+        {
+            // one slug, several failing hooks — keep every distinct method
+            $failed[$slug]['methods'][] = $failure['method'];
+        }
+    }
+
+    return $failed;
+}
+//-------------------------------------------------------------
+/**
+ * F06 / R5.9 — record one hook failure in the session collector and log it.
+ *
+ * One `Log::error` line per failure carries the three facts the admin
+ * notification needs: slug, hook method and message (visible in
+ * Advanced → Logs, which reads storage_path('logs')). Deduplicated on
+ * slug+method+message so a reloaded page does not multiply entries.
+ */
+function vh_record_hook_failure($slug, $method, $failure, $source='module')
+{
+    $message = is_array($failure['errors'] ?? null)
+        ? implode(' ', $failure['errors'])
+        : ($failure['errors'] ?? '');
+
+    $log_line = sprintf(
+        'vaahcms hook failed: slug=%s source=%s method=%s message=%s',
+        $slug,
+        $source,
+        $method,
+        $message
+    );
+
+    /*
+     * The store is real on a web request (started by the session middleware)
+     * and empty-but-available in console contexts (queue workers, seeders),
+     * where it degrades to per-process dedup. Log lines are de-duplicated
+     * per failure, so a reloaded page never multiplies them.
+     */
+    $key = vh_hook_failure_key();
+    $failures = session()->has($key) ? (array) session()->get($key) : [];
+
+    foreach ($failures as $existing)
+    {
+        if($existing['slug'] === $slug
+            && $existing['method'] === $method
+            && $existing['message'] === $message)
+        {
+            // already reported — one log line per failure, not per request
+            return;
+        }
+    }
+
+    $failures[] = [
+        'slug' => $slug,
+        'source' => $source,
+        'method' => $method,
+        'message' => $message,
+        'time' => now()->toIso8601String(),
+    ];
+
+    session()->put($key, $failures);
+
+    // one Log::error line per failure (slug, method, message) — visible in
+    // Advanced → Logs, which reads storage_path('logs')
+    \Log::error($log_line);
 }
 //-------------------------------------------------------------
 function vh_vaahcms_action($method, $params=null)
@@ -68,6 +184,12 @@ function vh_modules_action($method, $params=null, $output_type=null)
         if(isset($res['success']) && !$res['success'])
         {
             $output['failed'][$item->slug] = $res;
+
+            // F06 / R5.9 — the failed map is unchanged; the same failure is
+            // also recorded in the session collector (+ log line) so it is
+            // visible in data.failed even when this hook ran on a request
+            // that never serves the assets payload.
+            vh_record_hook_failure($item->slug, $method, $res, 'module');
 
         } elseif(isset($res['success']) && $res['success']
             && isset($res['data']) && count(array_filter($res['data'])) > 0)
@@ -143,6 +265,9 @@ function vh_themes_action($method, $params=null, $output_type=null)
         if(isset($res['success']) && !$res['success'])
         {
             $output['failed'][$item->slug] = $res;
+
+            // F06 / R5.9 — same collector entry as the module branch.
+            vh_record_hook_failure($item->slug, $method, $res, 'theme');
 
         } elseif(isset($res['success']) && $res['success']
             && isset($res['data']) && count(array_filter($res['data'])) > 0)
@@ -246,6 +371,10 @@ function vh_action($method, $params=null, $output_type=null){
             if(isset($vaahcms_res['success']) && !$vaahcms_res['success'])
             {
                 $vaahcms['failed'] = $vaahcms_res;
+
+                // F06 / R5.9 — core hook failures are collected under the
+                // key `vaahcms`, same as module and theme failures.
+                vh_record_hook_failure('vaahcms', $method, $vaahcms_res, 'vaahcms');
             } else{
                 $vaahcms['success']['vaahcms'] = $vaahcms_res['data'];
             }

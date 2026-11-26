@@ -4,7 +4,6 @@ import qs from 'qs'
 import { useRootStore } from "../root.js";
 import { vaah } from '../../vaahvue/pinia/vaah'
 import semver from "semver";
-// import Terminal from "primevue/terminal";
 //----Terminal
 import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'

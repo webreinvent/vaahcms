@@ -195,6 +195,16 @@ function vh_theme_assets_url($name, $file_path)
     return $url;
 }
 //-----------------------------------------------------------------------------------
+/**
+ * F06 / R5.10 — the core-provided CSS namespace for a theme's third-party
+ * rules: a theme bundle must emit its `p-*` rules only under this prefix
+ * (declared in the theme's `Config/assets.php` `css_prefix`).
+ */
+function vh_theme_css_prefix($slug)
+{
+    return 'p-vc-theme-'.\Str::slug($slug);
+}
+//-----------------------------------------------------------------------------------
 function vh_get_page_templates_path($theme_slug=null)
 {
 
@@ -233,16 +243,16 @@ function vh_get_page_templates($theme_slug=null)
 
 }
 //-----------------------------------------------------------------------------------
+/**
+ * F06 / ADR-008 — the block data lived in the Cms module, which is out of
+ * scope for 3.0 and no longer referenced by core. Core has zero callers of
+ * this helper, and with no bound CmsContract there is no block source to
+ * read, so degrade to `false` (the value the missing-class guard already
+ * returned). The deprecation path is recorded for the migration guide.
+ */
 function vh_block($block_slug = null)
 {
-
-    if(!class_exists('\VaahCms\Modules\Cms\Entities\Block')){
-        return false;
-    }
-
-    $data = \VaahCms\Modules\Cms\Entities\Block::getBlock($block_slug);
-
-    return $data;
+    return false;
 }
 //-----------------------------------------------------------------------------------
 function vh_location_blocks($location_slug = null)

@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import { useThemeStore } from '../../stores/store-themes'
 
@@ -53,7 +62,7 @@ const toggleFormMenu = (event) => {
             <template #icons>
 
 
-                <div class="p-inputgroup">
+                <InputGroup>
                     <Button label="Save"
                             v-if="store.item && store.item.id"
                             data-testid="themes-save"
@@ -68,7 +77,7 @@ const toggleFormMenu = (event) => {
 
 
                     <!--form_menu-->
-                    <Button
+                    <Button aria-label="Show actions menu"
                         type="button"
                         @click="toggleFormMenu"
                         data-testid="themes-form-menu"
@@ -81,12 +90,12 @@ const toggleFormMenu = (event) => {
                     <!--/form_menu-->
 
 
-                    <Button class="p-button-primary"
+                    <Button aria-label="Back to list" class="p-button-primary"
                             icon="pi pi-times"
                             data-testid="themes-to-list"
                             @click="store.toList()">
                     </Button>
-                </div>
+                </InputGroup>
 
 
 
@@ -110,7 +119,7 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <InputSwitch v-bind:false-value="0"
+                    <ToggleSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
                                  name="themes-active"
                                  data-testid="themes-active"

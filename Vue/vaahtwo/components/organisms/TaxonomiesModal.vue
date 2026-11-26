@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="p-inputgroup">
-            <Dropdown placeholder="Select a Parent" v-model="selectedParent" :options="tvModel" option-label="label"></Dropdown>
+        <InputGroup>
+            <Select placeholder="Select a Parent" v-model="selectedParent" :options="tvModel" option-label="label"></Select>
             <InputText v-model="inputChild"></InputText>
             <Button label="Add" @click="addToTree(selectedParent)"></Button>
-        </div>
+        </InputGroup>
         <div>
         </div>
         <div class="draggable-tree-list">

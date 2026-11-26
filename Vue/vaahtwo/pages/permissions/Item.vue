@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 import { vaah } from '../../vaahvue/pinia/vaah';
@@ -60,61 +69,37 @@ const toggleItemMenu = (event) => {
 <template>
 
     <div class="col-5">
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item" class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="font-semibold vc-text-16">
                         {{ store.item.name }}
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id"
-                            @click="useVaah.copy(store.item.id)"
-                            data-testid="permission-item_id"
-                    />
+                <InputGroup>
+                    <Button size="small" class="" :label=" '#' + store.item.id" @click="useVaah.copy(store.item.id)" data-testid="permission-item_id" />
 
-                    <Button class="p-button-sm"
-                            :label="root.assets.language_strings.crud_actions.view_edit"
-                            icon="pi pi-pencil"
-                            data-testid="permission-item_edit"
-                            @click="store.toEdit(store.item)"
-                            v-if="store.hasPermission('can-update-permissions') && root.assets
-                                  && root.assets.language_strings
-                                  && root.assets.language_strings.crud_actions"
-                    />
+                    <Button size="small" class="" :label="root.assets.language_strings.crud_actions.view_edit" icon="pi pi-pencil" data-testid="permission-item_edit" @click="store.toEdit(store.item)" v-if="store.hasPermission('can-update-permissions') && root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions" />
 
                     <!--item_menu-->
-                    <Button class="p-button-sm"
-                            icon="pi pi-angle-down"
-                            type="button"
-                            aria-haspopup="true"
-                            data-testid="permission-item_menu"
-                            @click="toggleItemMenu"
-                            v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
-                    />
+                    <Button size="small" class="" icon="pi pi-angle-down" aria-label="Show actions menu" type="button" aria-haspopup="true" data-testid="permission-item_menu" @click="toggleItemMenu" v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')" />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
                           :popup="true" />
                     <!--/item_menu-->
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="permission-item_list"
-                            @click="store.toList()"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" data-testid="permission-item_list" @click="store.toList()" />
+                </InputGroup>
             </template>
 
 
             <div v-if="store.item">
 
                 <Message severity="error"
-                         class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
                          v-if="store.item.deleted_at"
@@ -129,15 +114,13 @@ const toggleItemMenu = (event) => {
                         </div>
 
                         <div class="ml-3">
-                            <Button :label="root.assets.language_strings.crud_actions.view_restore"
-                                    class="p-button-sm"
-                                    @click="store.itemAction('restore')">
+                            <Button size="small" :label="root.assets.language_strings.crud_actions.view_restore" class="" @click="store.itemAction('restore')">
                             </Button>
                         </div>
                     </div>
                 </Message>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
+                <div class="p-datatable p-component permissions-item-stripes">
                     <table class="p-datatable-table">
                         <tbody class="p-datatable-tbody">
                             <template v-for="(value, column) in store.item ">
@@ -181,3 +164,21 @@ const toggleItemMenu = (event) => {
         </Panel>
     </div>
 </template>
+
+<style scoped>
+/* M6-T5 (F23) — F11 R3.6 explicit local replacement for the v3 striped-row
+   style class on this hand-rolled view table. The table is plain DOM (no
+   <DataTable> component), so the `stripedRows` prop has no host to attach to
+   and the v4 engine's striped rule — which targets a row class the DataTable
+   emits on its own rows — cannot match hand-rolled rows. The v3
+   `tr:nth-child(odd)` selector is therefore kept as a local style, and the
+   background is bound to the v4 `datatable.row.striped.background` token —
+   emitted as `--p-datatable-row-striped-background` (scheme-aware via the
+   `.app-dark` darkModeSelector) — the same value the engine styles
+   `stripedRows` DataTable rows with, so the stripe is identical to a
+   `stripedRows` DataTable in both light and dark (D3 visual parity).
+   This is the pattern M6-T2 (F21) applied to pages/modules/Item.vue. */
+.permissions-item-stripes :deep(tr:nth-child(odd)) {
+    background: var(--p-datatable-row-striped-background);
+}
+</style>

@@ -14,7 +14,6 @@ class Media extends MediaBase
 {
 
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
 
     public function createdByUser()

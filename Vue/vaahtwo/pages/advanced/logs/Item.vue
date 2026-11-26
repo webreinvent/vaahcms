@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
@@ -47,7 +56,7 @@ const toggleItemMenu = (event) => {
 
     <div class="col-7" >
 
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item" class="vc-dense">
 
             <template class="p-1" #header>
 
@@ -67,45 +76,31 @@ const toggleItemMenu = (event) => {
                            && store.assets.language_strings
                            "
                 >
-                <Button icon="pi pi-trash"
-                        @click="store.confirmClearFile(store.item)"
-                        data-testid="logs-item_clear_file"
-                        class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top="store.assets.language_strings.toolkit_text_clear_file"
-                />
+                <Button size="small" icon="pi pi-trash" aria-label="Clear file" @click="store.confirmClearFile(store.item)" data-testid="logs-item_clear_file" class=" p-button-rounded p-button-text" v-tooltip.top="store.assets.language_strings.toolkit_text_clear_file" />
 
-                <Button icon="pi pi-download"
-                        @click="store.downloadFile(store.item)"
-                        data-testid="logs-item_download_file"
-                        class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top="store.assets.language_strings.toolkit_text_download_file"
-                />
+                <Button size="small" icon="pi pi-download" aria-label="Download file" @click="store.downloadFile(store.item)" data-testid="logs-item_download_file" class=" p-button-rounded p-button-text" v-tooltip.top="store.assets.language_strings.toolkit_text_download_file" />
 
-                <Button icon="pi pi-refresh"
-                        @click="store.getItem(store.item.name)"
-                        data-testid="logs-item_refresh"
-                        class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top="store.assets.language_strings.toolkit_text_reload"
-                />
+                <Button size="small" icon="pi pi-refresh" aria-label="Reload file" @click="store.getItem(store.item.name)" data-testid="logs-item_refresh" class=" p-button-rounded p-button-text" v-tooltip.top="store.assets.language_strings.toolkit_text_reload" />
 
-                <Button icon="pi pi-times"
-                        @click="store.toList()"
-                        data-testid="logs-item_close"
-                        class="p-button-sm p-button-rounded p-button-text"
-                        v-tooltip.top="store.assets.language_strings.toolkit_text_close"
-                />
+                <Button size="small" icon="pi pi-times" aria-label="Close" @click="store.toList()" data-testid="logs-item_close" class=" p-button-rounded p-button-text" v-tooltip.top="store.assets.language_strings.toolkit_text_close" />
                 </div>
             </template>
             <div class="card overflow-hidden">
-                <TabView class="is-small tab-panel-has-no-padding">
-                    <TabPanel header="Logs">
+                                <Tabs value="0" class="vc-dense tab-panel-has-no-padding">
+                    <TabList>
+                        <Tab value="0">Logs</Tab>
+                        <Tab value="1">Raw</Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel value="0">
+
                         <table v-if="store.item.logs" class="p-datatable">
                             <tr v-for="log in store.item.logs">
                                 <td>
                                     <div class="level is-marginless">
                                         <div class="level-left">
                                             <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs line-height-3">TYPE</Tag>
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround vc-text-12 line-height-3">TYPE</Tag>
                                                 <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
                                             </div>
 
@@ -133,14 +128,15 @@ const toggleItemMenu = (event) => {
                                 </td>
                             </tr>
                         </table>
-                    </TabPanel>
+                                            </TabPanel>
+                        <TabPanel value="1">
 
-                    <TabPanel header="Raw">
                         <small v-if="store.item.content"
                             style="max-height: 768px; overflow: auto;"
                             v-html="store.item.content"></small>
-                    </TabPanel>
-                </TabView>
+                                            </TabPanel>
+                    </TabPanels>
+                </Tabs>
             </div>
         </Panel>
     </div>

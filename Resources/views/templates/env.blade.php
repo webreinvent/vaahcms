@@ -28,17 +28,18 @@ DB_PASSWORD={{vh_env_string($data->db_password)}}
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
-CACHE_PREFIX={{$data->app_name ? strtolower($data->app_name): '' }}
+CACHE_PREFIX={{vh_l13_namespace('CACHE_PREFIX','vaahcms_cache_')}}
+REDIS_PREFIX={{vh_l13_namespace('REDIS_PREFIX','vaahcms_database_')}}
 QUEUE_CONNECTION=sync
 SESSION_DRIVER=file
-SESSION_COOKIE={{$data->app_name ? strtolower($data->app_name): '' }}
+SESSION_COOKIE={{vh_l13_namespace('SESSION_COOKIE','vaahcms_session')}}
 SESSION_LIFETIME=120
 
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_DRIVER={{vh_env_string($data->mail_driver)}}
+MAIL_MAILER={{vh_env_string($data->mail_driver)}}
 MAIL_HOST={{vh_env_string($data->mail_host)}}
 MAIL_PORT={{vh_env_string($data->mail_port)}}
 MAIL_USERNAME={{vh_env_string($data->mail_username)}}

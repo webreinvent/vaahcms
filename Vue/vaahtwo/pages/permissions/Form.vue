@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch} from "vue";
 import { usePermissionStore } from '../../stores/store-permissions';
 import { vaah } from '../../vaahvue/pinia/vaah';
@@ -46,10 +55,10 @@ watch(
 <template>
 
     <div class="col-5">
-        <Panel class="is-small">
+        <Panel class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="font-semibold vc-text-16">
                         <span v-if="store.item && store.item.id">
                            {{ store.item.name }}
                         </span>
@@ -64,33 +73,13 @@ watch(
             </template>
 
             <template #icons>
-                <div class="p-inputgroup" v-if="store.item && store.item.id && root.assets
-                           && root.assets.language_strings
-                           && root.assets.language_strings.crud_actions"
-                >
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id"
-                            @click="useVaah.copy(store.item.id)"
-                            data-testid="permission-form_id"
-                    />
+                <InputGroup v-if="root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions">
+                    <Button size="small" class="" v-if="store.item && store.item.id" :label=" '#' + store.item.id" @click="useVaah.copy(store.item.id)" data-testid="permission-form_id" />
 
-                    <Button class="p-button-sm"
-                            :label="root.assets.language_strings.crud_actions.save_button"
-                            icon="pi pi-save"
-                            data-testid="permission-form_save"
-                            @click="store.itemAction('save')"
-                    />
+                    <Button size="small" class="" :label="root.assets.language_strings.crud_actions.save_button" icon="pi pi-save" data-testid="permission-form_save" @click="store.itemAction('save')" />
 
                     <!--form_menu-->
-                    <Button class="p-button-sm"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
-                            type="button"
-                            data-testid="permission-form_menu"
-                            @click="toggleFormMenu"
-                            v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
-
-                    />
+                    <Button size="small" class="" icon="pi pi-angle-down" aria-label="Show actions menu" aria-haspopup="true" type="button" data-testid="permission-form_menu" @click="toggleFormMenu" v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')" />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
@@ -98,20 +87,10 @@ watch(
                     />
                     <!--/form_menu-->
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
-                            data-testid="permission-item_view"
-                            @click="store.toView(store.item)"
-                            v-if="store.hasPermission('can-read-permissions')"
-                    />
+                    <Button size="small" class="" icon="pi pi-eye" aria-label="View" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view" data-testid="permission-item_view" @click="store.toView(store.item)" v-if="store.hasPermission('can-read-permissions')" />
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="permission-list_view"
-                            @click="store.toList()"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" data-testid="permission-list_view" @click="store.toList()" />
+                </InputGroup>
             </template>
 
             <div v-if="store.item" class="pt-2">

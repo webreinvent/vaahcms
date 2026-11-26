@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use ZanySoft\Zip\Zip;
+use WebReinvent\VaahCms\Libraries\Zip;
 
 class ModuleBase extends VaahModel
 {
     use SoftDeletes;
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     protected $table = 'vh_modules';
     //-------------------------------------------------
@@ -51,7 +50,7 @@ class ModuleBase extends VaahModel
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
-        $date_time_format = config('settings.global.datetime_format','Y-m-d H:i:s');
+        $date_time_format = config('settings.global.datetime_format');
         return $date->format($date_time_format);
     }
 
@@ -391,7 +390,29 @@ class ModuleBase extends VaahModel
             return $response;
         }
 
+        /*
+         * F06 / R5.10 — third-party asset contract gate: runs BEFORE
+         * Migration::runMigrations / seeds / copyAssets, so a detected
+         * PrimeVue 3 bundle is refused with the same shape a dependency
+         * failure returns — no migration, no seed, no asset copy, and
+         * is_active stays 0.
+         */
+        $contract_errors = vh_asset_contract_errors(
+            config('vaahcms.modules_path').'/'.$module->name,
+            $module->slug,
+            vh_module_css_prefix($module->slug),
+            'module'
+        );
 
+        if(count($contract_errors) > 0)
+        {
+            $response['success'] = false;
+            foreach ($contract_errors as $contract_error)
+            {
+                $response['errors'][] = $contract_error;
+            }
+            return $response;
+        }
 
         if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
         {

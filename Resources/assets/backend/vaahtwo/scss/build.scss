@@ -1,11 +1,55 @@
-@import "_fonts.scss";
-@import "_primeicons.scss";
+// M3-T2 (F10) — the single canonical admin stylesheet, compiled by Vite
+// only (Laravel Mix retired for this package, R4.9).
+//
+// The vendored PrimeVue 3 / PrimeFlex 3 / tailwind-light designer trees
+// (3 + 27 + 84 files) that competed with the OpenVue output are deleted;
+// their replacements are:
+//   - PrimeFlex v4 from npm (grid/flex utility classes used by the screens)
+//   - the OpenVue preset CSS emitted by the engine at plugin install
+//     (vaahvue/theme/openvue.js) — including the .vc-dense density class
+//     and the explicit .p-datatable-hoverable-rows hover style (R4.3/R4.8)
+//   - style/style.scss re-expressed against the token layer
+//
+// Icons (R4.7): the vendored PrimeIcons font + its 1,014-line sheet
+// are deleted; @openvue/openicons' compatibility sheet aliases the legacy
+// .pi / .pi-* markup onto the OpenIcons font so existing markup renders
+// unchanged. The Inter-* fonts in scss/fonts/ are retained.
+@import "primeflex/primeflex.css";
+@import "@openvue/openicons/openicons-compat.css";
 
-@import "primeflex-3.3.0/primeflex.scss";
-@import "primevue-3.29.2/primevue.css";
-@import "primevue-tailwind-light/theme.scss";
+@import "_fonts.scss";
 @import "_draggable.scss";
 
 @import "style/style.scss";
 
+// M3-T2 (F10) — R4.8: explicit local hoverable-rows style (the one
+// migration-table row with no vendored replacement after the designer
+// tree was deleted); contrast-audited, Nide content-scheme tokens.
+@import "datatable-hover.scss";
 
+// M3-T1 (F09) — OpenVue density layer (14px root rem scale + 8px grid step).
+@import "openvue-density.scss";
+
+// M6-T4 (F23) — VaahCMS design system: structural surface layer (topnav bar +
+// card identity, light + dark). Imported last so its unlayered author rules
+// win over the `@layer openvue` engine CSS on shared selectors. See
+// DESIGN-SYSTEM.md.
+@import "design-layer.scss";
+
+// M6-T4a (F23) — Batch 5 control layer (buttons, chips, small text). Imported
+// after design-layer.scss so its unlayered author rules win over both
+// style/style.scss and the `@layer openvue` engine CSS on the shared
+// `.p-button*` / `.p-tag` / `.p-badge` selectors.
+@import "controls-layer.scss";
+
+// M6-T4 (F23) — the design system's type scale as utilities (12 · 13 · 14 ·
+// 16 · 20 · 24 at the 14px root). Imported last so these unlayered author
+// rules win over the off-scale PrimeFlex `text-*` utilities they replace.
+// See DESIGN-SYSTEM.md §6.
+@import "type-layer.scss";
+
+// M6-T5 (F23) — the DESIGN-SYSTEM.md §6 type scale and the semantic colour
+// roles, as utility classes. Imported last so they win over the PrimeFlex
+// text utilities and over the `@layer openvue` engine CSS on the shared
+// `.p-tag` / `.p-button` selectors. See scss/ui-utilities.scss.
+@import "ui-utilities.scss";

@@ -112,7 +112,7 @@ export const useBatchStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                    if(this.watch_stopper && !(newVal?.name || '').includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
@@ -462,6 +462,20 @@ export const useBatchStore = defineStore({
             return width+'px';
         },
         //---------------------------------------------------------------------
+        // UT-93 (M6-T4a Batch 18) — the batches table ended with an
+        // unlabelled delete column. Every other list page names that column
+        // through getActionLabel(), so the same helper is added here.
+        getActionLabel()
+        {
+            let text = null;
+            if(this.isViewLarge())
+            {
+                text = 'Actions';
+            }
+
+            return text;
+        },
+        //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
             const root = useRootStore();
@@ -469,6 +483,7 @@ export const useBatchStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.bulk_delete,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: () => {
                         this.confirmDelete()
                     }
@@ -484,6 +499,7 @@ export const useBatchStore = defineStore({
                 {
                     label: root.assets.language_strings.crud_actions.delete_all,
                     icon: 'pi pi-trash',
+                    class: 'vaah-bulk-danger',
                     command: async () => {
                         this.confirmDeleteAll();
                     }

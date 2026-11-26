@@ -1,0 +1,5 @@
+{
+  "note": "Known UI-conformance debt. The check fails on any violation NOT listed here, or any file whose count exceeds its baseline. Re-baseline deliberately with `npm run ui-conformance -- --update-baseline`.",
+  "generatedAt": "2026-11-12",
+  "files": {}
+}

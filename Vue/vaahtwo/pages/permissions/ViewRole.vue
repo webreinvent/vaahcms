@@ -1,8 +1,17 @@
 <script setup>
 
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
+
 import { onMounted, ref } from "vue";
 import { usePermissionStore } from "../../stores/store-permissions";
-import { useDialog } from 'primevue/usedialog';
+import { useDialog } from 'openvue/usedialog';
 import RoleDetailsView from './components/RoleDetasilsView.vue'
 import { useRoute } from "vue-router";
 import { useRootStore } from "../../stores/root";
@@ -82,36 +91,26 @@ const openViewModal = () => {
 
 <template>
     <div class="col-5">
-        <Panel v-if="store && store.item" class="is-small">
+        <Panel v-if="store && store.item" class="vc-dense">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="font-semibold text-sm">
+                    <div class="font-semibold vc-text-16">
                         {{ store.item.name }}
                     </div>
                 </div>
             </template>
 
             <template #icons>
-                <div class="p-inputgroup">
+                <InputGroup>
 
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id"
-                            data-testid="permission-role_id"
-                            @click="useVaah.copy(store.item.id)"
-                    />
+                    <Button size="small" class="" :label=" '#' + store.item.id" data-testid="permission-role_id" @click="useVaah.copy(store.item.id)" />
 
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-permissions')
                                     || store.hasPermission('can-manage-permissions')"
                               class="control"
                     >
-                        <Button class="p-button-sm"
-                                icon="pi pi-angle-down"
-                                type="button"
-                                aria-haspopup="true"
-                                data-testid="permission-role_menu"
-                                @click="toggleItemMenu"
-                        />
+                        <Button size="small" class="" icon="pi pi-angle-down" aria-label="Show actions menu" type="button" aria-haspopup="true" data-testid="permission-role_menu" @click="toggleItemMenu" />
 
                         <Menu ref="role_menu_items"
                               :model="store.roles_menu_items"
@@ -120,46 +119,46 @@ const openViewModal = () => {
                     </template>
                     <!--/item_menu-->
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="permission-role_list"
-                            @click="store.toList()"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" data-testid="permission-role_list" @click="store.toList()" />
+                </InputGroup>
             </template>
 
 
 
-            <div class="grid p-fluid mt-1 mb-2">
+            <Fluid class="grid mt-1 mb-2">
                 <div class="col-12">
-                    <div class="p-inputgroup " v-if="store.assets && store.assets.language_strings">
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
-                            <InputText  class="w-full p-inputtext-sm"
-                                        :placeholder="store.assets.language_strings.view_roles_placeholder_search"
-                                        data-testid="permission-role_search"
-                                        v-model="store.permission_roles_query.q"
-                                        @keyup.enter="store.delayedItemUsersSearch()"
-                                        @keyup.enter.native="store.delayedItemUsersSearch()"
-                                        @keyup.13="store.delayedItemUsersSearch()"
-                            />
-                        </span>
+                    <!-- UT-108 (D3) — the search field and the "Reset" button
+                         were welded into one `InputGroup`, so the row read as
+                         a single oversized input with a button stuck to its
+                         right edge — the defect the UT-108 cross-screen
+                         probe found on the list toolbars. The field and its
+                         search glyph are one control and stay together;
+                         "Reset" acts on the *list*, not on the field, so it is
+                         a button of its own beside it (the peer contract). -->
+                    <div class="permission-role-search flex flex-wrap items-center gap-2">
+                        <InputGroup class="permission-role-search-field">
+                            <InputGroupAddon>
+                                <i class="pi pi-search" />
+                            </InputGroupAddon>
+                            <InputText aria-label="Search roles" size="small" class="w-full" :placeholder="store.assets?.language_strings?.view_roles_placeholder_search" data-testid="permission-role_search" v-model="store.permission_roles_query.q" @keyup.enter="store.delayedItemUsersSearch()" @keyup.enter.native="store.delayedItemUsersSearch()" @keyup.13="store.delayedItemUsersSearch()" />
+                        </InputGroup>
 
-                        <Button class="p-button-sm"
-                                :label="store.assets.language_strings.view_roles_reset_button"
-                                data-testid="permission-role_reset"
-                                @click="store.resetPermissionRolesQuery()"
-                        />
+                        <!-- UT-108 — `:fluid="false"` is load-bearing here. The
+                             v3 `<Fluid class="grid">` wrapper is a v4 `<Fluid>`
+                             component, which *provides* a fluid context: every
+                             Button below it (at any depth) is rendered
+                             `p-button-fluid`, i.e. `width: 100%`. Inside this
+                             row the "Reset" action is a sibling of the search
+                             field, so a fluid button stretches to the full
+                             panel width and drops onto its own row — the very
+                             defect the split was meant to remove. The field
+                             may stay fluid (it is the elastic member); the
+                             action may not. -->
+                        <Button size="small" :fluid="false" class="permission-role-search-action" :label="store.assets?.language_strings?.view_roles_reset_button" data-testid="permission-role_reset" @click="store.resetPermissionRolesQuery()" />
                     </div>
                 </div>
-            </div>
-            <DataTable v-if="store && store.permission_roles"
-                       :value="store.permission_roles.list.data"
-                       dataKey="id"
-                       class="p-datatable-sm"
-                       stripedRows
-                       responsiveLayout="scroll"
-            >
+            </Fluid>
+            <DataTable size="small" v-if="store && store.permission_roles" :value="store.permission_roles.list.data" dataKey="id" class="" stripedRows scrollable>
                 <Column field="role"
                         header="Role"
                         class="flex align-items-center"
@@ -169,7 +168,7 @@ const openViewModal = () => {
 
                         {{ prop.data.name }}
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button aria-label="Copy role id" class="p-button-tiny" text
                                 data-testid="permissions-role_id"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_copy_slug"
                                 @click="useVaah.copy(prop.data.slug)"
@@ -187,47 +186,24 @@ const openViewModal = () => {
                     <template #body="prop"
                               v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
                     >
-                        <Button :label="store.assets.language_strings.view_roles_yes"
-                                class="p-button-sm p-button-success p-button-rounded"
-                                v-if="prop.data.pivot.is_active === 1"
-                                data-testid="permission-role_status_yes"
-                                @click="store.changePermission(prop.data)"
-                        />
+                        <Button size="small" :label="store.assets.language_strings.view_roles_yes" severity="success" rounded v-if="prop.data.pivot.is_active === 1" data-testid="permission-role_status_yes" @click="store.changePermission(prop.data)" />
 
-                        <Button :label="store.assets.language_strings.view_roles_no"
-                                class="p-button-sm p-button-danger p-button-rounded"
-                                v-else
-                                @click="store.changePermission(prop.data)"
-                                data-testid="permission-role_status_no"
-                        />
+                        <Button size="small" :label="store.assets.language_strings.view_roles_no" severity="warn" rounded v-else @click="store.changePermission(prop.data)" data-testid="permission-role_status_no" />
                     </template>
 
                     <template #body="prop"
                               v-else
 
                     >
-                        <Button :label="store.assets.language_strings.view_roles_yes"
-                                class="p-button-sm p-button-success p-button-rounded"
-                                v-if="prop.data.pivot.is_active === 1"
-                                disabled
-                        />
+                        <Button size="small" :label="store.assets.language_strings.view_roles_yes" severity="success" rounded v-if="prop.data.pivot.is_active === 1" disabled />
 
-                        <Button :label="store.assets.language_strings.view_roles_no"
-                                class="p-button-sm p-button-danger p-button-rounded"
-                                disabled
-                                v-else
-                        />
+                        <Button size="small" :label="store.assets.language_strings.view_roles_no" severity="warn" rounded disabled v-else />
                     </template>
                 </Column>
 
                 <Column field="actions">
                     <template #body="prop">
-                        <Button class="p-button-sm p-button-rounded"
-                                @click="openViewModal(), store.active_permission_role = prop.data"
-                                icon="pi pi-eye"
-                                data-testid="permission-role_view_details"
-                                :label=store.assets.language_strings.view_roles_text_view
-                        />
+                        <Button size="small" rounded @click="openViewModal(), store.active_permission_role = prop.data" icon="pi pi-eye" data-testid="permission-role_view_details" :label=store.assets.language_strings.view_roles_text_view />
                     </template>
                 </Column>
             </DataTable>
@@ -249,3 +225,26 @@ const openViewModal = () => {
     </div>
 </template>
 
+
+<style scoped>
+
+/* UT-108 (D3) — the peer toolbar's sizing: the field takes the room the
+   search cluster has, and the list action beside it keeps its own width and
+   never shrinks.
+
+   The basis is 160px, not the list screens' 220px: this cluster lives in the
+   *narrow* sub-panel (a `col-5` beside the list panel), and at 220px the
+   field's basis plus the action's own width no longer fit on one line — the
+   action wrapped onto a row of its own. The field still grows to fill
+   whatever the cluster has, so it is wider than its basis whenever there is
+   room; the basis is only the size the cluster is asked to hold before it
+   wraps. */
+.permission-role-search-field {
+    flex: 1 1 160px;
+    min-width: 0;
+}
+
+.permission-role-search-action {
+    flex: 0 0 auto;
+}
+</style>

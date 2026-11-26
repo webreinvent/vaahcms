@@ -12,7 +12,7 @@ const root = useRootStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101"
         >
@@ -116,7 +116,7 @@ const root = useRootStore();
             </VhFieldVertical>
 
 
-        </Sidebar>
+        </Drawer>
 
     </div>
 </template>

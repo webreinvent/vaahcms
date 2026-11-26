@@ -13,13 +13,7 @@ const useVaah = vaah();
 
     <div v-if="store.list && store.assets">
         <!--table-->
-        <DataTable :value="store.list.data"
-                   dataKey="id"
-                   class="p-datatable-sm p-datatable-hoverable-rows"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll"
-        >
+        <DataTable size="small" rowHover :value="store.list.data" dataKey="id" class="" v-model:selection="store.action.items" stripedRows scrollable>
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge() || (store.hasPermission('can-update-users') || store.hasPermission('can-manage-users'))"
                     headerStyle="width: 3em"
@@ -62,10 +56,16 @@ const useVaah = vaah();
             >
                 <template #body="prop">
 
+                    <!-- UT-27 (M6-T4a Batch 5) — the ratio chip rendered with an
+                         empty left half ("/ 76") when the count is absent from
+                         the payload; `?? 0` shows the real zero. The underlying
+                         data gap stays open as UT-13. -->
                     <Button rounded
+                            aria-label="View roles"
                             data-testid="user-list_data_role"
                             @click="store.toRole(prop.data)"
-                            size="small" class="white-space-nowrap" :label=" prop.data.active_roles_count +' / '+ store.assets.totalRole"/>
+                            size="small" class="white-space-nowrap"
+                            :label="(prop.data.active_roles_count ?? 0) + ' / ' + store.assets.totalRole"/>
                 </template>
             </Column>
 
@@ -76,10 +76,11 @@ const useVaah = vaah();
                     style="width:100px;"
             >
                 <template #body="prop">
-                    <InputSwitch v-model.bool="prop.data.is_active"
+                    <ToggleSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
-                                 class="p-inputswitch-sm"
+                                
                                  data-testid="user-list_data_active"
+                                 :aria-label="'Toggle active status for ' + (prop.data.name || '')"
                                  @input="store.toggleIsActive(prop.data)"
                     />
                 </template>
@@ -94,11 +95,14 @@ const useVaah = vaah();
                     :header="store.getActionLabel()"
             >
                 <template #body="prop" >
-                    <div class="p-inputgroup">
+                    <InputGroup>
 
+                        <!-- UT-20 (M6-T4a Batch 5) — icon-only action buttons need
+                             an accessible name; the tooltip is not one. -->
                         <Button v-if="store.hasPermission('can-impersonate-users')
                                       && store.assets.language_strings"
                                 class="p-button-tiny p-button-text"
+                                aria-label="Impersonate user"
                                 v-tooltip.top="store.assets.language_strings.toolkit_text_impersonate"
                                 @click="store.impersonate(prop.data)"
                                 icon="pi pi-user"
@@ -107,6 +111,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text"
+                                aria-label="View user"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
@@ -115,6 +120,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-text "
+                                aria-label="Edit user"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_update"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
@@ -123,6 +129,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
+                                aria-label="Move user to trash"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-users')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_trash"
@@ -131,19 +138,27 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
+                                aria-label="Restore user"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_restore"
                                 icon="pi pi-replay"
                                 data-testid="user-list_data_restore"
                         />
-                    </div>
+                    </InputGroup>
                 </template>
             </Column>
 
+            <!-- M7-T3 (F26) — the v4 engine renders a blank cell when the
+                 #empty slot is absent, so the slot says what to do next
+                 (DESIGN-SYSTEM §8): a muted line + one primary action. An
+                 empty list is a state, not an error — the copy never paints
+                 a zero count as a failure. -->
             <template #empty>
-                <div class="text-center py-3">
-                    No records found.
+                <div class="vaah-empty" data-testid="user-list_empty">
+                    <i class="vaah-empty-icon pi pi-user" aria-hidden="true"></i>
+                    <p class="vaah-empty-copy">No users match your search — reset the filters, or create a new user.</p>
+                    <Button class="vaah-btn-primary" :label="root.assets.language_strings.crud_actions.create_button" icon="pi pi-plus" @click="store.toForm()" data-testid="user-list_empty_create" v-if="store.hasPermission('can-create-users')" />
                 </div>
             </template>
         </DataTable>

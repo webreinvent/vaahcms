@@ -11,7 +11,6 @@ use WebReinvent\VaahCms\Models\ModuleBase;
 class Module extends ModuleBase
 {
     //-------------------------------------------------
-    protected $connection= 'mysql';
     //-------------------------------------------------
     public function createdByUser()
     {

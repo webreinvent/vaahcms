@@ -5,11 +5,11 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center w-full">
-                    <h2 class="font-semibold text-lg">Content Structure</h2>
-                    <div class="p-inputgroup w-max">
-                        <Button label="Save" icon="pi pi-save" class="p-button-sm"></Button>
-                        <Button icon="pi pi-times" class="p-button-sm"></Button>
-                    </div>
+                    <h2 class="font-semibold vc-text-16">Content Structure</h2>
+                    <InputGroup class="w-max">
+                        <Button size="small" label="Save" icon="pi pi-save" class=""></Button>
+                        <Button size="small" icon="pi pi-times" class=""></Button>
+                    </InputGroup>
                 </div>
             </template>
             <template #content>
@@ -17,12 +17,12 @@
                     <template #content>
                         <div class="w-full flex justify-content-between align-items-center mb-4">
                             <h4 class="font-semibold">{{item.title}}</h4>
-                            <div class="w-max p-inputgroup align-items-center">
-                                <InputSwitch></InputSwitch>
-                                <p class="ml-1 mr-3 text-xs font-semibold">Is Repeatable</p>
-                                <Button icon="pi pi-hashtag" class="p-button-sm"></Button>
-                                <Button icon="pi pi-trash" class="p-button-sm" @click="removeGroup(idx)"></Button>
-                            </div>
+                            <InputGroup class="w-max align-items-center">
+                                <ToggleSwitch></ToggleSwitch>
+                                <p class="ml-1 mr-3 vc-text-12 font-semibold">Is Repeatable</p>
+                                <Button size="small" icon="pi pi-hashtag" class=""></Button>
+                                <Button size="small" icon="pi pi-trash" class="" @click="removeGroup(idx)"></Button>
+                            </InputGroup>
                         </div>
                         <draggable
                             v-model="item.content_types"
@@ -33,15 +33,15 @@
                             item-key="id">
                             <template #item="{element,index}">
                                <div>
-                                   <div class="p-inputgroup mb-3">
+                                   <InputGroup class="mb-3">
                                        <InputText class="w-2" :model-value="element.title" disabled></InputText>
                                        <InputText class="w-6" placeholder="Field Name"></InputText>
-                                       <Button icon="pi pi-hashtag p-button-sm"></Button>
-                                       <Button icon="pi pi-cog p-button-sm" @click="element.content_settings_status = !element.content_settings_status"></Button>
-                                       <Button icon="pi pi-trash p-button-sm" @click="removeAt(index,idx)"></Button>
-                                   </div>
+                                       <Button size="small" icon="pi pi-hashtag"></Button>
+                                       <Button size="small" icon="pi pi-cog" @click="element.content_settings_status = !element.content_settings_status"></Button>
+                                       <Button size="small" icon="pi pi-trash" @click="removeAt(index,idx)"></Button>
+                                   </InputGroup>
                                    <div v-if="element.content_settings_status">
-                                       <DataTable :value="element.content_settings" stripedRows class="p-datatable-sm">
+                                       <DataTable size="small" :value="element.content_settings" stripedRows class="">
                                            <Column>
                                                <template #body="slotProps">
                                                    {{slotProps.data.label}}
@@ -49,14 +49,14 @@
                                            </Column>
                                            <Column>
                                                <template #body="slotProps">
-                                                   <InputSwitch v-if="slotProps.data.value === 'repeatable'"></InputSwitch>
-                                                   <InputSwitch v-if="slotProps.data.value === 'searchable'"></InputSwitch>
+                                                   <ToggleSwitch v-if="slotProps.data.value === 'repeatable'"></ToggleSwitch>
+                                                   <ToggleSwitch v-if="slotProps.data.value === 'searchable'"></ToggleSwitch>
                                                    <Textarea v-if="slotProps.data.value === 'excerpt'" class="w-full"></Textarea>
                                                    <InputText v-if="slotProps.data.value === 'opening-tag'" class="w-full"></InputText>
                                                    <InputText v-if="slotProps.data.value === 'closing-tag'" class="w-full"></InputText>
                                                    <div v-if="slotProps.data.value === 'hidden'">
                                                        <Checkbox id="hidden"></Checkbox>
-                                                       <label for="hidden" class="font-semibold text-xs ml-1">Is Hidden</label>
+                                                       <label for="hidden" class="font-semibold vc-text-12 ml-1">Is Hidden</label>
                                                    </div>
                                                </template>
                                            </Column>
@@ -69,17 +69,17 @@
                 </Card>
             </template>
             <template #footer>
-                <div class="p-inputgroup w-6 m-auto">
+                <InputGroup class="w-6 m-auto">
                     <InputText v-model="contentInput"></InputText>
-                    <Button label="Add Group" class="p-button-sm" @click="addContentGroup"></Button>
-                </div>
+                    <Button size="small" label="Add Group" class="" @click="addContentGroup"></Button>
+                </InputGroup>
             </template>
         </Card>
     </div>
     <div class="col-12 md:col-3">
         <Card>
             <template #header>
-                <h2 class="font-semibold text-lg">Content Fields</h2>
+                <h2 class="font-semibold vc-text-16">Content Fields</h2>
             </template>
             <template #content>
                 <draggable
@@ -90,10 +90,10 @@
                     @end="drag=false"
                     item-key="id">
                     <template #item="{element}">
-                        <div class="p-inputgroup mb-3">
-                            <Button icon="pi pi-bars" class="p-button-sm p-button-secondary"></Button>
-                            <Button :label="element.title" class="p-button-secondary p-button-sm"></Button>
-                        </div>
+                        <InputGroup class="mb-3">
+                            <Button size="small" icon="pi pi-bars" class=" p-button-secondary"></Button>
+                            <Button size="small" :label="element.title" class="p-button-secondary"></Button>
+                        </InputGroup>
                     </template>
                 </draggable>
             </template>

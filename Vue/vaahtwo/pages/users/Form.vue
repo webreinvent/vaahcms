@@ -1,4 +1,13 @@
 <script setup>
+
+// UT-135 - Vue Router hands the route params to every component in the
+// matched chain (`props: true` on the route records). A route component
+// declares none of them, so Vue's attribute inheritance dropped the param
+// on the component's root element - as id="1", id="3", ... - and on the
+// screens that render a form or an item in a side panel the same id
+// landed on the screen twice. A route component takes nothing from the
+// router, so it opts out of the inheritance.
+defineOptions({ inheritAttrs: false });
 import {onMounted, ref, watch, watchEffect} from "vue";
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from '../../stores/root'
@@ -8,6 +17,7 @@ import FileUploader from "./components/FileUploader.vue";
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
+import {labelEditorToolbarWhenReady} from '../../vaahvue/utils/editorToolbarLabels';
 
 
 const store = useUserStore();
@@ -16,6 +26,8 @@ const route = useRoute();
 const useVaah = vaah();
 
 onMounted(async () => {
+    // UT-64 — Quill renders its toolbar without accessible names.
+    labelEditorToolbarWhenReady();
 
     if (route.params && route.params.id) {
         await store.getItem(route.params.id);
@@ -53,7 +65,7 @@ watch(
 </script>
 <template>
     <div class="col-5" >
-        <Panel class="is-small">
+        <Panel class="vc-dense">
 
             <Message severity="error"
                      class="p-container-message"
@@ -69,11 +81,7 @@ watch(
                     </div>
 
                     <div>
-                        <Button :label="root.assets.language_strings.crud_actions.toolkit_text_restore"
-                                class="p-button-sm"
-                                @click="store.itemAction('restore')"
-                                data-testid="register-form_item_action_restore"
-                        >
+                        <Button size="small" :label="root.assets.language_strings.crud_actions.toolkit_text_restore" class="" @click="store.itemAction('restore')" data-testid="register-form_item_action_restore">
                         </Button>
                     </div>
                 </div>
@@ -99,51 +107,17 @@ watch(
             </template>
 
             <template #icons>
-                <div class="p-inputgroup"
-                     v-if="root.assets
-                           && root.assets.language_strings
-                           && root.assets.language_strings.crud_actions"
-                >
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            data-testid="user-form_id"
-                            @click="useVaah.copy(store.item.id)"
-                    />
+                <InputGroup v-if="root.assets && root.assets.language_strings && root.assets.language_strings.crud_actions">
+                    <Button size="small" v-if="store.item && store.item.id" class="" :label=" '#' + store.item.id " data-testid="user-form_id" @click="useVaah.copy(store.item.id)" />
 
-                    <Button :label="root.assets.language_strings.crud_actions.save_button"
-                            class="p-button-sm"
-                            v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
-                            @click="store.itemAction('save')"
-                            data-testid="user-edit_save"
-                            icon="pi pi-save"
-                    />
+                    <Button size="small" :label="root.assets.language_strings.crud_actions.save_button" class="" v-if="store.item && store.item.id && store.hasPermission('can-update-users')" @click="store.itemAction('save')" data-testid="user-edit_save" icon="pi pi-save" />
 
-                    <Button :label="root.assets.language_strings.crud_actions.form_create_and_new"
-                            class="p-button-sm"
-                            v-else
-                            @click="store.itemAction('create-and-new')"
-                            data-testid="user-new_save"
-                            icon="pi pi-save"
-                            v-if="store.hasPermission('can-create-users')"
-                    />
+                    <Button size="small" :label="root.assets.language_strings.crud_actions.form_create_and_new" class="" v-else @click="store.itemAction('create-and-new')" data-testid="user-new_save" icon="pi pi-save" v-if="store.hasPermission('can-create-users')" />
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view"
-                            data-testid="user-form_view"
-                            @click="store.toView(store.item)"
-                    />
+                    <Button size="small" v-if="store.item && store.item.id" class="" icon="pi pi-eye" aria-label="View" v-tooltip.top="root.assets.language_strings.crud_actions.toolkit_text_view" data-testid="user-form_view" @click="store.toView(store.item)" />
 
                     <!--form_menu-->
-                    <Button class="p-button-sm"
-                            @click="toggleFormMenu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
-                            data-testid="user-form_menu"
-                            v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
-                    />
+                    <Button size="small" class="" @click="toggleFormMenu" icon="pi pi-angle-down" aria-label="Show actions menu" aria-haspopup="true" data-testid="user-form_menu" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')" />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
@@ -153,12 +127,8 @@ watch(
 
 
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-times"
-                            data-testid="user-list_view"
-                            @click="store.toList()"
-                    />
-                </div>
+                    <Button size="small" class="" icon="pi pi-times" aria-label="Back to list" data-testid="user-list_view" @click="store.toList()" />
+                </InputGroup>
 
 
 
@@ -178,10 +148,7 @@ watch(
                     >
 
                     <div v-if="store.item.avatar_url">
-                        <Button class="p-button-sm w-max"
-                                data-testid="profile-save"
-                                @click="store.removeAvatar"
-                                label="Remove"></Button>
+                        <Button size="small" class=" w-max" data-testid="user-form_remove_avatar" @click="store.removeAvatar" label="Remove"></Button>
                     </div>
 
                     <div class="w-max" v-if="root.assets && root.assets.urls">
@@ -200,7 +167,7 @@ watch(
                                v-model="store.item.email"
                                @input="store.validateEmail"
                                name="account-email"
-                               data-testid="account-email"
+                               data-testid="user-form_email"
                                type="email"
                                aria-describedby="email-error"
                     />
@@ -237,7 +204,7 @@ watch(
 
                 <template v-if="!store.isHidden('title') && store.assets">
                     <VhField label="Title">
-                        <Dropdown class="w-full"
+                        <Select class="w-full"
                                   v-model="store.item.title"
                                   :options="store.assets.name_titles"
                                   optionLabel="name"
@@ -286,7 +253,7 @@ watch(
                                   :options="store.gender_options"
                                   optionLabel="label"
                                   optionValue="value"
-                                  aria-labelledby="custom"
+                                  aria-label="Gender"
                                   name="account-gender"
                                   data-testid="account-gender"
                     >
@@ -311,7 +278,7 @@ watch(
                 </VhField>
 
                 <VhField label="Country Code" v-if="!store.isHidden('country_calling_code') && store.assets">
-                    <Dropdown class="w-full"
+                    <Select class="w-full"
                               v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
                               :editable="true"
@@ -333,7 +300,7 @@ watch(
 
                 <VhField label="Bio" v-if="!store.isHidden('bio')">
                     <Editor v-model="store.item.bio"
-                            editorStyle="height: 320px"
+                            editorStyle="height: 160px"
                             name="account-bio"
                             data-testid="account-bio"
                     />
@@ -348,7 +315,7 @@ watch(
                 </VhField>
 
                 <VhField label="Timezone" v-if="!store.isHidden('timezone') && store.assets">
-                    <Dropdown v-model="store.item.timezone"
+                    <Select v-model="store.item.timezone"
                               :options="store.assets.timezones"
                               optionLabel="name"
                               optionValue="slug"
@@ -369,7 +336,7 @@ watch(
                 </VhField>
 
                 <VhField label="Date of Birth" v-if="!store.isHidden('birth')">
-                    <Calendar class="w-full"
+                    <DatePicker class="w-full"
                               id="dob"
                               inputId="basic"
                               v-model="store.item.birth"
@@ -391,7 +358,7 @@ watch(
                 </VhField>
 
                 <VhField label="Status">
-                    <Dropdown class="w-full"
+                    <Select class="w-full"
                               v-model="store.item.status"
                               :options="store.status_options"
                               optionLabel="label"

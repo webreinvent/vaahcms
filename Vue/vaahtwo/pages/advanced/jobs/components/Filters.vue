@@ -12,7 +12,7 @@ const store = useJobStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Drawer v-model:visible="store.show_filters"
                  position="right"
                  style="z-index: 1101;"
         >
@@ -100,6 +100,6 @@ const store = useJobStore();
                     <label for="low">{{store.assets.language_strings.filter_low}}</label>
                 </div>
             </VhFieldVertical>
-        </Sidebar>
+        </Drawer>
     </div>
 </template>

@@ -96,9 +96,48 @@ function vh_load_backend_js()
 //-----------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------
+/**
+ * UT-114 — a *build* stamp for the admin's static assets.
+ *
+ * The `?v=` parameter is the **package version**, and it only changes when the
+ * package is released. A rebuilt admin bundle — a UI fix, a new build, a
+ * rebuilt stylesheet — is therefore served under exactly the same URL as the
+ * one before it, and every browser that has the old CSS/JS cached keeps
+ * serving the old file. The dashboard's notice fix and the list toolbars'
+ * fix were both invisible in the browser until the cache was cleared by
+ * hand; that is not a workflow, it is a delivery bug.
+ *
+ * The stamp is the mtime of the **published** asset
+ * (`public/<build dir>/backend/<theme>/<file>`), which changes on every
+ * rebuild, so a new bundle is always fetched. When the file is not published
+ * the stamp falls back to `0` and the URL keeps its previous shape.
+ */
+function vh_get_backend_asset_stamp($file_path, $theme=null)
+{
+    static $stamps = [];
+
+    if(!$theme) {
+        $theme = config('vaahcms.backend_theme', 'vaahtwo');
+    }
+
+    $key = $theme.'/'.$file_path;
+    if(isset($stamps[$key])) {
+        return $stamps[$key];
+    }
+
+    $dir = config('vaahcms.build_directory_name', 'vaahcms');
+    $path = public_path($dir.'/backend/'.$theme.'/'.$file_path);
+
+    $stamps[$key] = (is_file($path)) ? (string) filemtime($path) : '0';
+
+    return $stamps[$key];
+}
+//-----------------------------------------------------------------------------------
 function vh_get_backend_assets($file_path, $theme=null)
 {
-    return vh_get_backend_theme_url($theme)."/".$file_path."?v=".config('vaahcms.version');
+    return vh_get_backend_theme_url($theme)."/".$file_path
+        ."?v=".config('vaahcms.version')
+        ."&b=".vh_get_backend_asset_stamp($file_path, $theme);
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_asset_url($asset_url)

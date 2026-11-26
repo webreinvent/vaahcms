@@ -22,10 +22,11 @@
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
                                     <p  class="control">
-                                        <b-button type="is-light"
-                                                  icon-left="plus">
-                                            New Backup
-                                        </b-button>
+                                        <Button size="small"
+                                                severity="secondary"
+                                                outlined
+                                                icon="pi pi-plus"
+                                                label="New Backup" />
                                     </p>
                                 </div>
                             </div>
@@ -37,22 +38,24 @@
                         <div class="card-content">
 
                             <div class="block" v-if="show_backup_form">
-                                <b-field >
+                                <div class="field">
 
-                                    <p class="control">
-                                        <b-checkbox v-model="include.database">
-                                            Database
-                                        </b-checkbox>
-                                    </p>
+                                    <div class="control">
+                                        <Checkbox binary
+                                                  v-model="include.database"
+                                                  inputId="include-database" />
+                                        <label for="include-database">Database</label>
+                                    </div>
 
-                                    <p class="control has-margin-left-10">
-                                        <b-checkbox v-model="include.media">
-                                            Media Files
-                                        </b-checkbox>
-                                    </p>
+                                    <div class="control ml-3">
+                                        <Checkbox binary
+                                                  v-model="include.media"
+                                                  inputId="include-media" />
+                                        <label for="include-media">Media Files</label>
+                                    </div>
 
-                                </b-field>
-                                <b-button type="is-primary" @click="takeBackup">Create</b-button>
+                                </div>
+                                <Button @click="takeBackup" label="Create" />
                             </div>
 
 

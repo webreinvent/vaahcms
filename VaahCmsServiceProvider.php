@@ -19,14 +19,14 @@ use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
 class VaahCmsServiceProvider extends ServiceProvider {
 
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Bootstrap the application events.
+     *
+     * Bootstrap order contract (F05): the sequence below is a contract, not
+     * an incidental ordering. In particular, registerGlobalSettings() must
+     * precede registerRoutes(), because the route definitions and the Blade
+     * layouts that read config('settings.global') (e.g. is_sidebar_collapsed)
+     * observe a populated settings.global only when the global settings are
+     * loaded first. Reordering these calls is a behaviour change.
      *
      * @return void
      */
@@ -111,14 +111,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
     }
 
     /**
-     * @return array
-     */
-    public function provides() {
-
-        return [];
-    }
-
-    /**
      *
      */
     private function registerProviders() {
@@ -129,7 +121,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
 
-        $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class,);
         $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
 
     }
@@ -144,7 +135,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $loader->alias('VaahExcel', VaahExcelFacade::class);
         $loader->alias('VaahFile', VaahFileFacade::class);
-        $loader->alias('Zip', \ZanySoft\Zip\ZipServiceProvider::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');
@@ -212,6 +202,12 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     /**
      *
+     * Publishes the compiled admin SPA bundle, theme images and CSS under
+     * the `assets` tag.
+     *
+     * Upgrade note (R6.2): publishing is opt-in, so an upgrade MUST re-publish
+     * this tag (`php artisan vendor:publish --tag=assets --force`) or the
+     * installation keeps serving the previously published, now stale, bundle.
      */
     private function registerAssets() {
         $this->publishes([__DIR__.'/Resources/assets' => public_path(config('vaahcms.build_directory_name','vaahcms'))], 'assets');
@@ -219,6 +215,15 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     /**
      *
+     * Registers the `migrations` tag ONLY — the package never auto-loads its
+     * migrations (no framework migration autoloading call exists anywhere in
+     * this package, as asserted by F05's "published, not auto-loaded" scenario),
+     * so migration files enter the application exclusively through
+     * `php artisan vendor:publish --tag=migrations`.
+     *
+     * Upgrade note (R6.2): an existing installation must run
+     * `php artisan vendor:publish --tag=migrations --force` (or keep its
+     * already-published copies) before `php artisan migrate --force`.
      */
     private function registerMigrations() {
 
