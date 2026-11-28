@@ -1,10 +1,17 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, getCurrentInstance, onMounted, reactive, ref } from 'vue';
 import { useRoute } from "vue-router";
 import { useRootStore } from "../../stores/root";
 
 const root = useRootStore();
-const route = useRoute();
+
+/* UT-15d fix — the Sidebar is shared between the SPA shell (main.js, where
+   app.use(router) installs globalProperties.$router) and the extended shell
+   (main-extended.js, no router). Calling useRoute() in the extended shell
+   both warns (injection "Symbol(route location)" not found) and returns
+   undefined, which crashed the currentPath computed. Probe for an installed
+   router first so useRoute() is only called where it resolves. */
+const route = (getCurrentInstance()?.proxy?.$router) ? useRoute() : undefined;
 
 onMounted(async () => {
     root.verifyInstallStatus();
@@ -60,7 +67,14 @@ const normalisePath = (value) => {
     return path.replace(/\/+$/, '').toLowerCase();
 };
 
-const currentPath = computed(() => normalisePath(route.path));
+/* With a router, route.path is live and reactive. Without one (extended
+   shell), the hash in the page URL ("…/backend#/vaah/users/") carries the
+   same path — normalisePath strips the leading "#" — and the full-page
+   shell remounts this component on every navigation, so no reactivity is
+   needed there. */
+const currentPath = computed(() =>
+    normalisePath(route ? route.path : window.location.hash)
+);
 
 const isActive = (item) => {
     if (!item || !item.link || (item.items && item.items.length)) {

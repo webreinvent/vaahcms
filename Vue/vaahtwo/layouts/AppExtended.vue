@@ -85,11 +85,18 @@
         <!--/default-->
 
 
-        <div id="topmenu-and-sidebar-container" v-if="rootStore.is_logged_in">
+        <!-- M6 (F31): the id (not just the class) is what the persistent-nav
+             shell scss targets — `#nav-shell .sidebar` / `#nav-shell.nav-collapsed
+             .sidebar` in style.scss. The retired id (topmenu-and-sidebar-container)
+             matched no rule, so toggling nav-collapsed had no visual effect here.
+             Only one of Backend.vue / AppExtended.vue is mounted per page
+             (default.blade.php vs backend.blade.php), so the shared id is safe. -->
+        <div id="nav-shell" v-if="rootStore.is_logged_in"
+        :class="['nav-shell', { 'nav-collapsed': rootStore.sidebar_collapsed }]">
 
             <TopnavExtended />
 
-            <Drawer/>
+            <Sidebar/>
 
 
         </div>

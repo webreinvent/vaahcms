@@ -408,6 +408,8 @@ export const useRootStore = defineStore({
                             // the retired off-canvas Drawer, so navigating
                             // between pages no longer forces a re-open.
                             this.toggleSidebarCollapsed();
+                            console.log(this.sidebar_collapsed);
+                            
                             this.top_menu_items[0].tooltip = this.sidebar_collapsed
                                 ? this.assets.language_string.dashboard.topnav_tooltip_view_full_navigation
                                 : this.assets.language_string.dashboard.topnav_tooltip_view_less_navigation;

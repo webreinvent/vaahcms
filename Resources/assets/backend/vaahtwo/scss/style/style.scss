@@ -870,6 +870,28 @@ $sideBarRailWidth: 39px;
     overflow: hidden;
 }
 
+/* Extended app (backend.blade.php) — the shell mounts inside
+   #topmenu-sidebar and the blade's .main-container is a SIBLING of it,
+   outside #nav-shell, so the descendant rules above never reach it (the
+   legacy bare .main-container { calc(100% - 245px) } rule was removed in the
+   M6 shell rebuild and nothing re-offset this column). :has() reaches up to
+   the .vaahtwo ancestor so the runtime collapse toggle (.nav-collapsed on
+   #nav-shell) re-offsets the content column too. Only the extended blade has
+   a .vaahtwo > .main-container pair, so the main app is unaffected. Later in
+   the sheet than .has-sidebar-small .main-container (0,2,0), so it wins on
+   equal specificity for the expanded width. */
+.vaahtwo > .main-container {
+    width: calc(100% - #{$sideBarWidth});
+    margin: 72px 0 0 $sideBarWidth;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    transition: $sideBarAnimation;
+}
+.vaahtwo:has(#nav-shell.nav-collapsed) > .main-container {
+    width: calc(100% - #{$sideBarRailWidth});
+    margin-left: $sideBarRailWidth;
+}
+
 //tooltip
 .p-tooltip {
     .p-tooltip-text {
